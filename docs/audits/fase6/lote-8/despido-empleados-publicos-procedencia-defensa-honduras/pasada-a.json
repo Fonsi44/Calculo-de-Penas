@@ -1,0 +1,127 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "4798b074-f12f-498a-bd5f-171963053037",
+    "slug": "despido-empleados-publicos-procedencia-defensa-honduras",
+    "sha256_entrada": "f307f2d140672c6daf5fa538a1f6e72c47a2d5a648e5be533e6c94fe85766eb9",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json",
+      "data/codigo_trabajo.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_contextual": "El body de la entrada es un redirect ('Este contenido se ha fusionado con la guía completa de despido de empleados públicos...'). Las afirmaciones verificables se extraen del título y la descripción, ya que el contenido sustantivo fue migrado a otra guía."
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "Existe una diferencia jurídica entre el empleado público de carrera y el empleado público de libre nombramiento y remoción en el servicio civil hondureño.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "El Art. 256 de la Constitución establece que 'El Estado protegerá a sus servidores dentro de la carrera administrativa' y que 'la administración de personal estará sometida a métodos científicos basados en el sistema de méritos'. Esto confirma la existencia de la carrera administrativa como un régimen diferenciado con estabilidad reforzada basada en méritos, lo que implica por contraste la figura del empleado de libre nombramiento y remoción. MATIZ: La distinción explícita entre 'empleado de carrera' y 'de libre nombramiento y remoción' no aparece con esos términos literales en la Constitución; estos conceptos están desarrollados en la Ley de Servicio Civil (no disponible en el corpus local). La Constitución establece el fundamento constitucional del sistema de méritos (Art. 256) y remite a la ley secundaria la regulación detallada de las 'condiciones de ingreso', 'promociones y ascensos a base de méritos' y 'garantía de permanencia' (Art. 257).",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 256 Constitución",
+            "texto": "El régimen de Servicio Civil regula las relaciones de empleo y función pública que se establecen entre el Estado y sus servidores, fundamentados en principios de idoneidad, eficiencia y honestidad. La administración de personal estará sometida a métodos científicos basados en el sistema de méritos. El Estado protegerá a sus servidores dentro de la carrera administrativa."
+          },
+          {
+            "articulo": "Art. 257 Constitución",
+            "texto": "La ley regulará el Servicio Civil y en especial las condiciones de ingreso a la Administración Pública; las promociones y ascensos a base de méritos y aptitudes; la garantía de permanencia, los traslados, suspensiones y garantías; los deberes de los servidores públicos y los recursos contra las resoluciones que los afecten."
+          }
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "Existen causales de despido específicas en el régimen de Servicio Civil para empleados públicos en Honduras.",
+      "fuente_verificacion": "data/articulos_constitucion.json + data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "La Constitución establece en el Art. 257 que la ley regulará 'la garantía de permanencia' y 'los traslados, suspensiones y garantías'. Esto implica que existen causales y procedimientos específicos para la separación de empleados públicos. Sin embargo, las causales concretas de despido para empleados públicos no están en la Constitución ni en el Código del Trabajo. El Art. 2 del Código del Trabajo exceptúa expresamente a los empleados públicos de su ámbito de aplicación y remite a 'las leyes del Servicio Civil que se expidan'. Las causales específicas de despido para empleados públicos se encuentran en la Ley de Servicio Civil y sus reglamentos, no disponibles en el corpus local. La afirmación es plausible y consistente con el diseño constitucional, pero no es verificable directamente con las fuentes locales disponibles.",
+      "evidencia_local": {
+        "archivos": ["data/articulos_constitucion.json", "data/codigo_trabajo.json"],
+        "articulos": [
+          {
+            "articulo": "Art. 257 Constitución",
+            "texto": "La ley regulará el Servicio Civil y en especial [...] la garantía de permanencia, los traslados, suspensiones y garantías"
+          },
+          {
+            "articulo": "Art. 2 CT",
+            "texto": "Se exceptúan: [...] 2) Los empleados públicos nacionales, departamentales y municipales. [...] Las relaciones entre el Estado, el Departamento y el Municipio y sus servidores, se regirán por las leyes del Servicio Civil que se expidan"
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "Existe un proceso disciplinario formal que debe seguirse para el despido de empleados públicos en Honduras.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El Art. 257 constitucional menciona 'suspensiones' y 'recursos contra las resoluciones que los afecten' como materia de la ley del Servicio Civil, lo que presupone la existencia de un procedimiento formal previo al despido o sanción que garantice el debido proceso. Asimismo, el Art. 256 establece que el régimen de Servicio Civil se fundamenta en 'idoneidad, eficiencia y honestidad', principios que informan el régimen disciplinario. Sin embargo, los pasos concretos del proceso disciplinario, las autoridades competentes, los plazos y las formalidades procesales se encuentran en la Ley de Servicio Civil y sus reglamentos, que no forman parte del corpus local. La existencia de un proceso disciplinario es una inferencia razonable del diseño constitucional, pero su contenido específico no es verificable con las fuentes disponibles.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 257 Constitución",
+            "texto": "La ley regulará [...] las promociones y ascensos a base de méritos y aptitudes; la garantía de permanencia, los traslados, suspensiones y garantías; los deberes de los servidores públicos y los recursos contra las resoluciones que los afecten."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "Los empleados públicos cuentan con recursos legales para impugnar las resoluciones que los afecten, incluyendo el despido.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 257 de la Constitución establece expresamente que la ley del Servicio Civil regulará 'los recursos contra las resoluciones que los afecten', confirmando el derecho de los servidores públicos a impugnar las decisiones que los perjudiquen, incluyendo el despido. Esta garantía constitucional asegura el derecho de defensa y el acceso a mecanismos de revisión de las decisiones administrativas disciplinarias. La implementación concreta de estos recursos (vía administrativa, judicial, plazos, etc.) corresponde a la ley secundaria, pero la existencia del derecho a recurrir está confirmada constitucionalmente.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulo": "Art. 257 Constitución",
+        "texto": "La ley regulará el Servicio Civil y en especial [...] los recursos contra las resoluciones que los afecten."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "El despido de empleados públicos se rige por las leyes del Servicio Civil y no por el Código del Trabajo.",
+      "fuente_verificacion": "data/codigo_trabajo.json + data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 2 del Código del Trabajo exceptúa expresamente a 'los empleados públicos nacionales, departamentales y municipales' de la aplicación del CT y dispone que 'las relaciones entre el Estado, el Departamento y el Municipio y sus servidores, se regirán por las leyes del Servicio Civil que se expidan'. El Art. 256 constitucional crea el régimen de Servicio Civil como el marco regulador de 'las relaciones de empleo y función pública que se establecen entre el Estado y sus servidores'. En consecuencia, el despido de empleados públicos corresponde al régimen del Servicio Civil y no al derecho laboral común del Código del Trabajo.",
+      "evidencia_local": {
+        "archivos": ["data/codigo_trabajo.json", "data/articulos_constitucion.json"],
+        "articulos": [
+          {
+            "articulo": "Art. 2 CT",
+            "texto": "Se exceptúan: [...] 2) Los empleados públicos nacionales, departamentales y municipales. Se entiende por empleado público aquel cuyo puesto ha sido creado por la Constitución, la ley, decreto ejecutivo o acuerdo municipal. Las relaciones entre el Estado, el Departamento y el Municipio y sus servidores, se regirán por las leyes del Servicio Civil que se expidan"
+          },
+          {
+            "articulo": "Art. 256 Constitución",
+            "texto": "El régimen de Servicio Civil regula las relaciones de empleo y función pública que se establecen entre el Estado y sus servidores"
+          }
+        ]
+      },
+      "nivel_confianza": "alta"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 5,
+    "confirmados": 2,
+    "confirmados_con_matiz": 1,
+    "plausible_no_verificable": 2,
+    "parcialmente_confirmados": 0,
+    "errores_detectados": [],
+    "limitacion_corpus": "La Ley de Servicio Civil y sus reglamentos no están disponibles en el corpus local. Las afirmaciones sobre causales de despido (A2) y proceso disciplinario (A3) son consistentes con el diseño constitucional pero no verificables en su contenido específico. Los Artículos 256 y 257 de la Constitución y el Art. 2 del Código del Trabajo proporcionan el marco constitucional y legal general del régimen de Servicio Civil.",
+    "calidad_general": "buena_marco_constitucional_confirmado_contenido_especifico_no_verificable",
+    "nota_fusion": "El body de la entrada es únicamente un redirect a otra guía. No hay contenido sustantivo que verificar más allá del título y la descripción."
+  }
+}

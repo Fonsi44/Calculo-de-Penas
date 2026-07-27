@@ -1,0 +1,192 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "22af0864-73e2-4523-a792-e067a35868b0",
+    "slug": "pineda-asociados-bufete-multidisciplinario-honduras",
+    "sha256_entrada": "da8401f9f52c54fcc541b0112e41418a28c4dcfa95d766dbae0051337c342b6e",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento describe el funcionamiento de un bufete multidisciplinario en Honduras desde una perspectiva práctica y divulgativa. Contiene 6 afirmaciones con contenido jurídico-normativo. Tres de ellas son constitucionalmente verificables (colegiación, asociación, existencia del Colegio de Abogados). Las otras tres dependen de legislación secundaria no disponible en fuentes locales. No se detectan errores factuales en lo verificable contra la Constitución. El tono es apropiadamente divulgativo, sin pretensiones de exhaustividad normativa.",
+    "error_critico": {
+      "tipo": "ninguno",
+      "descripcion": "No se detectan errores críticos en las afirmaciones verificables contra la Constitución de Honduras."
+    },
+    "advertencia_cruzada": {
+      "tipo": "dependencia_normativa_secundaria",
+      "descripcion": "El documento referencia la Ley de Abogados y Notarios, el Código de Ética del Colegio de Abogados de Honduras, y conceptos como 'contrato de asociación civil' y 'responsabilidad solidaria'. Estas fuentes no están disponibles en el repositorio local. Las afirmaciones que dependen de ellas se califican como plausibles pero no verificables en su literalidad.",
+      "impacto": "bajo",
+      "recomendacion": "Si se requiere verificación exhaustiva, obtener y estructurar la Ley de Abogados y Notarios y el Código de Ética del Colegio de Abogados de Honduras como fuentes locales adicionales."
+    }
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "Existe una Ley de Abogados y Notarios que rige la prestación de servicios legales en Honduras.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible",
+      "detalle": "El Art. 177 constitucional establece la colegiación profesional obligatoria y remite a 'ley reglamentaria'. El Art. 313.6 vincula el notariado al título de abogado y lo somete a autorización de la CSJ. La existencia de una Ley de Abogados y Notarios como desarrollo de estos mandatos constitucionales es coherente con el ordenamiento hondureño, aunque no verificable directamente en las fuentes locales disponibles.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "Existe un Código de Ética del Colegio de Abogados de Honduras que rige la prestación de servicios legales.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible",
+      "detalle": "El Art. 177 constitucional establece la colegiación profesional obligatoria. Es estándar que los colegios profesionales cuenten con códigos de ética como parte de su función reguladora. La existencia del Colegio de Abogados de Honduras está confirmada por los Arts. 309.3 y 312 de la Constitución. El Código de Ética sería desarrollo reglamentario de dicho colegio, coherente con el mandato constitucional.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "La normativa hondureña permite la asociación de abogados para ejercer de manera organizada.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 78 Constitución: 'Se garantizan las libertades de asociación y de reunión siempre que no sean contrarias al orden público y a las buenas costumbres.' Esta garantía constitucional cubre la asociación de abogados con fines profesionales.",
+      "evidencia": "Art. 78 Constitución: libertad de asociación.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "La asociación de abogados debe respetar los principios de independencia, secreto profesional y responsabilidad civil.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible",
+      "detalle": "La Constitución no enumera estos principios específicos para abogados. El Art. 76 garantiza el derecho al honor, intimidad personal y familiar — relacionado tangencialmente con el secreto profesional. El Art. 82 garantiza el derecho de defensa como inviolable — relacionado con la independencia del abogado. Pero la formulación específica de 'independencia, secreto profesional y responsabilidad civil' como principios rectores del ejercicio profesional corresponde a la legislación secundaria, no al texto constitucional.",
+      "evidencia": "Arts. 76 y 82 Constitución como fundamentos indirectos de algunos principios. No se encuentra enumeración explícita de estos principios en la Constitución.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "Los bufetes deben constituirse bajo un contrato de asociación civil o sociedad profesional.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "La Constitución (Art. 78) garantiza la libertad de asociación pero no especifica las formas jurídicas concretas (asociación civil, sociedad profesional) mediante las cuales debe instrumentarse. Estas figuras corresponden al Código Civil y a la legislación mercantil y profesional. No verificable en fuentes locales constitucionales.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B3.2",
+      "subclaim_text": "Los miembros de un bufete responden solidariamente por los actos realizados en el ejercicio de su profesión.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "La responsabilidad solidaria es una figura de derecho civil/mercantil, no regulada en la Constitución. La afirmación es plausible como descripción del régimen de responsabilidad profesional, pero no es verificable en las fuentes constitucionales locales. Requeriría verificación contra el Código Civil y la Ley de Abogados y Notarios.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "La figura del bufete multidisciplinario no se define explícitamente en la normativa hondureña.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "La Constitución de Honduras no contiene ninguna mención del término 'bufete' ni 'bufete multidisciplinario'. La afirmación del documento de que 'la figura del bufete multidisciplinario no se define explícitamente' es correcta respecto a la Constitución. El Art. 78 establece la libertad de asociación como marco general, pero sin definir categorías específicas de asociación profesional.",
+      "evidencia": "Búsqueda exhaustiva en data/articulos_constitucion.json: no se encuentra 'bufete', 'multidisciplinario', 'firma legal', ni 'despacho jurídico'.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "El Colegio de Abogados de Honduras existe como institución.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 312 de la Constitución hace referencia explícita a 'la fecha de inscripción en el Colegio de Abogados' como criterio para cómputo de antigüedad profesional de candidatos a magistrados de la CSJ. El Art. 309.3 exige ser 'Abogado y Notario debidamente colegiado' para ser Magistrado de la CSJ. El Art. 177 ordena la colegiación profesional obligatoria. Estas tres referencias confirman la existencia constitucional del Colegio de Abogados de Honduras.",
+      "evidencia": "Arts. 177, 309.3 y 312 Constitución.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.2",
+      "subclaim_text": "El Colegio de Abogados de Honduras tiene un sitio web donde se puede consultar información adicional.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "no_aplica_verificacion_constitucional",
+      "detalle": "La existencia de un sitio web del Colegio de Abogados de Honduras es una cuestión de hecho, no de derecho constitucional. La Constitución no regula la presencia digital de los colegios profesionales. Esta afirmación no es verificable contra fuentes constitucionales.",
+      "nivel_confianza": "no_evaluable"
+    },
+    {
+      "subclaim_id": "B5.3",
+      "subclaim_text": "La colegiación profesional es obligatoria para el ejercicio de la abogacía en Honduras.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 177 Constitución: 'Se establece la colegiación profesional obligatoria. La ley reglamentará su organización y funcionamiento.' Este mandato es general para todas las profesiones e incluye la abogacía. El Art. 309.3 lo confirma para abogados específicamente al exigir 'Abogado y Notario debidamente colegiado' como requisito para Magistrado de la CSJ.",
+      "evidencia": "Art. 177 Constitución (colegiación obligatoria general) + Art. 309.3 (aplicación específica a abogados).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.1",
+      "subclaim_text": "La Corte Suprema de Justicia autoriza el ejercicio del notariado a quienes han obtenido el título de abogado.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 313 numeral 6 de la Constitución asigna a la Corte Suprema de Justicia la atribución de 'Autorizar al ejercicio del notariado a quienes hayan obtenido el título de abogado'. Esto confirma el vínculo constitucional entre la abogacía y el notariado en Honduras.",
+      "evidencia": "Art. 313.6 Constitución.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.1",
+      "subclaim_text": "[Cruce B1+B2] La Ley de Abogados y Notarios y la libertad de asociación del Art. 78 son marcos compatibles para la existencia de bufetes.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "coherente",
+      "detalle": "La libertad de asociación (Art. 78) proporciona la base constitucional para que abogados se agrupen en bufetes. La Ley de Abogados y Notarios (derivada del Art. 177) regularía los aspectos específicos del ejercicio profesional. Ambos marcos son complementarios: el Art. 78 habilita la asociación, y la legislación profesional establece los requisitos y límites. No hay conflicto constitucional.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.2",
+      "subclaim_text": "[Cruce B3+B5] La exigencia de 'contrato de asociación civil o sociedad profesional' y la colegiación obligatoria son compatibles.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "compatible",
+      "detalle": "El Art. 177 exige colegiación profesional (requisito personal del abogado). La constitución bajo asociación civil o sociedad profesional (requisito organizativo del bufete) opera en un plano distinto. Ambas exigencias son acumulativas, no excluyentes: un abogado debe estar colegiado (Art. 177) y, si se asocia, puede hacerlo bajo las formas jurídicas disponibles (Art. 78). Compatibilidad normativa confirmada.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.3",
+      "subclaim_text": "[Cruce B2+B5] La libertad de asociación de abogados (Art. 78) y la colegiación obligatoria (Art. 177) coexisten sin conflicto.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "compatible",
+      "detalle": "El Art. 78 garantiza la libertad de asociarse. El Art. 177 exige la colegiación para ejercer. No hay conflicto: un abogado puede asociarse libremente con otros abogados (Art. 78), pero todos deben estar colegiados para ejercer (Art. 177). La colegiación es condición previa individual; la asociación es opción organizativa posterior. Planos normativos complementarios.",
+      "nivel_confianza": "alta"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["B1_Ley_Abogados_Notarios", "B2_Asociacion_Abogados", "B3_Constitucion_Bufete", "B4_No_Definicion_Bufete", "B5_Colegio_Abogados", "B6_CSJ_Notariado"],
+    "cruces": [
+      {
+        "par": "B1+B2",
+        "relacion": "La Ley de Abogados (B1) y la libertad de asociación (B2) son complementarias. Una regula el ejercicio profesional individual; la otra habilita la agrupación.",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B5",
+        "relacion": "La libertad de asociación (B2) y la colegiación obligatoria (B5) son compatibles. Planos diferentes: asociación voluntaria vs. requisito profesional obligatorio.",
+        "conflicto": false
+      },
+      {
+        "par": "B3+B5",
+        "relacion": "Las formas de constitución del bufete (B3) y la colegiación (B5) son requisitos acumulativos compatibles.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B6",
+        "relacion": "La Ley de Abogados y Notarios (B1) desarrolla el mandato del Art. 313.6 (B6) sobre autorización del notariado. Coherencia estructural.",
+        "conflicto": false
+      },
+      {
+        "par": "B4+B2",
+        "relacion": "El documento reconoce honestamente que el bufete multidisciplinario no está definido legalmente (B4), lo cual es compatible con que exista por la libertad de asociación (B2).",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 14,
+    "confirmados": 4,
+    "confirmados_con_matiz": 0,
+    "plausibles": 3,
+    "plausible_no_verificable": 2,
+    "coherentes": 1,
+    "compatibles": 2,
+    "no_aplica_verificacion_constitucional": 1,
+    "no_evaluable": 1,
+    "refutados": 0,
+    "error_critico": "Ninguno detectado en las fuentes constitucionales disponibles.",
+    "advertencia_principal": "El documento es inherentemente de naturaleza divulgativa/descriptiva, no de análisis jurídico profundo. Las afirmaciones verificables contra la Constitución son correctas. Las que dependen de legislación secundaria (Ley de Abogados y Notarios, Código de Ética) son plausibles pero no verificables con las fuentes locales actuales.",
+    "calidad_global_documento": "Bueno. Documento divulgativo sin errores detectables contra la Constitución. Las referencias normativas son correctas en su existencia y fundamento constitucional. Se recomienda verificación complementaria contra Ley de Abogados y Notarios y Código de Ética cuando dichas fuentes estén disponibles."
+  }
+}

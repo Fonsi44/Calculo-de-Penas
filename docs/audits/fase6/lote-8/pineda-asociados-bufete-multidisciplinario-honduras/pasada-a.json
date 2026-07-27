@@ -1,0 +1,135 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "22af0864-73e2-4523-a792-e067a35868b0",
+    "slug": "pineda-asociados-bufete-multidisciplinario-honduras",
+    "sha256_entrada": "da8401f9f52c54fcc541b0112e41418a28c4dcfa95d766dbae0051337c342b6e",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "La prestación de servicios legales en Honduras está regida por la Ley de Abogados y Notarios y el Código de Ética del Colegio de Abogados de Honduras.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "El Art. 177 de la Constitución establece: 'Se establece la colegiación profesional obligatoria. La ley reglamentará su organización y funcionamiento.' Esto es el fundamento constitucional del Colegio de Abogados de Honduras y, por extensión, de la Ley de Abogados y Notarios y el Código de Ética como normativa reglamentaria. El Art. 313 numeral 6 otorga a la Corte Suprema de Justicia la facultad de 'Autorizar al ejercicio del notariado a quienes hayan obtenido el título de abogado', lo que confirma que el notariado está vinculado constitucionalmente al título de abogado. Sin embargo, ni la Ley de Abogados y Notarios ni el Código de Ética del Colegio de Abogados de Honduras están disponibles como fuentes estructuradas en el repositorio local. La afirmación es sustancialmente correcta pero no verificable en su literalidad con fuentes locales.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 177 Constitución",
+            "texto": "Se establece la colegiación profesional obligatoria. La ley reglamentará su organización y funcionamiento."
+          },
+          {
+            "articulo": "Art. 313.6 Constitución",
+            "texto": "Autorizar al ejercicio del notariado a quienes hayan obtenido el título de abogado."
+          }
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "La normativa permite la asociación de abogados para ejercer de manera organizada, siempre que se respeten los principios de independencia, secreto profesional y responsabilidad civil.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 78 de la Constitución garantiza explícitamente 'las libertades de asociación y de reunión siempre que no sean contrarias al orden público y a las buenas costumbres.' Este artículo es la base constitucional para la asociación de abogados en bufetes. Sin embargo, los principios específicos mencionados en el texto (independencia, secreto profesional, responsabilidad civil) no aparecen definidos en la Constitución como tales; pertenecen a la legislación secundaria (Ley de Abogados y Notarios, Código de Ética, Código Civil). La afirmación general es constitucionalmente sólida, pero la enumeración de principios específicos no es verificable en el texto constitucional.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulo": "Art. 78 Constitución",
+        "texto": "Se garantizan las libertades de asociación y de reunión siempre que no sean contrarias al orden público y a las buenas costumbres."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "Los bufetes deben constituirse bajo un contrato de asociación civil o sociedad profesional, y los miembros responden solidariamente por los actos realizados en el ejercicio de su profesión.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Constitución no define formas específicas de asociación profesional (asociación civil, sociedad profesional) ni regula la responsabilidad solidaria de los miembros de un bufete. El Art. 78 garantiza la libertad de asociación de manera genérica. El Art. 177 establece la colegiación profesional obligatoria pero no regula la forma jurídica de los bufetes. Estas figuras corresponden al Código Civil (contrato de sociedad, mandato) y a la Ley de Abogados y Notarios, fuentes no disponibles en el repositorio local.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos_base": [
+          "Art. 78 Constitución: libertad de asociación",
+          "Art. 177 Constitución: colegiación profesional obligatoria"
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "La regulación de los servicios legales en Honduras se rige por la Ley de Abogados y Notarios y su reglamento.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "Esta afirmación es coherente con el marco constitucional: Art. 177 (colegiación profesional obligatoria → ley reglamentaria) y Art. 313.6 (notariado vinculado al título de abogado → Ley de Abogados y Notarios como desarrollo). Sin embargo, la Ley de Abogados y Notarios no está disponible como fuente estructurada en el repositorio local para verificación directa de su contenido. La afirmación es plausible y consistente con el orden constitucional hondureño.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos_soporte": [
+          "Art. 177 Constitución: mandato constitucional de colegiación profesional → ley reglamentaria",
+          "Art. 313.6 Constitución: CSJ autoriza ejercicio del notariado a abogados titulados"
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "Existe el Colegio de Abogados de Honduras como ente regulador de la profesión legal (referenciado múltiples veces en el texto).",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 177 de la Constitución establece la colegiación profesional obligatoria para todas las profesiones, y remite a ley reglamentaria para su organización. El Art. 309 numeral 3 exige ser 'Abogado y Notario debidamente colegiado' para ser Magistrado de la Corte Suprema de Justicia, confirmando que la colegiación de abogados existe y es un requisito constitucionalmente reconocido. El Art. 312 hace referencia explícita a 'la fecha de inscripción en el Colegio de Abogados', confirmando la existencia concreta del Colegio de Abogados de Honduras como institución. El Colegio de Abogados de Honduras es el ente colegiado que desarrolla el mandato del Art. 177 para la profesión jurídica.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 177 Constitución",
+            "texto": "Se establece la colegiación profesional obligatoria. La ley reglamentará su organización y funcionamiento."
+          },
+          {
+            "articulo": "Art. 309.3 Constitución",
+            "texto": "Para ser Magistrado de la Corte Suprema de Justicia, se requiere: ... 3) Abogado y Notario debidamente colegiado."
+          },
+          {
+            "articulo": "Art. 312 Constitución",
+            "texto": "Referencia explícita a la 'fecha de inscripción en el Colegio de Abogados' como punto de cómputo para antigüedad profesional."
+          }
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "Un bufete multidisciplinario en Honduras funciona como una firma legal que integra abogados de diversas especialidades bajo una misma estructura organizativa, permitiendo abordar asuntos legales desde múltiples perspectivas simultáneamente.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Constitución no define ni regula la figura del 'bufete multidisciplinario'. El Art. 78 garantiza la libertad de asociación, que es la base constitucional para que abogados se asocien en estructuras como bufetes. La descripción funcional (múltiples especialidades bajo una estructura) es una cuestión de hecho y organización profesional, no de verificación normativa constitucional. La afirmación describe una realidad práctica del ejercicio profesional, no una categoría jurídica definida en la Constitución.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulo_base": "Art. 78 Constitución: garantía de libertad de asociación como fundamento para la existencia de bufetes"
+      },
+      "nivel_confianza": "baja"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 6,
+    "confirmados": 1,
+    "confirmados_con_matiz": 0,
+    "parcialmente_confirmados": 1,
+    "plausible_no_verificable": 3,
+    "plausible_no_verificable_completamente": 0,
+    "impreciso": 0,
+    "error_critico_detectado": "Ninguno. El documento no contiene errores factuales detectables con las fuentes constitucionales disponibles.",
+    "advertencia": "Tres de seis claims dependen de normativa secundaria (Ley de Abogados y Notarios, Código de Ética) no disponible en fuentes locales. Las afirmaciones son constitucionalmente plausibles pero no verificables en su literalidad.",
+    "calidad_general": "buena_sin_errores_detectables"
+  }
+}

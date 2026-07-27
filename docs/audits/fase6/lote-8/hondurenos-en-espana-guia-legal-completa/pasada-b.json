@@ -1,0 +1,61 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "048c5326-c302-41fb-8235-0a85f729f574",
+    "slug": "hondurenos-en-espana-guia-legal-completa",
+    "sha256_entrada": "f4b813a5e557870453486cd50d518b9d1f365188b1e25f3208e799bcb5d7d662",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El body del artículo es un mensaje de redirección que no contiene afirmaciones legales, normativas ni jurídicas sustantivas. Todo el contenido real ha sido consolidado en la página principal '/hondurenos-en-espana'. No hay claims que verificar, corregir ni contrastar contra fuentes legales. El artículo funciona como un placeholder/redirección interna.",
+    "error_critico": null,
+    "imprecision_detectada": null
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "El artículo declara que su contenido ha sido consolidado en una guía más completa.",
+      "fuente": "interno",
+      "veredicto": "confirmado_administrativo",
+      "detalle": "El body del artículo es un mensaje autodescriptivo de redirección. No contiene afirmaciones jurídicas. La existencia del destino '/hondurenos-en-espana' puede verificarse en el sitemap o estructura de rutas de la aplicación, pero no constituye un claim legal verificable contra fuentes normativas.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "La guía principal contiene información legal sobre regularización, visados, arraigo, asilo, nacionalidad y derechos de hondureños en España.",
+      "fuente": "metadatos_entrada",
+      "veredicto": "no_verificable_en_este_articulo",
+      "detalle": "Esta información aparece en la description y tags de la entrada.json, no en el body del artículo. Dado que el body es un placeholder, los claims legales sustantivos (regularización, visados, arraigo, etc.) no están presentes en el contenido verificable de este artículo. Corresponderían al artículo destino '/hondurenos-en-espana'.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.3",
+      "subclaim_text": "[Cruce único] No hay múltiples claims para cruzar. El artículo carece de contenido legal sustantivo.",
+      "fuente": "interno",
+      "veredicto": "sin_contenido_sustantivo",
+      "detalle": "El análisis granular confirma que el body solo contiene HTML de redirección. No se detectan referencias a artículos constitucionales, códigos, leyes, decretos ni jurisprudencia. No hay nada que verificar contra data/articulos_constitucion.json ni ninguna otra fuente legal local.",
+      "nivel_confianza": "alta"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["B1_Redireccion"],
+    "cruces": [],
+    "nota": "Matriz de cruce vacía porque solo existe un claim no jurídico. Sin contenido legal sustantivo que cruzar."
+  },
+  "resumen_granular": {
+    "total_subclaims": 3,
+    "confirmados_administrativo": 1,
+    "no_verificables": 1,
+    "sin_contenido_sustantivo": 1,
+    "refutados": 0,
+    "error_critico": null,
+    "error_secundario": null,
+    "calidad_global_documento": "placeholder_sin_contenido_legal — No requiere acción correctiva por ser redirección intencional.",
+    "recomendacion": "Si se desea que este artículo tenga contenido propio verificable, debe redactarse con claims legales sustantivos y luego re-ejecutar PASADA A+B."
+  }
+}

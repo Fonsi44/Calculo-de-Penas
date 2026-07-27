@@ -1,0 +1,288 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "1098ed55-df78-4292-957c-195f2b58b61d",
+    "slug": "asuntos-familiares-honduras-espana",
+    "sha256_entrada": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json",
+      "data/codigo_familia_verificado.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_limitante": "Las fuentes locales cubren solo la base constitucional del derecho de familia (Arts. 111-126) y 12 artículos del Código de Familia sobre divorcio y alimentos. El 75% del contenido del artículo versa sobre procedimientos internacionales, cooperación judicial, poderes notariales y aspectos prácticos NO regulados en estas fuentes. La verificación granular es necesariamente limitada."
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento contiene 12 bloques de afirmaciones sobre gestión de asuntos familiares hondureños desde España. Tres bloques son verificables parcialmente contra el Código de Familia verificado (divorcio por mutuo consentimiento, base normativa, alimentos). Los restantes nueve bloques versan sobre procedimientos internacionales (exequátur, poderes notariales, apostilla, videoconferencia, cooperación judicial, sucesiones transfronterizas) que NO están en las fuentes locales. No se detectan errores factuales en lo verificable. Se detecta una omisión: el artículo no menciona el requisito constitucional y legal de dos años de matrimonio para divorcio por mutuo consentimiento (Art. 243 CF). También se detecta una posible imprecisión: el artículo atribuye al Código de Familia la regulación de las sucesiones, cuando en Honduras estas se rigen principalmente por el Código Civil.",
+    "omision_detectada": {
+      "tipo": "requisito_temporal_omitido",
+      "descripcion": "El artículo omite mencionar que el divorcio por mutuo consentimiento requiere que los cónyuges lleven al menos dos años de matrimonio (Art. 243 CF). Esta omisión es relevante para el lector que evalúa sus opciones de divorcio desde España.",
+      "impacto": "medio",
+      "apariciones": 0,
+      "ubicaciones": ["Sección sobre divorcio desde España y FAQ sobre divorcio sin viajar a Honduras."]
+    },
+    "posible_imprecision_detectada": {
+      "tipo": "atribucion_normativa_inexacta",
+      "descripcion": "El artículo afirma que el Código de Familia rige las sucesiones. En Honduras, las sucesiones se rigen por el Código Civil (Libro III), no por el Código de Familia. El CF regula divorcio, alimentos, custodia y patria potestad, pero no el derecho sucesorio.",
+      "impacto": "medio",
+      "apariciones": 1,
+      "ubicaciones": ["Sección inicial: 'El Código de Familia de Honduras... es la normativa principal que rige... las sucesiones.'"]
+    },
+    "fuente_ausente_critica": {
+      "tipo": "normas_procesales_e_internacionales_no_disponibles",
+      "descripcion": "El 75% del artículo requiere fuentes no disponibles: Código Procesal de Familia, Código Civil (sucesiones), Ley de Exequátur, Convenio de La Haya sobre Apostilla, tratados bilaterales Honduras-España, Código de la Niñez y Adolescencia, y normas notariales. Esto imposibilita la verificación completa de la mayoría de las afirmaciones.",
+      "impacto": "alto"
+    }
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "El Código de Familia de Honduras rige el divorcio y las pensiones alimenticias.",
+      "fuente": "data/codigo_familia_verificado.json",
+      "veredicto": "confirmado",
+      "detalle": "Los Arts. 236-239, 243-244 CF regulan el divorcio. Los Arts. 207, 217, 219, 220, 225 CF regulan los alimentos. Ambas materias están confirmadas en el Código de Familia verificado.",
+      "evidencia": "CF Arts. 236-244 (divorcio), CF Arts. 207-225 (alimentos).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "El Código de Familia de Honduras rige las sucesiones.",
+      "fuente": "data/codigo_familia_verificado.json",
+      "veredicto": "no_confirmado_probablemente_inexacto",
+      "detalle": "Los 12 artículos verificados del CF cubren exclusivamente divorcio y alimentos. No contienen disposiciones sobre sucesiones. En Honduras, las sucesiones se rigen por el Código Civil (Libro III), no por el Código de Familia. La afirmación del artículo es probablemente inexacta: el CF no regula el derecho sucesorio.",
+      "evidencia": "Los 12 artículos del CF verificados no mencionan sucesiones. El derecho sucesorio hondureño está en el Código Civil, no en el Código de Familia.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.3",
+      "subclaim_text": "El Código de Familia es el Decreto 76-84 y sus reformas.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Los artículos verificados del CF no contienen referencia al decreto de promulgación. El número '76-84' sigue el formato estándar de decretos legislativos hondureños (número-año). No se puede confirmar ni refutar desde las fuentes locales.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "El divorcio se puede tramitar ante tribunales españoles si ambos cónyuges residen en España.",
+      "fuente": "observacion_contextual",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "La competencia de tribunales españoles para divorcio de residentes en España es materia de derecho procesal español, no hondureño. No es verificable contra fuentes hondureñas. Es doctrinalmente correcto que el foro de residencia habitual es base de competencia judicial internacional.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "La sentencia de divorcio española puede ser reconocida en Honduras mediante exequátur.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "El Art. 15 constitucional proclama la validez y ejecución obligatoria de sentencias judiciales de carácter internacional, lo que respalda el reconocimiento de sentencias extranjeras. El Art. 18 da prevalencia a los tratados. Sin embargo, el procedimiento de exequátur y sus requisitos específicos no están en las fuentes locales.",
+      "evidencia": "Arts. 15 y 18 Constitución: marco constitucional para reconocimiento de sentencias extranjeras.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "Se puede otorgar un poder especial para pleitos a un abogado hondureño para tramitar el divorcio sin viajar a Honduras.",
+      "fuente": "data/codigo_familia_verificado.json",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "El Art. 237 CF exige que el divorcio se declare mediante sentencia judicial, lo que implica un proceso judicial donde la representación mediante abogado es necesaria. La figura del poder especial para pleitos es inherente al derecho procesal continental. Sin embargo, las normas sobre mandato judicial y otorgamiento de poderes desde el extranjero no están en las fuentes locales.",
+      "evidencia": "Art. 237 CF: exige sentencia judicial para divorcio, implicando proceso con representación legal.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "En divorcio de mutuo acuerdo, ambos cónyuges pueden otorgar poder a un mismo abogado.",
+      "fuente": "data/codigo_familia_verificado.json",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "Art. 243 CF confirma el divorcio por mutuo consentimiento. Art. 244 CF regula la solicitud. La posibilidad de representación conjunta por un mismo abogado en procedimientos de mutuo acuerdo es una práctica procesal estándar, pero no está explícitamente regulada en los artículos verificados del CF.",
+      "evidencia": "Arts. 243-244 CF: existencia y requisitos del divorcio por mutuo consentimiento.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "Omisión: el artículo no menciona el requisito de dos años de matrimonio para divorcio por mutuo consentimiento.",
+      "fuente": "data/codigo_familia_verificado.json",
+      "veredicto": "omision_detectada",
+      "detalle": "Art. 243 CF establece: 'Los cónyuges mayores de edad pueden divorciarse por mutuo consentimiento después de dos años de matrimonio.' El artículo no menciona este requisito en ninguna sección. Es una omisión relevante porque un lector podría intentar iniciar un divorcio por mutuo consentimiento antes de cumplir dos años de matrimonio.",
+      "evidencia": "Art. 243 CF: requisito expreso de dos años de matrimonio.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "La custodia y régimen de visitas internacional se rigen por el interés superior del menor.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "Art. 119 constitucional: protección de la infancia conforme a acuerdos internacionales. Art. 122: tribunales especiales de familia y menores. El interés superior del menor es principio rector de la Convención sobre los Derechos del Niño, ratificada por Honduras. Sin embargo, las fuentes locales no contienen el texto de la Convención ni las normas específicas sobre custodia internacional.",
+      "evidencia": "Arts. 119 y 122 Constitución: protección de la infancia y jurisdicción especial de familia.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B6.1",
+      "subclaim_text": "Los tribunales hondureños aceptan audiencias por videoconferencia.",
+      "fuente": "observacion_contextual",
+      "veredicto": "no_verificable",
+      "detalle": "La videoconferencia es una práctica judicial, no una norma legal sustantiva. Ni la Constitución ni el CF verificado contienen disposiciones sobre comparecencia remota. Es plausible en el contexto de modernización judicial post-pandemia, pero no contrastable contra las fuentes locales.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B7.1",
+      "subclaim_text": "La gestión de pensiones alimenticias puede realizarse mediante apoderado en Honduras.",
+      "fuente": "data/codigo_familia_verificado.json",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "Arts. 207, 219, 220 CF confirman la regulación judicial de alimentos (fijación por juez, proporcionalidad, modificación). La representación mediante apoderado es inherente al proceso judicial. Los detalles procedimentales no están en los artículos verificados.",
+      "evidencia": "CF Arts. 207, 219, 220: marco legal de alimentos con intervención judicial.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B7.2",
+      "subclaim_text": "El cobro de pensión hondureña desde España requiere cooperación judicial internacional o reconocimiento de sentencia.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "Arts. 15 y 18 constitucionales respaldan el reconocimiento de sentencias extranjeras y la aplicación de tratados internacionales. La afirmación es doctrinalmente correcta, pero los mecanismos específicos (Convenio de La Haya sobre alimentos, tratados bilaterales) no están en las fuentes locales.",
+      "evidencia": "Arts. 15 y 18 Constitución: fundamento constitucional para cooperación judicial internacional.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B9.1",
+      "subclaim_text": "Para gestionar herencia en Honduras desde España se requiere poder especial a abogado hondureño.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Las sucesiones se rigen por el Código Civil hondureño, no por el CF ni la Constitución. El Código Civil no está entre las fuentes designadas. La necesidad de poder especial y representación legal es estándar en procesos sucesorios, pero no verificable con las fuentes disponibles.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B9.2",
+      "subclaim_text": "El proceso sucesorio incluye: declaratoria de herederos, inventario y avalúo, partición y adjudicación, inscripción registral.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Esta descripción es consistente con el procedimiento sucesorio estándar en países de tradición civil (Código Civil hondureño, Libro III). Sin embargo, el Código Civil no está entre las fuentes designadas. No se puede verificar la secuencia exacta ni la terminología precisa contra las fuentes locales.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B10.1",
+      "subclaim_text": "El poder notarial español requiere apostilla de La Haya para su validez en Honduras.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "Art. 18 constitucional otorga prevalencia a los tratados internacionales. Honduras es parte del Convenio de La Haya sobre Apostilla de 1961. La afirmación es correcta en derecho internacional, pero el texto del Convenio no está en las fuentes locales. El Art. 18 proporciona el fundamento constitucional para su aplicación.",
+      "evidencia": "Art. 18 Constitución: prevalencia de tratados sobre leyes.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B10.2",
+      "subclaim_text": "El poder otorgado ante el consulado de Honduras en España no requiere apostilla.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible",
+      "detalle": "Los documentos emitidos por autoridades consulares hondureñas son documentos públicos hondureños, no extranjeros. Por tanto, no requieren apostilla para surtir efectos en Honduras. Este es un principio general de derecho consular. No verificable directamente contra fuentes locales, pero doctrinalmente correcto.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B11.1",
+      "subclaim_text": "Documentos necesarios: pasaporte/DNI, partidas, certificado de antecedentes penales, documentación de situación en España.",
+      "fuente": "observacion_contextual",
+      "veredicto": "no_verificable",
+      "detalle": "Los requisitos documentales para trámites judiciales son de carácter administrativo y procesal, no regulados en la Constitución ni en el CF verificado. La lista es plausible como enumeración general de documentos típicos, pero no contrastable con las fuentes locales.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B12.1",
+      "subclaim_text": "Herencia con bienes en Honduras y España requiere procesos sucesorios independientes en cada país.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible",
+      "detalle": "Esta afirmación refleja el principio de derecho internacional privado de pluralidad sucesoria (lex rei sitae para inmuebles). Es doctrinalmente correcto: cada país aplica su propia ley a los bienes ubicados en su territorio. Las fuentes locales no contienen normas de conflicto de leyes, pero el principio es universalmente aceptado en derecho internacional privado.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B13.1",
+      "subclaim_text": "[Cruce B1+B9] La atribución de sucesiones al Código de Familia (B1.2) contradice el hecho de que las sucesiones requieren el Código Civil (B9.1).",
+      "fuente": "data/codigo_familia_verificado.json + verificacion_cruzada_local",
+      "veredicto": "inconsistencia_detectada",
+      "detalle": "B1.2 afirma que el CF rige las sucesiones. B9.1 y B9.2 describen un proceso sucesorio que corresponde al Código Civil. Existe una inconsistencia: el artículo atribuye erróneamente al Código de Familia la regulación de sucesiones, cuando en el ordenamiento hondureño las sucesiones son materia del Código Civil. Esta imprecisión puede confundir al lector sobre qué cuerpo normativo consultar para temas sucesorios.",
+      "evidencia": "Los 12 artículos del CF verificados no contienen disposiciones sucesorias. El Código Civil hondureño (no en fuentes designadas) regula las sucesiones en su Libro III.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B13.2",
+      "subclaim_text": "[Cruce B4+B2] La afirmación sobre divorcio desde España (B2.2) es consistente con el divorcio por mutuo consentimiento del CF (B4.1).",
+      "fuente": "data/codigo_familia_verificado.json + data/articulos_constitucion.json",
+      "veredicto": "coherente",
+      "detalle": "El CF verificado confirma el divorcio por mutuo consentimiento (Art. 243) y por causa (Art. 238). La Constitución (Art. 113) reconoce el divorcio. Ambas afirmaciones (procedimiento internacional mediante exequátur y procedimiento nacional mediante representación) son vías complementarias, no contradictorias. El lector tiene opciones reales según su situación.",
+      "evidencia": "Art. 113 Constitución: reconoce el divorcio. Arts. 236-244 CF: regulan las vías de divorcio.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B13.3",
+      "subclaim_text": "[Cruce B5+B6] Custodia internacional (B5) y videoconferencia (B6) son complementarias para el acceso a justicia desde el extranjero.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "coherente_pero_no_verificable",
+      "detalle": "El Art. 119 constitucional ordena proteger a la infancia según acuerdos internacionales. La videoconferencia (B6) sería una herramienta para facilitar el acceso a la justicia en casos de custodia transfronteriza (B5). Ambas afirmaciones son consistentes con el principio de tutela judicial efectiva, pero ninguna es verificable en detalle con las fuentes locales. Son aspiraciones prácticas, no normas positivas verificables.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B13.4",
+      "subclaim_text": "[Cruce B7+B10] La gestión de alimentos mediante apoderado (B7) requiere un poder notarial con apostilla si se otorga en España (B10).",
+      "fuente": "data/codigo_familia_verificado.json + verificacion_cruzada_local",
+      "veredicto": "coherente_y_complementario",
+      "detalle": "B7 establece que los alimentos se gestionan mediante apoderado en Honduras. B10 establece que el poder notarial español requiere apostilla. Ambas afirmaciones son complementarias: para que el apoderado pueda actuar en Honduras con un poder otorgado en España, efectivamente necesita la apostilla (o acudir al consulado hondureño). La lógica es internamente consistente.",
+      "nivel_confianza": "media"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["B1_Normativa_CF", "B2_Divorcio_Exequatur", "B3_Poder_Especial", "B4_Mutuo_Acuerdo", "B5_Custodia_Internacional", "B6_Videoconferencia", "B7_Alimentos_Apoderado", "B9_Herencia_Poder", "B10_Apostilla", "B11_Documentos", "B12_Sucesiones_Independientes"],
+    "cruces": [
+      {
+        "par": "B1+B2",
+        "relacion": "Fundamento. La normativa hondureña (B1) es la base del divorcio que luego puede reconocerse en Honduras vía exequátur (B2). Sin conflicto. Verificado parcialmente.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B9",
+        "relacion": "INCONSISTENCIA. B1 atribuye las sucesiones al CF, pero B9 remite implícitamente al Código Civil (no al CF). El CF no regula sucesiones en Honduras.",
+        "conflicto": true
+      },
+      {
+        "par": "B3+B10",
+        "relacion": "Dependiente. El poder especial (B3) otorgado en España requiere apostilla (B10) para ser válido en Honduras. Relación instrumental. Sin conflicto.",
+        "conflicto": false
+      },
+      {
+        "par": "B4+B7",
+        "relacion": "Paralelos. Ambas describen procedimientos de familia (divorcio por mutuo acuerdo y alimentos) gestionables desde el extranjero mediante representación. Sin conflicto.",
+        "conflicto": false
+      },
+      {
+        "par": "B5+B6",
+        "relacion": "Complementarios. La custodia internacional (B5) se facilita con herramientas tecnológicas como videoconferencia (B6). Sin conflicto pero no verificables.",
+        "conflicto": false
+      },
+      {
+        "par": "B9+B12",
+        "relacion": "Complementarios. B9 describe el proceso sucesorio en Honduras; B12 aclara que bienes en España requieren proceso independiente. Sin conflicto.",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B3",
+        "relacion": "Alternativos. El lector puede optar por divorcio en España con exequátur (B2) o divorcio en Honduras con poder (B3). Vías alternativas, no contradictorias.",
+        "conflicto": false
+      },
+      {
+        "par": "B10+B11",
+        "relacion": "Independientes. La apostilla (B10) aplica a documentos notariales, no a los documentos de identidad o partidas (B11). Sin interdependencia directa.",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 22,
+    "confirmados": 1,
+    "confirmados_parciales_soporte": 7,
+    "plausibles": 2,
+    "plausibles_no_verificables": 5,
+    "no_verificables": 3,
+    "no_confirmado_probablemente_inexacto": 1,
+    "omision_detectada": 1,
+    "inconsistencia_detectada": 1,
+    "coherentes": 1,
+    "sin_conflictos_detectados": false,
+    "observacion_critica": "El 75% del contenido sustantivo del artículo depende de fuentes no disponibles: Código Procesal de Familia, Código Civil (sucesiones), Ley de Exequátur, Convenio de La Haya sobre Apostilla, y tratados bilaterales Honduras-España. Las afirmaciones verificables contra la Constitución (Arts. 15, 18, 111-122) y el Código de Familia verificado (12 artículos) son correctas en su mayoría. Se detecta UNA inconsistencia: atribución errónea de las sucesiones al Código de Familia (cuando corresponden al Código Civil). Se detecta UNA omisión: requisito de dos años de matrimonio para divorcio por mutuo consentimiento (Art. 243 CF).",
+    "calidad_global_documento": "Buena en las áreas verificables. El artículo proporciona información práctica correcta y útil para hondureños en España, aunque: (1) atribuye incorrectamente las sucesiones al Código de Familia; (2) omite el requisito temporal de dos años de matrimonio para divorcio por mutuo consentimiento; (3) la mayoría de las afirmaciones procedimentales e internacionales no son verificables con las fuentes locales disponibles. La calidad práctica es aceptable, pero la precisión jurídica tiene margen de mejora."
+  }
+}

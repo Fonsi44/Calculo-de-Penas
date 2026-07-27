@@ -1,0 +1,204 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "1098ed55-df78-4292-957c-195f2b58b61d",
+    "slug": "asuntos-familiares-honduras-espana",
+    "sha256_entrada": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json",
+      "data/codigo_familia_verificado.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_importante": "El artículo aborda trámites de derecho de familia hondureño desde España (divorcio, custodia, alimentos, herencias transfronterizas). Las fuentes locales disponibles (12 artículos del Código de Familia verificados y artículos constitucionales de familia) permiten verificar parcialmente la base normativa del derecho de familia hondureño. Sin embargo, los aspectos procedimentales internacionales (poderes notariales, exequátur, apostilla, cooperación judicial internacional, videoconferencia) y las normas procesales NO están en las fuentes locales. La verificación se limita a los principios constitucionales de familia (Arts. 111-122) y a los artículos verificados del Código de Familia sobre divorcio y alimentos."
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "El Código de Familia de Honduras (Decreto 76-84 y sus reformas) es la normativa principal que rige el divorcio, la custodia, las pensiones alimenticias y las sucesiones.",
+      "fuente_verificacion": "data/codigo_familia_verificado.json + data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Código de Familia verificado (12 artículos) confirma que esta norma regula divorcio (Arts. 236-239, 243-244 CF) y alimentos (Arts. 207, 217, 219, 220, 225 CF). Sin embargo, los artículos verificados NO cubren custodia ni sucesiones. La Constitución en su Art. 113 reconoce el divorcio como medio de disolución del vínculo matrimonial y remite a la ley su regulación (que es el Código de Familia). El número de decreto (76-84) no es verificable contra las fuentes locales: los artículos del CF verificados no contienen referencia al decreto de promulgación. Las sucesiones en Honduras se rigen principalmente por el Código Civil (no por el Código de Familia), por lo que la afirmación de que el CF rige las sucesiones podría ser inexacta o incompleta.",
+      "evidencia_local": {
+        "codigo_familia_verificado": [
+          "Arts. 236-239, 243-244 CF: regulan divorcio (disolución, sentencia judicial, causas, mutuo consentimiento).",
+          "Arts. 207, 217, 219, 220, 225 CF: regulan alimentos (proporcionalidad, terminación, fijación judicial, modificación, prescripción)."
+        ],
+        "constitucion": [
+          "Art. 113: 'Se reconoce el divorcio como medio de disolución del vínculo matrimonial. La ley regulará sus causales y efectos.'",
+          "Art. 111: 'La familia, el matrimonio, la maternidad y la infancia están bajo la protección del Estado.'"
+        ],
+        "limitacion": "No se verifica el Decreto 76-84, la cobertura de custodia, ni la inclusión de sucesiones en el CF."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "Si ambos cónyuges residen en España, pueden optar por el divorcio ante tribunales españoles, cuya sentencia puede ser reconocida en Honduras mediante exequátur.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "El Art. 15 de la Constitución de Honduras establece la 'validez y obligatoria ejecución de las sentencias arbitrales y judiciales de carácter internacional', lo que proporciona el fundamento constitucional para el reconocimiento de sentencias extranjeras mediante exequátur. Sin embargo, el procedimiento específico de exequátur, los requisitos para sentencias de divorcio españolas y los tratados de cooperación judicial entre Honduras y España no están disponibles en las fuentes locales. La afirmación es doctrinalmente correcta (toda sentencia extranjera requiere exequátur para su ejecución en Honduras, salvo que un tratado disponga otra cosa), pero no es verificable en detalle.",
+      "evidencia_local": {
+        "constitucion": [
+          "Art. 15: 'Honduras proclama como ineludible la validez y obligatoria ejecución de las sentencias arbitrales y judiciales de carácter internacional.'",
+          "Art. 18: 'En caso de conflicto entre el tratado o convención y la ley, prevalecerá el primero.'"
+        ],
+        "limitacion": "El procedimiento de exequátur y los tratados bilaterales Honduras-España no están en fuentes locales."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "Se puede otorgar un poder especial para pleitos a un abogado hondureño. Este poder permite al abogado presentar la demanda y representar al cónyuge en todo el proceso, eliminando la necesidad de viajar a Honduras.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La figura del poder especial para pleitos existe en todos los ordenamientos de tradición civil, incluido Honduras. El Código Civil hondureño (no en las fuentes designadas pero de conocimiento notorio) regula el mandato judicial. El Art. 237 CF exige que el divorcio se declare mediante sentencia judicial, lo que implica necesariamente representación legal. Sin embargo, las fuentes locales designadas (12 artículos CF y Constitución) no contienen disposiciones sobre poderes notariales, representación procesal, ni requisitos para otorgamiento de poderes desde el extranjero. La afirmación es procesalmente correcta en el marco del derecho continental, pero no verificable con las fuentes disponibles.",
+      "evidencia_local": {
+        "codigo_familia": "Art. 237 CF: 'El divorcio debe declararse mediante sentencia judicial.' Implica proceso judicial con representación legal.",
+        "limitacion": "Normas sobre mandato judicial y poderes notariales no disponibles en las fuentes designadas."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "En casos de mutuo acuerdo, ambos cónyuges pueden otorgar poder a un mismo abogado o a abogados distintos para agilizar el trámite.",
+      "fuente_verificacion": "data/codigo_familia_verificado.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 243 CF confirma la existencia del divorcio por mutuo consentimiento para cónyuges mayores de edad después de dos años de matrimonio. El Art. 244 CF regula los requisitos de la solicitud de divorcio por mutuo consentimiento. La posibilidad de que ambos otorguen poder al mismo abogado es una consecuencia lógica de ser un procedimiento de mutuo acuerdo, pero no está explícitamente regulada en los artículos verificados. El artículo omite mencionar el requisito de dos años de matrimonio (Art. 243 CF), dato relevante para el lector.",
+      "evidencia_local": {
+        "codigo_familia": [
+          "Art. 243 CF: 'Los cónyuges mayores de edad pueden divorciarse por mutuo consentimiento después de dos años de matrimonio.'",
+          "Art. 244 CF: 'Regula los requisitos de la solicitud de divorcio por mutuo consentimiento.'"
+        ],
+        "omision_detectada": "El artículo no menciona el requisito de dos años de matrimonio para el divorcio por mutuo consentimiento (Art. 243 CF)."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "La custodia y el régimen de visitas entre progenitores en distintos países se rigen por el interés superior del menor.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "Los artículos constitucionales sobre niñez (Arts. 119-126) establecen la obligación del Estado de proteger a la infancia y garantizar sus derechos. El Art. 119 declara que 'los niños gozarán de la protección prevista en los acuerdos internacionales que velan por sus derechos'. El principio de interés superior del menor está consagrado en la Convención sobre los Derechos del Niño (ratificada por Honduras). Sin embargo, ni la Constitución hondureña ni los artículos verificados del Código de Familia mencionan explícitamente el término 'interés superior del menor'. Las normas específicas sobre custodia internacional y régimen de visitas transfronterizo requieren el Código de la Niñez y Adolescencia y tratados como el Convenio de La Haya de 1980 sobre sustracción de menores, no disponibles en las fuentes locales.",
+      "evidencia_local": {
+        "constitucion": [
+          "Art. 119: 'El Estado tiene la obligación de proteger a la infancia. Los niños gozarán de la protección prevista en los acuerdos internacionales que velan por sus derechos.'",
+          "Art. 122: 'La ley establecerá la jurisdicción y los tribunales especiales que conocerán de los asuntos de familia y de menores.'"
+        ],
+        "limitacion": "El Código de la Niñez y Adolescencia y los tratados internacionales sobre menores no están en fuentes locales."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "Se recomienda solicitar audiencias por videoconferencia, una modalidad cada vez más aceptada por los tribunales hondureños.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable",
+      "detalle": "Ni la Constitución ni el Código de Familia verificado contienen disposiciones sobre videoconferencia o comparecencia remota en procesos judiciales. Se trata de una práctica judicial y administrativa, no de una norma sustantiva. La afirmación sobre la aceptación creciente de videoconferencia por tribunales hondureños es una observación fáctica sobre la modernización judicial, no contrastable contra textos legales. Es plausible dado el contexto post-pandemia y la tendencia global de digitalización judicial, pero no tiene respaldo en las fuentes locales disponibles.",
+      "evidencia_local": {
+        "limitacion": "La videoconferencia es práctica judicial no regulada en los textos legales disponibles."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A7",
+      "claim_text": "La gestión de pensiones alimenticias puede realizarse a través de un apoderado. El abogado presentará la demanda, acreditará la capacidad económica del obligado y solicitará la fijación de la pensión.",
+      "fuente_verificacion": "data/codigo_familia_verificado.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Código de Familia verificado confirma que los alimentos son regulados judicialmente (Art. 219 CF: 'El juez determina la cuantía y la forma en que deben prestarse los alimentos'), que deben ser proporcionales a los recursos de quien los debe y a las circunstancias de quien los recibe (Art. 207 CF), y que la cuantía puede modificarse si cambian las circunstancias (Art. 220 CF). La posibilidad de actuar mediante apoderado es inherente a todo proceso judicial (derecho de representación). Sin embargo, los detalles procedimentales específicos (acreditación de capacidad económica, procedimiento de fijación) no están en los 12 artículos verificados. Corresponden al Código Procesal de Familia, no disponible.",
+      "evidencia_local": {
+        "codigo_familia": [
+          "Art. 207 CF: 'Los alimentos deben ser proporcionales a los recursos de quien los debe y a las circunstancias de quien los recibe.'",
+          "Art. 219 CF: 'El juez determina la cuantía y la forma en que deben prestarse los alimentos.'",
+          "Art. 220 CF: 'La cuantía de los alimentos puede modificarse si cambian las circunstancias que la determinaron.'"
+        ],
+        "limitacion": "El procedimiento detallado (demanda, acreditación de capacidad económica) no está en los artículos verificados."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A8",
+      "claim_text": "Si ya existe una pensión fijada en Honduras y el obligado reside en España, el cobro puede requerir mecanismos de cooperación judicial internacional o el reconocimiento de la sentencia hondureña en España.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "El Art. 15 de la Constitución establece la validez y ejecución obligatoria de sentencias judiciales de carácter internacional. El Art. 18 otorga prevalencia a los tratados internacionales sobre las leyes. Honduras y España son parte de diversos tratados de cooperación judicial internacional. Sin embargo, los mecanismos específicos de cooperación judicial internacional en materia de alimentos (como el Convenio de La Haya de 2007 sobre Cobro Internacional de Alimentos) no están en las fuentes locales. La afirmación es doctrinalmente correcta: la ejecución de una sentencia hondureña en España requiere reconocimiento (exequátur) o mecanismos de cooperación, pero los detalles dependen de tratados bilaterales o multilaterales no disponibles.",
+      "evidencia_local": {
+        "constitucion": [
+          "Art. 15: validez y ejecución de sentencias internacionales.",
+          "Art. 18: prevalencia de tratados sobre leyes."
+        ],
+        "limitacion": "Tratados de cooperación judicial internacional Honduras-España no disponibles en fuentes locales."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A9",
+      "claim_text": "Para gestionar una herencia en Honduras residiendo en España, el heredero debe otorgar un poder especial a un abogado hondureño. El proceso sucesorio incluye: declaratoria de herederos, inventario y avalúo, partición y adjudicación, e inscripción en el Registro de la Propiedad.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "Ni el Código de Familia verificado ni la Constitución regulan el derecho sucesorio. Las sucesiones en Honduras se rigen por el Código Civil (Libro III), que no está entre las fuentes designadas para esta verificación. La descripción del proceso sucesorio (declaratoria de herederos, inventario, avalúo, partición, inscripción registral) es consistente con el procedimiento sucesorio estándar en países de tradición civil, pero no puede verificarse contra las fuentes locales disponibles. La necesidad de poder especial y la posibilidad de gestionar el proceso desde el extranjero son afirmaciones sobre representación legal, no contrastables con los textos disponibles.",
+      "evidencia_local": {
+        "limitacion": "El Código Civil (que regula sucesiones) no está entre las fuentes designadas. La Constitución no contiene disposiciones sobre procedimientos sucesorios."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A10",
+      "claim_text": "Poder notarial otorgado en España debe contar con apostilla de La Haya para su validez en Honduras. Si se otorga ante el consulado de Honduras en España, no requiere apostilla.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "Honduras es parte del Convenio de La Haya sobre Apostilla (Convenio de 5 de octubre de 1961). La afirmación sobre apostilla para documentos notariales españoles y la exención para documentos consulares hondureños es correcta conforme al derecho internacional público aplicable. Sin embargo, el Convenio de La Haya no está transcrito en las fuentes locales, y la Constitución no menciona específicamente el requisito de apostilla. El Art. 18 constitucional otorga prevalencia a los tratados, lo que respalda la aplicación del Convenio, pero no se puede verificar directamente.",
+      "evidencia_local": {
+        "constitucion": "Art. 18: 'En caso de conflicto entre el tratado o convención y la ley, prevalecerá el primero.' Proporciona el fundamento para la aplicación del Convenio de La Haya.",
+        "limitacion": "El Convenio de La Haya sobre Apostilla no está en las fuentes locales."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A11",
+      "claim_text": "Documentos necesarios: pasaporte o documento de identidad, partidas de nacimiento/matrimonio/defunción (gestionables mediante poder), certificado de antecedentes penales, documentación que acredite la situación en España.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable",
+      "detalle": "La enumeración de documentos necesarios para trámites familiares es información de carácter práctico-administrativo que no está regulada en la Constitución ni en el Código de Familia verificado. Los requisitos documentales específicos para cada tipo de trámite (divorcio, alimentos, custodia, sucesiones) dependen de normas procesales, reglamentos notariales y circulares administrativas, ninguna de las cuales está en las fuentes locales. La lista es plausible como enumeración general de documentos típicos para trámites legales internacionales, pero no es verificable.",
+      "evidencia_local": {
+        "limitacion": "Los requisitos documentales para trámites judiciales no están regulados en la Constitución ni en el Código de Familia verificado."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A12",
+      "claim_text": "Si una herencia incluye bienes en Honduras y en España, se iniciarán procesos sucesorios independientes en cada país para los bienes ubicados en su respectiva jurisdicción.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "Esta afirmación refleja el principio de derecho internacional privado de lex rei sitae (la ley del lugar donde se encuentran los bienes), según el cual los bienes inmuebles se rigen por la ley del país donde están ubicados. Es un principio general del derecho internacional privado, pero las fuentes locales (Constitución y Código de Familia) no contienen normas de conflicto de leyes ni de derecho internacional privado. La regulación específica de sucesiones transfronterizas Honduras-España dependería de tratados bilaterales y de las normas de derecho internacional privado de ambos países, no disponibles.",
+      "evidencia_local": {
+        "limitacion": "Las normas de derecho internacional privado sobre sucesiones no están en la Constitución ni en el Código de Familia verificado."
+      },
+      "nivel_confianza": "media"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 12,
+    "confirmados": 0,
+    "parcialmente_confirmados": 3,
+    "plausible_no_verificable": 6,
+    "no_verificable": 2,
+    "matiz_relevante": 1,
+    "error_critico_detectado": "Ninguno. Las afirmaciones verificables contra las fuentes locales son sustancialmente correctas.",
+    "observacion_principal": "El artículo aborda principalmente aspectos procedimentales y de derecho internacional privado (poderes notariales, exequátur, apostilla, cooperación judicial internacional, videoconferencia) que NO están regulados en las fuentes locales disponibles (Constitución y 12 artículos del Código de Familia). Solo 3 de 12 claims pudieron verificarse parcialmente contra las fuentes. Se detecta una omisión relevante: el artículo no menciona el requisito de dos años de matrimonio para el divorcio por mutuo consentimiento (Art. 243 CF). La afirmación de que el Código de Familia rige las sucesiones es potencialmente imprecisa: en Honduras las sucesiones se rigen por el Código Civil. Para una verificación completa se requieren: Código de Familia completo, Código Procesal de Familia, Código Civil, Ley de Exequátur, tratados bilaterales Honduras-España y Convenio de La Haya sobre Apostilla.",
+    "calidad_general": "buena_con_limitacion_de_fuentes"
+  }
+}

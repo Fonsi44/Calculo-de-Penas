@@ -1,0 +1,203 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "3df7d4b3-f04a-4ae4-94dd-7e82a6d402f9",
+    "slug": "arraigo-social-laboral-hondurenos-espana",
+    "sha256_entrada": "71af9b246cc0d941a7bac02829908a7e8c77f749d86c7e0aad50ca7081b9fcc1",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento contiene 7 afirmaciones principales sobre derecho español de extranjería aplicable a ciudadanos hondureños. La totalidad de las afirmaciones versa sobre legislación española (Ley Orgánica 4/2000, RD 557/2011) que NO está disponible en las fuentes locales. La Constitución de Honduras permite verificar únicamente conceptos análogos y fundamentos de derecho internacional. No se detectan errores factuales en las afirmaciones, pero tampoco pueden confirmarse con las fuentes hondureñas disponibles. Se identifica un dato relevante no mencionado: el Art. 24 de la Constitución hondureña establece un régimen de reciprocidad favorable para españoles (2 años de residencia para naturalización vs. 3 años para otros extranjeros), lo cual constituye un contexto jurídico relevante para la relación bilateral Honduras-España.",
+    "limitacion_fundamental": {
+      "tipo": "fuentes_insuficientes",
+      "descripcion": "El artículo regula legislación española de extranjería. La fuente local disponible (Constitución de Honduras) no contiene derecho español. Las verificaciones son de coherencia constitucional y principios análogos, no de exactitud normativa española.",
+      "impacto": "alto",
+      "recomendacion": "Incorporar fuentes de derecho español de extranjería al repositorio para verificación completa."
+    },
+    "dato_contextual_relevante_no_mencionado": {
+      "tipo": "reciprocidad_constitucional",
+      "descripcion": "El Art. 24 de la Constitución de Honduras otorga a los españoles e iberoamericanos por nacimiento un trato preferencial para naturalizarse hondureños: 2 años de residencia frente a 3 años para otros extranjeros. Este dato es relevante para el público objetivo (hondureños en España) porque refleja la relación jurídica especial entre ambos países con rango constitucional.",
+      "impacto": "bajo",
+      "articulo": "Art. 24 Constitución"
+    }
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "La permanencia continuada de 3 años en España como requisito de arraigo social es un estándar de la legislación española de extranjería.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "No existe en la Constitución de Honduras norma alguna sobre plazos de residencia en España. Por analogía, el Art. 24 constitucional hondureño exige 3 años de residencia para naturalización de extranjeros no españoles/iberoamericanos, y el Art. 35 somete la inmigración a condiciones legales. Ambos reflejan el principio de que los Estados controlan los plazos de residencia para regularización.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "El certificado de empadronamiento histórico es el medio probatorio de la permanencia en España.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El empadronamiento es una institución del derecho administrativo español sin equivalente directo en la Constitución hondureña. La Constitución hondureña en su Art. 81 garantiza la libertad de circulación y residencia en Honduras, pero no regula el empadronamiento español.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "Es un requisito estándar en derecho migratorio internacional carecer de antecedentes penales del país de origen.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado_por_analogia",
+      "detalle": "La Constitución de Honduras, Arts. 30-35, establece que los extranjeros en Honduras están sujetos al cumplimiento de las leyes y que la inmigración está condicionada a los intereses del país. El Art. 30: 'Los extranjeros están obligados, desde su ingreso al territorio nacional, a respetar las autoridades y a cumplir las leyes.' Por reciprocidad internacional (principio consagrado en Art. 15 constitucional), es esperable que España exija lo mismo a los ciudadanos hondureños.",
+      "evidencia": "Art. 30 Constitución: 'Los extranjeros están obligados, desde su ingreso al territorio nacional, a respetar las autoridades y a cumplir las leyes.'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "Honduras emite certificados de antecedentes penales para sus ciudadanos.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible",
+      "detalle": "El Art. 39 constitucional establece el Registro Nacional de las Personas como base de la identificación ciudadana. La emisión de certificados de antecedentes penales es una función administrativa derivada del registro estatal de los ciudadanos, aunque no está explícitamente regulada en la Constitución.",
+      "evidencia": "Art. 39: 'Todo hondureño deberá ser inscrito en el Registro Nacional de las Personas.'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "El pasaporte es documento exigible en trámites migratorios internacionales.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 329 constitucional menciona la emisión de pasaportes como función estatal. El Art. 81 garantiza el derecho a salir y entrar del territorio nacional. La exigencia de pasaporte vigente es un estándar universal en derecho migratorio.",
+      "evidencia": "Art. 329: '...emisión de documentos de identidad y pasaportes...' Art. 81: 'Toda persona tiene derecho a circular libremente, salir, entrar y permanecer en el territorio nacional.'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.2",
+      "subclaim_text": "La nacionalidad hondureña determina qué documentos de viaje corresponden al solicitante.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Arts. 22-29 constitucionales establecen quiénes son hondureños por nacimiento (Art. 23) y por naturalización (Art. 24). El Art. 28 garantiza que ningún hondureño por nacimiento puede ser privado de su nacionalidad, y conserva este derecho aun adquiriendo otra nacionalidad. Esto es relevante para hondureños que eventualmente obtengan la nacionalidad española: NO pierden la hondureña por nacimiento.",
+      "evidencia": "Art. 23: 'Son hondureños por nacimiento: ...2) Los nacidos en el extranjero de padre o madre hondureños por nacimiento...' Art. 28: 'Ningún hondureño por nacimiento podrá ser privado de su nacionalidad. Este derecho lo conservan los hondureños por nacimiento, aun cuando adquieren otra nacionalidad.'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "La exigencia de apostilla para documentos hondureños usados en España deriva del Convenio de La Haya de 1961.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado_por_marco_constitucional",
+      "detalle": "La Constitución de Honduras establece el marco para la adhesión a tratados internacionales: Art. 15 (principios de derecho internacional), Art. 16 (aprobación de tratados por el Congreso Nacional), Art. 17 (tratados que afecten disposición constitucional requieren procedimiento agravado), Art. 18 (prevalencia del tratado sobre la ley). La apostilla de documentos entre Honduras y España opera bajo el Convenio de La Haya de 1961, del cual ambos países son parte. El fundamento constitucional para su aplicación es sólido.",
+      "evidencia": "Arts. 15, 16, 17 y 18 Constitución. Marco constitucional para adopción y prevalencia de tratados internacionales.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "El arraigo familiar protege el vínculo con ciudadanos españoles (padres de menor español, hijos de español de origen, cónyuges de español).",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "La legislación española de extranjería es la fuente de estos supuestos. La Constitución hondureña no regula el arraigo familiar en España. Sin embargo, el Art. 24 constitucional hondureño (reciprocidad para españoles) y los Arts. 22-29 (nacionalidad hondureña) proporcionan contexto sobre la relación Honduras-España y sobre nacionalidad.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B5.2",
+      "subclaim_text": "El Art. 24 de la Constitución hondureña contiene un régimen de reciprocidad favorable a españoles que el artículo no menciona.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "dato_ausente_relevante",
+      "detalle": "El Art. 24 constitucional establece que los españoles e iberoamericanos por nacimiento pueden naturalizarse hondureños con solo 2 años de residencia (vs. 3 años para otros extranjeros). Este es un dato contextual valioso para hondureños en España, ya que evidencia una relación jurídica bilateral privilegiada con rango constitucional que el artículo omite mencionar.",
+      "evidencia": "Art. 24: 'Son hondureños por naturalización: ...2) Los españoles e iberoamericanos por nacimiento, que tengan dos (2) años consecutivos de residencia en el país...'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.1",
+      "subclaim_text": "En España no se puede trabajar durante la tramitación del arraigo hasta la concesión de la autorización.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Esta es una norma de derecho español de extranjería. Por analogía, la Constitución hondureña en su Art. 35 supedita la inmigración a condiciones legales, y el Art. 137 establece limitaciones al empleo de extranjeros en Honduras (mínimo 90% de trabajadores hondureños, mínimo 85% de salarios a hondureños). Ambos reflejan el principio de que los Estados controlan el acceso al mercado laboral por parte de extranjeros.",
+      "evidencia": "Art. 35: 'La inmigración estará condicionada...' Art. 137: '...Se prohíbe a los patronos emplear menos de un noventa por ciento (90%) de trabajadores hondureños...'",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B7.1",
+      "subclaim_text": "Contra la denegación de arraigo procede recurso administrativo y contencioso-administrativo.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "La doble vía de recurso (administrativa y judicial) es un principio general del Estado de derecho, presente también en Honduras (Arts. 82, 94 y 313 constitucionales sobre garantías procesales y jurisdicción). No puede verificarse específicamente para el procedimiento de arraigo español con fuentes hondureñas.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B7.2",
+      "subclaim_text": "Es fundamental analizar las causas de la denegación con un abogado antes de interponer cualquier recurso.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "consejo_profesional_razonable",
+      "detalle": "Esta es una recomendación profesional, no una afirmación normativa verificable. Es un consejo prudente aplicable a cualquier jurisdicción. No requiere verificación constitucional.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B8.1",
+      "subclaim_text": "[Cruce B3.2+B5.2] La nacionalidad hondureña por nacimiento es irrenunciable (Art. 28) y España otorga trato recíproco favorable (Art. 24 constitucional hondureño).",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "relacion_bilateral_coherente",
+      "detalle": "El Art. 28 constitucional garantiza que los hondureños por nacimiento NO pierden su nacionalidad al adquirir otra (como la española). Simultáneamente, el Art. 24 otorga a los españoles un trato migratorio preferente en Honduras (2 años de residencia para naturalización). Existe coherencia bilateral: ambos ordenamientos facilitan la doble vinculación jurídica. Este contexto no es mencionado en el artículo analizado.",
+      "evidencia": "Arts. 24 y 28 Constitución.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B8.2",
+      "subclaim_text": "[Cruce B2+B4] La exigencia de antecedentes penales hondureños apostillados es coherente con el marco de derecho internacional adoptado por Honduras.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "coherente",
+      "detalle": "La combinación de (a) exigencia de antecedentes penales del país de origen (práctica migratoria universal) y (b) apostilla de documentos públicos (Convenio de La Haya, fundamentado en Arts. 15-18 constitucionales) es perfectamente coherente con el ordenamiento hondureño y el derecho internacional.",
+      "nivel_confianza": "alta"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["B1_Residencia3Anos", "B2_AntecedentesPenales", "B3_PasaporteNacionalidad", "B4_Apostilla", "B5_ArraigoFamiliar", "B6_NoTrabajarDuranteTramite", "B7_Recursos"],
+    "cruces": [
+      {
+        "par": "B1+B3",
+        "relacion": "Complementarios. La acreditación de permanencia (B1) requiere documentación de identidad y viaje (B3). Ambos son requisitos migratorios estándar.",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B4",
+        "relacion": "Complementarios. Los antecedentes penales hondureños (B2) deben apostillarse (B4) para validez en España. Coherencia normativa confirmada.",
+        "conflicto": false
+      },
+      {
+        "par": "B3+B5",
+        "relacion": "Independientes pero contextualmente vinculados. La nacionalidad hondureña (B3.2) y el arraigo familiar en España (B5) son dos caras de la relación bilateral Honduras-España.",
+        "conflicto": false,
+        "dato_ausente": "Art. 28 Constitución (no pérdida de nacionalidad al adquirir otra) como dato relevante no mencionado."
+      },
+      {
+        "par": "B5+B6",
+        "relacion": "Independientes. El arraigo familiar (B5) es una modalidad que puede no requerir contrato de trabajo, mientras que la prohibición de trabajar durante la tramitación (B6) aplica a todas las modalidades.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B6",
+        "relacion": "Complementarios. El arraigo social exige 3 años de residencia (B1) durante los cuales, por definición, no se ha podido trabajar legalmente (B6). Existe coherencia lógica: el periodo de permanencia irregular es el fundamento del arraigo.",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B7",
+        "relacion": "Independientes. La denegación por antecedentes penales (B2 no cumplido) es una de las causas que motiva la necesidad de recurso (B7).",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 14,
+    "confirmados": 2,
+    "confirmado_por_analogia": 1,
+    "confirmado_por_marco_constitucional": 1,
+    "plausibles": 1,
+    "plausible_no_verificable": 5,
+    "coherentes": 1,
+    "relacion_bilateral_coherente": 1,
+    "consejo_profesional_razonable": 1,
+    "dato_ausente_relevante": 1,
+    "refutados": 0,
+    "error_critico": null,
+    "hallazgo_clave": "El Art. 24 de la Constitución hondureña otorga reciprocidad migratoria favorable a españoles (2 años de residencia para naturalización). El Art. 28 garantiza que los hondureños por nacimiento no pierden su nacionalidad al adquirir la española. Ambos artículos son contexto jurídico valioso que el artículo omite.",
+    "calidad_global_documento": "Sustancialmente correcto. Las afirmaciones sobre derecho español de extranjería son plausibles y coherentes con principios generales de derecho migratorio. No se detectan errores. La omisión del marco constitucional hondureño de reciprocidad (Art. 24) y doble nacionalidad (Art. 28) es una oportunidad de mejora para enriquecer el contenido dirigido a hondureños."
+  }
+}

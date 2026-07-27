@@ -1,0 +1,181 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "4798b074-f12f-498a-bd5f-171963053037",
+    "slug": "despido-empleados-publicos-procedencia-defensa-honduras",
+    "sha256_entrada": "f307f2d140672c6daf5fa538a1f6e72c47a2d5a648e5be533e6c94fe85766eb9",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json",
+      "data/codigo_trabajo.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_contextual": "El body de la entrada es exclusivamente un redirect ('Este contenido se ha fusionado con la guía completa de despido de empleados públicos...'). Las claims se extraen del título y la descripción. No hay contenido sustantivo en el body."
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento anuncia una guía sobre despido de empleados públicos en Honduras con cuatro ejes: diferencia entre empleado de carrera y libre nombramiento, causales de despido, proceso disciplinario y recursos. Las 5 afirmaciones principales (desglosadas en 11 subclaims) se verifican contra la Constitución (Arts. 256 y 257) y el Código del Trabajo (Art. 2). Dos afirmaciones están plenamente confirmadas: (1) el régimen aplicable es el Servicio Civil, no el CT, y (2) los servidores públicos tienen derecho constitucional a recursos. Dos afirmaciones son plausibles pero no verificables en el corpus local por ausencia de la Ley de Servicio Civil: las causales específicas de despido y el proceso disciplinario. La distinción carrera/libre nombramiento está parcialmente confirmada: la Constitución consagra la carrera administrativa basada en méritos (Art. 256) pero no usa los términos exactos; éstos provienen de la ley secundaria. El documento es correcto en su marco conceptual pero el contenido sustantivo fue migrado a otra guía, por lo que no hay errores detectables en el body.",
+    "error_critico": null,
+    "imprecisiones_detectadas": [],
+    "inconsistencia_entre_fuentes": {
+      "tipo": "no_aplica",
+      "descripcion": "No se detectan inconsistencias entre las fuentes consultadas. La Constitución (Arts. 256, 257) y el Código del Trabajo (Art. 2) son consistentes: el Servicio Civil es el régimen aplicable a empleados públicos y el CT los excluye.",
+      "impacto": "ninguno"
+    }
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "El régimen de Servicio Civil regula las relaciones de empleo entre el Estado y sus servidores públicos en Honduras.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 256 Constitución: 'El régimen de Servicio Civil regula las relaciones de empleo y función pública que se establecen entre el Estado y sus servidores, fundamentados en principios de idoneidad, eficiencia y honestidad.'",
+      "evidencia": "Art. 256 Constitución",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "Los empleados públicos tienen una carrera administrativa protegida por el Estado.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "Art. 256 Constitución: 'El Estado protegerá a sus servidores dentro de la carrera administrativa.' MATIZ: La protección es constitucionalmente declarada, pero la noción de 'carrera administrativa' presupone un sistema de ingreso por méritos y estabilidad que la Constitución delega a la ley secundaria (Art. 257). La Ley de Servicio Civil desarrolla los alcances concretos de esta protección, no disponible en el corpus.",
+      "evidencia": "Art. 256 Constitución",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.3",
+      "subclaim_text": "Existe una diferencia jurídica entre empleado público de carrera y empleado público de libre nombramiento y remoción.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "La Constitución consagra el sistema de méritos y la carrera administrativa (Art. 256), lo que lógicamente implica la existencia de una categoría distinta de empleados no sujetos a carrera (libre nombramiento y remoción). Sin embargo, los términos exactos 'carrera' y 'libre nombramiento y remoción' con sus definiciones y alcances no aparecen en la Constitución ni en el Código del Trabajo. Estos son conceptos desarrollados por la Ley de Servicio Civil, no disponible en el corpus local. La afirmación es conceptualmente correcta según el diseño constitucional pero no verificable en su formulación precisa.",
+      "evidencia": "Art. 256 Constitución (carrera administrativa, sistema de méritos). Art. 257 (condiciones de ingreso, garantía de permanencia).",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "El despido de empleados públicos no se rige por el Código del Trabajo.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 2 CT: 'Se exceptúan: [...] 2) Los empleados públicos nacionales, departamentales y municipales. [...] Las relaciones entre el Estado, el Departamento y el Municipio y sus servidores, se regirán por las leyes del Servicio Civil que se expidan.' Exclusión expresa y total de los empleados públicos del ámbito de aplicación del CT.",
+      "evidencia": "Art. 2 CT",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "El despido de empleados públicos se rige por las leyes del Servicio Civil.",
+      "fuente": "data/codigo_trabajo.json + data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 2 CT: 'Las relaciones entre el Estado, el Departamento y el Municipio y sus servidores, se regirán por las leyes del Servicio Civil que se expidan.' Art. 256 Constitución: 'El régimen de Servicio Civil regula las relaciones de empleo y función pública que se establecen entre el Estado y sus servidores.' Ambas fuentes coinciden en que el Servicio Civil es el régimen jurídico aplicable.",
+      "evidencia": "Art. 2 CT + Art. 256 y 257 Constitución",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.3",
+      "subclaim_text": "Existen causales de despido específicas para empleados públicos en el régimen de Servicio Civil.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El Art. 257 constitucional ordena que la ley regule 'la garantía de permanencia, los traslados, suspensiones y garantías', lo que implica que existen causales para levantar esa garantía de permanencia (es decir, causales de despido). Sin embargo, las causales concretas no están en la Constitución ni en el CT. Corresponden a la Ley de Servicio Civil y sus reglamentos, no disponibles en el corpus local.",
+      "evidencia": "Art. 257 Constitución (garantía de permanencia, suspensiones).",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "Existe un proceso disciplinario formal para empleados públicos en Honduras.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El Art. 257 constitucional menciona 'suspensiones' y 'recursos contra las resoluciones que los afecten', lo que presupone un procedimiento formal con garantías. El Art. 256 establece los principios de 'idoneidad, eficiencia y honestidad' que informan el régimen disciplinario. Sin embargo, la descripción concreta del proceso (etapas, autoridades, plazos, formalidades) corresponde a la Ley de Servicio Civil, no disponible en el corpus.",
+      "evidencia": "Art. 256 y 257 Constitución",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B3.2",
+      "subclaim_text": "El proceso disciplinario garantiza el debido proceso al empleado público antes del despido.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "La Constitución en el Art. 257 ordena la regulación de 'los recursos contra las resoluciones que los afecten', lo que es indicativo de garantías procesales. El principio constitucional de debido proceso (implícito en el Estado de Derecho) respalda esta afirmación. Sin embargo, las garantías procesales específicas del procedimiento disciplinario de empleados públicos no están en la Constitución ni en el CT; corresponden a la Ley de Servicio Civil.",
+      "evidencia": "Art. 257 Constitución (recursos contra resoluciones).",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "Los empleados públicos tienen derecho a impugnar las resoluciones que los afecten.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 257 Constitución: 'La ley regulará el Servicio Civil y en especial [...] los recursos contra las resoluciones que los afecten.' El derecho a recurrir está constitucionalmente reconocido como parte del régimen de Servicio Civil.",
+      "evidencia": "Art. 257 Constitución",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "Los recursos legales incluyen la posibilidad de impugnar un despido.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 257 Constitución habla de 'los recursos contra las resoluciones que los afecten' sin limitar el tipo de resolución. Dado que el despido es la resolución más gravosa que puede afectar a un servidor público, queda comprendido dentro del ámbito de los recursos constitucionalmente garantizados.",
+      "evidencia": "Art. 257 Constitución (alcance amplio: 'las resoluciones que los afecten').",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.3",
+      "subclaim_text": "El contenido de la guía fue fusionado con otra guía completa de despido de empleados públicos.",
+      "fuente": "entrada.json",
+      "veredicto": "confirmado",
+      "detalle": "El body de la entrada dice textualmente: 'Este contenido se ha fusionado con la guía completa de despido de empleados públicos. Visite: [enlace a /blog/derecho-administrativo/despido-empleados-publicos-honduras].' Esto explica por qué el body carece de contenido sustantivo y solo contiene un redirect.",
+      "evidencia": "body de entrada.json",
+      "nivel_confianza": "alta"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["B1_RegimenServicioCivil", "B2_ExclusionCT_Causales", "B3_ProcesoDisciplinario", "B4_Recursos"],
+    "cruces": [
+      {
+        "par": "B1+B2",
+        "relacion": "Complementarios. B1 establece la existencia constitucional del régimen de Servicio Civil (Arts. 256, 257). B2 confirma que el CT excluye a los empleados públicos y los remite al Servicio Civil (Art. 2 CT). Ambas afirmaciones se refuerzan mutuamente y son consistentes.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B3",
+        "relacion": "Jerárquicos. B1 (Arts. 256, 257 Constitución) es la norma habilitante de rango constitucional. B3 (proceso disciplinario) es el desarrollo infraconstitucional de las garantías constitucionales. La Constitución ordena la regulación de suspensiones y garantías; el proceso disciplinario es la implementación de ese mandato.",
+        "conflicto": false,
+        "nota": "B3 no es verificable en su contenido específico por ausencia de la Ley de Servicio Civil en el corpus."
+      },
+      {
+        "par": "B1+B4",
+        "relacion": "Fuertemente vinculados. El Art. 257 constitucional enuncia en un mismo artículo tanto el régimen de Servicio Civil (B1) como el derecho a recursos (B4): 'La ley regulará el Servicio Civil y en especial [...] los recursos contra las resoluciones que los afecten'. B4 es una garantía integrante del régimen de B1.",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B4",
+        "relacion": "Complementarios. B2 establece que el CT no aplica a empleados públicos y los remite al Servicio Civil. B4 confirma que dentro del Servicio Civil existen recursos. Si el CT aplicara, los empleados públicos tendrían los recursos laborales ordinarios; al estar excluidos, deben acudir a los recursos del Servicio Civil. La coherencia es lógica y normativamente correcta.",
+        "conflicto": false
+      },
+      {
+        "par": "B3+B4",
+        "relacion": "Secuenciales. B3 (proceso disciplinario) genera la resolución que puede ser impugnada mediante B4 (recursos). El Art. 257 constitucional menciona 'suspensiones' (parte del proceso disciplinario) y 'recursos contra las resoluciones' en el mismo enunciado, evidenciando su conexión. Compatibles y complementarios.",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B3",
+        "relacion": "Excluyentes respecto al CT. B2 confirma que el CT no aplica. B3 describe el proceso disciplinario que opera en el Servicio Civil en lugar de los procedimientos de despido del CT (Arts. 112 y ss.). La exclusión del CT (B2) hace necesario un proceso disciplinario propio (B3).",
+        "conflicto": false,
+        "nota": "B3 no es verificable en detalle por ausencia de la Ley de Servicio Civil."
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 11,
+    "confirmados": 5,
+    "confirmados_con_matiz": 1,
+    "plausible_no_verificable": 3,
+    "matizados": 0,
+    "plausibles": 0,
+    "impreciso": 0,
+    "no_verificable": 0,
+    "no_verificable_en_fuente_citada": 0,
+    "refutados": 0,
+    "error_critico": null,
+    "error_secundario": null,
+    "limitacion_corpus": "B1.3 (diferencia carrera vs. libre nombramiento), B2.3 (causales de despido), B3.1 (proceso disciplinario) y B3.2 (debido proceso en el procedimiento) no son verificables en su contenido específico porque la Ley de Servicio Civil y sus reglamentos no están disponibles en el corpus local. Las fuentes disponibles (Constitución y Código del Trabajo) proporcionan únicamente el marco constitucional y la exclusión del ámbito laboral común.",
+    "calidad_global_documento": "Buena en su marco conceptual. Las afirmaciones del título y la descripción son consistentes con el diseño constitucional del Servicio Civil hondureño (Arts. 256 y 257) y con la exclusión de empleados públicos del Código del Trabajo (Art. 2 CT). No se detectan errores. El contenido sustantivo fue migrado a otra guía, por lo que la entrada actual funciona como redirect y no contiene afirmaciones detalladas que verificar. La limitación principal es la ausencia de la Ley de Servicio Civil en el corpus, que impide verificar los detalles específicos sobre causales de despido, proceso disciplinario y la distinción precisa entre empleados de carrera y de libre nombramiento.",
+    "nota_fusion": "El body es exclusivamente un redirect. No hay errores que reportar porque no hay contenido sustantivo en el body más allá del enlace de fusión."
+  }
+}

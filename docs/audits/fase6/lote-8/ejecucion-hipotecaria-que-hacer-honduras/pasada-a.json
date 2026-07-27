@@ -1,0 +1,221 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "17add9f3-3ccc-4381-ab01-6cf51c8496c6",
+    "slug": "ejecucion-hipotecaria-que-hacer-honduras",
+    "sha256_entrada": "5f1fdf40cdcefb2834bd8affeea2c44fef5bfd493c22e1fc090f800265dadd10",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_civil.json",
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_importante": "El Código Procesal Civil de Honduras, que regula los plazos de contestación, el procedimiento de ejecución hipotecaria, el remate judicial, las notificaciones y las excepciones procesales, NO se encuentra en los archivos JSON locales. La verificación se limita a las normas sustantivas del Código Civil (derecho de hipoteca) y del Código de Comercio (operaciones bancarias y prenda mercantil). La mayoría de las afirmaciones procedimentales del artículo (plazos, contestación, remate, tercería) dependen del Código Procesal Civil y no pueden verificarse directamente."
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "La ejecución hipotecaria no ocurre de un día para otro. El banco primero debe notificarle el incumplimiento (generalmente tres cuotas impagadas), luego iniciar el proceso judicial, y solo después de varias etapas se llega al remate.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "El Código Civil hondureño (Arts. 2098-2118) regula la hipoteca como derecho real de garantía y su constitución, pero NO regula el procedimiento de ejecución hipotecaria. El procedimiento (etapas, notificaciones, plazos de mora, remate) corresponde al Código Procesal Civil, que NO está disponible en las fuentes JSON locales. La práctica bancaria de iniciar ejecución tras tres cuotas impagadas es un estándar común en Latinoamérica pero no está codificada en el Código Civil ni en el Código de Comercio disponibles. Es plausible como descripción del procedimiento pero no verificable desde las fuentes locales.",
+      "evidencia_local": {
+        "codigo_civil": [
+          "Arts. 2098-2118: regulan la hipoteca como derecho sustantivo (definición, constitución, extensión, indivisibilidad, extinción). No contienen normas procedimentales de ejecución."
+        ],
+        "codigo_comercio": [
+          "Art. 8979: venta en pública subasta de bienes pignorados en el contexto de prenda mercantil (no de hipoteca inmobiliaria)."
+        ],
+        "ausencia_detectada": "Código Procesal Civil no disponible en fuentes JSON locales. Este código regula el procedimiento de ejecución hipotecaria y sus etapas."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "Tras la notificación de la demanda: tiene entre 5 y 20 días hábiles para contestar y oponer excepciones. Si no contesta en plazo, el proceso avanza sin usted.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "Los plazos de contestación de demanda en juicio ejecutivo hipotecario son materia del Código Procesal Civil, no disponible en fuentes locales. El Código Civil menciona el juicio ejecutivo únicamente en el Art. 2117 CC (renuncia a trámites del juicio ejecutivo en escritura de hipoteca), sin regular plazos. La existencia de un plazo de contestación y la posibilidad de oponer excepciones son principios universales del debido proceso (Art. 1 y 82 de la Constitución de Honduras, verificables en data/articulos_constitucion.json si estuviera disponible). La cifra '5 y 20 días hábiles' es específica y plausible para el proceso ejecutivo hondureño, pero no es verificable desde las fuentes locales disponibles.",
+      "evidencia_local": {
+        "codigo_civil": [
+          "Art. 2117 CC: menciona 'los trámites del juicio ejecutivo' como renunciables en escritura de hipoteca, confirmando la existencia de dicho procedimiento. No regula plazos.",
+          "Art. 11107 CC: 'La nulidad, ya sea absoluta o relativa, puede oponerse siempre como excepción.'"
+        ],
+        "codigo_comercio": [
+          "Art. 3225: enumera excepciones oponibles contra acciones derivadas de títulos-valor (no aplicable a ejecución hipotecaria)."
+        ],
+        "limitacion": "Los plazos procesales específicos dependen del Código Procesal Civil, no disponible."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "La dación en pago consiste en entregar voluntariamente el inmueble al banco a cambio de la cancelación total de la deuda. Requiere que el banco acepte.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "La dación en pago como figura contractual no aparece regulada con ese nombre en el Código Civil hondureño disponible. Sin embargo, el Art. 9899 CC establece que 'Las obligaciones se extinguen: por el pago o cumplimiento', y el pago puede consistir en una prestación diversa si el acreedor la acepta voluntariamente (principio general de derecho de obligaciones). El Art. 2116 CC prohíbe el pacto comisorio (apropiación directa por el acreedor), lo cual es consistente con la necesidad de aceptación voluntaria del banco en la dación en pago. El Art. 13165 CC exige mandato expreso para enajenar o hipotecar, y por extensión, la entrega voluntaria del inmueble al banco requeriría consentimiento expreso del deudor. La afirmación es doctrinalmente correcta: la dación en pago extingue la deuda si hay acuerdo entre las partes.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "articulos_relevantes": [
+          "Art. 9899 CC: 'Las obligaciones se extinguen: Por el pago o cumplimiento...'",
+          "Art. 2116 CC: 'Es nula la convención que estipule para el acreedor, en caso de no cumplimiento del deudor, el derecho de apropiarse los bienes hipotecados.' — Prohíbe el pacto comisorio, lo que implica que cualquier transferencia de propiedad al banco requiere consentimiento.",
+          "Art. 13165 CC: 'Para transigir, enajenar, hipotecar o ejecutar cualquier otro acto de riguroso dominio, se necesita mandato expreso.'"
+        ],
+        "nota": "La dación en pago como institución con ese nombre específico no aparece en el Código Civil. Se sustenta en principios generales de obligaciones."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "El banco solo acepta la dación en pago si el valor del inmueble cubre la deuda o si la diferencia es pequeña. Si debe más de lo que vale la casa, el banco probablemente rechazará la dación en pago pura y exigirá que pague la diferencia.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "Esta es una afirmación sobre la práctica bancaria, no sobre derecho positivo. El Código Civil no regula los criterios de aceptación de dación en pago por parte de entidades financieras. El Art. 2116 CC prohíbe la apropiación directa de los bienes hipotecados por el acreedor sin procedimiento, lo que hace que cualquier transferencia voluntaria requiera acuerdo. La afirmación sobre el comportamiento del banco ('probablemente rechazará') es una predicción práctica razonable basada en lógica económica (el banco no aceptará un activo que valga menos que la deuda porque perdería dinero), pero no es verificable contra fuentes normativas.",
+      "evidencia_local": {
+        "codigo_civil": [
+          "Art. 2116 CC: nulidad del pacto comisorio. Implica que la transferencia de propiedad al banco requiere consentimiento bilateral.",
+          "Art. 2107 CC: si el inmueble hipotecado se deteriora y no es suficiente para la seguridad de la deuda, el acreedor tiene derecho a exigir mejora de hipoteca o pago inmediato."
+        ],
+        "limitacion": "No hay norma que regule los criterios de aceptación o rechazo de dación en pago por parte de entidades financieras."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "Si la ejecución tiene defectos formales —la notificación fue irregular, el título ejecutivo no cumple los requisitos, el saldo reclamado es incorrecto, los intereses son usurarios— su abogado puede oponer excepciones que detengan o retrasen el proceso.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Código Civil establece en su Art. 11107 que 'la nulidad, ya sea absoluta o relativa, puede oponerse siempre como excepción', lo que respalda la posibilidad de oponer excepciones basadas en defectos de nulidad. La existencia del juicio ejecutivo como procedimiento se confirma en el Art. 2117 CC ('renunciar en la escritura de hipoteca los trámites del juicio ejecutivo'). Sin embargo, los defectos formales específicos mencionados (notificación irregular, requisitos del título ejecutivo, intereses usurarios) corresponden al Código Procesal Civil y a la Ley de Tarjetas de Crédito/leyes de protección al consumidor financiero, no disponibles en las fuentes locales. La afirmación es correcta en su principio general (posibilidad de oponer excepciones por defectos formales), pero los detalles específicos no son verificables.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "articulos_relevantes": [
+          "Art. 11107 CC: 'La nulidad, ya sea absoluta o relativa, puede oponerse siempre como excepción.'",
+          "Art. 2117 CC: 'Es permitido renunciar en la escritura de hipoteca los trámites del juicio ejecutivo.' — Confirma la existencia del juicio ejecutivo como procedimiento.",
+          "Art. 2112 CC: regula hasta dónde alcanza la garantía hipotecaria respecto de intereses (dos últimos años y anualidad corriente)."
+        ],
+        "limitacion": "Los tipos de excepciones procesales, requisitos de notificación y del título ejecutivo son materia del Código Procesal Civil, no disponible."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "Si el remate es inminente, puede presentar a un tercero que ofrezca comprar el inmueble por un precio superior al del remate (tercería de mejor postor). Esta figura está prevista en la ley.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La figura de 'tercería de mejor postor' es una institución del derecho procesal civil. El Código Civil hondureño disponible regula la venta judicial en pública subasta (Arts. 4849, 14726-14733), pero no menciona específicamente la tercería de mejor postor con ese nombre. El Código de Comercio menciona la subasta pública en el contexto de prenda mercantil (Arts. 8979, 8993) y regula la preferencia de acreedores hipotecarios (Arts. 6438, 6403), pero no la tercería. Esta figura estaría regulada en el Código Procesal Civil. La afirmación de que 'está prevista en la ley' es plausible por ser una institución común en los ordenamientos procesales latinoamericanos, pero no es verificable desde las fuentes locales disponibles.",
+      "evidencia_local": {
+        "codigo_civil": [
+          "Art. 4849 CC: ventas forzadas por decreto judicial en pública subasta.",
+          "Art. 14726 CC: 'Es permitido renunciar en la escritura de hipoteca los trámites del juicio ejecutivo. En tal caso se procederá, desde luego, a la venta judicial...'",
+          "Art. 14733 CC: 'Realizada la venta judicial, el deudor podrá hacer valer, en vía ordinaria, los derechos que le asistan a causa de la ejecución; pero sin que por eso deje de quedar firme la venta del inmueble hecha a favor de un tercero.'"
+        ],
+        "limitacion": "La tercería de mejor postor como figura procesal específica no aparece en el Código Civil ni en el Código de Comercio disponibles."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A7",
+      "claim_text": "Antes del remate: es la última oportunidad. Puede pagar la totalidad de la deuda más costas para detener el remate.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 11576 CC establece un principio análogo para la compraventa: 'el comprador podrá pagar aun después de expirado el término, mientras no haya sido requerido judicialmente', lo que refleja el principio general de que el pago puede hacerse hasta que el procedimiento judicial de ejecución alcance un punto de no retorno. El Art. 2116 CC prohíbe la apropiación directa por el acreedor, lo que implica que el único camino para evitar el remate es el pago. El Art. 2102 CC establece que 'los costos y gastos, como los daños e intereses... participan, como accesorio del crédito principal, de las seguridades hipotecarias', confirmando que las costas están cubiertas por la garantía hipotecaria y deben pagarse. El detalle procedimental exacto (hasta qué momento procesal se puede pagar para detener el remate) depende del Código Procesal Civil.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "articulos_relevantes": [
+          "Art. 11576 CC: posibilidad de pago después del término mientras no haya requerimiento judicial.",
+          "Art. 2116 CC: nulidad del pacto comisorio — el acreedor no puede simplemente apropiarse del bien.",
+          "Art. 2102 CC: 'Los costos y gastos, como los daños e intereses... participan, como accesorio del crédito principal, de las seguridades hipotecarias.'",
+          "Art. 9899 CC: 'Las obligaciones se extinguen: Por el pago o cumplimiento.' El pago total extingue la obligación principal y la garantía accesoria."
+        ],
+        "limitacion": "El momento procesal exacto hasta el cual se puede pagar para detener el remate es materia del Código Procesal Civil."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A8",
+      "claim_text": "Mientras la propiedad no haya sido adjudicada, usted sigue siendo el dueño y tiene derechos. No abandone el inmueble antes del remate.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Código Civil hondureño respalda esta afirmación. El Art. 4849 CC establece que en las ventas forzadas por decreto judicial en pública subasta, 'la persona cuyo dominio se transfiere es el tradente', indicando que la transferencia del dominio ocurre con la tradición derivada de la venta judicial, no antes. El Art. 14733 CC dispone que 'realizada la venta judicial, el deudor podrá hacer valer, en vía ordinaria, los derechos que le asistan', lo que implica que conserva derechos como dueño hasta que la venta se perfecciona. El Art. 2098 CC define la hipoteca como un derecho sobre inmuebles 'del deudor o de un tercero', confirmando que el deudor mantiene la propiedad (la hipoteca es un gravamen, no una transferencia de dominio). La recomendación práctica de no abandonar el inmueble es coherente con estos principios.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "articulos_relevantes": [
+          "Art. 4849 CC: 'En las ventas forzadas que se hacen por decreto judicial a petición de un acreedor, en pública subasta, la persona cuyo dominio se transfiere es el tradente, y el Juez su representante legal.' La transferencia ocurre con la venta judicial, no antes.",
+          "Art. 14733 CC: 'Realizada la venta judicial, el deudor podrá hacer valer, en vía ordinaria, los derechos que le asistan a causa de la ejecución; pero sin que por eso deje de quedar firme la venta del inmueble hecha a favor de un tercero.'",
+          "Art. 2098 CC: 'La hipoteca es un derecho constituido sobre los bienes inmuebles o derechos reales del deudor o de un tercero...' La propiedad permanece en el deudor; la hipoteca es un gravamen."
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A9",
+      "claim_text": "Puede impugnar el remate si hubo irregularidades procesales graves (defectos en la notificación del remate, precio vil, falta de publicación de edictos).",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 14733 CC establece que 'realizada la venta judicial, el deudor podrá hacer valer, en vía ordinaria, los derechos que le asistan a causa de la ejecución', lo que implica que el deudor conserva acciones legales después de la venta judicial para impugnar irregularidades. El Art. 11107 CC dispone que 'la nulidad, ya sea absoluta o relativa, puede oponerse siempre como excepción', fundamento de la posibilidad de impugnar actos procesales viciados de nulidad. El Art. 14894 CC exige que la subasta se haga 'con citación personal de los acreedores que tengan constituidas hipotecas sobre la misma finca', lo que respalda la importancia de las notificaciones. Los defectos específicos mencionados (precio vil, falta de edictos) son causales de nulidad procesal que, aunque no aparecen con esos términos exactos en el Código Civil, derivan de los principios generales de nulidad procesal y del debido proceso.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "articulos_relevantes": [
+          "Art. 14733 CC: 'Realizada la venta judicial, el deudor podrá hacer valer, en vía ordinaria, los derechos que le asistan a causa de la ejecución; pero sin que por eso deje de quedar firme la venta del inmueble hecha a favor de un tercero.'",
+          "Art. 11107 CC: 'La nulidad, ya sea absoluta o relativa, puede oponerse siempre como excepción.'",
+          "Art. 14894 CC: '...deberá hacerse la subasta con citación personal de los acreedores que tengan constituidas hipotecas sobre la misma finca; los cuales serán cubiertos sobre el precio del remate en el orden que corresponda.'"
+        ],
+        "limitacion": "Las causales específicas de impugnación del remate (precio vil, falta de edictos) son materia del Código Procesal Civil, no disponible."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A10",
+      "claim_text": "La hipoteca requiere escritura pública e inscripción en el registro para su validez y oponibilidad frente a terceros.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 2099 CC establece expresamente: 'La hipoteca debe constituirse por escritura pública e inscribirse en el competente registro.' La escritura pública es requisito de validez del acto constitutivo de la hipoteca. La inscripción registral es necesaria para la oponibilidad frente a terceros y para el rango de prelación. El Art. 2100 CC complementa: 'No puede constituirse hipoteca sino sobre cosas especial y expresamente determinadas, por una suma de dinero también cierta y determinada.' El Art. 2098 CC define la hipoteca como 'un derecho constituido sobre los bienes inmuebles o derechos reales del deudor o de un tercero en beneficio de un acreedor, para asegurar sobre los mismos el cumplimiento de una obligación.'",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "articulos_relevantes": [
+          "Art. 2098 CC: 'La hipoteca es un derecho constituido sobre los bienes inmuebles o derechos reales del deudor o de un tercero en beneficio de un acreedor, para asegurar sobre los mismos el cumplimiento de una obligación.'",
+          "Art. 2099 CC: 'La hipoteca debe constituirse por escritura pública e inscribirse en el competente registro.'",
+          "Art. 2100 CC: 'No puede constituirse hipoteca sino sobre cosas especial y expresamente determinadas, por una suma de dinero también cierta y determinada.'"
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A11",
+      "claim_text": "El Art. 2117 del Código Civil permite renunciar en la escritura de hipoteca a los trámites del juicio ejecutivo, procediéndose directamente a la venta judicial.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "matiz_relevante",
+      "detalle": "El artículo bajo verificación NO menciona esta disposición legal ni el Art. 2117 CC. Este es un dato jurídico relevante que el artículo omite: la posibilidad de que el deudor haya renunciado a los trámites del juicio ejecutivo en la escritura de hipoteca. Si dicha renuncia existe, el procedimiento sería más expedito (venta judicial directa sin trámites del juicio ejecutivo), lo cual limita significativamente las opciones de defensa descritas en el artículo (contestación, excepciones). El Art. 2117 CC establece: 'Es permitido renunciar en la escritura de hipoteca los trámites del juicio ejecutivo. En tal caso se procederá, desde luego, a la venta judicial, sirviendo de base el precio fijado por las partes en la escritura; si no se hubiese fijado el precio, se establecerá por peritos.' Esta omisión es relevante porque el lector podría tener una escritura con renuncia a trámites y creer erróneamente que dispone de los plazos y excepciones descritos en el artículo.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "articulo": "Art. 2117 CC",
+        "texto": "Es permitido renunciar en la escritura de hipoteca los trámites del juicio ejecutivo. En tal caso se procederá, desde luego, a la venta judicial, sirviendo de base el precio fijado por las partes en la escritura; si no se hubiese fijado el precio, se establecerá por peritos.",
+        "impacto": "ALTO. Si el deudor renunció a los trámites del juicio ejecutivo en la escritura, las opciones de defensa procesal descritas en el artículo (contestación en 5-20 días, oposición de excepciones) podrían no estar disponibles."
+      },
+      "nivel_confianza": "alta"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 11,
+    "confirmados": 2,
+    "parcialmente_confirmados": 3,
+    "plausible_no_verificable": 4,
+    "plausible_con_soporte_parcial": 1,
+    "matiz_relevante": 1,
+    "error_critico_detectado": "Ninguno. El artículo es sustancialmente correcto como guía práctica en sus afirmaciones verificables.",
+    "observacion_principal": "El Código Procesal Civil de Honduras NO está disponible en las fuentes JSON locales. Esto limita significativamente la verificación: aproximadamente el 70% de las afirmaciones del artículo dependen de normas procesales (plazos, contestación, remate, notificaciones, tercería, impugnación). Las normas sustantivas del Código Civil sobre hipoteca (Arts. 2098-2118) confirman los principios generales. Se detectó una OMISIÓN RELEVANTE: el artículo no menciona la posibilidad de renuncia a los trámites del juicio ejecutivo (Art. 2117 CC), que dejaría sin efecto las opciones de defensa procesal descritas.",
+    "calidad_general": "buena_con_limitacion_de_fuentes"
+  }
+}

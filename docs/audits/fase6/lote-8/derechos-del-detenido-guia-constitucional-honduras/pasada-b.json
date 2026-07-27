@@ -1,0 +1,131 @@
+{
+  "pasada": "B",
+  "objetivo": "Calidad: precisión jurídica, completitud, sesgo/tono, peligrosidad, omisiones críticas, advertencias faltantes.",
+  "documento": {
+    "id": "4a21f66a-6bad-4d1a-b44a-5ea5c0371c7c",
+    "slug": "derechos-del-detenido-guia-constitucional-honduras",
+    "title": "Derechos del detenido en Honduras: guía constitucional completa"
+  },
+  "evaluacion": {
+    "precision": {
+      "calificacion": "buena",
+      "detalle": "La mayoría de las afirmaciones sustantivas (14 de 17 claims) están verificadas o son razonables respecto de las fuentes consultadas. Los derechos enunciados —información al detenido, silencio, abogado, plazo de 24 horas, integridad física, presunción de inocencia— tienen respaldo directo en la Constitución y el CPP.",
+      "imprecisiones_detectadas": [
+        {
+          "severidad": "media",
+          "afirmacion": "Cualquier declaración que dé sin abogado puede ser usada en su contra aunque después se retracte.",
+          "problema": "El Art. 88 constitucional declara NULAS las declaraciones obtenidas con infracción. La afirmación del artículo sugiere lo contrario: que son admisibles y perjudiciales. Aunque se entiende como advertencia práctica para disuadir al detenido de declarar sin abogado, es jurídicamente incorrecta y puede generar desconfianza innecesaria en las garantías constitucionales.",
+          "recomendacion": "Reformular como: 'Cualquier declaración que dé sin abogado debe ser declarada nula, pero es mejor no arriesgarse: exija la presencia de su defensor antes de decir una sola palabra.'"
+        },
+        {
+          "severidad": "baja",
+          "afirmacion": "Nadie puede ser incomunicado durante la detención.",
+          "problema": "El Art. 71 constitucional permite la incomunicación por hasta 24 horas. La afirmación categórica es más protectora que la propia Constitución. Aunque el Art. 84 otorga un derecho de comunicación inmediata, el Art. 71 matiza ese derecho en su redacción literal.",
+          "recomendacion": "Añadir matiz: 'Aunque la Constitución contempla plazos breves de incomunicación, usted tiene derecho a comunicarse de inmediato con un familiar o abogado (Art. 84).'"
+        }
+      ]
+    },
+    "completitud": {
+      "calificacion": "aceptable con omisiones",
+      "derechos_cubiertos": [
+        "Derecho a conocer el motivo de la detención",
+        "Derecho a guardar silencio",
+        "Derecho a un abogado",
+        "Derecho a ser presentado ante juez en 24 horas",
+        "Derecho a no ser incomunicado",
+        "Derecho a la integridad física y no tortura",
+        "Derecho a la presunción de inocencia"
+      ],
+      "omisiones_relevantes": [
+        {
+          "tema": "Excepción de 48 horas para delitos de investigación compleja",
+          "fuente": "Art. 71 Constitución, Art. 285 CPP",
+          "impacto": "medio",
+          "detalle": "El artículo afirma que 24 horas es el plazo absoluto, pero la Constitución contempla una extensión a 48 horas en casos de investigación compleja (multiplicidad de hechos, dificultad probatoria, elevado número de imputados o víctimas). Un lector podría creer que toda detención superior a 24 horas es automáticamente ilegal, lo cual no es exacto."
+        },
+        {
+          "tema": "Detención judicial para inquirir (hasta 6 días)",
+          "fuente": "Art. 71 Constitución",
+          "impacto": "bajo",
+          "detalle": "El mismo Art. 71 contempla la detención judicial para inquirir que puede extenderse hasta 6 días. No se menciona."
+        },
+        {
+          "tema": "Hábeas corpus como mecanismo ante tortura durante detención legal",
+          "fuente": "Art. 182 Constitución",
+          "impacto": "bajo",
+          "detalle": "El artículo menciona hábeas corpus solo para detención ilegal, pero el Art. 182 también lo contempla para casos de tortura o vejámenes durante una detención legal."
+        },
+        {
+          "tema": "Prohibición de coacción y medios que afecten la libertad de decisión",
+          "fuente": "Art. 288 CPP",
+          "impacto": "bajo",
+          "detalle": "El CPP prohíbe explícitamente no solo la tortura sino también coacción, amenazas y otros medios que afecten la libertad de decisión del imputado."
+        },
+        {
+          "tema": "Derecho a no ser obligado a declarar contra cónyuge o parientes",
+          "fuente": "Art. 88 Constitución",
+          "impacto": "bajo",
+          "detalle": "El Art. 88 extiende la prohibición de declarar contra sí mismo a no declarar contra cónyuge, compañero de hogar, ni parientes dentro del cuarto grado de consanguinidad o segundo de afinidad."
+        },
+        {
+          "tema": "Separación de condenados",
+          "fuente": "Art. 86 Constitución",
+          "impacto": "bajo",
+          "detalle": "Toda persona detenida en juicio tiene derecho a permanecer separada de quienes ya fueron condenados."
+        },
+        {
+          "tema": "Derecho a no ser detenido por deudas u obligaciones civiles",
+          "fuente": "Art. 98 Constitución",
+          "impacto": "bajo",
+          "detalle": "Prohíbe la detención por obligaciones que no provengan de delito o falta."
+        }
+      ]
+    },
+    "sesgo_y_tono": {
+      "calificacion": "adecuado",
+      "tono_predominante": "informativo-persuasivo con orientación práctica",
+      "analisis": "El tono oscila entre divulgación jurídica y consejo práctico. Utiliza segunda persona ('usted', 'le') para crear cercanía con el lector. Las frases imperativas ('No espere', 'no declare solo', 'exija') tienen intención de empoderar al ciudadano, no de generar alarma. No se detecta sesgo político ni institucional.",
+      "notas": [
+        "La frase 'no espere a que se arregle solo' introduce un tono de urgencia que, aunque bienintencionado, podría interpretarse como desconfianza hacia el sistema. No es un sesgo grave pero sí un matiz editorial.",
+        "El artículo presenta al sistema como potencialmente adverso al detenido, lo cual es coherente con su propósito de guía práctica de autoprotección."
+      ]
+    },
+    "peligrosidad": {
+      "calificacion": "baja",
+      "riesgos_identificados": [
+        {
+          "riesgo": "Confianza excesiva en el plazo de 24 horas",
+          "severidad": "media",
+          "detalle": "Un lector podría asumir que toda detención mayor a 24 horas es ilegal y actuar en consecuencia (resistirse, confrontar), sin saber que existe la excepción de 48 horas para delitos complejos.",
+          "mitigacion": "Incluir la excepción de 48 horas y la detención judicial para inquirir."
+        },
+        {
+          "riesgo": "Falsa seguridad sobre nulidad de declaraciones sin abogado",
+          "severidad": "baja",
+          "detalle": "Al decir que las declaraciones sin abogado 'pueden ser usadas en su contra', el artículo podría disuadir a un detenido de invocar la nulidad. Sin embargo, en la práctica hondureña, lograr la declaración de nulidad puede depender de tener representación legal efectiva.",
+          "mitigacion": "Reformular como se indicó en la sección de precisión."
+        }
+      ],
+      "sin_riesgo_grave": true
+    },
+    "advertencias_faltantes": [
+      "El artículo no aclara que es una guía informativa, no sustituto de asesoría legal profesional. Recomendación: añadir un disclaimer.",
+      "No menciona que los plazos pueden variar si la detención ocurre en fin de semana o feriado (aunque la Constitución no distingue, en la práctica puede haber demoras).",
+      "No advierte sobre la diferencia entre detención administrativa/policial y detención judicial.",
+      "No menciona el derecho a solicitar libertad bajo fianza o medidas cautelares alternativas a la prisión preventiva (Art. 93 Constitución: 'Aún con auto de prisión, ninguna persona puede ser llevada a la cárcel ni detenida en ella, si otorga caución suficiente').",
+      "No indica qué hacer si el abogado no llega o el defensor público no está disponible."
+    ],
+    "calidad_global": {
+      "calificacion": "buena",
+      "resumen": "El artículo cumple su función declarada: ser una guía constitucional accesible sobre los derechos del detenido. Cubre los derechos fundamentales con un nivel de precisión aceptable para público no especializado. Las dos imprecisiones detectadas (declaraciones sin abogado 'usables en contra', incomunicación categórica) son corregibles con ajustes menores. La omisión más relevante es la excepción de 48 horas del Art. 71, que debería incluirse para no crear expectativas inexactas. Se recomienda añadir un disclaimer legal y mencionar el derecho a caución (Art. 93) como complemento práctico esencial.",
+      "acciones_recomendadas": [
+        "Corregir la afirmación sobre declaraciones sin abogado (C5).",
+        "Añadir la excepción de 48 horas del Art. 71.",
+        "Añadir disclaimer de que no sustituye asesoría legal.",
+        "Mencionar el derecho a caución/fianza del Art. 93.",
+        "Precisar que el Hábeas Corpus también aplica por tortura durante detención legal (Art. 182).",
+        "Considerar añadir el derecho a no declarar contra familiares (Art. 88)."
+      ]
+    }
+  }
+}

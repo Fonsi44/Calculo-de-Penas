@@ -1,0 +1,349 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "2c60988e-edac-4cb4-b6ff-a2a36a076f95",
+    "slug": "elegir-tipo-sociedad-empresa-honduras",
+    "sha256_entrada": "fe8d7c4ac7352951fe8a367583258ea57371d63890ef985941dc91d8c6f810cc",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_metodologica": "Verificacion cruzada granular exclusivamente contra el Codigo de Comercio de Honduras. Se descompusieron las afirmaciones del articulo en subclaims atomicos y se verificaron contra articulos especificos. La E.I.R.L. no consta en el Codigo de Comercio; se senala como ausencia relevante."
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El articulo describe correctamente los cinco tipos societarios del Codigo de Comercio (S.R.L., S.A., Comandita Simple, Comandita por Acciones y Capital Variable) con respaldo articulo por articulo. La unica excepcion significativa es la E.I.R.L., que no aparece en el Codigo de Comercio y cuya existencia en el ordenamiento hondureno no es verificable con las fuentes locales. Se detecta una imprecision terminologica menor: el articulo usa 'junta directiva' cuando el Codigo dice 'consejo de administracion'.",
+    "temas_verificables": [
+      {
+        "tema": "Sociedad de Responsabilidad Limitada (S. de R.L.)",
+        "claims_asociadas": ["A1", "A2", "A3", "A12", "A13"],
+        "fuente": "data/codigo_comercio.json",
+        "conclusion": "VERIFICADO. Los Arts. 66/69, 70, 71, 78 y 82 CM confirman: responsabilidad limitada a las aportaciones, capital minimo de L 5,000.00, administracion por gerentes designados, y estructura de gobierno mas simple que la S.A. (comisario opcional, Art. 88 CM)."
+      },
+      {
+        "tema": "Sociedad Anonima (S.A.)",
+        "claims_asociadas": ["A4", "A5", "A6", "A12", "A13"],
+        "fuente": "data/codigo_comercio.json",
+        "conclusion": "VERIFICADO con imprecision terminologica. Los Arts. 90, 92, 165, 201, 218 y 233 CM confirman: capital dividido en acciones, minimo 5 socios, capital minimo L 25,000.00, estructura con asamblea, consejo de administracion y gerentes. El termino 'junta directiva' no es el termino legal (es 'consejo de administracion')."
+      },
+      {
+        "tema": "Sociedad en Comandita Simple",
+        "claims_asociadas": ["A8", "A12"],
+        "fuente": "data/codigo_comercio.json",
+        "conclusion": "VERIFICADO. Arts. 59 y 61 CM confirman exactamente los dos tipos de socios y sus regimenes de responsabilidad y administracion."
+      },
+      {
+        "tema": "Sociedad de Capital Variable",
+        "claims_asociadas": ["A9", "A10", "A11"],
+        "fuente": "data/codigo_comercio.json",
+        "conclusion": "VERIFICADO. Arts. 1, 302, 303, 305 y 306 CM confirman la aplicabilidad transversal, el regimen de aumento/disminucion sin modificar escritura, y la existencia de capital minimo fijo. El matiz menor es que el minimo es el legal (Arts. 70/92), no necesariamente el capital suscrito inicialmente."
+      },
+      {
+        "tema": "Empresa Individual de Responsabilidad Limitada (E.I.R.L.)",
+        "claims_asociadas": ["A7"],
+        "fuente": "data/codigo_comercio.json",
+        "conclusion": "NO VERIFICABLE. La E.I.R.L. no consta en el Codigo de Comercio. El Art. 1 CM enumera seis tipos societarios sin incluir la E.I.R.L. Si existe, esta regulada en ley especial no disponible en las fuentes locales."
+      }
+    ]
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "En la S. de R.L., los socios responden solo hasta el monto de sus aportaciones.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 66/69 CM: '...cuyos socios solo estan obligados al pago de sus aportaciones'. Es la definicion legal de la figura.",
+      "evidencia": "Art. 66/69 CM.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "La S. de R.L. no requiere un capital minimo elevado.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado_comparativamente",
+      "detalle": "Art. 70 CM: capital minimo L 5,000.00. Comparado con S.A.: L 25,000.00 (Art. 92 CM), la diferencia es de 5:1. El calificativo 'elevado' es subjetivo pero la proporcion es objetivamente menor.",
+      "evidencia": "Arts. 70 y 92 CM.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.3",
+      "subclaim_text": "La S. de R.L. no requiere estructuras complejas de gobierno.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado_comparativamente",
+      "detalle": "La S.R.L. requiere gerentes (Art. 78 CM) y asamblea de socios (Art. 82 CM). El comisario o consejo de vigilancia es OPCIONAL: 'Cuando la escritura social lo establezca' (Art. 88 CM). En la S.A., los comisarios son obligatorios (Art. 233 CM) y las asambleas requieren convocatoria publica (Art. 173 CM). La menor carga organica obligatoria respalda la afirmacion.",
+      "evidencia": "Arts. 78, 82, 88 CM (S.R.L.) vs. Arts. 165, 173, 233 CM (S.A.).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.4",
+      "subclaim_text": "La administracion de la S. de R.L. recae en uno o varios gerentes designados por los socios.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 78 CM: 'La administracion de las sociedades de responsabilidad limitada estara a cargo de uno o mas gerentes, que podran ser socios o personas extrañas a la sociedad, designados temporalmente o por tiempo indeterminado.' La asamblea de socios —organo supremo— tiene la facultad de designarlos (Art. 82 CM).",
+      "evidencia": "Arts. 78 y 82 CM.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.5",
+      "subclaim_text": "La S. de R.L. tiene un maximo de 25 socios.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "no_mencionado_en_articulo_pero_confirmado",
+      "detalle": "El articulo no menciona explicitamente este limite, pero el Art. 69 CM establece: 'Ninguna sociedad de responsabilidad limitada tendra mas de veinticinco socios.' Es un dato objetivo que el articulo omite y que podria ser relevante para la decision del lector. No es un error, es una omision.",
+      "evidencia": "Art. 69 CM.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "En la S.A., el capital se divide en acciones.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 90 CM: 'Sociedad anonima es la que existe bajo una denominacion; y tiene un capital fundacional dividido en acciones'. Es la definicion legal.",
+      "evidencia": "Art. 90 CM.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "Las acciones de la S.A. son libremente transmisibles.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "Es la regla general, pero el Art. 140 CM permite restricciones estatutarias: 'En la escritura social podra pactarse que la transmision de las acciones nominativas solo se haga con autorizacion del consejo de administracion.' Las acciones al portador son libremente transmisibles. En la practica hondureña, las restricciones a la transmision de acciones nominativas son comunes. Aun asi, las acciones son significativamente mas transmisibles que las partes sociales de la S.R.L. (Art. 66 CM).",
+      "evidencia": "Arts. 90 y 140 CM.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.3",
+      "subclaim_text": "La S.A. requiere una asamblea de accionistas como organo supremo.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 165 CM: 'La asamblea general formada por los accionistas legalmente convocados y reunidos es el organo supremo de la sociedad'. Confirmado exactamente.",
+      "evidencia": "Art. 165 CM.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.4",
+      "subclaim_text": "La S.A. requiere una junta directiva.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "impreciso_terminologicamente",
+      "detalle": "El Codigo de Comercio NO utiliza el termino 'junta directiva'. El Art. 201 CM establece: 'Los estatutos fijaran si habra un administrador o un consejo de administracion.' El termino legal es 'consejo de administracion'. En la practica notarial y empresarial hondureña, ambos terminos se usan indistintamente, pero en la escritura constitutiva debe usarse 'consejo de administracion' para corresponder con la terminologia del Codigo.",
+      "evidencia": "Art. 201 CM.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.5",
+      "subclaim_text": "La S.A. requiere gerentes generales o especiales.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 218 CM: 'La asamblea general de accionistas, el consejo de administracion o el administrador, podran nombrar uno o varios gerentes generales o especiales, sean o no accionistas.' La figura del gerente es facultativa ('podran'), no obligatoria, pero la afirmacion del articulo es sustancialmente correcta como descripcion de la estructura tipica.",
+      "evidencia": "Art. 218 CM.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.6",
+      "subclaim_text": "La S.A. requiere un minimo de 5 socios.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 92 CM, Fraccion I: 'Que haya cinco socios como minimo, y que cada uno de ellos suscriba una accion, por lo menos.'",
+      "evidencia": "Art. 92 CM, Fraccion I.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.7",
+      "subclaim_text": "La S.A. requiere un capital minimo de L 25,000.00 y que este integramente suscrito.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 92 CM, Fraccion II: 'Que el capital social no sea menor de veinticinco mil lempiras y que este integramente suscrito.' Monto y requisito de suscripcion total confirmados.",
+      "evidencia": "Art. 92 CM, Fraccion II.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.8",
+      "subclaim_text": "Los costos de constitucion y registro de la S.A. son mayores que los de la S. de R.L.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El Codigo de Comercio establece mas requisitos formales para la S.A. (minimo 5 socios, capital minimo 5 veces mayor, exhibicion del 25% en efectivo, regimen de comisarios obligatorios), lo que naturalmente conlleva mayores costos notariales y registrales. Sin embargo, los aranceles y costos especificos no estan en el Codigo de Comercio sino en leyes administrativas y aranceles profesionales. La afirmacion es plausible y logicamente derivable, pero no directamente verificable en la fuente.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "La E.I.R.L. permite que una sola persona constituya una empresa con responsabilidad limitada.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "no_verificable",
+      "detalle": "La E.I.R.L. NO aparece en el Codigo de Comercio. El Art. 1 CM enumera las sociedades mercantiles y no incluye la E.I.R.L. No hay capitulo, seccion ni articulo que la regule. Si existe en Honduras, esta regulada por ley especial fuera del corpus documental disponible. El Codigo de Comercio no reconoce la figura de empresa unipersonal con responsabilidad limitada como sociedad mercantil.",
+      "evidencia": "Art. 1 CM: enumeracion exhaustiva de sociedades mercantiles sin inclusion de E.I.R.L.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.2",
+      "subclaim_text": "La E.I.R.L. separa el patrimonio personal del comercial.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "no_verificable",
+      "detalle": "Depende enteramente de la existencia de la E.I.R.L. como figura legal. Al no constar en el Codigo de Comercio, esta afirmacion no es verificable con las fuentes locales.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.3",
+      "subclaim_text": "La E.I.R.L. es una figura relativamente reciente en Honduras.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "no_verificable",
+      "detalle": "No hay referencia a la E.I.R.L. en el Codigo de Comercio. La afirmacion sobre su caracter 'reciente' no es verificable con las fuentes locales disponibles.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "En la Sociedad en Comandita Simple, los comanditados responden subsidiaria, ilimitada y solidariamente.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 59 CM: '...uno o varios socios comanditados, que responden de manera subsidiaria, ilimitada y solidariamente de las obligaciones sociales'. Texto exacto.",
+      "evidencia": "Art. 59 CM.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "En la Sociedad en Comandita Simple, los comanditarios solo estan obligados al pago de sus aportaciones.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 59 CM: '...y de uno o varios comanditarios que unicamente estan obligados al pago de sus aportaciones.' Texto exacto.",
+      "evidencia": "Art. 59 CM.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.3",
+      "subclaim_text": "Los comanditarios no participan en la gestion de la sociedad.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 61 CM: 'Los socios comanditarios no pueden ejercer acto alguno de administracion, ni aun con caracter de apoderados de los administradores o representantes.' El propio articulo matiza correctamente que la vigilancia y las autorizaciones no se reputan actos de administracion. Ademas, el Art. 62 CM sanciona al comanditario que administra con responsabilidad solidaria.",
+      "evidencia": "Arts. 61 y 62 CM.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "Cualquier tipo societario (S.R.L., S.A., etc.) puede constituirse como de capital variable.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 1 CM in fine: 'Estas sociedades podran ser de capital variable.' Art. 303 CM: 'Las sociedades de capital variable se regiran por las disposiciones que correspondan a la especie de sociedad de que se trate'. La modalidad de capital variable es transversal a todos los tipos societarios mercantiles.",
+      "evidencia": "Arts. 1 y 303 CM.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.2",
+      "subclaim_text": "El capital variable permite aumentar o reducir el capital social sin modificar la escritura constitutiva.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 302 CM: '...el capital social sera susceptible de aumento por aportaciones posteriores de los socios o por la admision de nuevos socios, y de disminucion de dicho capital por retiro parcial o total de las aportaciones, sin mas formalidades que las establecidas en este capitulo.' La exencion de modificar la escritura esta implicita en 'sin mas formalidades que las establecidas en este capitulo'.",
+      "evidencia": "Art. 302 CM.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.3",
+      "subclaim_text": "El capital variable tiene un minimo fijo (capital suscrito inicialmente) y un componente fluctuante.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "Art. 306 CM: el capital minimo de una S.A. o S.R.L. de capital variable 'no podra ser inferior al que se fija en los articulos 70 y 92' (L 5,000.00 o L 25,000.00, respectivamente). El matiz es que el minimo es el minimo legal, no necesariamente 'el capital suscrito inicialmente': la sociedad podria constituirse con un capital muy superior al minimo, y el piso infranqueable seguiria siendo el minimo legal (Art. 306), no el monto inicialmente suscrito. El componente fluctuante opera entre el minimo legal y lo pactado en la escritura (Art. 305 CM).",
+      "evidencia": "Arts. 305 y 306 CM.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "BX.1",
+      "subclaim_text": "[Cruce S.R.L. vs S.A.] Ambas limitan la responsabilidad al capital aportado pero difieren en estructura y costos.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "coherente",
+      "detalle": "Arts. 66/69 CM (S.R.L.) y 90 CM (S.A.) confirman responsabilidad limitada en ambas. Arts. 70 vs 92 CM confirman diferencia de capital minimo (5:1). Arts. 88 CM (comisario opcional S.R.L.) vs 233 CM (comisario obligatorio S.A.) confirman diferencia estructural. La afirmacion del articulo de que 'ambas protegen igual el patrimonio personal' es coherente con el regimen legal, aunque la S.A. impone mas carga formal para obtener la misma proteccion.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "BX.2",
+      "subclaim_text": "[Cruce S.R.L. vs Comandita] La S.R.L. ofrece responsabilidad limitada para todos los socios; la comandita solo para los comanditarios.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "coherente",
+      "detalle": "Arts. 66/69 CM (S.R.L.) y 59 CM (Comandita). La distincion que hace el articulo entre ambas figuras es precisa: en la S.R.L. TODOS los socios tienen responsabilidad limitada; en la comandita, los comanditados responden ilimitadamente. No hay contradiccion.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "BX.3",
+      "subclaim_text": "[Cruce S.A. vs S.A. de Capital Variable] La S.A. de Capital Variable añade flexibilidad de aumento/disminucion de capital sin perder la estructura corporativa de la S.A.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "coherente",
+      "detalle": "Arts. 302 y 303 CM confirman que las sociedades de capital variable se rigen por las disposiciones de la especie (S.A. en este caso) mas las del Capitulo VIII. El articulo describe correctamente que la modalidad de capital variable es una capa adicional de flexibilidad sobre la estructura base de la S.A. (o S.R.L.).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "BX.4",
+      "subclaim_text": "[Cruce E.I.R.L. vs S.R.L.] La E.I.R.L. se presenta como alternativa para un solo socio frente a la S.R.L. que requiere al menos dos.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "no_verificable_implicacion",
+      "detalle": "El Codigo de Comercio no establece un minimo expreso de socios para la S.R.L. (solo un maximo de 25, Art. 69 CM). Sin embargo, la logica de 'sociedad' como contrato plurilateral (Art. 18 CM) sugiere que se requieren al menos dos. La E.I.R.L., al no estar en el Codigo de Comercio, no puede ser contrastada con la S.R.L. usando las fuentes locales. La afirmacion del articulo de que la E.I.R.L. es la opcion para una sola persona es plausible si la E.I.R.L. existe como ley especial, pero no verificable.",
+      "nivel_confianza": "media"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["SRL", "SA", "Comandita_Simple", "Capital_Variable", "EIRL"],
+    "cruces": [
+      {
+        "par": "SRL + SA",
+        "relacion": "Alternativas con mismo nivel de proteccion patrimonial (responsabilidad limitada) pero distinta complejidad estructural y requisitos de capital. Arts. 66/69, 70, 78, 88 CM (SRL) vs Arts. 90, 92, 165, 201, 233 CM (SA).",
+        "conflicto": false
+      },
+      {
+        "par": "SRL + Capital Variable",
+        "relacion": "Modalidad complementaria. La SRL de CV añade flexibilidad de capital manteniendo la estructura simple de la SRL. Arts. 302, 303, 306 CM.",
+        "conflicto": false
+      },
+      {
+        "par": "SA + Capital Variable",
+        "relacion": "Modalidad complementaria. La SA de CV añade flexibilidad de capital a la estructura corporativa completa. Arts. 302, 303, 306 CM.",
+        "conflicto": false
+      },
+      {
+        "par": "SRL + Comandita",
+        "relacion": "Figuras distintas. SRL: responsabilidad limitada universal. Comandita: responsabilidad mixta (ilimitada para comanditados, limitada para comanditarios). Arts. 59, 66/69 CM.",
+        "conflicto": false
+      },
+      {
+        "par": "SRL + EIRL",
+        "relacion": "No verificable. La EIRL no consta en el Codigo de Comercio. Si existe como ley especial, serian figuras complementarias (EIRL para unipersonal, SRL para 2-25 socios).",
+        "conflicto": "No verificable — EIRL ausente del Codigo de Comercio"
+      },
+      {
+        "par": "SA + Comandita por Acciones",
+        "relacion": "El articulo menciona la Comandita por Acciones indirectamente. Arts. 272-276 CM confirman que se rige por reglas de S.A. con particularidades de la comandita. Omision menor del articulo.",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 26,
+    "confirmados": 10,
+    "confirmados_comparativamente": 2,
+    "confirmados_con_matiz": 3,
+    "plausible_no_verificable": 1,
+    "impreciso_terminologicamente": 1,
+    "no_verificables": 4,
+    "no_mencionado_en_articulo_pero_confirmado": 1,
+    "coherentes": 3,
+    "no_verificable_implicacion": 1,
+    "refutados": 0,
+    "temas_confirmados": [
+      "Responsabilidad limitada en S.R.L. (Art. 66/69 CM)",
+      "Capital minimo S.R.L. = L 5,000.00 (Art. 70 CM)",
+      "Administracion por gerentes en S.R.L. (Art. 78 CM)",
+      "Capital dividido en acciones en S.A. (Art. 90 CM)",
+      "Asamblea de accionistas como organo supremo en S.A. (Art. 165 CM)",
+      "Minimo 5 socios en S.A. (Art. 92 CM)",
+      "Capital minimo S.A. = L 25,000.00 (Art. 92 CM)",
+      "Comanditados responden ilimitadamente (Art. 59 CM)",
+      "Comanditarios no administran (Art. 61 CM)",
+      "Capital variable sin modificar escritura (Art. 302 CM)",
+      "Modalidad transversal de capital variable (Arts. 1, 303 CM)",
+      "Capital minimo en sociedades de capital variable (Art. 306 CM)"
+    ],
+    "temas_no_verificables": [
+      "Existencia y regulacion de la E.I.R.L. en Honduras (3 subclaims)",
+      "Costos especificos de constitucion y registro (fuera del Codigo de Comercio)"
+    ],
+    "imprecision_detectada": "Uso de 'junta directiva' en lugar de 'consejo de administracion' (termino legal del Codigo de Comercio). En la practica hondureña se usan indistintamente, pero en documentos constitutivos debe usarse el termino legal.",
+    "omision_detectada": "El articulo no menciona el limite maximo de 25 socios para la S. de R.L. (Art. 69 CM), lo cual es un criterio relevante para la eleccion del tipo societario.",
+    "errores_factuales": "No se detectaron errores factuales en las afirmaciones verificables. La unica afirmacion no verificable en las fuentes locales es la relativa a la E.I.R.L.",
+    "calidad_global_documento": "Buena. El articulo describe con precision los tipos societarios del Codigo de Comercio. Las afirmaciones sobre S.R.L., S.A., Comandita Simple y Capital Variable estan respaldadas por articulos especificos del Codigo. La E.I.R.L. es la unica figura mencionada que no encuentra respaldo en el Codigo de Comercio, lo cual no significa necesariamente que sea incorrecta (podria estar en ley especial), pero el lector debe saber que no es una figura del Codigo de Comercio. Se recomienda: (a) sustituir 'junta directiva' por 'consejo de administracion', (b) indicar que la S.R.L. tiene un maximo de 25 socios, y (c) aclarar si la E.I.R.L. esta regulada por el Codigo de Comercio o por ley especial."
+  }
+}

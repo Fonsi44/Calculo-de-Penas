@@ -1,0 +1,108 @@
+{
+  "id": "c6e3c327-1a56-497d-bab4-acb7ab5aa28e",
+  "slug": "divorcio-express-mutuo-acuerdo-honduras",
+  "pasada": "B",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "sources": [
+    {
+      "file": "data/codigo_familia_verificado.json",
+      "sha256": "7af6f6d79ccec7ad38d9ba252d0aeeae13e4794ce69ce9c7ef01bad129d055aa"
+    },
+    {
+      "file": "data/codigo_civil.json",
+      "sha256": "6f5b7e553f8698af7f917ca0098b05700f834a78916e89cd98b902a69b74429c"
+    }
+  ],
+  "summary": {
+    "total_claims": 14,
+    "verified": 0,
+    "falsos": 4,
+    "parcialmente_verificable": 1,
+    "sin_respaldo": 2,
+    "no_verificable": 7,
+    "severidad": "ALTA"
+  },
+  "hallazgos_criticos": [
+    {
+      "id": "H01",
+      "severidad": "crítica",
+      "afirmacion": "Existe una vía de divorcio express ante notario público sin intervención judicial.",
+      "afecta": "Toda la sección 2 y parte de la tabla comparativa.",
+      "impacto": "El artículo describe y recomienda una vía de divorcio que no existe en el ordenamiento jurídico hondureño según las fuentes verificadas. Art. 237 CF establece que el divorcio debe declararse mediante sentencia judicial. Un lector que crea calificar para esta vía y actúe en consecuencia recibiría asesoramiento jurídicamente inviable.",
+      "claims_asociados": ["C03", "C04", "C09"]
+    },
+    {
+      "id": "H02",
+      "severidad": "alta",
+      "afirmacion": "El divorcio por mutuo consentimiento requiere solo un año desde la celebración del matrimonio.",
+      "afecta": "Sección 1 (Mutuo consentimiento).",
+      "impacto": "Art. 243 CF y el Código Civil exigen dos años, no uno. Un lector que acuda a un juzgado antes de los dos años verá su solicitud rechazada. El error puede generar falsas expectativas y pérdida de tiempo y dinero.",
+      "claims_asociados": ["C02"]
+    },
+    {
+      "id": "H03",
+      "severidad": "alta",
+      "afirmacion": "La separación de hecho y el abandono del hogar son causas de divorcio contencioso con solo un año.",
+      "afecta": "Sección 3 (Divorcio contencioso).",
+      "impacto": "Art. 238 CF exige más de dos años de separación o abandono injustificado, no uno. El lector podría iniciar una acción de divorcio contencioso prematuramente, con el consiguiente rechazo judicial y costes procesales innecesarios.",
+      "claims_asociados": ["C05", "C06"]
+    }
+  ],
+  "hallazgos_menores": [
+    {
+      "id": "H04",
+      "severidad": "media",
+      "afirmacion": "Las causas de divorcio contencioso incluyen injurias graves, alcoholismo y drogadicción como categorías autónomas.",
+      "afecta": "Sección 3 (listado de causas).",
+      "impacto": "El Código Civil enumera causas específicas (adulterio, concubinato con escándalo, malos tratamientos graves, atentado contra la vida, etc.) que no coinciden exactamente con la paráfrasis del artículo. Las 'injurias graves' y 'vicios' no aparecen como categorías independientes en los extractos verificados. La imprecisión puede inducir a error sobre qué hechos constituyen causal válida.",
+      "claims_asociados": ["C07"]
+    },
+    {
+      "id": "H05",
+      "severidad": "baja",
+      "afirmacion": "Costes y plazos de tramitación para cada vía.",
+      "afecta": "Tabla comparativa y secciones 1-3.",
+      "impacto": "Los costes y plazos no son verificables contra las fuentes legales; son estimaciones de mercado. No son falsos per se, pero el lector debe saber que no provienen de tarifas oficiales ni plazos legales. El rango de costes y plazos de la vía notarial es especialmente problemático por describir una vía inexistente.",
+      "claims_asociados": ["C08", "C09", "C10", "C11"]
+    }
+  ],
+  "recomendaciones": [
+    {
+      "id": "R01",
+      "prioridad": "urgente",
+      "accion": "Eliminar o reescribir completamente la sección del divorcio express notarial (sección 2).",
+      "justificacion": "Es una vía que no existe en el ordenamiento jurídico hondureño verificado. Mantenerla expone al lector a seguir un camino jurídicamente inviable y constituye desinformación grave."
+    },
+    {
+      "id": "R02",
+      "prioridad": "urgente",
+      "accion": "Corregir el plazo de un año a dos años en el divorcio por mutuo consentimiento.",
+      "justificacion": "Art. 243 CF y el Código Civil son inequívocos: dos años. El error puede causar rechazo judicial de la solicitud."
+    },
+    {
+      "id": "R03",
+      "prioridad": "urgente",
+      "accion": "Corregir el plazo de separación/abandono de un año a dos años en el divorcio contencioso.",
+      "justificacion": "Art. 238 CF exige más de dos años. Iniciar la acción antes de ese plazo resultará en su inadmisión."
+    },
+    {
+      "id": "R04",
+      "prioridad": "alta",
+      "accion": "Revisar y ajustar el listado de causas de divorcio contencioso para que refleje con precisión las causales del Código Civil y del Código de Familia.",
+      "justificacion": "La paráfrasis actual mezcla conceptos que no aparecen en las fuentes (injurias graves, alcoholismo/drogadicción como categorías autónomas) con otros que sí están recogidos pero con redacción distinta."
+    },
+    {
+      "id": "R05",
+      "prioridad": "media",
+      "accion": "Añadir una nota aclaratoria sobre costes y plazos indicando que son estimaciones de mercado, no tarifas ni plazos oficiales.",
+      "justificacion": "Transparencia para el lector."
+    },
+    {
+      "id": "R06",
+      "prioridad": "media",
+      "accion": "Verificar el número de decreto del Código de Familia (76-84) contra fuente oficial externa.",
+      "justificacion": "No contrastable con las fuentes locales disponibles, pero es un dato que debe ser exacto."
+    }
+  ],
+  "nota_metodologica": "Las fuentes locales disponibles (codigo_familia_verificado.json con 12 artículos verificados y codigo_civil.json completo) no cubren la totalidad del ordenamiento jurídico hondureño en materia de familia. Es posible que existan leyes especiales, reformas posteriores o reglamentos no incluidos en estas fuentes que regulen aspectos no verificables en esta auditoría. Los veredictos 'no_verificable' y 'sin_respaldo' reflejan esta limitación y no deben interpretarse como afirmación de falsedad."
+}
