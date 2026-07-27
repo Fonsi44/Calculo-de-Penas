@@ -1,0 +1,193 @@
+{
+  "description": "Manifiesto de migraciones manuales aplicadas fuera del journal de Drizzle. Cada entrada incluye ruta, checksum SHA-256, dependencias y orden. El runner tools/db/run-migrations.mjs usa este manifiesto para aplicar migraciones pendientes.",
+  "version": 1,
+  "entries": [
+    {
+      "id": "manual-0038",
+      "file": "drizzle/migrations/0038_fase4a_sgie_schema_migrations.sql",
+      "description": "SGIE schema migrations registry table",
+      "dependsOn": [
+        "0038_lively_silvermane"
+      ],
+      "checksum": "5e42b4683c7c4da2cdee221bbe5a480044544953475690b1448fd9334c188bfa",
+      "transactional": true,
+      "applied": false
+    },
+    {
+      "id": "manual-0039",
+      "file": "drizzle/migrations/0039_fase4a_feature_flags.sql",
+      "description": "Feature flags system for SGIE",
+      "dependsOn": [
+        "manual-0038"
+      ],
+      "checksum": "582d86f083bc48319e0f3a424201a46eef1333000c3aeb3045c0e9074b83d283",
+      "transactional": true,
+      "applied": false
+    },
+    {
+      "id": "manual-0040",
+      "file": "drizzle/migrations/0040_fase4a_document_pipeline.sql",
+      "description": "Document automation pipeline tables",
+      "dependsOn": [
+        "manual-0039"
+      ],
+      "checksum": "74c38c8e98d3a279f0dd99e05c677c9d25c99e057ecc47d04ff7eb23ea6cab26",
+      "transactional": true,
+      "applied": false
+    },
+    {
+      "id": "manual-0041",
+      "file": "drizzle/migrations/0041_fase4a_summary_nextaction.sql",
+      "description": "AI summary and next action columns",
+      "dependsOn": [
+        "manual-0040"
+      ],
+      "checksum": "ca460119a1171144aabee9404a02a6ee056bd06252f0bd824193f23b1eece069",
+      "transactional": true,
+      "applied": false
+    },
+    {
+      "id": "manual-0042",
+      "file": "drizzle/migrations/0042_fase4a_unique_constraints_and_seeds.sql",
+      "description": "Unique constraints and seed data for SGIE v2",
+      "dependsOn": [
+        "manual-0041"
+      ],
+      "checksum": "7d5fbae9ed80946493f9da37d88c406f68b6a86b0373cc79cb0e1d4397f406b2",
+      "transactional": false,
+      "applied": false
+    },
+    {
+      "id": "manual-0043",
+      "file": "drizzle/migrations/0043_fase4a_checkpoint_unique_partial.sql",
+      "description": "Checkpoint unique partial indexes",
+      "dependsOn": [
+        "manual-0042"
+      ],
+      "checksum": "c37b96616e87082b30bfd600139dfb56d866e4d9f41dd21cd86a070815cde9c4",
+      "transactional": true,
+      "applied": false
+    },
+    {
+      "id": "manual-0044",
+      "file": "drizzle/migrations/0044_fase4b1_bulk_approval.sql",
+      "description": "Bulk approval workflow tables (Fase 4B-1)",
+      "dependsOn": [
+        "manual-0043"
+      ],
+      "checksum": "ffadd62b8767667a6aba355369c34b18cd940b38a38ed5f9b0f1fb70cf68e253",
+      "transactional": true,
+      "applied": false
+    },
+    {
+      "id": "manual-0045",
+      "file": "drizzle/migrations/0045_fase4b2_signature_packages.sql",
+      "description": "Signature packages and envelope tables (Fase 4B-2)",
+      "dependsOn": [
+        "manual-0044"
+      ],
+      "checksum": "c71af5acfe7968c4cf56ff06156dd0cc85d2e39a6df12ecc01147b2a51008d81",
+      "transactional": true,
+      "applied": false
+    },
+    {
+      "id": "manual-0046",
+      "file": "drizzle/migrations/0046_fase4b3_electronic_signature.sql",
+      "description": "Electronic signature workflow (Fase 4B-3)",
+      "dependsOn": [
+        "manual-0045"
+      ],
+      "checksum": "21994408306c7bccf8d9aadd6ad18f078e5903c4d17cd0cb2f5b50ac66ddec37",
+      "transactional": true,
+      "applied": false
+    },
+    {
+      "id": "manual-0047",
+      "file": "drizzle/migrations/0047_fase4b3_reconciliation_locks.sql",
+      "description": "Reconciliation locks for concurrent operations (Fase 4B-3)",
+      "dependsOn": [
+        "manual-0046"
+      ],
+      "checksum": "272bdf9f683d481c6f0a7174718656222f3c6e3ed86818d61d030f249f46deca",
+      "transactional": true,
+      "applied": false
+    },
+    {
+      "id": "manual-0048",
+      "file": "drizzle/migrations/0048_fase4b4_external_calendar.sql",
+      "description": "External calendar integration tables (Fase 4B-4)",
+      "dependsOn": [
+        "manual-0047"
+      ],
+      "checksum": "b4fa097c050fedc6de760bfc1d2f68e824558c9e34dd8df4c6af019e37f35754",
+      "transactional": true,
+      "applied": false
+    },
+    {
+      "id": "manual-0049",
+      "file": "drizzle/migrations/0049_fase4b5_search_fts.sql",
+      "description": "Full-text search indexes (Fase 4B-5)",
+      "dependsOn": [
+        "manual-0048"
+      ],
+      "checksum": "67c5c8e139270d8b7d1f13ccbcfffed7bcc369af3d043f9b304908c624b3057c",
+      "transactional": false,
+      "applied": false
+    },
+    {
+      "id": "manual-0050",
+      "file": "drizzle/migrations/0050_fase4b6_knowledge_base.sql",
+      "description": "Knowledge base tables (Fase 4B-6)",
+      "dependsOn": [
+        "manual-0049"
+      ],
+      "checksum": "0cd0d585c59998e904c5290df6e8b3a69ebf07f754cdbe6135e2402dd0ccf08a",
+      "transactional": true,
+      "applied": false
+    },
+    {
+      "id": "manual-0051",
+      "file": "drizzle/migrations/0051_fase5_risk_workload_brief.sql",
+      "description": "Risk analysis, workload, and brief tables (Fase 5)",
+      "dependsOn": [
+        "manual-0050"
+      ],
+      "checksum": "266384c01d24b387883af2412082bcd3f5db910ac4ba0236bff9e9ad8326a03e",
+      "transactional": true,
+      "applied": false
+    },
+    {
+      "id": "manual-0052",
+      "file": "drizzle/migrations/0052_add_outbox_idempotency.sql",
+      "description": "Outbox idempotency keys",
+      "dependsOn": [
+        "manual-0051"
+      ],
+      "checksum": "2bd069ad80d0970fc0678e3d9ff00dc399da2677d51b6760eaf6958e922860b1",
+      "transactional": true,
+      "applied": false
+    },
+    {
+      "id": "manual-0053",
+      "file": "drizzle/migrations/0053_add_events_table.sql",
+      "description": "Events/audit table for event sourcing",
+      "dependsOn": [
+        "manual-0052"
+      ],
+      "checksum": "553cdb306c12cc1f2e0515f5e7de5d7dd0c3900aafe7da5f054bdfc99fb138bc",
+      "transactional": true,
+      "applied": false
+    },
+    {
+      "id": "manual-0054",
+      "file": "drizzle/migrations/0054_fase5b_document_intelligence.sql",
+      "description": "Document intelligence pipeline tables (Fase 5B)",
+      "dependsOn": [
+        "manual-0053"
+      ],
+      "checksum": "df1ebbc3fbdd727989d98748b63c98d16ba3dfbbb20c28b948d2db27435a5d63",
+      "transactional": true,
+      "applied": false
+    }
+  ]
+}
