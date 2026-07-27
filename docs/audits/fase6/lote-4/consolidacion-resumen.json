@@ -1,0 +1,100 @@
+{
+  "lote": 4,
+  "total": 15,
+  "completed": 12,
+  "corrected": 0,
+  "needs_human_review": 3,
+  "blocked": 0,
+  "detalles": [
+    {
+      "slug": "registro-medicamentos-productos-farmaceuticos-honduras",
+      "estadoFinal": "completed",
+      "razon": "A y B coinciden plenamente",
+      "correcciones_count": 0
+    },
+    {
+      "slug": "contratos-empleadas-domesticas-obligaciones-honduras",
+      "estadoFinal": "needs_human_review",
+      "razon": "Uno o ambos subagentes indicaron que requiere revisión humana de abogado.",
+      "correcciones_count": 0
+    },
+    {
+      "slug": "registro-sanitario-alimentos-arsa-paso-a-paso-honduras",
+      "estadoFinal": "needs_human_review",
+      "razon": "Uno o ambos subagentes indicaron que requiere revisión humana de abogado.",
+      "correcciones_count": 0
+    },
+    {
+      "slug": "calcular-prestaciones-laborales-honduras",
+      "estadoFinal": "needs_human_review",
+      "razon": "Uno o ambos subagentes indicaron que requiere revisión humana de abogado.",
+      "correcciones_count": 0
+    },
+    {
+      "slug": "habilitacion-clinicas-hospitales",
+      "estadoFinal": "completed",
+      "razon": "A y B coinciden plenamente",
+      "correcciones_count": 0
+    },
+    {
+      "slug": "zonas-libres-zoli-beneficios-fiscales-honduras",
+      "estadoFinal": "completed",
+      "razon": "A y B coinciden plenamente",
+      "correcciones_count": 0
+    },
+    {
+      "slug": "reformas-legales-recientes-honduras",
+      "estadoFinal": "completed",
+      "razon": "A y B coinciden plenamente",
+      "correcciones_count": 0
+    },
+    {
+      "slug": "contratos-mercantiles-proteger-negocio",
+      "estadoFinal": "completed",
+      "razon": "A y B coinciden plenamente",
+      "correcciones_count": 0
+    },
+    {
+      "slug": "contratos-civiles-honduras-errores-comunes",
+      "estadoFinal": "completed",
+      "razon": "A y B coinciden plenamente",
+      "correcciones_count": 0
+    },
+    {
+      "slug": "licencia-ambiental-categorias-plazos-honduras",
+      "estadoFinal": "completed",
+      "razon": "A y B coinciden plenamente",
+      "correcciones_count": 0
+    },
+    {
+      "slug": "constitucion-empresas-honduras-pasos-legales",
+      "estadoFinal": "completed",
+      "razon": "A y B coinciden plenamente",
+      "correcciones_count": 0
+    },
+    {
+      "slug": "centro-conciliacion-arbitraje-ccic",
+      "estadoFinal": "completed",
+      "razon": "A y B coinciden plenamente",
+      "correcciones_count": 0
+    },
+    {
+      "slug": "expropiacion-forzosa-derechos-propietario-honduras",
+      "estadoFinal": "completed",
+      "razon": "A y B coinciden plenamente",
+      "correcciones_count": 0
+    },
+    {
+      "slug": "contratacion-publica-licitaciones",
+      "estadoFinal": "completed",
+      "razon": "A y B coinciden plenamente",
+      "correcciones_count": 0
+    },
+    {
+      "slug": "central-riesgos-consultar-impugnar-honduras",
+      "estadoFinal": "completed",
+      "razon": "A y B coinciden plenamente",
+      "correcciones_count": 0
+    }
+  ]
+}
