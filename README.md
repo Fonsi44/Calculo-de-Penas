@@ -8,6 +8,8 @@ gestión integral de expedientes (SGIE) y sistema de analítica y SEO.
 - **Sitio:** `https://www.pinedayasociadoshn.com` (Vercel)
 - **Documentación para agentes IA:** [`AGENTS.md`](AGENTS.md)
 - **Histórico de cambios:** [`CHANGELOG.md`](CHANGELOG.md)
+- **Guía de contribución:** [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- **Índice documental:** [`docs/README.md`](docs/README.md)
 
 ---
 

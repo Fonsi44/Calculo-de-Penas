@@ -879,7 +879,7 @@ export type RemisionNormativaInsert = typeof remisionesNormativas.$inferInsert;
 // Expedientes. No modifican tablas existentes (salvo columnas de
 // gobernanza en `usuarios`). Convención del repo: snake_case en DB,
 // uuid PK defaultRandom, FKs explícitas, índices en claves de acceso.
-// Referencia: pinedayasociados.md §20 (entidades) y §8.2 (estados).
+// Ver docs/architecture/ §20 (entidades) y §8.2 (estados).
 // ============================================================
 
 // --- Enums SGIE ---
@@ -1172,7 +1172,7 @@ export type HistorialExpedienteInsert = typeof historialExpediente.$inferInsert;
 // Tablas aditivas para: enlaces mágicos y carga documental (Fase 4),
 // plantillas y correos (Fase 5), motor documental (Fase 6), IA (Fase 7),
 // reglas y confianza (Fase 8), agenda/tareas (Fase 9), métricas/auditoría/
-// aprendizaje/retención (Fase 10). Referencia: pinedayasociados.md §20.
+// aprendizaje/retención (Fase 10). Ver docs/architecture/ §20.
 // ============================================================
 
 // --- Enums adicionales ---

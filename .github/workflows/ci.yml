@@ -2,21 +2,30 @@ name: CI
 
 on:
   push:
-    branches: [main, master, develop]
+    branches: [main]
   pull_request:
-    branches: [main, master, develop]
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   quality:
-    name: Lint, Typecheck, Test, Build, SEO
+    name: Higiene, Lint, TypeScript, Tests, Build
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       DATABASE_URL: postgresql://placeholder:placeholder@localhost:5432/placeholder
       JWT_SECRET: 0123456789abcdef0123456789abcdef0123456789abcdef
+      CRON_SECRET: 0123456789abcdef0123456789abcdef0123456789abcdef
+      ENCRYPTION_KEY: 0123456789abcdef0123456789abcdef0123456789abcdef
       NEXT_TELEMETRY_DISABLED: '1'
       PORT: '3100'
-      # Variables necesarias para site.ts y metadata
       NEXT_PUBLIC_SITE_URL: https://www.pinedayasociadoshn.com
       NEXT_PUBLIC_SITE_NAME: "Pineda y Asociados"
       NEXT_PUBLIC_NOINDEX: "false"
@@ -32,57 +41,23 @@ jobs:
           cache: 'npm'
           cache-dependency-path: package-lock.json
 
-      - name: Install npm 11
-        run: npm install -g npm@11
-
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Check scripts
-        id: scripts
-        run: |
-          if jq -e '.scripts.lint' package.json >/dev/null; then echo "has_lint=true" >> $GITHUB_OUTPUT; else echo "has_lint=false" >> $GITHUB_OUTPUT; fi
-          if jq -e '.scripts.typecheck' package.json >/dev/null; then echo "has_typecheck=true" >> $GITHUB_OUTPUT; else echo "has_typecheck=false" >> $GITHUB_OUTPUT; fi
-          if jq -e '.scripts.test' package.json >/dev/null; then echo "has_test=true" >> $GITHUB_OUTPUT; else echo "has_test=false" >> $GITHUB_OUTPUT; fi
-          if jq -e '.scripts.build' package.json >/dev/null; then echo "has_build=true" >> $GITHUB_OUTPUT; else echo "has_build=false" >> $GITHUB_OUTPUT; fi
-          if jq -e '.scripts["seo:doctor"]' package.json >/dev/null; then echo "has_seo_doctor=true" >> $GITHUB_OUTPUT; else echo "has_seo_doctor=false" >> $GITHUB_OUTPUT; fi
+      - name: Repo hygiene
+        run: node tools/ci/repo-hygiene.mjs
+
+      - name: Migrations validate
+        run: npm run db:migrations:validate
 
       - name: Lint
-        run: |
-          if [ "${{ steps.scripts.outputs.has_lint }}" = "true" ]; then
-            npm run lint
-          else
-            echo "script no definido, omitiendo"
-          fi
+        run: npm run lint
 
-      - name: Typecheck
-        run: |
-          if [ "${{ steps.scripts.outputs.has_typecheck }}" = "true" ]; then
-            npm run typecheck
-          else
-            echo "script no definido, omitiendo"
-          fi
+      - name: TypeScript
+        run: npx tsc --noEmit
 
       - name: Unit tests
-        run: |
-          if [ "${{ steps.scripts.outputs.has_test }}" = "true" ]; then
-            npm run test
-          else
-            echo "script no definido, omitiendo"
-          fi
+        run: npm run test
 
       - name: Build
-        run: |
-          if [ "${{ steps.scripts.outputs.has_build }}" = "true" ]; then
-            npm run build
-          else
-            echo "script no definido, omitiendo"
-          fi
-
-      - name: SEO Doctor
-        run: |
-          if [ "${{ steps.scripts.outputs.has_seo_doctor }}" = "true" ]; then
-            npm run seo:doctor
-          else
-            echo "script no definido, omitiendo"
-          fi
+        run: npm run build

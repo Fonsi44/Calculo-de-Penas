@@ -1,0 +1,138 @@
+{
+  "timestamp": "2026-07-26T08:39:05.789Z",
+  "total_posts": 141,
+  "errors_count": 9,
+  "warnings_count": 9,
+  "info_count": 0,
+  "errors": [
+    {
+      "slug": "abogados-en-san-marcos-de-colon-choluteca",
+      "category": "practica-legal",
+      "severity": "ERROR",
+      "issue": "Sin meta_title",
+      "detail": "La página usará title como meta_title"
+    },
+    {
+      "slug": "derechos-detenido-honduras-guia-constitucional",
+      "category": "derecho-penal",
+      "severity": "ERROR",
+      "issue": "Sin meta_title",
+      "detail": "La página usará title como meta_title"
+    },
+    {
+      "slug": "audiencia-inicial-proceso-penal-honduras",
+      "category": "derecho-penal",
+      "severity": "ERROR",
+      "issue": "Sin meta_title",
+      "detail": "La página usará title como meta_title"
+    },
+    {
+      "slug": "diferencia-denuncia-querella-acusacion-honduras",
+      "category": "derecho-penal",
+      "severity": "ERROR",
+      "issue": "Sin meta_title",
+      "detail": "La página usará title como meta_title"
+    },
+    {
+      "slug": "guia-aduanera-importaciones-honduras",
+      "category": "derecho-aduanero",
+      "severity": "ERROR",
+      "issue": "Sin meta_title",
+      "detail": "La página usará title como meta_title"
+    },
+    {
+      "slug": "sobreseimiento-definitivo-provisional",
+      "category": "proceso-penal",
+      "severity": "ERROR",
+      "issue": "Sin meta_title",
+      "detail": "La página usará title como meta_title"
+    },
+    {
+      "slug": "allanamiento-ilegal-violacion-domicilio-honduras",
+      "category": "derecho-penal",
+      "severity": "ERROR",
+      "issue": "Sin meta_title",
+      "detail": "La página usará title como meta_title"
+    },
+    {
+      "slug": "juicio-oral-etapas-que-esperar-honduras",
+      "category": "proceso-penal",
+      "severity": "ERROR",
+      "issue": "Sin meta_title",
+      "detail": "La página usará title como meta_title"
+    },
+    {
+      "slug": "defensa-penal-honduras",
+      "category": "derecho-penal",
+      "severity": "ERROR",
+      "issue": "Sin meta_title",
+      "detail": "La página usará title como meta_title"
+    }
+  ],
+  "warnings": [
+    {
+      "slug": "impuesto-renta-personas-fisicas-honduras",
+      "category": "tributario",
+      "severity": "WARN",
+      "issue": "meta_desc < 120c (117c)",
+      "detail": "Conozca quién debe declarar el ISR en Honduras, cómo calcularlo, gastos deducibl"
+    },
+    {
+      "slug": "competencia-desleal-como-denunciar-honduras",
+      "category": "derecho-mercantil",
+      "severity": "WARN",
+      "issue": "meta_desc < 120c (113c)",
+      "detail": "Descubra qué es la competencia desleal en Honduras, las conductas sancionables y"
+    },
+    {
+      "slug": "derechos-trabajadora-embarazada-honduras",
+      "category": "derecho-laboral",
+      "severity": "WARN",
+      "issue": "meta_desc < 120c (117c)",
+      "detail": "Conozca sus derechos laborales en Honduras ante un despido por embarazo. Fuero m"
+    },
+    {
+      "slug": "prescripcion-deudas-plazos-honduras",
+      "category": "derecho-civil",
+      "severity": "WARN",
+      "issue": "meta_title > 60c (73c)",
+      "detail": "Prescripción de Deudas Honduras: Plazos y ¿A los Cuántos Año"
+    },
+    {
+      "slug": "prescripcion-deudas-plazos-honduras",
+      "category": "derecho-civil",
+      "severity": "WARN",
+      "issue": "meta_desc > 160c (169c)",
+      "detail": "¿En cuánto tiempo prescribe una deuda en Honduras? Plazos para deudas civiles, m"
+    },
+    {
+      "slug": "registro-medicamentos-productos-farmaceuticos-honduras",
+      "category": "regulacion-sanitaria",
+      "severity": "WARN",
+      "issue": "meta_desc < 120c (114c)",
+      "detail": "Descubra los requisitos técnicos, costos y plazos reales para obtener un registr"
+    },
+    {
+      "slug": "allanamiento-ilegal-violacion-domicilio-honduras",
+      "category": "derecho-penal",
+      "severity": "WARN",
+      "issue": "meta_desc < 120c (112c)",
+      "detail": "Horario, orden judicial, urgencia y derechos ante un registro o allanamiento ile"
+    },
+    {
+      "slug": "registro-sanitario-alimentos-arsa-paso-a-paso-honduras",
+      "category": "regulacion-sanitaria",
+      "severity": "WARN",
+      "issue": "meta_desc < 120c (112c)",
+      "detail": "Revise los requisitos y pasos para tramitar ante ARSA el registro sanitario de a"
+    },
+    {
+      "slug": "herencias-transfronterizas-bienes",
+      "category": "hondurenos-en-espana",
+      "severity": "WARN",
+      "issue": "meta_desc < 120c (95c)",
+      "detail": "Gestione herencias entre Honduras y España. Conozca qué ley aplica, impuestos y "
+    }
+  ],
+  "info": []
+}
