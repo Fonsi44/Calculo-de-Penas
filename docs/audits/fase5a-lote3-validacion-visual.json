@@ -1,0 +1,314 @@
+{
+  "fase": "5A",
+  "lote": 3,
+  "generatedAt": "2026-07-27T00:45:39.147Z",
+  "totalChecks": 16,
+  "pass": 16,
+  "fail": 0,
+  "resultados": [
+    {
+      "slug": "poder-legal-honduras-cuando-se-necesita",
+      "viewport": "desktop",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-notarial/poder-legal-honduras-cu",
+      "jsonld": 4,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 4,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=ZPQ8S42GWROSqg-l",
+        "yasociadoshn.com/blog/derecho-notarial?_rsc=ZPQ8S42GWROSqg-l"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "poder-legal-honduras-cuando-se-necesita",
+      "viewport": "mobile",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-notarial/poder-legal-honduras-cu",
+      "jsonld": 4,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 4,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=ZPQ8S42GWROSqg-l",
+        "yasociadoshn.com/blog/derecho-notarial?_rsc=ZPQ8S42GWROSqg-l"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "contratos-mercantiles-esenciales-empresas-honduras",
+      "viewport": "desktop",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-mercantil/contratos-mercantiles-",
+      "jsonld": 3,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 3,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "asociadoshn.com/blog/derecho-mercantil?_rsc=1yQkdTRHJIcpy3Oj",
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=cNHyXDy5LUUuRCUf"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "contratos-mercantiles-esenciales-empresas-honduras",
+      "viewport": "mobile",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-mercantil/contratos-mercantiles-",
+      "jsonld": 3,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 3,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "asociadoshn.com/blog/derecho-mercantil?_rsc=1yQkdTRHJIcpy3Oj",
+        "asociadoshn.com/blog/derecho-mercantil?_rsc=cNHyXDy5LUUuRCUf"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "recurso-de-amparo-honduras-guia-completa",
+      "viewport": "desktop",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-administrativo/recurso-de-amparo",
+      "jsonld": 4,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 2,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "adoshn.com/blog/derecho-administrativo?_rsc=pjHS0NKZ8g3rvPRY",
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=pjHS0NKZ8g3rvPRY"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "recurso-de-amparo-honduras-guia-completa",
+      "viewport": "mobile",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-administrativo/recurso-de-amparo",
+      "jsonld": 4,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 3,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=pjHS0NKZ8g3rvPRY",
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=HZQrav_h1zOJadjx"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "reclamar-deuda-legalmente-honduras",
+      "viewport": "desktop",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-civil/reclamar-deuda-legalmente-",
+      "jsonld": 4,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 3,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=j7qKDy7KmnXicYXX",
+        "edayasociadoshn.com/blog/derecho-civil?_rsc=xEvtg5-SHOHiciA1"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "reclamar-deuda-legalmente-honduras",
+      "viewport": "mobile",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-civil/reclamar-deuda-legalmente-",
+      "jsonld": 4,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 3,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=j7qKDy7KmnXicYXX",
+        "edayasociadoshn.com/blog/derecho-civil?_rsc=xEvtg5-SHOHiciA1"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "importar-china-guia-aduanera",
+      "viewport": "desktop",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-aduanero/importar-china-guia-adu",
+      "jsonld": 4,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 4,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=ErC-mTGLLKmm4uDA",
+        "yasociadoshn.com/blog/derecho-aduanero?_rsc=ErC-mTGLLKmm4uDA"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "importar-china-guia-aduanera",
+      "viewport": "mobile",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-aduanero/importar-china-guia-adu",
+      "jsonld": 4,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 2,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=ErC-mTGLLKmm4uDA",
+        "yasociadoshn.com/blog/derecho-aduanero?_rsc=Ajv-5z7q7EMXcnHG"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "importar-mercancias-guia-aduanera",
+      "viewport": "desktop",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-aduanero/importar-mercancias-gui",
+      "jsonld": 3,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 2,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=MtrbCvft2gvO9dsA",
+        "yasociadoshn.com/blog/derecho-aduanero?_rsc=-1wVquWE__aO0EaR"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "importar-mercancias-guia-aduanera",
+      "viewport": "mobile",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-aduanero/importar-mercancias-gui",
+      "jsonld": 3,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 4,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "yasociadoshn.com/blog/derecho-aduanero?_rsc=MtrbCvft2gvO9dsA",
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=MtrbCvft2gvO9dsA"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "derechos-indigenas-consulta-previa-honduras",
+      "viewport": "desktop",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-ambiental/derechos-indigenas-con",
+      "jsonld": 3,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 4,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "asociadoshn.com/blog/derecho-ambiental?_rsc=tM3Za_fCupGwzZ7O",
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=tM3Za_fCupGwzZ7O"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "derechos-indigenas-consulta-previa-honduras",
+      "viewport": "mobile",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-ambiental/derechos-indigenas-con",
+      "jsonld": 3,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 3,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "asociadoshn.com/blog/derecho-ambiental?_rsc=tM3Za_fCupGwzZ7O",
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=bXClyRFN0J0wGce1"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "union-de-hecho-requisitos-derechos-honduras",
+      "viewport": "desktop",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-de-familia/union-de-hecho-requis",
+      "jsonld": 3,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 3,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=Uecpmc8hOswyKG31",
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=ByZn1BJtdZQWpnTl"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "union-de-hecho-requisitos-derechos-honduras",
+      "viewport": "mobile",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-de-familia/union-de-hecho-requis",
+      "jsonld": 3,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 2,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "sociadoshn.com/blog/derecho-de-familia?_rsc=ByZn1BJtdZQWpnTl",
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=ByZn1BJtdZQWpnTl"
+      ],
+      "ok": true
+    }
+  ]
+}
