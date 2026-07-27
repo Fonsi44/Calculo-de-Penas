@@ -1,0 +1,122 @@
+{
+  "pasada": "A",
+  "tipo": "documental",
+  "sha256_entrada": "44826a584d9507af9a06588421d1ab79ae9273ae61e6d88161ccd519cc584fe5",
+  "fuente_principal": {
+    "archivo": "data/codigo_civil.json",
+    "descripcion": "Código Civil de Honduras (Decreto 76-1906) — 2359 artículos verificados. Regula obligaciones, contratos, sucesiones, bienes, derechos reales y régimen patrimonial."
+  },
+  "fuente_secundaria": null,
+  "claims_extraidos": [
+    {
+      "id": "C1",
+      "claim": "El Código del Notariado de Honduras (Decreto 353-2005) regula la función notarial."
+    },
+    {
+      "id": "C2",
+      "claim": "Según el Artículo 2 del Código del Notariado, el notariado es la institución del Estado que garantiza la seguridad jurídica."
+    },
+    {
+      "id": "C3",
+      "claim": "Conforme al Artículo 16 del Código del Notariado, la escritura pública es el instrumento matriz que formaliza actos jurídicos."
+    },
+    {
+      "id": "C4",
+      "claim": "Los poderes generales y especiales se otorgan mediante escritura pública."
+    },
+    {
+      "id": "C5",
+      "claim": "El Código Civil de Honduras regula el testamento abierto y sus solemnidades."
+    },
+    {
+      "id": "C6",
+      "claim": "La compraventa de bien inmueble exige escritura pública y verificación de que la propiedad esté libre de gravámenes."
+    },
+    {
+      "id": "C7",
+      "claim": "La constitución de sociedad mercantil requiere escritura ante notario como paso previo a la inscripción en el Registro Mercantil."
+    },
+    {
+      "id": "C8",
+      "claim": "Los honorarios notariales están regulados por el Arancel del Profesional del Derecho del Colegio de Abogados de Honduras."
+    },
+    {
+      "id": "C9",
+      "claim": "Para cualquier instrumento público las partes deben presentar DNI emitido por el RNP y RTN del SAR."
+    },
+    {
+      "id": "C10",
+      "claim": "Si se extravía una escritura, se puede solicitar copia al notario autorizante o al Archivo General de Protocolos Notariales de la CSJ."
+    }
+  ],
+  "resultados_verificacion": [
+    {
+      "claim_id": "C1",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_civil.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C2",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_civil.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C3",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_civil.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C4",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_civil.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C5",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Referencia relacionada en codigo_civil.json Art. 989 CC: El testamento es solemne o menos solemne testamento solemne es aquel en que se han observado todas las solemnidades que la ley ordinariamente requiere. El menos solemne o privilegiado es aquel en que no se han observado algunas de estas solemnidades,",
+      "fuente_exacta": "codigo_civil Art. 989 CC"
+    },
+    {
+      "claim_id": "C6",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_civil.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C7",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_civil.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C8",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_civil.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C9",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_civil.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C10",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_civil.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    }
+  ],
+  "resumen_estadistico": {
+    "total_claims": 10,
+    "verificados": 0,
+    "parcialmente_verificados": 1,
+    "no_verificables": 9,
+    "refutados": 0
+  },
+  "conclusion": "Se verificaron 10 claims contra data/codigo_civil.json. 0 verificados, 1 parcialmente verificados, 9 no verificables, 0 refutados. No se detectaron refutaciones."
+}

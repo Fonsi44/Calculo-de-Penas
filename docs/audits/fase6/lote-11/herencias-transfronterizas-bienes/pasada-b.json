@@ -1,0 +1,95 @@
+{
+  "pasada": "B",
+  "tipo": "documental_ampliada",
+  "sha256_entrada": "b3065e30549f627bbd090f2ec6d00009e81e2b11a2b713c459c2fafe4a6c5983",
+  "fuentes_consultadas": [
+    {
+      "archivo": "data/codigo_civil.json",
+      "descripcion": "Código Civil de Honduras (Decreto 76-1906) — 2359 artículos verificados. Regula obligaciones, contratos, sucesiones, bienes, derechos reales y régimen patrimonial."
+    }
+  ],
+  "timestamp": "2026-07-27T08:23:15.423002",
+  "metodologia": "Verificación documental: cada claim se contrasta contra el texto literal de los artículos en las fuentes. Si se encuentra el número de artículo exacto: VERIFICADO. Si se encuentran referencias relacionadas por palabras clave: PARCIALMENTE VERIFICADO. Si no se encuentra evidencia en las fuentes: NO VERIFICABLE.",
+  "claims_detallados": [
+    {
+      "claim_id": "C1",
+      "claim_text": "La sucesión internacional entre Honduras y España se rige por el principio de la última residencia habitual del causante.",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia_detallada": "Referencia relacionada en codigo_civil.json Art. 974 CC:  El municipio llamado a la sucesión, es el correspondiente al lugar del domicilio del causante. Si éste no hubiere tenido su domicilio en la República, corresponden los bienes a los municipios donde se encontraren a la muerte de aquel, declarándose h",
+      "fuentes": "codigo_civil Art. 974 CC",
+      "nivel_confianza": "MEDIO"
+    },
+    {
+      "claim_id": "C2",
+      "claim_text": "Si el fallecido residía en España, la sucesión se rige por la ley española conforme al Reglamento (UE) 650/2012.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C3",
+      "claim_text": "Si la última residencia habitual fue Honduras, se aplica el Código Civil hondureño, Título X sobre sucesiones por causa de muerte.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C4",
+      "claim_text": "Los bienes inmuebles situados en el otro país están sujetos a la legislación local en aspectos registrales y fiscales.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C5",
+      "claim_text": "En Honduras se debe pagar el Impuesto sobre Sucesiones sobre el valor de los bienes ubicados en el país.",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia_detallada": "Referencia relacionada en codigo_civil.json Art. 14 CC: Los bienes situados en Honduras están sujetos a las leyes hondureñas aunque sus dueños sean extranjeros y no residan en Honduras.; Referencia relacionada en codigo_civil.json Art. 978 CC: En la sucesión ab intestado de un extranjero que fallezca dentro o fuera del territorio de la República, tendrán los hondureños, a título de herencia, de porción conyugal o de alimentos, los mismos derechos que según las leyes hondureñas les correspo",
+      "fuentes": "codigo_civil Art. 14 CC, codigo_civil Art. 978 CC",
+      "nivel_confianza": "MEDIO"
+    },
+    {
+      "claim_id": "C6",
+      "claim_text": "Existen exenciones para el cónyuge supérstite y los hijos en el Impuesto sobre Sucesiones hondureño.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C7",
+      "claim_text": "En España se aplica el Impuesto de Sucesiones y Donaciones, con tasas y bonificaciones variables por Comunidad Autónoma.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C8",
+      "claim_text": "España permite una deducción por el impuesto pagado en Honduras sobre los mismos bienes para evitar doble imposición.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C9",
+      "claim_text": "En ausencia de testamento se aplica la sucesión intestada conforme a la ley de la última residencia habitual del causante.",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia_detallada": "Referencia relacionada en codigo_civil.json Art. 978 CC: En la sucesión ab intestado de un extranjero que fallezca dentro o fuera del territorio de la República, tendrán los hondureños, a título de herencia, de porción conyugal o de alimentos, los mismos derechos que según las leyes hondureñas les correspo; Referencia relacionada en codigo_civil.json Art. 1166 CC: Si el testamento cerrado hubiese sido enteramente destruido por un caso fortuito o por fuerza mayor, los herederos instituidos o legatarios no serán admitidos a probar las disposiciones que el testamento contenía, y se procederá segú",
+      "fuentes": "codigo_civil Art. 978 CC, codigo_civil Art. 1166 CC",
+      "nivel_confianza": "MEDIO"
+    }
+  ],
+  "estadisticas": {
+    "total_claims": 9,
+    "verificados": 0,
+    "parcialmente_verificados": 3,
+    "no_verificables": 6,
+    "refutados": 0
+  },
+  "conclusion": "Se verificaron 9 claims contra data/codigo_civil.json. 0 verificados, 3 parcialmente verificados, 6 no verificables, 0 refutados. No se detectaron refutaciones."
+}

@@ -1,0 +1,111 @@
+{
+  "pasada": "B",
+  "tipo": "documental_ampliada",
+  "sha256_entrada": "c442bbf1368afdc1745889359b279e97eddff5dbee0f24d458786d805cd54b3e",
+  "fuentes_consultadas": [
+    {
+      "archivo": "data/codigo_trabajo.json",
+      "descripcion": "Código del Trabajo de Honduras (Decreto 189-59) — 856 artículos verificados. Regula relaciones laborales, contratos, prestaciones, cesantía, indemnizaciones, despidos, vacaciones y aguinaldo."
+    }
+  ],
+  "timestamp": "2026-07-27T08:23:15.387066",
+  "metodologia": "Verificación documental: cada claim se contrasta contra el texto literal de los artículos en las fuentes. Si se encuentra el número de artículo exacto: VERIFICADO. Si se encuentran referencias relacionadas por palabras clave: PARCIALMENTE VERIFICADO. Si no se encuentra evidencia en las fuentes: NO VERIFICABLE.",
+  "claims_detallados": [
+    {
+      "claim_id": "C1",
+      "claim_text": "El Artículo 111 del Código del Trabajo detalla las causas de terminación de los contratos laborales.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado codigo_trabajo.json: Art. 111. Texto: Son causas de terminación de los contratos de trabajo: 1.Cualquiera de las estipuladas en ellos si no fueren contrarias a la ley; 2.El mutuo consentimiento de las partes; 3.Muerte del trabajador o incapacidad física o mental del mismo, que haga imposible el cumplimiento del contrato; 4.Enfermedad de; Referencia relacionada en codigo_trabajo.json Art. 111 CT: Son causas de terminación de los contratos de trabajo: 1.Cualquiera de las estipuladas en ellos si no fueren contrarias a la ley; 2.El mutuo consentimiento de las partes; 3.Muerte del trabaj",
+      "fuentes": "codigo_trabajo Art. 111, codigo_trabajo Art. 111 CT, codigo_trabajo Art. 99 CT",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C2",
+      "claim_text": "El Artículo 112 del Código del Trabajo especifica las causas justas que facultan al patrono para dar por terminado el contrato sin responsabilidad.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado codigo_trabajo.json: Art. 112. Texto: Son causas justas que facultan al patrono para dar por terminado el contrato de trabajo, sin responsabilidad de su parte: a)El engaño del trabajador o del sindicato que lo hubiere propuesto mediante la presentación de recomendaciones o certificados falsos sobre su aptitud. Esta causa dejará de tener; Referencia relacionada en codigo_trabajo.json Art. 49 CT: El período de prueba, que no puede exceder de sesenta (60) días, es la etapa inicial del contrato de trabajo, y tiene por objeto, por parte del patrono, apreciar las aptitudes del trabajador,",
+      "fuentes": "codigo_trabajo Art. 112, codigo_trabajo Art. 49 CT, codigo_trabajo Art. 112 CT",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C3",
+      "claim_text": "La indemnización por despido injustificado se calcula como un mes de salario por cada año de servicio continuo, según el Artículo 120 del Código del Trabajo.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado codigo_trabajo.json: Art. 120. Texto: Si el contrato de trabajo por tiempo indeterminado concluye por razón de despido injustificado, o por alguna de las causas previstas en el; Referencia relacionada en codigo_trabajo.json Art. 160 CT: Los trabajadores domésticos tendrán derecho a dar por terminado el contrato y exigir el pago de un (1) mes de salario en los casos de maltrato del patrono o de personas de la casa, o de conato para inducirlo a un hecho criminal o inmoral. También ten; Referencia relacionada en codigo_trabajo.json Art. 411 CT: El cálculo del salario de un trabajador s",
+      "fuentes": "codigo_trabajo Art. 120, codigo_trabajo Art. 160 CT, codigo_trabajo Art. 411 CT",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C4",
+      "claim_text": "El Artículo 116 del Código del Trabajo regula el preaviso y su duración depende de la antigüedad del trabajador.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado codigo_trabajo.json: Art. 116. Texto: Si el contrato es por tiempo indeterminado cualquiera de las partes puede hacerlo terminar dando a la otra un preaviso. Durante el término de éste el trabajador que va a ser despedido tiene derecho a licencia remunerada de un (1) día en cada semana a fin de que pueda buscar nueva colocación. El prea",
+      "fuentes": "codigo_trabajo Art. 116",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C5",
+      "claim_text": "El plazo general para reclamar un despido injustificado es de dos meses según el Artículo 864 del Código del Trabajo.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado codigo_trabajo.json: Art. 864. Texto: Los derechos y acciones de los trabajadores para reclamar contra los despidos injustificados que se les hagan o contra las correcciones disciplinarias que se les apliquen, prescriben en el término de dos (2) meses Centro Electrónico de Documentación e Información Judicial contados a partir de la ter; Referencia relacionada en codigo_trabajo.json Art. 867 CT: Salvo disposición en contrario, todos los derechos y acciones provenientes de este Código, de sus reglamentos o de las demás leyes de trabajo o previsión social que no se originen directamen",
+      "fuentes": "codigo_trabajo Art. 864, codigo_trabajo Art. 867 CT",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C6",
+      "claim_text": "La carga de la prueba en un despido recae sobre el empleador, quien debe demostrar la causa justa ante un juez de trabajo.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_trabajo.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C7",
+      "claim_text": "El trabajador tiene derecho a vacaciones proporcionales y aguinaldo proporcional al ser despedido.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_trabajo.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C8",
+      "claim_text": "Si el empleador no notificó con la antelación requerida, debe pagar el equivalente al salario del período de preaviso omitido.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_trabajo.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C9",
+      "claim_text": "El primer paso recomendado tras un despido es acudir a la Secretaría de Trabajo y Seguridad Social (SETRASS) para intentar una conciliación.",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia_detallada": "Referencia relacionada en codigo_trabajo.json Art. 77 CT: Las partes podrán establecer en el contrato colectivo que las diferencias de interpretación se resuelvan por el procedimiento que en el mismo contrato se establezca, sin perjuicio de la función de vigilancia, sobre el cumplimiento de los contratos co; Referencia relacionada en codigo_trabajo.json Art. 632 CT: Esta sección dependerá de la Inspección General de Trabajo y tendrá las siguientes atribuciones: 1.Formular proyectos de leyes decretos y reglamentos que correspondan a las actividades de la Secretaría de Trabajo y Seguridad Social",
+      "fuentes": "codigo_trabajo Art. 77 CT, codigo_trabajo Art. 632 CT, codigo_trabajo Art. 649 CT",
+      "nivel_confianza": "MEDIO"
+    },
+    {
+      "claim_id": "C10",
+      "claim_text": "Si la conciliación fracasa, el trabajador puede presentar una demanda ante el Juzgado de Letras del Trabajo.",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia_detallada": "Referencia relacionada en codigo_trabajo.json Art. 435 CT: El patrono está obligado a dar aviso de los accidentes ocurridos, a la Inspección General del Trabajo o a sus representantes y al Juzgado de Letras del Trabajo que corresponda, dentro de las primeras veinticuatro (24) horas. Ya sea durante este térmi; Referencia relacionada en codigo_trabajo.json Art. 666 CT: En materia de trabajo la justicia se administra por: a) Los Juzgados de Letras de Trabajo, como Juzgados de primera o única instancia; b) Las Cortes de Apelaciones de Trabajo, como Tribunales de segunda instancia, cuando se establ",
+      "fuentes": "codigo_trabajo Art. 435 CT, codigo_trabajo Art. 666 CT, codigo_trabajo Art. 673 CT",
+      "nivel_confianza": "MEDIO"
+    },
+    {
+      "claim_id": "C11",
+      "claim_text": "Firmar una carta de renuncia o finiquito sin asesoría legal puede hacer perder el derecho a la indemnización por despido.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_trabajo.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    }
+  ],
+  "estadisticas": {
+    "total_claims": 11,
+    "verificados": 5,
+    "parcialmente_verificados": 2,
+    "no_verificables": 4,
+    "refutados": 0
+  },
+  "conclusion": "Se verificaron 11 claims contra data/codigo_trabajo.json. 5 verificados, 2 parcialmente verificados, 4 no verificables, 0 refutados. No se detectaron refutaciones."
+}

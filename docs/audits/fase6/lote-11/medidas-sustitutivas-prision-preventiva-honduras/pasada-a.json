@@ -1,0 +1,92 @@
+{
+  "pasada": "A",
+  "tipo": "documental",
+  "sha256_entrada": "fd32b1b2fb3d7138166a51d24ef85fc3025c1498856901939ff1db7698c15d03",
+  "fuente_principal": {
+    "archivo": "data/codigo_procesal_penal_verificado.json",
+    "descripcion": "Código Procesal Penal de Honduras (Decreto 130-2017) — 44 artículos verificados. Regula proceso penal, medidas cautelares, prisión preventiva y medidas sustitutivas."
+  },
+  "fuente_secundaria": null,
+  "claims_extraidos": [
+    {
+      "id": "C1",
+      "claim": "Los artículos 173 al 179 del Código Procesal Penal regulan las medidas sustitutivas a la prisión preventiva."
+    },
+    {
+      "id": "C2",
+      "claim": "La prisión preventiva es una medida cautelar excepcional en Honduras."
+    },
+    {
+      "id": "C3",
+      "claim": "Las medidas sustitutivas incluyen presentación periódica, prohibición de salida del país y arraigo domiciliario."
+    },
+    {
+      "id": "C4",
+      "claim": "La caución económica es una medida sustitutiva: el imputado deposita dinero o constituye garantía para asegurar su comparecencia."
+    },
+    {
+      "id": "C5",
+      "claim": "La vigilancia electrónica (tobillera) es una medida sustitutiva disponible en Honduras."
+    },
+    {
+      "id": "C6",
+      "claim": "El juez evalúa arraigo familiar, laboral, domicilio fijo y ausencia de riesgo procesal para conceder medidas sustitutivas."
+    },
+    {
+      "id": "C7",
+      "claim": "El Código Procesal Penal de Honduras (Decreto 130-2017) regula las medidas cautelares de manera integral."
+    }
+  ],
+  "resultados_verificacion": [
+    {
+      "claim_id": "C1",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_procesal_penal_verificado.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C2",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_procesal_penal_verificado.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C3",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_procesal_penal_verificado.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C4",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_procesal_penal_verificado.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C5",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_procesal_penal_verificado.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C6",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_procesal_penal_verificado.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C7",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_procesal_penal_verificado.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    }
+  ],
+  "resumen_estadistico": {
+    "total_claims": 7,
+    "verificados": 0,
+    "parcialmente_verificados": 0,
+    "no_verificables": 7,
+    "refutados": 0
+  },
+  "conclusion": "Se verificaron 7 claims contra data/codigo_procesal_penal_verificado.json. 0 verificados, 0 parcialmente verificados, 7 no verificables, 0 refutados. No se detectaron refutaciones."
+}

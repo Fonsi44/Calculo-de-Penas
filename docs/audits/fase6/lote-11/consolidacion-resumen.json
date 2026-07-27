@@ -1,0 +1,75 @@
+{
+  "lote": 11,
+  "total": 13,
+  "completed": 0,
+  "corrected": 0,
+  "needs_human_review": 13,
+  "blocked": 0,
+  "detalles": [
+    {
+      "slug": "calcular-liquidacion-laboral-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "creditos-reestructuracion-deudas",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "despido-empleados-publicos-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "despido-injustificado-honduras-derechos-trabajador",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "divorcio-choluteca",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "herencias-transfronterizas-bienes",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "medidas-sustitutivas-prision-preventiva-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "nacionalidad-espanola-para-hondurenos-residencia-plazos",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "naturalizacion-nacionalidad-hondurena",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "sanciones-administrativas-como-defenderse-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "servicios-legales-empresas-sur-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "tramites-legales-nacaome",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "tramites-notariales-frecuentes-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    }
+  ]
+}

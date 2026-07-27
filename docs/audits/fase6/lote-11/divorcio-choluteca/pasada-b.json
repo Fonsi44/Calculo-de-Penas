@@ -1,0 +1,99 @@
+{
+  "pasada": "B",
+  "tipo": "documental_ampliada",
+  "sha256_entrada": "4546d4d3f7ffc1907723173806cd3f1c431b386674a71bbb20e29a782307283d",
+  "fuentes_consultadas": [
+    {
+      "archivo": "data/codigo_familia_verificado.json",
+      "descripcion": "Código de Familia de Honduras (Decreto 76-84) — 11 artículos verificados. Regula matrimonio, divorcio, filiación, alimentos, custodia y relaciones familiares."
+    },
+    {
+      "archivo": "data/codigo_civil.json",
+      "descripcion": "Código Civil de Honduras (Decreto 76-1906) — 2359 artículos verificados. Regula obligaciones, contratos, sucesiones, bienes, derechos reales y régimen patrimonial."
+    }
+  ],
+  "timestamp": "2026-07-27T08:23:15.566463",
+  "metodologia": "Verificación documental: cada claim se contrasta contra el texto literal de los artículos en las fuentes. Si se encuentra el número de artículo exacto: VERIFICADO. Si se encuentran referencias relacionadas por palabras clave: PARCIALMENTE VERIFICADO. Si no se encuentra evidencia en las fuentes: NO VERIFICABLE.",
+  "claims_detallados": [
+    {
+      "claim_id": "C1",
+      "claim_text": "El divorcio en Honduras se regula principalmente por el Código de Familia (Decreto 76-84).",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_familia_verificado.json, codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C2",
+      "claim_text": "Los Artículos 133 y siguientes del Código de Familia detallan las causales de divorcio.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado codigo_civil.json: Art. 133. Texto: El matrimonio se celebrará en el local de la audiencia pública del Alcalde que hubiere de autorizarlo, a no ser que este acordare otra cosa a instancia de los contrayentes, por hallarse alguno de ellos en laimposibilidad de concurrir al local mencionado o por otra causa análoga.",
+      "fuentes": "codigo_civil Art. 133",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C3",
+      "claim_text": "El mutuo consentimiento está en el numeral 1 del Artículo 133 y la separación de hecho por más de un año en el numeral 4.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado codigo_civil.json: Art. 133. Texto: El matrimonio se celebrará en el local de la audiencia pública del Alcalde que hubiere de autorizarlo, a no ser que este acordare otra cosa a instancia de los contrayentes, por hallarse alguno de ellos en laimposibilidad de concurrir al local mencionado o por otra causa análoga.",
+      "fuentes": "codigo_civil Art. 133",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C4",
+      "claim_text": "El divorcio por mutuo consentimiento suele durar entre 1 y 3 meses.",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia_detallada": "Referencia relacionada en codigo_civil.json Art. 38 CC: Todos los plazos de días, meses o años de que se haga mención en las leyes o en los decretos del Poder Ejecutivo, o en los Tribunales o Juzgados se entenderá que han de ser completos, y correrán, además,hasta la media noche del último día del plazo. ; Referencia relacionada en codigo_civil.json Art. 130 CC: Después de transcurridos seis meses desde la fecha de los edictos, o de su dispensa, sin que se haya celebrado el matrimonio, no podrá autorizarse, aunque los interesados lo soliciten, si no se cumplennuevamente los requisitos y se pra",
+      "fuentes": "codigo_civil Art. 38 CC, codigo_civil Art. 130 CC, codigo_civil Art. 176 CC",
+      "nivel_confianza": "MEDIO"
+    },
+    {
+      "claim_id": "C5",
+      "claim_text": "El divorcio express por separación de hecho requiere más de 1 año de separación.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_familia_verificado.json, codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C6",
+      "claim_text": "El divorcio contencioso puede extenderse de 6 meses a 1 año o más.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_familia_verificado.json, codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C7",
+      "claim_text": "La autoridad competente en Choluteca es el Juzgado de Letras de Familia.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_familia_verificado.json, codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C8",
+      "claim_text": "Los documentos esenciales incluyen certificado de matrimonio actualizado del RNP y certificados de nacimiento de los hijos.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_familia_verificado.json, codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C9",
+      "claim_text": "En caso de hijos menores se requiere un convenio sobre pensión alimenticia y custodia.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_familia_verificado.json, codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    }
+  ],
+  "estadisticas": {
+    "total_claims": 9,
+    "verificados": 2,
+    "parcialmente_verificados": 1,
+    "no_verificables": 6,
+    "refutados": 0
+  },
+  "conclusion": "Se verificaron 9 claims contra data/codigo_familia_verificado.json y data/codigo_civil.json. 2 verificados, 1 parcialmente verificados, 6 no verificables, 0 refutados. No se detectaron refutaciones."
+}

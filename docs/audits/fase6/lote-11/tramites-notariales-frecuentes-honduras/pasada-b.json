@@ -1,0 +1,103 @@
+{
+  "pasada": "B",
+  "tipo": "documental_ampliada",
+  "sha256_entrada": "44826a584d9507af9a06588421d1ab79ae9273ae61e6d88161ccd519cc584fe5",
+  "fuentes_consultadas": [
+    {
+      "archivo": "data/codigo_civil.json",
+      "descripcion": "Código Civil de Honduras (Decreto 76-1906) — 2359 artículos verificados. Regula obligaciones, contratos, sucesiones, bienes, derechos reales y régimen patrimonial."
+    }
+  ],
+  "timestamp": "2026-07-27T08:23:15.619776",
+  "metodologia": "Verificación documental: cada claim se contrasta contra el texto literal de los artículos en las fuentes. Si se encuentra el número de artículo exacto: VERIFICADO. Si se encuentran referencias relacionadas por palabras clave: PARCIALMENTE VERIFICADO. Si no se encuentra evidencia en las fuentes: NO VERIFICABLE.",
+  "claims_detallados": [
+    {
+      "claim_id": "C1",
+      "claim_text": "El Código del Notariado de Honduras (Decreto 353-2005) regula la función notarial.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C2",
+      "claim_text": "Según el Artículo 2 del Código del Notariado, el notariado es la institución del Estado que garantiza la seguridad jurídica.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C3",
+      "claim_text": "Conforme al Artículo 16 del Código del Notariado, la escritura pública es el instrumento matriz que formaliza actos jurídicos.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C4",
+      "claim_text": "Los poderes generales y especiales se otorgan mediante escritura pública.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C5",
+      "claim_text": "El Código Civil de Honduras regula el testamento abierto y sus solemnidades.",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia_detallada": "Referencia relacionada en codigo_civil.json Art. 989 CC: El testamento es solemne o menos solemne testamento solemne es aquel en que se han observado todas las solemnidades que la ley ordinariamente requiere. El menos solemne o privilegiado es aquel en que no se han observado algunas de estas solemnidades,",
+      "fuentes": "codigo_civil Art. 989 CC",
+      "nivel_confianza": "MEDIO"
+    },
+    {
+      "claim_id": "C6",
+      "claim_text": "La compraventa de bien inmueble exige escritura pública y verificación de que la propiedad esté libre de gravámenes.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C7",
+      "claim_text": "La constitución de sociedad mercantil requiere escritura ante notario como paso previo a la inscripción en el Registro Mercantil.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C8",
+      "claim_text": "Los honorarios notariales están regulados por el Arancel del Profesional del Derecho del Colegio de Abogados de Honduras.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C9",
+      "claim_text": "Para cualquier instrumento público las partes deben presentar DNI emitido por el RNP y RTN del SAR.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C10",
+      "claim_text": "Si se extravía una escritura, se puede solicitar copia al notario autorizante o al Archivo General de Protocolos Notariales de la CSJ.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_civil.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    }
+  ],
+  "estadisticas": {
+    "total_claims": 10,
+    "verificados": 0,
+    "parcialmente_verificados": 1,
+    "no_verificables": 9,
+    "refutados": 0
+  },
+  "conclusion": "Se verificaron 10 claims contra data/codigo_civil.json. 0 verificados, 1 parcialmente verificados, 9 no verificables, 0 refutados. No se detectaron refutaciones."
+}

@@ -1,0 +1,112 @@
+{
+  "pasada": "A",
+  "tipo": "documental",
+  "sha256_entrada": "c51505cbc6f04bd97e5712a34d115e00efc4ed509051d0d12d0f86b1057e20bf",
+  "fuente_principal": {
+    "archivo": "data/articulos_constitucion.json",
+    "descripcion": "Constitución de la República de Honduras — 378 artículos. Norma suprema: derechos fundamentales, estructura del Estado, nacionalidad y garantías constitucionales."
+  },
+  "fuente_secundaria": null,
+  "claims_extraidos": [
+    {
+      "id": "C1",
+      "claim": "El Artículo 22 de la Constitución establece que la nacionalidad hondureña se adquiere por nacimiento y por naturalización."
+    },
+    {
+      "id": "C2",
+      "claim": "El Artículo 24 de la Constitución establece que los centroamericanos por nacimiento pueden naturalizarse con un año de residencia."
+    },
+    {
+      "id": "C3",
+      "claim": "Los españoles e iberoamericanos por nacimiento pueden naturalizarse con dos años consecutivos de residencia legal, según el Artículo 24 constitucional."
+    },
+    {
+      "id": "C4",
+      "claim": "Los demás extranjeros requieren más de tres años consecutivos de residencia legal, según el Artículo 24 constitucional."
+    },
+    {
+      "id": "C5",
+      "claim": "La persona extranjera casada con un hondureño por nacimiento puede optar por la naturalización, según el Artículo 24 constitucional."
+    },
+    {
+      "id": "C6",
+      "claim": "El Artículo 28 de la Constitución establece que ningún hondureño por nacimiento podrá ser privado de su nacionalidad."
+    },
+    {
+      "id": "C7",
+      "claim": "Honduras mantiene tratados de doble nacionalidad con países iberoamericanos y con España."
+    },
+    {
+      "id": "C8",
+      "claim": "La naturalización requiere aprobación del Congreso Nacional mediante decreto legislativo."
+    },
+    {
+      "id": "C9",
+      "claim": "El proceso de naturalización toma entre 6 a 12 meses, e incluso hasta 24 meses."
+    }
+  ],
+  "resultados_verificacion": [
+    {
+      "claim_id": "C1",
+      "veredicto": "VERIFICADO",
+      "evidencia": "Encontrado articulos_constitucion.json: Art. 22. Texto: La nacionalidad hondureña se adquiere por nacimiento y por naturalización. [Nota: 2 Artículo 17. Reformado por Decreto No.237-2012 de fecha 23 de enero del 2013, publicado en el Diario] Oficial Gaceta Nº33,033 del 24 de enero del 2013. Ratificado por Decreto No.10-2013 del 30 de enero del 2013, publ; Referencia relacionada en articulos_constitucion.json Art. 22 Constitución: La nacionalidad hondureña se adquiere por nacimiento y por naturalización. [Nota: 2 Artículo 17. Reformado por Decreto No.237-2012 de fecha 23 de enero del 2013, publ",
+      "fuente_exacta": "articulos_constitucion Art. 22, articulos_constitucion Art. 22 Constitución, articulos_constitucion Art. 24 Constitución"
+    },
+    {
+      "claim_id": "C2",
+      "veredicto": "VERIFICADO",
+      "evidencia": "Encontrado articulos_constitucion.json: Art. 24. Texto: Son hondureños por naturalización: 1) Los centroamericanos por nacimiento que tengan un (1) año de residencia en el país; 2) Los españoles e iberoamericanos por nacimiento, que tengan dos (2) años consecutivos de residencia en el país; 3) Los demás extranjeros que hayan residido en el país más de tr; Referencia relacionada en articulos_constitucion.json Art. 24 Constitución: Son hondureños por naturalización: 1) Los centroamericanos por nacimiento que tengan un (1) año de residencia en el país; 2) Los españoles e iberoamericanos por nacim",
+      "fuente_exacta": "articulos_constitucion Art. 24, articulos_constitucion Art. 24 Constitución, articulos_constitucion Art. 43 Constitución"
+    },
+    {
+      "claim_id": "C3",
+      "veredicto": "VERIFICADO",
+      "evidencia": "Encontrado articulos_constitucion.json: Art. 24. Texto: Son hondureños por naturalización: 1) Los centroamericanos por nacimiento que tengan un (1) año de residencia en el país; 2) Los españoles e iberoamericanos por nacimiento, que tengan dos (2) años consecutivos de residencia en el país; 3) Los demás extranjeros que hayan residido en el país más de tr; Referencia relacionada en articulos_constitucion.json Art. 24 Constitución: Son hondureños por naturalización: 1) Los centroamericanos por nacimiento que tengan un (1) año de residencia en el país; 2) Los españoles e iberoamericanos por nacim",
+      "fuente_exacta": "articulos_constitucion Art. 24, articulos_constitucion Art. 24 Constitución"
+    },
+    {
+      "claim_id": "C4",
+      "veredicto": "VERIFICADO",
+      "evidencia": "Encontrado articulos_constitucion.json: Art. 24. Texto: Son hondureños por naturalización: 1) Los centroamericanos por nacimiento que tengan un (1) año de residencia en el país; 2) Los españoles e iberoamericanos por nacimiento, que tengan dos (2) años consecutivos de residencia en el país; 3) Los demás extranjeros que hayan residido en el país más de tr; Referencia relacionada en articulos_constitucion.json Art. 24 Constitución: Son hondureños por naturalización: 1) Los centroamericanos por nacimiento que tengan un (1) año de residencia en el país; 2) Los españoles e iberoamericanos por nacim",
+      "fuente_exacta": "articulos_constitucion Art. 24, articulos_constitucion Art. 24 Constitución"
+    },
+    {
+      "claim_id": "C5",
+      "veredicto": "VERIFICADO",
+      "evidencia": "Encontrado articulos_constitucion.json: Art. 24. Texto: Son hondureños por naturalización: 1) Los centroamericanos por nacimiento que tengan un (1) año de residencia en el país; 2) Los españoles e iberoamericanos por nacimiento, que tengan dos (2) años consecutivos de residencia en el país; 3) Los demás extranjeros que hayan residido en el país más de tr; Referencia relacionada en articulos_constitucion.json Art. 24 Constitución: Son hondureños por naturalización: 1) Los centroamericanos por nacimiento que tengan un (1) año de residencia en el país; 2) Los españoles e iberoamericanos por nacim",
+      "fuente_exacta": "articulos_constitucion Art. 24, articulos_constitucion Art. 24 Constitución, articulos_constitucion Art. 23 Constitución"
+    },
+    {
+      "claim_id": "C6",
+      "veredicto": "VERIFICADO",
+      "evidencia": "Encontrado articulos_constitucion.json: Art. 28. Texto: Ningún hondureño por nacimiento podrá ser privado de su nacionalidad. Este derecho lo conservan los hondureños por nacimiento, aun cuando adquieren otra nacionalidad. Una Ley Especial denominada Ley de Nacionalidad regulará lo relativo al ejercicio de los derechos políticos y de todo aquello que se ; Referencia relacionada en articulos_constitucion.json Art. 28 Constitución: Ningún hondureño por nacimiento podrá ser privado de su nacionalidad. Este derecho lo conservan los hondureños por nacimiento, aun cuando adquieren otra nacionalidad.",
+      "fuente_exacta": "articulos_constitucion Art. 28, articulos_constitucion Art. 28 Constitución, articulos_constitucion Art. 24 Constitución"
+    },
+    {
+      "claim_id": "C7",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en articulos_constitucion.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C8",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Referencia relacionada en articulos_constitucion.json Art. 5 Constitución: El Gobierno de la República debe sustentarse en los principios de la soberanía popular, la autodeterminación de los pueblos y la democracia participativa, de los cuales se derivan la integración nacional, que implica participación de todos los sector; Referencia relacionada en articulos_constitucion.json Art. 20 Constitución: Cualquier tratado o convención que celebre el Poder Ejecutivo referente al territorio nacional, requerirá la aprobación del Congreso Nacional por votación no menor de tres cuartas partes (3/4) de l",
+      "fuente_exacta": "articulos_constitucion Art. 5 Constitución, articulos_constitucion Art. 20 Constitución, articulos_constitucion Art. 245 Constitución"
+    },
+    {
+      "claim_id": "C9",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Referencia relacionada en articulos_constitucion.json Art. 22 Constitución: La nacionalidad hondureña se adquiere por nacimiento y por naturalización. [Nota: 2 Artículo 17. Reformado por Decreto No.237-2012 de fecha 23 de enero del 2013, publicado en el Diario] Oficial Gaceta Nº33,033 del 24 de enero del 2013. Ratificado por; Referencia relacionada en articulos_constitucion.json Art. 199 Constitución: No pueden ser elegidos diputados: 1) El presidente y los designados a la presidencia de la República; 34 [Nota: 34 Artículo 199. numeral 1. Conforme a Sentencia de la Corte Suprema de Justicia de",
+      "fuente_exacta": "articulos_constitucion Art. 22 Constitución, articulos_constitucion Art. 199 Constitución, articulos_constitucion Art. 240 Constitución"
+    }
+  ],
+  "resumen_estadistico": {
+    "total_claims": 9,
+    "verificados": 6,
+    "parcialmente_verificados": 2,
+    "no_verificables": 1,
+    "refutados": 0
+  },
+  "conclusion": "Se verificaron 9 claims contra data/articulos_constitucion.json. 6 verificados, 2 parcialmente verificados, 1 no verificables, 0 refutados. No se detectaron refutaciones."
+}

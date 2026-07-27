@@ -1,0 +1,115 @@
+{
+  "pasada": "A",
+  "tipo": "documental",
+  "sha256_entrada": "4546d4d3f7ffc1907723173806cd3f1c431b386674a71bbb20e29a782307283d",
+  "fuente_principal": {
+    "archivo": "data/codigo_familia_verificado.json",
+    "descripcion": "Código de Familia de Honduras (Decreto 76-84) — 11 artículos verificados. Regula matrimonio, divorcio, filiación, alimentos, custodia y relaciones familiares."
+  },
+  "fuente_secundaria": {
+    "archivo": "data/codigo_civil.json",
+    "descripcion": "Código Civil de Honduras (Decreto 76-1906) — 2359 artículos verificados. Regula obligaciones, contratos, sucesiones, bienes, derechos reales y régimen patrimonial."
+  },
+  "claims_extraidos": [
+    {
+      "id": "C1",
+      "claim": "El divorcio en Honduras se regula principalmente por el Código de Familia (Decreto 76-84)."
+    },
+    {
+      "id": "C2",
+      "claim": "Los Artículos 133 y siguientes del Código de Familia detallan las causales de divorcio."
+    },
+    {
+      "id": "C3",
+      "claim": "El mutuo consentimiento está en el numeral 1 del Artículo 133 y la separación de hecho por más de un año en el numeral 4."
+    },
+    {
+      "id": "C4",
+      "claim": "El divorcio por mutuo consentimiento suele durar entre 1 y 3 meses."
+    },
+    {
+      "id": "C5",
+      "claim": "El divorcio express por separación de hecho requiere más de 1 año de separación."
+    },
+    {
+      "id": "C6",
+      "claim": "El divorcio contencioso puede extenderse de 6 meses a 1 año o más."
+    },
+    {
+      "id": "C7",
+      "claim": "La autoridad competente en Choluteca es el Juzgado de Letras de Familia."
+    },
+    {
+      "id": "C8",
+      "claim": "Los documentos esenciales incluyen certificado de matrimonio actualizado del RNP y certificados de nacimiento de los hijos."
+    },
+    {
+      "id": "C9",
+      "claim": "En caso de hijos menores se requiere un convenio sobre pensión alimenticia y custodia."
+    }
+  ],
+  "resultados_verificacion": [
+    {
+      "claim_id": "C1",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_familia_verificado.json, codigo_civil.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C2",
+      "veredicto": "VERIFICADO",
+      "evidencia": "Encontrado codigo_civil.json: Art. 133. Texto: El matrimonio se celebrará en el local de la audiencia pública del Alcalde que hubiere de autorizarlo, a no ser que este acordare otra cosa a instancia de los contrayentes, por hallarse alguno de ellos en laimposibilidad de concurrir al local mencionado o por otra causa análoga.",
+      "fuente_exacta": "codigo_civil Art. 133"
+    },
+    {
+      "claim_id": "C3",
+      "veredicto": "VERIFICADO",
+      "evidencia": "Encontrado codigo_civil.json: Art. 133. Texto: El matrimonio se celebrará en el local de la audiencia pública del Alcalde que hubiere de autorizarlo, a no ser que este acordare otra cosa a instancia de los contrayentes, por hallarse alguno de ellos en laimposibilidad de concurrir al local mencionado o por otra causa análoga.",
+      "fuente_exacta": "codigo_civil Art. 133"
+    },
+    {
+      "claim_id": "C4",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Referencia relacionada en codigo_civil.json Art. 38 CC: Todos los plazos de días, meses o años de que se haga mención en las leyes o en los decretos del Poder Ejecutivo, o en los Tribunales o Juzgados se entenderá que han de ser completos, y correrán, además,hasta la media noche del último día del plazo. ; Referencia relacionada en codigo_civil.json Art. 130 CC: Después de transcurridos seis meses desde la fecha de los edictos, o de su dispensa, sin que se haya celebrado el matrimonio, no podrá autorizarse, aunque los interesados lo soliciten, si no se cumplennuevamente los requisitos y se pra",
+      "fuente_exacta": "codigo_civil Art. 38 CC, codigo_civil Art. 130 CC, codigo_civil Art. 176 CC"
+    },
+    {
+      "claim_id": "C5",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_familia_verificado.json, codigo_civil.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C6",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_familia_verificado.json, codigo_civil.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C7",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_familia_verificado.json, codigo_civil.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C8",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_familia_verificado.json, codigo_civil.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    },
+    {
+      "claim_id": "C9",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "No se encontró evidencia en codigo_familia_verificado.json, codigo_civil.json.",
+      "fuente_exacta": "No disponible en las fuentes consultadas"
+    }
+  ],
+  "resumen_estadistico": {
+    "total_claims": 9,
+    "verificados": 2,
+    "parcialmente_verificados": 1,
+    "no_verificables": 6,
+    "refutados": 0
+  },
+  "conclusion": "Se verificaron 9 claims contra data/codigo_familia_verificado.json y data/codigo_civil.json. 2 verificados, 1 parcialmente verificados, 6 no verificables, 0 refutados. No se detectaron refutaciones."
+}

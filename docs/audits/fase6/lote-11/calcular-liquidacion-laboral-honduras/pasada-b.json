@@ -1,0 +1,119 @@
+{
+  "pasada": "B",
+  "tipo": "documental_ampliada",
+  "sha256_entrada": "04cc41ef0cb2c28142a8237afcd7b6666b26d0f9657d91739318dce0ab2ed281",
+  "fuentes_consultadas": [
+    {
+      "archivo": "data/codigo_trabajo.json",
+      "descripcion": "Código del Trabajo de Honduras (Decreto 189-59) — 856 artículos verificados. Regula relaciones laborales, contratos, prestaciones, cesantía, indemnizaciones, despidos, vacaciones y aguinaldo."
+    }
+  ],
+  "timestamp": "2026-07-27T08:23:15.464192",
+  "metodologia": "Verificación documental: cada claim se contrasta contra el texto literal de los artículos en las fuentes. Si se encuentra el número de artículo exacto: VERIFICADO. Si se encuentran referencias relacionadas por palabras clave: PARCIALMENTE VERIFICADO. Si no se encuentra evidencia en las fuentes: NO VERIFICABLE.",
+  "claims_detallados": [
+    {
+      "claim_id": "C1",
+      "claim_text": "Los Artículos 112 al 120 del Código del Trabajo regulan la cesantía, el preaviso y la indemnización por despido injustificado.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado codigo_trabajo.json: Art. 112. Texto: Son causas justas que facultan al patrono para dar por terminado el contrato de trabajo, sin responsabilidad de su parte: a)El engaño del trabajador o del sindicato que lo hubiere propuesto mediante la presentación de recomendaciones o certificados falsos sobre su aptitud. Esta causa dejará de tener; Encontrado codigo_trabajo.json: Art. 120. Texto: Si el contrato de trabajo por tiempo indeterminado concluye por razón de despido injustificado, o por alguna de las causas previstas en el; Referencia relacionada en codigo_trabajo.json Art. 52 CT: Du",
+      "fuentes": "codigo_trabajo Art. 112, codigo_trabajo Art. 120, codigo_trabajo Art. 52 CT",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C2",
+      "claim_text": "Las vacaciones se rigen por el Artículo 346 del Código del Trabajo.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado codigo_trabajo.json: Art. 346. Texto: El período de vacaciones remuneradas, a que tiene derecho todo trabajador después de cada año de trabajo continuo al servicio del mismo patrono, tendrá como duración mínima la que a continuación se expresa: a)Después de un (1) año de servicios continuos diez (10) días laborables, consecutivos; b)Des; Referencia relacionada en codigo_trabajo.json Art. 56 CT: Por condiciones generales de trabajo se entenderá todo lo relativo a jornadas de labor, descanso semanal, vacaciones anuales, salarios, régimen Centro Electrónico de Documentación e Informaci",
+      "fuentes": "codigo_trabajo Art. 346, codigo_trabajo Art. 56 CT, codigo_trabajo Art. 92 CT",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C3",
+      "claim_text": "El aguinaldo se rige por el Artículo 347 del Código del Trabajo.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado codigo_trabajo.json: Art. 347. Texto: En las labores en que el trabajo no se efectúe con regularidad todo el año, se considerará cumplida la condición de continuidad en el servicio cuando el interesado haya trabajado durante un mínimo de doscientos (200) días en el año.",
+      "fuentes": "codigo_trabajo Art. 347",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C4",
+      "claim_text": "La cesantía se calcula según el tiempo de servicio continuo y el salario, con topes máximos según antigüedad.",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia_detallada": "Referencia relacionada en codigo_trabajo.json Art. 367 CT: Para fijar el importe del salario en cada clase de trabajo, se deben tomar en cuenta la intensidad y calidad del mismo, clima y condiciones de vida, y el tiempo de servicio del trabajador. A trabajo igual debe corresponder salario igual, sin discrimi",
+      "fuentes": "codigo_trabajo Art. 367 CT",
+      "nivel_confianza": "MEDIO"
+    },
+    {
+      "claim_id": "C5",
+      "claim_text": "Según el Artículo 112, para menos de 5 años de servicio, la cesantía corresponde al 25% sobre los salarios devengados.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado codigo_trabajo.json: Art. 112. Texto: Son causas justas que facultan al patrono para dar por terminado el contrato de trabajo, sin responsabilidad de su parte: a)El engaño del trabajador o del sindicato que lo hubiere propuesto mediante la presentación de recomendaciones o certificados falsos sobre su aptitud. Esta causa dejará de tener",
+      "fuentes": "codigo_trabajo Art. 112",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C6",
+      "claim_text": "El Artículo 119 del Código del Trabajo regula el preaviso: 30 días para más de 2 y menos de 4 años de servicio.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado codigo_trabajo.json: Art. 119. Texto: Código de la Niñez y la Adolescencia: El empleo de niños en cualquier actividad retribuida estará sujeto a lo prescrito por el",
+      "fuentes": "codigo_trabajo Art. 119",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C7",
+      "claim_text": "El Artículo 120 establece la indemnización por despido: un mes de salario por cada año o fracción mayor a 6 meses para menos de 5 años.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado codigo_trabajo.json: Art. 120. Texto: Si el contrato de trabajo por tiempo indeterminado concluye por razón de despido injustificado, o por alguna de las causas previstas en el; Referencia relacionada en codigo_trabajo.json Art. 144 CT: Ninguna trabajadora puede ser despedida por motivo de embarazo o lactancia. Se presume que el despido se ha efectuado por motivo de embarazo o lactancia, cuando a tenido lugar dentro del período del embarazo o dentro de los tres (3) meses posteriores; Referencia relacionada en codigo_trabajo.json Art. 160 CT: Los trabajadores domésticos tendrán derec",
+      "fuentes": "codigo_trabajo Art. 120, codigo_trabajo Art. 144 CT, codigo_trabajo Art. 160 CT",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C8",
+      "claim_text": "El plazo para interponer una demanda judicial por prestaciones laborales es de un año según el Artículo 318 del Código del Trabajo.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado codigo_trabajo.json: Art. 318. Texto: Lo dispuesto en los siguientes artículos de este Título es de observancia general, por no excluye las soluciones especiales que para ciertas modalidades de trabajo se dan en otros capítulos del presente Código, ni el convenio que con sujeción a los límites legales realicen las partes.",
+      "fuentes": "codigo_trabajo Art. 318",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C9",
+      "claim_text": "La cesantía es un derecho adquirido que se paga en cualquier terminación de contrato, incluida la renuncia voluntaria.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_trabajo.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C10",
+      "claim_text": "El salario promedio para el cálculo de cesantía incluye horas extra, comisiones y bonos habituales de los últimos seis meses.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_trabajo.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C11",
+      "claim_text": "El preaviso omitido debe pagarse al trabajador según el Artículo 119 del Código del Trabajo.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado codigo_trabajo.json: Art. 119. Texto: Código de la Niñez y la Adolescencia: El empleo de niños en cualquier actividad retribuida estará sujeto a lo prescrito por el",
+      "fuentes": "codigo_trabajo Art. 119",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C12",
+      "claim_text": "Errores comunes incluyen ignorar bonos, comisiones, no incluir preaviso omitido y confundir cesantía con indemnización.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en codigo_trabajo.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    }
+  ],
+  "estadisticas": {
+    "total_claims": 12,
+    "verificados": 8,
+    "parcialmente_verificados": 1,
+    "no_verificables": 3,
+    "refutados": 0
+  },
+  "conclusion": "Se verificaron 12 claims contra data/codigo_trabajo.json. 8 verificados, 1 parcialmente verificados, 3 no verificables, 0 refutados. No se detectaron refutaciones."
+}

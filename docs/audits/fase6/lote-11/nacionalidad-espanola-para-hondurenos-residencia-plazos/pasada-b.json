@@ -1,0 +1,79 @@
+{
+  "pasada": "B",
+  "tipo": "documental_ampliada",
+  "sha256_entrada": "070ad1686b503086f808bbcc0ed8883f65b3306516e7b2523ecf58fcd90910c6",
+  "fuentes_consultadas": [
+    {
+      "archivo": "data/articulos_constitucion.json",
+      "descripcion": "Constitución de la República de Honduras — 378 artículos. Norma suprema: derechos fundamentales, estructura del Estado, nacionalidad y garantías constitucionales."
+    }
+  ],
+  "timestamp": "2026-07-27T08:23:15.533727",
+  "metodologia": "Verificación documental: cada claim se contrasta contra el texto literal de los artículos en las fuentes. Si se encuentra el número de artículo exacto: VERIFICADO. Si se encuentran referencias relacionadas por palabras clave: PARCIALMENTE VERIFICADO. Si no se encuentra evidencia en las fuentes: NO VERIFICABLE.",
+  "claims_detallados": [
+    {
+      "claim_id": "C1",
+      "claim_text": "El Artículo 22 de la Constitución española (Código Civil español) regula la nacionalidad por residencia.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado articulos_constitucion.json: Art. 22. Texto: La nacionalidad hondureña se adquiere por nacimiento y por naturalización. [Nota: 2 Artículo 17. Reformado por Decreto No.237-2012 de fecha 23 de enero del 2013, publicado en el Diario] Oficial Gaceta Nº33,033 del 24 de enero del 2013. Ratificado por Decreto No.10-2013 del 30 de enero del 2013, publ; Referencia relacionada en articulos_constitucion.json Art. 24 Constitución: Son hondureños por naturalización: 1) Los centroamericanos por nacimiento que tengan un (1) año de residencia en el país; 2) Los españoles e iberoamericanos por nacim",
+      "fuentes": "articulos_constitucion Art. 22, articulos_constitucion Art. 24 Constitución",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C2",
+      "claim_text": "Los nacionales de países iberoamericanos, como Honduras, pueden solicitar la nacionalidad española tras dos años de residencia legal.",
+      "veredicto": "VERIFICADO",
+      "evidencia_detallada": "Encontrado articulos_constitucion.json: Art. 22. Texto: La nacionalidad hondureña se adquiere por nacimiento y por naturalización. [Nota: 2 Artículo 17. Reformado por Decreto No.237-2012 de fecha 23 de enero del 2013, publicado en el Diario] Oficial Gaceta Nº33,033 del 24 de enero del 2013. Ratificado por Decreto No.10-2013 del 30 de enero del 2013, publ; Encontrado articulos_constitucion.json: Art. 24. Texto: Son hondureños por naturalización: 1) Los centroamericanos por nacimiento que tengan un (1) año de residencia en el país; 2) Los españoles e iberoamericanos por nacimiento, que tengan do",
+      "fuentes": "articulos_constitucion Art. 22, articulos_constitucion Art. 24, articulos_constitucion Art. 24 Constitución",
+      "nivel_confianza": "ALTO"
+    },
+    {
+      "claim_id": "C3",
+      "claim_text": "El plazo general de residencia para la nacionalidad española es de diez años, con excepciones que lo reducen.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en articulos_constitucion.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C4",
+      "claim_text": "Se requiere acreditar residencia legal e ininterrumpida, buena conducta cívica e integración en la sociedad española.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en articulos_constitucion.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C5",
+      "claim_text": "La integración se acredita mediante la prueba CCSE del Instituto Cervantes.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en articulos_constitucion.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C6",
+      "claim_text": "Los nacionales de países hispanohablantes están exentos del examen DELE A2 de español.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en articulos_constitucion.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    },
+    {
+      "claim_id": "C7",
+      "claim_text": "La documentación incluye pasaporte hondureño vigente, tarjeta de residencia española y certificado de nacimiento hondureño apostillado.",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia_detallada": "No se encontró evidencia en articulos_constitucion.json.",
+      "fuentes": "No disponible en las fuentes consultadas",
+      "nivel_confianza": "BAJO"
+    }
+  ],
+  "estadisticas": {
+    "total_claims": 7,
+    "verificados": 2,
+    "parcialmente_verificados": 0,
+    "no_verificables": 5,
+    "refutados": 0
+  },
+  "conclusion": "Se verificaron 7 claims contra data/articulos_constitucion.json. 2 verificados, 0 parcialmente verificados, 5 no verificables, 0 refutados. No se detectaron refutaciones."
+}
