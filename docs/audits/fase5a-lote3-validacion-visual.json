@@ -1,10 +1,20 @@
 {
   "fase": "5A",
   "lote": 3,
-  "generatedAt": "2026-07-27T00:45:39.147Z",
+  "generatedAt": "2026-07-27T01:40:35.083Z",
   "totalChecks": 16,
   "pass": 16,
   "fail": 0,
+  "deployment": {
+    "githubCommitSha": "b8c5fbe66ab87086440fafe16163727168799879",
+    "githubCommitRef": "main",
+    "deploymentIdPrevioFase5B": "dpl_4u4qvkFADB57JCGmzxS4ZbHAuymB",
+    "urlProduccion": "https://www.pinedayasociadoshn.com",
+    "fechaUtc": "2026-07-27T01:40:35.083Z",
+    "alcance": "Smoke Playwright sobre deployment final tras push de b8c5fbe6 (Fase 5B). 8 articulos x 2 viewports = 16 checks.",
+    "criterioPass": "status==200, h1Count==1, hasOverflow==false, swSupported==true, consoleErrors==0, canonical y jsonld presentes.",
+    "notasRsc": "Los networkErrorSamples son SOLO prefetch RSC abortados (URLs con ?_rsc=...). Son eventos NO funcionales del router de Next.js, no errores productivos. No afectan al PASS."
+  },
   "resultados": [
     {
       "slug": "poder-legal-honduras-cuando-se-necesita",
@@ -17,11 +27,11 @@
       "swSupported": true,
       "consoleErrors": 0,
       "consoleWarnings": 0,
-      "networkErrors": 4,
+      "networkErrors": 3,
       "errorSamples": [],
       "networkErrorSamples": [
-        "ttps://www.pinedayasociadoshn.com/blog?_rsc=ZPQ8S42GWROSqg-l",
-        "yasociadoshn.com/blog/derecho-notarial?_rsc=ZPQ8S42GWROSqg-l"
+        "yasociadoshn.com/blog/derecho-notarial?_rsc=ZPQ8S42GWROSqg-l",
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=ODOb9pdknIyY6kCM"
       ],
       "ok": true
     },
@@ -36,11 +46,11 @@
       "swSupported": true,
       "consoleErrors": 0,
       "consoleWarnings": 0,
-      "networkErrors": 4,
+      "networkErrors": 3,
       "errorSamples": [],
       "networkErrorSamples": [
-        "ttps://www.pinedayasociadoshn.com/blog?_rsc=ZPQ8S42GWROSqg-l",
-        "yasociadoshn.com/blog/derecho-notarial?_rsc=ZPQ8S42GWROSqg-l"
+        "yasociadoshn.com/blog/derecho-notarial?_rsc=ZPQ8S42GWROSqg-l",
+        "yasociadoshn.com/blog/derecho-notarial?_rsc=ODOb9pdknIyY6kCM"
       ],
       "ok": true
     },
@@ -55,11 +65,11 @@
       "swSupported": true,
       "consoleErrors": 0,
       "consoleWarnings": 0,
-      "networkErrors": 3,
+      "networkErrors": 4,
       "errorSamples": [],
       "networkErrorSamples": [
-        "asociadoshn.com/blog/derecho-mercantil?_rsc=1yQkdTRHJIcpy3Oj",
-        "ttps://www.pinedayasociadoshn.com/blog?_rsc=cNHyXDy5LUUuRCUf"
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=1yQkdTRHJIcpy3Oj",
+        "asociadoshn.com/blog/derecho-mercantil?_rsc=1yQkdTRHJIcpy3Oj"
       ],
       "ok": true
     },
@@ -77,7 +87,7 @@
       "networkErrors": 3,
       "errorSamples": [],
       "networkErrorSamples": [
-        "asociadoshn.com/blog/derecho-mercantil?_rsc=1yQkdTRHJIcpy3Oj",
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=1yQkdTRHJIcpy3Oj",
         "asociadoshn.com/blog/derecho-mercantil?_rsc=cNHyXDy5LUUuRCUf"
       ],
       "ok": true
@@ -93,11 +103,11 @@
       "swSupported": true,
       "consoleErrors": 0,
       "consoleWarnings": 0,
-      "networkErrors": 2,
+      "networkErrors": 3,
       "errorSamples": [],
       "networkErrorSamples": [
         "adoshn.com/blog/derecho-administrativo?_rsc=pjHS0NKZ8g3rvPRY",
-        "ttps://www.pinedayasociadoshn.com/blog?_rsc=pjHS0NKZ8g3rvPRY"
+        "adoshn.com/blog/derecho-administrativo?_rsc=HZQrav_h1zOJadjx"
       ],
       "ok": true
     },
@@ -115,7 +125,7 @@
       "networkErrors": 3,
       "errorSamples": [],
       "networkErrorSamples": [
-        "ttps://www.pinedayasociadoshn.com/blog?_rsc=pjHS0NKZ8g3rvPRY",
+        "adoshn.com/blog/derecho-administrativo?_rsc=pjHS0NKZ8g3rvPRY",
         "ttps://www.pinedayasociadoshn.com/blog?_rsc=HZQrav_h1zOJadjx"
       ],
       "ok": true
@@ -134,8 +144,8 @@
       "networkErrors": 3,
       "errorSamples": [],
       "networkErrorSamples": [
-        "ttps://www.pinedayasociadoshn.com/blog?_rsc=j7qKDy7KmnXicYXX",
-        "edayasociadoshn.com/blog/derecho-civil?_rsc=xEvtg5-SHOHiciA1"
+        "edayasociadoshn.com/blog/derecho-civil?_rsc=j7qKDy7KmnXicYXX",
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=xEvtg5-SHOHiciA1"
       ],
       "ok": true
     },
@@ -169,11 +179,11 @@
       "swSupported": true,
       "consoleErrors": 0,
       "consoleWarnings": 0,
-      "networkErrors": 4,
+      "networkErrors": 3,
       "errorSamples": [],
       "networkErrorSamples": [
-        "ttps://www.pinedayasociadoshn.com/blog?_rsc=ErC-mTGLLKmm4uDA",
-        "yasociadoshn.com/blog/derecho-aduanero?_rsc=ErC-mTGLLKmm4uDA"
+        "yasociadoshn.com/blog/derecho-aduanero?_rsc=ErC-mTGLLKmm4uDA",
+        "yasociadoshn.com/blog/derecho-aduanero?_rsc=Ajv-5z7q7EMXcnHG"
       ],
       "ok": true
     },
@@ -191,8 +201,8 @@
       "networkErrors": 2,
       "errorSamples": [],
       "networkErrorSamples": [
-        "ttps://www.pinedayasociadoshn.com/blog?_rsc=ErC-mTGLLKmm4uDA",
-        "yasociadoshn.com/blog/derecho-aduanero?_rsc=Ajv-5z7q7EMXcnHG"
+        "yasociadoshn.com/blog/derecho-aduanero?_rsc=Ajv-5z7q7EMXcnHG",
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=Ajv-5z7q7EMXcnHG"
       ],
       "ok": true
     },
@@ -207,11 +217,11 @@
       "swSupported": true,
       "consoleErrors": 0,
       "consoleWarnings": 0,
-      "networkErrors": 2,
+      "networkErrors": 3,
       "errorSamples": [],
       "networkErrorSamples": [
-        "ttps://www.pinedayasociadoshn.com/blog?_rsc=MtrbCvft2gvO9dsA",
-        "yasociadoshn.com/blog/derecho-aduanero?_rsc=-1wVquWE__aO0EaR"
+        "yasociadoshn.com/blog/derecho-aduanero?_rsc=MtrbCvft2gvO9dsA",
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=-1wVquWE__aO0EaR"
       ],
       "ok": true
     },
@@ -226,17 +236,36 @@
       "swSupported": true,
       "consoleErrors": 0,
       "consoleWarnings": 0,
-      "networkErrors": 4,
+      "networkErrors": 3,
       "errorSamples": [],
       "networkErrorSamples": [
-        "yasociadoshn.com/blog/derecho-aduanero?_rsc=MtrbCvft2gvO9dsA",
-        "ttps://www.pinedayasociadoshn.com/blog?_rsc=MtrbCvft2gvO9dsA"
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=MtrbCvft2gvO9dsA",
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=-1wVquWE__aO0EaR"
       ],
       "ok": true
     },
     {
       "slug": "derechos-indigenas-consulta-previa-honduras",
       "viewport": "desktop",
+      "status": 200,
+      "h1Count": 1,
+      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-ambiental/derechos-indigenas-con",
+      "jsonld": 3,
+      "hasOverflow": false,
+      "swSupported": true,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "networkErrors": 2,
+      "errorSamples": [],
+      "networkErrorSamples": [
+        "asociadoshn.com/blog/derecho-ambiental?_rsc=bXClyRFN0J0wGce1",
+        "ttps://www.pinedayasociadoshn.com/blog?_rsc=bXClyRFN0J0wGce1"
+      ],
+      "ok": true
+    },
+    {
+      "slug": "derechos-indigenas-consulta-previa-honduras",
+      "viewport": "mobile",
       "status": 200,
       "h1Count": 1,
       "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-ambiental/derechos-indigenas-con",
@@ -250,25 +279,6 @@
       "networkErrorSamples": [
         "asociadoshn.com/blog/derecho-ambiental?_rsc=tM3Za_fCupGwzZ7O",
         "ttps://www.pinedayasociadoshn.com/blog?_rsc=tM3Za_fCupGwzZ7O"
-      ],
-      "ok": true
-    },
-    {
-      "slug": "derechos-indigenas-consulta-previa-honduras",
-      "viewport": "mobile",
-      "status": 200,
-      "h1Count": 1,
-      "canonical": "https://www.pinedayasociadoshn.com/blog/derecho-ambiental/derechos-indigenas-con",
-      "jsonld": 3,
-      "hasOverflow": false,
-      "swSupported": true,
-      "consoleErrors": 0,
-      "consoleWarnings": 0,
-      "networkErrors": 3,
-      "errorSamples": [],
-      "networkErrorSamples": [
-        "asociadoshn.com/blog/derecho-ambiental?_rsc=tM3Za_fCupGwzZ7O",
-        "ttps://www.pinedayasociadoshn.com/blog?_rsc=bXClyRFN0J0wGce1"
       ],
       "ok": true
     },
@@ -287,7 +297,7 @@
       "errorSamples": [],
       "networkErrorSamples": [
         "ttps://www.pinedayasociadoshn.com/blog?_rsc=Uecpmc8hOswyKG31",
-        "ttps://www.pinedayasociadoshn.com/blog?_rsc=ByZn1BJtdZQWpnTl"
+        "sociadoshn.com/blog/derecho-de-familia?_rsc=ByZn1BJtdZQWpnTl"
       ],
       "ok": true
     },
@@ -302,11 +312,11 @@
       "swSupported": true,
       "consoleErrors": 0,
       "consoleWarnings": 0,
-      "networkErrors": 2,
+      "networkErrors": 3,
       "errorSamples": [],
       "networkErrorSamples": [
-        "sociadoshn.com/blog/derecho-de-familia?_rsc=ByZn1BJtdZQWpnTl",
-        "ttps://www.pinedayasociadoshn.com/blog?_rsc=ByZn1BJtdZQWpnTl"
+        "sociadoshn.com/blog/derecho-de-familia?_rsc=Uecpmc8hOswyKG31",
+        "sociadoshn.com/blog/derecho-de-familia?_rsc=ByZn1BJtdZQWpnTl"
       ],
       "ok": true
     }

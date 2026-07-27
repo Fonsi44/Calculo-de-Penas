@@ -4,7 +4,7 @@
 - **Fecha:** 2026-07-27
 - **Modo:** `IMPLEMENTACIÓN` sobre `main`
 - **Hash inicial:** `a24f13913474cc5d5b40c32f4ef86bb1b9e6ca0e` (= `origin/main` al inicio)
-- **Hash final:** se registra en §11 tras el commit documental.
+- **Hash final:** `b8c5fbe66ab87086440fafe16163727168799879` (= `origin/main`, ver §11).
 - **Veredicto:** ✅ **CERRADO.** Las 4 inconsistencias de Fase 5A quedan resueltas, verificadas con lectura de archivos, recálculo aritmético, consulta a la API de Vercel y consulta a la DB Neon.
 
 ---
@@ -285,7 +285,23 @@ Esta Fase 5B crea/actualiza los artefactos listados en §7. No se reabre la audi
 
 ## 11. Commit, push y deployment final
 
-(Se completa tras el commit documental `docs(fase5b): cerrar integridad y trazabilidad del lote 3` y el push a `origin/main`.)
+```text
+git checkout main
+git commit -m "docs(fase5b): cerrar integridad y trazabilidad del lote 3"
+git push origin main
+```
+
+| Campo | Valor |
+|-------|-------|
+| Commit Fase 5B | `b8c5fbe66ab87086440fafe16163727168799879` |
+| Ref | `main` |
+| Enviado a `origin/main` | ✓ (`origin/main == b8c5fbe6`) |
+| Deployment Git-triggered | `dpl_4u4qvkFADB57JCGmzxS4ZbHAuymB` (production, READY, alias `www.pinedayasociadoshn.com`) |
+| Smoke visual posterior | 16/16 PASS (`docs/audits/fase5a-lote3-validacion-visual.json`, `generatedAt` 2026-07-27T01:40:35Z) |
+
+> **Nota de trazabilidad:** el deployment `dpl_4u4qvkFA` quedó anclado al commit `a24f1391` (hash inicial de Fase 5B) en el momento de su verificación. Tras el push del commit documental `b8c5fbe6`, el smoke visual final confirma 16/16 PASS sobre producción (`www.pinedayasociadoshn.com`) con `consoleErrors: 0` y `swSupported: true` en los 8 artículos auditados (escritorio y móvil). Los `networkErrorSamples` registrados son exclusivamente prefetch RSC abortados (eventos no funcionales del router Next.js), no errores productivos.
+
+> El cierre inmutable y la evidencia final post-deployment se documentan en Fase 5C: [`fase5c-cierre-inmutable-lote3.md`](./fase5c-cierre-inmutable-lote3.md).
 
 ---
 
