@@ -1,0 +1,83 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "233e1c31-c466-4057-b047-ebf88ba8903b",
+    "slug": "accidente-transito-choluteca",
+    "sha256_entrada": "8db534321fa3bc6333115ea01c5a6d62efc9d25858283b34e75aa71cf1ea0f27",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_civil.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "La responsabilidad civil por accidentes de tránsito se rige por el Código Civil, en los artículos 2245 y siguientes.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "error_de_numero_de_articulo",
+      "detalle": "El Art. 2245 CC NO trata sobre responsabilidad civil por daños. El Art. 2245 CC establece: 'El deudor puede solicitar judicialmente de sus acreedores quita y espera de sus deudas, o cualquiera de las dos cosas; pero no producirá efectos jurídicos el ejercicio de este derecho sino en los casos previstos en la ley.' Este artículo pertenece al Título XV 'DE LA CONCURRENCIA Y PRELACION DE CREDITOS', no a responsabilidad extracontractual. El artículo correcto para responsabilidad civil por daños es el Art. 2236 CC: 'El que por acción u omisión causa daño a otro, interviniendo culpa o negligencia, está obligado a reparar el daño causado.' La sección correcta es el Capítulo II 'DE LAS OBLIGACIONES QUE NACEN DE CULPA O NEGLIGENCIA' (Arts. 2236-2244 CC). El artículo 2245 inicia el Título XV sobre prelación de créditos, un tema completamente distinto.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "articulo_erroneo": "Art. 2245 CC (quita y espera de deudas, prelación de créditos)",
+        "articulo_correcto": "Art. 2236 CC",
+        "texto_correcto": "El que por acción u omisión causa daño a otro, interviniendo culpa o negligencia, está obligado a reparar el daño causado.",
+        "seccion_correcta": "CAPITULO II DE LAS OBLIGACIONES QUE NACEN DE CULPA O NEGLIGENCIA (Arts. 2236-2244 CC)"
+      },
+      "errores_detectados": [
+        "Art. 2245 CC es sobre quita y espera, no responsabilidad civil. El artículo correcto es 2236 CC.",
+        "Los artículos 'siguientes' al 2245 (2246-2249) tratan sobre concurso de acreedores, no sobre daños."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "Los accidentes de tránsito con resultado de lesiones se tipifican como delito de lesiones culposas en el Código Penal de Honduras (Decreto 130-2017), a partir del Artículo 139.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable_en_fuente_asignada",
+      "detalle": "El Código Penal de Honduras (Decreto 130-2017) no está disponible como JSON estructurado en las fuentes locales. La verificación del Art. 139 CP no es posible con los recursos disponibles. La referencia al Decreto 130-2017 es plausible (coincide con el Código Penal vigente), pero el número de artículo no puede ser confirmado.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "nota": "Código Penal no disponible localmente. Imposible verificar Art. 139 CP."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "La acción civil por daños y perjuicios prescribe en el plazo de 1 año, contado a partir de la fecha en que se tuvo conocimiento del daño.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable_en_fuente_asignada",
+      "detalle": "Los artículos de prescripción de acciones civiles no fueron localizados en la búsqueda dentro del codigo_civil.json. El Código Civil contiene disposiciones sobre prescripción (generalmente en su Libro IV), pero el plazo específico de 1 año para acción por daños no pudo ser verificado. En el Código del Trabajo, el Art. 453 CT establece prescripción de 1 año para indemnizaciones por riesgos profesionales, pero esto es materia laboral, no civil general.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "nota": "Plazo de prescripción de 1 año para acción civil por daños no verificado localmente."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "La DNVT, el Ministerio Público y los juzgados penales o civiles son las autoridades competentes en accidentes de tránsito.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La competencia de estas autoridades está regulada por leyes orgánicas y procesales (Ley del Ministerio Público, Ley de la DNVT, Código Procesal Penal, Código Procesal Civil) no disponibles en las fuentes locales. La afirmación es consistente con el sistema institucional hondureño pero no verificable en el codigo_civil.json.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "nota": "Competencias institucionales no reguladas en el Código Civil."
+      },
+      "nivel_confianza": "media"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 4,
+    "error_de_numero_de_articulo": 1,
+    "no_verificable_en_fuente_asignada": 2,
+    "plausible_no_verificable": 1,
+    "error_critico_detectado": "Art. 2245 CC citado como base de responsabilidad civil por daños cuando trata sobre quita y espera de deudas. El artículo correcto es 2236 CC. Además, los 'siguientes' (2246+) son sobre concurso de acreedores, no daños.",
+    "calidad_general": "regular_con_error_significativo_de_numeracion_y_claims_no_verificables"
+  }
+}

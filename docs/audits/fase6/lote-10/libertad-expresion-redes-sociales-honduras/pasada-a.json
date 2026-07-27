@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "732bd97e-c19e-435b-9e47-1012dab597d6",
+    "slug": "libertad-expresion-redes-sociales-honduras",
+    "sha256_entrada": "3bdaa4dd1cb465e8f10500cc79d3b3e5d8ecf9e2549fe21ae64684f10a8f1ef8",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "La Constitución de la República de Honduras, en su Artículo 72, consagra el derecho a la libre emisión del pensamiento sin censura previa.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "Art. 72 Constitución: 'Es libre la emisión del pensamiento por cualquier medio de difusión, sin previa censura. Son responsables ante la ley los que abusen de este derecho...' Confirmado textualmente. El artículo constitucional establece tanto la libertad como la responsabilidad por el abuso.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 72 Constitución",
+            "texto": "Es libre la emisión del pensamiento por cualquier medio de difusión, sin previa censura. Son responsables ante la ley los que abusen de este derecho y aquellos que por medios directos o indirectos restrinjan o impidan la comunicación y circulación de ideas y opiniones."
+          }
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "Este derecho no es absoluto y se encuentra limitado por la necesidad de proteger el honor, la intimidad y la reputación de terceros, así como el orden público y la moral.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 72 menciona explícitamente la responsabilidad por abuso: 'Son responsables ante la ley los que abusen de este derecho.' El Art. 74 añade: 'No se puede restringir el derecho de emisión del pensamiento por vías o medios indirectos.' La limitación por protección del honor y la reputación se infiere de la cláusula de responsabilidad, pero la mención explícita a 'intimidad', 'orden público' y 'moral' como límites no aparece en el Art. 72. Estos límites derivan de la interpretación sistemática con otros derechos constitucionales y de tratados internacionales.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 72 Constitución",
+            "texto": "Es libre la emisión del pensamiento por cualquier medio de difusión, sin previa censura. Son responsables ante la ley los que abusen de este derecho..."
+          },
+          {
+            "articulo": "Art. 74 Constitución",
+            "texto": "No se puede restringir el derecho de emisión del pensamiento por vías o medios indirectos, tales como el abuso de controles oficiales o particulares del material usado para la impresión de periódicos..."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "El Código Penal de Honduras (Decreto 130-2017) tipifica los delitos contra el honor: calumnia (Art. 215) e injuria (Art. 223), con penas de prisión de 1 a 4 años y 1 a 2 años respectivamente.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Constitución no contiene el Código Penal ni sus artículos 215 y 223. El Art. 95 establece el principio de legalidad penal: 'Ninguna persona será sancionada con penas no establecidas previamente en la ley.' El Art. 72 establece la responsabilidad por abuso de la libertad de expresión. La tipificación de delitos contra el honor es constitucionalmente posible y consistente con la cláusula de responsabilidad del Art. 72, pero los decretos y penas específicas no son verificables.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 72 Constitución",
+            "texto": "Son responsables ante la ley los que abusen de este derecho..."
+          },
+          {
+            "articulo": "Art. 95 Constitución",
+            "texto": "Ninguna persona será sancionada con penas no establecidas previamente en la ley..."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "La distinción fundamental: una opinión ('Considero que este funcionario es ineficiente') está protegida, mientras que la imputación de un hecho falso ('Este funcionario malversó fondos públicos') sin pruebas puede constituir calumnia.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 72 protege la 'emisión del pensamiento' (opinión) y simultáneamente establece responsabilidad por 'abuso'. La distinción entre opinión protegida e imputación falsa sancionable es una elaboración doctrinal y jurisprudencial que el texto constitucional habilita pero no desarrolla. El Art. 74 prohíbe restricciones indirectas, reforzando la protección de la opinión. La distinción es consistente con la estructura del Art. 72 (libertad + responsabilidad).",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 72 Constitución",
+            "texto": "Es libre la emisión del pensamiento... Son responsables ante la ley los que abusen de este derecho..."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "Las expresiones que promueven el odio contra grupos específicos están prohibidas y sancionadas por la ley (Ley Especial Integral para una Vida Libre de Violencia contra las Mujeres y el Código Penal).",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Constitución no menciona la Ley Especial Integral para una Vida Libre de Violencia contra las Mujeres. El Art. 72 establece la responsabilidad por abuso de la libertad de expresión. El Art. 321 limita las facultades de los servidores públicos a lo establecido por ley. La prohibición de discurso de odio es consistente con la cláusula de responsabilidad, pero la ley específica y las sanciones no son verificables.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 72 Constitución",
+            "texto": "Son responsables ante la ley los que abusen de este derecho..."
+          }
+        ]
+      },
+      "nivel_confianza": "baja"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 5,
+    "confirmados": 1,
+    "parcialmente_confirmados": 2,
+    "plausible_no_verificable": 2,
+    "error_critico_detectado": "Ninguno. El Art. 72 constitucional confirma la libertad de emisión del pensamiento sin censura previa y la responsabilidad por abuso. El artículo de divulgación es fiel al texto constitucional en su descripción del derecho fundamental, aunque las referencias al Código Penal y leyes especiales son materia de legislación secundaria.",
+    "calidad_general": "sustancialmente_correcto_en_lo_verificable",
+    "nota_limitacion": "La fuente constitucional confirma el núcleo del derecho (Art. 72) pero no permite verificar los artículos del Código Penal ni leyes especiales mencionados."
+  }
+}

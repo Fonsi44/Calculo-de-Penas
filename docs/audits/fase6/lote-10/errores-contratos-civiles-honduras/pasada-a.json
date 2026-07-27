@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "e20073ff-f091-444e-8c2f-5e3a34ab1b7f",
+    "slug": "errores-contratos-civiles-honduras",
+    "sha256_entrada": "aa6ec2a33fda510dc2f2c1266836c45d2aa575b889be5b81a081e7d7b7d27e16",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_civil.json",
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "Un contrato es el acuerdo de voluntades para crear, modificar o extinguir obligaciones, según el Artículo 1450 del Código Civil.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "error_de_numero_de_articulo",
+      "detalle": "El Art. 1450 CC NO define contrato. El Art. 1450 CC establece: 'Lo dispuesto acerca de la cesión en los Artículos 1444 y siguientes, se aplica al embargo de los bienes por acción ejecutiva del acreedor o acreedores. DEL PAGO CON BENEFICIO DE COMPETENCIA.' La definición correcta de contrato está en el Art. 1539 CC: 'Contrato es una convención en virtud de la cual una o más personas se obligan para con otra u otras, o recíprocamente, a dar, hacer o no hacer alguna cosa.' La descripción conceptual ('acuerdo de voluntades para crear, modificar o extinguir obligaciones') es sustancialmente correcta aunque difiere en redacción de la definición legal exacta.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "articulo_erroneo": "Art. 1450 CC (cesión de bienes y embargo)",
+        "articulo_correcto": "Art. 1539 CC",
+        "texto_correcto": "Contrato es una convención en virtud de la cual una o más personas se obligan para con otra u otras, o recíprocamente, a dar, hacer o no hacer alguna cosa."
+      },
+      "errores_detectados": [
+        "Art. 1450 CC es sobre cesión de bienes/embargo, no sobre definición de contrato. El artículo correcto es 1539 CC."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "Para la validez del contrato se requiere consentimiento libre, objeto lícito y causa justa.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "El Código Civil hondureño establece estos requisitos en el Capítulo II 'DE LOS REQUISITOS ESENCIALES PARA LA VALIDEZ DE LOS CONTRATOS' (Arts. 1551-1564 CC). El Art. 1552 CC menciona consentimiento, objeto y causa. El Art. 1553 CC detalla que 'puede prestar su consentimiento todo el que no está declarado incapaz por la ley'. La descripción es correcta aunque omite que el Código también exige capacidad de las partes como requisito.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "seccion": "CAPITULO II DE LOS REQUISITOS ESENCIALES PARA LA VALIDEZ DE LOS CONTRATOS",
+        "articulos": "Arts. 1551-1564 CC"
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "Ciertos contratos, como los de compraventa de bienes inmuebles, requieren forma escrita para su validez y exigibilidad, según el Código Civil.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "El principio general del Código Civil hondureño es la libertad de forma (contratos consensuales), pero existen excepciones para contratos solemnes como la compraventa de inmuebles. Los artículos específicos sobre compraventa de inmuebles (generalmente alrededor del Art. 1605 y siguientes) no fueron verificados en detalle. La afirmación es consistente con los principios generales del derecho civil hondureño.",
+      "evidencia_local": {
+        "archivo": "data/codigo_civil.json",
+        "nota": "Principio general verosímil. Verificación detallada de artículos de compraventa requeriría búsqueda adicional."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "La contratación civil se rige por el Código Civil; los contratos mercantiles por el Código de Comercio.",
+      "fuente_verificacion": "data/codigo_civil.json + data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "Ambos cuerpos legales existen en las fuentes locales. El Art. 1 del Código de Comercio establece la aplicación supletoria del Código Civil: 'Los comerciantes, los actos de comercio y las cosas mercantiles se regirán por las disposiciones de este Código y de las demás leyes mercantiles en su defecto, por los usos y costumbres mercantiles y a falta de éstos, por las normas del Código Civil.' Esto confirma la dualidad de regímenes.",
+      "evidencia_local": {
+        "codigo_civil": "data/codigo_civil.json (2359 artículos)",
+        "codigo_comercio": "data/codigo_comercio.json (1693 artículos)",
+        "articulo_conector": "Art. 1 CM (aplicación supletoria del Código Civil)"
+      },
+      "nivel_confianza": "alta"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 4,
+    "error_de_numero_de_articulo": 1,
+    "confirmado_con_matiz": 1,
+    "plausible_no_verificable": 1,
+    "confirmados": 1,
+    "error_critico_detectado": "Art. 1450 CC citado como definición de contrato cuando trata sobre cesión de bienes y embargo. El artículo correcto es 1539 CC.",
+    "calidad_general": "buena_con_error_puntual_de_numeracion"
+  }
+}

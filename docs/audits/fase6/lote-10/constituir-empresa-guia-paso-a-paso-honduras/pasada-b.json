@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "aa6c442c-89a6-4e40-bd6e-d2c695fe1597",
+    "slug": "constituir-empresa-guia-paso-a-paso-honduras",
+    "sha256_entrada": "ddc77d52ffdeb38073eae2fe6da61114fa827b49ba41b67205db50853da71264",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento contiene 4 afirmaciones normativas principales sobre constitución de empresas en Honduras. El Art. 13 CM se verifica de forma exacta. El Art. 14 CM se verifica pero con omisiones (el artículo no menciona 'junta directiva' sino 'administradores'). La E.I.R.L. no aparece en el Código de Comercio como tipo societario listado en el Art. 13 CM. Los pasos procesales (RTN, permisos, Cámara) no son verificables en el Código de Comercio por corresponder a normativa administrativa y tributaria.",
+    "imprecision_detectada": {
+      "tipo": "inclusion_no_verificable",
+      "descripcion": "La E.I.R.L. se presenta como tipo societario común pero no aparece en el Art. 13 CM del Código de Comercio disponible localmente.",
+      "impacto": "bajo"
+    }
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "El Art. 13 del Código de Comercio enumera los tipos societarios.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 13 CM lista exactamente: sociedad en nombre colectivo, comandita simple, responsabilidad limitada, anónima, y comandita por acciones.",
+      "evidencia": "Art. 13 CM verificado en data/codigo_comercio.json",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "La E.I.R.L. es una de las formas societarias más comunes en la práctica hondureña.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "no_verificable",
+      "detalle": "La E.I.R.L. no aparece en el Art. 13 CM ni en artículos cercanos. Podría estar en legislación especial no disponible localmente.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "El Art. 14 CM exige que la escritura contenga denominación social, tipo societario, datos de socios, capital social, objeto social y domicilio fiscal.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 14 CM fracciones III (clase de sociedad), IV (objeto), V (razón social/denominación), VII-VIII (capital social y aportes), IX (domicilio) y X-XI (administración) cubren estos requisitos.",
+      "evidencia": "Art. 14 CM",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "La escritura debe detallar la estructura de administración (gerente, junta directiva).",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "matizado",
+      "detalle": "El Art. 14 CM habla de 'la manera conforme a la cual haya de administrarse la sociedad y las facultades de los administradores' y 'nombramiento de los administradores'. No menciona 'gerente' ni 'junta directiva' como términos específicos, aunque estos cargos son formas comunes de administración. La afirmación es sustancialmente correcta pero usa terminología más específica que la legal.",
+      "evidencia": "Art. 14 CM fracciones X y XI",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "Los pasos del proceso de constitución incluyen: notario, Registro Mercantil, SAR/RTN, municipalidad y Cámara de Comercio.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "plausible",
+      "detalle": "El Código de Comercio cubre los dos primeros pasos (notario/escritura: Art. 14 CM; Registro Mercantil: múltiples artículos). Los pasos restantes corresponden a legislación tributaria (SAR), municipal y administrativa no disponible localmente. La secuencia es consistente con la práctica general hondureña.",
+      "nivel_confianza": "media"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": [
+      "B1_TiposSocietarios",
+      "B2_Escritura",
+      "B3_Procesos"
+    ],
+    "cruces": [
+      {
+        "par": "B1+B2",
+        "relacion": "Complementarios. Art. 13 define tipos; Art. 14 define contenido de escritura para todos los tipos.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B3",
+        "relacion": "Independientes. Tipos societarios y proceso administrativo.",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B3",
+        "relacion": "Secuenciales. Escritura (B2) es el primer paso del proceso (B3).",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 5,
+    "confirmados": 2,
+    "matizados": 1,
+    "plausibles": 1,
+    "no_verificables": 1,
+    "calidad_global_documento": "Buena. Un error menor: E.I.R.L. no verificable en fuente local."
+  }
+}

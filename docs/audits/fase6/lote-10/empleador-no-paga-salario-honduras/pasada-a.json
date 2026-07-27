@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "39d2a686-3bd5-4b39-84d0-4d74e2ddd128",
+    "slug": "empleador-no-paga-salario-honduras",
+    "sha256_entrada": "a760957f6f1787273b4748a44398e7554877257a10eca7746442ef45e6cd09db",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_trabajo.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "El salario está definido en el Artículo 33 del Código del Trabajo de Honduras (Decreto 189-59) como la retribución que el empleador debe pagar al trabajador por sus servicios.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "error_de_numero_de_articulo",
+      "detalle": "La definición de salario NO se encuentra en el Art. 33 CT. El Art. 33 no existe como tal en el Código del Trabajo disponible localmente (el archivo contiene artículos como Art. 3, Art. 35, Art. 330, etc., pero no un 'Art. 33 CT' independiente). La definición correcta de salario está en el Art. 360 CT: 'Salario, jornal o sueldo es la retribución que el patrono debe pagar al trabajador en virtud del contrato de trabajo, o de la relación de trabajo vigente.' La descripción conceptual es correcta pero el número de artículo es erróneo.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulo_correcto": "Art. 360 CT",
+        "texto_correcto": "Salario, jornal o sueldo es la retribución que el patrono debe pagar al trabajador en virtud del contrato de trabajo, o de la relación de trabajo vigente.",
+        "articulo_inexistente": "Art. 33 CT no existe en la fuente local"
+      },
+      "errores_detectados": [
+        "El número de artículo 33 es incorrecto. La definición de salario está en Art. 360 CT, no en Art. 33."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "El Artículo 71 del Código del Trabajo estipula que el pago debe efectuarse en la fecha convenida.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "error_de_numero_de_articulo",
+      "detalle": "El Art. 71 CT no trata sobre pago de salarios. El Art. 71 no existe como artículo independiente en el archivo (existen Art. 710 CT y otros, pero no Art. 71). El artículo relevante sobre plazos de pago es el Art. 368 CT: 'Las partes fijarán el plazo para el pago del salario, pero dicho plazo nunca podrá ser mayor de una (1) semana para los trabajadores manuales, ni de un (1) mes para los trabajadores intelectuales y los del servicio doméstico.' También el Art. 369 CT regula el lugar de pago.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulo_correcto": "Art. 368 CT",
+        "texto_correcto": "Las partes fijarán el plazo para el pago del salario, pero dicho plazo nunca podrá ser mayor de una (1) semana para los trabajadores manuales, ni de un (1) mes para los trabajadores intelectuales y los del servicio doméstico.",
+        "articulo_inexistente": "Art. 71 CT no existe como artículo independiente en la fuente local"
+      },
+      "errores_detectados": [
+        "El número de artículo 71 es incorrecto. El pago en fecha convenida se relaciona con Art. 368 CT."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "La acción por salarios prescribe en dos meses según el Artículo 62 del Código del Trabajo.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_error_de_numero",
+      "detalle": "El plazo de prescripción de DOS MESES es CORRECTO, pero el artículo es INCORRECTO. El Art. 62 CT trata sobre contrato colectivo de trabajo (separación del patrono del sindicato), no sobre prescripción. El artículo correcto es el Art. 867 CT: 'Salvo disposición en contrario, todos los derechos y acciones provenientes de este Código, de sus reglamentos o de las demás leyes de trabajo o previsión social que no se originen directamente en contratos de trabajo, prescriben en el término de dos (2) meses. Este plazo corre para patronos y trabajadores.' La afirmación sobre el plazo de 2 meses es correcta pero la atribución al Art. 62 es errónea.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulo_correcto": "Art. 867 CT",
+        "texto_correcto": "Salvo disposición en contrario, todos los derechos y acciones provenientes de este Código, de sus reglamentos o de las demás leyes de trabajo o previsión social que no se originen directamente en contratos de trabajo, prescriben en el término de dos (2) meses.",
+        "articulo_erroneo": "Art. 62 CT (trata sobre contrato colectivo, no prescripción)"
+      },
+      "errores_detectados": [
+        "El número de artículo 62 es incorrecto. El artículo correcto es 867 CT."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "El artículo menciona los artículos 33, 62, 71 y 84 del Código del Trabajo como normativa aplicable al reclamo de salarios impagos.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "error_sistematico_de_numeracion",
+      "detalle": "De los cuatro artículos citados, NINGUNO corresponde a la materia indicada: Art. 33 (no existe), Art. 62 (contrato colectivo), Art. 71 (no existe), Art. 84 CT (recurso de reposición contra resoluciones de la Inspección de Trabajo). Los artículos correctos serían: Art. 360 (definición de salario), Art. 368 (plazo de pago), Art. 867 (prescripción de 2 meses). El Art. 84 CT sí existe pero trata de un recurso administrativo, no directamente de salarios impagos.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulos_verificados": {
+          "Art. 360 CT": "Define salario",
+          "Art. 368 CT": "Plazo de pago del salario",
+          "Art. 867 CT": "Prescripción de 2 meses",
+          "Art. 84 CT": "Recurso de reposición (existe pero no sobre salarios)"
+        }
+      },
+      "errores_detectados": [
+        "Error sistemático: los 4 números de artículo (33, 62, 71, 84) están todos equivocados respecto a la materia que pretenden referenciar."
+      ],
+      "nivel_confianza": "alta"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 4,
+    "error_de_numero_de_articulo": 2,
+    "parcialmente_confirmado_con_error_de_numero": 1,
+    "error_sistematico_de_numeracion": 1,
+    "error_critico_detectado": "ERROR SISTEMATICO: Los 4 números de artículo del Código del Trabajo citados en el documento (33, 62, 71, 84) son incorrectos. Los artículos correctos son: 360 (salario), 368 (pago), 867 (prescripción 2 meses). El contenido descriptivo sobre salarios y plazos es sustancialmente correcto, pero la numeración está completamente errada.",
+    "calidad_general": "contenido_correcto_numeracion_erronea"
+  }
+}

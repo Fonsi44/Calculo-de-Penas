@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "93efcbe6-9392-40fd-ad81-53a3c9c06610",
+    "slug": "preguntas-frecuentes-antes-contratar-abogado-honduras",
+    "sha256_entrada": "878c23451a8480ae05ce2fdae6e7e9f534062691441e5d236062eee192f2fca8",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento contiene 4 afirmaciones principales sobre la relación abogado-cliente en Honduras. Solo 1 es verificable directamente en la fuente constitucional (colegiación obligatoria, Art. 177). Las otras 3 corresponden a normativa deontológica (Código de Ética CAH), legislación especial (Ley de Abogados) y derecho civil (mandato), no disponibles en articulos_constitucion.json."
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "Existe una Ley de Abogados (Decreto No. 84-84) que regula la práctica legal en Honduras.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible",
+      "detalle": "El Art. 177 constitucional ordena que 'la ley reglamentará su organización y funcionamiento', lo que implica la existencia de una ley reglamentaria para la colegiación. No se puede confirmar el número de decreto (84-84) desde la fuente constitucional.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "Existe un Código de Ética del Colegio de Abogados de Honduras.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible",
+      "detalle": "Como consecuencia lógica del mandato constitucional de colegiación (Art. 177), los colegios profesionales típicamente emiten códigos de ética. No verificable directamente.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "La colegiación profesional es obligatoria para ejercer la abogacía en Honduras.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 177 Constitución: 'Se establece la colegiación profesional obligatoria.' Aplica a todas las profesiones, incluida la abogacía.",
+      "evidencia": "Art. 177 Constitución",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "El abogado debe actuar con lealtad, probidad, diligencia y confidencialidad.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "no_verificable",
+      "detalle": "Deberes éticos del Código de Ética del CAH (no disponible). No regulados en la Constitución.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "El cliente puede revocar el poder y cambiar de abogado en cualquier momento.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "no_verificable",
+      "detalle": "Derecho civil (mandato), no constitucional. Verosímil pero fuera del alcance de la fuente asignada.",
+      "nivel_confianza": "media"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": [
+      "B1_LeyAbogados",
+      "B2_Colegiacion",
+      "B3_DeberesEticos",
+      "B4_Revocacion"
+    ],
+    "cruces": [
+      {
+        "par": "B1+B2",
+        "relacion": "Complementarios. B1 es la ley reglamentaria de B2 (mandato constitucional).",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B3",
+        "relacion": "Jerárquicos. B2 (colegiación) es el fundamento de B3 (deberes éticos del colegiado).",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B4",
+        "relacion": "Independientes. B1 regula la profesión; B4 es derecho civil de mandato.",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 5,
+    "confirmados": 1,
+    "plausibles": 2,
+    "no_verificables": 2,
+    "calidad_global_documento": "Buena. Afirmaciones éticas y civiles no verificables en fuente constitucional, pero el núcleo constitucional (colegiación) está confirmado."
+  }
+}

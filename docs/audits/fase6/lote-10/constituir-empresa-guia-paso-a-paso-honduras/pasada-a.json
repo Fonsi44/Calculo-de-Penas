@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "aa6c442c-89a6-4e40-bd6e-d2c695fe1597",
+    "slug": "constituir-empresa-guia-paso-a-paso-honduras",
+    "sha256_entrada": "ddc77d52ffdeb38073eae2fe6da61114fa827b49ba41b67205db50853da71264",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "Las sociedades mercantiles en Honduras se rigen por el Código de Comercio. El Artículo 13 enumera los tipos societarios: sociedad en nombre colectivo, en comandita simple, de responsabilidad limitada, anónima y en comandita por acciones.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 13 CM establece: 'Son mercantiles, independientes de su finalidad: I.- La sociedad en nombre colectivo; II.- La sociedad en comandita simple; III.- La sociedad de responsabilidad limitada; IV.- La sociedad anónima; V.- La sociedad en comandita por acciones.' La enumeración del artículo es exacta y completa.",
+      "evidencia_local": {
+        "archivo": "data/codigo_comercio.json",
+        "articulo": "Art. 13 CM",
+        "texto": "Son mercantiles, independientes de su finalidad: I.- La sociedad en nombre colectivo; II.- La sociedad en comandita simple; III.- La sociedad de responsabilidad limitada; IV.- La sociedad anónima; V.- La sociedad en comandita por acciones."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "La escritura de constitución debe detallar: denominación o razón social, tipo societario, datos de los socios, capital social, objeto social, domicilio fiscal y estructura de administración.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "El Art. 14 CM enumera los requisitos de la escritura constitutiva: 'I.- Lugar y fecha en que se celebre el acto; II.- Nombre, nacionalidad y domicilio de las personas físicas o jurídicas que constituyan la sociedad; III.- La clase de sociedad elegida; IV.- El objeto de la sociedad; V.- La razón social o denominación; VI.- Su duración o declaración de ser por tiempo indeterminado; VII.- El importe del capital social, cuando se haya estipulado; VIII.- La expresión de lo que cada socio aporte en dinero o en otros bienes, y su valor; IX.- El domicilio de la sociedad; X.- La manera conforme a la cual haya de administrarse la sociedad y las facultades de los administradores; XI.- El nombramiento de los administradores y la designación de los que han de llevar la firma social; XII.- La manera de hacer la distribución de las utilidades o pérdidas, en su caso; XIII.- Los casos en que la sociedad haya de disolverse anticipadamente, en su caso; XIV.- Las bases para practicar la liquidación de la sociedad; XV.- El modo de proceder a la elección de los liquidadores, cuando no hayan sido designados anticipadamente.' La descripción del artículo cubre los elementos mencionados pero omite otros también requeridos (duración, distribución de utilidades, liquidación). La mención de 'estructura de administración (gerente, junta directiva)' no aparece textualmente en el Art. 14 CM; este habla de 'manera conforme a la cual haya de administrarse la sociedad y las facultades de los administradores' y 'nombramiento de los administradores'.",
+      "evidencia_local": {
+        "archivo": "data/codigo_comercio.json",
+        "articulo": "Art. 14 CM",
+        "texto": "La escritura constitutiva de toda sociedad mercantil deberá contener: I.- Lugar y fecha en que se celebre el acto; II.- Nombre, nacionalidad y domicilio de las personas físicas o jurídicas que constituyan la sociedad; III.- La clase de sociedad elegida..."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "Las formas más comunes en la práctica son la S. de R.L., la S.A. y la E.I.R.L.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "La S. de R.L. y la S.A. están listadas en el Art. 13 CM como formas societarias mercantiles. Sin embargo, la Empresa Individual de Responsabilidad Limitada (E.I.R.L.) NO aparece en el Art. 13 CM ni en los artículos cercanos del Código de Comercio disponibles localmente. Podría estar regulada en legislación complementaria no incluida en el archivo fuente. La afirmación sobre S. de R.L. y S.A. es correcta; la inclusión de E.I.R.L. no es verificable en la fuente local.",
+      "evidencia_local": {
+        "archivo": "data/codigo_comercio.json",
+        "articulo": "Art. 13 CM",
+        "nota": "E.I.R.L. no mencionada en el Código de Comercio dentro de los tipos del Art. 13 CM"
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "El proceso de constitución requiere: escritura ante notario, inscripción en Registro Mercantil, obtención de RTN ante SAR, permiso de operación municipal e inscripción en Cámara de Comercio.",
+      "fuente_verificacion": "data/codigo_comercio.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "El Código de Comercio regula la escritura constitutiva (Art. 14 CM) y el Registro Mercantil, pero no contiene disposiciones específicas sobre RTN (SAR), permisos municipales o Cámara de Comercio, que son regulados por legislación administrativa y tributaria no disponible en las fuentes locales. La secuencia descrita es generalmente correcta para el proceso hondureño pero no puede verificarse completamente solo con el Código de Comercio.",
+      "evidencia_local": {
+        "archivo": "data/codigo_comercio.json",
+        "articulos_verificables": "Art. 13 CM y Art. 14 CM (parcialmente)",
+        "no_verificable": "RTN, permisos municipales, Cámara de Comercio"
+      },
+      "nivel_confianza": "media"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 4,
+    "confirmados": 1,
+    "confirmados_con_matiz": 1,
+    "parcialmente_confirmados": 1,
+    "plausible_no_verificable": 1,
+    "calidad_general": "buena_con_imprecisiones_menores"
+  }
+}

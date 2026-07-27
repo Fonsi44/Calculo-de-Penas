@@ -1,0 +1,124 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "7e5cc1be-6234-44a5-89ce-6156300e0dff",
+    "slug": "como-obtener-rtn-personas-empresas-honduras",
+    "sha256_entrada": "697067d8a8383a78a23ad8fc6640ccfac9fd1a2169ca4989037f140e6b17302a",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_tributario.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "Artículo divulgativo sobre el Registro Tributario Nacional (RTN) en Honduras. Explica qué es, cómo obtenerlo (persona natural y jurídica), obligaciones asociadas y errores comunes. El Código Tributario confirma la obligación de inscripción (Art. 66), los deberes formales de los obligados tributarios (Arts. 58, 62) y el régimen sancionatorio (Arts. 160, 164). Los detalles operativos (gratuidad, oficinas, procedimientos) son materia reglamentaria del SAR.",
+    "error_critico": null,
+    "imprecision_detectada": null
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "Las personas naturales y jurídicas que realizan actividades como obligados tributarios deben inscribirse en el RTN.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 66 CTrib: obligación expresa de inscribirse en el RTN.",
+      "evidencia": "Art. 66 CTrib",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.2",
+      "subclaim_text": "Inscribirse en los registros de la Administración Tributaria es un deber formal de los obligados tributarios.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 58.1 CTrib: 'Constituyen deberes y obligaciones... Inscribirse en los registros de la Administración Tributaria.'",
+      "evidencia": "Art. 58.1 CTrib",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.3",
+      "subclaim_text": "Los obligados tributarios deben presentar declaraciones, autoliquidaciones e informes.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 62.1 CTrib: 'El obligado tributario debe presentar las declaraciones, autoliquidaciones e informes establecidos en la Ley.'",
+      "evidencia": "Art. 62.1 CTrib",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.4",
+      "subclaim_text": "El RTN puede ser suspendido como sanción por incumplimiento de obligaciones materiales.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 164 CTrib: 'La sanción de suspensión del Registro Tributario Nacional (RTN) debe aplicarse cuando un obligado tributario no se encuentre solvente en el cumplimiento de obligaciones materiales.'",
+      "evidencia": "Art. 164 CTrib",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.5",
+      "subclaim_text": "Existe un régimen de sanciones por infracciones formales con multas calculadas según tabla.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 160 CTrib: 'Las sanciones a la infracción de las obligaciones formales... se debe calcular conforme a la tabla siguiente.'",
+      "evidencia": "Art. 160 CTrib",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.6",
+      "subclaim_text": "El trámite del RTN es gratuito para personas naturales.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "no_verificable",
+      "detalle": "El Código Tributario no establece la gratuidad del trámite de inscripción. Es una cuestión administrativa/reglamentaria.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B3.7",
+      "subclaim_text": "El RTN es permanente y solo se actualizan los datos cuando cambia el domicilio.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "parcialmente_verificable",
+      "detalle": "El Art. 164 habla de suspensión (no cancelación), implicando permanencia. El Art. 62.2 exige dirección exacta para notificaciones, implicando deber de actualización. Pero la 'permanencia' absoluta no está declarada explícitamente.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B3.8",
+      "subclaim_text": "[Cruce B1+B4] La obligación de inscribirse (Art. 66) y la sanción de suspensión del RTN (Art. 164) forman un sistema coherente de deber-sanción.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "coherente",
+      "detalle": "Art. 66 establece el deber; Art. 164 establece la consecuencia del incumplimiento. Sistema normativo coherente.",
+      "nivel_confianza": "alta"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": [
+      "B3.1_Inscripcion",
+      "B3.2_Deberes",
+      "B3.3_Declaraciones",
+      "B3.4_Sancion"
+    ],
+    "cruces": [
+      {
+        "par": "B1+B2",
+        "relacion": "Complementarios. Inscripción es un deber formal específico dentro del catálogo general.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B4",
+        "relacion": "Deber-sanción. El incumplimiento de B1 habilita B4.",
+        "conflicto": false
+      },
+      {
+        "par": "B3+B4",
+        "relacion": "Independientes. Las declaraciones y la suspensión del RTN operan en planos distintos.",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 8,
+    "confirmados": 5,
+    "parcialmente_verificables": 1,
+    "no_verificables": 1,
+    "coherentes": 1,
+    "error_critico": null,
+    "calidad_global_documento": "Artículo técnicamente correcto en lo verificable contra el Código Tributario. La obligación de inscripción, deberes formales y régimen sancionatorio están confirmados. Los detalles operativos requieren verificación reglamentaria."
+  }
+}

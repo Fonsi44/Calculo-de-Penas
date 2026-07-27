@@ -1,0 +1,139 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "7e5cc1be-6234-44a5-89ce-6156300e0dff",
+    "slug": "como-obtener-rtn-personas-empresas-honduras",
+    "sha256_entrada": "697067d8a8383a78a23ad8fc6640ccfac9fd1a2169ca4989037f140e6b17302a",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_tributario.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "El Registro Tributario Nacional (RTN) es el código alfanumérico de identificación fiscal en Honduras. Conforme a la normativa vigente y las disposiciones del SAR, toda persona natural o jurídica que realice actividades económicas está obligada a obtenerlo.",
+      "fuente_verificacion": "data/codigo_tributario.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "Art. 66 CTrib: 'Las personas naturales, jurídicas y las organizaciones o entidades que carecen de personalidad jurídica, pero que realizan actividades que las convierten en obligados tributarios, deben inscribirse en el Registro Tributario Nacional.' Confirmado: la obligación de inscribirse en el RTN existe para quienes realizan actividades que los convierten en obligados tributarios. Art. 58.1 CTrib también establece el deber de 'Inscribirse en los registros de la Administración Tributaria.'",
+      "evidencia_local": {
+        "archivo": "data/codigo_tributario.json",
+        "articulos": [
+          {
+            "articulo": "Art. 66 CTrib",
+            "texto": "OBLIGACIÓN DE INSCRIBIRSE EN EL REGISTRO TRIBUTARIO NACIONAL. 1) Las personas naturales, jurídicas y las organizaciones o entidades que carecen de personalidad jurídica, pero que realizan actividades que las convierten en obligados tributarios, deben inscribirse en el Registro Tributario Nacional (RTN)..."
+          },
+          {
+            "articulo": "Art. 58.1 CTrib",
+            "texto": "Constituyen deberes y obligaciones de los obligados tributarios... 1) Inscribirse en los registros de la Administración Tributaria y Administración Aduanera..."
+          }
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "El RTN es indispensable para facturar, declarar impuestos (ISR, ISV), abrir cuentas bancarias empresariales, registrar marcas, contratar con el Estado y realizar cualquier actividad económica formal.",
+      "fuente_verificacion": "data/codigo_tributario.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 66 CTrib establece la obligación de inscribirse. El Art. 62 CTrib establece la obligación de presentar declaraciones y autoliquidaciones. El Art. 136 CTrib regula los medios de pago de tributos. Sin embargo, las funciones específicas del RTN para abrir cuentas bancarias, registrar marcas o contratar con el Estado no están detalladas en el Código Tributario; son consecuencias administrativas de la identificación fiscal. El uso del RTN como identificador fiscal para facturación y declaraciones es consistente con el sistema tributario.",
+      "evidencia_local": {
+        "archivo": "data/codigo_tributario.json",
+        "articulos": [
+          {
+            "articulo": "Art. 62 CTrib",
+            "texto": "DECLARACIONES Y MANIFESTACIONES. 1) El obligado tributario debe presentar las declaraciones, autoliquidaciones e informes establecidos en la Ley..."
+          },
+          {
+            "articulo": "Art. 66 CTrib",
+            "texto": "OBLIGACIÓN DE INSCRIBIRSE EN EL REGISTRO TRIBUTARIO NACIONAL..."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "El trámite del RTN se realiza en la oficina del SAR más cercana al domicilio fiscal. El RTN se asigna en el acto si la documentación está completa. Este trámite es gratuito para personas naturales y el RTN es permanente.",
+      "fuente_verificacion": "data/codigo_tributario.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 66 CTrib establece la obligación de inscripción pero no regula la gratuidad ni los detalles operativos del trámite (oficinas SAR, asignación en el acto). El Art. 62.2 CTrib exige señalar 'la dirección exacta en la que deben hacerse las notificaciones', lo que implica la noción de domicilio fiscal. El Art. 164 CTrib menciona la 'suspensión del Registro Tributario Nacional (RTN)', lo que implica que el RTN puede ser suspendido pero normalmente es permanente. Los detalles operativos son materia de reglamentos administrativos del SAR.",
+      "evidencia_local": {
+        "archivo": "data/codigo_tributario.json",
+        "articulos": [
+          {
+            "articulo": "Art. 62.2 CTrib",
+            "texto": "En las declaraciones necesariamente se debe señalar la dirección exacta en la que deben hacerse las notificaciones..."
+          },
+          {
+            "articulo": "Art. 164 CTrib",
+            "texto": "SUSPENSIÓN DEL REGISTRO TRIBUTARIO NACIONAL. La sanción de suspensión del Registro Tributario Nacional (RTN) debe aplicarse cuando un obligado tributario no se encuentre solvente..."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "La obligación de inscribirse en el RTN está contenida en el Código Tributario de Honduras y en el Reglamento del SAR. Este marco legal faculta al SAR para emitir el número de registro y aplicar sanciones por su omisión.",
+      "fuente_verificacion": "data/codigo_tributario.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "Art. 66 CTrib confirma la obligación de inscribirse en el RTN. Art. 164 CTrib establece la sanción de suspensión del RTN. Art. 160 CTrib establece el régimen sancionatorio: 'Las sanciones a la infracción de las obligaciones formales contenidas en el presente Código, se debe calcular conforme a la tabla siguiente.' El Código faculta para sancionar la omisión. El Reglamento del SAR como tal no está contenido en el Código Tributario, pero la habilitación legal para emitirlo existe.",
+      "evidencia_local": {
+        "archivo": "data/codigo_tributario.json",
+        "articulos": [
+          {
+            "articulo": "Art. 66 CTrib",
+            "texto": "OBLIGACIÓN DE INSCRIBIRSE EN EL REGISTRO TRIBUTARIO NACIONAL..."
+          },
+          {
+            "articulo": "Art. 164 CTrib",
+            "texto": "SUSPENSIÓN DEL REGISTRO TRIBUTARIO NACIONAL..."
+          },
+          {
+            "articulo": "Art. 160 CTrib",
+            "texto": "CÁLCULO DE LA SANCIÓN POR FALTAS FORMALES..."
+          }
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "El RTN es permanente; solo se actualizan los datos. La actualización es necesaria al cambiar de domicilio.",
+      "fuente_verificacion": "data/codigo_tributario.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 164 CTrib habla de 'suspensión del RTN', no de cancelación, lo que implica que normalmente es permanente salvo sanción. El Art. 62.2 exige señalar la dirección exacta para notificaciones, lo que implica la obligación de mantener actualizado el domicilio fiscal. La permanencia y actualización son consistentes con el sistema, pero los detalles operativos no están explícitamente regulados en el Código.",
+      "evidencia_local": {
+        "archivo": "data/codigo_tributario.json",
+        "articulos": [
+          {
+            "articulo": "Art. 164 CTrib",
+            "texto": "SUSPENSIÓN DEL REGISTRO TRIBUTARIO NACIONAL..."
+          },
+          {
+            "articulo": "Art. 62.2 CTrib",
+            "texto": "...se debe señalar la dirección exacta en la que deben hacerse las notificaciones..."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 5,
+    "confirmados": 2,
+    "parcialmente_confirmados": 3,
+    "plausible_no_verificable": 0,
+    "error_critico_detectado": "Ninguno. El Código Tributario confirma: la obligación de inscripción en RTN (Art. 66), la obligación de declarar (Art. 62), el régimen sancionatorio por incumplimiento de obligaciones formales (Arts. 160, 164). Los detalles operativos (gratuidad, trámite en oficinas SAR) son materia reglamentaria.",
+    "calidad_general": "sustancialmente_correcto",
+    "nota_limitacion": "Los detalles procedimentales (oficinas, gratuidad, asignación en el acto) son materia administrativa/reglamentaria no contenida en el Código Tributario."
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "7cecb8aa-bbc7-4fb8-bf6d-65a3a0005acb",
+    "slug": "como-elegir-buen-abogado-guia-practica-honduras",
+    "sha256_entrada": "3996a460c607484b12cbed0dcdd0194907024990300eab985f6b7059058746fa",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "Artículo de orientación práctica sobre cómo elegir un abogado en Honduras. Aborda criterios deontológicos y prácticos: especialización, colegiación, honorarios, confidencialidad. La verificación contra la Constitución confirma los fundamentos del derecho de defensa (Art. 82), la independencia judicial (Art. 303) y la potestad legislativa (Art. 205). Las referencias específicas al CAH, Código Procesal Penal de 2002, y estándares de práctica profesional no son verificables con fuente constitucional.",
+    "error_critico": null,
+    "imprecision_detectada": null
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "El derecho de defensa es inviolable según la Constitución hondureña.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 82: 'El derecho de defensa es inviolable.' Confirmado literalmente.",
+      "evidencia": "Art. 82 Constitución",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "Los habitantes tienen libre acceso a los tribunales.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 82: 'Los habitantes de la República tienen libre acceso a los tribunales para ejercitar sus acciones en la forma que señalan las leyes.' Confirmado.",
+      "evidencia": "Art. 82 Constitución",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.3",
+      "subclaim_text": "El Colegio de Abogados de Honduras (CAH) regula el ejercicio profesional y la colegiación es obligatoria.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "no_verificable",
+      "detalle": "La Constitución no menciona el CAH. La colegiación profesional es materia de ley secundaria.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B2.4",
+      "subclaim_text": "Los jueces son independientes y solo sometidos a la Constitución y las leyes.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 303: '...por magistrados y jueces independientes, únicamente sometidos a la Constitución y las leyes.' Confirmado.",
+      "evidencia": "Art. 303 Constitución",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.5",
+      "subclaim_text": "El Congreso Nacional tiene la facultad de crear, reformar y derogar leyes (incluyendo códigos procesales y de trabajo).",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 205.1: 'Crear, decretar, interpretar, reformar y derogar las leyes.' Confirmado.",
+      "evidencia": "Art. 205.1 Constitución",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.6",
+      "subclaim_text": "La organización y competencia de los tribunales la establece la ley.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 304: 'La ley establecerá la organización y competencia de los tribunales.' Confirmado.",
+      "evidencia": "Art. 304 Constitución",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.7",
+      "subclaim_text": "[Cruce B1+B4] El libre acceso a los tribunales (Art. 82) y la independencia judicial (Art. 303) son garantías complementarias del sistema de justicia.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "coherente",
+      "detalle": "El Art. 82 garantiza el acceso del ciudadano; el Art. 303 garantiza que quien juzga es independiente. Ambos operan como pilares complementarios del debido proceso.",
+      "nivel_confianza": "alta"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": [
+      "B2.1_Derecho_Defensa",
+      "B2.2_Acceso_Tribunales",
+      "B2.4_Independencia_Judicial",
+      "B2.5_Potestad_Legislativa"
+    ],
+    "cruces": [
+      {
+        "par": "B1+B2",
+        "relacion": "Complementarios. El derecho de defensa presupone el acceso a tribunales.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B4",
+        "relacion": "Complementarios. La defensa se ejerce ante jueces independientes.",
+        "conflicto": false
+      },
+      {
+        "par": "B4+B5",
+        "relacion": "Complementarios. La organización judicial (Art. 304) depende de la potestad legislativa (Art. 205.1).",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 7,
+    "confirmados": 5,
+    "no_verificables": 1,
+    "coherentes": 1,
+    "error_critico": null,
+    "nota_fuente_limitada": "Las referencias al CAH y legislación secundaria no son verificables.",
+    "calidad_global_documento": "Artículo de orientación práctica correcto en sus fundamentos constitucionales. Los criterios deontológicos son razonables. La Constitución avala el derecho de defensa, acceso a tribunales e independencia judicial que sustentan la práctica profesional."
+  }
+}

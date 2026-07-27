@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "3c676ec7-b0aa-414d-ac23-c71a886f8379",
+    "slug": "hondurenos-espana-documentos",
+    "sha256_entrada": "380048286144eaaf8e4beaf34c092ac592890b1bc99c18ef5e2e48cd344b26e6",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento aborda trámites consulares y administrativos para hondureños en España. Ninguna de las 4 afirmaciones normativas es verificable directamente en la fuente constitucional asignada, ya que los temas tratados (Apostilla de La Haya, RNP, consulados, trámites) corresponden a tratados internacionales, leyes especiales y normativa administrativa, no a la Constitución de Honduras. La Constitución solo proporciona el marco general (servicio exterior, adhesión a derecho internacional)."
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "Honduras es parte del Convenio de la Apostilla de La Haya.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible",
+      "detalle": "El Art. 15 constitucional establece la adhesión a principios de derecho internacional. Honduras efectivamente es parte del Convenio desde 1991. La fuente local no contiene el tratado pero el marco constitucional lo permite.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "La Apostilla elimina la legalización consular entre Honduras y España.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible",
+      "detalle": "Efecto estándar del Convenio de La Haya entre países miembros. No verificable directamente en fuente constitucional.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "El RNP emite partidas de nacimiento, matrimonio y defunción.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "no_verificable",
+      "detalle": "El RNP no es mencionado en la Constitución. Creado por Decreto 62-2004 (no disponible localmente).",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "La Corte Suprema de Justicia regula la apostilla; la Secretaría de Relaciones Exteriores la emite.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible",
+      "detalle": "La CSJ (Arts. 308-320) tiene facultad reglamentaria; Relaciones Exteriores (Arts. 245-246) maneja asuntos exteriores. Atribución específica no consta en Constitución.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "Consulados hondureños en España emiten pasaportes y poderes consulares.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible",
+      "detalle": "Funciones consulares estándar según práctica internacional. La Constitución menciona el servicio exterior (Arts. 245-246) sin detallar funciones específicas.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "El poder otorgado ante el consulado hondureño tiene validez en Honduras sin apostilla.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible",
+      "detalle": "Los actos consulares generalmente tienen validez directa en el país representado. No verificable en fuente constitucional.",
+      "nivel_confianza": "media"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": [
+      "B1_Apostilla",
+      "B2_RNP",
+      "B3_Autoridades",
+      "B4_Consulados"
+    ],
+    "cruces": [
+      {
+        "par": "B1+B3",
+        "relacion": "Complementarios. B1 describe el tratado; B3 las autoridades que lo implementan.",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B4",
+        "relacion": "Alternativos. RNP (B2) para partidas en Honduras; consulados (B4) para documentos en el exterior.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B4",
+        "relacion": "Complementarios. Apostilla aplica a documentos hondureños; consulados emiten documentos con validez directa.",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 6,
+    "plausibles": 5,
+    "no_verificables": 1,
+    "calidad_global_documento": "Informativo y correcto en términos generales, pero no verificable en fuente constitucional. La fuente asignada es inadecuada para este contenido."
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "6d661c5e-3794-4465-8a0c-51972eaadd6d",
+    "slug": "poder-desde-espana-para-tramites-honduras",
+    "sha256_entrada": "d22da800fb3c9acb63b7a92ac6b40b0fb351c9fc15c2b963204f0b72f20beda3",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "El otorgamiento de poderes desde el extranjero para surtir efectos en Honduras se rige por el Convenio de La Haya de 5 de octubre de 1961 (Apostilla), del cual ambos países son signatarios.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable",
+      "detalle": "La Constitución no menciona el Convenio de La Haya de 1961 ni el sistema de apostilla. Los tratados internacionales son aprobados por el Congreso (Art. 205) pero los convenios específicos no están listados en el texto constitucional.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": []
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "En cuanto a la sustancia del mandato, se aplican las disposiciones del Código Civil hondureño, específicamente los artículos 1539 y siguientes, que regulan la representación voluntaria y el mandato.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable",
+      "detalle": "La Constitución no contiene el Código Civil ni sus artículos. El mandato y la representación voluntaria son instituciones de derecho civil, no constitucional.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": []
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "Es posible otorgar el poder directamente ante el Consulado General de Honduras en Madrid o el Consulado en Barcelona. Los poderes consulares se rigen por la legislación hondureña y no requieren apostilla.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable",
+      "detalle": "La Constitución no regula las funciones consulares ni los consulados de Honduras en el extranjero. La función consular es materia de derecho internacional y legislación secundaria.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": []
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "Los poderes otorgados en España son válidos en Honduras ante el Registro de la Propiedad, los Juzgados de Letras, el RNP, el SAR y otros notarios.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Constitución menciona los Juzgados como parte del Poder Judicial (Art. 303). El RNP y el SAR no aparecen en la Constitución. La validez de documentos extranjeros es materia de derecho internacional privado, no constitucional. El Art. 205 permite al Congreso aprobar tratados que regulen esta materia. Es plausible pero no verificable.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 303 Constitución",
+            "texto": "El Poder Judicial se integra por una Corte Suprema de Justicia, por las Cortes de Apelaciones, los Juzgados..."
+          }
+        ]
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "Un poder es válido hasta su revocación expresa o el cumplimiento de un plazo si así se pactó, según los artículos 1539-1552 del Código Civil.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable",
+      "detalle": "La Constitución no contiene el Código Civil. La revocación del mandato es institución de derecho civil no constitucional.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": []
+      },
+      "nivel_confianza": "baja"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 5,
+    "confirmados": 0,
+    "parcialmente_confirmados": 0,
+    "plausible_no_verificable": 1,
+    "no_verificable": 4,
+    "error_critico_detectado": "Ninguno. La Constitución no regula poderes notariales, apostilla, consulados ni mandato civil. Esta materia corresponde al Código Civil, tratados internacionales y legislación consular.",
+    "calidad_general": "no_verificable_con_fuente_disponible",
+    "nota_limitacion": "La fuente constitucional no contiene ninguna de las normas citadas (Código Civil, Convenio de La Haya, funciones consulares). Es materialmente imposible verificar las afirmaciones del artículo con esta fuente."
+  }
+}

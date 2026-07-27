@@ -1,0 +1,149 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "7cecb8aa-bbc7-4fb8-bf6d-65a3a0005acb",
+    "slug": "como-elegir-buen-abogado-guia-practica-honduras",
+    "sha256_entrada": "3996a460c607484b12cbed0dcdd0194907024990300eab985f6b7059058746fa",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "En Honduras, cualquier abogado colegiado puede ejercer en cualquier área. El proceso penal cambió con el Código Procesal Penal de 2002; el laboral, con las reformas al Código de Trabajo; el tributario, con las resoluciones del SAR.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Constitución no regula el ejercicio profesional de la abogacía ni menciona el Código Procesal Penal de 2002, las reformas al Código de Trabajo, ni las resoluciones del SAR. El Art. 82 garantiza el 'libre acceso a los tribunales para ejercitar sus acciones', y el Art. 205.1 faculta al Congreso para crear y reformar leyes. La existencia de estos cuerpos legales es constitucionalmente posible, pero los detalles no son verificables.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 82 Constitución",
+            "texto": "El derecho de defensa es inviolable. Los habitantes de la República tienen libre acceso a los tribunales para ejercitar sus acciones en la forma que señalan las leyes."
+          },
+          {
+            "articulo": "Art. 205.1 Constitución",
+            "texto": "Corresponde al Congreso Nacional las atribuciones siguientes: 1) Crear, decretar, interpretar, reformar y derogar las leyes..."
+          }
+        ]
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "En Honduras, el ejercicio de la abogacía requiere inscripción en el Colegio de Abogados de Honduras (CAH). Un abogado no colegiado no puede representarlo en juicio.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Constitución no menciona el Colegio de Abogados de Honduras (CAH). El Art. 82 garantiza el libre acceso a los tribunales y el derecho de defensa. El Art. 321 establece que 'los servidores del Estado no tienen más facultades que las que expresamente les confiere la ley', lo que sugiere que el ejercicio profesional está regulado por ley. La colegiación obligatoria es materia de legislación secundaria no verificable con la fuente constitucional.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 82 Constitución",
+            "texto": "El derecho de defensa es inviolable. Los habitantes de la República tienen libre acceso a los tribunales para ejercitar sus acciones en la forma que señalan las leyes."
+          },
+          {
+            "articulo": "Art. 321 Constitución",
+            "texto": "Los servidores del Estado no tienen más facultades que las que expresamente les confiere la ley."
+          }
+        ]
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "Un buen abogado interroga para entender detalles, explica riesgos (no solo posibilidades favorables), habla con claridad (sin jerga legal excesiva), y da un plazo estimado.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable",
+      "detalle": "Estos son criterios de calidad profesional y ética deontológica, no normas constitucionales. La Constitución no regula los estándares de atención al cliente ni la conducta profesional de los abogados. Son recomendaciones prácticas que no tienen anclaje constitucional directo.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": []
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "Ningún abogado puede garantizarle que ganará un juicio. Quien lo hace está mintiendo o está insinuando influencia indebida sobre el juzgado —y esto último es delito.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 303 establece la independencia judicial: 'La potestad de impartir justicia emana del pueblo y se imparte gratuitamente en nombre del Estado, por magistrados y jueces independientes, únicamente sometidos a la Constitución y las leyes.' El Art. 321 sanciona la extralimitación de funciones. El principio de que los jueces son independientes y solo sometidos a la ley es constitucional. Que garantizar resultados constituya delito es materia del Código Penal (cohecho, tráfico de influencias), no verificable con esta fuente.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 303 Constitución",
+            "texto": "La potestad de impartir justicia emana del pueblo y se imparte gratuitamente en nombre del Estado, por magistrados y jueces independientes, únicamente sometidos a la Constitución y las leyes."
+          },
+          {
+            "articulo": "Art. 321 Constitución",
+            "texto": "Los servidores del Estado no tienen más facultades que las que expresamente les confiere la ley. Todo acto que ejecuten fuera de la ley es nulo e implica responsabilidad."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "En Honduras, cada circuito judicial tiene sus particularidades. Los plazos reales y los criterios de los jueces varían entre Tegucigalpa, Nacaome, Choluteca o San Pedro Sula.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Constitución no regula la organización territorial de los circuitos judiciales ni las variaciones en plazos o criterios entre ellos. El Art. 303 menciona 'Cortes de Apelaciones, los Juzgados' como parte del Poder Judicial. El Art. 304 menciona que 'La ley establecerá la organización y competencia de los tribunales'. La existencia de distintos circuitos judiciales es plausible, pero los detalles operativos no son verificables.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 303 Constitución",
+            "texto": "El Poder Judicial se integra por una Corte Suprema de Justicia, por las Cortes de Apelaciones, los Juzgados, y demás dependencias que señale la ley."
+          },
+          {
+            "articulo": "Art. 304 Constitución",
+            "texto": "La ley establecerá la organización y competencia de los tribunales."
+          }
+        ]
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "La relación abogado-cliente se basa en la confidencialidad.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 82 garantiza la inviolabilidad del derecho de defensa, lo que implica que la comunicación entre abogado y cliente está protegida como parte esencial del ejercicio de ese derecho. Sin embargo, la 'confidencialidad' como concepto explícito en la relación abogado-cliente no está mencionada en la Constitución; es un principio deontológico y procesal de desarrollo legal secundario.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 82 Constitución",
+            "texto": "El derecho de defensa es inviolable. Los habitantes de la República tienen libre acceso a los tribunales para ejercitar sus acciones en la forma que señalan las leyes."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 6,
+    "confirmados": 0,
+    "confirmados_con_matiz": 0,
+    "parcialmente_confirmados": 2,
+    "parcialmente_confirmado_con_errores": 0,
+    "parcialmente_confirmado_con_error_factual": 0,
+    "plausible_no_verificable": 3,
+    "impreciso": 0,
+    "no_verificable": 1,
+    "error_critico_detectado": "Ninguno detectado. El artículo es una guía práctica deontológica, no un texto normativo. La Constitución provee fundamentos para el derecho de defensa (Art. 82), la independencia judicial (Art. 303) y la potestad legislativa (Art. 205), pero las referencias al CAH, Código Procesal Penal, y criterios de calidad profesional son materia de legislación secundaria.",
+    "calidad_general": "aceptable_con_limitacion_de_fuente",
+    "nota_limitacion": "La fuente única (articulos_constitucion.json) solo permite verificar los fundamentos constitucionales del acceso a la justicia y la independencia judicial. Las afirmaciones sobre colegiación, CAH, y práctica profesional corresponden a legislación secundaria."
+  }
+}

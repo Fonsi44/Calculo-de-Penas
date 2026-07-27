@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "1c250188-4ed5-453f-a142-2110c42943d4",
+    "slug": "permiso-trabajo-extranjeros-honduras",
+    "sha256_entrada": "05b0b2af4a8aa23b553fce4403435bffff1c8e0be97aada2c14dff318bfe3f4d",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "El permiso de trabajo para extranjeros en Honduras se rige por la Ley de Migración y Extranjería (Decreto 208-2003) y su Reglamento, así como por el Código de Trabajo (Decreto 189 de 1959).",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Constitución no menciona la Ley de Migración y Extranjería, el Decreto 208-2003, ni el Código de Trabajo por número de decreto. El Art. 245 confiere al Presidente 'la administración general del Estado', dentro de la cual opera la política migratoria. El Art. 205.1 faculta al Congreso para crear leyes, incluyendo leyes migratorias y laborales. La existencia de estas leyes es constitucionalmente plausible pero los decretos específicos no son verificables.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 205.1 Constitución",
+            "texto": "Corresponde al Congreso Nacional... 1) Crear, decretar, interpretar, reformar y derogar las leyes"
+          },
+          {
+            "articulo": "Art. 245 Constitución",
+            "texto": "El presidente de la República tiene la administración general del Estado..."
+          }
+        ]
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "El Artículo 112 de la Ley de Migración y Extranjería especifica que los extranjeros con residencia temporal requieren autorización para laborar.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable",
+      "detalle": "La Constitución no contiene la Ley de Migración y Extranjería ni su Artículo 112. La regulación de la condición jurídica de los extranjeros es materia de legislación secundaria no disponible en la fuente constitucional.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": []
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "La Secretaría de Trabajo y Seguridad Social emite el permiso de trabajo. La solicitud se presenta ante la Dirección General de Empleo.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Constitución no menciona la Secretaría de Trabajo y Seguridad Social ni la Dirección General de Empleo. El Art. 245 establece que el Presidente tiene 'la administración general del Estado' y enumera atribuciones entre las que se incluye la dirección de la política general. La existencia de secretarías de Estado es una derivación organizativa de esta facultad, pero las entidades específicas no son verificables en el texto constitucional.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 245 Constitución",
+            "texto": "El presidente de la República tiene la administración general del Estado, son sus atribuciones: 1) Cumplir y hacer cumplir la Constitución..."
+          }
+        ]
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "Los residentes permanentes en Honduras pueden trabajar sin necesidad de un permiso adicional.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable",
+      "detalle": "La Constitución no define categorías migratorias como 'residente permanente' ni regula sus derechos laborales específicos. Es materia de legislación migratoria secundaria.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": []
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "Trabajar sin permiso acarrea sanciones: multas de hasta 50 salarios mínimos para el trabajador, cancelación de residencia, prohibición de reingreso y deportación. Para el empleador, multas hasta 100 salarios mínimos y posible clausura.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable",
+      "detalle": "La Constitución no establece sanciones administrativas por trabajar sin permiso. El Art. 95 establece el principio de legalidad penal: 'Ninguna persona será sancionada con penas no establecidas previamente en la ley.' Las sanciones específicas son materia de legislación migratoria y laboral secundaria.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": [
+          {
+            "articulo": "Art. 95 Constitución",
+            "texto": "Ninguna persona será sancionada con penas no establecidas previamente en la ley..."
+          }
+        ]
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "Se requiere certificación de la Secretaría de Trabajo que acredite la inexistencia de personal hondureño calificado para el puesto, o justificación técnica de necesidad de conocimientos especializados.",
+      "fuente_verificacion": "data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable",
+      "detalle": "La Constitución no regula requisitos de prelación laboral para nacionales vs. extranjeros. Es materia de legislación laboral y migratoria secundaria.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos": []
+      },
+      "nivel_confianza": "baja"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 6,
+    "confirmados": 0,
+    "parcialmente_confirmados": 0,
+    "plausible_no_verificable": 2,
+    "no_verificable": 4,
+    "error_critico_detectado": "Ninguno. La Constitución no regula detalles de permisos de trabajo para extranjeros. Esta materia corresponde a legislación secundaria (Ley de Migración, Código de Trabajo) no disponible en la fuente.",
+    "calidad_general": "no_verificable_con_fuente_disponible",
+    "nota_limitacion": "La fuente única (articulos_constitucion.json) no contiene legislación migratoria ni laboral. Solo permite verificar los fundamentos constitucionales de la potestad legislativa y administrativa del Estado."
+  }
+}
