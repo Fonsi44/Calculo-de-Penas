@@ -1,0 +1,50 @@
+{
+  "pasada": "A",
+  "timestamp": "2026-07-27T07:09:59.428687+00:00",
+  "sha256_body": "41f05b4d6818ed3a00873c41667100308dbc50106cd7a9f0b62c08c34bb739ae",
+  "slug": "recurso-de-amparo-honduras-guia-completa",
+  "title": "Recurso de Amparo en Honduras: Guía Completa y",
+  "total_claims_verificados": 0,
+  "total_claims_no_verificados": 1,
+  "total_claims": 1,
+  "claims_articulos": [
+    {
+      "articulo_numero": 182,
+      "encontrado_en_fuentes": [
+        "Constitución"
+      ],
+      "verificado": false,
+      "contexto_en_articulo": "dos en la Constitución de la República de Honduras y en los tratados internacionales de derechos humanos ratificados por el país, conforme al <strong>Artículo 182 de la Constitución</strong> y la Ley de Justicia Constitucional. Esto incluye, entre otros, el derecho a la vida, la libertad personal, la integridad",
+      "texto_fuente": {
+        "Constitución": {
+          "articulo": "Art. 182 Constitución",
+          "texto": "El Estado reconoce la garantía de Hábeas Corpus o Exhibición Personal, y de Hábeas Data. En consecuencia en el Hábeas Corpus o Exhibición Personal toda persona agraviada o cualquier otra en nombre de ésta tiene derecho a promoverla; y en el de Hábeas Data únicamente puede promoverla la persona cuyos datos personales o familiares consten en los archivos, registros públicos o privados de la siguiente manera: 1) EL HÁBEAS CORPUS O EXHIBICIÓN PERSONAL: a) Cuando se encuentre ilegalmente presa, deten"
+        }
+      },
+      "nota": "IMPORTANTE: Art. 182 Constitución regula Hábeas Corpus y Hábeas Data, NO el Recurso de Amparo. El Amparo está en Art. 183 Constitución. El artículo cita Art. 182 como base del amparo, lo cual es un error — la base correcta es Art. 183."
+    }
+  ],
+  "aserciones_legales": [
+    {
+      "tipo": "error_articulo_base",
+      "texto": "El artículo cita Art. 182 Constitución como base del amparo, pero el Art. 182 regula Hábeas Corpus/Hábeas Data. La base correcta es Art. 183 Constitución.",
+      "verificado": false,
+      "nota": "Error de numeración: confunde Art. 182 (Hábeas Corpus) con Art. 183 (Amparo)."
+    },
+    {
+      "tipo": "claim_legal_general",
+      "texto": "Plazo de 2 meses para interponer amparo.",
+      "verificado": false,
+      "nota": "Requiere verificación contra Ley de Justicia Constitucional (Decreto 130-2017)."
+    },
+    {
+      "tipo": "claim_legal_general",
+      "texto": "El amparo se interpone ante la Sala de lo Constitucional de la CSJ.",
+      "verificado": false,
+      "nota": "Confirmado en Art. 183 Constitución — pero verificar procedimiento exacto en Ley de Justicia Constitucional."
+    }
+  ],
+  "resumen": "De 1 claim por número de artículo, 0 verificados correctamente. ERROR CRÍTICO: el artículo cita Art. 182 (Hábeas Corpus) como base del amparo, cuando la base real es Art. 183.",
+  "sha256_original": "41f05b4d6818ed3a00873c41667100308dbc50106cd7a9f0b62c08c34bb739ae",
+  "_sha_backfilled": true
+}

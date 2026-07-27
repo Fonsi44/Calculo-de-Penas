@@ -1,0 +1,77 @@
+{
+  "pasada": "A",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "entrada": {
+    "file": "docs/audits/fase6/lote-14/derechos-indigenas-consulta-previa-honduras/entrada.json",
+    "sha256": "4b120dd15f4f74a288dc93890e96e7bf3270af1bb80ddb7edb0730dfa483b0e1"
+  },
+  "sources_used": {
+    "data/articulos_constitucion.json": {
+      "sha256": "37b129c3f133103b2dc467ba9ae6db656c8b2713b12e9afe0bba235d85b84175",
+      "articles_consulted": [
+        "Art. 173 Constitución",
+        "Art. 346 Constitución"
+      ]
+    }
+  },
+  "claims": [
+    {
+      "id": "claim-11-1",
+      "text": "La Constitución, en su Artículo 346, reconoce el deber del Estado de preservar y promover las culturas nativas, garantizando a las comunidades indígenas el aprovechamiento de los recursos naturales de sus territorios",
+      "body_reference": "La Constitución de la República de Honduras, en su Artículo 346, reconoce el deber del Estado de preservar y promover las culturas nativas, garantizando a las comunidades indígenas el aprovechamiento de los recursos naturales de sus territorios",
+      "verification": {
+        "status": "PARTIALLY_VERIFIED",
+        "source_article": "Art. 346 Constitución",
+        "source_text": "Es deber del Estado dictar medidas de protección de los derechos e intereses de las comunidades indígenas existentes en el país, especialmente de las tierras y bosques donde estuvieren asentadas.",
+        "notes": "El Art. 346 habla de 'dictar medidas de protección de los derechos e intereses de las comunidades indígenas, especialmente de las tierras y bosques'. No menciona explícitamente 'preservar y promover las culturas nativas' ni 'garantizar el aprovechamiento de los recursos naturales'. La preservación de culturas nativas está en el Art. 173. La referencia a 'aprovechamiento de recursos naturales' no aparece textualmente en el Art. 346."
+      }
+    },
+    {
+      "id": "claim-11-2",
+      "text": "El Convenio 169 de la OIT posee rango constitucional, ratificado mediante Decreto 26-94",
+      "body_reference": "El Convenio 169 de la Organización Internacional del Trabajo (OIT) sobre Pueblos Indígenas y Tribales, ratificado por Honduras mediante Decreto 26-94. Este convenio posee rango constitucional",
+      "verification": {
+        "status": "UNVERIFIABLE",
+        "source_article": null,
+        "source_text": null,
+        "notes": "El Convenio 169 OIT no está en las fuentes proporcionadas (solo articulos_constitucion.json). El Decreto 26-94 de ratificación tampoco está disponible. No se puede verificar la afirmación."
+      }
+    },
+    {
+      "id": "claim-11-3",
+      "text": "La Ley de Propiedad y la Ley General del Ambiente (Decreto 104-93) contienen disposiciones para la protección de derechos territoriales indígenas",
+      "body_reference": "la Ley de Propiedad y la Ley General del Ambiente (Decreto 104-93) contienen disposiciones específicas para la protección de los derechos territoriales indígenas",
+      "verification": {
+        "status": "UNVERIFIABLE",
+        "source_article": null,
+        "source_text": null,
+        "notes": "Ni la Ley de Propiedad ni la Ley General del Ambiente están en las fuentes proporcionadas. No se puede verificar."
+      }
+    },
+    {
+      "id": "claim-11-4",
+      "text": "El Artículo 95 de la Ley de Propiedad establece el deber del Estado de consultar a los pueblos indígenas cuando pretenda explotar recursos naturales en sus territorios",
+      "body_reference": "El Artículo 95 de la Ley de Propiedad establece el deber del Estado de consultar a estos pueblos cuando pretenda explotar recursos naturales en sus territorios",
+      "verification": {
+        "status": "UNVERIFIABLE",
+        "source_article": null,
+        "source_text": null,
+        "notes": "La Ley de Propiedad no está en las fuentes proporcionadas. No se puede verificar."
+      }
+    },
+    {
+      "id": "claim-11-5",
+      "text": "El Estado preservará y estimulará las culturas nativas (Constitución)",
+      "body_reference": "[Contexto general del artículo sobre protección de culturas indígenas]",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 173 Constitución",
+        "source_text": "El Estado preservará y estimulará las culturas nativas, así como las genuinas expresiones del folclore nacional, el arte popular y las artesanías.",
+        "notes": "Confirmado textualmente. Este artículo constitucional respalda la protección de culturas nativas."
+      }
+    }
+  ],
+  "global_notes": "De las fuentes proporcionadas (solo articulos_constitucion.json), únicamente dos artículos constitucionales son verificables: Art. 173 (preservación de culturas nativas) y Art. 346 (protección de comunidades indígenas, tierras y bosques). El Art. 346 no contiene exactamente lo que el artículo le atribuye. El Convenio 169 OIT, la Ley de Propiedad, la Ley General del Ambiente, y la Declaración ONU 2007 no están en las fuentes. La fuente asignada es claramente insuficiente para este artículo.",
+  "sha256_original": "77156fca08704ea0084d8666e096d5f7a972037fa3a57649de114aadb6601306",
+  "_sha_backfilled": true
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "union-de-hecho-requisitos-derechos-honduras",
+  "articleId": "194e3ecd-d0e2-439a-8606-6a6116860c66",
+  "lote": 13,
+  "fechaConsolidacion": "2026-07-27T09:30:00.000Z",
+  "estadoFinal": "needs_human_review",
+  "razon": "Mayoría de claims no verificables contra fuentes disponibles",
+  "hashes": {
+    "bodyActual": "63dba72fafa9700f2c6e9ef4e659ee2e0aae6f7664dc76da66a9c3a123edf44d",
+    "pasadaA": "63dba72fafa9700f2c6e9ef4e659ee2e0aae6f7664dc76da66a9c3a123edf44d",
+    "pasadaB": "63dba72fafa9700f2c6e9ef4e659ee2e0aae6f7664dc76da66a9c3a123edf44d",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 4,
+    "pasadaA": 4,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 4
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

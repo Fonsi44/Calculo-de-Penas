@@ -1,0 +1,16 @@
+{
+  "pasada": "B",
+  "slug": "abogado-penalista-sur-honduras",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "overall_assessment": "El artículo contiene DOS ERRORES en las referencias constitucionales al derecho de defensa. Primero cita el Art. 88 (que regula la prohibición de coacción para declarar), y luego en la sección de marco legal cita el Art. 303 (que regula el Poder Judicial). El artículo correcto es el Art. 82: 'El derecho de defensa es inviolable.' Esto es particularmente problemático porque el artículo se contradice a sí mismo usando dos números de artículo distintos y ambos incorrectos. La referencia al Art. 289 CPP sí es correcta. El resto del artículo es contenido informativo/comercial sobre ventajas prácticas de abogados locales, no verificable contra fuentes normativas.",
+  "risk_flags": [
+    "ERROR GRAVE: El artículo cita dos artículos constitucionales diferentes (88 y 303) para el derecho de defensa, y AMBOS son incorrectos. El derecho de defensa está en el Art. 82 de la Constitución. Esta inconsistencia interna y doble error puede afectar la credibilidad del contenido.",
+    "El artículo menciona 'Artículo 303 de la Constitución' en la sección de marco legal, lo cual es falso: el Art. 303 regula el Poder Judicial."
+  ],
+  "recommendations": [
+    "CORREGIR URGENTE: Reemplazar todas las referencias al Art. 88 y Art. 303 de la Constitución por Art. 82 ('El derecho de defensa es inviolable').",
+    "Unificar la referencia constitucional en todo el artículo para evitar la contradicción interna actual."
+  ],
+  "sha256_original": "9449f7336feb57744dc6a6bc75ddaf526ed7e2059b605b2643c299505649bff8",
+  "_sha_backfilled": true
+}

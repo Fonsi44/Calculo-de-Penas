@@ -1,0 +1,65 @@
+{
+  "pasada": "B",
+  "timestamp": "2026-07-27T07:09:06.374191+00:00",
+  "sha256": {
+    "body": "99e8765d53e91fd82e8198b449216be95a745e98db2390cc521d04d84c147013",
+    "title": "f960de254c6bd6af5457dd6a84998a6ae37e59486231c8cc17d0f79a279d3bf7",
+    "metaDescription": "af34cb13fb455d57e4950c3d22a88f1adeaa0e9cc62ad4686cbe179e28e6c6cd",
+    "full_entrada": "2c8f5b1ba6c393d944c7b662371d590e88953a7957c25a0f7784a8d28e1f9e16"
+  },
+  "slug": "juicio-oral-etapas-que-esperar-honduras",
+  "title": "Juicio oral en Honduras: etapas y preparación",
+  "integridad_fuentes": {
+    "codigo_procesal_penal_verificado": {
+      "existe": true,
+      "num_articulos": 44,
+      "verificado": true
+    },
+    "articulos_constitucion": {
+      "existe": true,
+      "num_articulos": 378,
+      "verificado": true
+    }
+  },
+  "fuentes_asignadas": [
+    "codigo_procesal_penal_verificado",
+    "articulos_constitucion"
+  ],
+  "verificaciones_hechos": [
+    {
+      "tipo": "decretos_mencionados",
+      "valores": [
+        "Decreto 9-99-E",
+        "Decreto 130-2017"
+      ],
+      "nota": "El artículo menciona Decreto 9-99-E como CPP y Decreto 130-2017 como Código Penal. Verificar."
+    },
+    {
+      "tipo": "instituciones_mencionadas",
+      "valores": [
+        "Ministerio Público",
+        "Corte de Apelaciones",
+        "Corte Suprema de Justicia",
+        "Tribunales de Sentencia"
+      ],
+      "nota": "Verificar nombres oficiales."
+    }
+  ],
+  "metadata": {
+    "reviewStatus": "reviewed",
+    "aiReviewStatus": "needs_human_review",
+    "publishedAt": "2025-12-24T12:00:00.000Z",
+    "updatedAt": "2026-07-25T19:53:45.697Z",
+    "category": "proceso-penal",
+    "tags": [
+      "cómo es un juicio penal honduras",
+      "audiencia inicial",
+      "audiencia preliminar",
+      "juicio oral y público"
+    ],
+    "author": "Pineda y Asociados"
+  },
+  "resumen": "PASADA B: 2 verificaciones de hecho realizadas. SHA256 calculados. 2 fuentes verificadas.",
+  "sha256_original": "99e8765d53e91fd82e8198b449216be95a745e98db2390cc521d04d84c147013",
+  "_sha_backfilled": true
+}

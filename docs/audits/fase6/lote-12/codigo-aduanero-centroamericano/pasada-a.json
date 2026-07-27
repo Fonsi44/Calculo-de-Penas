@@ -1,0 +1,51 @@
+{
+  "slug": "codigo-aduanero-centroamericano",
+  "sha256_original": "a4687178679fc4841153d94a3f4c455574c4c1be733169dbb92902a5bac1e43c",
+  "pasada": "A",
+  "claims": [
+    {
+      "id": "claim-1",
+      "text": "El CAUCA y RECAUCA constituyen la legislación regional básica que regula los regímenes, trámites y operaciones aduaneras en Centroamérica, incluyendo Honduras.",
+      "verification_status": "unverifiable",
+      "verification_detail": "CAUCA/RECAUCA son instrumentos regionales centroamericanos no contenidos en el Código Tributario hondureño (fuente local disponible). No se puede verificar con la fuente asignada.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-2",
+      "text": "La aplicación y fiscalización del CAUCA y RECAUCA está a cargo de la Administración Aduanera de Honduras, en coordinación con la Secretaría de Desarrollo Económico y el SAR.",
+      "verification_status": "unverifiable",
+      "verification_detail": "La fuente local (Código Tributario) no menciona la distribución competencial entre Administración Aduanera, SDE y SAR respecto del CAUCA/RECAUCA.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-3",
+      "text": "Los regímenes aduaneros son: importación definitiva, exportación definitiva, regímenes temporales y regímenes liberatorios (ZOLI).",
+      "verification_status": "unverifiable",
+      "verification_detail": "La clasificación de regímenes aduaneros pertenece al CAUCA/RECAUCA, no al Código Tributario hondureño. Fuente local insuficiente.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-4",
+      "text": "La Declaración Única Centroamericana (DUCA o DUA) debe ser transmitida electrónicamente por un Agente Aduanero autorizado.",
+      "verification_status": "unverifiable",
+      "verification_detail": "La DUA/DUCA es un instrumento del CAUCA/RECAUCA. La fuente local (Código Tributario) no contiene esta regulación específica.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-5",
+      "text": "Las infracciones se clasifican en administrativas, tributarias y delito de contrabando/defraudación fiscal con penas de prisión y decomiso.",
+      "verification_status": "unverifiable",
+      "verification_detail": "La clasificación de infracciones aduaneras está en leyes especiales aduaneras y el Código Penal, no verificables con el Código Tributario como única fuente local.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-6",
+      "text": "El sistema aduanero requiere clasificación arancelaria y valoración aduanera precisa; errores pueden resultar en acusaciones de defraudación fiscal.",
+      "verification_status": "unverifiable",
+      "verification_detail": "Afirmación genérica sobre operación aduanera no verificable con el Código Tributario, que trata principios generales pero no el detalle operativo del CAUCA.",
+      "source_articles": []
+    }
+  ],
+  "global_assessment": "unverifiable",
+  "global_assessment_reason": "El artículo describe el CAUCA/RECAUCA, instrumentos jurídicos regionales centroamericanos, utilizando como fuente local el Código Tributario hondureño. Este código no contiene el texto del CAUCA ni regula sus regímenes, procedimientos o sanciones en el nivel de detalle que el artículo expone. Todas las claims son inverificables con la fuente asignada."
+}

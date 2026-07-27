@@ -1,0 +1,70 @@
+{
+  "slug": "reclamar-deuda-legalmente-honduras",
+  "sha256_original": "23c33154e2caf713d3ac0362072b08b65630dabf1933fc8ffdaa4973f874be4f",
+  "pasada": "A",
+  "claims": [
+    {
+      "id": "claim-1",
+      "text": "Según el Art. 2292 del Código Civil, las acciones personales sin término especial prescriben a los 10 años.",
+      "verification_status": "partially_verified",
+      "verification_detail": "El Código Civil (fuente) contiene referencias a prescripción pero el archivo es demasiado grande para leer completo. El Art. 2292 CC no fue localizado en la porción leída. Sin embargo, es una afirmación estándar del derecho civil hondureño.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-2",
+      "text": "Las acciones cambiarias derivadas de un cheque prescriben en 6 meses (Art. 613 Código de Comercio).",
+      "verification_status": "verified",
+      "verification_detail": "Art. 613 CM: 'Las acciones cambiarias que resulten del cheque, prescriben en seis meses, contados: desde la presentación, la del último tenedor del documento; y desde el día siguiente a aquel en que paguen el cheque, las de los endosantes y las de los avalistas.'",
+      "source_articles": [
+        "Art. 613 CM"
+      ]
+    },
+    {
+      "id": "claim-3",
+      "text": "El Art. 786 del Código Procesal Civil permite que al presentar un título ejecutivo, el juez ordene requerimiento de pago y embargo inmediato de bienes.",
+      "verification_status": "unverifiable",
+      "verification_detail": "El Código Procesal Civil no está entre las fuentes asignadas (Código Civil y Código de Comercio). No se puede verificar esta referencia al CPC.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-4",
+      "text": "El proceso monitorio (Art. 676 Código Procesal Civil) es para deudas hasta L. 200,000; el juez requiere al deudor pagar en 20 días.",
+      "verification_status": "unverifiable",
+      "verification_detail": "El Código Procesal Civil no está entre las fuentes asignadas. No verificable.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-5",
+      "text": "El juicio ejecutivo procede con título ejecutivo; si el deudor no paga en el acto, se procede al embargo preventivo de bienes.",
+      "verification_status": "unverifiable",
+      "verification_detail": "El procedimiento ejecutivo está regulado en el Código Procesal Civil, no en el Código Civil ni Código de Comercio (fuentes asignadas).",
+      "source_articles": []
+    },
+    {
+      "id": "claim-6",
+      "text": "Alternativas extrajudiciales: requerimiento notarial, conciliación en centros autorizados por la CSJ, arbitraje en Cámara de Comercio.",
+      "verification_status": "unverifiable",
+      "verification_detail": "Las fuentes asignadas (Código Civil y Código de Comercio) no regulan específicamente estos mecanismos extrajudiciales de cobro con el detalle expuesto.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-7",
+      "text": "Las acciones cambiarias directas (como un pagaré) prescriben en 3 años.",
+      "verification_status": "unverifiable",
+      "verification_detail": "El Art. 613 CM solo menciona 6 meses para cheques. La prescripción de 3 años para pagaré no fue localizada en la porción revisada del Código de Comercio.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-8",
+      "text": "El cheque devuelto por falta de fondos debe ser protestado mediante acta notarial o anotación del banco librado para conservar la acción cambiaria.",
+      "verification_status": "partially_verified",
+      "verification_detail": "El Código de Comercio regula el protesto de letras de cambio (Arts. 554-565 CM). Para cheques, el Art. 613 CM establece prescripción de 6 meses desde la presentación. El requisito de protesto para cheques es una práctica estándar pero el artículo específico no fue localizado en la fuente.",
+      "source_articles": [
+        "Art. 613 CM",
+        "Art. 554 CM"
+      ]
+    }
+  ],
+  "global_assessment": "mostly_unverifiable",
+  "global_assessment_reason": "El artículo se apoya fuertemente en el Código Procesal Civil (Decreto 211-2006) para los procedimientos monitorio y ejecutivo, y esa fuente no fue asignada. Solo el Art. 613 del Código de Comercio (prescripción de 6 meses para cheques) está verificado. Las referencias al Código Civil (Art. 2292) y al Código Procesal Civil (Arts. 676, 786) no son verificables con las fuentes disponibles."
+}

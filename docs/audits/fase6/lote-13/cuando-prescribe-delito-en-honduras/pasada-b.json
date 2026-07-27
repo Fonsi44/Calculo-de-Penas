@@ -1,0 +1,32 @@
+{
+  "pasada": "B",
+  "sha256_entrada": "no_requerido_pasada_b",
+  "claims_cruzadas": [
+    {
+      "id": "PRES_X1",
+      "claim_origen_id": "PRES6",
+      "texto": "El artículo dice que el hurto simple tiene pena de 1 a 3 años y prescribe a los 3 años. Verificación real: Art. 357 CP = 6 meses a 2 años. Art. 109 CP: pena max 2 + mitad 1 = 3. Como 3 < 5, prescribe a 5 años (plazo residual).",
+      "tipo": "error_pena_y_calculo",
+      "verifica": "alucinacion",
+      "nota": "ERROR DETECTADO. El hurto simple (Art. 357 CP) pena de 6 meses a 2 años, no 1 a 3. Según Art. 109 CP, prescribe a 5 años (no 3). El ejemplo práctico del artículo contiene datos incorrectos."
+    },
+    {
+      "id": "PRES_X2",
+      "claim_origen_id": "PRES2",
+      "texto": "¿Las faltas prescriben a los 6 meses según Art. 109 CP?",
+      "tipo": "verificacion_parcial",
+      "verifica": "parcial",
+      "nota": "El extracto del Art. 109 en la fuente está cortado y no muestra el plazo para faltas. El dato es doctrinalmente correcto pero no confirmable con el extracto cargado."
+    }
+  ],
+  "alucinaciones_detectadas": [
+    {
+      "claim_id": "PRES6",
+      "descripcion": "El ejemplo práctico dice que el hurto simple tiene pena de 1 a 3 años y prescribe a los 3 años. Según el Art. 357 CP, la pena real es de 6 meses a 2 años. Además, aunque la pena fuera 1-3 años, con max 3 + mitad 1.5 = 4.5 < 5, prescribiría a 5 años, no 3. Doble error.",
+      "severidad": "alta"
+    }
+  ],
+  "nota_final": "Se detectó 1 error grave en el ejemplo práctico de prescripción del hurto. Pena incorrecta y plazo de prescripción incorrecto.",
+  "sha256_original": "60988525da867d7abc4ab35f29c0cd08397957a7c5c8e6a2c5f08ae8fe330cba",
+  "_sha_backfilled": true
+}

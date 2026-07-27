@@ -1,0 +1,26 @@
+{
+  "pasada": "B",
+  "sha256_entrada": "no_requerido_pasada_b",
+  "claims_cruzadas": [
+    {
+      "id": "VD_X1",
+      "claim_origen_id": "VD3",
+      "texto": "El artículo menciona el Art. 176 CPP pero este NO aparece en la fuente verificada. ¿Es real?",
+      "tipo": "invencion_articulo",
+      "verifica": "no_verificable",
+      "nota": "Art. 176 CPP no está en codigo_procesal_penal_verificado.json. Puede existir en el CPP completo pero no en el extracto cargado. Sin inventar."
+    },
+    {
+      "id": "VD_X2",
+      "claim_origen_id": "VD1",
+      "texto": "¿La Ley contra la Violencia Doméstica es realmente Decreto 132-97 reformado por 250-2005?",
+      "tipo": "fecha_decreto",
+      "verifica": "no_verificable",
+      "nota": "Fuera del alcance de las fuentes locales disponibles. Sin inventar."
+    }
+  ],
+  "alucinaciones_detectadas": [],
+  "nota_final": "Pasada B sin hallazgos de alucinación en lo verificable. Los claims dependientes de la Ley contra la Violencia Doméstica (no cargada) quedan como no verificables, no como falsos. Sin inventar.",
+  "sha256_original": "4d0409ea4349a148cdbc3d43868e4e0eb8e8ab1448b6fd86903e5dd3dcae890b",
+  "_sha_backfilled": true
+}

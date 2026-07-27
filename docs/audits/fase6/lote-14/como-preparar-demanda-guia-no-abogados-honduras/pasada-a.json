@@ -1,0 +1,83 @@
+{
+  "pasada": "A",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "entrada": {
+    "file": "docs/audits/fase6/lote-14/como-preparar-demanda-guia-no-abogados-honduras/entrada.json",
+    "sha256": "315171aa43e50972d241d01c75413638e39fe4d6f939a6047e818a24b8e69e91"
+  },
+  "sources_used": {
+    "data/codigo_civil.json": {
+      "sha256": "6f5b7e553f8698af7f917ca0098b05700f834a78916e89cd98b902a69b74429c",
+      "articles_consulted": [
+        "Art. 76 CC"
+      ]
+    },
+    "data/articulos_constitucion.json": {
+      "sha256": "37b129c3f133103b2dc467ba9ae6db656c8b2713b12e9afe0bba235d85b84175",
+      "articles_consulted": [
+        "Art. 82 Constitución",
+        "Art. 83 Constitución"
+      ]
+    }
+  },
+  "claims": [
+    {
+      "id": "claim-9-1",
+      "text": "El Código Procesal Civil de Honduras, en su Artículo 42, establece la obligatoriedad de representación legal para cuantías mayores a 50 salarios mínimos",
+      "body_reference": "En materia civil, si el valor de la demanda no excede los 50 salarios mínimos vigentes, no se requiere abogado. El Código Procesal Civil de Honduras, en su Artículo 42, establece la obligatoriedad de representación legal para cuantías mayores.",
+      "verification": {
+        "status": "UNVERIFIABLE",
+        "source_article": null,
+        "source_text": null,
+        "notes": "El Código Procesal Civil no está entre las fuentes proporcionadas (codigo_civil.json y articulos_constitucion.json). El Código Civil (fuente disponible) no contiene disposiciones sobre representación procesal obligatoria ni el umbral de 50 salarios mínimos."
+      }
+    },
+    {
+      "id": "claim-9-2",
+      "text": "El Código de Trabajo, Artículo 74, exime de representación legal en primera instancia para reclamaciones de baja cuantía",
+      "body_reference": "En el ámbito laboral, el Código de Trabajo de Honduras, específicamente en su Artículo 74, exime de esta obligación en primera instancia para reclamaciones de baja cuantía.",
+      "verification": {
+        "status": "UNVERIFIABLE",
+        "source_article": null,
+        "source_text": null,
+        "notes": "El Código de Trabajo no está entre las fuentes proporcionadas. No se puede verificar."
+      }
+    },
+    {
+      "id": "claim-9-3",
+      "text": "La Ley de Procedimiento de Familia permite presentación sin abogado en divorcios por mutuo consentimiento o reclamaciones de alimentos",
+      "body_reference": "la Ley de Procedimiento de Familia permite la presentación sin abogado en casos como divorcios por mutuo consentimiento o reclamaciones de alimentos",
+      "verification": {
+        "status": "UNVERIFIABLE",
+        "source_article": null,
+        "source_text": null,
+        "notes": "La Ley de Procedimiento de Familia no está entre las fuentes proporcionadas. No se puede verificar."
+      }
+    },
+    {
+      "id": "claim-9-4",
+      "text": "El derecho de defensa es inviolable y los habitantes tienen libre acceso a los tribunales (Constitución)",
+      "body_reference": "El Código Procesal Civil de Honduras, en su Artículo 42... [referencia implícita al acceso a la justicia]",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 82 Constitución",
+        "source_text": "El derecho de defensa es inviolable. Los habitantes de la República tienen libre acceso a los tribunales para ejercitar sus acciones en la forma que señalan las leyes.",
+        "notes": "La Constitución garantiza el derecho de defensa y acceso a los tribunales, que es el fundamento constitucional de la posibilidad de autocomparecencia."
+      }
+    },
+    {
+      "id": "claim-9-5",
+      "text": "Corresponde al Estado nombrar procuradores para la defensa de los pobres y para que velen por menores e incapaces (Constitución)",
+      "body_reference": "[Referencia implícita a defensa pública]",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 83 Constitución",
+        "source_text": "Corresponde al Estado nombrar procuradores para la defensa de los pobres y para que velen por las personas e intereses de los menores e incapaces. Darán a ellos asistencia legal y los representarán judicialmente en la defensa de su libertad individual y demás derechos.",
+        "notes": "Confirmado textualmente. La Constitución establece la defensa pública como garantía."
+      }
+    }
+  ],
+  "global_notes": "La gran mayoría de las afirmaciones normativas del artículo (Código Procesal Civil, Código de Trabajo, Ley de Procedimiento de Familia) hacen referencia a cuerpos legales que NO están en las fuentes proporcionadas (codigo_civil.json y articulos_constitucion.json). Solo las referencias constitucionales generales al derecho de defensa (Art. 82) y defensa pública (Art. 83) son verificables. Las fuentes asignadas son insuficientes para verificar el contenido sustantivo del artículo.",
+  "sha256_original": "1be8fe56f709048cfe2ada7ff9d8f58c2debbc80a3514b619a94c1262f1b6a22",
+  "_sha_backfilled": true
+}

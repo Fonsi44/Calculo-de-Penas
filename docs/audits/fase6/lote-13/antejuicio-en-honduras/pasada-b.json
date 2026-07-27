@@ -1,0 +1,37 @@
+{
+  "pasada": "B",
+  "sha256_entrada": "no_requerido_pasada_b",
+  "claims_cruzadas": [
+    {
+      "id": "ANT_X1",
+      "claim_origen_id": "ANT1",
+      "texto": "El artículo cita Art. 205 Constitución para el antejuicio. Texto real del Art. 205: 'Corresponde al Congreso Nacional las atribuciones siguientes: 1) Crear, decretar, interpretar, reformar y derogar las leyes...' — es el artículo de atribuciones del Congreso, NO de antejuicio.",
+      "tipo": "alucinacion_numero_articulo",
+      "verifica": "alucinacion",
+      "nota": "ALUCINACION CONFIRMADA. El Art. 205 no regula el antejuicio. El antejuicio está en los Arts. 303-306 de la Constitución (Título V, Capítulo sobre Poder Judicial)."
+    },
+    {
+      "id": "ANT_X2",
+      "claim_origen_id": "ANT2",
+      "texto": "El artículo cita Art. 313 Constitución como base del antejuicio contra magistrados de cortes de apelaciones. Texto real: atribuciones de la CSJ, numeral 2 menciona 'Conocer los procesos incoados a los más altos funcionarios del Estado y los Diputados'.",
+      "tipo": "atribucion_imprecisa",
+      "verifica": "parcial",
+      "nota": "El Art. 313 numeral 2 se relaciona tangencialmente pero NO menciona específicamente 'magistrados de cortes de apelaciones'. La regulación principal del antejuicio está en Arts. 303-306."
+    }
+  ],
+  "alucinaciones_detectadas": [
+    {
+      "claim_id": "ANT1",
+      "descripcion": "El artículo atribuye al Art. 205 de la Constitución la regulación del antejuicio. El Art. 205 real regula las atribuciones del Congreso Nacional (crear leyes, decretar, interpretar, reformar, derogar). El antejuicio está en los Arts. 303-306 de la Constitución.",
+      "severidad": "alta"
+    },
+    {
+      "claim_id": "ANT2",
+      "descripcion": "El Art. 313 numeral 2 menciona procesos contra altos funcionarios, pero no es el artículo principal de antejuicio ni menciona específicamente magistrados de cortes de apelaciones. Atribución imprecisa.",
+      "severidad": "media"
+    }
+  ],
+  "nota_final": "Se detectaron 2 problemas: 1 alucinación grave (Art. 205 no es de antejuicio) y 1 atribución imprecisa (Art. 313). Los artículos correctos son 303-306 de la Constitución.",
+  "sha256_original": "5103a3e4816c73c05a88aaca057fe1244671dbef87fe2d3db148eae0e5dad1f1",
+  "_sha_backfilled": true
+}

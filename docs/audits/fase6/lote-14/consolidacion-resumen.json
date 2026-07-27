@@ -1,0 +1,75 @@
+{
+  "lote": 14,
+  "total": 13,
+  "completed": 0,
+  "source_checked": 7,
+  "needs_human_review": 6,
+  "blocked": 0,
+  "detalles": [
+    {
+      "slug": "como-preparar-demanda-guia-no-abogados-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "contratos-mercantiles-esenciales-empresas-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "derechos-indigenas-consulta-previa-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "derechos-trabajadora-embarazada-honduras",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "despido-laboral-honduras-guia-completa",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "fianza-medidas-cautelares-proceso-penal-honduras",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "juicio-oral-etapas-que-esperar-honduras",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "pension-alimenticia-honduras-guia-completa",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "poder-legal-honduras-cuando-se-necesita",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "prescripcion-deudas-plazos-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "que-hacer-si-me-detienen-en-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "recurso-de-amparo-honduras-guia-completa",
+      "estado": "source_checked",
+      "errores": 0
+    }
+  ]
+}

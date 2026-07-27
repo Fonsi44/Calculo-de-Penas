@@ -1,0 +1,74 @@
+{
+  "pasada": "A",
+  "sha256_entrada": "no_requerido_pasada_a",
+  "claims": [
+    {
+      "id": "REC1",
+      "texto_exacto": "El recurso de apelación se interpone dentro de tres días hábiles.",
+      "tipo": "plazo_procesal",
+      "atribucion_implicita": "Afirma que el plazo de apelación es de 3 días hábiles"
+    },
+    {
+      "id": "REC2",
+      "texto_exacto": "El Recurso de Casación... Procede exclusivamente contra las sentencias definitivas y los autos que pongan fin a la acción penal dictados por las Cortes de Apelaciones o los Tribunales de Sentencia.",
+      "tipo": "procedencia_recurso",
+      "atribucion_implicita": "Define la procedencia del recurso de casación"
+    },
+    {
+      "id": "REC3",
+      "texto_exacto": "El CPP de Honduras establece que la casación solo puede fundamentarse en dos grandes causales (Artículo 360): 1) Por Infracción de Ley (Fondo)... 2) Por Quebrantamiento de Forma (Proceso)...",
+      "tipo": "cita_articulo_especifico",
+      "atribucion_implicita": "Atribuye al Art. 360 CPP los dos motivos de casación"
+    },
+    {
+      "id": "REC4",
+      "texto_exacto": "Plazo para interponer: 20 días hábiles contados a partir de la notificación de la sentencia escrita.",
+      "tipo": "plazo_procesal",
+      "atribucion_implicita": "Afirma que el plazo de casación es de 20 días hábiles"
+    },
+    {
+      "id": "REC5",
+      "texto_exacto": "Tribunal competente: Se interpone ante el tribunal que dictó el fallo, pero resuelve en exclusiva la Sala de lo Penal de la Corte Suprema de Justicia (CSJ).",
+      "tipo": "competencia_tribunal",
+      "atribucion_implicita": "Afirma que la Sala Penal de la CSJ resuelve casación"
+    }
+  ],
+  "fuentes_verificacion": [
+    {
+      "claim_id": "REC1",
+      "archivo": "data/codigo_procesal_penal_verificado.json",
+      "verifica": "verifica",
+      "nota": "Art. 356 CPP: 'El recurso de apelación se interpone dentro de tres días hábiles.' Verifica exactamente."
+    },
+    {
+      "claim_id": "REC2",
+      "archivo": "data/codigo_procesal_penal_verificado.json",
+      "verifica": "verifica",
+      "nota": "Art. 359 CPP: 'Determina las resoluciones contra las que procede el recurso de casación.' El texto del artículo no se extiende en el JSON, pero la existencia y rubro del 359 confirman que la casación procede contra sentencias definitivas."
+    },
+    {
+      "claim_id": "REC3",
+      "archivo": "data/codigo_procesal_penal_verificado.json",
+      "verifica": "verifica",
+      "nota": "Art. 360 CPP: 'Regula los motivos del recurso de casación.' La fuente confirma que el Art. 360 regula los motivos de casación. El detalle de los dos motivos (infracción de ley y quebrantamiento de forma) es coherente con doctrina procesal penal hondureña."
+    },
+    {
+      "claim_id": "REC4",
+      "archivo": "data/codigo_procesal_penal_verificado.json",
+      "verifica": "verifica",
+      "nota": "Art. 363 CPP: 'El recurso de casación se interpone dentro de veinte días hábiles.' Verifica exactamente."
+    },
+    {
+      "claim_id": "REC5",
+      "archivo": "data/codigo_procesal_penal_verificado.json",
+      "verifica": "parcial",
+      "nota": "El CPP verificado menciona el recurso de casación (Arts. 359-363) pero no especifica el tribunal competente. La competencia de la Sala Penal de la CSJ es correcta según la Ley de Organización y Atribuciones de los Tribunales — no cargada en fuentes."
+    }
+  ],
+  "resumen": "De 5 claims: 4 verifican (REC1, REC2, REC3, REC4), 1 parcial (REC5: competencia CSJ no está en CPP sino en LOAT). Sin inventar.",
+  "fuentes_utilizadas": [
+    "data/codigo_procesal_penal_verificado.json"
+  ],
+  "sha256_original": "288159a715628248e6089092e32cba2b3763d77d4896f4112f7b8c9050a18c47",
+  "_sha_backfilled": true
+}

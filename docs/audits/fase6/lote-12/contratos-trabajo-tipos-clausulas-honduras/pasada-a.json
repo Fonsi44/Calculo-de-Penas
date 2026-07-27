@@ -1,0 +1,55 @@
+{
+  "slug": "contratos-trabajo-tipos-clausulas-honduras",
+  "sha256_original": "13efa80866a670ce914d3f944218a3d9602cc960711707a2a91f80e901c90fce",
+  "pasada": "A",
+  "claims": [
+    {
+      "id": "claim-1",
+      "text": "La existencia de la relación laboral se presume desde que una persona realiza un trabajo subordinado y recibe un salario, según el Art. 12 del Código de Trabajo.",
+      "verification_status": "partially_verified",
+      "verification_detail": "El Art. 12 CT en la fuente habla de prohibición de discriminación, no de presunción de relación laboral. El Art. 19 CT define contrato individual de trabajo como 'una persona natural se obliga a ejecutar una obra o prestar servicios bajo continua dependencia o subordinación mediante una remuneración.' La presunción puede estar en otro artículo no verificado.",
+      "source_articles": [
+        "Art. 19 CT"
+      ]
+    },
+    {
+      "id": "claim-2",
+      "text": "Si no se especifica plazo, el contrato se considera por tiempo indefinido, conforme al Art. 18 del Código de Trabajo.",
+      "verification_status": "partially_verified",
+      "verification_detail": "El Art. 18 CT en la fuente trata sobre fuentes supletorias del Derecho del Trabajo (casos no previstos), no sobre presunción de contrato indefinido. La presunción de indefinición es un principio del derecho laboral hondureño pero el artículo citado no lo contiene.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-3",
+      "text": "El período de prueba no puede exceder los 30 días, según el Art. 19 del Código de Trabajo.",
+      "verification_status": "partially_verified",
+      "verification_detail": "El Art. 19 CT en la fuente define contrato individual de trabajo (subordinación y remuneración), no menciona el período de prueba de 30 días. El período de prueba puede estar en otro artículo no verificado.",
+      "source_articles": [
+        "Art. 19 CT"
+      ]
+    },
+    {
+      "id": "claim-4",
+      "text": "Existen tres tipos de contrato: por tiempo indefinido, a plazo fijo y por obra o servicio determinado.",
+      "verification_status": "unverifiable",
+      "verification_detail": "La clasificación tripartita no está explícita en los artículos revisados del Código de Trabajo (Arts. 12, 18, 19 CT). Puede estar en artículos subsiguientes no incluidos en la búsqueda.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-5",
+      "text": "Cláusulas esenciales: identificación de partes, descripción del puesto, salario, jornada/horario, período de prueba.",
+      "verification_status": "unverifiable",
+      "verification_detail": "Las cláusulas esenciales del contrato de trabajo no están enumeradas en los artículos 12, 18, 19 CT revisados. Corresponden a artículos posteriores del Código de Trabajo no verificados.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-6",
+      "text": "La normativa principal es el Código de Trabajo, Decreto 74-2001, con reformas siendo la más reciente en 2021.",
+      "verification_status": "unverifiable",
+      "verification_detail": "La fuente (codigo_trabajo.json) no incluye metadatos sobre el decreto de promulgación ni historial de reformas. El número de decreto y año de última reforma no son verificables.",
+      "source_articles": []
+    }
+  ],
+  "global_assessment": "unverifiable",
+  "global_assessment_reason": "Los artículos del Código de Trabajo disponibles en la fuente (Arts. 12, 18, 19 CT) no coinciden con las atribuciones que el artículo les asigna. El Art. 12 CT trata sobre discriminación (no presunción de relación laboral), el Art. 18 CT sobre fuentes supletorias (no contrato indefinido), y el Art. 19 CT define contrato individual (no menciona período de prueba de 30 días). Es posible que los números de artículo citados en el blog no correspondan al Código de Trabajo actual (Decreto 74-2001) o que la fuente tenga una numeración diferente."
+}

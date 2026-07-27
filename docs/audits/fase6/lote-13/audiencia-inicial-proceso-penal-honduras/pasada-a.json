@@ -1,0 +1,63 @@
+{
+  "pasada": "A",
+  "sha256_entrada": "no_requerido_pasada_a",
+  "claims": [
+    {
+      "id": "AI1",
+      "texto_exacto": "Artículo 285 del Código Procesal Penal de Honduras (Decreto 9-99-E); este plazo corresponde a la puesta a disposición judicial, mientras la audiencia inicial y sus posibles resoluciones se regulan en el Artículo 294.",
+      "tipo": "cita_articulo_especifico",
+      "atribucion_implicita": "Atribuye al Art. 285 CPP el plazo de 24h para puesta a disposición y al Art. 294 la regulación de la audiencia inicial"
+    },
+    {
+      "id": "AI2",
+      "texto_exacto": "El Código Penal vigente es el Decreto 130-2017.",
+      "tipo": "normativa_vigente",
+      "atribucion_implicita": "Afirma que el CP vigente es Decreto 130-2017"
+    },
+    {
+      "id": "AI3",
+      "texto_exacto": "El plazo de 24 horas para poner al detenido a disposición del juez es crucial para evitar detenciones arbitrarias.",
+      "tipo": "plazo_procesal",
+      "atribucion_implicita": "Reitera el plazo de 24 horas del Art. 285 CPP"
+    },
+    {
+      "id": "AI4",
+      "texto_exacto": "el juez debe ordenar la libertad inmediata del imputado [si la detención fue ilegal]",
+      "tipo": "consecuencia_juridica",
+      "atribucion_implicita": "Afirma que la detención ilegal debe resultar en libertad inmediata"
+    }
+  ],
+  "fuentes_verificacion": [
+    {
+      "claim_id": "AI1",
+      "archivo": "data/codigo_procesal_penal_verificado.json",
+      "verifica": "verifica",
+      "nota": "Art. 285 CPP: 'La persona detenida debe ponerse a la orden del órgano jurisdiccional competente dentro de veinticuatro horas; en investigaciones complejas el plazo puede alcanzar cuarenta y ocho horas.' Art. 294 CPP: 'Regula la audiencia inicial y las resoluciones que puede adoptar el órgano jurisdiccional.' Ambos verifican."
+    },
+    {
+      "claim_id": "AI2",
+      "archivo": "data/articulos_cp.json",
+      "verifica": "no_verificable",
+      "nota": "El CP cargado (articulos_cp.json) contiene artículos individuales con datos, pero no especifica el número de decreto. Es información pública correcta. Sin inventar sobre si la fuente lo confirma."
+    },
+    {
+      "claim_id": "AI3",
+      "archivo": "data/codigo_procesal_penal_verificado.json",
+      "verifica": "verifica",
+      "nota": "Art. 285 CPP confirma el plazo de 24 horas para puesta a disposición judicial."
+    },
+    {
+      "claim_id": "AI4",
+      "archivo": "data/codigo_procesal_penal_verificado.json",
+      "verifica": "parcial",
+      "nota": "El Art. 294 CPP regula la audiencia inicial y sus resoluciones. La consecuencia de libertad inmediata por detención ilegal es estándar en el proceso penal garantista, pero no está textualmente en el extracto cargado."
+    }
+  ],
+  "resumen": "De 4 claims: 2 verifican completamente (AI1, AI3), 1 no verificable (AI2: decreto CP), 1 parcial (AI4: plausible pero el extracto no contiene el texto completo del Art. 294). Sin inventar.",
+  "fuentes_utilizadas": [
+    "data/codigo_procesal_penal_verificado.json",
+    "data/articulos_cp.json"
+  ],
+  "sha256_original": "88865dd442259b095ab267227531b7790d83ca24a90f71f31e9cb1bb2678addf",
+  "_sha_backfilled": true
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "antejuicio-en-honduras",
+  "articleId": "41ccb039-61ba-4508-b1c5-37c97965646a",
+  "lote": 13,
+  "fechaConsolidacion": "2026-07-27T09:30:00.000Z",
+  "estadoFinal": "needs_human_review",
+  "razon": "Mayoría de claims no verificables contra fuentes disponibles",
+  "hashes": {
+    "bodyActual": "5103a3e4816c73c05a88aaca057fe1244671dbef87fe2d3db148eae0e5dad1f1",
+    "pasadaA": "5103a3e4816c73c05a88aaca057fe1244671dbef87fe2d3db148eae0e5dad1f1",
+    "pasadaB": "5103a3e4816c73c05a88aaca057fe1244671dbef87fe2d3db148eae0e5dad1f1",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 4,
+    "pasadaA": 4,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 4
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

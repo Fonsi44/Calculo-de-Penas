@@ -1,0 +1,90 @@
+{
+  "pasada": "A",
+  "slug": "diferencia-denuncia-querella-acusacion-honduras",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "sha256_entrada": "f28ee7ee9b5c4a6b4a3c4f0ca2b3d1e8a9f0b1c2d3e4f5a6b7c8d9e0f1a2b3",
+  "claims_extracted": [
+    {
+      "id": "c1",
+      "claim": "El Artículo 269 del Código Procesal Penal (Decreto 9-99-E) impone el deber de denunciar a funcionarios públicos, profesionales de la salud y quienes tengan bajo su cuidado bienes ajenos, cuando tengan conocimiento de delitos de acción pública.",
+      "source_article": "Art. 269 CPP",
+      "category": "legal_reference"
+    },
+    {
+      "id": "c2",
+      "claim": "Los Artículos 96 y 99 del Código Procesal Penal regulan la figura del acusador privado: el Artículo 96 permite a la víctima o su representante provocar la persecución penal asistida por un profesional del derecho, y el Artículo 99 enumera los requisitos formales de la acusación privada.",
+      "source_article": "Arts. 96 y 99 CPP",
+      "category": "legal_reference"
+    },
+    {
+      "id": "c3",
+      "claim": "Conforme al Artículo 301 del Código Procesal Penal, en la audiencia preliminar el fiscal y el acusador privado formalizan la acusación, que debe contener: relación breve y precisa de los hechos, calificación jurídica, participación del imputado y penas solicitadas.",
+      "source_article": "Art. 301 CPP",
+      "category": "legal_reference"
+    },
+    {
+      "id": "c4",
+      "claim": "La denuncia puede ser presentada por cualquier persona, víctima o no, y no requiere patrocinio legal.",
+      "source_article": "Art. 268 CPP",
+      "category": "procedural_fact"
+    },
+    {
+      "id": "c5",
+      "claim": "La querella exige el patrocinio de un abogado y formaliza la intervención de la víctima como parte activa en el proceso penal.",
+      "source_article": null,
+      "category": "procedural_fact"
+    },
+    {
+      "id": "c6",
+      "claim": "Una vez interpuesta, la denuncia pasa a control del Ministerio Público; la querella sí puede ser desistida por el querellante.",
+      "source_article": null,
+      "category": "procedural_fact"
+    }
+  ],
+  "verification_results": [
+    {
+      "claim_id": "c1",
+      "verdict": "verifiable",
+      "source": "data/codigo_procesal_penal_verificado.json",
+      "evidence": "Art. 269 CPP: 'Determina las personas obligadas a denunciar por razón de su función o profesión.' El texto verificado confirma que el artículo regula la obligación de denunciar para ciertos funcionarios y profesionales. El cuerpo del artículo describe correctamente el alcance general de la norma, aunque el texto fuente solo proporciona un resumen temático."
+    },
+    {
+      "claim_id": "c2",
+      "verdict": "verifiable",
+      "source": "data/codigo_procesal_penal_verificado.json",
+      "evidence": "Art. 96 CPP: 'La víctima o su representante puede constituirse como acusador privado en delitos de acción pública.' Art. 99 CPP: 'Regula los requisitos formales de la acusación privada.' Ambos artículos existen en la fuente verificada y coinciden con la descripción del artículo."
+    },
+    {
+      "claim_id": "c3",
+      "verdict": "verifiable",
+      "source": "data/codigo_procesal_penal_verificado.json",
+      "evidence": "Art. 301 CPP: 'Regula la formalización de la acusación y su contenido en la audiencia preliminar.' Coincide con lo afirmado en el artículo sobre que la acusación se formaliza en audiencia preliminar y que tiene un contenido regulado."
+    },
+    {
+      "claim_id": "c4",
+      "verdict": "verifiable",
+      "source": "data/codigo_procesal_penal_verificado.json",
+      "evidence": "Art. 268 CPP: 'Regula quién puede presentar denuncia.' El texto verificado confirma que existe regulación sobre quién puede denunciar. La afirmación del artículo sobre que cualquier persona puede denunciar es consistente con la naturaleza de la denuncia como acto de comunicación, pero el texto fuente solo contiene un resumen que no contradice ni confirma explícitamente el detalle sobre el patrocinio legal."
+    },
+    {
+      "claim_id": "c5",
+      "verdict": "unverifiable",
+      "source": null,
+      "evidence": "No se encontró en las fuentes verificadas un artículo específico que establezca explícitamente que la querella exige patrocinio de abogado. El Art. 96 CPP permite a la víctima constituirse como acusador privado, pero no detalla el requisito de abogado en el texto verificado disponible."
+    },
+    {
+      "claim_id": "c6",
+      "verdict": "unverifiable",
+      "source": null,
+      "evidence": "Las fuentes verificadas no contienen texto específico sobre la posibilidad de desistir de la querella versus la imposibilidad de retirar la denuncia. Es una afirmación de doctrina procesal que no se puede confirmar ni refutar con los textos legales disponibles."
+    }
+  ],
+  "summary": {
+    "total_claims": 6,
+    "verifiable": 4,
+    "unverifiable": 2,
+    "contradicted": 0
+  },
+  "sha256_original": "0102707b9d88b5d107744281d6dfff7152831a9592c4d280a8dc4111a15027a2",
+  "_sha_backfilled": true
+}

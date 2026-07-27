@@ -1,0 +1,62 @@
+{
+  "slug": "importar-mercancias-guia-aduanera",
+  "sha256_original": "66dc468bbfd4eecfe14da9e69fd632163bc90d2b693d1d94c18f27432cbee52c",
+  "pasada": "B",
+  "claims": [
+    {
+      "id": "claim-1",
+      "text": "El marco principal lo constituye el CAUCA y RECAUCA, adoptados mediante Decreto 212-2001. La Ley de Aduanas complementa.",
+      "verification_status": "unverifiable",
+      "verification_detail": "Fuente insuficiente. El Código Tributario no cita el Decreto 212-2001 ni el CAUCA.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-2",
+      "text": "La DUA debe ser presentada ante la DARA por un agente aduanero autorizado. Obligatoria para toda importación comercial.",
+      "verification_status": "unverifiable",
+      "verification_detail": "Fuente insuficiente. Procedimiento DUA no regulado en Código Tributario.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-3",
+      "text": "Requisitos: RTN activo, factura comercial, documento de transporte, certificado de origen, permisos especiales (ARSA, SENASA).",
+      "verification_status": "partially_verified",
+      "verification_detail": "Solo RTN está en Art. 66 CTrib. Resto de requisitos son materia aduanera/sanitaria no cubierta.",
+      "source_articles": [
+        "Art. 66 CTrib"
+      ]
+    },
+    {
+      "id": "claim-4",
+      "text": "Impuestos: DAI (0%-15%), ISV (15%), Tasa Servicios Aduaneros (1.5%), ISO para productos específicos.",
+      "verification_status": "unverifiable",
+      "verification_detail": "Fuente insuficiente. El Código Tributario clasifica tributos (Art. 3 CTrib) pero no fija tarifas específicas.",
+      "source_articles": [
+        "Art. 3 CTrib"
+      ]
+    },
+    {
+      "id": "claim-5",
+      "text": "El despacho aduanero puede durar entre 1 y 5 días hábiles.",
+      "verification_status": "unverifiable",
+      "verification_detail": "Fuente insuficiente. Plazo no regulado en Código Tributario.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-6",
+      "text": "El SAR puede imponer sanciones del 50% al 200% del impuesto omitido más intereses moratorios; mercancía sujeta a decomiso.",
+      "verification_status": "unverifiable",
+      "verification_detail": "Fuente insuficiente. Rangos sancionatorios específicos no localizados en Código Tributario.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-7",
+      "text": "La legislación exige agente aduanero autorizado; honorarios entre 0.5% y 2% del CIF.",
+      "verification_status": "unverifiable",
+      "verification_detail": "Fuente insuficiente. Agente aduanero y honorarios no regulados en Código Tributario.",
+      "source_articles": []
+    }
+  ],
+  "global_assessment": "unverifiable",
+  "global_assessment_reason": "Confirmación de Pasada A. El artículo es de naturaleza aduanera operativa y requiere la Ley de Aduanas, CAUCA/RECAUCA y leyes de tarifas. El Código Tributario solo aporta el marco general de tributos y RTN."
+}

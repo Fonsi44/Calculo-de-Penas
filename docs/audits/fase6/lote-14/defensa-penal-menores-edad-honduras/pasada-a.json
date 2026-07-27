@@ -1,0 +1,44 @@
+{
+  "pasada": "A",
+  "timestamp": "2026-07-27T07:09:06.374191+00:00",
+  "sha256_body": "80322667de1cd2333c1f2e6136493cfd82bb09afcbbbadd2db0af6481fcbdb91",
+  "slug": "defensa-penal-menores-edad-honduras",
+  "title": "Defensa Penal Juvenil en Honduras: Guía Completa",
+  "total_claims_verificados": 0,
+  "total_claims_no_verificados": 1,
+  "total_claims": 1,
+  "claims_articulos": [
+    {
+      "articulo_numero": 5,
+      "encontrado_en_fuentes": [
+        "Constitución"
+      ],
+      "verificado": false,
+      "contexto_en_articulo": "del <strong>interés superior del menor</strong>, la excepcionalidad de la privación de libertad y la finalidad educativa de las medidas impuestas. El Artículo 5 de esta ley especifica que la privación de libertad debe ser el último recurso.</p>\n<h2>Principios fundamentales de la justicia juvenil</h2>\n<ul>\n<li",
+      "texto_fuente": {
+        "Constitución": {
+          "articulo": "Art. 5 Constitución",
+          "texto": "El Gobierno de la República debe sustentarse en los principios de la soberanía popular, la autodeterminación de los pueblos y la democracia participativa, de los cuales se derivan la integración nacional, que implica participación de todos los sectores políticos en la Administración Pública, la esta..."
+        }
+      },
+      "nota": "Claim cita 'Artículo 5 de esta ley' refiriéndose a la Ley del Sistema Especial de Justicia para Menores — NO es cita del CPP ni de la Constitución. El match con Art. 5 Constitución es coincidencia numérica."
+    }
+  ],
+  "aserciones_legales": [
+    {
+      "tipo": "claim_legal_general",
+      "texto": "La Ley del Sistema Especial de Justicia para Menores rige los principios y procedimientos de la justicia penal juvenil.",
+      "verificado": false,
+      "nota": "Ley no disponible en fuentes de verificación — requiere verificación manual."
+    },
+    {
+      "tipo": "claim_legal_general",
+      "texto": "La privación de libertad debe ser el último recurso (citado como Art. 5 de la Ley del Sistema Especial de Justicia para Menores).",
+      "verificado": false,
+      "nota": "Ley no disponible en fuentes de verificación."
+    }
+  ],
+  "resumen": "De 1 claim por número de artículo, 0 verificados en fuentes, 1 no verificado (Art. 5 refiere a ley especial no disponible en fuentes).",
+  "sha256_original": "80322667de1cd2333c1f2e6136493cfd82bb09afcbbbadd2db0af6481fcbdb91",
+  "_sha_backfilled": true
+}

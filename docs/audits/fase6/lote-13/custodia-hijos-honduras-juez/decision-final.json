@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "custodia-hijos-honduras-juez",
+  "articleId": "9c9f0a2f-1aeb-4d7a-a373-80386f90057e",
+  "lote": 13,
+  "fechaConsolidacion": "2026-07-27T09:30:00.000Z",
+  "estadoFinal": "needs_human_review",
+  "razon": "Mayoría de claims no verificables contra fuentes disponibles",
+  "hashes": {
+    "bodyActual": "4be33fee9d83d4fac96c92656bd5f2460ebb6325fd9e16bafa9c4b3a5da0ca46",
+    "pasadaA": "4be33fee9d83d4fac96c92656bd5f2460ebb6325fd9e16bafa9c4b3a5da0ca46",
+    "pasadaB": "4be33fee9d83d4fac96c92656bd5f2460ebb6325fd9e16bafa9c4b3a5da0ca46",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 4,
+    "pasadaA": 4,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 4
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

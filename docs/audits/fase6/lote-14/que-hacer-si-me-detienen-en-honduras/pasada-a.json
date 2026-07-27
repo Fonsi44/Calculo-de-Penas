@@ -1,0 +1,91 @@
+{
+  "pasada": "A",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "entrada": {
+    "file": "docs/audits/fase6/lote-14/que-hacer-si-me-detienen-en-honduras/entrada.json",
+    "sha256": "5d006061d7ae12a04c6dd9f89cc04eb42cbf80f07ef6a0f5c51311a46ccd52c9"
+  },
+  "sources_used": {
+    "data/articulos_constitucion.json": {
+      "sha256": "37b129c3f133103b2dc467ba9ae6db656c8b2713b12e9afe0bba235d85b84175",
+      "articles_consulted": [
+        "Art. 82 Constitución",
+        "Art. 83 Constitución",
+        "Art. 84 Constitución"
+      ]
+    },
+    "data/codigo_procesal_penal_verificado.json": {
+      "sha256": "7f8312f62673969c0e5460169e5f65cd5b202c52f878db0858187729eab06681",
+      "articles_consulted": [
+        "Art. 101 CPP",
+        "Art. 119 CPP",
+        "Art. 282 CPP",
+        "Art. 285 CPP",
+        "Art. 287 CPP",
+        "Art. 288 CPP",
+        "Art. 289 CPP",
+        "Art. 294 CPP"
+      ]
+    }
+  },
+  "claims": [
+    {
+      "id": "claim-12-1",
+      "text": "El Artículo 84 de la Constitución garantiza el derecho a no autoincriminarse y a la asistencia de un abogado",
+      "body_reference": "la Constitución de la República, específicamente en el Artículo 84, que garantiza el derecho a no autoincriminarse y a la asistencia de un abogado",
+      "verification": {
+        "status": "PARTIALLY_VERIFIED",
+        "source_article": "Art. 84 Constitución",
+        "source_text": "Nadie podrá ser arrestado o detenido sino en virtud de mandato escrito de autoridad competente, expedido con las formalidades legales y por motivo previamente establecido en la ley. No obstante, el delincuente infraganti puede ser aprehendido por cualquier persona para el único efecto de entregarlo a la autoridad. El arrestado o detenido debe ser informado en el acto y con toda claridad de sus derechos y de los hechos que se le imputan; y además, la autoridad debe permitirle comunicar su detención a un pariente o persona de su elección.",
+        "notes": "El Art. 84 constitucional garantiza: detención solo con mandato escrito, información inmediata de derechos y hechos imputados, y comunicación con familiar/persona de elección. NO menciona explícitamente 'no autoincriminarse' ni 'asistencia de abogado'. Esos derechos están desarrollados en el CPP (Art. 101, 119, 289)."
+      }
+    },
+    {
+      "id": "claim-12-2",
+      "text": "El Artículo 101 de la Constitución obliga al Estado a proporcionar defensor público",
+      "body_reference": "Si no dispone de recursos económicos, el Estado está obligado a proporcionarle un defensor público, conforme al Artículo 101 de la Constitución de la República de Honduras",
+      "verification": {
+        "status": "FALSE",
+        "source_article": "Art. 101 Constitución",
+        "source_text": "Honduras reconoce el derecho de asilo en la forma y condiciones que establece la ley...",
+        "notes": "ERROR GRAVE. El Art. 101 de la Constitución trata sobre el DERECHO DE ASILO, no sobre defensor público. El artículo correcto es el Art. 83 constitucional: 'Corresponde al Estado nombrar procuradores para la defensa de los pobres...'. También el Art. 119 CPP regula la designación de defensor público."
+      }
+    },
+    {
+      "id": "claim-12-3",
+      "text": "El Código Procesal Penal en sus artículos 279 al 292 regula el procedimiento de detención y el plazo de 24 horas",
+      "body_reference": "el Código Procesal Penal (Decreto 130-2017), en sus artículos 279 al 292, regula el procedimiento de detención, estableciendo los requisitos de legalidad y el plazo de 24 horas para la puesta a disposición judicial",
+      "verification": {
+        "status": "PARTIALLY_VERIFIED",
+        "source_article": "Art. 285 CPP, Art. 282 CPP, Art. 287 CPP, Art. 288 CPP, Art. 289 CPP",
+        "source_text": "Art. 285 CPP: La persona detenida debe ponerse a la orden del órgano jurisdiccional competente dentro de veinticuatro horas; en investigaciones complejas el plazo puede alcanzar cuarenta y ocho horas.",
+        "notes": "Los artículos del CPP en el rango 279-292 están presentes en las fuentes y cubren: aprehensión (282), plazo 24h (285), información de derechos (287), prohibición de coacción (288), declaración con defensor (289). El rango exacto de artículos en la fuente es 282-289, no 279-292. La diferencia de numeración es menor y el contenido coincide sustancialmente."
+      }
+    },
+    {
+      "id": "claim-12-4",
+      "text": "Toda persona detenida debe ser puesta a disposición de un juez en un plazo máximo de 24 horas; si se excede, procede hábeas corpus",
+      "body_reference": "Toda persona detenida debe ser puesta a disposición de un juez competente en un plazo máximo de 24 horas. Si este plazo se excede sin justificación legal, la detención se considera ilegal y procede el recurso de hábeas corpus",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 285 CPP",
+        "source_text": "La persona detenida debe ponerse a la orden del órgano jurisdiccional competente dentro de veinticuatro horas; en investigaciones complejas el plazo puede alcanzar cuarenta y ocho horas.",
+        "notes": "Confirmado el plazo de 24 horas. La procedencia del hábeas corpus por detención ilegal es un principio constitucional consolidado, aunque el Art. 285 CPP admite 48h en investigaciones complejas (matiz no mencionado en el artículo)."
+      }
+    },
+    {
+      "id": "claim-12-5",
+      "text": "El Art. 101 CPP reconoce al imputado derechos de defensa técnica, entrevista privada con defensor, silencio y presencia del defensor al declarar",
+      "body_reference": "[Derechos del detenido: guardar silencio, asistencia legal, etc.]",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 101 CPP",
+        "source_text": "Reconoce al imputado, entre otros derechos, defensa técnica, entrevista privada con su defensor, silencio y presencia de su defensor al declarar.",
+        "notes": "Confirmado. El Art. 101 CPP recoge los derechos fundamentales del imputado."
+      }
+    }
+  ],
+  "global_notes": "El error más crítico es la cita del Art. 101 constitucional para defensor público, cuando dicho artículo trata sobre derecho de asilo. El artículo correcto es el 83 constitucional. El resto de referencias al CPP están sustancialmente correctas, aunque el rango de artículos (279-292) es ligeramente diferente en la fuente (282-289).",
+  "sha256_original": "d8efc9d097068f385eb1022e4832115e44ffca10281eda682ce5f13294b8b9c3",
+  "_sha_backfilled": true
+}

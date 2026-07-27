@@ -1,0 +1,68 @@
+{
+  "pasada": "A",
+  "timestamp": "2026-07-27T07:10:28.187674+00:00",
+  "sha256_body": "554b65d2b762c393b94a0ccef55010ae6e999f5b13ace390b24145ecd1d670b8",
+  "slug": "pension-alimenticia-honduras-guia-completa",
+  "title": "Pensión alimenticia en Honduras: requisitos y pasos",
+  "total_claims_verificados": 3,
+  "total_claims_no_verificados": 0,
+  "total_claims": 3,
+  "claims_articulos": [
+    {
+      "articulo_numero": 207,
+      "encontrado_en_fuentes": [
+        "CF"
+      ],
+      "verificado": true,
+      "contexto_en_articulo": " la pensión alimenticia. En realidad, el Código de Familia establece que la pensión se fijará bajo el principio de <strong>proporcionalidad</strong> (Artículo 207 del Código de Familia; el Artículo 219 atribuye al juez la determinación de la cuantía y forma de pago). Esto significa que la cuota se calcula basán",
+      "texto_fuente": {
+        "CF": {
+          "articulo": "Art. 207 CF",
+          "texto": "Los alimentos deben ser proporcionales a los recursos de quien los debe y a las circunstancias de quien los recibe."
+        }
+      },
+      "nota": "Claim verificado contra fuente"
+    },
+    {
+      "articulo_numero": 217,
+      "encontrado_en_fuentes": [
+        "CF"
+      ],
+      "verificado": true,
+      "contexto_en_articulo": "mostrando el cambio de circunstancias.</p>\n<p>La obligación de dar alimentos <strong>cesa</strong> (termina) por diversas causales establecidas en el Artículo 217 del Código de Familia, como la mayoría de edad del alimentario (salvo que siga estudiando con provecho y no trabaje), o por injuria, falta o daño gra",
+      "texto_fuente": {
+        "CF": {
+          "articulo": "Art. 217 CF",
+          "texto": "Regula las causas por las que termina la obligación de dar alimentos."
+        }
+      },
+      "nota": "Claim verificado contra fuente"
+    },
+    {
+      "articulo_numero": 219,
+      "encontrado_en_fuentes": [
+        "CF"
+      ],
+      "verificado": true,
+      "contexto_en_articulo": "l Código de Familia establece que la pensión se fijará bajo el principio de <strong>proporcionalidad</strong> (Artículo 207 del Código de Familia; el Artículo 219 atribuye al juez la determinación de la cuantía y forma de pago). Esto significa que la cuota se calcula basándose en dos factores principales:</p>\n<",
+      "texto_fuente": {
+        "CF": {
+          "articulo": "Art. 219 CF",
+          "texto": "El juez determina la cuantía y la forma en que deben prestarse los alimentos."
+        }
+      },
+      "nota": "Claim verificado contra fuente"
+    }
+  ],
+  "aserciones_legales": [
+    {
+      "tipo": "claim_legal_general",
+      "texto": "Embargo no puede exceder 50% ingresos netos.",
+      "verificado": false,
+      "nota": "Requiere verificación contra CF completo."
+    }
+  ],
+  "resumen": "3/3 claims verificados en Código de Familia.",
+  "sha256_original": "554b65d2b762c393b94a0ccef55010ae6e999f5b13ace390b24145ecd1d670b8",
+  "_sha_backfilled": true
+}

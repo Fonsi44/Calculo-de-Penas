@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "cuando-necesito-abogado-penalista-honduras",
+  "articleId": "805f67d0-5b18-447d-9d7d-ee2a9f392c41",
+  "lote": 12,
+  "fechaConsolidacion": "2026-07-27T09:30:00.000Z",
+  "estadoFinal": "source_checked",
+  "razon": "0/0 claims verificados",
+  "hashes": {
+    "bodyActual": "cb4a495154c3cf26df9c6c3fbbb0b1cc0e7a9876694d588901ec41e1254e52b2",
+    "pasadaA": "cb4a495154c3cf26df9c6c3fbbb0b1cc0e7a9876694d588901ec41e1254e52b2",
+    "pasadaB": "cb4a495154c3cf26df9c6c3fbbb0b1cc0e7a9876694d588901ec41e1254e52b2",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 0,
+    "pasadaA": 0,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

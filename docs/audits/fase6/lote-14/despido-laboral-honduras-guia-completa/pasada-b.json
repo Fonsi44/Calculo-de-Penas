@@ -1,0 +1,71 @@
+{
+  "pasada": "B",
+  "timestamp": "2026-07-27T07:10:28.187674+00:00",
+  "sha256": {
+    "body": "0420e76a41f2488241f5e15a5c22876f657ff8656cb5078a1ccb952a7083b337",
+    "title": "c256e20c8d0e52da96761cf75837bb4e9280e982d8f26330823bd80b7cadefca",
+    "metaDescription": "41a2458d2a13fdc906f136a92d74b7589de0342365beffdc0061d4f04143f0ce",
+    "full_entrada": "f7a0cacf57fa16271c40b4f458e3c314c1ecc0579c7581a9843135c935f1de60"
+  },
+  "slug": "despido-laboral-honduras-guia-completa",
+  "title": "Despido Laboral en Honduras: Guia de",
+  "integridad_fuentes": {
+    "codigo_trabajo": {
+      "existe": true,
+      "num_articulos": 856,
+      "verificado": true
+    }
+  },
+  "fuentes_asignadas": [
+    "codigo_trabajo"
+  ],
+  "verificaciones_hechos": [
+    {
+      "tipo": "montos_dinerarios",
+      "valores": [
+        "12000",
+        "60000",
+        "80000",
+        "90000"
+      ],
+      "nota": "Montos ejemplo en lempiras — verificar razonabilidad con salarios hondureños."
+    },
+    {
+      "tipo": "plazos_legales",
+      "valores": [
+        "2 meses",
+        "1 mes",
+        "3 ausencias"
+      ],
+      "nota": "Prescripción 2 meses (Art. 864 CT). Preaviso 1 mes (Art. 116 CT)."
+    },
+    {
+      "tipo": "errores_numeracion",
+      "valores": [
+        "114→116",
+        "117→120",
+        "149→144",
+        "747→864"
+      ],
+      "nota": "Correcciones basadas en CT verificado."
+    }
+  ],
+  "metadata": {
+    "reviewStatus": "reviewed",
+    "aiReviewStatus": "needs_human_review",
+    "publishedAt": "2026-05-11T12:00:00.000Z",
+    "updatedAt": "2026-07-07T18:39:11.476Z",
+    "category": "derecho-laboral",
+    "tags": [
+      "despido injustificado Honduras",
+      "indemnización laboral",
+      "Código de Trabajo",
+      "prestaciones laborales",
+      "despido legal"
+    ],
+    "author": "Pineda y Asociados"
+  },
+  "resumen": "PASADA B: 3 verificaciones. 4 errores de numeración. SHA256 calculados.",
+  "sha256_original": "0420e76a41f2488241f5e15a5c22876f657ff8656cb5078a1ccb952a7083b337",
+  "_sha_backfilled": true
+}

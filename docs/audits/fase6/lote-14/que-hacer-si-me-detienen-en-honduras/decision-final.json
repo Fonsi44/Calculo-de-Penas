@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "que-hacer-si-me-detienen-en-honduras",
+  "articleId": "3dffd244-ccb8-4613-a721-e7e95a24e1fc",
+  "lote": 14,
+  "fechaConsolidacion": "2026-07-27T09:45:00.000Z",
+  "estadoFinal": "needs_human_review",
+  "razon": "Mayoría no verificable",
+  "hashes": {
+    "bodyActual": "d8efc9d097068f385eb1022e4832115e44ffca10281eda682ce5f13294b8b9c3",
+    "pasadaA": "d8efc9d097068f385eb1022e4832115e44ffca10281eda682ce5f13294b8b9c3",
+    "pasadaB": "d8efc9d097068f385eb1022e4832115e44ffca10281eda682ce5f13294b8b9c3",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 5,
+    "pasadaA": 5,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 5
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

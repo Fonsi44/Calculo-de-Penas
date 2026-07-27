@@ -1,0 +1,74 @@
+{
+  "pasada": "B",
+  "timestamp": "2026-07-27T07:09:06.374191+00:00",
+  "sha256": {
+    "body": "80322667de1cd2333c1f2e6136493cfd82bb09afcbbbadd2db0af6481fcbdb91",
+    "title": "a1dd0b230857f393a900810ffbb7cef77f64a4c07e6a02048edc9512e03b1490",
+    "metaDescription": "c9152b730840ccba81e1a7cf0ff0c6c015260f2b6d0ca52544289a9db84f4822",
+    "full_entrada": "3846a2e7137ce7a55c0abe26b52f12a64730de5e33de1a87cd1518973f2634d6"
+  },
+  "slug": "defensa-penal-menores-edad-honduras",
+  "title": "Defensa Penal Juvenil en Honduras: Guía Completa",
+  "integridad_fuentes": {
+    "codigo_procesal_penal_verificado": {
+      "existe": true,
+      "num_articulos": 44,
+      "verificado": true
+    },
+    "articulos_constitucion": {
+      "existe": true,
+      "num_articulos": 378,
+      "verificado": true
+    }
+  },
+  "fuentes_asignadas": [
+    "codigo_procesal_penal_verificado",
+    "articulos_constitucion"
+  ],
+  "verificaciones_hechos": [
+    {
+      "tipo": "edades_mencionadas",
+      "valores": [
+        "12",
+        "18"
+      ],
+      "nota": "Edades de imputabilidad penal juvenil — verificar contra Ley del Sistema Especial de Justicia para Menores."
+    },
+    {
+      "tipo": "instituciones_mencionadas",
+      "valores": [
+        "Juzgados de Letras de la Niñez y la Adolescencia",
+        "Ministerio Público",
+        "Fiscalía Especializada en la Niñez y Adolescencia",
+        "DINAF"
+      ],
+      "nota": "Verificar nombres oficiales y competencias actuales de cada institución."
+    },
+    {
+      "tipo": "leyes_mencionadas",
+      "valores": [
+        "Ley del Sistema Especial de Justicia para Menores (1996)",
+        "Decreto 35-2013",
+        "Convención sobre los Derechos del Niño"
+      ],
+      "nota": "Verificar vigencia y numeración correcta de decretos."
+    }
+  ],
+  "metadata": {
+    "reviewStatus": "needs_human_review",
+    "aiReviewStatus": null,
+    "publishedAt": "2026-04-14T12:00:00.000Z",
+    "updatedAt": "2026-07-26T16:08:51.577Z",
+    "category": "derecho-penal",
+    "tags": [
+      "justicia penal juvenil honduras",
+      "menores infractores honduras",
+      "ley penal juvenil honduras",
+      "responsabilidad penal adolescentes"
+    ],
+    "author": "Pineda y Asociados"
+  },
+  "resumen": "PASADA B: 3 verificaciones de hecho realizadas. SHA256 calculados para body, title, metaDescription, full_entrada. 2 fuentes verificadas.",
+  "sha256_original": "80322667de1cd2333c1f2e6136493cfd82bb09afcbbbadd2db0af6481fcbdb91",
+  "_sha_backfilled": true
+}

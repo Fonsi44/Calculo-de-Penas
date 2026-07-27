@@ -1,0 +1,55 @@
+{
+  "slug": "residencia-temporal-requisitos-plazos-honduras",
+  "sha256_original": "42cd2b95f32bb32ba21b97b6883c455b347b7058bf1514a0e6e81b0ed55c2626",
+  "pasada": "B",
+  "claims": [
+    {
+      "id": "claim-1",
+      "text": "La Residencia Temporal es otorgada por el Instituto Nacional de Migración (INM) a ciudadanos extranjeros por 1 a 5 años.",
+      "verification_status": "unverifiable",
+      "verification_detail": "Fuente insuficiente. Arts. 30-35 Constitución solo tratan obligaciones generales de extranjeros, no plazos de residencia ni el INM.",
+      "source_articles": [
+        "Art. 30 Constitución",
+        "Art. 31 Constitución",
+        "Art. 35 Constitución"
+      ]
+    },
+    {
+      "id": "claim-2",
+      "text": "El trámite está regulado por la Ley de Migración y Extranjería (Decreto 208-2003).",
+      "verification_status": "unverifiable",
+      "verification_detail": "Fuente insuficiente. La Constitución no cita esta ley.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-3",
+      "text": "Existen categorías: residencia por trabajo, inversión, vínculo familiar, estudio/misión religiosa.",
+      "verification_status": "unverifiable",
+      "verification_detail": "Fuente insuficiente. La Constitución no enumera categorías migratorias.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-4",
+      "text": "La empresa patrocinadora debe cumplir con el porcentaje 90% hondureños / 10% extranjeros del Código de Trabajo.",
+      "verification_status": "unverifiable",
+      "verification_detail": "Fuente insuficiente. La proporción corresponde al Código de Trabajo, no a la Constitución.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-5",
+      "text": "Requisitos: poder/carta poder, pasaporte apostillado, antecedentes penales apostillados, certificado médico, acreditación del motivo, comprobante de pago de tasas migratorias.",
+      "verification_status": "unverifiable",
+      "verification_detail": "Fuente insuficiente. La Constitución no enumera requisitos documentales migratorios.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-6",
+      "text": "Documentos extranjeros deben estar apostillados (Convenio de La Haya) o autenticados por el Consulado de Honduras; traducciones por traductor autorizado de la Secretaría de Relaciones Exteriores.",
+      "verification_status": "unverifiable",
+      "verification_detail": "Fuente insuficiente. La Constitución no regula apostilla ni traducciones oficiales migratorias.",
+      "source_articles": []
+    }
+  ],
+  "global_assessment": "unverifiable",
+  "global_assessment_reason": "Confirmación de Pasada A. El artículo es sobre materia migratoria (Ley de Migración y Extranjería). La Constitución solo contiene normas generales sobre extranjeros (Arts. 30-35). Todas las claims son inverificables con esta fuente."
+}

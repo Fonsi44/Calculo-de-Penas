@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "cuando-prescribe-delito-en-honduras",
+  "articleId": "1bb56341-7290-43f0-87ae-0e109b4df712",
+  "lote": 13,
+  "fechaConsolidacion": "2026-07-27T09:30:00.000Z",
+  "estadoFinal": "needs_human_review",
+  "razon": "Mayoría de claims no verificables contra fuentes disponibles",
+  "hashes": {
+    "bodyActual": "60988525da867d7abc4ab35f29c0cd08397957a7c5c8e6a2c5f08ae8fe330cba",
+    "pasadaA": "60988525da867d7abc4ab35f29c0cd08397957a7c5c8e6a2c5f08ae8fe330cba",
+    "pasadaB": "60988525da867d7abc4ab35f29c0cd08397957a7c5c8e6a2c5f08ae8fe330cba",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 6,
+    "pasadaA": 6,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 6
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

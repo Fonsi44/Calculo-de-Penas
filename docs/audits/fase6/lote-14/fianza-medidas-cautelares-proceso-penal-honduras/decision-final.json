@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "fianza-medidas-cautelares-proceso-penal-honduras",
+  "articleId": "80ea0c32-f28b-4085-b5c0-dc34db3d6203",
+  "lote": 14,
+  "fechaConsolidacion": "2026-07-27T09:45:00.000Z",
+  "estadoFinal": "source_checked",
+  "razon": "0/0 verificados",
+  "hashes": {
+    "bodyActual": "55dc7bbbbbf485727ec4763a39bedfcbed040773a221350ec926738edc499863",
+    "pasadaA": "55dc7bbbbbf485727ec4763a39bedfcbed040773a221350ec926738edc499863",
+    "pasadaB": "55dc7bbbbbf485727ec4763a39bedfcbed040773a221350ec926738edc499863",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 0,
+    "pasadaA": 0,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

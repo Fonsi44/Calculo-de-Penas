@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "audiencia-inicial-proceso-penal-honduras",
+  "articleId": "109ce88b-feb9-4e29-abc6-db6c8b8dea23",
+  "lote": 13,
+  "fechaConsolidacion": "2026-07-27T09:30:00.000Z",
+  "estadoFinal": "needs_human_review",
+  "razon": "Mayoría de claims no verificables contra fuentes disponibles",
+  "hashes": {
+    "bodyActual": "88865dd442259b095ab267227531b7790d83ca24a90f71f31e9cb1bb2678addf",
+    "pasadaA": "88865dd442259b095ab267227531b7790d83ca24a90f71f31e9cb1bb2678addf",
+    "pasadaB": "88865dd442259b095ab267227531b7790d83ca24a90f71f31e9cb1bb2678addf",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 4,
+    "pasadaA": 4,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 4
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

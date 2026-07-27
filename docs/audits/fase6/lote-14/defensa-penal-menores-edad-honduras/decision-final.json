@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "defensa-penal-menores-edad-honduras",
+  "articleId": "6da0b6a2-8a17-40ad-a20f-58d1ee4fa436",
+  "lote": 14,
+  "fechaConsolidacion": "2026-07-27T09:45:00.000Z",
+  "estadoFinal": "source_checked",
+  "razon": "0/0 verificados",
+  "hashes": {
+    "bodyActual": "80322667de1cd2333c1f2e6136493cfd82bb09afcbbbadd2db0af6481fcbdb91",
+    "pasadaA": "80322667de1cd2333c1f2e6136493cfd82bb09afcbbbadd2db0af6481fcbdb91",
+    "pasadaB": "80322667de1cd2333c1f2e6136493cfd82bb09afcbbbadd2db0af6481fcbdb91",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 0,
+    "pasadaA": 0,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

@@ -1,0 +1,33 @@
+{
+  "pasada": "B",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "entrada": {
+    "file": "docs/audits/fase6/lote-14/poder-legal-honduras-cuando-se-necesita/entrada.json",
+    "sha256": "9d3ec5844b403f8228b4a3020313941c681309d031d2fb180b8feb12017ca040"
+  },
+  "sources_used": {
+    "data/codigo_civil.json": {
+      "sha256": "6f5b7e553f8698af7f917ca0098b05700f834a78916e89cd98b902a69b74429c",
+      "articles_consulted": [
+        "Art. 1888 CC al Art. 1912 CC"
+      ]
+    }
+  },
+  "factual_issues": [
+    {
+      "issue": "Posible errata tipográfica en fuente del Art. 1888 CC",
+      "body_text": "Por el contrario de mandato se obliga una persona...",
+      "correction": "El texto de la fuente dice 'Por el contrario de mandato' en lugar de 'Por el contrato de mandato'. Es probablemente una errata en la transcripción de la fuente, no un error del artículo.",
+      "severity": "low"
+    },
+    {
+      "issue": "Referencias fuera de fuentes disponibles no verificables",
+      "body_text": "Colegio de Abogados de Honduras, RNP, DGME, SAR, CSJ, Ley de Apostilla/Convenio de La Haya",
+      "correction": "Estas referencias institucionales y normativas no están en el codigo_civil.json. No se pueden verificar los costos, requisitos administrativos ni validez internacional del poder.",
+      "severity": "low"
+    }
+  ],
+  "legal_accuracy_notes": "El artículo es altamente preciso en sus referencias al Código Civil. Los artículos 1888-1912 existen, cubren el mandato, y su contenido coincide con lo descrito. Es el artículo mejor verificado del lote. Las referencias a trámites administrativos y costos notariales, aunque no verificables con las fuentes, son plausibles.",
+  "sha256_original": "160edca4e27b0b924d62aea3e7ea6c53d2a5b35cfcc09f9fd91d84b69a034699",
+  "_sha_backfilled": true
+}

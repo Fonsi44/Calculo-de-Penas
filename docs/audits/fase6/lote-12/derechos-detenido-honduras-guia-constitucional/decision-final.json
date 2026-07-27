@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "derechos-detenido-honduras-guia-constitucional",
+  "articleId": "26b6dffa-25de-46e0-a6f7-842861ebdfda",
+  "lote": 12,
+  "fechaConsolidacion": "2026-07-27T09:30:00.000Z",
+  "estadoFinal": "source_checked",
+  "razon": "16/16 claims verificados",
+  "hashes": {
+    "bodyActual": "3f91757e7b5c393d62850087af82beef841bb0701d5ddb6edcfd9e12e03897c1",
+    "pasadaA": "3f91757e7b5c393d62850087af82beef841bb0701d5ddb6edcfd9e12e03897c1",
+    "pasadaB": "3f91757e7b5c393d62850087af82beef841bb0701d5ddb6edcfd9e12e03897c1",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 16,
+    "pasadaA": 8,
+    "pasadaB": 8,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 16
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

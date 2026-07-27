@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "violencia-domestica-ruta-legal-honduras",
+  "articleId": "6850c7ce-0601-4c15-8826-9e3615a4664c",
+  "lote": 13,
+  "fechaConsolidacion": "2026-07-27T09:30:00.000Z",
+  "estadoFinal": "needs_human_review",
+  "razon": "Mayoría de claims no verificables contra fuentes disponibles",
+  "hashes": {
+    "bodyActual": "4d0409ea4349a148cdbc3d43868e4e0eb8e8ab1448b6fd86903e5dd3dcae890b",
+    "pasadaA": "4d0409ea4349a148cdbc3d43868e4e0eb8e8ab1448b6fd86903e5dd3dcae890b",
+    "pasadaB": "4d0409ea4349a148cdbc3d43868e4e0eb8e8ab1448b6fd86903e5dd3dcae890b",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 4,
+    "pasadaA": 4,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 4
+  },
+  "requiereAbogado": true,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

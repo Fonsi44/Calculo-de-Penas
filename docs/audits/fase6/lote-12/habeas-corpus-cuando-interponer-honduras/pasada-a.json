@@ -1,0 +1,72 @@
+{
+  "slug": "habeas-corpus-cuando-interponer-honduras",
+  "sha256_original": "f08fa76ae46aa090ca41aff774fb663e4a13464e26679d2a97c1fbc553195e3d",
+  "pasada": "A",
+  "claims": [
+    {
+      "id": "claim-1",
+      "text": "El hábeas corpus está consagrado en el Art. 182 de la Constitución y regulado por el Código Procesal Penal.",
+      "verification_status": "verified",
+      "verification_detail": "Art. 182 Constitución: 'El Estado reconoce la garantía de Hábeas Corpus o Exhibición Personal... toda persona agraviada o cualquier otra en nombre de ésta tiene derecho a promoverla.'",
+      "source_articles": [
+        "Art. 182 Constitución"
+      ]
+    },
+    {
+      "id": "claim-2",
+      "text": "El juez debe resolverlo en un plazo máximo de 24 horas; ningún día es inhábil.",
+      "verification_status": "partially_verified",
+      "verification_detail": "Art. 182 Constitución reconoce la garantía pero no especifica el plazo de 24 horas para resolución. El Art. 71 Constitución establece 24 horas como plazo máximo de detención sin orden judicial, que es un estándar relacionado. El plazo de 24h para resolver el hábeas corpus corresponde a la regulación procesal (CPP), no a la fuente constitucional.",
+      "source_articles": [
+        "Art. 182 Constitución",
+        "Art. 71 Constitución"
+      ]
+    },
+    {
+      "id": "claim-3",
+      "text": "Procede contra: detención sin orden judicial ni flagrancia, detención que excede plazo constitucional, condiciones inhumanas, amenaza inminente de detención ilegal, restricción ilegal de libertad ambulatoria, desaparición forzada.",
+      "verification_status": "partially_verified",
+      "verification_detail": "Art. 182 Constitución reconoce el hábeas corpus para 'toda persona agraviada'. El Art. 84 Constitución establece que la detención requiere mandato escrito (salvo flagrancia). La enumeración detallada de causales no está en la Constitución sino en la ley procesal.",
+      "source_articles": [
+        "Art. 182 Constitución",
+        "Art. 84 Constitución"
+      ]
+    },
+    {
+      "id": "claim-4",
+      "text": "Puede ser interpuesto por la persona detenida, cualquier familiar o amigo sin poder notarial, cualquier abogado, o el juez de oficio.",
+      "verification_status": "verified",
+      "verification_detail": "Art. 182 Constitución: 'toda persona agraviada o cualquier otra en nombre de ésta tiene derecho a promoverla.' Esto confirma la legitimación amplia sin requisitos formales.",
+      "source_articles": [
+        "Art. 182 Constitución"
+      ]
+    },
+    {
+      "id": "claim-5",
+      "text": "La solicitud puede presentarse por escrito o verbalmente, sin mayores formalidades.",
+      "verification_status": "partially_verified",
+      "verification_detail": "El Art. 182 Constitución no especifica la forma (escrita/verbal). La informalidad es una característica reconocida doctrinalmente pero no está explícita en el texto constitucional.",
+      "source_articles": [
+        "Art. 182 Constitución"
+      ]
+    },
+    {
+      "id": "claim-6",
+      "text": "Diferencias con el amparo: hábeas corpus protege libertad personal (24h, informal, todos los días), amparo protege demás derechos (días/semanas, escrito, solo días hábiles, 2 meses para interponer).",
+      "verification_status": "partially_verified",
+      "verification_detail": "Art. 182 Constitución reconoce tanto el Hábeas Corpus como el Hábeas Data, pero no el amparo en el mismo artículo. La distinción con el amparo es doctrinal y de la Ley de Justicia Constitucional, no verificable solo con la Constitución.",
+      "source_articles": [
+        "Art. 182 Constitución"
+      ]
+    },
+    {
+      "id": "claim-7",
+      "text": "El procedimiento se desarrolla en el Código Procesal Penal, Arts. 333 a 340.",
+      "verification_status": "unverifiable",
+      "verification_detail": "El Código Procesal Penal no es fuente asignada para este artículo. La fuente es solo la Constitución.",
+      "source_articles": []
+    }
+  ],
+  "global_assessment": "partially_verified",
+  "global_assessment_reason": "El Art. 182 de la Constitución verifica el reconocimiento constitucional del hábeas corpus y la legitimación amplia para interponerlo. Sin embargo, los detalles procedimentales (plazo de 24h para resolver, causales específicas, forma verbal/escrita, diferencia con amparo, y artículos del CPP) no están en la fuente constitucional. La verificación es sólida en el núcleo constitucional pero incompleta en los detalles procesales."
+}

@@ -1,0 +1,64 @@
+{
+  "pasada": "A",
+  "sha256_entrada": "no_requerido_pasada_a",
+  "claims": [
+    {
+      "id": "VD1",
+      "texto_exacto": "La violencia doméstica está contemplada principalmente en la Ley contra la Violencia Doméstica (Decreto No. 132-97, reformada por el Decreto No. 250-2005), sin perjuicio de los tipos penales del Código Penal de Honduras vigente (Decreto No. 130-2017).",
+      "tipo": "normativa_vigente",
+      "atribucion_implicita": "Afirma que la Ley contra la Violencia Doméstica es Decreto 132-97 reformado por 250-2005, y el CP vigente es Decreto 130-2017"
+    },
+    {
+      "id": "VD2",
+      "texto_exacto": "La Ley contra la Violencia Doméstica protege a la mujer contra cualquier forma de violencia —física, psicológica, patrimonial y/o económica y sexual— por parte de su cónyuge, excónyuge, compañero, excompañero de hogar o cualquier relación afín a una pareja, haya mediado o no cohabitación, conforme a sus Artículos 1 y 5.",
+      "tipo": "cita_articulo_especifico",
+      "atribucion_implicita": "Atribuye a los Artículos 1 y 5 de la Ley contra la Violencia Doméstica el ámbito de protección descrito"
+    },
+    {
+      "id": "VD3",
+      "texto_exacto": "Artículo 71 de la Constitución y los Artículos 176 y 285 del Código Procesal Penal",
+      "tipo": "cita_articulo_especifico",
+      "atribucion_implicita": "Afirma que el Art. 71 Constitución y Arts. 176 y 285 CPP regulan el plazo de 24h (ampliable a 48h) para poner al detenido a disposición judicial"
+    },
+    {
+      "id": "VD4",
+      "texto_exacto": "Artículo 71 de la Constitución",
+      "tipo": "cita_constitucional",
+      "atribucion_implicita": "Atribuye al Art. 71 Constitución el plazo de 24 horas para poner al detenido a disposición judicial, ampliable a 48h en delitos complejos"
+    }
+  ],
+  "fuentes_verificacion": [
+    {
+      "claim_id": "VD1",
+      "archivo": "data/articulos_cp.json",
+      "verifica": "parcial",
+      "nota": "El CP vigente Decreto 130-2017 es correcto. La Ley contra la Violencia Doméstica (132-97, 250-2005) NO está en las fuentes cargadas — no se puede verificar el decreto exacto ni los artículos 1 y 5 de esa ley especial."
+    },
+    {
+      "claim_id": "VD2",
+      "archivo": "data/articulos_cp.json",
+      "verifica": "no_verificable",
+      "nota": "La Ley contra la Violencia Doméstica no está entre las fuentes locales disponibles. No se puede confirmar ni refutar el contenido de sus Artículos 1 y 5."
+    },
+    {
+      "claim_id": "VD3",
+      "archivo": "data/codigo_procesal_penal_verificado.json",
+      "verifica": "verifica",
+      "nota": "Art. 285 CPP encontrado: 'La persona detenida debe ponerse a la orden del órgano jurisdiccional competente dentro de veinticuatro horas; en investigaciones complejas el plazo puede alcanzar cuarenta y ocho horas.' El Art. 176 NO está en la fuente (no cargado en el JSON)."
+    },
+    {
+      "claim_id": "VD4",
+      "archivo": "data/articulos_constitucion.json",
+      "verifica": "verifica",
+      "nota": "Art. 71 Constitución (numero 71): 'Ninguna persona puede ser detenida ni incomunicada por más de veinticuatro (24) horas posteriores a su detención, sin ser puesta en libertad o a la orden de autoridad competente... Excepcionalmente este plazo lo extenderá la autoridad competente hasta cuarenta y ocho (48) horas, cuando se trate de delitos de investigación compleja...' Verifica completamente."
+    }
+  ],
+  "resumen": "De 4 claims: 2 verifican (VD3 parcial por Art. 285 CPP, VD4 verifica completo), 1 verifica parcial (VD1: CP correcto, ley especial no verificable), 1 no verificable (VD2: ley especial fuera de fuentes). Sin inventar.",
+  "fuentes_utilizadas": [
+    "data/articulos_cp.json",
+    "data/codigo_procesal_penal_verificado.json",
+    "data/articulos_constitucion.json"
+  ],
+  "sha256_original": "4d0409ea4349a148cdbc3d43868e4e0eb8e8ab1448b6fd86903e5dd3dcae890b",
+  "_sha_backfilled": true
+}

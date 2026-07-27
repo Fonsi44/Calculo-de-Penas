@@ -1,0 +1,77 @@
+{
+  "pasada": "B",
+  "timestamp": "2026-07-27T07:07:07.583280+00:00",
+  "sha256": {
+    "body": "235caf1b232587a9f1fabc18feef1326083bc6e09a3ee67a3d9c0ae70c134988",
+    "title": "29acdf786cc7dfe18e48a835e6c1cf333817943b8957408c5a662dc6cb3953db",
+    "metaDescription": "7042f3035b6186d05b80f780701e0abd25e42d617ba75ac90fe0c384faa2d453",
+    "full_entrada": "9b154a812518ffab907f2e5c21689afd21ee3cee6a7bd78a083bdbe58b519b34"
+  },
+  "slug": "defensa-penal-honduras",
+  "title": "Defensa penal en Honduras: primeras 24 horas",
+  "integridad_fuentes": {
+    "codigo_procesal_penal_verificado": {
+      "existe": true,
+      "num_articulos": 44,
+      "verificado": true
+    },
+    "articulos_constitucion": {
+      "existe": true,
+      "num_articulos": 378,
+      "verificado": true
+    }
+  },
+  "fuentes_asignadas": [
+    "codigo_procesal_penal_verificado",
+    "articulos_constitucion"
+  ],
+  "verificaciones_hechos": [
+    {
+      "tipo": "plazos_legales",
+      "valores": [
+        "3",
+        "20"
+      ],
+      "nota": "Plazos mencionados — verificar contra legislación vigente (posibles reformas)"
+    },
+    {
+      "tipo": "decretos_citados",
+      "valores": [
+        "106-",
+        "88-",
+        "9-",
+        "130-"
+      ],
+      "nota": "Verificar que el Decreto citado existe y corresponde a la materia"
+    },
+    {
+      "tipo": "instituciones_mencionadas",
+      "valores": [
+        "Ministerio Público",
+        "Corte Suprema de Justicia",
+        "Juzgado de Letras",
+        "Sala Penal",
+        "DPI"
+      ],
+      "nota": "Verificar nombres oficiales y competencias actuales de cada institución"
+    }
+  ],
+  "metadata": {
+    "reviewStatus": "needs_human_review",
+    "aiReviewStatus": null,
+    "publishedAt": "2025-12-15T12:00:00.000Z",
+    "updatedAt": "2026-07-26T16:08:51.382Z",
+    "category": "derecho-penal",
+    "tags": [
+      "defensa penal Honduras",
+      "audiencia inicial",
+      "proceso penal",
+      "derechos del imputado",
+      "abogado penalista"
+    ],
+    "author": "Pineda y Asociados"
+  },
+  "resumen": "PASADA B: 3 verificaciones de hecho realizadas. SHA256 calculados para body, title, metaDescription. 2 fuentes verificadas.",
+  "sha256_original": "235caf1b232587a9f1fabc18feef1326083bc6e09a3ee67a3d9c0ae70c134988",
+  "_sha_backfilled": true
+}

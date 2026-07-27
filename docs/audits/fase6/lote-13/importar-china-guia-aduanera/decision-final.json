@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "importar-china-guia-aduanera",
+  "articleId": "2f186add-0456-4294-9d5d-2f7ab80dd451",
+  "lote": 13,
+  "fechaConsolidacion": "2026-07-27T09:30:00.000Z",
+  "estadoFinal": "source_checked",
+  "razon": "0/0 claims verificados",
+  "hashes": {
+    "bodyActual": "7169de277b587636329a60a730fbd2949fc6b2f6043580d59edf043673ed0148",
+    "pasadaA": "7169de277b587636329a60a730fbd2949fc6b2f6043580d59edf043673ed0148",
+    "pasadaB": "7169de277b587636329a60a730fbd2949fc6b2f6043580d59edf043673ed0148",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 0,
+    "pasadaA": 0,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

@@ -1,0 +1,133 @@
+{
+  "pasada": "A",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "entrada": {
+    "file": "docs/audits/fase6/lote-14/poder-legal-honduras-cuando-se-necesita/entrada.json",
+    "sha256": "9d3ec5844b403f8228b4a3020313941c681309d031d2fb180b8feb12017ca040"
+  },
+  "sources_used": {
+    "data/codigo_civil.json": {
+      "sha256": "6f5b7e553f8698af7f917ca0098b05700f834a78916e89cd98b902a69b74429c",
+      "articles_consulted": [
+        "Art. 1888 CC",
+        "Art. 1889 CC",
+        "Art. 1890 CC",
+        "Art. 1891 CC",
+        "Art. 1892 CC",
+        "Art. 1893 CC",
+        "Art. 1894 CC",
+        "Art. 1895 CC",
+        "Art. 1896 CC",
+        "Art. 1897 CC",
+        "Art. 1898 CC",
+        "Art. 1899 CC",
+        "Art. 1900 CC",
+        "Art. 1901 CC",
+        "Art. 1902 CC",
+        "Art. 1903 CC",
+        "Art. 1904 CC",
+        "Art. 1905 CC",
+        "Art. 1906 CC",
+        "Art. 1907 CC",
+        "Art. 1908 CC",
+        "Art. 1909 CC",
+        "Art. 1910 CC",
+        "Art. 1911 CC",
+        "Art. 1912 CC"
+      ]
+    }
+  },
+  "claims": [
+    {
+      "id": "claim-13-1",
+      "text": "El poder notarial se regula en los artículos 1888 al 1912 del Código Civil, que versan sobre el mandato",
+      "body_reference": "La figura del poder notarial se encuentra regulada principalmente en el Código Civil de Honduras, específicamente en los artículos 1888 al 1912, que versan sobre el mandato.",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 1888 CC al Art. 1912 CC",
+        "source_text": "Art. 1888: 'Por el contrario de mandato se obliga una persona a prestar algún servicio o hacer alguna cosa, por cuenta o encargo de otra.' Art. 1912: 'El mandante puede revocar el mandato a su voluntad, y compeler al mandatario a la devolución del documento en que conste el mandato.'",
+        "notes": "Confirmado. Los artículos 1888 a 1912 del Código Civil regulan efectivamente el contrato de mandato, que es la base legal del poder notarial."
+      }
+    },
+    {
+      "id": "claim-13-2",
+      "text": "El Artículo 1888 define el mandato como el contrato por el cual una persona se obliga a prestar algún servicio o hacer alguna cosa, por cuenta o encargo de otra",
+      "body_reference": "El Artículo 1888 define el mandato como el contrato por el cual una persona se obliga a prestar algún servicio o hacer alguna cosa, por cuenta o encargo de otra.",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 1888 CC",
+        "source_text": "Por el contrario de mandato se obliga una persona a prestar algún servicio o hacer alguna cosa, por cuenta o encargo de otra.",
+        "notes": "Confirmado textualmente. Nota: la fuente dice 'Por el contrario de mandato' (posible errata por 'Por el contrato de mandato')."
+      }
+    },
+    {
+      "id": "claim-13-3",
+      "text": "El mandato puede ser expreso o tácito; el expreso puede darse por instrumento público, privado o de palabra",
+      "body_reference": "[Clasificación del mandato como expreso o tácito]",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 1889 CC",
+        "source_text": "El mandato puede ser expreso o tácito. El expreso puede darse por un instrumento público o privado y aun de palabra.",
+        "notes": "Confirmado textualmente."
+      }
+    },
+    {
+      "id": "claim-13-4",
+      "text": "El mandato se supone gratuito a falta de pacto en contrario (Art. 1890 CC)",
+      "body_reference": "[Referencia a gratuidad del mandato]",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 1890 CC",
+        "source_text": "A falta de pacto en contrario, el mandato se supone gratuito. Esto no obstante, si el mandatario tiene por ocupación el desempeño de servicios de la especie a que se refiere el mandato, se presume la obligación de retribuirlo.",
+        "notes": "Confirmado textualmente. El artículo establece presunción de gratuidad con excepción para profesionales."
+      }
+    },
+    {
+      "id": "claim-13-5",
+      "text": "El mandato es general o especial: el general comprende todos los negocios, el especial uno o más determinados",
+      "body_reference": "[Clasificación general vs especial del mandato/poder]",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 1891 CC",
+        "source_text": "El mandato es general o especial. El primero comprende todos los negocios del mandante. El segundo, uno o más negocios determinados.",
+        "notes": "Confirmado textualmente. Coincide con la distinción entre poder general y poder especial."
+      }
+    },
+    {
+      "id": "claim-13-6",
+      "text": "Para transigir, enajenar, hipotecar o cualquier acto de riguroso dominio se necesita mandato expreso (Art. 1892 CC)",
+      "body_reference": "[Actos que requieren mandato expreso]",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 1892 CC",
+        "source_text": "El mandato, concebido en términos generales, no comprende más que los actos de administración. Para transigir, enajenar, hipotecar o ejecutar cualquier otro acto de riguroso dominio, se necesita mandato expreso.",
+        "notes": "Confirmado textualmente."
+      }
+    },
+    {
+      "id": "claim-13-7",
+      "text": "El mandato se acaba por revocación, renuncia, muerte, interdicción, quiebra o insolvencia del mandante o mandatario (Art. 1911 CC)",
+      "body_reference": "[Causales de extinción del mandato]",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 1911 CC",
+        "source_text": "El mandato se acaba: 1.- Por su revocación. 2.- Por la renuncia del mandatario. 3.- Por muerte, interdicción, quiebra o insolvencia del mandante, o del mandatario, salvo lo dispuesto en la Ley Orgánica de Tribunales.",
+        "notes": "Confirmado textualmente."
+      }
+    },
+    {
+      "id": "claim-13-8",
+      "text": "El mandante puede revocar el mandato a su voluntad (Art. 1912 CC)",
+      "body_reference": "El poderdante tiene el derecho de revocar un poder notarial en cualquier momento, salvo que se haya pactado como irrevocable por un plazo determinado y por causa legalmente justificada",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 1912 CC",
+        "source_text": "El mandante puede revocar el mandato a su voluntad, y compeler al mandatario a la devolución del documento en que conste el mandato.",
+        "notes": "Confirmado. La revocación es un derecho del mandante. La excepción de irrevocabilidad pactada no aparece explícitamente en el Art. 1912 pero es una figura doctrinal reconocida."
+      }
+    }
+  ],
+  "global_notes": "Todas las referencias a los artículos 1888-1912 del Código Civil sobre el mandato están verificadas correctamente. El rango de artículos es exacto y el contenido coincide. La única observación menor es que la fuente tiene una posible errata en el Art. 1888 ('contrario' en vez de 'contrato'). Las referencias a leyes fuera del Código Civil (Colegio de Abogados, Ley de Apostilla, RNP, DGME, SAR) no son verificables con las fuentes proporcionadas.",
+  "sha256_original": "160edca4e27b0b924d62aea3e7ea6c53d2a5b35cfcc09f9fd91d84b69a034699",
+  "_sha_backfilled": true
+}

@@ -1,0 +1,49 @@
+{
+  "pasada": "B",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "entrada": {
+    "file": "docs/audits/fase6/lote-14/contratos-mercantiles-esenciales-empresas-honduras/entrada.json",
+    "sha256": "bf1085b30e9b4c79021f1c2af174dc0107dcf16886d159c72e543e17d24732fa"
+  },
+  "sources_used": {
+    "data/codigo_comercio.json": {
+      "sha256": "699a1404f6c4c65b11cc3cfeb8f43610416d48e7fd613e0b2b139ae8cf59dd25",
+      "articles_consulted": [
+        "Art. 1 CM",
+        "Art. 2 CM",
+        "Art. 3 CM",
+        "Art. 15 CM",
+        "Art. 16 CM",
+        "Art. 50 CM",
+        "Art. 717 CM",
+        "Art. 763 CM",
+        "Art. 764 CM",
+        "Art. 793 CM",
+        "Art. 798 CM"
+      ]
+    }
+  },
+  "factual_issues": [
+    {
+      "issue": "Art. 717 CM: contenido no coincide",
+      "body_text": "La manifestación de voluntad y aceptación pueden deducirse por actos ejecutados... según el Artículo 717 del Código de Comercio",
+      "correction": "El Art. 717 CM en la fuente trata sobre oferta y aceptación por teléfono/medios electrónicos consideradas entre presentes, no sobre manifestación tácita por actos.",
+      "severity": "medium"
+    },
+    {
+      "issue": "Art. 50 CM: contenido no coincide",
+      "body_text": "El Artículo 50 del Código de Comercio establece que los contratos mercantiles se regirán por las reglas generales del derecho común",
+      "correction": "El Art. 50 CM en la fuente regula las facultades del administrador para enajenar bienes inmuebles de la compañía, no la supletoriedad del derecho común.",
+      "severity": "medium"
+    },
+    {
+      "issue": "Ley de Representantes no verificable",
+      "body_text": "Ley de Representantes, Distribuidores y Agentes de Empresas Nacionales y Extranjeras",
+      "correction": "Esta ley especial no está en las fuentes proporcionadas. No se puede verificar su contenido ni vigencia.",
+      "severity": "low"
+    }
+  ],
+  "legal_accuracy_notes": "Los artículos sobre contratos específicos (763, 764, 793, 798) están correctamente citados y su contenido coincide con las fuentes. Los errores están en los artículos 717 y 50 CM, cuyo contenido en las fuentes difiere de lo descrito. Posiblemente se deba a diferencias de numeración entre ediciones del Código de Comercio (Decreto 75-2000 vs otras versiones).",
+  "sha256_original": "7aec743208b47dc08649164d81edfa6ca072bc5465ce5d1ff8d4bf330750728d",
+  "_sha_backfilled": true
+}

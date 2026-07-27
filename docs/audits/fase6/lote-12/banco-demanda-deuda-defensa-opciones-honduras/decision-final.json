@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "banco-demanda-deuda-defensa-opciones-honduras",
+  "articleId": "2c26116d-3f04-45e4-9eed-3f082d92f147",
+  "lote": 12,
+  "fechaConsolidacion": "2026-07-27T09:30:00.000Z",
+  "estadoFinal": "source_checked",
+  "razon": "0/0 claims verificados",
+  "hashes": {
+    "bodyActual": "d23071217db748e646f00d587e8d8967c457dc09a6576e127a67e28e9a4b7e37",
+    "pasadaA": "d23071217db748e646f00d587e8d8967c457dc09a6576e127a67e28e9a4b7e37",
+    "pasadaB": "d23071217db748e646f00d587e8d8967c457dc09a6576e127a67e28e9a4b7e37",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 0,
+    "pasadaA": 0,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

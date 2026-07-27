@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "despido-laboral-honduras-guia-completa",
+  "articleId": "dbc8f0e7-ac0d-4f0f-a9ab-8ddeaeaf2855",
+  "lote": 14,
+  "fechaConsolidacion": "2026-07-27T09:45:00.000Z",
+  "estadoFinal": "source_checked",
+  "razon": "0/0 verificados",
+  "hashes": {
+    "bodyActual": "0420e76a41f2488241f5e15a5c22876f657ff8656cb5078a1ccb952a7083b337",
+    "pasadaA": "0420e76a41f2488241f5e15a5c22876f657ff8656cb5078a1ccb952a7083b337",
+    "pasadaB": "0420e76a41f2488241f5e15a5c22876f657ff8656cb5078a1ccb952a7083b337",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 0,
+    "pasadaA": 0,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

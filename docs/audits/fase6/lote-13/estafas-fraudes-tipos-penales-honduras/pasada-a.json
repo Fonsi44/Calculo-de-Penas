@@ -1,0 +1,84 @@
+{
+  "pasada": "A",
+  "timestamp": "2026-07-27T07:07:07.571935+00:00",
+  "sha256_body": "3830925c724c34e3c83ff9914743f0fae780383e6a2809507af536186aaf4fd5",
+  "slug": "estafas-fraudes-tipos-penales-honduras",
+  "title": "Estafas en Honduras: Tipos Penales",
+  "total_claims_verificados": 4,
+  "total_claims_no_verificados": 0,
+  "total_claims": 4,
+  "claims_articulos": [
+    {
+      "articulo_numero": 253,
+      "encontrado_en_fuentes": [
+        "articulos_cp"
+      ],
+      "verificado": true,
+      "contexto_en_articulo": "se apropia de un bien que recibió legítimamente con la obligación de devolverlo, como un empleado que retiene dinero que debía depositar. Los artículos 253 y 254 del Código Penal regulan este delito. ¿Cómo se diferencia una Estafa de un Incumplimiento Contractual? Una estafa requiere un engaño previo y la intención de defraudar desde el inicio. Si una persona contrata un servicio, lo recibe y lueg",
+      "texto_fuente": {
+        "articulos_cp": {
+          "articulo_raw": "Art. 253 CP",
+          "texto": "Quien, a través de las tecnologías de la comunicación e información, propone a un menor de catorce (14) años concertar un encuentro físico para realizar actividades sexuales, siempre y cuando tal propuesta se acompañe de actos materiales encaminados a dicho encuentro, debe ser castigado con la pena de arresto domiciliario de uno (1) a tres (3) años.\n\nCuando la aproximación se obtenga mediante coacción o intimidación, debe ser castigado con prisión de dos (2) a cuatro (4) años.\n\nLa pena estableci",
+          "epigrafe": "Contacto con finalidad sexual con menores por medios electrónicos",
+          "tema": "garantias_penales"
+        }
+      },
+      "nota": "Claim verificado contra fuente"
+    },
+    {
+      "articulo_numero": 254,
+      "encontrado_en_fuentes": [
+        "articulos_cp"
+      ],
+      "verificado": true,
+      "contexto_en_articulo": "",
+      "texto_fuente": {
+        "articulos_cp": {
+          "articulo_raw": "Art. 254 CP",
+          "texto": "Quien utilizando engaño realiza actos de contenido sexual con persona mayor de catorce (14) y menor de dieciocho (18) años, debe ser castigado con la pena de prisión de seis (6) meses a un (1) año. Si los actos sexuales implican acceso camal por cualquier vía, las penas deben ser de prisión de uno (1) a tres (3) años y prestación de servicios de utilidad pública o a las víctimas por tiempo de dos (2) a cuatro (4) meses o multa de trescientos (300) a seiscientos (600) días.\n\nQuien prevaliéndose d",
+          "epigrafe": "Estupro",
+          "tema": "garantias_penales"
+        }
+      },
+      "nota": "Claim verificado contra fuente"
+    },
+    {
+      "articulo_numero": 365,
+      "encontrado_en_fuentes": [
+        "articulos_cp"
+      ],
+      "verificado": true,
+      "contexto_en_articulo": "abuso de confianza, induce a otra a realizar un acto de disposición patrimonial que le causa un perjuicio. El engaño es el elemento clave. El Artículo 365 del Código Penal describe las bases de este delito. Estafa Agravada: Las penas se incrementan cuando el delito recae sobre bienes inmuebles destinados a vivienda, bienes de primera necesidad, o cuando la cuantía defraudada es de especial graveda",
+      "texto_fuente": {
+        "articulos_cp": {
+          "articulo_raw": "Art. 365 CP",
+          "texto": "Comete estafa quien con ánimo de lucro, utiliza engaño suficiente para producir error en otro y le induce a realizar un acto de disposición en perjuicio propio o ajeno. También se comete el delito de estafa en los casos siguientes:\n\n1) Quien con el propósito de obtener un provecho ilícito consigue la transferencia no consentida de cualquier activo patrimonial en perjuicio de tercero, mediante una manipulación informática o el uso de otro artificio semejante; y,\n\n2) Quien utilizando ilegítimament",
+          "epigrafe": "Estafa",
+          "tema": "delitos"
+        }
+      },
+      "nota": "Claim verificado contra fuente"
+    },
+    {
+      "articulo_numero": 366,
+      "encontrado_en_fuentes": [
+        "articulos_cp"
+      ],
+      "verificado": true,
+      "contexto_en_articulo": "",
+      "texto_fuente": {
+        "articulos_cp": {
+          "articulo_raw": "Art. 366 CP",
+          "texto": "Las penas previstas en este capítulo se deben aumentar en un tercio (1/3) si concurre alguna de las circunstancias siguientes:\n\n1) Los hechos recaen sobre cosas de primera necesidad o destinadas a un servicio público, de titularidad pública o privada o a la vivienda;\n\n2) Los bienes objeto del delito forman parte del patrimonio histórico, artístico, cultural o científico de la nación;\n\n3) Los hechos revisten especial gravedad por la cuantía defraudada;\n\n4) Los hechos se cometen con abuso de firma",
+          "epigrafe": "Agravantes específicas",
+          "tema": "delitos"
+        }
+      },
+      "nota": "Claim verificado contra fuente"
+    }
+  ],
+  "aserciones_legales": [],
+  "resumen": "De 4 claims por número de artículo, 4 verificados en fuentes, 0 no verificados.",
+  "sha256_original": "3830925c724c34e3c83ff9914743f0fae780383e6a2809507af536186aaf4fd5",
+  "_sha_backfilled": true
+}

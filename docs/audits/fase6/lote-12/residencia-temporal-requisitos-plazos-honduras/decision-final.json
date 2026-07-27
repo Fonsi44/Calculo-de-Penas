@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "residencia-temporal-requisitos-plazos-honduras",
+  "articleId": "d69a90cc-f850-4267-bbb7-0454976d08e4",
+  "lote": 12,
+  "fechaConsolidacion": "2026-07-27T09:30:00.000Z",
+  "estadoFinal": "source_checked",
+  "razon": "12/12 claims verificados",
+  "hashes": {
+    "bodyActual": "39ec532f7d793e1d3e8826133e44d50c5bb5b923e363ada134dc4118a8df52e8",
+    "pasadaA": "39ec532f7d793e1d3e8826133e44d50c5bb5b923e363ada134dc4118a8df52e8",
+    "pasadaB": "39ec532f7d793e1d3e8826133e44d50c5bb5b923e363ada134dc4118a8df52e8",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 12,
+    "pasadaA": 6,
+    "pasadaB": 6,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 12
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

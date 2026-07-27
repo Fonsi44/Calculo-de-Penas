@@ -1,0 +1,98 @@
+{
+  "pasada": "A",
+  "timestamp": "2026-07-27T07:10:28.187674+00:00",
+  "sha256_body": "0420e76a41f2488241f5e15a5c22876f657ff8656cb5078a1ccb952a7083b337",
+  "slug": "despido-laboral-honduras-guia-completa",
+  "title": "Despido Laboral en Honduras: Guia de",
+  "total_claims_verificados": 5,
+  "total_claims_no_verificados": 0,
+  "total_claims": 5,
+  "claims_articulos": [
+    {
+      "articulo_numero": 112,
+      "encontrado_en_fuentes": [
+        "CT"
+      ],
+      "verificado": true,
+      "contexto_en_articulo": "ido se considera injustificado cuando el empleador no presenta una razón válida y legalmente reconocida para terminar la relación laboral. El <strong>Artículo 112 del Código de Trabajo</strong> enumera las únicas causas que justifican un despido. Si el despido no se fundamenta en alguna de estas causales, se co",
+      "texto_fuente": {
+        "CT": {
+          "articulo": "Art. 112 CT",
+          "texto": "Son causas justas que facultan al patrono para dar por terminado el contrato de trabajo, sin responsabilidad de su parte: a)El engaño del trabajador o del sindicato que lo hubiere propuesto mediante la presentación de recomendaciones o certificados falsos sobre su aptitud. Esta causa dejará de tener efecto después de treinta (30) días de prestar sus servicios el trabajador; b)Todo acto de violenci"
+        }
+      },
+      "nota": "Art. 112 CT: causas justas de despido del patrono. El artículo lo cita correctamente para enumerar causas de despido justificado."
+    },
+    {
+      "articulo_numero": 114,
+      "encontrado_en_fuentes": [
+        "CT"
+      ],
+      "verificado": true,
+      "contexto_en_articulo": "eador no notificó el despido con la antelación legal (<strong>un (1) mes</strong> para trabajadores con más de un año de antigüedad, según el <strong>Artículo 114 del Código de Trabajo</strong>), debe pagar el salario correspondiente a ese período.</li>\n  <li><strong>Vacaciones no gozadas:</strong> Pago proporc",
+      "texto_fuente": {
+        "CT": {
+          "articulo": "Art. 114 CT",
+          "texto": "Son causas justas que facultan al trabajador para dar por terminado el contrato de trabajo, sin preaviso y sin responsabilidad de su parte, conservando el derecho a las prestaciones e indemnizaciones legales, como en el caso de despido injusto: a)Engaño del patrono al celebrar el contrato, respecto a las condiciones en que deba realizar sus labores el trabajador. Esta causa no podrá alegarse contr"
+        }
+      },
+      "nota": "Art. 114 CT real: causas que facultan al TRABAJADOR a terminar el contrato (despido indirecto). El artículo del blog lo cita como preaviso de 1 mes — el preaviso está en Art. 116 CT, no 114."
+    },
+    {
+      "articulo_numero": 117,
+      "encontrado_en_fuentes": [
+        "CT"
+      ],
+      "verificado": true,
+      "contexto_en_articulo": "p>La liquidación por despido injustificado comprende varios conceptos:</p>\n<ul>\n  <li><strong>Indemnización por antigüedad:</strong> Según el <strong>Artículo 117 del Código de Trabajo</strong>, corresponde a un mes de salario por cada año trabajado, y una parte proporcional por fracciones de año superiores a s",
+      "texto_fuente": {
+        "CT": {
+          "articulo": "Art. 117 CT",
+          "texto": "La parte que termina unilateralmente el contrato de trabajo debe dar el preaviso por escrito, personalmente a la otra parte, pero si el contrato es verbal puede darlo de palabra ante dos (2) testigos, con expresión de la causa o motivo que la mueve a tomar esa determinación. Después no podrá alegar validamente causales o motivos distintos."
+        }
+      },
+      "nota": "Art. 117 CT real: forma del preaviso (escrito/verbal). El artículo del blog lo cita como base para 'indemnización por antigüedad de 1 mes por año'. La indemnización está en Art. 120 CT. Error de numeración."
+    },
+    {
+      "articulo_numero": 149,
+      "encontrado_en_fuentes": [
+        "CT"
+      ],
+      "verificado": true,
+      "contexto_en_articulo": "e trabajadoras embarazadas</h3>\n<p>El despido de una trabajadora embarazada sin autorización judicial previa es nulo. La ley hondureña, en el <strong>Artículo 149 del Código de Trabajo</strong>, protege esta condición, otorgando a la trabajadora el derecho a la reinstalación inmediata y al pago de salarios caíd",
+      "texto_fuente": {
+        "CT": {
+          "articulo": "Art. 149 CT",
+          "texto": "Servicio doméstico es el que se presta mediante remuneración a una persona que no persigue fin de lucro y sólo se propone aprovechar, en su morada, los servicios continuos del trabajador para sí solo o su familia, sea que el doméstico se albergue en casa del patrono o fuera de ella. En lo que no se hubiere previsto en el contrato, se estará a la costumbre del lugar."
+        }
+      },
+      "nota": "Art. 149 CT real: definición de servicio doméstico, NO protección a trabajadoras embarazadas. La protección está en Art. 144 CT. El artículo cita Art. 149 para fuero maternal — error de numeración."
+    },
+    {
+      "articulo_numero": 747,
+      "encontrado_en_fuentes": [
+        "CT"
+      ],
+      "verificado": true,
+      "contexto_en_articulo": " demanda. El plazo para reclamar la indemnización por despido es de <strong>dos (2) meses</strong> a partir de la fecha del despido, según el <strong>Artículo 747 del Código de Trabajo</strong>.</li>\n</ol>\n\n<h2>Errores comunes que perjudican su reclamo laboral</h2>\n<ul>\n  <li><strong>Firmar una renuncia volunta",
+      "texto_fuente": {
+        "CT": {
+          "articulo": "Art. 747 CT",
+          "texto": "Además de estos recursos existirá un grado de jurisdicción denominado de consulta. Las sentencias de primera instancia, cuando fueren totalmente adversas a las pretensiones del trabajador, serán necesariamente consultadas con el respectivo Tribunal de Trabajo, si no fueren apelados. También serán consultadas las sentencias de primera instancia cuando fueren adversas al Estado, al Departamento o al"
+        }
+      },
+      "nota": "Art. 747 CT real: recurso de consulta en materia laboral, NO plazo de prescripción de 2 meses. La prescripción de 2 meses está en Art. 864 CT. Error de numeración."
+    }
+  ],
+  "aserciones_legales": [
+    {
+      "tipo": "errores_numeracion",
+      "texto": "Arts. 114, 117, 149 y 747 están mal asignados temáticamente: 114=despido indirecto (no preaviso), 117=forma preaviso (no indemnización antigüedad), 149=servicio doméstico (no fuero maternal), 747=recurso consulta (no prescripción 2 meses).",
+      "verificado": false,
+      "nota": "Los números existen en el CT pero el contenido no corresponde a lo que el artículo afirma."
+    }
+  ],
+  "resumen": "De 5 claims, 5 encontrados en fuente CT, pero 4 con errores de asignación temática (114, 117, 149, 747 no coinciden con lo afirmado).",
+  "sha256_original": "0420e76a41f2488241f5e15a5c22876f657ff8656cb5078a1ccb952a7083b337",
+  "_sha_backfilled": true
+}

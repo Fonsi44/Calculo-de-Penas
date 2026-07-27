@@ -1,0 +1,37 @@
+{
+  "pasada": "A",
+  "timestamp": "2026-07-27T07:09:06.374191+00:00",
+  "sha256_body": "55dc7bbbbbf485727ec4763a39bedfcbed040773a221350ec926738edc499863",
+  "slug": "fianza-medidas-cautelares-proceso-penal-honduras",
+  "title": "Fianzas y Medidas Cautelares en el Proceso Penal",
+  "total_claims_verificados": 0,
+  "total_claims_no_verificados": 1,
+  "total_claims": 1,
+  "claims_articulos": [
+    {
+      "articulo_numero": 172,
+      "encontrado_en_fuentes": [],
+      "verificado": false,
+      "contexto_en_articulo": "res y la fianza en Honduras se encuentra principalmente en el <strong>Código Procesal Penal (Decreto 9-99-E)</strong>, específicamente en los <strong>artículos 172 y siguientes</strong>. Este cuerpo legal establece una jerarquía de medidas que el juez puede imponer, siempre respetando el principio de proporciona",
+      "texto_fuente": {},
+      "nota": "Art. 172 CPP NO encontrado en fuente verificada (dataset CPP tiene 46 artículos seleccionados; Art. 172 está fuera del conjunto verificado)."
+    }
+  ],
+  "aserciones_legales": [
+    {
+      "tipo": "claim_legal_general",
+      "texto": "El Código Procesal Penal (Decreto 9-99-E) regula las medidas cautelares en los artículos 172 y siguientes.",
+      "verificado": false,
+      "nota": "Art. 172 no está en el dataset CPP verificado. Además el artículo menciona también Decreto 130-2017 como CPP."
+    },
+    {
+      "tipo": "claim_legal_general",
+      "texto": "El monto de la fianza se determina considerando gravedad del delito, capacidad económica y arraigo.",
+      "verificado": false,
+      "nota": "Asercion general — requiere verificación contra CPP completo."
+    }
+  ],
+  "resumen": "De 1 claim por número de artículo, 0 verificados en fuentes, 1 no verificado (Art. 172 fuera del dataset CPP).",
+  "sha256_original": "55dc7bbbbbf485727ec4763a39bedfcbed040773a221350ec926738edc499863",
+  "_sha_backfilled": true
+}

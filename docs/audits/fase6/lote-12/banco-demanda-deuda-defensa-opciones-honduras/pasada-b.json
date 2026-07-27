@@ -1,0 +1,16 @@
+{
+  "pasada": "B",
+  "slug": "banco-demanda-deuda-defensa-opciones-honduras",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "overall_assessment": "El artículo proporciona información práctica sobre defensas contra demandas bancarias. Dos claims clave son verificables: (1) la prescripción de acciones personales a los 10 años está confirmada por el Art. 2292 del Código Civil; (2) la prohibición constitucional de prisión por deudas está confirmada por el Art. 98 de la Constitución. Sin embargo, la mayoría de las afirmaciones procesales (plazo de 3 días para oposición, embargo preventivo, rebeldía, remate) dependen del Código Procesal Civil, que no está en las fuentes disponibles. Esto es una limitación significativa porque el artículo se centra en procedimientos judiciales civiles.",
+  "risk_flags": [
+    "ALTO RIESGO: La mayoría de las afirmaciones procesales (5 de 7 claims) no son verificables porque el Código Procesal Civil no está en las fuentes de datos.",
+    "Los plazos procesales (3 días hábiles) y procedimientos de embargo son información crítica que no se puede verificar."
+  ],
+  "recommendations": [
+    "AGREGAR el Código Procesal Civil a las fuentes de datos para verificar artículos sobre procedimientos judiciales civiles y mercantiles.",
+    "Verificar el plazo de 3 días hábiles para oposición en juicio ejecutivo contra el CPC vigente."
+  ],
+  "sha256_original": "d23071217db748e646f00d587e8d8967c457dc09a6576e127a67e28e9a4b7e37",
+  "_sha_backfilled": true
+}

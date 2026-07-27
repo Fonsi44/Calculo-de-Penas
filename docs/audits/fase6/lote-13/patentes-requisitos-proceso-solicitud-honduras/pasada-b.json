@@ -1,0 +1,60 @@
+{
+  "pasada": "B",
+  "timestamp": "2026-07-27T07:07:07.577581+00:00",
+  "sha256": {
+    "body": "e3da596a63956b7686f22715ae2e6d6c366dadee3e10576280bf1cb5d7dae89f",
+    "title": "f06bdb62c5c21fd1e54230138f497ada39d6f4ba07fd1889daabd89c7d207fd0",
+    "metaDescription": "3b473a20a50586a229e5e832ecefe6801ab1ec347439a4a26e16dded2e3931df",
+    "full_entrada": "e1be15dd0a35901fe384202e0302fe362fe54dedeb58205d30b8f3405303b85a"
+  },
+  "slug": "patentes-requisitos-proceso-solicitud-honduras",
+  "title": "Patentes en Honduras: Requisitos y Costos",
+  "integridad_fuentes": {
+    "codigo_comercio": {
+      "existe": true,
+      "num_articulos": 1693,
+      "verificado": true
+    }
+  },
+  "fuentes_asignadas": [
+    "codigo_comercio"
+  ],
+  "verificaciones_hechos": [
+    {
+      "tipo": "plazos_legales",
+      "valores": [
+        "20",
+        "60",
+        "4",
+        "20",
+        "10"
+      ],
+      "nota": "Plazos mencionados — verificar contra legislación vigente (posibles reformas)"
+    },
+    {
+      "tipo": "instituciones_mencionadas",
+      "valores": [
+        "Dirección General de Propiedad Industrial",
+        "DIGEPIH"
+      ],
+      "nota": "Verificar nombres oficiales y competencias actuales de cada institución"
+    }
+  ],
+  "metadata": {
+    "reviewStatus": "needs_human_review",
+    "aiReviewStatus": null,
+    "publishedAt": "2025-12-25T12:00:00.000Z",
+    "updatedAt": "2026-07-27T00:20:35.008Z",
+    "category": "propiedad-intelectual",
+    "tags": [
+      "registrar patente honduras",
+      "modelo de utilidad honduras",
+      "patente de invención",
+      "digepih patentes"
+    ],
+    "author": "Pineda y Asociados"
+  },
+  "resumen": "PASADA B: 2 verificaciones de hecho realizadas. SHA256 calculados para body, title, metaDescription. 1 fuentes verificadas.",
+  "sha256_original": "e3da596a63956b7686f22715ae2e6d6c366dadee3e10576280bf1cb5d7dae89f",
+  "_sha_backfilled": true
+}

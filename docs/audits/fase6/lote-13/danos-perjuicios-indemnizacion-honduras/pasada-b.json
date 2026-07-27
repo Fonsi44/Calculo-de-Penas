@@ -1,0 +1,68 @@
+{
+  "pasada": "B",
+  "timestamp": "2026-07-27T07:07:07.576254+00:00",
+  "sha256": {
+    "body": "d278f3eb2cfad38935a5cfddd3471952838bceb837f90d143565e4c822695469",
+    "title": "72986b665eeb7f98629e6e8afad191870cdb1928e55102960a5b1a7b1fc9ed50",
+    "metaDescription": "d0f681d97502b5107db6b1aa6a86cfa780b094257bfc5cefc664f776d3299cd6",
+    "full_entrada": "c434da9891c5ed9d4ff69c019de97fc3fc60d8fbe8d1b6691c29ccf8815eae33"
+  },
+  "slug": "danos-perjuicios-indemnizacion-honduras",
+  "title": "Daños y Perjuicios en Honduras: Demanda e Indemnización",
+  "integridad_fuentes": {
+    "codigo_civil": {
+      "existe": true,
+      "num_articulos": 2359,
+      "verificado": true
+    }
+  },
+  "fuentes_asignadas": [
+    "codigo_civil"
+  ],
+  "verificaciones_hechos": [
+    {
+      "tipo": "montos_dinerarios",
+      "valores": [
+        "60000",
+        "18000",
+        "72000",
+        "30000",
+        "162000"
+      ],
+      "nota": "Montos verificables — contrastar con escala salarial/realidad económica hondureña actual (2026)"
+    },
+    {
+      "tipo": "plazos_legales",
+      "valores": [
+        "4"
+      ],
+      "nota": "Plazos mencionados — verificar contra legislación vigente (posibles reformas)"
+    },
+    {
+      "tipo": "instituciones_mencionadas",
+      "valores": [
+        "Corte de Apelaciones",
+        "Juzgado de Letras"
+      ],
+      "nota": "Verificar nombres oficiales y competencias actuales de cada institución"
+    }
+  ],
+  "metadata": {
+    "reviewStatus": "reviewed",
+    "aiReviewStatus": "completed",
+    "publishedAt": "2026-04-10T12:00:00.000Z",
+    "updatedAt": "2026-07-25T06:31:08.128Z",
+    "category": "derecho-civil",
+    "tags": [
+      "daños y perjuicios Honduras",
+      "responsabilidad civil",
+      "indemnización",
+      "daño moral",
+      "lucro cesante"
+    ],
+    "author": "Pineda y Asociados"
+  },
+  "resumen": "PASADA B: 3 verificaciones de hecho realizadas. SHA256 calculados para body, title, metaDescription. 1 fuentes verificadas.",
+  "sha256_original": "d278f3eb2cfad38935a5cfddd3471952838bceb837f90d143565e4c822695469",
+  "_sha_backfilled": true
+}

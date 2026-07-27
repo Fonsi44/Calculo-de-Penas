@@ -1,0 +1,18 @@
+{
+  "pasada": "B",
+  "sha256_entrada": "no_requerido_pasada_b",
+  "claims_cruzadas": [
+    {
+      "id": "DEL_X1",
+      "claim_origen_id": "DEL6",
+      "texto": "El artículo dice que el Art. 366 no define la estafa. ¿Dónde está definida la estafa entonces?",
+      "tipo": "verificacion_cruzada",
+      "verifica": "verifica",
+      "nota": "Según delitos.json: 'Estafa' está en Art. 365 CP (pena 24-48 meses). El Art. 366 son 'Agravantes específicas' del capítulo de estafas. La afirmación del artículo es correcta."
+    }
+  ],
+  "alucinaciones_detectadas": [],
+  "nota_final": "Sin alucinaciones. El artículo es preciso. La autocorrección sobre el Art. 366 es acertada.",
+  "sha256_original": "bc2b09050bbf32d723892efe8fc3c0dd10aa21c0f00c323313184505ee4e6d0a",
+  "_sha_backfilled": true
+}

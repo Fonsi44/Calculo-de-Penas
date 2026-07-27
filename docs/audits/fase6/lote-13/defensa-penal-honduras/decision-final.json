@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "defensa-penal-honduras",
+  "articleId": "6e3c0b96-d52c-4b0c-a0d3-ec582a12cc92",
+  "lote": 13,
+  "fechaConsolidacion": "2026-07-27T09:30:00.000Z",
+  "estadoFinal": "source_checked",
+  "razon": "0/0 claims verificados",
+  "hashes": {
+    "bodyActual": "235caf1b232587a9f1fabc18feef1326083bc6e09a3ee67a3d9c0ae70c134988",
+    "pasadaA": "235caf1b232587a9f1fabc18feef1326083bc6e09a3ee67a3d9c0ae70c134988",
+    "pasadaB": "235caf1b232587a9f1fabc18feef1326083bc6e09a3ee67a3d9c0ae70c134988",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 0,
+    "pasadaA": 0,
+    "pasadaB": 0,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 0
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

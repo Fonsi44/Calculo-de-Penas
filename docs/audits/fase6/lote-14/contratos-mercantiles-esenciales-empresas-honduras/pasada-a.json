@@ -1,0 +1,119 @@
+{
+  "pasada": "A",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "entrada": {
+    "file": "docs/audits/fase6/lote-14/contratos-mercantiles-esenciales-empresas-honduras/entrada.json",
+    "sha256": "bf1085b30e9b4c79021f1c2af174dc0107dcf16886d159c72e543e17d24732fa"
+  },
+  "sources_used": {
+    "data/codigo_comercio.json": {
+      "sha256": "699a1404f6c4c65b11cc3cfeb8f43610416d48e7fd613e0b2b139ae8cf59dd25",
+      "articles_consulted": [
+        "Art. 1 CM",
+        "Art. 2 CM",
+        "Art. 3 CM",
+        "Art. 15 CM",
+        "Art. 16 CM",
+        "Art. 50 CM",
+        "Art. 717 CM",
+        "Art. 763 CM",
+        "Art. 764 CM",
+        "Art. 793 CM",
+        "Art. 798 CM"
+      ]
+    }
+  },
+  "claims": [
+    {
+      "id": "claim-10-1",
+      "text": "El Código de Comercio en sus artículos 1 al 16 sienta las bases para la regulación de actos de comercio y obligaciones de comerciantes",
+      "body_reference": "El Código de Comercio de Honduras, específicamente en sus artículos 1 al 16, sienta las bases para la regulación de estos actos, definiendo qué se considera un acto de comercio y las obligaciones generales de los comerciantes",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 1 CM",
+        "source_text": "Los comerciantes, los actos de comercio y las cosas mercantiles se regirán por las disposiciones de este Código y de las demás leyes mercantiles en su defecto, por los usos y costumbres mercantiles y a falta de éstos por el Derecho Común.",
+        "notes": "Los artículos 1 al 16 CM están presentes en la fuente. El Art. 1 CM establece el ámbito de aplicación. La afirmación es correcta en cuanto al rango de artículos."
+      }
+    },
+    {
+      "id": "claim-10-2",
+      "text": "La compraventa mercantil se regula a partir del Artículo 763 del Código de Comercio",
+      "body_reference": "la compraventa mercantil se regula a partir del Artículo 763 y siguientes del Código de Comercio",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 763 CM",
+        "source_text": "Serán compraventas mercantiles: 1-Las que se realicen con ocasión de la explotación normal de una empresa mercantil, ya se trate de objetos comprados para ser revendidos en el mismo estado o después de elaborados o transformados...",
+        "notes": "Confirmado. El Art. 763 CM inicia la regulación de la compraventa mercantil."
+      }
+    },
+    {
+      "id": "claim-10-3",
+      "text": "El Artículo 764 del Código de Comercio presume la mercantilidad de las compraventas entre comerciantes",
+      "body_reference": "El Artículo 764 del Código de Comercio presume la mercantilidad de las compraventas entre comerciantes, salvo prueba en contrario",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 764 CM",
+        "source_text": "Se presumirán mercantiles las compraventas entre comerciantes, salvo que se pruebe que no corresponden a alguna de las clases anteriores.",
+        "notes": "Confirmado textualmente."
+      }
+    },
+    {
+      "id": "claim-10-4",
+      "text": "El Artículo 793 del Código de Comercio define el contrato de suministro",
+      "body_reference": "El Artículo 793 del Código de Comercio define este contrato [suministro]",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 793 CM",
+        "source_text": "Por el contrato de suministro, una parte se obliga, a cambio de un precio, a realizar en favor de la otra, prestaciones periódicas o continuadas de cosas.",
+        "notes": "Confirmado textualmente."
+      }
+    },
+    {
+      "id": "claim-10-5",
+      "text": "El Artículo 798 establece que el incumplimiento de una prestación aislada puede llevar a la resolución del contrato si afecta la confianza",
+      "body_reference": "el Artículo 798 establece que el incumplimiento de una prestación aislada puede llevar a la resolución del contrato si afecta la confianza en futuras prestaciones",
+      "verification": {
+        "status": "VERIFIED",
+        "source_article": "Art. 798 CM",
+        "source_text": "En caso de incumplimiento de una de las partes, en relación con las prestaciones aisladas, la otra podrá pedir la resolución del contrato, si el incumplimiento tiene tal importancia que es capaz de afectar la confianza en la exactitud de las futuras prestaciones.",
+        "notes": "Confirmado textualmente."
+      }
+    },
+    {
+      "id": "claim-10-6",
+      "text": "La manifestación de voluntad y aceptación pueden deducirse por actos ejecutados, según el Artículo 717 del Código de Comercio",
+      "body_reference": "La manifestación de voluntad y aceptación pueden deducirse por actos ejecutados, teniendo el mismo valor que si se hubieran hecho por escrito, según el Artículo 717 del Código de Comercio",
+      "verification": {
+        "status": "PARTIALLY_VERIFIED",
+        "source_article": "Art. 717 CM",
+        "source_text": "La oferta y la aceptación por teléfono, radiotelefonía o cualquier medio semejante, se considerarán entre presentes cuando las partes, sus representantes o mandatarios se comuniquen personalmente.",
+        "notes": "El Art. 717 CM en la fuente trata sobre comunicaciones telefónicas/electrónicas, no sobre manifestación tácita de voluntad. Puede haber un desplazamiento de numeración o el artículo real sobre este tema es otro."
+      }
+    },
+    {
+      "id": "claim-10-7",
+      "text": "El Artículo 50 del Código de Comercio establece que los contratos mercantiles se regirán por las reglas generales del derecho común en lo no expresamente establecido",
+      "body_reference": "El Artículo 50 del Código de Comercio establece que los contratos mercantiles se regirán por las reglas generales del derecho común en lo no expresamente establecido por el Código o leyes especiales",
+      "verification": {
+        "status": "PARTIALLY_VERIFIED",
+        "source_article": "Art. 50 CM",
+        "source_text": "El administrador sólo podrá enajenar y gravar los bienes inmuebles de la compañía con el consentimiento de la mayoría de los socios o en caso de que dicha enajenación constituya la finalidad social...",
+        "notes": "El Art. 50 CM en la fuente trata sobre facultades del administrador de sociedades, no sobre supletoriedad del derecho común. La numeración no coincide con el contenido descrito."
+      }
+    },
+    {
+      "id": "claim-10-8",
+      "text": "La Ley de Representantes, Distribuidores y Agentes de Empresas Nacionales y Extranjeras regula contratos de distribución y agencia",
+      "body_reference": "La Ley de Representantes, Distribuidores y Agentes de Empresas Nacionales y Extranjeras es relevante en este ámbito",
+      "verification": {
+        "status": "UNVERIFIABLE",
+        "source_article": null,
+        "source_text": null,
+        "notes": "Esta ley especial no está en las fuentes proporcionadas (solo codigo_comercio.json). No se puede verificar su contenido."
+      }
+    }
+  ],
+  "global_notes": "La mayoría de referencias a artículos del Código de Comercio sobre contratos específicos (compraventa 763-764, suministro 793, 798) están verificadas correctamente. Sin embargo, el Art. 717 CM y el Art. 50 CM en las fuentes tienen contenido diferente al descrito en el artículo. La Ley de Representantes no está en las fuentes.",
+  "sha256_original": "7aec743208b47dc08649164d81edfa6ca072bc5465ce5d1ff8d4bf330750728d",
+  "_sha_backfilled": true
+}

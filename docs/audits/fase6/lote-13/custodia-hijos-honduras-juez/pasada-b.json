@@ -1,0 +1,32 @@
+{
+  "pasada": "B",
+  "sha256_entrada": "no_requerido_pasada_b",
+  "claims_cruzadas": [
+    {
+      "id": "CUS_X1",
+      "claim_origen_id": "CUS1",
+      "texto": "Art. 65 Constitución citado como fuente del interés superior del menor. El texto real del Art. 65 es 'El derecho a la vida es inviolable'.",
+      "tipo": "alucinacion_atribucion",
+      "verifica": "alucinacion",
+      "nota": "ALUCINACION CONFIRMADA. El Art. 65 de la Constitución de Honduras dice 'El derecho a la vida es inviolable' — nada que ver con custodia de menores. El interés superior del menor está en otros artículos constitucionales (Título III, Capítulo III sobre la familia) y en el Código de Familia."
+    },
+    {
+      "id": "CUS_X2",
+      "claim_origen_id": "CUS2",
+      "texto": "¿El CF verificado contiene artículos de custodia?",
+      "tipo": "cobertura_fuente",
+      "verifica": "no_verificable",
+      "nota": "El CF verificado cargado solo contiene arts. 207-244 (alimentos, divorcio). No cubre custodia. No se puede verificar."
+    }
+  ],
+  "alucinaciones_detectadas": [
+    {
+      "claim_id": "CUS1",
+      "descripcion": "El artículo atribuye al Art. 65 de la Constitución el principio del interés superior del menor. El texto real del Art. 65 es 'El derecho a la vida es inviolable'. Es una alucinación de atribución de artículo constitucional.",
+      "severidad": "alta"
+    }
+  ],
+  "nota_final": "Se detectó 1 alucinación grave: atribución falsa al Art. 65 constitucional. El resto no verificable con fuentes limitadas.",
+  "sha256_original": "4be33fee9d83d4fac96c92656bd5f2460ebb6325fd9e16bafa9c4b3a5da0ca46",
+  "_sha_backfilled": true
+}

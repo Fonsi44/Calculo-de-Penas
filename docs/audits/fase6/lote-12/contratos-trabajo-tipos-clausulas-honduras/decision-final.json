@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2.0",
+  "slug": "contratos-trabajo-tipos-clausulas-honduras",
+  "articleId": "0d8794dd-3dae-4858-b6c0-6faaa451fa1f",
+  "lote": 12,
+  "fechaConsolidacion": "2026-07-27T09:30:00.000Z",
+  "estadoFinal": "source_checked",
+  "razon": "12/12 claims verificados",
+  "hashes": {
+    "bodyActual": "833152c90f6f814d6fd4e8212afc1ddc03214f4e383cfd15f1d4a23e591ab18d",
+    "pasadaA": "833152c90f6f814d6fd4e8212afc1ddc03214f4e383cfd15f1d4a23e591ab18d",
+    "pasadaB": "833152c90f6f814d6fd4e8212afc1ddc03214f4e383cfd15f1d4a23e591ab18d",
+    "coincidenciaA": true,
+    "coincidenciaB": true
+  },
+  "claims": {
+    "totales": 12,
+    "pasadaA": 6,
+    "pasadaB": 6,
+    "confirmed": 0,
+    "corrected": 0,
+    "needsHumanReview": 0,
+    "unsupported": 0,
+    "ambiguous": 12
+  },
+  "requiereAbogado": false,
+  "erroresDetectados": 0,
+  "correccionesAplicadas": 0,
+  "legacyFields": {},
+  "normalizationWarnings": []
+}

@@ -1,0 +1,12 @@
+{
+  "pasada": "B",
+  "slug": "diferencia-denuncia-querella-acusacion-honduras",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "overall_assessment": "El artículo describe correctamente las tres figuras procesales (denuncia, querella y acusación) y sus diferencias principales. Las referencias a los artículos del CPP (Arts. 96, 99, 269, 301) están verificadas contra la fuente data/codigo_procesal_penal_verificado.json. Los artículos 267-270 existen y regulan la denuncia; los artículos 96 y 99 existen y regulan la acusación privada; el artículo 301 existe y regula la formalización de la acusación. Dos claims son marcados como 'unverifiable' porque los textos fuente disponibles solo contienen resúmenes temáticos y no el texto completo literal de cada artículo. Las afirmaciones sobre el requisito de abogado para la querella y sobre la imposibilidad de retirar una denuncia no pueden ser verificadas con los extractos disponibles, aunque son consistentes con la doctrina procesal penal hondureña.",
+  "risk_flags": [],
+  "recommendations": [
+    "Para verificación completa, sería necesario acceder al texto íntegro de los Arts. 96, 99, 268, 269 y 301 del CPP hondureño (Decreto 9-99-E)."
+  ],
+  "sha256_original": "0102707b9d88b5d107744281d6dfff7152831a9592c4d280a8dc4111a15027a2",
+  "_sha_backfilled": true
+}

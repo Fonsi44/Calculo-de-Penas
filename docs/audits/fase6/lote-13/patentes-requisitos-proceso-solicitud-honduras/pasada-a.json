@@ -1,0 +1,22 @@
+{
+  "pasada": "A",
+  "timestamp": "2026-07-27T07:07:07.577066+00:00",
+  "sha256_body": "e3da596a63956b7686f22715ae2e6d6c366dadee3e10576280bf1cb5d7dae89f",
+  "slug": "patentes-requisitos-proceso-solicitud-honduras",
+  "title": "Patentes en Honduras: Requisitos y Costos",
+  "total_claims_verificados": 0,
+  "total_claims_no_verificados": 0,
+  "total_claims": 0,
+  "claims_articulos": [],
+  "aserciones_legales": [
+    {
+      "tipo": "claim_legal_general",
+      "texto": "La Ley de Propiedad Industrial establece exclusiones explícitas para la patentabilidad: Descubrimientos, teorías científicas y métodos matemáticos.",
+      "verificado": false,
+      "nota": "Asercion general — requiere verificacion manual contra fuente completa"
+    }
+  ],
+  "resumen": "De 0 claims por número de artículo, 0 verificados en fuentes, 0 no verificados.",
+  "sha256_original": "e3da596a63956b7686f22715ae2e6d6c366dadee3e10576280bf1cb5d7dae89f",
+  "_sha_backfilled": true
+}

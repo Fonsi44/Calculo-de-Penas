@@ -1,0 +1,85 @@
+{
+  "lote": 12,
+  "total": 15,
+  "completed": 0,
+  "source_checked": 15,
+  "needs_human_review": 0,
+  "blocked": 0,
+  "detalles": [
+    {
+      "slug": "abogado-penalista-sur-honduras",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "adopcion-requisitos-proceso-honduras",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "allanamiento-ilegal-violacion-domicilio-honduras",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "banco-demanda-deuda-defensa-opciones-honduras",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "codigo-aduanero-centroamericano",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "contratos-arrendamiento-derechos-obligaciones-honduras",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "contratos-trabajo-tipos-clausulas-honduras",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "cuando-necesito-abogado-penalista-honduras",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "derechos-detenido-honduras-guia-constitucional",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "diferencia-denuncia-querella-acusacion-honduras",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "habeas-corpus-cuando-interponer-honduras",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "importar-mercancias-guia-aduanera",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "pension-alimenticia-porcentaje-honduras-2026",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "reclamar-deuda-legalmente-honduras",
+      "estado": "source_checked",
+      "errores": 0
+    },
+    {
+      "slug": "residencia-temporal-requisitos-plazos-honduras",
+      "estado": "source_checked",
+      "errores": 0
+    }
+  ]
+}

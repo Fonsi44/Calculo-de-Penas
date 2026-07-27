@@ -1,0 +1,62 @@
+{
+  "slug": "importar-mercancias-guia-aduanera",
+  "sha256_original": "66dc468bbfd4eecfe14da9e69fd632163bc90d2b693d1d94c18f27432cbee52c",
+  "pasada": "A",
+  "claims": [
+    {
+      "id": "claim-1",
+      "text": "El marco principal lo constituye el CAUCA y RECAUCA, adoptados mediante Decreto 212-2001. La Ley de Aduanas y su Reglamento complementan.",
+      "verification_status": "unverifiable",
+      "verification_detail": "El Código Tributario no cita el Decreto 212-2001 ni el CAUCA/RECAUCA. La fuente no contiene referencias a estos instrumentos aduaneros regionales.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-2",
+      "text": "La DUA debe ser presentada ante la DARA por un agente aduanero autorizado. Es obligatoria para toda importación comercial.",
+      "verification_status": "unverifiable",
+      "verification_detail": "El Código Tributario no regula el procedimiento específico de la DUA ni la obligatoriedad del agente aduanero. Materia de la Ley de Aduanas.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-3",
+      "text": "Requisitos: RTN activo, factura comercial, documento de transporte, certificado de origen, permisos especiales (ARSA, SENASA).",
+      "verification_status": "partially_verified",
+      "verification_detail": "El Art. 66 CTrib exige inscripción en el RTN. El resto de requisitos (factura comercial, documento de transporte, certificado de origen, permisos ARSA/SENASA) no están en el Código Tributario sino en legislación aduanera y sanitaria específica.",
+      "source_articles": [
+        "Art. 66 CTrib"
+      ]
+    },
+    {
+      "id": "claim-4",
+      "text": "Impuestos: DAI (0%-15% sobre valor CIF), ISV (15% sobre CIF+DAI), Tasa de Servicios Aduaneros (1.5% sobre CIF), ISO para productos específicos.",
+      "verification_status": "unverifiable",
+      "verification_detail": "El Código Tributario clasifica tributos (Art. 3 CTrib: impuestos, tasas, contribuciones) pero no especifica los porcentajes del DAI, ISV, tasa de servicios aduaneros ni ISO. Estas tarifas están en leyes especiales.",
+      "source_articles": [
+        "Art. 3 CTrib"
+      ]
+    },
+    {
+      "id": "claim-5",
+      "text": "El despacho aduanero puede durar entre 1 y 5 días hábiles si la documentación está completa.",
+      "verification_status": "unverifiable",
+      "verification_detail": "El Código Tributario no establece plazos de despacho aduanero. Esto es materia de la Ley de Aduanas o normativa administrativa.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-6",
+      "text": "El SAR puede imponer sanciones del 50% al 200% del impuesto omitido más intereses moratorios; mercancía sujeta a decomiso.",
+      "verification_status": "unverifiable",
+      "verification_detail": "El Código Tributario contiene sanciones pero el rango 50%-200% y decomiso específico no se encuentran en los artículos revisados de la fuente. Requiere verificación en secciones sancionatorias no cubiertas.",
+      "source_articles": []
+    },
+    {
+      "id": "claim-7",
+      "text": "La legislación exige la intervención de un agente aduanero autorizado para toda importación comercial; honorarios entre 0.5% y 2% del CIF.",
+      "verification_status": "unverifiable",
+      "verification_detail": "El Código Tributario no regula la figura del agente aduanero ni sus honorarios. Materia de la Ley de Aduanas.",
+      "source_articles": []
+    }
+  ],
+  "global_assessment": "unverifiable",
+  "global_assessment_reason": "El artículo detalla procedimientos aduaneros (DUA, CAUCA, DAI, ISV, despacho) que corresponden a la Ley de Aduanas y normativa aduanera específica, no al Código Tributario. Solo la exigencia de RTN (Art. 66 CTrib) y la clasificación general de tributos (Art. 3 CTrib) tienen respaldo parcial. La gran mayoría de claims son inverificables con la fuente asignada."
+}

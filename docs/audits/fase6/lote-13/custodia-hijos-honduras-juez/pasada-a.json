@@ -1,0 +1,63 @@
+{
+  "pasada": "A",
+  "sha256_entrada": "no_requerido_pasada_a",
+  "claims": [
+    {
+      "id": "CUS1",
+      "texto_exacto": "Artículo 65 de la Constitución de la República de Honduras... Este principio obliga a los jueces a priorizar el bienestar integral del niño, niña o adolescente por encima de cualquier otro interés.",
+      "tipo": "cita_constitucional",
+      "atribucion_implicita": "Atribuye al Art. 65 de la Constitución el principio del interés superior del menor"
+    },
+    {
+      "id": "CUS2",
+      "texto_exacto": "El Código de Familia de Honduras es la normativa principal que regula la custodia, estableciendo el interés superior del menor como eje central de todas las decisiones.",
+      "tipo": "normativa_vigente",
+      "atribucion_implicita": "Afirma que el Código de Familia regula la custodia de hijos bajo el principio del interés superior del menor"
+    },
+    {
+      "id": "CUS3",
+      "texto_exacto": "No existe una preferencia legal automática por la madre o el padre; cada caso se evalúa individualmente.",
+      "tipo": "afirmacion_doctrinal",
+      "atribucion_implicita": "Afirma que la ley hondureña no otorga preferencia automática a la madre en custodia"
+    },
+    {
+      "id": "CUS4",
+      "texto_exacto": "Generalmente, a partir de los doce años, el juez le escuchará en una entrevista confidencial.",
+      "tipo": "dato_especifico",
+      "atribucion_implicita": "Afirma que la edad para ser oído es 12 años"
+    }
+  ],
+  "fuentes_verificacion": [
+    {
+      "claim_id": "CUS1",
+      "archivo": "data/articulos_constitucion.json",
+      "verifica": "no_verifica",
+      "nota": "Art. 65 Constitución dice: 'El derecho a la vida es inviolable.' NO menciona el interés superior del menor. Ese principio está en el Art. 111-116 de la Constitución (protección de la familia, niñez) y en el Código de Familia. Alucinación de atribución: el Art. 65 no es sobre custodia/niñez."
+    },
+    {
+      "claim_id": "CUS2",
+      "archivo": "data/codigo_familia_verificado.json",
+      "verifica": "no_verificable",
+      "nota": "El Código de Familia verificado contiene artículos sobre alimentos y divorcio, pero no tiene artículos específicos sobre custodia. La afirmación general de que el CF regula la custodia es plausible pero no verificable con los artículos cargados (limitados a pensiones alimenticias, divorcio)."
+    },
+    {
+      "claim_id": "CUS3",
+      "archivo": "data/codigo_familia_verificado.json",
+      "verifica": "no_verificable",
+      "nota": "Los artículos cargados del CF no cubren custodia. No se puede confirmar ni refutar."
+    },
+    {
+      "claim_id": "CUS4",
+      "archivo": "data/codigo_familia_verificado.json",
+      "verifica": "no_verificable",
+      "nota": "No hay artículos sobre edad para ser oído en el CF verificado. Sin inventar."
+    }
+  ],
+  "resumen": "ALERTA: CUS1 detecta alucinación — el Art. 65 de la Constitución NO habla del interés superior del menor (dice 'El derecho a la vida es inviolable'). El interés superior del menor está en los Arts. 111 y ss. de la Constitución (familia, niñez). CUS2-CUS4 no verificables con fuentes limitadas. Sin inventar.",
+  "fuentes_utilizadas": [
+    "data/articulos_constitucion.json",
+    "data/codigo_familia_verificado.json"
+  ],
+  "sha256_original": "4be33fee9d83d4fac96c92656bd5f2460ebb6325fd9e16bafa9c4b3a5da0ca46",
+  "_sha_backfilled": true
+}
