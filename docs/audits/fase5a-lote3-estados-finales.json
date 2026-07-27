@@ -141,15 +141,16 @@
       "slug": "poder-legal-honduras-cuando-se-necesita",
       "estadoAnterior": "not_started",
       "estadoFinal": "completed",
-      "razon": "0 claims sin resolver; 0 confirmados + 2 corregidos; 1 fuentes oficiales",
-      "totalClaims": 2,
+      "razon": "0 claims sin resolver; 0 confirmados + 1 corregido (deduplicado en Fase 5B); 1 fuentes oficiales",
+      "totalClaims": 1,
       "centrales": 2,
       "centralConfirmed": 0,
-      "centralCorrected": 2,
+      "centralCorrected": 1,
       "centralUnresolved": 0,
       "officialSources": 1,
       "requiresHuman": false,
-      "invarianteOk": true
+      "invarianteOk": true,
+      "notaDeduplicacion": "Fase 5B: 2 claims corrected (5a-poder-legal-...-01 y -M02) eran la misma afirmación jurídica; consolidados en -M02. centralCorrected pasó de 2 a 1."
     },
     {
       "slug": "proteccion-datos-personales-derechos-arco-honduras",
@@ -221,5 +222,7 @@
       "requiresHuman": true,
       "invarianteOk": true
     }
-  ]
+  ],
+  "fase5bActualizadoEn": "2026-07-27T03:25:00.000Z",
+  "fase5bNota": "centralCorrected de poder-legal corregido de 2 a 1 tras deduplicación Fase 5B."
 }

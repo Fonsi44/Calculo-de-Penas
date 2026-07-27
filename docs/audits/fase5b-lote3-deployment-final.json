@@ -1,0 +1,45 @@
+{
+  "fase": "5B",
+  "lote": 3,
+  "generatedAt": "2026-07-27T03:30:00.000Z",
+  "fuente": "Vercel REST API v13 + v6 (GET deployments?target=production). Solo lectura.",
+  "proposito": "Evidencia canónica del deployment Git-triggered cuyo githubCommitSha == HEAD. Resuelve la inconsistencia de Fase 5A (deployment asociado a abb767e9 cuando el hash final declarado era a24f1391).",
+  "uid": "dpl_4u4qvkFADB57JCGmzxS4ZbHAuymB",
+  "name": "justicia-verdadera",
+  "url": "justicia-verdadera-9l0gsk3lv-fonsi-roiget-s-projects.vercel.app",
+  "alias": [
+    "www.pinedayasociadoshn.com",
+    "pinedayasociadoshn.com",
+    "calculo-de-penas-nextjs.vercel.app",
+    "justicia-verdadera-fonsi-roiget-s-projects.vercel.app",
+    "justicia-verdadera-git-main-fonsi-roiget-s-projects.vercel.app"
+  ],
+  "state": "READY",
+  "target": "production",
+  "createdAt": 1785113270568,
+  "createdAtIso": "2026-07-27T00:21:10.568Z",
+  "readyAt": 1785113449173,
+  "readyAtIso": "2026-07-27T00:24:09.173Z",
+  "creator": "fonsi44",
+  "githubCommitSha": "a24f13913474cc5d5b40c32f4ef86bb1b9e6ca0e",
+  "githubCommitMessage": "docs(fase5a): documentar validacion y rollback del lote 3",
+  "githubCommitRef": "main",
+  "githubDeployment": 1,
+  "githubRepo": "Calculo-de-Penas",
+  "metodoCreacion": "Git-triggered (push a main)",
+  "headAlMomentoDeVerificacion": "a24f13913474cc5d5b40c32f4ef86bb1b9e6ca0e",
+  "shaCoincideConHead": true,
+  "deploymentPrevioIncorrectamenteAsociado": {
+    "uid": "dpl_J7sXn9xHWVnZUZp1RTfqncsRSD3E",
+    "githubCommitSha": "abb767e95962...",
+    "githubCommitMessage": "test(fase5a): cubrir integridad del lote 3",
+    "nota": "Este deployment NO era el final de Fase 5A; fue un commit intermedio. El hash final declarado (a24f1391) sí tiene su propio deployment Git-triggered (este archivo)."
+  },
+  "validacion": {
+    "targetProduction": true,
+    "stateReady": true,
+    "gitTriggered": true,
+    "shaIgualHead": true,
+    "aliasIncluyeDominioCanonico": "www.pinedayasociadoshn.com"
+  }
+}

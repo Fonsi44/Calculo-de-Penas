@@ -4,9 +4,9 @@
   "generatedAt": "2026-07-27T00:42:03.458Z",
   "invocacionesTotales": 45,
   "pathsUnicos": 28,
-  "duplicadosEncontrados": 3,
+  "duplicadosEncontrados": 17,
   "exitosos": 45,
-  "nota": "45 invocaciones ≠ 28 paths únicos: el /blog hub y cada categoría se invocan múltiples veces (una por slug que pertenece a ellas)",
+  "nota": "Fase 5B: 45 invocaciones = 3 por slug (post + categoría + hub). 28 paths únicos (15 posts + 12 categorías + 1 hub /blog). Duplicados = 45 - 28 = 17, repartidos en 3 grupos de duplicación: /blog (x15), /blog/derecho-aduanero (x3), /blog/derecho-de-familia (x2). El campo duplicadosEncontrados previo (3) contaba grupos, no repeticiones.",
   "duplicadosTop": [
     [
       "/blog",
@@ -389,5 +389,24 @@
       "status": 200
     }
   ],
-  "reintentoCompletado": true
+  "reintentoCompletado": true,
+  "gruposDuplicacion": 3,
+  "desgloseDuplicados": [
+    {
+      "path": "/blog",
+      "ocurrencias": 15,
+      "repeticiones": 14
+    },
+    {
+      "path": "/blog/derecho-aduanero",
+      "ocurrencias": 3,
+      "repeticiones": 2
+    },
+    {
+      "path": "/blog/derecho-de-familia",
+      "ocurrencias": 2,
+      "repeticiones": 1
+    }
+  ],
+  "fase5bActualizadoEn": "2026-07-27T03:26:00.000Z"
 }

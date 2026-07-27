@@ -4,15 +4,15 @@
   "lote": 3,
   "enunciadoSeccion": "§5-§7",
   "metodo": "Extracción por patrones (Art. N, Decreto, plazos, penas, %, cifras institucionales, derechos) + verificación contra canónicos data/*.json con búsqueda en códigos afines (defecto #3) + tabla de decretos verificada (defecto #4) + deduplicación estricta por artículo normalizado (defecto #1). Claims centrales, corrected y unsupported se refinan manualmente con investigación a fuentes oficiales. + enriquecimiento manual (fase5a-enriquecer-claims-manuales.ts): claims perdidos por defecto #5 (afirmaciones sin formato \"Art. N\") y reclasificación de claims mal asignados.",
-  "totalClaims": 80,
+  "totalClaims": 79,
   "porDecision": {
     "needs_human_review": 51,
     "confirmed": 27,
-    "corrected": 2
+    "corrected": 1
   },
   "porImportancia": {
-    "supporting": 31,
-    "central": 49
+    "central": 48,
+    "supporting": 31
   },
   "fuentesOficialesReferenciadas": [],
   "claims": [
@@ -1011,29 +1011,6 @@
       "fragmento": null
     },
     {
-      "id": "5a-poder-legal-honduras-cua-01",
-      "slug": "poder-legal-honduras-cuando-se-necesita",
-      "textoExacto": "Artículo 1732",
-      "contexto": "lmente en el Código Civil de Honduras , específicamente en los artículos 1732 al 1750 , que versan sobre el mandato. El Artículo 1732 define el mandato como el contrato por el cual una persona encarga a otra la gestión de uno o más negocios. El poder no",
-      "tipo": "norma",
-      "importancia": "central",
-      "normaMencionada": "Código Civil",
-      "articuloMencionado": "Art. 1732",
-      "decision": "corrected",
-      "motivo": "CONSOLIDADO con claim manual: Art. 1732 CC trata de ARRENDAMIENTO, NO de mandato. Cita incorrecta. Ver claim 5a-poder-legal...-Mxx para sustitución completa (1888-1912 CC).",
-      "fuenteExistente": null,
-      "fuenteCanonicaVerificada": null,
-      "canonEncontrado": null,
-      "pertinente": false,
-      "necesitaRevisionHumana": false,
-      "textoAnterior": "Artículo 1732",
-      "textoSustituto": "artículos 1888 al 1912... Artículo 1888 define el mandato...",
-      "fuenteCorreccion": "data/codigo_civil.json (Art. 1888 CC)",
-      "fragmento": null,
-      "origen": "consolidado_manual",
-      "aplicadoABody": true
-    },
-    {
       "id": "5a-proteccion-datos-persona-01",
       "slug": "proteccion-datos-personales-derechos-arco-honduras",
       "textoExacto": "Artículo 76",
@@ -1644,7 +1621,11 @@
       "fuenteCorreccion": "data/codigo_civil.json (Art. 1888 CC)",
       "fragmento": "Por el contrario de mandato se obliga una persona a prestar algún servicio o hacer alguna cosa, por cuenta o encargo de otra.",
       "origen": "manual_verificado",
-      "aplicadoABody": true
+      "aplicadoABody": true,
+      "idCanonico": true,
+      "deduplicadoDe": [
+        "5a-poder-legal-honduras-cua-01"
+      ]
     },
     {
       "id": "5a-recurso-de-amparo-hondur-M02",
@@ -1804,5 +1785,17 @@
       "fragmento": null,
       "origen": "verificacion_body_oficial"
     }
-  ]
+  ],
+  "duplicadosResueltos": [
+    {
+      "idEliminado": "5a-poder-legal-honduras-cua-01",
+      "consolidadoEn": "5a-poder-legal-honduras-cua-M02",
+      "razon": "Misma afirmación jurídica (Art. 1732→1888 CC, mandato) en el mismo slug y ubicación, con el mismo textoSustituto. El claim -01 (origen=consolidado_manual) ya referenciaba al -M02 (origen=manual_verificado). Una única afirmación jurídica no debe contabilizarse como dos correcciones independientes.",
+      "idEliminadoTextoAnterior": "Artículo 1732",
+      "idEliminadoOrigen": "consolidado_manual",
+      "canonTextoAnterior": "artículos 1732 al 1750, que versan sobre el mandato. El Artículo 1732 define el mandato",
+      "canonOrigen": "manual_verificado"
+    }
+  ],
+  "notaDeduplicacion": "Fase 5B: el claim 5a-poder-legal-honduras-cua-01 fue consolidado en 5a-poder-legal-honduras-cua-M02 (misma afirmación jurídica). totalClaims pasó de 80 a 79 y corrected de 2 a 1."
 }
