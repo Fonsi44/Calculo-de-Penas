@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { Pool } from '@neondatabase/serverless';
-import { randomUUID, randomBytes, createHash } from 'crypto';
+import { randomUUID } from 'crypto';
 
 const DB_URL = process.env.DATABASE_URL;
 if (!DB_URL) { console.error('DATABASE_URL required'); process.exit(1); }
