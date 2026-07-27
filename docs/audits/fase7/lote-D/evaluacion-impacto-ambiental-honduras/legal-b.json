@@ -1,0 +1,34 @@
+{
+  "slug": "evaluacion-impacto-ambiental-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-ambiental/evaluacion-impacto-ambiental-honduras",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T13:55:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "Ley General del Ambiente: Decreto 104-93. Reglamento SINEIA: Acuerdo 189-2009. Categorías: CI (alto impacto con EIA), CII (moderado con evaluación ambiental), CIII (bajo impacto con registro ambiental), CIV (sin medida ambiental). Licencia ambiental obligatoria",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Múltiples afirmaciones normativas y de procedimiento sin fuentes verificables externamente. Las categorías y el reglamento son plausibles pero no confirmables con fuentes oficiales inaccesibles.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar Decreto 104-93 (Ley General del Ambiente)",
+    "Verificar Acuerdo 189-2009 (Reglamento SINEIA)",
+    "Confirmar categorías CI-CIV y procedimientos vigentes"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": ["Sitios oficiales inaccesibles"],
+  "discrepancias_con_auditor_a": []
+}

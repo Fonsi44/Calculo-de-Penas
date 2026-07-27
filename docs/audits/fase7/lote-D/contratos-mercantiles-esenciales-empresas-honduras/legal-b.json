@@ -1,0 +1,34 @@
+{
+  "slug": "contratos-mercantiles-esenciales-empresas-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T14:00:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "Código de Comercio: Artículos 1-16 (actos de comercio), Artículo 763 y siguientes (compraventa mercantil), Artículo 793 (suministro), Artículo 798 (incumplimiento), Artículo 717 (no requiere forma escrita), Artículo 50 (derecho común supletorio). Ley de Representantes, Distribuidores y Agentes de Empresas Nacionales y Extranjeras. Franquicia no regulada específicamente",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Artículo divulgativo con múltiples referencias a artículos del Código de Comercio. Las citas son específicas y plausibles. La afirmación sobre 'indemnización por clientela' es un concepto relevante pero debe confirmarse su vigencia en derecho hondureño. La Ley de Representantes y Distribuidores requiere verificación de número de decreto.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar referencias del Código de Comercio (Arts. 717, 763, 793, 798)",
+    "Verificar Ley de Representantes, Distribuidores y Agentes (número de decreto)",
+    "Confirmar concepto de 'indemnización por clientela' en derecho hondureño"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": ["Sitios oficiales inaccesibles"],
+  "discrepancias_con_auditor_a": []
+}

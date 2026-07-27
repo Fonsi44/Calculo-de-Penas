@@ -1,0 +1,38 @@
+{
+  "slug": "contratos-empleadas-domesticas-obligaciones-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/contratos-empleadas-domesticas-obligaciones-honduras",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T13:59:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "Código de Trabajo Artículos 114-120 regulan trabajo doméstico. Contrato debe ser por escrito. Jornada 8h diarias / 44h semanales. Descanso nocturno mínimo 10h continuas. Vacaciones 10 días hábiles por año. Horas extra: recargo 25%; feriados: recargo 100%. Aguinaldo: 1 salario mensual. Cesantía hasta 10 meses. Afiliación obligatoria al IHSS. Decreto 189-59",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Múltiples datos cuantitativos que afectan derechos laborales fundamentales. El Código de Trabajo Decreto 189-59 fue identificado en auditorías previas como inconsistente con otras menciones (189-59 vs 189-1959 vs 74-2001). Las cifras de jornada, vacaciones, recargos y cesantía deben ser verificadas contra el texto legal vigente.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Verificar Código de Trabajo Artículos 114-120 (trabajo doméstico)",
+    "Confirmar jornada 44h semanales para trabajo doméstico",
+    "Confirmar recargo horas extra 25% y feriados 100%",
+    "Confirmar tope de cesantía (10 meses)",
+    "Resolver inconsistencia del decreto del Código de Trabajo (189-59 vs otros)"
+  ],
+  "acciones_obligatorias": [
+    "Confirmar datos cuantitativos — afectan derechos laborales y cálculo de liquidaciones"
+  ],
+  "bloqueos": ["Sitios oficiales inaccesibles"],
+  "discrepancias_con_auditor_a": []
+}
