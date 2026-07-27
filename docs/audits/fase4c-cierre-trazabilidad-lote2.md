@@ -3,8 +3,15 @@
 **Fecha:** 2026-07-26
 **Modo:** IMPLEMENTACIÓN (documental + 1 cambio de código en script de validación)
 **Rama:** `main` (única rama de trabajo, R19)
-**Hash inicial:** `95b41d35e9d98d9ae69a4f9c12392e771ea3b1cb` (último commit pre-Fase 4B)
-**Hash final:** `88b18cb8b53932e1095555c262f137be2f56096d` (= `HEAD` = `origin/main`)
+**Hash inicial:** `88b18cb8b53932e1095555c262f137be2f56096d` (último commit de Fase 4B; punto de partida real de la corrección documental de Fase 4C)
+**Hash final:** `3f9e9ccdeefe3dec047ee3bdf71fe287d838c4e4` (= `HEAD` = `origin/main`, commit de cierre documental de Fase 4C)
+
+> **Corrección Fase 5A (2026-07-27):** el presente documento identificaba
+> originalmente `95b41d35` como "hash inicial" de Fase 4C. Eso era incorrecto:
+> `95b41d35` es el punto de partida de la **Fase 4A**, no de la 4C. La Fase 4C
+> partió de `88b18cb8` (cierre de Fase 4B) y produjo únicamente el commit
+> documental `3f9e9ccd`. La tabla de commits de la §3 ya reflejaba esto
+> correctamente; esta cabecera es la que quedaba por alinear.
 
 ## 1. Objetivo
 
@@ -157,7 +164,7 @@ git status --short        = (clean)
 | Alias de producción | `https://www.pinedayasociadoshn.com` (y apuntados) |
 | Edad en el momento del cierre | ~28 min |
 | Origen | `vercel --prod` (deploy desde CLI; sin `githubCommitSha` en meta porque no fue un push-triggered deploy) |
-| Hash del árbol desplegado | `88b18cb8` (= `HEAD`, árbol limpio sin cambios sin versionar) |
+| Hash del árbol desplegado | `88b18cb8` (= `HEAD`, árbol limpio sin cambios sin versionar). **NO verificable vía `meta.githubCommitSha`** (es `null` en deploys CLI); la asociación se establece por método alternativo (ver nota siguiente). |
 
 > **Nota sobre el deploy CLI:** los deployments de este proyecto se realizan
 > con `vercel --prod` desde el árbol local, no vía Git integration. Por eso
