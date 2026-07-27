@@ -28,6 +28,7 @@
     "e2e:guard": "node scripts/e2e/guard.mjs",
     "e2e:setup": "node scripts/e2e/setup.mjs",
     "e2e:seed": "node scripts/e2e/seed.mjs",
+    "e2e:seed:synthetic": "ALLOW_E2E_SEED=true node tools/ci/seed-e2e.mjs",
     "e2e:cleanup": "node scripts/e2e/cleanup.mjs",
     "e2e:run": "node scripts/e2e/run.mjs",
     "e2e:fase1": "node scripts/e2e/guard.mjs && node scripts/e2e/verify-neon-branch.mjs && tsx scripts/e2e/fase1-integration.ts",
