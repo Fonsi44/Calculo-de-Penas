@@ -66,7 +66,7 @@ await new Promise((resolve, reject) => {
   const timeout = setTimeout(() => reject(new Error('Server start timeout')), 60000);
   const check = () => {
     try {
-      const http = require('http');
+      const http = await import('http');
       http.get(`${BASE_URL}/api/health`, (res) => {
         if (res.statusCode === 200) {
           clearTimeout(timeout);
@@ -86,7 +86,7 @@ console.log('\n▶ Running Playwright...');
 try {
   run(`npx playwright test --project=chromium`, { env: { ...process.env, PLAYWRIGHT_BASE_URL: BASE_URL } });
   console.log('✓ E2E passed');
-} catch (e) {
+} catch (_e) {
   console.error('✗ Some E2E tests failed');
 } finally {
   // 6. Stop server
