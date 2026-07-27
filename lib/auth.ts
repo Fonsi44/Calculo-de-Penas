@@ -357,7 +357,7 @@ export async function requireAdmin(request: Request): Promise<AuthUser> {
  * El admin conserva acceso total al módulo SGIE (supervisión global),
  * por lo que ambos roles acceden. El scope fino por abogado (qué expedientes
  * ve un abogado) lo aplican las queries de `lib/sgie/expedientes-db.ts`,
- * no esta función. Referencia: pinedayasociados.md §6.1.
+ * no esta función. Ver docs/architecture/ §6.1.
  *
  * La verificación de bloqueo/revocación (posterior al JWT) se hace vía
  * `validateSessionFreshness` (token_version + active + bloqueado), con caché

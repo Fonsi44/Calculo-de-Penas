@@ -11,7 +11,7 @@
  * JSON estricto validado por Zod. Cita fuente obligatoria en campos
  * críticos. Fallo → `pendiente_abogado`.
  *
- * Referencia: pinedayasociados.md §13.
+ * Ver docs/architecture/ §13.
  */
 import { z } from 'zod';
 import { db } from '@/lib/db';

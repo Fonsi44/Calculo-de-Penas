@@ -8,7 +8,7 @@
  * La extracción de texto, clasificación y OCR se delegan a jobs (Fase 6/7),
  * nunca dentro del route handler de carga.
  *
- * Referencia: pinedayasociados.md §12 (motor documental).
+ * Ver docs/architecture/ §12 (motor documental).
  */
 import { db } from '@/lib/db';
 import { documentosExpediente } from '@/lib/schema';

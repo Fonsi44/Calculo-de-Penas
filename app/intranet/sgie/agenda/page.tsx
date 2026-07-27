@@ -28,7 +28,6 @@ import { cn } from '@/lib/ui';
 import { traducirEstadoAgenda } from '@/lib/sgie/estados';
 import { etiquetaAccion, estadoTrasAccion } from '@/lib/sgie/agenda-helpers';
 import { ReprogramarEventoDialog } from '@/components/sgie/reprogramar-evento-dialog';
-import { CalendarExternalSection } from '@/components/sgie/calendar-external-section';
 import {
   rejillaMes, rejillaSemana, esMismoDia, formatRangoSemana,
   MESES_ES, DIAS_ES_CORTO, type DiaCalendario,
@@ -270,6 +269,24 @@ export default function SgieAgendaPage() {
       fetchEventos();
     } catch {
       toast.danger('No se pudo actualizar el evento');
+    } finally {
+      setAccionId(null);
+    }
+  };
+
+  const eliminarEvento = async (eventoId: string) => {
+    setDeleteConfirmId(null);
+    setAccionId(eventoId);
+    try {
+      const res = await fetch(`/api/sgie/agenda/${eventoId}`, { method: 'DELETE' });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: 'Error al eliminar' }));
+        throw new Error(err.error);
+      }
+      toast.success('Evento eliminado');
+      fetchEventos();
+    } catch (err) {
+      toast.danger(err instanceof Error ? err.message : 'No se pudo eliminar el evento');
     } finally {
       setAccionId(null);
     }
@@ -553,19 +570,15 @@ export default function SgieAgendaPage() {
                 className="px-4 py-2 rounded-md border border-border text-sm font-semibold text-text-secondary hover:bg-surface-alt">
                 Cancelar
               </button>
-              <button type="button" onClick={() => {
-                setDeleteConfirmId(null);
-                toast.danger('Función de eliminación no implementada');
-              }}
-                className="px-4 py-2 rounded-md bg-danger text-white text-sm font-bold hover:opacity-90">
-                Eliminar
+              <button type="button" onClick={() => eliminarEvento(deleteConfirmId!)}
+                className="px-4 py-2 rounded-md bg-danger text-white text-sm font-semibold border border-danger hover:bg-danger/85"
+                disabled={accionId === deleteConfirmId}>
+                {accionId === deleteConfirmId ? 'Eliminando...' : 'Eliminar'}
               </button>
             </div>
           </div>
         </div>
       )}
-
-    {user && !authLoading && <CalendarExternalSection userId={user.id} />}
 
     </div>
   );

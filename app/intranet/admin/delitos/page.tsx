@@ -76,7 +76,7 @@ export default function AdminDelitosCatalog() {
             <p className="text-xs text-text-secondary">Código Penal de Honduras · {pluralizar(total, 'tipo penal', 'tipos penales')}</p>
           </div>
         </div>
-        <Link href="/delito-form"><Button variant="primary" size="sm"><Plus size={14} /> Nuevo delito</Button></Link>
+        <Link href="/intranet/admin/delito-form"><Button variant="primary" size="sm"><Plus size={14} /> Nuevo delito</Button></Link>
       </div>
 
       <div className="flex items-start gap-2 p-2 bg-success-bg border border-success/30 rounded-md text-xxs leading-4">
@@ -117,7 +117,7 @@ export default function AdminDelitosCatalog() {
 
       {delitos.length === 0 ? (
         <EmptyState icon={<BookOpen size={48} />} title="Sin resultados" description="Modifica la búsqueda o registra un nuevo delito."
-          action={<Link href="/delito-form"><Button variant="primary"><Plus size={16} /> Nuevo delito</Button></Link>} />
+          action={<Link href="/intranet/admin/delito-form"><Button variant="primary"><Plus size={16} /> Nuevo delito</Button></Link>} />
       ) : (
         <>
           <div className="grid md:grid-cols-2 gap-2">
@@ -142,7 +142,7 @@ export default function AdminDelitosCatalog() {
                   <p className="text-text-muted text-xxs italic truncate">{formatRama(item.rama_id)}</p>
                 </Link>
                 <div className="flex border-t border-border">
-                  <Link href={`/delito-form?id=${item.id}`}
+                  <Link href={`/intranet/admin/delito-form?id=${item.id}`}
                     className="flex-1 flex items-center justify-center gap-1.5 h-10 text-xs font-semibold text-primary hover:bg-surface-alt">
                     <Edit3 size={14} /> Editar
                   </Link>

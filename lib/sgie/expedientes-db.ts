@@ -5,7 +5,7 @@
  * asignado (responsable/colaborador) o tenga permiso explícito concedido por
  * admin. El admin ve todo. El scope se aplica SIEMPRE en la query (no en UI).
  *
- * Referencia: pinedayasociados.md §6.2 (scope), §8.2 (estados), §11 (procedimientos).
+ * Ver docs/architecture/ §6.2 (scope), §8.2 (estados), §11 (procedimientos).
  *
  * PRINCIPIO RECTOR: la IA/sistema nunca ejecuta transiciones críticas
  * (`validado` y posteriores). Esas requieren actor abogado explícito.

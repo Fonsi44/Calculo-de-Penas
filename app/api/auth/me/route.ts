@@ -31,7 +31,7 @@ export async function GET(request: Request) {
   // SGIE — revocación de sesión activa para usuarios bloqueados o desactivados.
   // El JWT es stateless; si un admin bloquea al usuario tras la emisión del token,
   // el token seguiría siendo válido 24h. Aquí cerramos esa ventana: devolvemos
-  // `user: null` para que el cliente cierre sesión. Referencia: pinedayasociados.md
+  // `user: null` para que el cliente cierre sesión. Ver docs/architecture/
   // Fase 2 — Riesgo "sesión activa persiste tras bloqueo".
   if (!user.active || user.bloqueado || user.tokenVersion !== payload.tokenVersion) {
     return Response.json({ user: null }, { status: 200 });

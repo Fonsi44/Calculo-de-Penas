@@ -6,7 +6,7 @@
  * El envío usa Resend (via lib/email.ts) con idempotencia por
  * (expediente_id, plantilla_slug, ventana_temporal).
  *
- * Referencia: pinedayasociados.md §22.3, §23.1.
+ * Ver docs/architecture/ §22.3, §23.1.
  */
 import { db } from '@/lib/db';
 import { plantillasCorreo, correosEnviados, comunicacionesOutbox, webhookReceipts, type PlantillaCorreo, type PlantillaCorreoInsert, type ComunicacionOutboxInsert, type WebhookReceiptInsert } from '@/lib/schema';

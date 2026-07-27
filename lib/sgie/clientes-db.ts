@@ -5,7 +5,7 @@
  * (vía `duplicado_hash`). El abogado sólo ve clientes vinculados a sus
  * expedientes asignados; el admin ve todos. Scope en query.
  *
- * Referencia: pinedayasociados.md §8.1 (paso 2: alta o detección de cliente).
+ * Ver docs/architecture/ §8.1 (paso 2: alta o detección de cliente).
  */
 import { db } from '@/lib/db';
 import { clientes } from '@/lib/schema';

@@ -6,7 +6,7 @@
  * expediente aquí, porque el catálogo no es sensible por abogado). El admin
  * además puede ver todos los estados (panel admin dedicado).
  *
- * Referencia: pinedayasociados.md §11 (procedimientos y checklists), §11.2
+ * Ver docs/architecture/ §11 (procedimientos y checklists), §11.2
  * (estructura mínima de la `definicion`).
  *
  * Sprint 0: habilita el alta de expedientes con procedimiento real.

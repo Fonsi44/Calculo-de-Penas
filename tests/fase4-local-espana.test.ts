@@ -433,7 +433,29 @@ describe('FASE 4 §18-20 — Subsistemas intactos', () => {
       'lib/sgie/document-segmentation-service.ts',
       'app/api/admin/knowledge/route.ts',
     ];
-    const all = [...sgie, ...intranet, ...admin, ...auth].filter(f => !lintFixes.includes(f));
+    // Fase 4B cleanup: eliminación de CalendarExternalSection y subsistema sandbox abandonado.
+    const fase4bCleanup = [
+      'lib/sgie/calendar-sync.ts',
+    ];
+    // Fase 3: corrección de referencias documentales (pinedayasociados.md → docs/architecture/)
+    const fase3DocsFix = [
+      'lib/auth.ts',
+      'lib/sgie/clientes-db.ts',
+      'lib/sgie/correos-db.ts',
+      'lib/sgie/documentos-db.ts',
+      'lib/sgie/enlaces-magicos.ts',
+      'lib/sgie/expedientes-db.ts',
+      'lib/sgie/ia-documental.ts',
+      'lib/sgie/ia-router.ts',
+      'lib/sgie/motor-confianza.ts',
+      'lib/sgie/motor-documental.ts',
+      'lib/sgie/motor-reglas.ts',
+      'lib/sgie/procedimientos-db.ts',
+      'lib/sgie/tareas-db.ts',
+      'lib/sgie/upload-atomico.ts',
+      'lib/sgie/util.ts',
+    ];
+    const all = [...sgie, ...intranet, ...admin, ...auth].filter(f => !lintFixes.includes(f) && !fase4bCleanup.includes(f) && !fase3DocsFix.includes(f));
     expect(all).toEqual([]);
   });
 

@@ -9,7 +9,7 @@
  *   - No ejecutar procesamiento pesado en route handlers.
  *   - Sin IA (Fase 7).
  *
- * Referencia: pinedayasociados.md §12, §12.3–§12.5.
+ * Ver docs/architecture/ §12, §12.3–§12.5.
  */
 import { db } from '@/lib/db';
 import { documentosExpediente, extraccionesIa, jobsSgie, historialExpediente, documentTextPages } from '@/lib/schema';

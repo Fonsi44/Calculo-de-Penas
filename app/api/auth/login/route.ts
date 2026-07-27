@@ -60,7 +60,7 @@ export async function POST(request: Request) {
 
     // SGIE — acceso revocado: usuario desactivado (active=false) o bloqueado
     // (bloqueado=true). Se verifica DESPUÉS de la contraseña para no filtrar
-    // información sobre qué cuentas existen. Referencia: pinedayasociados.md §6.2.
+    // información sobre qué cuentas existen. Ver docs/architecture/ §6.2.
     if (!user.active) {
       await audit({
         accion: 'login_failed',

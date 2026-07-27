@@ -9,7 +9,7 @@
  * (`token_hash`). El token en claro solo vive en memoria en el momento de
  * emisión (envío por email / respuesta inmediata al abogado) y viaja en la URL
  * /cargar/{token} como credencial del cliente. No se loguea ni audita.
- * Referencia: pinedayasociados.md §22.2.
+ * Ver docs/architecture/ §22.2.
  */
 import { db } from '@/lib/db';
 import { enlacesMagicos } from '@/lib/schema';

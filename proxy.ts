@@ -28,20 +28,23 @@ function roleFromToken(token: string | null): string | null {
   return payload?.rol ?? null;
 }
 
-const PUBLIC_API_PREFIXES = [
-  '/api/auth/login',
-  '/api/auth/logout',
-  '/api/auth/register',
-  '/api/auth/invitaciones',
-  '/api/auth/me',
-  // SGIE — portal de carga por enlace mágico (público por token, no indexable).
-  // La validación real (token, expiración, usos, MIME, hash) la hace el handler.
-  '/api/public/cargar',
-];
+// ── Clasificación de rutas API por mecanismo de autenticación ──
+// Cada handler mantiene su propia validación (token, firma, secreto, challenge).
+// El proxy solo bloquea rutas que realmente necesitan sesión JWT previa.
+//
+// Categorías:
+// 1. PUBLIC       — Sin autenticación (páginas web, catálogos, health, forms)
+// 2. PRE_AUTH     — Autenticación previa a la sesión (login, 2FA, reset password, invitaciones)
+// 3. TOKEN_AUTH   — Protegidas mediante token temporal (portal carga, ICS feed, descargas)
+// 4. WEBHOOK_AUTH — Protegidas mediante firma de webhook (Resend, proveedores firma)
+// 5. CRON_AUTH    — Protegidas mediante CRON_SECRET (revalidate, procesamiento SGIE)
+// 6. SESSION_AUTH — Requieren sesión JWT (el proxy las bloquea si no hay token válido)
 
+// ── Categoría 1: APIs públicas (sin autenticación) ──
 const PUBLIC_API_EXACT = new Set<string>([
   '/api/delitos/count',
   '/api/health',
+  '/api/health/readiness',
   '/api/whatsapp',
   '/api/indexnow-key',
   '/api/contacto',
@@ -49,16 +52,57 @@ const PUBLIC_API_EXACT = new Set<string>([
   '/api/subscribe',
   '/api/descargar',
   '/api/og',
-  // Chat asistente público (rate-limit + guardrails server-side en el handler).
   '/api/chat',
-  // Revalidación on-demand (Fase 3D/3E): el handler valida Authorization
-  // Bearer <CRON_SECRET> con crypto.timingSafeEqual + rate-limit por IP +
-  // allowlist de paths públicos. No requiere sesión JWT: es invocado por
-  // Vercel Cron o por un script administrativo con el secreto. Sin esta
-  // excepción, el proxy devuelve 401 (no hay token JWT) antes de que el
-  // handler pueda verificar CRON_SECRET, haciendo el endpoint inutilizable.
+  '/api/clasificaciones',
+  '/api/remisiones-normativas',
+]);
+
+const PUBLIC_API_PREFIXES = [
+  // Catálogos públicos (GET) — delitos, CP, etc.
+  '/api/delitos',
+  '/api/cp',
+  '/api/health',
+];
+
+// ── Categoría 2: APIs pre-auth (login, 2FA, reset, invitaciones) ──
+const PRE_AUTH_API_EXACT = new Set<string>([
+  '/api/auth/login',
+  '/api/auth/logout',
+  '/api/auth/register',
+  '/api/auth/me',
+  '/api/auth/2fa/verify',
+]);
+
+const PRE_AUTH_API_PREFIXES = [
+  '/api/auth/invitaciones',
+  '/api/auth/reset-password',
+];
+
+// ── Categoría 3: APIs con token temporal (no requieren sesión JWT) ──
+const TOKEN_AUTH_API_PREFIXES = [
+  '/api/public/cargar',
+  '/api/public/portal',
+];
+
+// Rutas específicas con token (ICS feed de agenda)
+const TOKEN_AUTH_API_EXACT = new Set<string>([
+  '/api/sgie/agenda/ics/feed',
+]);
+
+// ── Categoría 4: APIs con firma de webhook ──
+const WEBHOOK_AUTH_API_PREFIXES = [
+  '/api/webhooks/signature',
+  '/api/email/inbound',
+];
+
+// ── Categoría 5: APIs con CRON_SECRET ──
+const CRON_AUTH_API_EXACT = new Set<string>([
   '/api/revalidate',
 ]);
+
+const CRON_AUTH_API_PREFIXES = [
+  '/api/cron',
+];
 
 const PUBLIC_PAGE_EXACT = new Set<string>([
   '/',
@@ -121,9 +165,24 @@ export function isPublicPagePath(pathname: string): boolean {
   return false;
 }
 
+/** Rutas que NO requieren sesión JWT (públicas, pre-auth, token, webhook, cron). */
 export function isPublicApiPath(pathname: string): boolean {
   if (PUBLIC_API_EXACT.has(pathname)) return true;
-  return PUBLIC_API_PREFIXES.some(p => pathname === p || pathname.startsWith(p + '/'));
+  if (PUBLIC_API_PREFIXES.some(p => pathname.startsWith(p + '/') || pathname === p)) return true;
+  if (PRE_AUTH_API_EXACT.has(pathname)) return true;
+  if (PRE_AUTH_API_PREFIXES.some(p => pathname.startsWith(p + '/') || pathname === p)) return true;
+  if (TOKEN_AUTH_API_EXACT.has(pathname)) return true;
+  if (TOKEN_AUTH_API_PREFIXES.some(p => pathname.startsWith(p + '/') || pathname === p)) return true;
+  if (WEBHOOK_AUTH_API_PREFIXES.some(p => pathname.startsWith(p + '/') || pathname === p)) return true;
+  if (CRON_AUTH_API_EXACT.has(pathname)) return true;
+  if (CRON_AUTH_API_PREFIXES.some(p => pathname.startsWith(p + '/') || pathname === p)) return true;
+  return false;
+}
+
+/** Indica si una ruta requiere autenticación de sesión JWT (no es pública ni de otro tipo). */
+export function isSessionApiPath(pathname: string): boolean {
+  if (!pathname.startsWith('/api/')) return false;
+  return !isPublicApiPath(pathname);
 }
 
 function readToken(request: NextRequest): string | undefined {
@@ -147,8 +206,15 @@ export async function proxy(request: NextRequest) {
 
   const token = readToken(request);
 
+  // ── APIs ──
+  // Solo las rutas que requieren sesión JWT pasan por el control del proxy.
+  // Las rutas públicas, pre-auth, token-auth, webhook-auth y cron-auth llegan
+  // directamente a su handler, que mantiene su propia validación específica.
   if (pathname.startsWith('/api/')) {
-    if (isPublicApiPath(pathname)) return withCorrelationId(NextResponse.next(), correlationId);
+    // Si la ruta NO requiere sesión, dejarla pasar (el handler la valida).
+    if (!isSessionApiPath(pathname)) return withCorrelationId(NextResponse.next(), correlationId);
+
+    // A partir de aquí: ruta que SÍ requiere sesión JWT.
     if (!token) {
       return withCorrelationId(NextResponse.json({ error: 'No autorizado' }, { status: 401 }), correlationId);
     }
@@ -254,7 +320,6 @@ export async function proxy(request: NextRequest) {
     // herramientas internas legacy (calculadora, casos, cp, delitos, agravantes,
     // delito-form) o a cualquier ruta intranet no autorizada para abogados,
     // se redirige a su cockpit SGIE. El admin conserva acceso a todo.
-    // Referencia: pinedayasociados.md §6.1, §22.1.
     {
       const esAdmin = rol === 'admin';
       if (!esAdmin) {
