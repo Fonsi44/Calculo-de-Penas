@@ -1,0 +1,57 @@
+{
+  "slug": "mediacion-familiar-cuando-funciona-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-familia/mediacion-familiar-cuando-funciona-honduras",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T13:05:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "La Ley de Mediación, Conciliación y Arbitraje es el Decreto No. 260-2001",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "DISCREPANCIA DETECTADA: Este artículo cita la Ley de Mediación, Conciliación y Arbitraje como Decreto 260-2001. Sin embargo, el artículo 'centro-conciliacion-arbitraje-ccic' (Lote B) y 'mediacion-vs-juicio-cual-elegir' (Lote A) citan el Decreto 161-2000. Existen DOS números de decreto diferentes para la misma ley en el blog. Esto es una inconsistencia grave.",
+      "fuentes": []
+    },
+    {
+      "claim": "La mediación es gratuita en centros adscritos a Juzgados de Familia",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "Plausible pero no verificable independientemente.",
+      "fuentes": []
+    },
+    {
+      "claim": "Una mediación típica requiere de 1 a 3 sesiones en semanas",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "Estimación práctica razonable.",
+      "fuentes": []
+    },
+    {
+      "claim": "No procede mediación cuando existe violencia doméstica activa",
+      "severidad": "baja",
+      "estado": "confirmed",
+      "evidencia": "Correcto. La violencia doméstica es una contraindicación universal para la mediación familiar en cualquier jurisdicción.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 4,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "URGENTE: Resolver inconsistencia del decreto de la Ley de Mediación (161-2000 vs 260-2001). Dos números diferentes en el mismo blog."
+  ],
+  "acciones_obligatorias": [
+    "Unificar el número de decreto de la Ley de Mediación, Conciliación y Arbitraje en todos los artículos"
+  ],
+  "bloqueos": [
+    "Sitios oficiales inaccesibles"
+  ],
+  "discrepancias_con_auditor_a": []
+}

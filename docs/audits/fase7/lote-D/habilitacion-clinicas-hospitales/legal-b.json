@@ -1,0 +1,32 @@
+{
+  "slug": "habilitacion-clinicas-hospitales",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-sanitario/habilitacion-clinicas-hospitales",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T13:46:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "Reglamento para Control Sanitario es Acuerdo N° 06-2005. Tiempo de trámite: 2-4 meses. Vigencia: 2 a 5 años. Renovación: 3 meses antes del vencimiento",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Plazos y referencias normativas no verificables independientemente.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Verificar Acuerdo 06-2005 y plazos con ARSA/SESAL"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": ["Sitios oficiales inaccesibles"],
+  "discrepancias_con_auditor_a": []
+}

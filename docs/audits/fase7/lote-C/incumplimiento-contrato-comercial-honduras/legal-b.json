@@ -1,0 +1,47 @@
+{
+  "slug": "incumplimiento-contrato-comercial-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-mercantil/incumplimiento-contrato-comercial-honduras",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T13:18:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "Código de Comercio, Artículos 1025 al 1045, regulan incumplimiento de obligaciones mercantiles",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Referencia específica a artículos del Código de Comercio. No verificable independientemente.",
+      "fuentes": []
+    },
+    {
+      "claim": "Acciones personales mercantiles prescriben en 3 a 5 años",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "El rango '3 a 5 años' es vago para ser citado como información legal. Debería especificar plazos exactos según tipo de acción. Compárese con 'prescripcion-deudas-plazos-honduras' que dice 3 años para acciones cambiarias.",
+      "fuentes": []
+    },
+    {
+      "claim": "Daños morales por incumplimiento contractual no son habituales en el ámbito mercantil hondureño",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "Afirmación sobre práctica judicial. No verificable sin acceso a jurisprudencia hondureña.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Especificar plazos de prescripción exactos (no '3 a 5 años')",
+    "Verificar artículos 1025-1045 del Código de Comercio"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": ["Sitios oficiales inaccesibles"],
+  "discrepancias_con_auditor_a": []
+}

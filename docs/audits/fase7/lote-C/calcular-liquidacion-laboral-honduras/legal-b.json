@@ -1,0 +1,60 @@
+{
+  "slug": "calcular-liquidacion-laboral-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/calcular-liquidacion-laboral-honduras",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T13:10:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "El Código del Trabajo es el Decreto 189-59 (otra variante: ni 189-1959 ni 74-2001)",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "TERCERA VARIANTE DETECTADA: Este artículo cita 'Decreto 189-59'. El artículo 'contratos-trabajo-tipos-clausulas-honduras' cita 'Decreto 74-2001'. El artículo 'como-preparar-demanda' cita 'Decreto 189-1959'. TRES referencias diferentes al Código de Trabajo en el mismo blog. Esto es una inconsistencia sistémica gravísima.",
+      "fuentes": []
+    },
+    {
+      "claim": "Artículos 112 al 120 regulan cesantía, preaviso e indemnización. Aguinaldo: artículos 346 y 347",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Referencias específicas a artículos del Código de Trabajo. No verificables pero plausibles en estructura.",
+      "fuentes": []
+    },
+    {
+      "claim": "Plazo para demandar prestaciones laborales: 1 año según Artículo 318 del Código de Trabajo",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Plazo de prescripción de 1 año para acciones laborales. Afirmación cuantitativa precisa. Requiere verificación.",
+      "fuentes": []
+    },
+    {
+      "claim": "Ejemplo: Cesantía 25% para menos de 5 años (Art. 112). Preaviso 30 días para 2-4 años (Art. 119). Indemnización: 1 mes por año o fracción >6 meses (Art. 120)",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Cálculos y porcentajes específicos que determinan montos de liquidación. Cualquier error afecta directamente los derechos económicos de los trabajadores.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 4,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 4,
+    "unsupported": 0,
+    "riesgo_alto": 3
+  },
+  "acciones_propuestas": [
+    "URGENTE: Unificar la cita del Código de Trabajo. TRES variantes (189-59, 189-1959, 74-2001) en el blog",
+    "Verificar porcentajes de cesantía, plazos de preaviso y fórmula de indemnización con texto oficial",
+    "Confirmar plazo de prescripción de 1 año para acciones laborales (Art. 318)"
+  ],
+  "acciones_obligatorias": [
+    "Resolver la inconsistencia del decreto del Código de Trabajo — TRES variantes diferentes",
+    "Verificar todos los porcentajes y plazos de liquidación laboral con fuente oficial"
+  ],
+  "bloqueos": [
+    "Sitios oficiales inaccesibles"
+  ],
+  "discrepancias_con_auditor_a": []
+}

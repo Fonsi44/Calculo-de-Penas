@@ -1,0 +1,49 @@
+{
+  "slug": "proteccion-marcas-competencia-desleal",
+  "url": "https://www.pinedayasociadoshn.com/blog/propiedad-intelectual/proteccion-marcas-competencia-desleal",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T13:44:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "Ley de Propiedad Industrial: Decreto 12-99-E. Artículos 80 y siguientes definen competencia desleal. Oposición en 30 días hábiles desde publicación en La Gaceta. Nulidad prescribe a 5 años (imprescriptible si mala fe)",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Múltiples afirmaciones cuantitativas precisas (30 días, 5 años). Plazos fatales para el titular de la marca.",
+      "fuentes": []
+    },
+    {
+      "claim": "Código Penal Art. 281: penas 6 meses a 3 años. Art. 282: penas 2 a 5 años. Art. 168 Ley Propiedad Industrial: sanciones por uso no autorizado",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Penas específicas del Código Penal para falsificación de marcas. Debe verificarse con el Código Penal vigente.",
+      "fuentes": []
+    },
+    {
+      "claim": "Ley de Protección al Consumidor: Decreto 24-2008",
+      "severidad": "baja",
+      "estado": "needs_human_review",
+      "evidencia": "Referencia plausible. Honduras tiene una ley de protección al consumidor.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 2
+  },
+  "acciones_propuestas": [
+    "Verificar plazos de oposición (30 días) y nulidad (5 años)",
+    "Confirmar penas de Art. 281 y 282 del Código Penal"
+  ],
+  "acciones_obligatorias": [
+    "Confirmar plazos y penas — afectan derechos de titulares de marcas"
+  ],
+  "bloqueos": ["Sitios oficiales inaccesibles"],
+  "discrepancias_con_auditor_a": []
+}

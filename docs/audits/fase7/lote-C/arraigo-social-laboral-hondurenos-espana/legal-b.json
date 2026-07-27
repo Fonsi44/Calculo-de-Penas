@@ -1,0 +1,47 @@
+{
+  "slug": "arraigo-social-laboral-hondurenos-espana",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-migratorio/arraigo-social-laboral-hondurenos-espana",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T13:28:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "Arraigo social requiere permanencia de al menos 3 años, contrato de trabajo de mínimo 1 año, e informe de arraigo de la Comunidad Autónoma",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Requisitos de arraigo social en España según la Ley de Extranjería española. Son correctos en términos generales (3 años de permanencia, contrato de 1 año). No verificables en detalle sin consultar el Reglamento de Extranjería español vigente (RD 557/2011 y reformas de 2024).",
+      "fuentes": []
+    },
+    {
+      "claim": "Arraigo laboral: 6 meses en situación irregular, acreditado por sentencia judicial, denuncia ante Inspección de Trabajo o acta de inspección",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Requisitos del arraigo laboral en España. Plausibles según la normativa española vigente.",
+      "fuentes": []
+    },
+    {
+      "claim": "Arraigo familiar: padres de menor español, hijos de español de origen, o cónyuges de español. No requiere contrato ni informe",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Requisitos del arraigo familiar español. Plausibles pero requieren verificación con la normativa actual.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 3,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Citar el Reglamento de Extranjería español vigente (RD 557/2011 y reformas)",
+    "Mencionar las reformas de 2024 al Reglamento de Extranjería que modificaron algunas figuras de arraigo"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": [],
+  "discrepancias_con_auditor_a": []
+}

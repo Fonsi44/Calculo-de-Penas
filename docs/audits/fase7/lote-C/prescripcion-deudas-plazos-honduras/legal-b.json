@@ -1,0 +1,56 @@
+{
+  "slug": "prescripcion-deudas-plazos-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-civil/prescripcion-deudas-plazos-honduras",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T13:16:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "Código de Comercio: Decreto No. 75-2000. Acciones cambiarias prescriben en 3 años (Art. 794)",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "Referencias específicas. Plazos de prescripción precisos (3 años para acciones cambiarias, 10 años para acciones personales civiles, 5 años para deudas tributarias). No verificables independientemente.",
+      "fuentes": []
+    },
+    {
+      "claim": "Código Civil: Decreto No. 110-87 (y sus reformas). Acciones personales sin plazo especial: 10 años",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Otra referencia al Código Civil con número de decreto diferente. El artículo 'creditos-reestructuracion-deudas' (Lote B) cita el Código Civil como Decreto Ley 76-1906. Dos referencias diferentes.",
+      "fuentes": []
+    },
+    {
+      "claim": "Código Tributario: Decreto No. 170-2004. Deuda tributaria prescribe a los 5 años",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Referencia específica plausible.",
+      "fuentes": []
+    },
+    {
+      "claim": "Cualquier pago parcial o firma de arreglo interrumpe la prescripción y reinicia el contador a cero",
+      "severidad": "media",
+      "estado": "confirmed",
+      "evidencia": "Principio general de interrupción de la prescripción por reconocimiento de deuda. Correcto en derecho civil.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 4,
+    "confirmed": 1,
+    "corrected": 0,
+    "needs_human_review": 3,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "Verificar plazos de prescripción con textos oficiales",
+    "Unificar referencia al Código Civil (110-87 vs 76-1906)"
+  ],
+  "acciones_obligatorias": [
+    "Confirmar plazos de prescripción — afectan derechos de cobro y defensa de deudores"
+  ],
+  "bloqueos": ["Sitios oficiales inaccesibles"],
+  "discrepancias_con_auditor_a": []
+}

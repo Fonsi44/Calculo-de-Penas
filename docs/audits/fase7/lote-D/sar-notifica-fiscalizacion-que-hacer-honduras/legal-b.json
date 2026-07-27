@@ -1,0 +1,35 @@
+{
+  "slug": "sar-notifica-fiscalizacion-que-hacer-honduras",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-tributario/sar-notifica-fiscalizacion-que-hacer-honduras",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T13:48:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "Código Tributario: Decreto Legislativo N° 170-2016. Plazo para responder: 10-15 días hábiles. Recurso de revisión: 10 días hábiles. Prescripción fiscal generalmente 4 años",
+      "severidad": "alta",
+      "estado": "needs_human_review",
+      "evidencia": "DISCREPANCIA: Este artículo cita Código Tributario como Decreto 170-2016. El artículo 'prescripcion-deudas-plazos-honduras' cita Decreto 170-2004. Dos números de decreto diferentes para el mismo código. Además, el plazo de prescripción: aquí dice 4 años; 'prescripcion-deudas' dice 5 años. Inconsistencia interna.",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 1
+  },
+  "acciones_propuestas": [
+    "URGENTE: Unificar decreto del Código Tributario (170-2004 vs 170-2016)",
+    "Unificar plazo de prescripción fiscal (4 años vs 5 años)"
+  ],
+  "acciones_obligatorias": [
+    "Resolver inconsistencia del Código Tributario y plazo de prescripción fiscal"
+  ],
+  "bloqueos": ["Sitios oficiales inaccesibles"],
+  "discrepancias_con_auditor_a": []
+}

@@ -1,0 +1,32 @@
+{
+  "slug": "arbitraje-honduras-guia-completa",
+  "url": "https://www.pinedayasociadoshn.com/blog/derecho-mercantil/arbitraje-honduras-guia-completa",
+  "body_hash": "auditor-b-internal",
+  "fecha_auditoria": "2026-07-27T13:50:00.000Z",
+  "modelo": "DeepSeek V4 Pro",
+  "tipo_auditoria": "legal-adversarial",
+  "auditor": "Subagente 2 — Auditor jurídico adversarial",
+  "hallazgos": [
+    {
+      "claim": "Ley de Conciliación y Arbitraje: Decreto No. 161-2000. Honduras es signataria de la Convención de Nueva York. Laudos en 6-12 meses",
+      "severidad": "media",
+      "estado": "needs_human_review",
+      "evidencia": "Este artículo cita Decreto 161-2000, consistente con 'centro-conciliacion-arbitraje-ccic' (Lote B). Pero 'mediacion-familiar' (Lote C) cita Decreto 260-2001. DOS decretos diferentes. Honduras sí es parte de la Convención de Nueva York (ratificada en 2000).",
+      "fuentes": []
+    }
+  ],
+  "resumen": {
+    "total_claims": 1,
+    "confirmed": 0,
+    "corrected": 0,
+    "needs_human_review": 1,
+    "unsupported": 0,
+    "riesgo_alto": 0
+  },
+  "acciones_propuestas": [
+    "Unificar decreto de Ley de Conciliación y Arbitraje (161-2000 vs 260-2001)"
+  ],
+  "acciones_obligatorias": [],
+  "bloqueos": ["Sitios oficiales inaccesibles"],
+  "discrepancias_con_auditor_a": []
+}
