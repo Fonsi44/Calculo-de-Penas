@@ -1,0 +1,139 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "519b14c4-e807-49db-8b80-116187ffccb1",
+    "slug": "derecho-ambiental-honduras",
+    "sha256_entrada": "d93b2a5f0ccf179fc393cb186b442c97a0fc7890d56778770a3c48be851b9988",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/delitos.json",
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "El Código Penal de Honduras (Decreto 130-2017 y sus reformas) tipifica como delitos ambientales: Atentados contra los recursos naturales (Artículo 339), Delitos contra la fauna y flora silvestre (Artículo 340), Contaminación ambiental (Artículo 341), Abandono de animales (Artículo 342), y Tráfico ilegal de especies. Las sanciones incluyen penas de prisión, multas y la obligación de reparar los daños causados (responsabilidad civil).",
+      "fuente_verificacion": "data/delitos.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_errores_graves",
+      "detalle": "ERRORES GRAVES EN NUMERACIÓN DE ARTÍCULOS. De los 5 delitos listados con número de artículo, 3 de 4 artículos citados están ERRADOS. Solo el Art. 342 CP (Abandono de animales) coincide con la fuente local. CORRESPONDENCIA REAL: 1) 'Atentados contra los recursos naturales' citado como Art. 339 CP, pero Art. 339 CP es 'Restauración del equilibrio ecológico' (medida de restauración, no un tipo penal). El delito real es Art. 325 CP 'Explotación ilegal de recursos naturales' (pena: 72-120 meses prisión + multa 500-800 días). 2) 'Delitos contra la fauna y flora silvestre' citado como Art. 340 CP, pero Art. 340 CP es 'Reincidencia internacional' (regla de reincidencia, no un tipo penal). Los delitos contra biodiversidad están en Arts. 328-332 CP (Introducción de especies exógenas, Propagación de plagas, Daños a especies amenazadas, Captura ilegal de especímenes, Agravantes). 3) 'Contaminación ambiental' citado como Art. 341 CP, pero Art. 341 CP es 'Maltrato de animales'. El delito real es Art. 324 CP 'Contaminación del aire, las aguas o los suelos' (pena: 72-120 meses prisión + multa 500-800 días). 4) 'Abandono de animales (Artículo 342)' es el ÚNICO correcto: Art. 342 CP efectivamente tipifica el abandono de animales (pena: 6-8 meses prestación servicios o multa 100-200 días). 5) 'Tráfico ilegal de especies' sin número: corresponde parcialmente al Art. 330 CP 'Daños a especies amenazadas' que incluye 'trafica ilegalmente con ellos o con sus restos' (pena: 6-36 meses prisión + multa 50-300 días). Las sanciones mencionadas (prisión, multas, reparación) son genéricamente correctas pero los números de artículo son mayoritariamente incorrectos.",
+      "evidencia_local": {
+        "archivo": "data/delitos.json",
+        "articulos_verificados": [
+          {
+            "articulo_citado_en_documento": "Art. 339 CP (Atentados contra recursos naturales)",
+            "articulo_real": "Art. 325 CP (Explotación ilegal de recursos naturales)",
+            "texto_real": "Quien, con infracción de las disposiciones protectoras del medio ambiente, realiza actividades de captación, extracción o explotación ilegal de recursos hídricos, forestales, minerales o fósiles, de forma que ponga en peligro grave el equilibrio de un sistema natural.",
+            "pena": "72-120 meses prisión + 500-800 días multa"
+          },
+          {
+            "articulo_citado_en_documento": "Art. 340 CP (Delitos contra fauna y flora)",
+            "articulo_real": "Arts. 328-332 CP (Delitos contra la diversidad biológica)",
+            "texto_real": "El Art. 340 CP real es 'Reincidencia internacional' (regla procesal). Los delitos contra flora y fauna están en Arts. 328-332 CP (Introducción especies exógenas, Propagación plagas, Daños a especies amenazadas, Captura ilegal, Agravantes)."
+          },
+          {
+            "articulo_citado_en_documento": "Art. 341 CP (Contaminación ambiental)",
+            "articulo_real": "Art. 324 CP (Contaminación del aire, las aguas o los suelos)",
+            "texto_real": "Quien, con infracción de la legislación protectora del medio ambiente, realiza actividades contaminantes que afectan a la atmósfera, las aguas marinas, las aguas continentales, el suelo o el subsuelo y con ello pone en peligro grave el equilibrio de los sistemas naturales.",
+            "pena": "72-120 meses prisión + 500-800 días multa"
+          },
+          {
+            "articulo_citado_en_documento": "Art. 342 CP (Abandono de animales)",
+            "articulo_real": "Art. 342 CP (Abandono de animales) — CORRECTO",
+            "texto_real": "Quien abandona a un animal doméstico o domesticado en condiciones peligrosas para su vida o integridad física debe ser castigado con la pena de prestación de servicios de utilidad pública o a las víctimas de seis (6) a ocho (8) meses o multa de cien (100) a doscientos (200) días.",
+            "pena": "6-8 meses prestación servicios o 100-200 días multa"
+          }
+        ],
+        "resumen_discrepancias": "3 de 4 artículos numerados en el documento están ERRADOS. Las descripciones sustantivas de los delitos (explotación recursos, contaminación, fauna/flora) existen en el CP pero con números de artículo diferentes."
+      },
+      "errores_detectados": [
+        "ERROR GRAVE: 'Atentados contra los recursos naturales' se cita como Art. 339 CP. El Art. 339 CP real es 'Restauración del equilibrio ecológico' (medida accesoria, no tipo penal). El delito correcto es Art. 325 CP.",
+        "ERROR GRAVE: 'Delitos contra la fauna y flora silvestre' se cita como Art. 340 CP. El Art. 340 CP real es 'Reincidencia internacional' (regla de reincidencia, no tipo penal). Los delitos correctos están en Arts. 328-332 CP.",
+        "ERROR GRAVE: 'Contaminación ambiental' se cita como Art. 341 CP. El Art. 341 CP real es 'Maltrato de animales'. El delito correcto es Art. 324 CP.",
+        "ACIERTO: 'Abandono de animales (Artículo 342)' es correcto. El Art. 342 CP efectivamente tipifica el abandono de animales.",
+        "'Tráfico ilegal de especies' se menciona sin número, pero se aproxima al Art. 330 CP 'Daños a especies amenazadas' que incluye tráfico."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "La Secretaría de Recursos Naturales y Ambiente (SERNA) es la autoridad principal en materia ambiental, con la colaboración de entidades como el Instituto de Conservación Forestal (ICF) y las municipalidades.",
+      "fuente_verificacion": "data/articulos_constitucion.json + data/delitos.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Las fuentes locales (articulos_constitucion.json y delitos.json) no contienen referencias directas a la SERNA, ICF ni a su rol como autoridad ambiental principal. La Constitución en su Art. 340 declara la explotación de recursos naturales de utilidad pública y que 'El Estado reglamentará su aprovechamiento', lo cual es coherente con la existencia de una autoridad ambiental pero no la nombra. La Ley General del Ambiente, que crea y regula la SERNA, no está disponible en el corpus local. La afirmación es plausible y consistente con el marco institucional hondureño conocido, pero no es verificable contra las fuentes locales disponibles.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulo": "Art. 340 Constitución",
+        "texto": "Se declara de utilidad y necesidad pública, la explotación técnica y racional de los recursos naturales de la nación. El Estado reglamentará su aprovechamiento, de acuerdo con el interés social y fijará las condiciones de su otorgamiento a los particulares."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "La legislación clave incluye la Ley General del Ambiente, la Ley de Evaluación de Impacto Ambiental, la Ley Forestal, Áreas Protegidas y Vida Silvestre, la Ley de Aguas y la Ley de Cambio Climático. Honduras es parte de convenios internacionales como el Convenio de Basilea y el Acuerdo de París.",
+      "fuente_verificacion": "data/articulos_constitucion.json + data/delitos.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Las leyes especiales citadas (Ley General del Ambiente, Ley de Evaluación de Impacto Ambiental, Ley Forestal, Ley de Aguas, Ley de Cambio Climático) y los convenios internacionales (Basilea, París) no están disponibles en el corpus local (articulos_constitucion.json y delitos.json). La Constitución en su Art. 145 menciona la protección del medio ambiente y el Art. 340 la explotación racional de recursos naturales, proporcionando base constitucional para dicha legislación, pero sin enumerar las leyes específicas. La afirmación es plausible y consistente con el ordenamiento jurídico hondureño conocido, pero no verificable contra las fuentes locales.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulos_relacionados": [
+          {
+            "articulo": "Art. 145 Constitución",
+            "texto": "El Estado conservará el medio ambiente adecuado para proteger la salud de las personas."
+          },
+          {
+            "articulo": "Art. 340 Constitución",
+            "texto": "Se declara de utilidad y necesidad pública, la explotación técnica y racional de los recursos naturales de la nación."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "Tipos y proceso para obtener una licencia ambiental: Categoría 1 (bajo impacto, 30 días), Categoría 2 (moderado impacto, 60 días), Categoría 3 (alto impacto, 90-180 días), Categoría 4 (muy alto impacto, hasta 180 días). Procedimiento: categorización, elaboración del EsIA, presentación, evaluación, resolución, seguimiento.",
+      "fuente_verificacion": "data/delitos.json + data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable_en_fuentes_locales",
+      "detalle": "Las categorías de licencia ambiental, los plazos de tramitación y el procedimiento detallado de 6 pasos son materia de la Ley de Evaluación de Impacto Ambiental y sus reglamentos, ninguna de las cuales está disponible en el corpus local (articulos_constitucion.json y delitos.json). El Art. 340 constitucional proporciona la base para la regulación estatal del aprovechamiento de recursos naturales, pero no contiene el detalle procedimental afirmado en el documento. La información sobre categorización y plazos es plausible pero no verificable contra fuentes locales.",
+      "evidencia_local": {
+        "archivo": "data/articulos_constitucion.json",
+        "articulo": "Art. 340 Constitución",
+        "texto": "El Estado reglamentará su aprovechamiento, de acuerdo con el interés social y fijará las condiciones de su otorgamiento a los particulares.",
+        "nota": "Base constitucional para el licenciamiento ambiental, pero sin detalle de categorías ni plazos."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "Cualquier persona puede interponer una denuncia por delitos ambientales ante el Ministerio Público (Fiscalía de Medio Ambiente), la SERNA, el ICF o la Policía Nacional. La denuncia debe incluir ubicación exacta, descripción de la afectación y pruebas.",
+      "fuente_verificacion": "data/delitos.json + data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El procedimiento de denuncia y las autoridades receptoras (Ministerio Público, SERNA, ICF, Policía Nacional) no están detallados en las fuentes locales. El Código Penal (delitos.json) tipifica los delitos ambientales pero no regula el procedimiento de denuncia, que corresponde al Código Procesal Penal (no disponible en el corpus). La afirmación es coherente con el sistema procesal penal hondureño (denuncia ante MP o policía) y con la existencia de fiscalías especializadas, pero no es verificable contra las fuentes locales.",
+      "nivel_confianza": "media"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 5,
+    "confirmados": 0,
+    "confirmados_con_matiz": 0,
+    "parcialmente_confirmados": 0,
+    "parcialmente_confirmado_con_matiz": 0,
+    "parcialmente_confirmado_con_errores": 0,
+    "parcialmente_confirmado_con_errores_graves": 1,
+    "plausible_no_verificable": 3,
+    "no_verificable_en_fuentes_locales": 1,
+    "impreciso": 0,
+    "errores_detectados": [
+      "A1: ERROR GRAVE. 3 de 4 artículos del CP citados tienen numeración INCORRECTA. Art. 339 citado como 'atentados contra recursos naturales' pero es 'restauración del equilibrio ecológico' (Art. 325 CP es el correcto). Art. 340 citado como 'delitos contra fauna y flora' pero es 'reincidencia internacional' (Arts. 328-332 CP son los correctos). Art. 341 citado como 'contaminación ambiental' pero es 'maltrato de animales' (Art. 324 CP es el correcto). Solo Art. 342 (abandono de animales) es correcto.",
+      "A1: La numeración de los artículos del CP en el documento parece corresponder a una versión anterior del Código Penal o a una fuente incorrecta. Los números de artículo en delitos.json (fuente local verificada) son consistentemente diferentes."
+    ],
+    "calidad_general": "regular_con_errores_graves_en_numeracion_de_articulos_del_codigo_penal"
+  }
+}

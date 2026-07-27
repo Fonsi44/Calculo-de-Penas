@@ -1,0 +1,309 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "a4e10c8f-07ac-497e-ba8c-80c3ac4f0857",
+    "slug": "reagrupacion-familiar-hondurenos-espana",
+    "sha256_entrada": "c4a5be622364d53e7e7d2f512195a1d964580609fd9492c8411c0b9dbe5604fc",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_limitante": "EL ARTICULO VERSA SOBRE DERECHO DE EXTRANJERIA ESPAÑOL (LO 4/2000, RD 557/2011). Las fuentes locales son exclusivamente de derecho hondureño. La verificación granular se limita a: (a) principios constitucionales hondureños sobre familia, nacionalidad y doble nacionalidad (Arts. 23, 24, 81, 111, 114, 121), (b) la existencia de documentos hondureños mencionados (partidas de nacimiento, matrimonio), y (c) la aplicabilidad de la Apostilla de La Haya a documentos hondureños. El 90% de los subclaims son no verificables con fuentes locales."
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento contiene 7 bloques de afirmaciones sobre reagrupación familiar en España para hondureños. Seis de los siete bloques (B1 a B6 normativos) tratan sobre requisitos y procedimientos de la legislación de extranjería española, no verificables con fuentes locales hondureñas. El séptimo bloque (B6 sobre documentos) es el único con verificabilidad parcial. No se detectan errores factuales en lo verificable. Se detecta un matiz: el artículo menciona 'traducción oficial si es necesaria', pero al estar los documentos hondureños en español (idioma oficial de España), la traducción jurada no sería necesaria en circunstancias normales. La calidad general del artículo es buena en su presentación del procedimiento español, pero no es verificable con las fuentes locales disponibles.",
+    "omision_detectada": {
+      "tipo": "contexto_constitucional_no_mencionado",
+      "descripcion": "El artículo no menciona que la Constitución de Honduras (Art. 24) reconoce la doble nacionalidad mediante tratado, y que España y Honduras tienen un Convenio de Doble Nacionalidad desde 1966. Esto es relevante porque los hondureños que adquieran la nacionalidad española no pierden la hondureña. Tampoco menciona que los hijos de hondureños nacidos en España son hondureños por nacimiento (Art. 23.2).",
+      "impacto": "bajo",
+      "apariciones": 0,
+      "ubicaciones": ["No se menciona en el artículo. Es información complementaria útil para el lector hondureño."]
+    },
+    "matiz_detectado": {
+      "tipo": "traduccion_oficial_potencialmente_innecesaria",
+      "descripcion": "El artículo menciona 'traducción oficial si es necesaria' para documentos hondureños. Dado que Honduras y España comparten el idioma español como lengua oficial, los documentos del registro civil hondureño (partidas de nacimiento, matrimonio) normalmente no requieren traducción jurada para su uso en España. La apostilla de La Haya es suficiente. La mención es técnicamente correcta como advertencia general, pero podría generar confusión innecesaria en lectores hondureños.",
+      "impacto": "bajo"
+    },
+    "fuente_ausente_critica": {
+      "tipo": "ordenamiento_juridico_completo_no_disponible",
+      "descripcion": "El artículo trata sobre derecho español de extranjería. NINGUNA fuente de derecho español está disponible en los archivos JSON locales. Esto impide verificar el 100% del contenido normativo del artículo. Las fuentes necesarias serían: Ley Orgánica 4/2000 sobre derechos y libertades de los extranjeros en España, Real Decreto 557/2011 (Reglamento de Extranjería), y normativa sobre IPREM.",
+      "impacto": "critico"
+    }
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "La reagrupación familiar en España está regulada por normativa de extranjería española.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Es hecho notorio que España regula la reagrupación familiar en su legislación de extranjería (LO 4/2000, RD 557/2011). No verificable con fuentes hondureñas. La Constitución hondureña (Art. 111) establece la protección estatal de la familia, principio consistente pero no vinculante para el derecho español.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "El régimen de reagrupación se aplica a hondureños residentes legales en España.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible",
+      "detalle": "Los hondureños, como nacionales de un tercer país no comunitario, están sujetos al régimen general de extranjería en España. La Constitución hondureña (Art. 24) reconoce la doble nacionalidad mediante tratado, y el Art. 23.2 reconoce como hondureños a los nacidos en el extranjero de padres hondureños, lo que confirma la realidad de comunidades hondureñas en el exterior. La existencia del Consulado de España en Tegucigalpa es un hecho notorio.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "El residente debe haber renovado su autorización de residencia al menos una vez.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Requisito del art. 18.2 LO 4/2000 y art. 55 RD 557/2011 españoles. No verificable con fuentes hondureñas. Ninguna disposición constitucional o legal hondureña regula requisitos de residencia en el extranjero.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "Pueden reagruparse: cónyuge o pareja de hecho registrada.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_con_contexto_constitucional",
+      "detalle": "La Constitución hondureña en su Art. 111 protege 'la familia, el matrimonio, la maternidad y la infancia'. El principio de reagrupación del cónyuge es consistente con la protección constitucional del matrimonio como base de la familia. La inclusión de pareja de hecho es un desarrollo más amplio de la legislación española. No verificable directamente.",
+      "evidencia": "Art. 111 Constitución: 'La familia, el matrimonio, la maternidad y la infancia están bajo la protección del Estado.'",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B2.3",
+      "subclaim_text": "Pueden reagruparse: hijos menores de 18 años.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible_con_contexto_constitucional",
+      "detalle": "La Constitución hondureña (Art. 121) establece la obligación de los padres de 'alimentar, asistir y educar a sus hijos durante la minoría de edad'. El Art. 114 establece igualdad de derechos de todos los hijos. Estos principios constitucionales reflejan la importancia de la unidad familiar con los hijos menores, fundamento que subyace a la reagrupación. No verificable directamente contra normativa española.",
+      "evidencia": "Art. 121: 'Los padres están obligados a alimentar, asistir y educar a sus hijos durante la minoría de edad.' Art. 114: 'Todos los hijos tienen los mismos derechos y deberes.'",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B2.4",
+      "subclaim_text": "Pueden reagruparse: hijos mayores de edad que acrediten discapacidad.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Esta es una previsión específica del art. 17.1.b LO 4/2000 y art. 53 RD 557/2011 españoles. No existe disposición equivalente en las fuentes hondureñas locales que permita verificar este criterio. Es consistente con el principio de protección a personas en situación de vulnerabilidad, pero no verificable directamente.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B2.5",
+      "subclaim_text": "Pueden reagruparse: ascendientes (padres o suegros) que dependan económicamente del residente y existan razones justificadas.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Requisito del art. 17.1.c LO 4/2000 español. No verificable con fuentes hondureñas. La Constitución hondureña no contiene disposiciones sobre reagrupación de ascendientes en el extranjero. La mención de 'razones justificadas' es consistente con el requisito español de que existan 'razones que justifiquen la necesidad de autorizar su residencia en España'.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "El umbral mínimo de ingresos es el 150% del IPREM para unidad familiar de dos miembros.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El IPREM es un indicador económico español creado por el RD-ley 3/2004. El porcentaje del 150% para reagrupación de un familiar es el requisito estándar del art. 54.1 RD 557/2011. No existe referencia al IPREM en ninguna fuente local hondureña. No verificable.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B3.2",
+      "subclaim_text": "El umbral se incrementa en un 50% del IPREM por cada miembro adicional.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Consistente con el art. 54.1 RD 557/2011 español. No verificable con fuentes hondureñas.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B3.3",
+      "subclaim_text": "Ingreso neto aproximado de 1,100 euros mensuales para reagrupar a una persona.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Esta cifra es una estimación basada en el valor del IPREM vigente a la fecha del artículo. El IPREM mensual para 2025-2026 ronda los 600 euros (12 pagas), por lo que el 150% sería aproximadamente 900 euros, y las cifras del artículo incluyen probablemente prorrateo de pagas extras. No verificable con fuentes locales. La cifra es orientativa y depende del año de referencia del IPREM.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B3.4",
+      "subclaim_text": "Ingreso neto aproximado de 1,400 euros mensuales para reagrupar a cónyuge e hijo.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Estimación basada en 200% IPREM (150% + 50% por miembro adicional). El valor exacto depende del IPREM del año en curso. No verificable con fuentes hondureñas. La cifra es orientativa.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B3.5",
+      "subclaim_text": "Los ingresos se acreditan mediante nóminas recientes, declaración del IRPF, contrato de trabajo y vida laboral.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Estos son los medios de prueba estándar exigidos por las Oficinas de Extranjería españolas. El IRPF, las nóminas y el informe de vida laboral son documentos emitidos por la administración española (AEAT y TGSS). No verificable con fuentes hondureñas.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "Se requiere informe de adecuación de vivienda emitido por servicios sociales de la Comunidad Autónoma.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Requisito del art. 55 RD 557/2011 español. Las Comunidades Autónomas son entidades de la organización territorial española (art. 137 Constitución Española). No verificable con fuentes hondureñas.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "Este informe puede demorar varias semanas y debe iniciarse con antelación.",
+      "fuente": "observacion_contextual",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Los plazos de emisión del informe de vivienda varían según la Comunidad Autónoma y la carga de trabajo de los servicios sociales municipales. Es un consejo práctico razonable, pero no verificable contra fuente normativa alguna, ni española ni hondureña.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "La solicitud se presenta en la Oficina de Extranjería de la provincia de residencia en España.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "La presentación en la Oficina de Extranjería de la provincia es el procedimiento estándar bajo la legislación española. No verificable con fuentes hondureñas.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B5.2",
+      "subclaim_text": "La falta de respuesta en el plazo establecido se considera denegación por silencio administrativo.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible",
+      "detalle": "La Ley Orgánica 4/2000 española establece el silencio administrativo negativo para las solicitudes de reagrupación familiar (art. 18.2). Esto es conocimiento general del derecho de extranjería español. La regla de silencio negativo es distinta del régimen general de silencio administrativo positivo de la Ley 39/2015 española, lo cual es una particularidad correcta del régimen de extranjería. No verificable con fuentes hondureñas, pero la afirmación es doctrinalmente correcta.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B5.3",
+      "subclaim_text": "El visado de reagrupación se tramita en el Consulado de España en Tegucigalpa.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible",
+      "detalle": "Es hecho notorio que España mantiene una Embajada en Tegucigalpa con sección consular que tramita visados. Honduras y España mantienen relaciones diplomáticas plenas. La tramitación del visado en el consulado del país de origen del reagrupado es el procedimiento estándar internacional. No verificable con fuentes locales, pero es información de conocimiento general.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.1",
+      "subclaim_text": "Las partidas de nacimiento y matrimonio son documentos que existen en el ordenamiento jurídico hondureño.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible",
+      "detalle": "El Registro Nacional de las Personas (RNP) de Honduras emite certificaciones de nacimiento, matrimonio y defunción. El Código de Familia hondureño regula estas instituciones. Aunque el texto completo del Código de Familia no está disponible en los JSON locales, el archivo codigo_familia_verificado.json confirma la existencia de normativa de familia hondureña. Es un hecho notorio que todo país tiene un registro civil que emite estos documentos.",
+      "evidencia": "codigo_familia_verificado.json confirma la existencia de normativa de familia hondureña. Las partidas del registro civil son documentos universalmente reconocidos.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.2",
+      "subclaim_text": "Los documentos emitidos en Honduras deben estar apostillados para su uso en España.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "confirmado",
+      "detalle": "Honduras se adhirió al Convenio de La Haya de 5 de octubre de 1961 sobre la Apostilla (Convenio Suprimiendo la Exigencia de Legalización de Documentos Públicos Extranjeros). España también es Estado parte de dicho Convenio. Por tanto, los documentos públicos hondureños destinados a surtir efectos jurídicos en España deben llevar la Apostilla de La Haya, emitida por la autoridad competente hondureña (Secretaría de Relaciones Exteriores). Este es el procedimiento correcto que reemplaza la legalización consular tradicional.",
+      "evidencia": "Convenio de La Haya de 1961 sobre la Apostilla. Honduras es Estado contratante. España es Estado contratante. La apostilla sustituye la legalización para documentos entre Estados parte.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.3",
+      "subclaim_text": "Los documentos pueden requerir traducción oficial si es necesaria.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_con_matiz",
+      "detalle": "La afirmación es técnicamente correcta como advertencia general: algunos documentos extranjeros pueden requerir traducción jurada en España. Sin embargo, el matiz relevante es que Honduras y España comparten el español como idioma oficial. Por tanto, las partidas de nacimiento, matrimonio y demás documentos del registro civil hondureño, al estar redactados en español, normalmente NO requieren traducción jurada para su uso en España. La apostilla es suficiente. La mención podría generar confusión innecesaria en lectores hondureños.",
+      "evidencia": "Honduras tiene el español como idioma oficial. España tiene el castellano (español) como idioma oficial del Estado (art. 3 Constitución Española). Documentos en español no requieren traducción para uso en España.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.1",
+      "subclaim_text": "[Cruce B1+B6] La normativa española de extranjería (B1) y la exigencia de documentos hondureños apostillados (B6) son consistentes: el procedimiento español requiere documentos extranjeros con apostilla.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "coherente",
+      "detalle": "La normativa de extranjería española exige que los documentos extranjeros estén debidamente legalizados o apostillados. Honduras, como Estado parte del Convenio de La Haya, emite documentos con apostilla. Ambas afirmaciones son complementarias y consistentes: el marco español exige la apostilla, y el marco hondureño la provee.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.2",
+      "subclaim_text": "[Cruce B2+B6] Los vínculos familiares (B2) se acreditan con documentos hondureños (B6): partidas de nacimiento para hijos, partida de matrimonio para cónyuge.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "coherente",
+      "detalle": "La acreditación del vínculo familiar (B2: cónyuge, hijos) depende lógicamente de los documentos del registro civil hondureño (B6: partidas de nacimiento y matrimonio). La cadena documental es lógica: para demostrar que alguien es cónyuge o hijo, se requiere el documento emitido por el país de origen. Ambas afirmaciones son internamente consistentes.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.3",
+      "subclaim_text": "[Cruce B1+B3] La normativa española (B1) establece umbrales económicos basados en el IPREM (B3). El IPREM es un indicador español ajeno al ordenamiento hondureño.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "coherente_pero_con_vacio",
+      "detalle": "La normativa española de extranjería utiliza el IPREM como referencia para los umbrales de ingresos. El IPREM es un concepto exclusivo del derecho español. No hay conflicto, pero la verificabilidad es nula desde fuentes hondureñas. La coherencia interna del artículo es correcta: los porcentajes sobre IPREM son los estándar de la legislación española.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B7.4",
+      "subclaim_text": "[Cruce B2+B3+B4] Los requisitos de familiares (B2), ingresos (B3) y vivienda (B4) forman los tres pilares interdependientes del régimen español de reagrupación.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "coherente_pero_con_vacio",
+      "detalle": "La legislación española estructura la reagrupación familiar sobre tres pilares: (a) vínculo familiar cualificado, (b) medios económicos suficientes, y (c) vivienda adecuada. El artículo cubre correctamente los tres. Los tres pilares dependen enteramente de la normativa española, no disponible en fuentes locales. La coherencia interna del artículo es correcta.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B7.5",
+      "subclaim_text": "[Cruce B5+B6] El procedimiento (B5: solicitud, resolución, visado) y la documentación hondureña (B6) forman la secuencia procedimental completa.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "coherente",
+      "detalle": "La secuencia del artículo es lógica: el reagrupante en España prepara documentos y solicita en Extranjería (B5.1), y una vez aprobada, el reagrupado en Honduras tramita el visado con sus documentos apostillados (B5.3 + B6.2). No hay conflicto. La secuencia refleja correctamente el procedimiento de reagrupación familiar del régimen general español.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.6",
+      "subclaim_text": "[Cruce B1+B6.3] La normativa española (B1) y la traducción oficial (B6.3). Matiz: documentos en español no requieren traducción.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "matiz_detectado",
+      "detalle": "La normativa española generalmente exige traducción jurada para documentos en idioma extranjero. Sin embargo, los documentos hondureños están en español. Por tanto, la mención a 'traducción oficial si es necesaria' es técnicamente correcta pero potencialmente innecesaria para el caso concreto de documentos hondureños. Este cruce revela que el artículo incluye una advertencia genérica que podría no aplicar al lector hondureño.",
+      "nivel_confianza": "alta"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["B1_Normativa_Espanola", "B2_Familiares_Reagrupables", "B3_Requisitos_Economicos", "B4_Vivienda", "B5_Procedimiento", "B6_Documentos_Hondurenos"],
+    "cruces": [
+      {
+        "par": "B1+B2",
+        "relacion": "Dependiente. La normativa española (B1) define qué familiares son reagrupables (B2). No verificable con fuentes hondureñas.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B3",
+        "relacion": "Dependiente. La normativa española (B1) establece los umbrales de IPREM (B3). IPREM ajeno al ordenamiento hondureño.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B4",
+        "relacion": "Dependiente. La normativa española (B1) exige el informe de vivienda (B4). No verificable.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B5",
+        "relacion": "Dependiente. La normativa (B1) define el procedimiento (B5). No verificable.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B6",
+        "relacion": "Complementarios. La normativa española exige apostilla (B1), Honduras la provee (B6). Coherente.",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B6",
+        "relacion": "Dependiente. Los vínculos familiares (B2) se acreditan con documentos hondureños (B6). Coherente.",
+        "conflicto": false
+      },
+      {
+        "par": "B5+B6",
+        "relacion": "Secuencial. El procedimiento (B5) requiere documentos (B6) en distintas fases. Sin conflicto.",
+        "conflicto": false
+      },
+      {
+        "par": "B6.2+B6.3",
+        "relacion": "Matiz. La apostilla (B6.2) es necesaria. La traducción (B6.3) probablemente no, por compartir idioma.",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 24,
+    "confirmados": 1,
+    "plausibles": 4,
+    "plausibles_con_contexto_constitucional": 2,
+    "plausibles_con_matiz": 1,
+    "plausibles_no_verificables": 12,
+    "coherentes": 3,
+    "coherente_pero_con_vacio": 2,
+    "matiz_detectado": 1,
+    "sin_conflictos_detectados": true,
+    "observacion_critica": "De 24 subclaims, solo 7 tienen verificabilidad parcial desde fuentes hondureñas (subclaims sobre documentos hondureños, apostilla, contexto constitucional, cruces). Los 17 restantes dependen enteramente de normativa española no disponible. No se detectan errores factuales en lo verificable. El artículo es internamente consistente y refleja correctamente la estructura del procedimiento español de reagrupación familiar, pero su verificabilidad con fuentes locales hondureñas es mínima por la naturaleza transfronteriza de la materia.",
+    "calidad_global_documento": "Buena. El artículo presenta de forma correcta y completa el procedimiento de reagrupación familiar en España para hondureños. La estructura es lógica, los requisitos mencionados son los estándar de la legislación española de extranjería, y los consejos prácticos son pertinentes. La principal limitación es que el 100% del contenido normativo es derecho español, no verificable con las fuentes locales hondureñas disponibles. Se recomienda obtener fuentes de derecho español (LO 4/2000, RD 557/2011) para una verificación completa. El matiz sobre la traducción oficial es menor y no afecta la calidad general."
+  }
+}

@@ -1,0 +1,222 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "1264fd4c-cf4d-4bb8-8df1-1a4711aa5f72",
+    "slug": "jornada-laboral-horas-extra-descansos-honduras",
+    "sha256_entrada": "4ef85942104161cbe2e60c59d9e466d42ab4ba0253253bb9119e83c17131cb20",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_trabajo.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "Tipos de jornada laboral: diurna (5:00 a.m. a 7:00 p.m., max 8h/d y 44h/sem), nocturna (7:00 p.m. a 5:00 a.m., max 6h/d y 36h/sem, recargo 25%), mixta (combina periodos diurnos y nocturnos; si el nocturno >= 3h se considera nocturna; max 7h/d y 42h/sem).",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "TODAS las definiciones y límites están CONFIRMADOS contra el Código de Trabajo. Jornada diurna: Arts. 321 y 322 CT confirman horario 5:00 a.m.-7:00 p.m., max 8h/d y 44h/sem. Jornada nocturna: Art. 321 CT confirma horario 7:00 p.m.-5:00 a.m.; Art. 322 CT confirma max 6h/d y 36h/sem. Recargo nocturno 25%: Art. 329 CT confirma textualmente 'se remunera con un recargo del veinticinco por ciento (25%) sobre el valor del trabajo diurno'. Jornada mixta: Art. 321 CT confirma que si el período nocturno abarca menos de 3 horas es mixta, si >= 3 horas se reputa nocturna; max 7h/d y 42h/sem. La información del documento coincide exactamente con la fuente local.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulos_verificados": [
+          {
+            "articulo": "Art. 321 CT",
+            "texto": "Trabajo diurno es el que se ejecuta entre las cinco horas (5:00 a. m.) y las diecinueve (7:00 p. m.); nocturno, el que se realiza entre las diecinueve horas (7:00 p. m.) y las cinco (5:00 a. m.). Es jornada mixta, la que comprende períodos de tiempo de las jornadas diurna y nocturna, siempre que el período nocturno abarque menos de tres (3) horas, pues en caso contrario, se reputará como jornada nocturna. La duración máxima de la jornada mixta será de siete (7) horas diarias y de cuarenta y dos (42) a la semana."
+          },
+          {
+            "articulo": "Art. 322 CT",
+            "texto": "La jornada ordinaria de trabajo diurno no podrá exceder de ocho (8) horas diarias y cuarenta y cuatro (44) a la semana, equivalentes a cuarenta y ocho (48) de salario. La jornada ordinaria de trabajo nocturno no podrá exceder de seis (6) horas diarias y treinta y seis (36) a la semana."
+          },
+          {
+            "articulo": "Art. 329 CT",
+            "texto": "El trabajo nocturno, por el solo hecho de ser nocturno, se remunera con un recargo del veinticinco por ciento (25%) sobre el valor del trabajo diurno. Con el mismo recargo se pagarán las horas trabajadas durante el período nocturno en la jornada mixta."
+          }
+        ]
+      },
+      "errores_detectados": [],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "Horas extra: diurnas con recargo del 25%, nocturnas con recargo del 50%, y las que excedan 12 horas semanales con recargo del 75% sobre el valor de la hora ordinaria.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable_en_fuentes_locales",
+      "detalle": "El Art. 330 CT, que regula la remuneración de la jornada extraordinaria, está TRUNCADO en la fuente local (codigo_trabajo.json). El texto disponible dice: 'El trabajo efectivo que se ejecute fuera de los límites que determinan los artículos anteriores para la jornada ordinaria, o que exceda de la jornada inferior, convenida por las partes, constituye jornada extraordinaria, y debe ser remunerada, así:' y se interrumpe sin listar los recargos. Los Arts. 331-333 CT, que sí están completos, regulan exclusiones (errores del trabajador), límite de 12h de jornada total (ordinaria+extra), y prohibiciones (trabajos peligrosos, max 4 veces/semana), pero no contienen los porcentajes de recargo. Los recargos del 25%, 50% y 75% para horas extra diurnas, nocturnas y exceso de 12 semanales NO son verificables contra la fuente local. La información es coherente con el conocimiento doctrinal del derecho laboral hondureño (Art. 330 CT original del Decreto 189-1959), pero la fuente local no permite verificarla.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulo": "Art. 330 CT",
+        "texto": "El trabajo efectivo que se ejecute fuera de los límites que determinan los artículos anteriores para la jornada ordinaria, o que exceda de la jornada inferior, convenida por las partes, constituye jornada extraordinaria, y debe ser remunerada, así: [TEXTO TRUNCADO EN LA FUENTE LOCAL]",
+        "nota": "El texto del Art. 330 CT en codigo_trabajo.json está incompleto. Los recargos específicos (25% diurnas, 50% nocturnas, 75% exceso de 12 semanales) no aparecen en la fuente."
+      },
+      "errores_detectados": [],
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "El tiempo de trabajo efectivo es aquel en que el trabajador está a disposición del empleador. El descanso intra-jornada (media hora) NO se computa como tiempo efectivo, a menos que el empleador no permita al trabajador ausentarse. Tampoco se considera tiempo efectivo el cambio de ropa, salvo uniforme específico en instalaciones. Sí se considera trabajo efectivo la capacitación ordenada, los tiempos de espera y los desplazamientos dentro de instalaciones.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_errores_graves",
+      "detalle": "ERROR GRAVE en el descanso intra-jornada. El Art. 326 CT establece que el descanso mínimo de 30 minutos dentro de la jornada continua 'debe computarse como tiempo de trabajo efectivo'. El documento afirma lo contrario: que 'no se computa como tiempo efectivo'. Esta es una contradicción directa con la fuente local. Respecto a la definición general de trabajo efectivo ('trabajador a disposición del empleador'), el Art. 270 CT (aunque pertenece al capítulo de ferrocarriles, Arts. 267-285 CT) sí recoge este principio: 'se considerará trabajo efectivo todo el tiempo que el trabajador permanezca a disposición de la empresa'. Las demás afirmaciones sobre cambio de ropa, capacitación, tiempos de espera y desplazamientos NO son verificables contra la fuente local, pues el CT en los artículos disponibles no aborda estos casos específicos con ese nivel de detalle.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulos_verificados": [
+          {
+            "articulo": "Art. 326 CT",
+            "texto": "Siempre que se pacte una jornada ordinaria continua, el trabajador tiene derecho a un descanso mínimo de treinta (30) minutos dentro de esa jornada, el que debe computarse como tiempo de trabajo efectivo.",
+            "discrepancia": "El documento dice 'no computable como tiempo efectivo'. La fuente local dice 'debe computarse como tiempo de trabajo efectivo'. CONTRADICCIÓN DIRECTA."
+          },
+          {
+            "articulo": "Art. 270 CT (Trabajo de Ferrocarriles)",
+            "texto": "A los efectos de la determinación de la jornada de trabajo y su duración, se considerará trabajo efectivo todo el tiempo que el trabajador permanezca a disposición de la empresa.",
+            "nota": "Art. 270 CT pertenece al capítulo de ferrocarriles, pero recoge el principio general citado en el documento."
+          }
+        ]
+      },
+      "errores_detectados": [
+        "ERROR GRAVE: El documento afirma que el descanso intra-jornada de 30 minutos NO se computa como tiempo efectivo. El Art. 326 CT establece exactamente lo contrario: 'debe computarse como tiempo de trabajo efectivo'.",
+        "Las afirmaciones sobre cambio de ropa, capacitación, tiempos de espera y desplazamientos no son verificables en la fuente local."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "Descansos obligatorios: (a) intra-jornada de al menos 30 min; (b) descanso semanal de un día completo preferentemente domingo según Artículo 330 CT, con recargo del 75% si se labora en domingo más descanso compensatorio; (c) días feriados: 1 enero, 14 abril, 1 mayo, 15 septiembre, 21 octubre y 25 diciembre, con recargo del 100% si se labora en feriado.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_errores_graves",
+      "detalle": "MÚLTIPLES ERRORES detectados. (1) Descanso intra-jornada de 30 min: CONFIRMADO en Art. 326 CT ('descanso mínimo de treinta (30) minutos'). (2) Descanso semanal: la referencia al 'Artículo 330' es INCORRECTA. El descanso semanal está en Art. 338 CT, no en Art. 330 (que regula la jornada extraordinaria). El Art. 338 CT confirma 'un (1) día de descanso, preferentemente el domingo, por cada seis (6) de trabajo'. (3) Recargo por trabajo en domingo: el documento afirma 75% de recargo, pero el Art. 340 CT establece 'el duplo de salario' (100% de recargo), no 75%. El descanso compensatorio sí está confirmado en Art. 340 CT: 'sin perjuicio del derecho del trabajador a cualquier otro día de descanso en la semana'. (4) Días feriados listados: el documento omite el 3 de octubre, el 12 de octubre, y el 'jueves, viernes y sábado de la Semana Santa', que sí aparecen en el Art. 339 CT. Por tanto, la lista está INCOMPLETA. (5) Recargo del 100% por trabajo en feriado: CONFIRMADO en Art. 340 CT ('duplo de salario').",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulos_verificados": [
+          {
+            "articulo": "Art. 338 CT (descanso semanal — el documento lo cita erróneamente como Art. 330)",
+            "texto": "El trabajador gozará de un (1) día de descanso, preferentemente el domingo, por cada seis (6) de trabajo."
+          },
+          {
+            "articulo": "Art. 330 CT (lo que realmente dice)",
+            "texto": "El trabajo efectivo que se ejecute fuera de los límites que determinan los artículos anteriores para la jornada ordinaria [...] constituye jornada extraordinaria, y debe ser remunerada, así: [TRUNCADO]",
+            "nota": "Art. 330 CT regula la jornada extraordinaria, NO el descanso semanal. El documento cita el artículo equivocado."
+          },
+          {
+            "articulo": "Art. 340 CT (recargo por trabajo en descanso/feriado)",
+            "texto": "Si en virtud de convenio se trabajare durante los días de descanso o los días feriados o de fiesta nacional, se pagarán con el duplo de salario correspondiente a la jornada ordinaria en proporción al tiempo trabajado, sin perjuicio del derecho del trabajador a cualquier otro día de descanso en la semana."
+          },
+          {
+            "articulo": "Art. 339 CT (días feriados)",
+            "texto": "Los patronos pagarán los siguientes días feriados o de fiesta nacional: 1º de enero, 14 de abril, 1º. de mayo, 15 de septiembre, 3 de octubre, 12 de octubre, 21 de octubre y 25 de diciembre, aunque caigan en domingo; el jueves, viernes y sábado de la Semana Santa."
+          }
+        ]
+      },
+      "errores_detectados": [
+        "ERROR EN CITA DE ARTÍCULO: El documento cita 'Artículo 330' para el descanso semanal. El artículo correcto es Art. 338 CT. El Art. 330 CT regula la jornada extraordinaria, no el descanso semanal.",
+        "ERROR EN RECARGO: El documento afirma recargo del 75% por trabajo en domingo. El Art. 340 CT establece 'el duplo de salario' (100% de recargo), no 75%. La diferencia es significativa (25 puntos porcentuales).",
+        "OMISIÓN EN LISTA DE FERIADOS: El documento omite el 3 de octubre, el 12 de octubre y los días de Semana Santa (jueves, viernes y sábado) que el Art. 339 CT incluye expresamente."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "Vacaciones anuales según Artículo 346 CT: 1 año = 10 días hábiles, 2 años = 12 días hábiles, 3 años = 15 días hábiles, 4+ años = 20 días hábiles. No sustituibles por dinero salvo al terminar la relación laboral. Si el empleador no las concede en el año siguiente, debe pagarlas con recargo del 100%.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "La escala de vacaciones está CONFIRMADA: Art. 346 CT establece exactamente 10, 12, 15 y 20 días laborables consecutivos tras 1, 2, 3 y 4+ años. La referencia al Art. 346 es CORRECTA. La no sustituibilidad por dinero salvo al terminar la relación está PARCIALMENTE CONFIRMADA: Art. 349 CT establece que si el trabajador cesa antes de disfrutar vacaciones, 'recibirá el importe correspondiente en dinero'. Art. 345 CT añade que en caso de despido injustificado el patrono pagará 'la parte de vacaciones correspondiente al periodo trabajado'. Sin embargo, el documento usa 'días hábiles' mientras el CT dice 'días laborables' (diferencia terminológica menor). El recargo del 100% por no concesión de vacaciones en el año siguiente NO es verificable en los artículos disponibles del CT (Arts. 345-358). Los artículos disponibles regulan la concesión, acumulación, disfrute y cálculo del salario vacacional, pero no contienen una penalidad explícita del 100% por falta de concesión.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulos_verificados": [
+          {
+            "articulo": "Art. 346 CT",
+            "texto": "El período de vacaciones remuneradas [...] tendrá como duración mínima la que a continuación se expresa: a) Después de un (1) año de servicios continuos diez (10) días laborables, consecutivos; b) Después de dos (2) años de servicios continuos, doce (12) días laborables, consecutivos; c) Después de tres (3) años de servicios continuos, quince (15) días laborables, consecutivos; y, d) Después de cuatro (4) años de servicios continuos veinte (20) días laborables, consecutivos."
+          },
+          {
+            "articulo": "Art. 349 CT",
+            "texto": "El trabajador que hubiere adquirido derecho a vacaciones y que antes de disfrutar de éstas cese en su trabajo por cualquier causa, recibirá el importe correspondiente en dinero."
+          },
+          {
+            "articulo": "Art. 345 CT",
+            "texto": "En caso de despido injustificado el patrono pagará en efectivo, a más de las indemnizaciones que la ley señale, la parte de vacaciones correspondiente al periodo trabajado."
+          }
+        ]
+      },
+      "errores_detectados": [
+        "MATIZ MENOR: El documento dice 'días hábiles'; el CT dice 'días laborables'. La diferencia terminológica es menor pero existe.",
+        "NO VERIFICABLE: El recargo del 100% por no concesión de vacaciones en el año siguiente no consta en los Arts. 345-358 CT disponibles en la fuente local."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "Regímenes especiales: trabajadores agrícolas y ganaderos (jornadas moduladas), trabajadores domésticos (máximo 12 horas diarias con descansos), pilotos, personal de transporte y personal de salud (guardias hospitalarias).",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_matiz",
+      "detalle": "PARCIALMENTE CONFIRMADO con matices importantes. (1) Trabajadores domésticos: el Art. 325 CT los excluye expresamente de la regulación sobre jornada máxima legal. El Art. 154 CT establece que gozarán de 'un descanso absoluto de diez (10) horas diarias, de las cuales por lo menos ocho (8) han de ser nocturnas y continuas, y dos (2) deben destinarse a las comidas'. Esto implica indirectamente que pueden trabajar hasta 14 horas diarias (24h - 10h de descanso), no 12 como afirma el documento. Sin embargo, el documento acierta al señalar que tienen un régimen especial con descansos. (2) Agrícolas/ganaderos: el Art. 338.4 CT permite descanso en día distinto para labores agrícolas/ganaderas. El Art. 202 CT permite trabajo en días de descanso y horas suplementarias durante cosechas. El término 'jornadas moduladas' no aparece en la fuente local. (3) Transporte: el Art. 213 CT confirma que 'su duración podrá exceder de las ocho (8) horas diarias' pero con límite de 44h/sem (diurno) o 36h/sem (nocturno). CONFIRMADO PARCIALMENTE. (4) Pilotos y personal de salud (guardias hospitalarias): NO VERIFICABLES en la fuente local. El CT disponible no contiene disposiciones específicas sobre estos sectores.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulos_verificados": [
+          {
+            "articulo": "Art. 325 CT (exclusiones)",
+            "texto": "Quedan excluidos de la regulación sobre jornada máxima legal de trabajo los siguientes trabajadores: [...] b) Los del servicio doméstico, ya se trate de labores en los centros urbanos o en el campo; [...] d) Los chóferes particulares y los que presten sus servicios en empresas de transporte de cualquier clase."
+          },
+          {
+            "articulo": "Art. 154 CT (domésticos)",
+            "texto": "Al trabajo de los domésticos no se aplicarán las disposiciones sobre días de descanso, feriados o de fiesta nacional, pero gozarán de un descanso absoluto de diez (10) horas diarias, de las cuales por lo menos ocho (8) han de ser nocturnas y continuas, y dos (2) deben destinarse a las comidas."
+          },
+          {
+            "articulo": "Art. 213 CT (transporte)",
+            "texto": "Atendida la naturaleza del trabajo de transporte, su duración podrá exceder de las ocho (8) horas diarias, siempre que se establezcan turnos [...] En ningún caso el total de horas trabajadas podrá exceder de cuarenta y cuatro (44) en la semana, si se tratare de trabajo diurno, ni de treinta y seis (36) en trabajo nocturno."
+          },
+          {
+            "articulo": "Art. 338.4 CT (agrícolas/ganaderos)",
+            "texto": "[...] puede estipularse en favor de los trabajadores un período íntegro de veinticuatro (24) horas consecutivas de descanso, en día distinto, a cambio del descanso dominical, en los casos siguientes: [...] 4. Por tratarse de labores agrícolas o ganaderas."
+          }
+        ]
+      },
+      "errores_detectados": [
+        "MATIZ: El documento afirma 'máximo 12 horas diarias' para domésticos. El Art. 154 CT establece 10h de descanso (8 nocturnas + 2 comidas), lo que permite hasta 14h de trabajo (24h - 10h), no 12h. La cifra del documento no coincide con la fuente.",
+        "NO VERIFICABLE: 'Pilotos' y 'personal de salud (guardias hospitalarias)' no aparecen en los artículos del CT disponibles.",
+        "NO VERIFICABLE: El término 'jornadas moduladas' para agrícolas/ganaderos no consta en la fuente local."
+      ],
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A7",
+      "claim_text": "Procedimiento de reclamación: gestión amistosa con el empleador, denuncia ante la Inspectoría General de Trabajo, demanda ante juzgados de trabajo. Plazo de un año desde la terminación de la relación laboral para reclamar horas extra.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable_en_fuentes_locales",
+      "detalle": "Los artículos del CT disponibles en la fuente local (codigo_trabajo.json) no contienen disposiciones sobre el procedimiento de reclamación de horas extra, la Inspectoría General de Trabajo como autoridad receptora, los juzgados de trabajo como instancia judicial, ni el plazo de prescripción de un año. El Art. 317 CT menciona a los 'Inspectores de Trabajo' encargados de asegurar el cumplimiento de las disposiciones sobre empleados de comercio, y el Art. 359 CT menciona a la 'Secretaría de Trabajo y Seguridad Social' como autoridad de vigilancia, pero ninguno detalla el procedimiento de reclamación ni los plazos. La información es plausible y coherente con el sistema procesal laboral hondureño, pero no es verificable contra la fuente local.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "nota": "El CT disponible no contiene disposiciones sobre procedimientos de reclamación, plazos de prescripción para horas extra, ni la competencia de la Inspectoría General de Trabajo o juzgados de trabajo en esta materia específica. El Art. 317 CT menciona inspectores de trabajo pero en contexto de empleados de comercio; el Art. 359 CT menciona la Secretaría de Trabajo pero sin detalle procedimental."
+      },
+      "errores_detectados": [],
+      "nivel_confianza": "baja"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 7,
+    "confirmados": 1,
+    "confirmados_con_matiz": 0,
+    "parcialmente_confirmados": 1,
+    "parcialmente_confirmado_con_matiz": 1,
+    "parcialmente_confirmado_con_errores": 0,
+    "parcialmente_confirmado_con_errores_graves": 2,
+    "plausible_no_verificable": 0,
+    "no_verificable_en_fuentes_locales": 2,
+    "impreciso": 0,
+    "errores_detectados": [
+      "A3: ERROR GRAVE. El documento afirma que el descanso intra-jornada de 30 min NO se computa como tiempo efectivo. El Art. 326 CT establece lo contrario: 'debe computarse como tiempo de trabajo efectivo'.",
+      "A4: ERROR GRAVE en cita de artículo. El documento cita 'Artículo 330 CT' para el descanso semanal, pero el artículo correcto es Art. 338 CT. Art. 330 CT regula la jornada extraordinaria.",
+      "A4: ERROR en recargo por trabajo en domingo. El documento afirma 75%, el Art. 340 CT establece 'el duplo de salario' (100%).",
+      "A4: OMISIÓN. La lista de feriados del documento omite 3 de octubre, 12 de octubre y Semana Santa (jueves, viernes, sábado), que sí constan en Art. 339 CT.",
+      "A6: MATIZ en jornada de domésticos. El documento dice 'máximo 12 horas diarias' pero el Art. 154 CT establece 10h de descanso (8 nocturnas + 2 comidas), implicando hasta 14h de trabajo."
+    ],
+    "calidad_general": "regular_con_errores_graves_en_descanso_intra_jornada_cita_de_articulo_y_recargo_dominical"
+  }
+}

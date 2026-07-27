@@ -1,0 +1,153 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "7f73730a-5fc5-4a92-aad5-4b38a0b3527a",
+    "slug": "divorcio-tipos-requisitos-tiempos-honduras",
+    "sha256_entrada": "c139c8c0443d15548440bd6f3d20e7bdfc83432ba59a13d853d8afdb0819dc34",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_familia_verificado.json",
+      "data/codigo_civil.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_importante": "El Código de Familia completo NO se encuentra en los archivos JSON locales. Solo se dispone de 12 artículos verificados (codigo_familia_verificado.json), de los cuales 6 son sobre divorcio (Arts. 236-244 CF). El Código Civil contiene disposiciones sobre divorcio que pueden estar derogadas o modificadas por el Código de Familia, que es ley posterior y especial. La verificación se limita a contrastar el artículo contra estas fuentes parciales."
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "El Código de Familia hondureño contempla tres vías para disolver el vínculo matrimonial: mutuo consentimiento, express (notarial) y contencioso (causal).",
+      "fuente_verificacion": "data/codigo_familia_verificado.json + data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_discrepancia_critica",
+      "detalle": "El Código de Familia (Art. 237 CF) establece que 'el divorcio debe declararse mediante sentencia judicial'. Esto contradice directamente la existencia de un divorcio express notarial, ya que toda disolución del vínculo requiere sentencia judicial. El Código Civil (Art. 140 CC) reconoce 'divorcio contencioso o voluntario' como causales de disolución del matrimonio. El divorcio por mutuo consentimiento está respaldado por el Art. 243 CF ('Los cónyuges mayores de edad pueden divorciarse por mutuo consentimiento después de dos años de matrimonio'). El divorcio contencioso está respaldado por el Art. 238 CF que enumera causas legales. La vía 'express o notarial' NO aparece en ninguno de los artículos disponibles. Si esta modalidad existe, debe estar regulada por una ley especial o reforma posterior no presente en las fuentes locales. El Art. 237 CF sugiere que todo divorcio requiere sentencia judicial.",
+      "evidencia_local": {
+        "codigo_familia": [
+          "Art. 236 CF: 'El divorcio disuelve el vínculo matrimonial y produce los efectos previstos por la ley.'",
+          "Art. 237 CF: 'El divorcio debe declararse mediante sentencia judicial.'",
+          "Art. 238 CF: 'Establece las causas legales de divorcio, entre ellas la separación o abandono injustificado por más de dos años.'",
+          "Art. 243 CF: 'Los cónyuges mayores de edad pueden divorciarse por mutuo consentimiento después de dos años de matrimonio.'"
+        ],
+        "codigo_civil": [
+          "Art. 140 CC: 'El matrimonio se disuelve ... Por sentencia firme en que se declare el divorcio contencioso o voluntario.'",
+          "Art. 156 CC: regula el procedimiento de disolución por mutuo consentimiento ante juez de letras."
+        ],
+        "discrepancia": "Art. 237 CF requiere sentencia judicial para todo divorcio, lo que contradice la existencia de una vía notarial sin intervención judicial."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "Divorcio por mutuo consentimiento: se presenta solicitud conjunta ante el juzgado de familia con un convenio que regule custodia, pensión alimenticia y división de bienes. Plazo estimado: 2 a 4 meses. Necesita abogado.",
+      "fuente_verificacion": "data/codigo_familia_verificado.json + data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_omision",
+      "detalle": "La existencia del divorcio por mutuo consentimiento está confirmada (Art. 243 CF). El Art. 244 CF regula los requisitos de la solicitud. El Código Civil (Art. 156 CC) detalla que los cónyuges deben presentarse personalmente y por escrito ante el juez de letras, acompañando atestado del Registro Civil y testimonio de declaración de bienes. Sin embargo, el artículo OMITE un requisito legal crítico: el Art. 243 CF exige que los cónyuges hayan estado casados 'después de dos años de matrimonio' para acceder al divorcio por mutuo consentimiento. Esta omisión es relevante para lectores con matrimonios recientes. Los plazos (2 a 4 meses) no aparecen en las fuentes legales; son estimaciones prácticas basadas en la realidad judicial hondureña, no verificables contra los textos normativos disponibles. La necesidad de abogado no está explícitamente en los artículos disponibles pero es práctica estándar en procedimientos judiciales.",
+      "evidencia_local": {
+        "codigo_familia": [
+          "Art. 243 CF: 'Los cónyuges mayores de edad pueden divorciarse por mutuo consentimiento después de dos años de matrimonio.'",
+          "Art. 244 CF: 'Regula los requisitos de la solicitud de divorcio por mutuo consentimiento.'"
+        ],
+        "codigo_civil": [
+          "Art. 156 CC: 'Los cónyuges que intenten disolver el vínculo matrimonial por mutuo consentimiento, presentarán personalmente y por escrito su solicitud al juez de letras de su domicilio, acompañando los documentos siguientes: 1o.- Atestado del Registro Civil en que conste su edad y su calidad de casados. 2o.- Testimonio de la escritura en que hayan hecho declaración de bienes sociales o comunes, o de que no existen bienes de esta clase.'"
+        ],
+        "omision_detectada": "El artículo no menciona el requisito de 2 años de matrimonio previo establecido en Art. 243 CF."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "Divorcio express (notarial): se tramita ante notario, no ante juez. Requisitos: ambos de acuerdo, sin hijos menores, liquidación de bienes cerrada, mujer no embarazada. Plazo: 1 a 2 meses. Coste: medio-bajo.",
+      "fuente_verificacion": "data/codigo_familia_verificado.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable_con_tension_normativa",
+      "detalle": "El Art. 237 CF establece que 'el divorcio debe declararse mediante sentencia judicial'. Esta disposición contradice directamente la afirmación de que el divorcio express se tramita 'ante notario, no ante juez'. Si la figura del divorcio express o notarial existe en Honduras, debe estar regulada por una reforma legislativa posterior al Código de Familia o por una ley especial que no está disponible en las fuentes JSON locales. Los requisitos mencionados (sin hijos menores, liquidación cerrada, mujer no embarazada) y el plazo (1 a 2 meses) son afirmaciones normativas y prácticas que no pueden ser verificadas ni refutadas con las fuentes disponibles. La tensión con el Art. 237 CF sugiere que, o bien la afirmación es incorrecta, o bien existe legislación posterior que creó esta figura modificando el requisito de sentencia judicial.",
+      "evidencia_local": {
+        "codigo_familia": [
+          "Art. 237 CF: 'El divorcio debe declararse mediante sentencia judicial.' — Texto que contradice la existencia de un divorcio por vía notarial sin intervención judicial."
+        ],
+        "ausencia_detectada": "No se encuentra en las fuentes locales ninguna referencia a 'divorcio express', 'divorcio notarial' o procedimiento de divorcio sin intervención judicial.",
+        "nota": "Si esta figura existe, debe constar en una reforma al Código de Familia o en una ley especial no disponible en los archivos JSON locales."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "Divorcio contencioso: se basa en probar una causa legal. Causas mencionadas: infidelidad, maltrato, abandono, injurias graves, separación de hecho por más de un año, alcoholismo o drogadicción. Plazo estimado: 8 a 18 meses.",
+      "fuente_verificacion": "data/codigo_familia_verificado.json + data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_discrepancia_numerica",
+      "detalle": "La existencia de divorcio contencioso basado en causas legales está confirmada (Art. 238 CF, Art. 143 CC). El Código Civil (Art. 143 CC) enumera causas como adulterio, maltrato, atentado contra la vida, concubinato con escándalo público, tentativa de prostituir, corrupción de hijos. El Art. 238 CF menciona específicamente 'separación o abandono injustificado por más de dos años'. DISCREPANCIA: el artículo dice 'separación de hecho por más de un año', pero el Art. 238 CF establece el plazo en 'más de dos años'. Esta diferencia de un año es jurídicamente relevante. El Código Civil (Art. 144 CC) añade que la acción prescribe tras un año desde que se conocieron los hechos. Las causas de alcoholismo y drogadicción no aparecen explícitamente en los artículos disponibles; el Art. 238 CF solo menciona 'las causas legales de divorcio' sin listarlas exhaustivamente en el extracto disponible. Los plazos (8 a 18 meses) son estimaciones prácticas no verificables contra los textos normativos.",
+      "evidencia_local": {
+        "codigo_familia": [
+          "Art. 238 CF: 'Establece las causas legales de divorcio, entre ellas la separación o abandono injustificado por más de dos años.'"
+        ],
+        "codigo_civil": [
+          "Art. 143 CC: enumera 7 causas de divorcio: preñez por relaciones ilícitas, atentado contra la vida, malos tratamientos graves, adulterio de la mujer, concubinato del marido con escándalo público, tentativa del marido para prostituir a su mujer, conato para corromper a los hijos.",
+          "Art. 144 CC: 'La acción de divorcio solo podrá establecerse por el cónyuge inocente; pero no será admisible si se promueve después de un año contado desde que llegaron a su noticia los hechos que pudieran motivarla.'"
+        ],
+        "discrepancia_numerica": "El artículo dice 'separación de hecho por más de un año'; el Art. 238 CF establece 'más de dos años'. El Art. 144 CC prescribe la acción tras un año de conocidos los hechos (no confundir con el plazo de separación requerido)."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "Es posible cambiar de tipo de divorcio durante el proceso: iniciar un contencioso y convertirlo en mutuo consentimiento si hay acuerdo, o viceversa.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "Ninguno de los artículos disponibles en las fuentes locales regula explícitamente la posibilidad de convertir un tipo de divorcio en otro durante el proceso. Sin embargo, el principio general de economía procesal y el hecho de que ambas vías (contencioso y mutuo consentimiento) convergen ante el mismo juez de familia hacen plausible esta afirmación. El Art. 145 CC establece que 'no podrá decretarse el divorcio si entre los cónyuges ha habido reconciliación', lo que sugiere que la voluntad de las partes puede modificar el curso del proceso. La afirmación es doctrinalmente razonable pero no tiene respaldo textual directo en las fuentes disponibles.",
+      "evidencia_local": {
+        "codigo_civil": [
+          "Art. 145 CC: 'No podrá decretarse el divorcio si entre los cónyuges ha habido reconciliación o vida marital, ya sea después de los hechos que hubieran podido autorizarlo o después de la demanda.' — Implica que la conducta de las partes durante el proceso afecta su resultado."
+        ],
+        "limitacion": "Ningún artículo disponible regula explícitamente la conversión entre tipos de divorcio."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "Los juzgados de Tegucigalpa y San Pedro Sula tienen más carga que los de Nacaome o Choluteca, lo que puede duplicar plazos.",
+      "fuente_verificacion": "observacion_contextual",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Esta es una afirmación sobre la realidad operativa del sistema judicial hondureño, no una afirmación normativa. La mayor carga de trabajo en juzgados de grandes ciudades frente a ciudades pequeñas es un fenómeno fáctico coherente con la realidad de cualquier sistema judicial. Sin embargo, no es verificable contra los textos legales disponibles. Las fuentes JSON locales no contienen estadísticas judiciales ni informes de carga procesal.",
+      "evidencia_local": {
+        "tipo": "Afirmación fáctica, no normativa.",
+        "plausibilidad": "Alta. Es consistente con el principio general de que las grandes urbes concentran más litigios."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A7",
+      "claim_text": "Si existe violencia doméstica, el divorcio contencioso es inevitable y debe tramitarse simultáneamente con la solicitud de medidas de protección ante el juzgado de familia.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "El Código Civil (Art. 143 CC) enumera 'graves y frecuentes malos tratamientos de obra inferidos por alguno de los cónyuges al otro, o a los hijos, si pusieren en peligro su vida' como causal de divorcio. El Art. 147 CC establece medidas provisionales que el juez puede acordar al admitir la demanda: separación provisional de los cónyuges, depósito de la mujer si lo pide, depósito de los hijos, señalamiento de alimentos y medidas para proteger los bienes de la mujer. Estas medidas provisionales son consistentes con lo que el artículo denomina 'medidas de protección'. La afirmación de que el divorcio contencioso es 'inevitable' en casos de violencia doméstica es una valoración práctica, no normativa: legalmente nada impide que las partes acuerden un mutuo consentimiento incluso si existe violencia, aunque en la práctica es improbable.",
+      "evidencia_local": {
+        "codigo_civil": [
+          "Art. 143 CC causa 3o: 'Graves y frecuentes malos tratamientos de obra inferidos por alguno de los cónyuges al otro, o a los hijos, si pusieren en peligro su vida.'",
+          "Art. 147 CC: medidas provisionales: separación provisional, depósito de la mujer, depósito de hijos, alimentos, protección de bienes."
+        ],
+        "matiz": "Legalmente, la violencia doméstica es una causal de divorcio contencioso pero no impide que las partes opten por mutuo consentimiento si ambas están de acuerdo."
+      },
+      "nivel_confianza": "media"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 7,
+    "confirmados": 0,
+    "parcialmente_confirmados": 3,
+    "plausible_no_verificable": 2,
+    "plausible_con_soporte_parcial": 1,
+    "no_verificable_con_tension_normativa": 1,
+    "errores_y_discrepancias_detectados": [
+      "DISCREPANCIA NUMERICA (A4): El artículo afirma 'separación de hecho por más de un año' como causal de divorcio contencioso. El Art. 238 CF establece 'separación o abandono injustificado por más de dos años'. Diferencia de un año completo.",
+      "TENSION NORMATIVA (A1, A3): El artículo describe un 'divorcio express o notarial' sin intervención judicial. El Art. 237 CF establece que 'el divorcio debe declararse mediante sentencia judicial'. Si existe el divorcio notarial, debe estar en legislación posterior no disponible en fuentes locales.",
+      "OMISION RELEVANTE (A2): El artículo omite el requisito de 2 años de matrimonio previo para el divorcio por mutuo consentimiento (Art. 243 CF)."
+    ],
+    "observacion_principal": "El artículo presenta tres discrepancias relevantes con las fuentes locales: (1) el plazo de separación para divorcio contencioso es 'más de dos años' según el Art. 238 CF, no 'más de un año' como afirma el artículo; (2) la existencia del divorcio express notarial no está respaldada por las fuentes disponibles y contradice el Art. 237 CF que exige sentencia judicial; (3) se omite el requisito de 2 años de matrimonio previo para el mutuo consentimiento. El Código de Familia completo no está disponible en los archivos JSON locales (solo 12 artículos verificados), lo que limita la verificación del contenido normativo específico.",
+    "calidad_general": "regular_con_discrepancias_detectadas"
+  }
+}

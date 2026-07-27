@@ -1,0 +1,244 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "67566dce-493d-4986-95d9-0dcd7d26a89d",
+    "slug": "impuesto-renta-personas-fisicas-honduras",
+    "sha256_entrada": "e1f197feecf2789d1289bcc5f0d3ad99bb0394fbd47ec869699825da5dcc5065",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_tributario.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_importante": "La Ley del Impuesto Sobre la Renta (Ley ISR) —que contiene los artículos 4 y 22-30 citados por el artículo, los tramos progresivos, el umbral de 50,000 lempiras, los gastos deducibles y las alícuotas— NO se encuentra en los archivos JSON locales. La verificación se limita al Código Tributario (Decreto 170-2016), que establece el marco general: principios, sujetos obligados, deberes formales, sanciones, fiscalización y prescripción. Las afirmaciones sobre montos, tasas y deducciones específicas de la Ley ISR no son verificables con las fuentes locales disponibles."
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "El ISR en Honduras se basa en un sistema progresivo: quienes obtienen mayores ingresos pagan una tasa más alta, pero solo sobre el excedente de cada tramo de renta. Los tramos iniciales suelen estar exentos, mientras que los tramos intermedios y superiores gravan con porcentajes moderados (10% o 15%) y máximos (25%).",
+      "fuente_verificacion": "data/codigo_tributario.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "El Código Tributario (Art. 11) establece el principio de legalidad: compete exclusivamente al Congreso Nacional fijar la tarifa del tributo. El Art. 4 define el impuesto como el tributo cuya obligación toma en consideración la 'capacidad contributiva' del obligado. Estos principios son consistentes con un sistema progresivo. Sin embargo, el Código Tributario no contiene los tramos, tasas (10%, 15%, 25%) ni las exenciones de los tramos iniciales. Estas disposiciones pertenecen a los Arts. 22-30 de la Ley del Impuesto Sobre la Renta, no disponible en fuentes locales. La afirmación es plausible bajo el principio de capacidad contributiva (Art. 4 CTrib) y el principio de legalidad (Art. 11 CTrib), pero los valores específicos no son verificables.",
+      "evidencia_local": {
+        "archivo": "data/codigo_tributario.json",
+        "articulos": [
+          {
+            "referencia": "Art. 4 CTrib",
+            "texto": "Impuesto es el tributo cuya obligación tiene como hecho generador y como fundamento jurídico una situación relativa al contribuyente tomando en consideración la capacidad contributiva del mismo."
+          },
+          {
+            "referencia": "Art. 11 CTrib",
+            "texto": "Compete exclusivamente al Congreso Nacional... fijar la base imponible, la tarifa y el plazo del tributo."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "La Ley de Impuesto Sobre la Renta, en sus artículos 22 al 30, detalla las alícuotas aplicables. El Artículo 4 de dicha ley establece la obligación general de declarar para aquellos cuyos ingresos brutos excedan 50,000 lempiras.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable",
+      "detalle": "La Ley del Impuesto Sobre la Renta no está disponible en los archivos JSON locales. No es posible verificar el contenido de los Arts. 4, 22-30 ni el umbral de 50,000 lempiras. El Código Tributario (Art. 424) establece la obligación de presentar declaraciones, autoliquidaciones e informes, pero remite a cada ley especial los umbrales y alícuotas. La existencia misma de la Ley ISR es consistente con el Art. 207 CTrib (disposición final), que ordena al Poder Ejecutivo presentar el proyecto de 'Ley del Impuesto Sobre la Renta' al Congreso Nacional.",
+      "evidencia_local": {
+        "archivo": "data/codigo_tributario.json",
+        "articulos": [
+          {
+            "referencia": "Art. 424 CTrib (Deber de declarar)",
+            "texto": "El obligado tributario debe presentar las declaraciones, autoliquidaciones e informes establecidos en la Ley."
+          },
+          {
+            "referencia": "Art. 207 CTrib (Disposición final)",
+            "texto": "El Poder Ejecutivo... debe presentar al Congreso Nacional los nuevos proyectos de Ley del Impuesto Sobre la Renta."
+          }
+        ]
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "El cálculo se realiza sobre la renta neta gravable, que resulta de restar las deducciones autorizadas a los ingresos totales.",
+      "fuente_verificacion": "data/codigo_tributario.json",
+      "tipo_verificacion": "local",
+      "veredicto": "consistente_con_marco_general",
+      "detalle": "El Código Tributario (Art. 11 numeral 2) menciona expresamente que compete al Congreso Nacional otorgar 'deducciones' como parte de los elementos del tributo. El concepto de renta neta gravable (ingresos menos deducciones autorizadas) es el estándar internacional en imposición sobre la renta y es consistente con el marco hondureño. Sin embargo, el Código Tributario no define la fórmula de cálculo de la base imponible del ISR, que corresponde a la Ley ISR, no disponible. La afirmación es consistente con los principios generales del CTrib, pero el mecanismo específico no es verificable.",
+      "evidencia_local": {
+        "archivo": "data/codigo_tributario.json",
+        "articulo": "Art. 11 CTrib",
+        "texto": "Compete exclusivamente al Congreso Nacional... 2) Otorgar exenciones, exoneraciones, deducciones, liberaciones o cualquier clase de beneficio tributario."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "El empleador efectúa retenciones mensuales estimadas que se enteran al Servicio de Administración de Rentas (SAR). Al cierre del ejercicio fiscal, si las retenciones superan el impuesto real, el contribuyente puede solicitar la devolución; de lo contrario, deberá pagar la diferencia.",
+      "fuente_verificacion": "data/codigo_tributario.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_verificado",
+      "detalle": "VERIFICADO en cuanto al mecanismo de retención y devolución. El Art. 29 CTrib define al agente de retención: 'Es agente de retención la persona o entidad a quien la ley de cada tributo... le obliga a retener y enterar los tributos.' El Art. 22 CTrib incluye a los agentes de retención y a los obligados a realizar pagos a cuenta como sujetos pasivos. El Art. 113 CTrib consagra el derecho a la devolución de pagos indebidos o en exceso, y la compensación de saldos a favor (Art. 134 CTrib). NO VERIFICABLE en cuanto al SAR como entidad específica: el Código Tributario se refiere genéricamente a la 'Administración Tributaria' sin mencionar al SAR. El SAR es la denominación operativa de la Administración Tributaria hondureña, pero esta identificación no surge del CTrib.",
+      "evidencia_local": {
+        "archivo": "data/codigo_tributario.json",
+        "articulos": [
+          {
+            "referencia": "Art. 29 CTrib (Agente de retención)",
+            "texto": "Es agente de retención la persona o entidad a quien la ley de cada tributo... le obliga a retener y enterar los tributos o los importes a cuenta de estos, de otros obligados tributarios."
+          },
+          {
+            "referencia": "Art. 22 CTrib (Obligados tributarios)",
+            "texto": "Son obligados tributarios... 2) Los obligados a realizar pagos a cuenta o anticipados; 3) Los agentes de retención."
+          },
+          {
+            "referencia": "Art. 113 CTrib (Derecho de restitución y devolución)",
+            "texto": "El obligado tributario tiene derecho de acción para reclamar la restitución de lo pagado en exceso o indebidamente, por concepto de tributos y sanciones."
+          }
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "Gastos deducibles: médicos, educativos, intereses hipotecarios, aportaciones a fondos de pensiones (IHSS, RAP, privados), donaciones a entidades sin fines de lucro autorizadas por el SAR. Se requiere factura fiscal válida con RTN.",
+      "fuente_verificacion": "data/codigo_tributario.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable",
+      "detalle": "El Código Tributario no enumera los gastos deducibles del ISR. La lista de deducciones (médicos, educativos, hipotecarios, pensiones, donaciones) pertenece a la Ley del Impuesto Sobre la Renta, no disponible. El CTrib (Art. 11 numeral 2) establece que compete al Congreso otorgar deducciones, confirmando que estas deben estar en ley. En cuanto al RTN y facturación: el Art. 63 CTrib obliga a inscribirse en el Registro Tributario Nacional (RTN) y el Art. 77 CTrib menciona el 'régimen de imprentas y facturación', pero no regula los requisitos de factura fiscal para deducciones del ISR. La afirmación es plausible bajo el marco general, pero los conceptos específicos no son verificables.",
+      "evidencia_local": {
+        "archivo": "data/codigo_tributario.json",
+        "articulos": [
+          {
+            "referencia": "Art. 11.2 CTrib",
+            "texto": "Compete exclusivamente al Congreso Nacional... 2) Otorgar exenciones, exoneraciones, deducciones, liberaciones o cualquier clase de beneficio tributario."
+          },
+          {
+            "referencia": "Art. 63 CTrib (RTN)",
+            "texto": "Las personas naturales, jurídicas y las organizaciones... que realizan actividades que las convierten en obligados tributarios, deben inscribirse en el Registro Tributario Nacional (RTN)."
+          }
+        ]
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "No presentar la declaración de ISR cuando se está legalmente obligado genera multas automáticas. Presentar información falsa u omitir ingresos puede desencadenar una fiscalización por parte del SAR. En casos de omisión significativa, se podría configurar el delito de defraudación fiscal, con sanciones penales.",
+      "fuente_verificacion": "data/codigo_tributario.json",
+      "tipo_verificacion": "confirmado_con_matiz",
+      "detalle": "VERIFICADO en cuanto al marco sancionador y la existencia de fiscalización. El Art. 149 CTrib clasifica las infracciones en faltas y delitos. El Art. 150 CTrib tipifica como faltas el incumplimiento de obligaciones formales y materiales. El Art. 107 CTrib regula la liquidación mediante fiscalización: la Administración puede 'determinar de oficio la obligación tributaria'. El Art. 165 CTrib establece: 'Son delitos tributarios los tipificados en el Código Penal.' El Art. 166 CTrib regula el procedimiento de denuncia ante el Ministerio Público. MATIZ: el CTrib no menciona 'defraudación fiscal' por ese nombre — remite a los delitos tipificados en el Código Penal. Las 'multas automáticas' específicas por no declarar ISR están en la Ley ISR, no en el CTrib.",
+      "evidencia_local": {
+        "archivo": "data/codigo_tributario.json",
+        "articulos": [
+          {
+            "referencia": "Art. 149 CTrib",
+            "texto": "Las infracciones se clasifican en faltas y en delitos: a) Constituye falta todo incumplimiento de normas tributarias... b) Los delitos tributarios están contenidos en el Código Penal."
+          },
+          {
+            "referencia": "Art. 107 CTrib (Fiscalización)",
+            "texto": "La Administración Tributaria... mediante fiscalización, en cualquier momento y antes de producirse la prescripción, puede determinar de oficio la obligación tributaria."
+          },
+          {
+            "referencia": "Art. 165 CTrib",
+            "texto": "Son delitos tributarios los tipificados en el Código Penal."
+          }
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A7",
+      "claim_text": "El SAR cuenta con herramientas de cruce de información con entidades bancarias, la Comisión Nacional de Bancos y Seguros (CNBS) y otras fuentes, lo que facilita la detección de inconsistencias.",
+      "fuente_verificacion": "data/codigo_tributario.json",
+      "tipo_verificacion": "no_verificable",
+      "detalle": "El Código Tributario no menciona a la CNBS ni mecanismos de cruce de información con entidades bancarias. El Art. 72 CTrib regula el deber de información de obligados tributarios y terceros con la Administración, y el Art. 75 CTrib protege la reserva de datos, pero no detalla sistemas de cruce con el sistema financiero. Las herramientas específicas de cruce de información del SAR pertenecen a normativa operativa o a convenios interinstitucionales no incluidos en el corpus.",
+      "evidencia_local": {
+        "archivo": "data/codigo_tributario.json",
+        "articulos": [
+          {
+            "referencia": "Art. 72 CTrib (Deberes de información)",
+            "texto": "Los obligados tributarios... están obligados a cooperar... en las funciones de verificación, determinación, investigación, fiscalización y cobranza, debiendo proporcionarle toda clase de datos, informes o antecedentes con trascendencia tributaria."
+          },
+          {
+            "referencia": "Art. 75 CTrib (Reserva)",
+            "texto": "Los servidores públicos... están obligados a guardar absoluta reserva en lo concerniente a las declaraciones y datos suministrados por los obligados tributarios."
+          }
+        ]
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A8",
+      "claim_text": "El SAR puede revisar hasta los últimos cinco ejercicios fiscales.",
+      "fuente_verificacion": "data/codigo_tributario.json",
+      "tipo_verificacion": "local",
+      "veredicto": "tension_detectada",
+      "detalle": "El artículo afirma que el SAR puede revisar 'hasta los últimos cinco ejercicios fiscales'. Sin embargo, el Código Tributario (Art. 144) establece un plazo de prescripción de CUATRO (4) años para las acciones de fiscalización, verificación y determinación del Estado en materia de obligaciones de importación (el texto se trunca en el JSON pero la referencia a 4 años es clara). Art. 145 CTrib: el cómputo comienza desde el día hábil siguiente a la presentación de la declaración. Existe una discrepancia entre los 'cinco ejercicios' del artículo y los 4 años del CTrib. La diferencia podría explicarse si la Ley ISR establece un plazo mayor (5 años) como norma especial, pero dicha ley no está disponible para verificarlo. Con la fuente local disponible, el plazo es de 4 años, no 5.",
+      "evidencia_local": {
+        "archivo": "data/codigo_tributario.json",
+        "articulos": [
+          {
+            "referencia": "Art. 144 CTrib",
+            "texto": "Las acciones y facultades del Estado para verificar, comprobar, fiscalizar, investigar... determinar y exigir el pago de las obligaciones previstas en este Código, prescriben en forma definitiva por el transcurso de: a) Cuatro (4) años en el caso de obligaciones de importación."
+          },
+          {
+            "referencia": "Art. 145 CTrib",
+            "texto": "La prescripción... debe comenzar a computarse a partir del día hábil siguiente en que se presente la declaración o que deba presentarse la misma."
+          }
+        ]
+      },
+      "nivel_confianza": "media",
+      "nota": "El texto del Art. 144 en el JSON local está truncado. El plazo de 4 años corresponde a obligaciones de importación. El plazo para obligaciones internas (ISR) podría ser diferente. Sin la Ley ISR no se puede confirmar ni refutar el plazo de 5 años mencionado en el artículo."
+    },
+    {
+      "claim_id": "A9",
+      "claim_text": "Ejemplo de María: ingresos brutos 240,000 lempiras, gastos deducibles 60,000, renta neta gravable 180,000. Cálculo: primeros 50,000 exentos; tramo 50,001-150,000 al 10% (10,000); tramo 150,001-180,000 al 15% (4,500); total ISR = 14,500 lempiras.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable",
+      "detalle": "La totalidad de los datos del ejemplo (umbral de exención de 50,000, tramos, tasas del 10% y 15%) depende de la Ley del Impuesto Sobre la Renta, no disponible en fuentes locales. El Código Tributario no contiene los tramos ni alícuotas del ISR. El ejemplo es internamente coherente y la aritmética es correcta (100,000 x 0.10 = 10,000; 30,000 x 0.15 = 4,500; total 14,500), pero no es posible verificar los valores de los tramos ni las tasas contra la ley.",
+      "evidencia_local": {
+        "archivo": "data/codigo_tributario.json",
+        "nota": "El CTrib no contiene los tramos del ISR. Estos pertenecen a la Ley ISR, ausente del corpus."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A10",
+      "claim_text": "La obligación de declarar aplica si los ingresos brutos superaron los 50,000 lempiras durante el año fiscal (1 de enero al 31 de diciembre). También están obligados quienes realicen actividades empresariales o profesionales de forma independiente, sin importar el monto. Los asalariados con un solo empleador y cuyos ingresos no excedan el umbral generalmente no requieren presentar declaración, ya que su empleador realiza las retenciones. Si tiene más de un empleador simultáneamente, es probable que deba declarar.",
+      "fuente_verificacion": "data/codigo_tributario.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_verificado",
+      "detalle": "VERIFICADO el marco general: Art. 424 CTrib: 'El obligado tributario debe presentar las declaraciones, autoliquidaciones e informes establecidos en la Ley.' Art. 25 CTrib define contribuyentes como 'las personas naturales o jurídicas directamente sujetas al cumplimiento de la obligación tributaria.' Art. 29 CTrib define al agente de retención, figura en la que encaja el empleador. NO VERIFICABLE: el umbral de 50,000 lempiras, la exención de declaración para asalariados con un solo empleador, y la obligación para quien tenga múltiples empleadores. Todo ello pertenece a la Ley ISR, no al CTrib.",
+      "evidencia_local": {
+        "archivo": "data/codigo_tributario.json",
+        "articulos": [
+          {
+            "referencia": "Art. 424 CTrib",
+            "texto": "El obligado tributario debe presentar las declaraciones, autoliquidaciones e informes establecidos en la Ley."
+          },
+          {
+            "referencia": "Art. 25 CTrib",
+            "texto": "Son contribuyentes las personas naturales o jurídicas directamente sujetas al cumplimiento de la obligación tributaria por encontrarse, respecto al hecho generador, en la situación prevista por la Ley."
+          },
+          {
+            "referencia": "Art. 29 CTrib",
+            "texto": "Es agente de retención la persona o entidad a quien la ley de cada tributo... le obliga a retener y enterar los tributos."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 10,
+    "confirmados_con_matiz": 1,
+    "parcialmente_verificados": 2,
+    "consistente_con_marco_general": 1,
+    "plausibles_no_verificables": 1,
+    "no_verificables": 3,
+    "tension_detectada": 2,
+    "error_critico_detectado": "Posible error en el plazo de fiscalización: el artículo afirma 5 ejercicios; el CTrib (Art. 144) establece prescripción de 4 años. Sin la Ley ISR no se puede resolver definitivamente.",
+    "omision_relevante": "El artículo omite mencionar que el Código Tributario establece un plazo de prescripción general (Art. 144) y que la defraudación fiscal es un delito tipificado en el Código Penal (Art. 165 CTrib), no en el CTrib mismo. También omite mencionar el derecho a compensación de saldos a favor (Art. 134 CTrib).",
+    "fuente_ausente_critica": "La Ley del Impuesto Sobre la Renta —fuente primaria del artículo— NO está disponible en los archivos JSON locales. Aproximadamente el 80% del contenido específico del artículo (tramos, tasas, umbral de 50,000 lempiras, deducciones, Arts. 4 y 22-30) depende de esta ley. El Código Tributario solo proporciona el marco general de principios, obligaciones y sanciones.",
+    "calidad_general": "buena_con_limitacion_critica_de_fuentes"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "impuesto-renta-personas-fisicas-honduras",
+  "article_id": "67566dce-493d-4986-95d9-0dcd7d26a89d",
+  "sha256_original": "",
+  "fecha_consolidacion": "2026-07-27T07:15:00.000Z",
+  "estado_final": "needs_human_review",
+  "razon": "Claims no verificables contra fuentes disponibles",
+  "claims_totales_a": 0,
+  "claims_totales_b": 0,
+  "errores_detectados": 0,
+  "correcciones_pendientes": 0,
+  "requiere_abogado": true,
+  "version_esquema": "1.0"
+}

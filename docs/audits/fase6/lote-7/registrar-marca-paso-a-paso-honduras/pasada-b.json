@@ -1,0 +1,439 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "79bbb24e-217f-4d66-920f-18231553cbce",
+    "slug": "registrar-marca-paso-a-paso-honduras",
+    "sha256_entrada": "bb403da60481517f0ea6b21b4ce3355c165032550a268079a52dfbaa5dc98d68",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento contiene información sustancialmente correcta sobre el régimen de registro de marcas en Honduras bajo la Ley de Propiedad Industrial (Decreto No. 12-99). Se detectan tres errores principales: (1) el plazo de subsanación es de 30 días según la ley, no 15 días hábiles; (2) el examen de fondo de prohibiciones ocurre ANTES de la publicación y oposición, no después como describe el documento; (3) la tasa oficial en la ley es de L.700.00 por clase, no 1,000-2,000 lempiras. Adicionalmente, la denominación DIGEPIH y la adscripción al 'Instituto de la Propiedad' no se encuentran en el texto legal disponible. Los datos sobre vigencia (10 años), renovación (año anterior + 6 meses de gracia), publicación en La Gaceta, y derechos del titular son consistentes con la ley.",
+    "error_critico": {
+      "tipo": "orden_procedimental_invertido",
+      "descripcion": "El documento describe el examen de fondo (verificación de prohibiciones absolutas y relativas) como un paso posterior a la oposición (Paso 6). La Ley de Propiedad Industrial (Art. 87, 88, 89, 91) establece que este examen ocurre ANTES de ordenar la publicación. La secuencia legal es: examen de forma → examen de prohibiciones → publicación → oposición → concesión. El documento describe: examen de forma → publicación → oposición → examen de fondo → concesión.",
+      "impacto": "alto",
+      "apariciones": 1,
+      "ubicaciones": [
+        "Paso 5 y Paso 6 del body: 'Superado el examen de forma, la DIGEPIH ordena la publicación...' y 'Si no se presentan oposiciones... la DIGEPIH realiza un examen de fondo'"
+      ]
+    },
+    "errores_secundarios": [
+      {
+        "tipo": "plazo_incorrecto",
+        "descripcion": "Plazo de subsanación: 15 días hábiles (documento) vs. 30 días (Art. 86 LPI).",
+        "impacto": "medio"
+      },
+      {
+        "tipo": "tasa_desactualizada",
+        "descripcion": "Tasa: 1,000-2,000 lempiras (documento) vs. L.700.00 (Art. 174(4)(a) LPI). Posiblemente refleje actualizaciones posteriores de tasas no incluidas en la ley de 1999/2006.",
+        "impacto": "medio"
+      },
+      {
+        "tipo": "calificacion_no_verificada",
+        "descripcion": "El documento califica los plazos como 'hábiles' (30 días hábiles para oposición); la ley simplemente dice '30 días' sin calificar.",
+        "impacto": "bajo"
+      }
+    ],
+    "imprecisiones_detectadas": [
+      {
+        "tipo": "denominacion_institucional_no_verificada",
+        "descripcion": "El acrónimo 'DIGEPIH' y la adscripción al 'Instituto de la Propiedad' no aparecen en el texto de la Ley de Propiedad Industrial.",
+        "impacto": "bajo"
+      },
+      {
+        "tipo": "disponibilidad_inmediata_inexacta",
+        "descripcion": "El documento afirma que al caducar la marca 'queda disponible para que cualquier tercero la registre'. El Art. 83(10) LPI impone una prohibición de 1 año (2 para marcas colectivas) antes de que un tercero pueda registrar una marca idéntica o similar a la caducada.",
+        "impacto": "bajo"
+      }
+    ]
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "La Dirección General de Propiedad Intelectual es la autoridad competente en materia de registro de marcas en Honduras.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado",
+      "detalle": "Art. 1 LPI: 'Su aplicación corresponde a la Secretaría de Estado en los Despachos de Industria y Comercio, a través de la Oficina de Registro de la Propiedad Industrial, dependencia de la Dirección General de Propiedad Intelectual.' La DGPI es la dependencia directamente responsable del Registro de la Propiedad Industrial.",
+      "evidencia": "Art. 1 LPI. También Art. 91 LPI menciona al 'Director General de Propiedad Intelectual' como autoridad firmante del certificado de registro.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "El acrónimo oficial es DIGEPIH.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "no_verificado",
+      "detalle": "La Ley de Propiedad Industrial utiliza consistentemente 'Dirección General de Propiedad Intelectual' sin acrónimo. El texto legal no contiene 'DIGEPIH'. El acrónimo podría ser de uso administrativo o haber sido adoptado posteriormente, pero no es verificable en las fuentes locales disponibles.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B1.3",
+      "subclaim_text": "La DIGEPIH está adscrita al Instituto de la Propiedad.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "no_verificado",
+      "detalle": "La ley no menciona ningún 'Instituto de la Propiedad'. El Art. 1 LPI establece que la DGPI es dependencia de la 'Secretaría de Estado en los Despachos de Industria y Comercio'. La mención al 'Instituto de la Propiedad' podría referirse a una estructura administrativa creada con posterioridad a la ley de 1999.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "El derecho al uso exclusivo de una marca se adquiere mediante su inscripción en el registro.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt + data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 80 LPI: 'El derecho al uso exclusivo de una marca se adquiere mediante su inscripción en el Registro de la Propiedad Industrial.' Art. 667 CM: 'El derecho al uso exclusivo de una marca... puede ser adquirido... mediante su registro.' Ambas fuentes coinciden.",
+      "evidencia": "Art. 80 LPI; Art. 667 CM (codigo_comercio.json).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "Sin registro, cualquier persona podría utilizar el nombre comercial sin consecuencias legales.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "Sin registro de marca, no hay derecho exclusivo oponible (Art. 80 LPI). Sin embargo, el documento mezcla 'marca' con 'nombre comercial'. La LPI protege el nombre comercial de forma separada (Art. 115-118 LPI) mediante su registro, pero también reconoce protección al nombre comercial usado en el comercio aunque no esté registrado. Existe un matiz: un nombre comercial no registrado como marca pero sí usado en el comercio podría tener cierta protección. El documento simplifica esta distinción.",
+      "evidencia": "Art. 80 y Art. 115-118 LPI sobre nombre comercial.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "El registro permite impedir que terceros usen signos idénticos o similares.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado",
+      "detalle": "Art. 96 LPI enumera los actos contra los cuales el titular puede actuar, incluyendo: 'Usar en el comercio un signo idéntico o similar a la marca para los mismos productos o servicios... o para productos o servicios diferentes cuando el uso... pudiese crear confusión o un riesgo de asociación.' Confirmado.",
+      "evidencia": "Art. 96(5) y 96(6) LPI.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.2",
+      "subclaim_text": "El registro permite solicitar el comiso de productos falsificados en aduanas.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "plausible",
+      "detalle": "El Art. 96(6)(b) LPI incluye 'importar, exportar, almacenar o transportar productos con el signo' como actos contra los cuales el titular puede actuar. El Título VI de la LPI (Art. 160-173) regula las acciones por infracción y medidas precautorias, incluyendo el comiso (Art. 165). Las medidas en frontera son consistentes con el marco ADPIC/TRIPS. Plausible aunque no se detalla un procedimiento aduanero específico en las fuentes disponibles.",
+      "evidencia": "Art. 96(6)(b), Art. 164-165 LPI.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B3.3",
+      "subclaim_text": "El registro permite obtener indemnización por daños y perjuicios en caso de infracción.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado",
+      "detalle": "Art. 161 LPI establece: 'La indemnización de los daños y perjuicios sufridos' como una de las pretensiones que puede ejercer el titular del derecho infringido.",
+      "evidencia": "Art. 161(2) LPI: 'La indemnización de los daños y perjuicios sufridos.'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "La marca registrada puede licenciarse.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 101 LPI (derogado por Decreto 16-2006) regulaba las licencias de uso. Aunque fue derogado, el Art. 102 LPI vigente regula los casos en que el Registro denegará la inscripción de contratos de licencia, lo cual implica que las licencias de uso de marca existen y son inscribibles. También el Art. 104 LPI regula la anulación de la inscripción de licencia.",
+      "evidencia": "Arts. 102, 103, 104 LPI.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "La marca registrada puede venderse (cederse).",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado",
+      "detalle": "Art. 100 LPI: 'El derecho relativo a una marca registrado o en trámite de registro podrán ser cedidos por acto entre vivos o por vía sucesoria.' También Art. 675 CM (codigo_comercio.json): 'La transmisión de una marca no produce efectos contra tercero, sino a partir de la fecha en que se inscriba.'",
+      "evidencia": "Art. 100 LPI; Art. 675 CM (codigo_comercio.json).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "La búsqueda de anterioridad no es obligatoria legalmente.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado",
+      "detalle": "La LPI no exige la búsqueda de anterioridad como requisito previo. El procedimiento legal inicia directamente con la solicitud (Art. 85 LPI). El propio documento afirma que 'no es obligatoria'. El Art. 174(7)(b) LPI sí contempla una tasa por 'búsqueda de antecedentes registrales: CIEN LEMPIRAS (L.100.00)', lo que indica que es un servicio disponible pero no un requisito.",
+      "evidencia": "Arts. 85-91 LPI (procedimiento sin paso de búsqueda); Art. 174(7)(b) LPI (tasa por búsqueda de antecedentes como servicio opcional).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.2",
+      "subclaim_text": "La búsqueda de anterioridad por abogado toma de 3 a 5 días hábiles.",
+      "fuente": "N/A (dato operativo)",
+      "veredicto": "no_verificable",
+      "detalle": "Es un dato operativo/práctico que no está regulado en la ley. Depende de la carga de trabajo del profesional y del sistema de consulta del Registro.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B6.1",
+      "subclaim_text": "Honduras utiliza la clasificación internacional de productos y servicios para el registro de marcas.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado",
+      "detalle": "Art. 85 LPI: la solicitud debe indicar 'la clase internacional'. Art. 88 LPI: el aviso de publicación debe contener 'la clase correspondiente'. La remisión a la clasificación internacional es inequívoca.",
+      "evidencia": "Art. 85 y Art. 88 LPI: 'la clase internacional'.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.2",
+      "subclaim_text": "La clasificación comprende 45 clases.",
+      "fuente": "N/A (dato internacional)",
+      "veredicto": "plausible",
+      "detalle": "La Clasificación Internacional de Niza (Arreglo de Niza) establece 45 clases (34 de productos + 11 de servicios). Honduras es parte contratante. La ley no enumera las clases, pero el dato es correcto según el estándar internacional aplicable.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.3",
+      "subclaim_text": "Los ejemplos de clases: 25 (prendas de vestir), 30 (café, té, arroz), 35 (publicidad), 43 (restaurantes y hoteles).",
+      "fuente": "N/A (dato internacional)",
+      "veredicto": "plausible",
+      "detalle": "Estas correspondencias son correctas según la Clasificación de Niza. Clase 25: prendas de vestir, calzado, sombrerería. Clase 30: café, té, cacao, arroz, etc. Clase 35: publicidad, gestión de negocios comerciales. Clase 43: servicios de restauración y hospedaje. No verificable en fuentes locales hondureñas, pero correcto según Niza.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.1",
+      "subclaim_text": "Los documentos necesarios para la solicitud incluyen: formulario oficial, representación gráfica de la marca, lista de productos/servicios por clase, comprobante de pago de tasa, y poder notarial si se presenta mediante apoderado.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "sustancialmente_correcto",
+      "detalle": "Art. 85 LPI enumera: (1) 20 ejemplares de la reproducción de la marca con lista de productos/servicios y clase internacional + timbres de ley, (2) descripción completa de la marca, (3) documento de mandato, (4) certificado de origen si reivindica prioridad. El documento del artículo es una simplificación práctica que captura lo esencial pero omite detalles (20 ejemplares, descripción detallada, certificado de origen para prioridad). El 'poder notarial' equivale al 'documento de mandato' de la ley.",
+      "evidencia": "Art. 85 LPI (requisitos de la solicitud).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B8.1",
+      "subclaim_text": "La tasa oficial ronda entre 1,000 y 2,000 lempiras por clase.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "discrepante_con_fuente",
+      "detalle": "Art. 174(4)(a) LPI: 'Por la inscripción de una marca, por clase: SETECIENTOS LEMPIRAS (L.700.00).' La ley fija L.700.00 por clase, sustancialmente menos que 1,000-2,000. Sin embargo, el Art. 174 permite revisión de tasas cada 2 años según inflación. El documento podría reflejar tasas actualizadas por normativa posterior no incluida en esta fuente.",
+      "evidencia": "Art. 174(4)(a) LPI: L.700.00 por clase.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B9.1",
+      "subclaim_text": "El Registro revisa que la solicitud cumpla los requisitos formales (examen de forma).",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado",
+      "detalle": "Art. 86 LPI establece el procedimiento de verificación de cumplimiento de los requisitos del Art. 85, con notificación al solicitante para subsanar omisiones.",
+      "evidencia": "Art. 86 LPI.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B9.2",
+      "subclaim_text": "El plazo para subsanar es de 15 días hábiles.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "refutado",
+      "detalle": "Art. 86 LPI: 'dentro del plazo de treinta (30) días.' La ley establece 30 días, no 15. La calificación de 'hábiles' tampoco aparece en el texto legal. El plazo correcto es 30 días.",
+      "evidencia": "Art. 86 LPI: 'El Registro notificará al solicitante para que cumpla con subsanar dentro del plazo de treinta (30) días.'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B9.3",
+      "subclaim_text": "No subsanar dentro del plazo provoca el abandono de la solicitud.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado",
+      "detalle": "Art. 86 LPI: 'bajo apercibimiento de considerarse abandonada la solicitud y archivarse de oficio. Si no se subsanara el error y omisión en el plazo establecido, el Registro hará efectivo el apercibimiento mediante resolución fundamentada.'",
+      "evidencia": "Art. 86 LPI.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B10.1",
+      "subclaim_text": "La publicación se hace en el Diario Oficial La Gaceta.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado",
+      "detalle": "Art. 88 LPI: 'el Registro de la Propiedad Industrial ordenará que se anuncie la solicitud mediante la publicación de un aviso en el Diario Oficial La Gaceta, por tres (3) veces, con intervalos de diez (10) días cada una, y en forma consecutiva.'",
+      "evidencia": "Art. 88 LPI.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B10.2",
+      "subclaim_text": "El plazo para presentar oposición es de 30 días hábiles desde la publicación.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "parcialmente_correcto",
+      "detalle": "Art. 89 LPI: 'dentro del período de publicación y hasta treinta (30) días contados desde la fecha de la última publicación del aviso.' El plazo de 30 días es correcto. Sin embargo, la ley no califica estos días como 'hábiles'. La adición de 'hábiles' por el documento no tiene respaldo en el texto legal.",
+      "evidencia": "Art. 89 LPI: 'treinta (30) días contados desde la fecha de la última publicación.'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B11.1",
+      "subclaim_text": "La DIGEPIH realiza un examen de fondo después de la oposición para verificar prohibiciones absolutas y relativas.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "refutado",
+      "detalle": "El Art. 87 LPI establece que el examen de prohibiciones (Arts. 83 y 84) lo realiza el Registro ANTES de ordenar la publicación. Art. 88 LPI: 'Efectuados los exámenes de conformidad con los Artículos 86 y 87 de la presente Ley, el Registro... ordenará que se anuncie la solicitud mediante la publicación.' La secuencia legal es: examen de forma (Art. 86) → examen de prohibiciones (Art. 87) → publicación (Art. 88) → oposición (Art. 89) → concesión (Art. 91). No existe un segundo 'examen de fondo' post-oposición.",
+      "evidencia": "Arts. 87, 88, 89, 91 LPI.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B11.2",
+      "subclaim_text": "Las prohibiciones absolutas incluyen signos genéricos, descriptivos, engañosos o contrarios al orden público.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado",
+      "detalle": "Art. 83 LPI enumera las prohibiciones absolutas: numeral 3 (signos descriptivos), numeral 4 (designación genérica), numeral 7 (contrarios a la moral u orden público), numeral 9 (puedan engañar al público), entre otros.",
+      "evidencia": "Art. 83(3), 83(4), 83(7), 83(9) LPI.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B11.3",
+      "subclaim_text": "Las prohibiciones relativas se refieren a conflictos con marcas anteriores.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado",
+      "detalle": "Art. 84 LPI enumera las prohibiciones relativas (derivadas de derechos de terceros): numeral 1 (marca registrada o en trámite anterior), numeral 2 (marca no registrada pero usada por tercero con mejor derecho), numeral 4 (marca notoriamente conocida), entre otros.",
+      "evidencia": "Art. 84(1), 84(2), 84(4) LPI.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B12.1",
+      "subclaim_text": "La duración total del trámite es de 6 a 12 meses.",
+      "fuente": "N/A (dato operativo)",
+      "veredicto": "no_verificable",
+      "detalle": "La LPI no establece un plazo total para el procedimiento. Los plazos legales parciales suman aproximadamente: 30 días subsanación + 30 días publicación (3 avisos x 10 días) + 30 días oposición = mínimo 90 días sin contar tiempos administrativos de examen y resolución. El rango 6-12 meses es plausible como estimación práctica pero no es verificable en el texto legal.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B13.1",
+      "subclaim_text": "La vigencia del registro es de 10 años contados desde la fecha de concesión.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado",
+      "detalle": "Art. 92 LPI: 'El registro de una marca caducará a los diez (10) años, contados desde la fecha de concesión del registro.'",
+      "evidencia": "Art. 92 LPI.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B13.2",
+      "subclaim_text": "La renovación debe solicitarse dentro del año anterior al vencimiento.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado",
+      "detalle": "Art. 94 LPI: 'La renovación... se efectuará mediante la presentación de solicitud de renovación... dentro del año anterior a la fecha de vencimiento del registro.'",
+      "evidencia": "Art. 94 LPI.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B13.3",
+      "subclaim_text": "Existe un período de gracia de 6 meses para renovar con recargo.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "confirmado",
+      "detalle": "Art. 94 LPI: 'La renovación también podrá hacerse dentro de un plazo de gracia de seis (6) meses contados de la fecha de vencimiento del registro... debiendo en tal caso pagarse la sobretasa establecida.'",
+      "evidencia": "Art. 94 LPI.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B13.4",
+      "subclaim_text": "Si no se renueva, la marca caduca y queda disponible para cualquier tercero.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "matizado",
+      "detalle": "Es correcto que la marca caduca si no se renueva (Art. 92 LPI). Sin embargo, la afirmación de que 'queda disponible para que cualquier tercero la registre' omite el Art. 83(10) LPI: 'Sean idénticos o se asemejen... a una marca cuyo registro haya vencido o no haya sido renovado... a menos que hubiese transcurrido un (1) año, o dos (2) años, si se trata de una marca colectiva, desde la fecha del vencimiento.' Es decir, un tercero no puede registrar inmediatamente una marca idéntica o similar a la caducada; debe esperar 1 año (2 para colectivas).",
+      "evidencia": "Art. 83(10) LPI y Art. 92 LPI.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B14.1",
+      "subclaim_text": "[Cruce B1+B2] La autoridad DGPI y el registro como fuente del derecho exclusivo son coherentes: la DGPI es quien administra el Registro de la Propiedad Industrial donde se inscribe la marca.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "coherente",
+      "detalle": "Art. 1 LPI (DGPI como dependencia a cargo del Registro) + Art. 80 LPI (derecho exclusivo mediante inscripción en el Registro). Ambas afirmaciones son consistentes entre sí y con la estructura institucional de la ley.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B14.2",
+      "subclaim_text": "[Cruce B6+B13] La clasificación internacional de 45 clases y la vigencia de 10 años renovables son compatibles con el sistema internacional de propiedad industrial.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "coherente",
+      "detalle": "El sistema de clasificación por clases y la vigencia decenal renovable son estándares internacionales (Convenio de París, Arreglo de Niza, ADPIC/TRIPS). La LPI los recoge consistentemente en Arts. 85 (clase internacional), 92 (10 años), 93-94 (renovación).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B14.3",
+      "subclaim_text": "[Cruce B9+B11] El plazo de subsanación de 15 días hábiles y la secuencia procedimental (examen de fondo post-oposición) contienen los dos errores más significativos del documento.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "veredicto": "ambos_refutados",
+      "detalle": "Cruce de B9.2 (plazo 15 días hábiles vs. 30 días legales) y B11.1 (examen de fondo post-oposición vs. pre-publicación). Ambos son errores independientes pero ambos afectan la descripción del procedimiento administrativo. Combinados, distorsionan significativamente la comprensión del proceso de registro.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B14.4",
+      "subclaim_text": "[Cruce B3+B4] Los derechos del titular (impedir uso, comiso, indemnización) y la transferibilidad (licencia, venta) forman un cuadro completo y coherente del derecho de marca como activo de propiedad industrial.",
+      "fuente": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt + data/codigo_comercio.json",
+      "veredicto": "coherente",
+      "detalle": "Arts. 96, 161 LPI (derechos de exclusión e indemnización) + Arts. 100, 102-104 LPI (cesión y licencias) + Arts. 667, 675-676 CM (codigo_comercio.json). El marco de protección y explotación económica de la marca es internamente consistente y está respaldado por ambas fuentes.",
+      "nivel_confianza": "alta"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": [
+      "B1_DGPI_Autoridad",
+      "B2_Derecho_Exclusivo",
+      "B3_Derechos_Titular",
+      "B4_Transferibilidad",
+      "B5_Busqueda_Anterioridad",
+      "B6_Clasificacion_Niza",
+      "B7_Documentos_Solicitud",
+      "B8_Tasas",
+      "B9_Examen_Forma",
+      "B10_Publicacion_Oposicion",
+      "B11_Examen_Fondo",
+      "B12_Duracion_Tramite",
+      "B13_Vigencia_Renovacion"
+    ],
+    "cruces": [
+      {
+        "par": "B1+B2",
+        "relacion": "Complementarios. Art. 1 LPI (DGPI) administra el Registro donde se adquiere el derecho exclusivo (Art. 80 LPI).",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B3",
+        "relacion": "Dependencia lógica. El derecho exclusivo (B2) es el fundamento de los derechos de exclusión (B3). Confirmado por Arts. 80 y 96 LPI.",
+        "conflicto": false
+      },
+      {
+        "par": "B3+B4",
+        "relacion": "Complementarios. Los derechos de exclusión (B3) y la transferibilidad (B4) son facetas del derecho de propiedad industrial. Coherentes.",
+        "conflicto": false
+      },
+      {
+        "par": "B6+B7",
+        "relacion": "Complementarios. La clasificación (B6) determina cómo se estructura la lista de productos/servicios en la solicitud (B7). Art. 85 LPI.",
+        "conflicto": false
+      },
+      {
+        "par": "B9+B11",
+        "relacion": "Error compartido en secuencia procedimental. El documento describe examen de forma (B9) → publicación → oposición → examen de fondo (B11). La ley establece: examen de forma (Art. 86) → examen de fondo (Art. 87) → publicación (Art. 88) → oposición (Art. 89).",
+        "conflicto": false,
+        "error_comun": "Inversión del orden procedimental: el examen de fondo precede a la publicación (no la sigue)"
+      },
+      {
+        "par": "B9+B10",
+        "relacion": "Error en B9.2 (plazo 15 días vs. 30) independiente del dato correcto en B10.1 (publicación en La Gaceta).",
+        "conflicto": false
+      },
+      {
+        "par": "B8+B13",
+        "relacion": "Independientes. La tasa de registro (B8) y la vigencia/renovación (B13) son conceptos distintos. B8 presenta discrepancia con la fuente; B13 es correcto.",
+        "conflicto": false
+      },
+      {
+        "par": "B12+B13",
+        "relacion": "Independientes. La duración del trámite (B12: estimación práctica no verificable) no depende de la vigencia legal (B13: 10 años, confirmado).",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 28,
+    "confirmados": 13,
+    "confirmados_con_matiz": 1,
+    "parcialmente_correctos": 1,
+    "matizados": 1,
+    "sustancialmente_correctos": 1,
+    "plausibles": 3,
+    "coherentes": 4,
+    "no_verificados": 2,
+    "no_verificables": 2,
+    "discrepantes_con_fuente": 1,
+    "refutados": 2,
+    "ambos_refutados": 1,
+    "errores_criticos": [
+      "B11.1: El examen de fondo ocurre ANTES de la publicación (Art. 87 LPI), no después de la oposición.",
+      "B9.2: El plazo de subsanación es de 30 días (Art. 86 LPI), no 15 días hábiles."
+    ],
+    "errores_secundarios": [
+      "B8.1: La tasa en la ley es L.700.00 por clase (Art. 174(4)(a) LPI) vs. 1,000-2,000 lempiras en el documento.",
+      "B13.4: La marca caducada no queda inmediatamente disponible; hay prohibición de 1 año (Art. 83(10) LPI).",
+      "B1.2 y B1.3: El acrónimo DIGEPIH y el 'Instituto de la Propiedad' no aparecen en el texto legal."
+    ],
+    "calidad_global_documento": "Bueno con dos errores procedimentales corregibles (orden del examen de fondo y plazo de subsanación), una discrepancia en tasas posiblemente atribuible a actualización normativa, e imprecisiones menores sobre denominación institucional."
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "edf5f763-5171-4c0b-922f-e143ffcbd49f",
+    "slug": "pension-alimenticia-honduras-como-solicitarla",
+    "sha256_entrada": "2a3738691562c05b0231279413c1294a03104f99dc15f3b8ba02c5bc5a67110f",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_familia_verificado.json",
+      "data/codigo_civil.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_importante": "El Código de Familia completo NO se encuentra en los archivos JSON locales. Solo se dispone de 12 artículos verificados (codigo_familia_verificado.json), de los cuales 5 son sobre alimentos (Arts. 207, 217, 219, 220, 225 CF). El Código Civil contiene un título completo sobre alimentos (Arts. 388-408 CC) que puede estar parcialmente derogado o modificado por el Código de Familia, que es ley posterior y especial. La verificación se limita a contrastar el artículo contra estas fuentes parciales. Los mecanismos de ejecución (embargo de salario, apremio corporal, prohibición de salida) no aparecen en las fuentes disponibles y probablemente están regulados en el Código Procesal Civil o en el Código de Familia completo, no disponibles."
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "La pensión alimenticia es una obligación que garantiza el sustento, educación, salud y vivienda de quienes no pueden proveerse por sí mismos.",
+      "fuente_verificacion": "data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_imprecision",
+      "detalle": "El Código Civil (Art. 390 CC) define los alimentos como congruos ('los que habilitan al alimentario para subsistir modestamente de un modo correspondiente a su posición social') y necesarios ('los que le dan lo que basta para sustentar la vida'). La definición del artículo es sustancialmente correcta, pero añade elementos (educación, salud, vivienda, esparcimiento) que no aparecen enumerados explícitamente en los textos disponibles. La definición del Código Civil es más genérica: habla de 'subsistir modestamente' según posición social o 'sustentar la vida'. Los elementos específicos mencionados pueden estar en el Código de Familia completo (no disponible) o ser una interpretación doctrinal razonable del concepto amplio de alimentos. El Art. 388 CC enumera quiénes tienen derecho, no qué cubre.",
+      "evidencia_local": {
+        "codigo_civil": [
+          "Art. 390 CC: 'Los alimentos se dividen en congruos y necesarios. Congruos son los que habilitan al alimentario para subsistir modestamente de un modo correspondiente a su posición social. Necesarios los que le dan lo que basta para sustentar la vida.'",
+          "Art. 388 CC: enumera beneficiarios pero no el contenido de la obligación."
+        ],
+        "codigo_familia": [
+          "No hay artículos disponibles que enumeren el contenido específico de la obligación alimentaria."
+        ],
+        "imprecision": "El artículo enumera elementos (educación, salud, vivienda, esparcimiento) no textualmente en las fuentes disponibles. Pueden ser interpretación doctrinal o estar en el CF completo."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "La demanda se interpone ante el Juzgado de Familia o el Juzgado de Letras con competencia en materia de familia del domicilio del alimentado o del alimentante.",
+      "fuente_verificacion": "data/codigo_familia_verificado.json + data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "El Art. 219 CF dice que 'el juez determina la cuantía y la forma en que deben prestarse los alimentos', pero no especifica cuál juzgado. El Art. 395 CC menciona que 'el Juez repartirá el importe', y el Art. 396 CC que 'podrá el juez ordenar que se den provisionalmente'. Ninguno menciona explícitamente 'Juzgado de Familia' o 'Juzgado de Letras con competencia en materia de familia'. Estas denominaciones son consistentes con la organización judicial hondureña pero no aparecen textualmente en los artículos disponibles. Es plausible pero no verificable con las fuentes locales.",
+      "evidencia_local": {
+        "codigo_familia": [
+          "Art. 219 CF: 'El juez determina la cuantía y la forma en que deben prestarse los alimentos.' — No especifica tribunal competente."
+        ],
+        "codigo_civil": [
+          "Art. 395 CC: 'el Juez repartirá el importe entre ellos'.",
+          "Art. 396 CC: 'podrá el juez ordenar que se den provisionalmente'."
+        ],
+        "limitacion": "Las fuentes mencionan 'juez' genéricamente sin designar tribunal. La competencia por materia (familia) y territorio (domicilio) es plausible según la organización judicial pero no verificable."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "Quiénes pueden solicitarla: hijos menores de edad representados por el progenitor que tiene la guarda, hijos mayores de edad que estén estudiando y no puedan mantenerse, el cónyuge o conviviente en ciertos casos, y los ascendientes en situación de necesidad.",
+      "fuente_verificacion": "data/codigo_civil.json + data/codigo_familia_verificado.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_omisiones_y_discrepancia",
+      "detalle": "El Art. 388 CC enumera los titulares del derecho de alimentos: '1o.- Al cónyuge. 2o.- A los descendientes legítimos. 3o.- Al hijo natural reconocido. 4o.- A los ascendientes legítimos. 5o.- A la madre y padre naturales que han reconocido al hijo.' Esto confirma: cónyuge (1o.), hijos/descendientes (2o. y 3o.), ascendientes (4o.). DISCREPANCIA: el artículo menciona 'conviviente', pero el Art. 388 CC no incluye convivientes en unión de hecho. El Código de Familia podría haber ampliado los titulares. OMISIÓN: el artículo no menciona a los padres naturales que reconocieron al hijo (Art. 388 CC 5o.). CONFIRMACIÓN PARCIAL sobre hijos mayores estudiando: Art. 401 CC dice que los alimentos continúan 'continuando las circunstancias que legitimaron la demanda', y Art. 407 CC 3o. dice que cesan 'Cuando el alimentario pueda adquirir lo suficiente, según su clase y condición, para subsistir'. Esto implica que un mayor de edad que estudia y no puede mantenerse seguiría teniendo derecho. La representación por el progenitor con guarda no está explícita en los artículos disponibles pero es implícita del ejercicio de la patria potestad.",
+      "evidencia_local": {
+        "codigo_civil": [
+          "Art. 388 CC: 'Se deben alimentos: 1o.- Al cónyuge. 2o.- A los descendientes legítimos. 3o.- Al hijo natural reconocido. 4o.- A los ascendientes legítimos. 5o.- A la madre y padre naturales que han reconocido al hijo.'",
+          "Art. 401 CC: 'Los alimentos que se deben por ley se entienden concedidos para toda la vida del alimentario, continuando las circunstancias que legitimaron la demanda.'",
+          "Art. 407 CC 3o.: 'Cuando el alimentario pueda adquirir lo suficiente, según su clase y condición, para subsistir.'"
+        ],
+        "codigo_familia": [
+          "No hay artículos disponibles que amplíen la lista de titulares."
+        ],
+        "discrepancia": "El artículo incluye 'conviviente' pero el Art. 388 CC no lo contempla. El Código de Familia podría haber incluido la unión de hecho.",
+        "omision": "El artículo omite a 'la madre y padre naturales que han reconocido al hijo' (Art. 388 CC 5o.)."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "El juez fija el monto considerando dos factores: la necesidad del alimentado y la capacidad económica del alimentante. No existe una tabla fija ni un porcentaje automático.",
+      "fuente_verificacion": "data/codigo_familia_verificado.json + data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "Confirmado por ambas fuentes. Art. 207 CF: 'Los alimentos deben ser proporcionales a los recursos de quien los debe y a las circunstancias de quien los recibe.' Art. 394 CC: 'Los alimentos deben ser proporcionados a la posibilidad del que debe darlos y a la necesidad del que debe recibirlos.' Ambas disposiciones contienen el principio de proporcionalidad bilateral (necesidad del alimentado + capacidad del alimentante). Además, Art. 219 CF: 'El juez determina la cuantía y la forma en que deben prestarse los alimentos', lo que confirma que no hay tabla fija automática sino determinación judicial caso por caso.",
+      "evidencia_local": {
+        "codigo_familia": [
+          "Art. 207 CF: 'Los alimentos deben ser proporcionales a los recursos de quien los debe y a las circunstancias de quien los recibe.'",
+          "Art. 219 CF: 'El juez determina la cuantía y la forma en que deben prestarse los alimentos.'"
+        ],
+        "codigo_civil": [
+          "Art. 394 CC: 'Los alimentos deben ser proporcionados a la posibilidad del que debe darlos y a la necesidad del que debe recibirlos.'",
+          "Art. 395 CC: 'Si fueren varios los que deben dar los alimentos, y todos tuvieren posibilidad para hacerlo, el Juez repartirá el importe entre ellos con proporción a sus haberes.'"
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "La pensión se revisa periódicamente: si cambian las circunstancias, cualquiera de las partes puede solicitar la modificación.",
+      "fuente_verificacion": "data/codigo_familia_verificado.json + data/codigo_civil.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "Confirmado por Art. 220 CF: 'La cuantía de los alimentos puede modificarse si cambian las circunstancias que la determinaron.' También respaldado por Art. 401 CC que condiciona los alimentos a que 'continúen las circunstancias que legitimaron la demanda', y Art. 407 CC que enumera causales de cesación. El principio de modificabilidad por cambio de circunstancias es un pilar de la obligación alimentaria en ambas fuentes.",
+      "evidencia_local": {
+        "codigo_familia": [
+          "Art. 220 CF: 'La cuantía de los alimentos puede modificarse si cambian las circunstancias que la determinaron.'"
+        ],
+        "codigo_civil": [
+          "Art. 401 CC: 'Los alimentos que se deben por ley se entienden concedidos para toda la vida del alimentario, continuando las circunstancias que legitimaron la demanda. También se conceden siempre que se reproduzcan las circunstancias que hicieron cesar la obligación.'",
+          "Art. 407 CC: enumera 4 causales de cesación de la obligación, incluyendo cambio de circunstancias."
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "Documentos requeridos: certificación de nacimiento, documento de identidad, comprobantes de gastos del alimentado, prueba de ingresos del alimentante, dirección del alimentante.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Ninguno de los artículos disponibles en las fuentes locales enumera los documentos requeridos para presentar una demanda de alimentos. El Art. 244 CF regula los requisitos de solicitud para divorcio por mutuo consentimiento, pero no para alimentos. La lista de documentos es una enumeración práctica y razonable (acreditar filiación, identidad, necesidad y capacidad económica), pero no tiene respaldo textual directo en las fuentes disponibles. La necesidad de acreditar la filiación es implícita del Art. 388 CC que exige que el hijo sea 'legítimo' o 'natural reconocido'. El resto de documentos son práctica forense estándar.",
+      "evidencia_local": {
+        "codigo_civil": [
+          "Art. 388 CC 2o. y 3o.: requiere que el hijo sea 'legítimo' o 'natural reconocido', lo que implica acreditar filiación mediante certificación de nacimiento."
+        ],
+        "limitacion": "No hay lista documental en las fuentes. Los requisitos documentales específicos probablemente están en el Código Procesal Civil o de Familia, no disponibles."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A7",
+      "claim_text": "Mecanismos de ejecución: embargo del salario del alimentante directamente ante el empleador, apremio corporal (detención del alimentante moroso), prohibición de salida del país, intereses moratorios sobre cuotas atrasadas.",
+      "fuente_verificacion": "data/codigo_civil.json + data/codigo_familia_verificado.json",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable_con_fuentes_disponibles",
+      "detalle": "NINGUNO de los cuatro mecanismos de ejecución mencionados (embargo de salario, apremio corporal, prohibición de salida del país, intereses moratorios) aparece en los artículos disponibles del Código de Familia ni del Código Civil. Art. 405 CC menciona que 'las pensiones alimenticias atrasadas podrán renunciarse o compensarse', y Art. 406 CC establece que 'prescriben por tres años', pero no regula los mecanismos de ejecución forzosa. Art. 225 CF establece que 'prescriben en un año las pensiones alimenticias mensuales ya decretadas y no cobradas' (DISCREPANCIA con Art. 406 CC que dice 3 años; prevalece CF por ser ley posterior y especial). El embargo de salario podría estar en el Código de Trabajo (no consultado). El apremio corporal y la prohibición de salida probablemente están en el Código de Familia completo o en leyes especiales. Los intereses moratorios son un principio general del derecho de obligaciones. Las afirmaciones del artículo son plausibles en el contexto del derecho de familia latinoamericano pero NO VERIFICABLES con las fuentes locales disponibles.",
+      "evidencia_local": {
+        "codigo_familia": [
+          "Art. 225 CF: 'Prescriben en un año las pensiones alimenticias mensuales ya decretadas y no cobradas.'"
+        ],
+        "codigo_civil": [
+          "Art. 405 CC: 'las pensiones alimenticias atrasadas podrán renunciarse o compensarse; y el derecho de demandarlas, transmitirse por causa de muerte, enajenarse o cederse.'",
+          "Art. 406 CC: 'Las pensiones alimenticias atrasadas se prescriben por tres años contados desde el día en que dejaron de pagarse.' (Probablemente derogado por Art. 225 CF que establece UN año.)"
+        ],
+        "ausencia_detectada": "No se encuentra en las fuentes locales ninguna referencia a embargo de salario, apremio corporal, prohibición de salida del país ni intereses moratorios en el contexto de alimentos."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A8",
+      "claim_text": "El proceso es gratuito para el solicitante. No se requiere abogado para iniciar la demanda. La Defensa Pública brinda asistencia gratuita.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "no_verificable_con_fuentes_disponibles",
+      "detalle": "Ninguno de los artículos disponibles menciona gratuidad del proceso de alimentos, exención de abogado ni asistencia de la Defensa Pública. El Código Civil no contiene disposiciones sobre gratuidad procesal en esta materia. El Código de Familia (Arts. 207-225 CF disponibles) tampoco aborda estos aspectos procesales. Estas afirmaciones sobre gratuidad y defensa pública probablemente están en el Código de Familia completo o en la Ley de la Defensa Pública, no disponibles. Son afirmaciones de política pública y acceso a la justicia plausibles pero no verificables contra los textos normativos disponibles.",
+      "evidencia_local": {
+        "ausencia_detectada": "No se encuentra en las fuentes locales ninguna referencia a gratuidad del proceso de alimentos, exención de abogado, ni intervención de la Defensa Pública.",
+        "plausibilidad": "Muchos ordenamientos latinoamericanos contemplan gratuidad en procesos de alimentos por su naturaleza tutelar. Plausible pero no verificable."
+      },
+      "nivel_confianza": "baja"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 8,
+    "confirmados": 2,
+    "parcialmente_confirmados": 2,
+    "plausible_no_verificable": 1,
+    "no_verificable_con_fuentes_disponibles": 3,
+    "errores_y_discrepancias_detectados": [
+      "DISCREPANCIA (A3): El artículo incluye 'conviviente' como titular del derecho de alimentos, pero el Art. 388 CC solo menciona 'cónyuge', no conviviente en unión de hecho. El Código de Familia podría haber ampliado los titulares, pero no hay evidencia en los artículos disponibles.",
+      "OMISION (A3): El artículo omite a 'la madre y padre naturales que han reconocido al hijo' como titulares del derecho de alimentos (Art. 388 CC 5o.).",
+      "NO VERIFICABLE (A7): Los cuatro mecanismos de ejecución (embargo de salario, apremio corporal, prohibición de salida, intereses moratorios) no aparecen en ninguna fuente local disponible. Podrían estar en el Código de Familia completo o en leyes procesales no disponibles.",
+      "NO VERIFICABLE (A8): Las afirmaciones sobre gratuidad del proceso, no necesidad de abogado y asistencia de Defensa Pública no tienen respaldo en las fuentes locales disponibles.",
+      "IMPRECISION (A1): La enumeración de elementos cubiertos por alimentos (educación, salud, vivienda, esparcimiento) no aparece textualmente en las fuentes. El CC habla de 'subsistir modestamente' de modo genérico."
+    ],
+    "observacion_principal": "El artículo es sustancialmente correcto en sus afirmaciones normativas centrales: la obligación de alimentos existe (Art. 388 CC), el monto se fija por necesidad/capacidad (Arts. 207 CF y 394 CC), el juez determina la cuantía (Art. 219 CF), y la pensión es modificable por cambio de circunstancias (Art. 220 CF). Sin embargo, las secciones más prácticas y procesales del artículo (documentos, mecanismos de ejecución, gratuidad, Defensa Pública) NO son verificables con las fuentes locales disponibles, que son exclusivamente normativas y parciales. El Código de Familia completo no está disponible (solo 12 artículos). El Código Civil contiene un título completo sobre alimentos (Arts. 388-408 CC) pero puede estar parcialmente derogado por el Código de Familia. Se recomienda verificación externa para los aspectos procesales y de ejecución.",
+    "calidad_general": "buena_en_lo_normativo_basico__no_verificable_en_lo_procesal"
+  }
+}

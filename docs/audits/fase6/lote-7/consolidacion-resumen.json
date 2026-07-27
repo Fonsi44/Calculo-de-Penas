@@ -1,0 +1,85 @@
+{
+  "lote": 7,
+  "total": 15,
+  "completed": 0,
+  "corrected": 0,
+  "needs_human_review": 15,
+  "blocked": 0,
+  "detalles": [
+    {
+      "slug": "acoso-laboral-mobbing-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "arbitraje-cuando-conviene-como-funciona-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "central-riesgos-honduras-consultar-impugnar",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "costos-honorarios-abogados-como-funcionan-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "delitos-ambientales-como-denunciarlos-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "derecho-ambiental-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "devolucion-impuestos-como-solicitarla-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "divorcio-tipos-requisitos-tiempos-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "etapa-investigacion-proceso-penal-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "herencias-honduras-fallece-familiar",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "impuesto-renta-personas-fisicas-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "jornada-laboral-horas-extra-descansos-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "pension-alimenticia-honduras-como-solicitarla",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "reagrupacion-familiar-hondurenos-espana",
+      "estado": "needs_human_review",
+      "errores": 0
+    },
+    {
+      "slug": "registrar-marca-paso-a-paso-honduras",
+      "estado": "needs_human_review",
+      "errores": 0
+    }
+  ]
+}

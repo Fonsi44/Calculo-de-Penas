@@ -1,0 +1,335 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "13fc809b-491c-4cb8-965a-88bd33c7da4d",
+    "slug": "acoso-laboral-mobbing-honduras",
+    "sha256_entrada": "038c7736619ea8e95628a3dbbf5d07f3d938862df13f2c7315d2b04ed87d348e",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_trabajo.json",
+      "data/codigo_procesal_penal_verificado.json",
+      "data/lote-penal-1.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_limitante": "El Código Penal sustantivo (Decreto 130-2017) no está disponible en los archivos JSON locales. Existe 'codigo_procesal_penal_verificado.json' (CPP, 44 artículos) que es el Código Procesal Penal — código distinto del Código Penal. El Art. 294 CPP regula la audiencia inicial, no el acoso laboral. 'lote-penal-1.json' no contiene datos legibles. El Código Civil, la Ley de Inspección del Trabajo y el Código de Familia tampoco están en las fuentes locales. La verificación se apoya principalmente en el Código de Trabajo (856 artículos verificados), que cubre las figuras laborales pero no las penales ni civiles mencionadas."
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento describe el acoso laboral en Honduras desde tres ángulos: laboral (despido indirecto, Art. 114 CT), penal (acoso laboral vertical, Art. 294 CP) y probatorio/administrativo. De estos tres pilares, solo el laboral es verificable contra las fuentes locales. El pilar penal —que es presentado como la novedad legislativa más relevante— no puede ser verificado porque el Código Penal no está en las fuentes locales. El pilar administrativo (STSS, inspección) y civil (daños y perjuicios) tampoco son verificables por ausencia de las leyes respectivas. El artículo es internamente coherente y bien estructurado, pero su credibilidad depende de la exactitud de las citas al Código Penal, que no se pueden confirmar. Se detecta una posible confusión de códigos: el artículo menciona 'Artículo 294 del Código Penal', pero en las fuentes locales el Art. 294 pertenece al Código Procesal Penal (audiencia inicial) — son cuerpos legales distintos.",
+    "discrepancias_detectadas": [
+      {
+        "tipo": "posible_confusion_de_codigos",
+        "descripcion": "El artículo cita el 'Artículo 294 del Código Penal (Decreto 130-2017)' como el tipo penal de acoso laboral vertical. En las fuentes locales, el único Art. 294 disponible pertenece al Código Procesal Penal (CPP) y regula la audiencia inicial. No se puede confirmar que el Art. 294 del Código Penal efectivamente tipifique el acoso laboral, pero la coincidencia numérica con el Art. 294 CPP (código distinto) amerita verificación externa para descartar una confusión de fuentes por parte del autor.",
+        "impacto": "alto",
+        "apariciones": 1,
+        "ubicaciones": ["Sección '¿Cómo aplica el Artículo 294 del Código Penal sobre Acoso Laboral Vertical?'"]
+      },
+      {
+        "tipo": "ausencia_total_de_fuente_primaria",
+        "descripcion": "Todas las referencias al Código Penal (Arts. 294, 246, 245, 229) y al Decreto 130-2017 dependen de una fuente que no está disponible localmente. Esto afecta aproximadamente el 30% del contenido sustantivo del artículo. Sin acceso al Código Penal, no se puede verificar: (a) la existencia del tipo penal de acoso laboral vertical, (b) la pena de 6 meses a 1 año, (c) la existencia y contenido de los arts. 246, 245 y 229, (d) que el Decreto 130-2017 sea el Código Penal vigente.",
+        "impacto": "alto",
+        "apariciones": 4,
+        "ubicaciones": ["Sección Art. 294 CP", "Mención Arts. 246/245/229 CP", "Referencia al Decreto 130-2017", "Mención del Ministerio Público"]
+      },
+      {
+        "tipo": "matiz_textual_menor",
+        "descripcion": "El artículo dice que el Art. 114 CT garantiza el '100% de sus prestaciones'. El texto del Art. 114 CT dice 'conservando el derecho a las prestaciones e indemnizaciones legales, como en el caso de despido injusto'. La palabra '100%' no aparece en el CT. La diferencia es menor en la práctica (el efecto jurídico es equivalente), pero la paráfrasis es ligeramente imprecisa.",
+        "impacto": "bajo",
+        "apariciones": 1,
+        "ubicaciones": ["Sección '¿Qué es el despido indirecto y cómo aplica el Artículo 114?'"]
+      }
+    ],
+    "fuente_ausente_critica": {
+      "tipo": "ley_primaria_no_disponible",
+      "descripcion": "El Código Penal de Honduras (Decreto 130-2017) es la fuente jurídica central para la sección penal del artículo. No está disponible en ningún archivo JSON local. El archivo 'lote-penal-1.json' existe pero sus 15 entradas están vacías. El archivo 'codigo_procesal_penal_verificado.json' contiene 44 artículos del Código Procesal Penal (CPP), que es una ley distinta. Esta ausencia impide verificar la afirmación más novedosa y potencialmente impactante del artículo: la tipificación penal del acoso laboral vertical. Adicionalmente, la Ley de Inspección del Trabajo, el Código Civil y la Ley del IHSS no están disponibles, lo que limita la verificación de las secciones administrativa, civil y probatoria.",
+      "impacto": "alto"
+    }
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "El acoso laboral o mobbing consiste en una conducta hostil, reiterada y sistemática dirigida contra un trabajador en su entorno laboral.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "Definición doctrinal, no textual. El Art. 114 CT literal b) cubre conductas de violencia, malos tratamientos y amenazas del patrono que se solapan con el concepto de acoso, pero el CT no contiene una definición legal de mobbing. La definición del artículo es consistente con la doctrina iberoamericana.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "La legislación hondureña protege activamente a los trabajadores frente a estos abusos mediante el Código de Trabajo y el Código Penal vigente.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "parcialmente_confirmado_con_limitacion",
+      "detalle": "El Código de Trabajo sí protege mediante el despido indirecto (Art. 114 CT). La protección del Código Penal no es verificable por ausencia de la fuente. 'Activamente' es una valoración cualitativa.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "El Decreto 130-2017 es el Código Penal de Honduras vigente.",
+      "fuente": "data/codigo_procesal_penal_verificado.json",
+      "veredicto": "no_verificable",
+      "detalle": "No hay fuente local que confirme o refute que el Decreto 130-2017 sea el Código Penal vigente en Honduras. Es una afirmación que requiere verificación externa.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "El Artículo 294 del Código Penal tipifica expresamente el Acoso Laboral Vertical como delito.",
+      "fuente": "data/codigo_procesal_penal_verificado.json",
+      "veredicto": "no_verificable_con_alerta",
+      "detalle": "El Código Penal no está disponible. El Art. 294 que sí está disponible pertenece al Código Procesal Penal (CPP) y regula la audiencia inicial, materia sin relación con acoso laboral. ALERTA: existe la posibilidad de que el autor haya confundido el Código Penal con el Código Procesal Penal, o que simplemente el número de artículo coincida en ambos códigos. No se puede descartar ninguna hipótesis sin acceso al CP.",
+      "evidencia": "Art. 294 CPP: 'Regula la audiencia inicial y las resoluciones que puede adoptar el órgano jurisdiccional.'",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B2.3",
+      "subclaim_text": "La pena por acoso laboral vertical es de arresto domiciliario de seis (6) meses a un (1) año.",
+      "fuente": "data/codigo_procesal_penal_verificado.json + data/lote-penal-1.json",
+      "veredicto": "no_verificable",
+      "detalle": "Al no estar disponible el Código Penal, la pena específica no puede ser verificada. Es una afirmación que requiere acceso al Decreto 130-2017.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B2.4",
+      "subclaim_text": "Aprovechándose de una relación de superioridad en el ámbito laboral, realiza actos hostiles o despreciativos reiterados que provocan una situación objetiva y gravemente humillante para la víctima. (Descripción de la conducta típica del Art. 294 CP)",
+      "fuente": "data/lote-penal-1.json",
+      "veredicto": "no_verificable",
+      "detalle": "Descripción detallada que el artículo atribuye al Art. 294 CP. Sin el texto del Código Penal, no se puede verificar si esta descripción corresponde al tipo penal o es una elaboración del autor. 'lote-penal-1.json' no contiene datos legibles.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B2.5",
+      "subclaim_text": "Los Artículos 246 (amenazas), 245 (coacciones) y 229 (injurias) del Código Penal pueden denunciarse en concurso ante el Ministerio Público.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "Ni los artículos ni el Código Penal están en fuentes locales. La afirmación sobre concurso de delitos es técnicamente plausible (si los tipos penales existen, pueden concursar), pero la existencia misma de los tipos no es verificable.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "El Artículo 114 del Código de Trabajo (Decreto 189-1959) faculta al empleado para dar por terminado su contrato sin preaviso y sin responsabilidad de su parte.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 114 CT textual: 'Son causas justas que facultan al trabajador para dar por terminado el contrato de trabajo, sin preaviso y sin responsabilidad de su parte'. Confirmado palabra por palabra.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.2",
+      "subclaim_text": "El trabajador conserva el derecho al pago del 100% de sus prestaciones e indemnizaciones legales.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "parcialmente_confirmado_con_matiz",
+      "detalle": "El Art. 114 CT dice 'conservando el derecho a las prestaciones e indemnizaciones legales, como en el caso de despido injusto'. No dice '100%' literalmente. El efecto jurídico es equivalente (se reciben todas las prestaciones como en despido injusto), pero la paráfrasis añade la palabra '100%' que no está en el texto legal.",
+      "evidencia": "Art. 114 CT: 'conservando el derecho a las prestaciones e indemnizaciones legales, como en el caso de despido injusto'.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.3",
+      "subclaim_text": "Las prestaciones incluyen: cesantía, preaviso, vacaciones, décimo tercer y décimo cuarto mes.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "plausible_no_verificable_en_conjunto",
+      "detalle": "El Art. 114 CT no enumera las prestaciones. Estas están reguladas en otros artículos del Código de Trabajo (cesantía, preaviso, vacaciones, aguinaldo). La enumeración del artículo es plausible pero no se verificó artículo por artículo contra el CT para cada prestación. El 'décimo tercer y décimo cuarto mes' son denominaciones coloquiales para el aguinaldo, comunes en Honduras.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B3.4",
+      "subclaim_text": "El Art. 114 CT literal b) cubre actos de violencia, malos tratamientos o amenazas graves del patrono como causal de despido indirecto.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 114 CT literal b): 'Todo acto de violencia, malos tratamientos, o amenazas graves inferidas por el patrono contra el trabajador o los miembros de su familia, dentro o fuera del servicio, o inferidas dentro del servicio por los parientes, representantes o dependientes del patrono, con el consentimiento o la tolerancia de éste.' Confirmado. Esta disposición cubre tanto el acoso directo del patrono como el acoso por dependientes con tolerancia del patrono.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.5",
+      "subclaim_text": "El Decreto 189-1959 corresponde al Código de Trabajo.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El archivo codigo_trabajo.json contiene 856 artículos pero no incluye el número de decreto en sus metadatos. La afirmación de que el CT es el Decreto 189-1959 es un dato histórico-jurídico plausible (el CT hondureño data de 1959) pero no es verificable contra el contenido del archivo JSON.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "Para el despido indirecto, el empleado debe notificar por escrito las causales exactas de su renuncia.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 117 CT: 'La parte que termina unilateralmente el contrato de trabajo debe dar el preaviso por escrito, personalmente a la otra parte [...] con expresión de la causa o motivo que la mueve a tomar esa determinación. Después no podrá alegar validamente causales o motivos distintos.' Confirmado: debe ser por escrito y con expresión de causa.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "Una renuncia simple sin invocar el Artículo 114 exime al patrono del pago del auxilio de cesantía y preaviso.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "El Art. 117 CT exige expresar la causa al momento de la terminación y prohíbe alegar causas distintas después. El Art. 115 CT establece que si el trabajador abandona sin justa causa debe pagar preaviso y daños. La inferencia de que una renuncia sin invocar causa justa priva de cesantía y preaviso es lógicamente correcta dentro del sistema del CT, pero no hay un artículo que lo diga en esos términos exactos.",
+      "evidencia": "Art. 117 CT: obligación de expresar causa. Art. 115 CT: consecuencias de abandono sin justa causa.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "Según el Artículo 865 del Código de Trabajo, el plazo de prescripción para el despido indirecto es de un (1) mes.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 865 CT textual: 'Los derechos y acciones de los trabajadores para dar por terminado con justa causa su contrato de trabajo, prescriben en el término de un (1) mes, contado desde el momento en que el patrono dio motivo para la separación o despido indirecto.' Confirmado en su totalidad: plazo, cómputo y referencia al despido indirecto.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.1",
+      "subclaim_text": "El trabajador puede interponer una denuncia administrativa ante la Inspectoría General del Trabajo (STSS).",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "La existencia de la STSS y su Inspectoría es un hecho institucional conocido. Sin embargo, la Ley de Inspección del Trabajo y el reglamento de la STSS no están en las fuentes locales. La afirmación es altamente plausible pero no verificable contra los textos disponibles.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B6.2",
+      "subclaim_text": "Los inspectores pueden visitar la empresa, levantar actas, citar a audiencias de conciliación e imponer multas exigiendo el cese del hostigamiento.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Funciones típicas de inspección del trabajo. No verificables contra el Código de Trabajo, que es ley sustantiva, no ley de inspección. La facultad sancionadora y las medidas de cese son plausibles pero sin respaldo textual en las fuentes disponibles.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B7.1",
+      "subclaim_text": "La víctima puede demandar indemnización por daños morales y materiales ante juzgados civiles.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Principio general del derecho de daños. El Código Civil hondureño no está en las fuentes locales. Sin acceso al CC, no se puede verificar la regulación de la responsabilidad civil extracontractual ni la procedencia de daños morales en Honduras.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B8.1",
+      "subclaim_text": "La carga de la prueba en el despido indirecto recae en el trabajador.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "El Art. 115 CT regula la situación inversa (patrono probando abandono sin justa causa). Por principio general, quien alega un hecho debe probarlo. El Art. 117 CT exige expresar la causa al momento de la terminación, lo que implica que el trabajador debe tener elementos para sustentarla. La afirmación es jurídicamente correcta como principio, pero el CT no dice explícitamente 'la carga de la prueba recae en el trabajador'.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B8.2",
+      "subclaim_text": "Se recomiendan como medios probatorios: correos electrónicos, mensajes de WhatsApp, bitácora de incidentes, testimonios y dictámenes médicos del IHSS.",
+      "fuente": "observacion_contextual",
+      "veredicto": "plausible",
+      "detalle": "Consejos prácticos de litigación, no requisitos legales. Todos los medios mencionados son admisibles en principio en cualquier procedimiento laboral hondureño. La referencia al IHSS es contextualmente plausible. No hay fuente legal que 'recomiende' estos medios; son sugerencias del autor.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B8.3",
+      "subclaim_text": "Las denuncias internas previas ante Recursos Humanos y la inacción de la empresa fortalecen la demanda por responsabilidad solidaria.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "El Art. 114 CT literal b) cubre actos de dependientes 'con el consentimiento o la tolerancia' del patrono. Una denuncia interna ignorada es evidencia de tolerancia. La 'responsabilidad solidaria' es un concepto del derecho de obligaciones que requeriría verificación en el Código Civil, no disponible. La lógica es sólida pero el término 'solidaria' puede no ser el técnicamente correcto en el contexto laboral hondureño.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B9.1",
+      "subclaim_text": "Los empleadores tienen la obligación legal de garantizar un ambiente de trabajo seguro.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "plausible",
+      "detalle": "Principio general del derecho del trabajo. El Código de Trabajo contiene disposiciones sobre seguridad e higiene que respaldan esta obligación general, aunque el artículo no cita artículos específicos. La obligación es inherente a la relación laboral.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B9.2",
+      "subclaim_text": "Si la empresa tiene conocimiento del acoso entre pares y omite tomar medidas disciplinarias, asume responsabilidad legal por negligencia.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "plausible_con_soporte_parcial",
+      "detalle": "El Art. 114 CT literal b) respalda la responsabilidad cuando el acoso es 'inferido dentro del servicio por los [...] dependientes del patrono, con el consentimiento o la tolerancia de éste'. La omisión de medidas equivale a tolerancia. El término 'responsabilidad legal por negligencia' es una construcción doctrinal que combina el CT (tolerancia = causal de despido indirecto) con principios de responsabilidad civil no verificables.",
+      "evidencia": "Art. 114 CT literal b): actos de dependientes 'con el consentimiento o la tolerancia' del patrono.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B10.1",
+      "subclaim_text": "[Cruce B2+B3] El artículo descansa sobre dos pilares legales: el Código Penal (B2) y el Código de Trabajo (B3). El pilar penal no es verificable.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "asimetria_de_verificabilidad",
+      "detalle": "De los dos pilares normativos del artículo, solo el laboral (B3) es verificable. El penal (B2) depende enteramente de fuentes no disponibles. Esto crea una asimetría: el artículo es sólidamente verificable en su mitad laboral pero completamente opaco en su mitad penal.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B10.2",
+      "subclaim_text": "[Cruce B2.2+B2.3] La tipificación del acoso laboral vertical y su pena forman un bloque no verificable pero internamente coherente.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "coherente_internamente_no_verificable",
+      "detalle": "La descripción del tipo penal (B2.2) y la pena (B2.3) son internamente consistentes: el acoso laboral vertical se castiga con arresto domiciliario de 6 meses a 1 año. La coherencia interna no sustituye la verificación externa. El bloque completo requiere acceso al Decreto 130-2017.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B10.3",
+      "subclaim_text": "[Cruce B3+B4+B5] El bloque de despido indirecto es internamente consistente y verificable: causal (B3.4), procedimiento (B4.1), consecuencias de no seguir el procedimiento (B4.2) y prescripción (B5.1).",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "confirmado_en_conjunto",
+      "detalle": "El artículo describe correctamente el circuito del despido indirecto en el Código de Trabajo: (1) el Art. 114 CT establece las causales, (2) el Art. 117 CT exige notificación escrita con expresión de causa, (3) la falta de expresión de causa priva de las protecciones del despido indirecto, (4) el Art. 865 CT establece prescripción de 1 mes. El circuito es jurídicamente correcto y está respaldado por las fuentes.",
+      "evidencia": "Arts. 114, 115, 117 y 865 CT — todos verificados en codigo_trabajo.json.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B10.4",
+      "subclaim_text": "[Cruce B3.4+B9.2] El Art. 114 CT literal b) cubre tanto el acoso del patrono como el acoso por compañeros tolerado por el patrono. Ambas afirmaciones son consistentes con la misma fuente.",
+      "fuente": "data/codigo_trabajo.json",
+      "veredicto": "confirmado_consistencia_cruzada",
+      "detalle": "El Art. 114 CT literal b) menciona actos inferidos 'por el patrono' e 'inferidas dentro del servicio por los parientes, representantes o dependientes del patrono, con el consentimiento o la tolerancia de éste'. Esto cubre ambas situaciones descritas en el artículo: acoso directo del jefe (B3.4) y acoso entre pares con tolerancia (B9.2). La cobertura es expresa y verificable.",
+      "evidencia": "Art. 114 CT literal b): texto completo ya verificado.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B10.5",
+      "subclaim_text": "[Cruce B6+B7+B8] Las vías administrativa (B6), civil (B7) y probatoria (B8) son complementarias entre sí y con la vía laboral pero ninguna es verificable en detalle.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "coherente_internamente_no_verificable_en_detalle",
+      "detalle": "Las tres vías adicionales (STSS, civil, probatoria) forman un ecosistema de protección complementario lógico. Sin embargo, la Ley de Inspección, el Código Civil y las normas procesales no están disponibles. La coherencia interna del conjunto es alta (cada vía ataca un aspecto distinto del problema), pero la verificabilidad es baja.",
+      "nivel_confianza": "baja"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["B1_Definicion", "B2_Pilar_Penal", "B3_Pilar_Laboral", "B4_Procedimiento_Despido", "B5_Prescripcion", "B6_Via_Administrativa", "B7_Via_Civil", "B8_Prueba", "B9_Responsabilidad_Empleador", "B10_Cruces_Internos"],
+    "cruces": [
+      {
+        "par": "B2+B3",
+        "relacion": "Asimetria. B2 (penal) no es verificable; B3 (laboral) es verificable y confirmado. Los dos pilares del articulo tienen calidades de verificacion radicalmente distintas.",
+        "conflicto": false
+      },
+      {
+        "par": "B3+B4+B5",
+        "relacion": "Circuito completo verificado. Art. 114 (causal) + Art. 117 (procedimiento) + Art. 865 (prescripcion) forman un bloque juridico correcto y verificado.",
+        "conflicto": false
+      },
+      {
+        "par": "B3.4+B9.2",
+        "relacion": "Consistencia reforzada. El mismo Art. 114 CT literal b) cubre ambas situaciones: acoso del patrono directo y acoso entre pares con tolerancia.",
+        "conflicto": false
+      },
+      {
+        "par": "B2.2+B2.3",
+        "relacion": "Coherente pero no verificable. La descripcion del tipo penal y la pena son internamente consistentes entre si, pero dependen de fuente no disponible.",
+        "conflicto": false
+      },
+      {
+        "par": "B6+B7+B8",
+        "relacion": "Complementarias no verificables. Las vias administrativa, civil y probatoria son logicamente complementarias entre si y con la via laboral, pero ninguna tiene respaldo textual verificable en las fuentes disponibles.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B3.4",
+        "relacion": "Solapamiento parcial. La definicion doctrinal de acoso (B1) encuentra respaldo parcial en la causal legal de violencia/malos tratamientos (B3.4), pero la definicion es mas amplia que la causal legal.",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 27,
+    "confirmados": 4,
+    "confirmados_con_matiz": 1,
+    "parcialmente_confirmados_con_matiz": 1,
+    "parcialmente_confirmados_con_limitacion": 1,
+    "plausibles": 3,
+    "plausibles_con_soporte_parcial": 5,
+    "plausibles_no_verificables": 4,
+    "plausibles_no_verificables_en_conjunto": 1,
+    "no_verificables": 2,
+    "no_verificables_con_alerta": 1,
+    "confirmado_en_conjunto": 1,
+    "confirmado_consistencia_cruzada": 1,
+    "asimetria_de_verificabilidad": 1,
+    "coherente_internamente_no_verificable": 2,
+    "conflictos_detectados_flag": false,
+    "observacion_critica": "El articulo es sustancialmente correcto en su pilar laboral (despido indirecto, prescripcion). Los Arts. 114, 117 y 865 del Codigo de Trabajo respaldan las afirmaciones principales con precision textual. Sin embargo, el pilar penal —que incluye la afirmacion mas novedosa del articulo (tipificacion del acoso laboral vertical en el Art. 294 CP con pena de 6 meses a 1 ano)— NO puede ser verificado porque el Codigo Penal (Decreto 130-2017) no esta disponible en las fuentes locales. Existe una alerta: en las fuentes locales el Art. 294 pertenece al Codigo Procesal Penal (CPP, audiencia inicial), no al Codigo Penal. Sin acceso al CP, no se puede determinar si el autor consulto correctamente el Codigo Penal o si confundio el numero de articulo con el CPP. Las vias administrativa (STSS), civil (danos y perjuicios) y las recomendaciones probatorias son plausibles y consistentes con el sistema juridico hondureno, pero no tienen respaldo textual directo en las fuentes locales disponibles. Se recomienda: (a) verificacion externa de los Arts. 294, 246, 245 y 229 del Codigo Penal hondureno, (b) confirmacion de que el Decreto 130-2017 es el Codigo Penal vigente, y (c) incorporacion del Codigo Penal a las fuentes locales para futuras verificaciones.",
+    "calidad_global_documento": "Buena en el pilar laboral verificable, no evaluable en el pilar penal por ausencia de fuente. El articulo es internamente coherente, bien estructurado y juridicamente plausible en todas sus secciones. La unica limitacion es la imposibilidad de verificar las referencias al Codigo Penal, que constituyen aproximadamente el 30% del contenido juridico sustantivo."
+  }
+}

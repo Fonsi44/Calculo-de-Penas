@@ -1,0 +1,169 @@
+{
+  "audit": {
+    "id": "62ef4cfe-0b17-47fd-8fea-e2969ce45d74",
+    "slug": "herencias-honduras-fallece-familiar",
+    "title": "Herencias en Honduras: ¿qué hacer cuando fallece un familiar?",
+    "category": "derecho-civil",
+    "author": "Pineda y Asociados",
+    "publishedAt": "2026-01-05T12:00:00.000Z",
+    "updatedAt": "2026-06-20T10:00:50.739Z",
+    "reviewStatus": "reviewed",
+    "aiReviewStatus": "not_started"
+  },
+  "pasada": "A",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "entrada": {
+    "sha256": "a458d827e382852582ec51c9c9056a7858419952e6f99c1b4d84cfe977e0dcd4",
+    "path": "docs/audits/fase6/lote-7/herencias-honduras-fallece-familiar/entrada.json"
+  },
+  "fuentes": [
+    {
+      "id": "codigo_civil",
+      "path": "data/codigo_civil.json",
+      "type": "norma",
+      "description": "Código Civil de Honduras — artículos sobre sucesiones (Art. 77, 936, 938, 959–979, 1147–1156, 1167–1168, 1172, 1192–1198, 1202–1203)",
+      "verificado": true,
+      "articulos_relevantes": [
+        "Art. 77 CC",
+        "Art. 936 CC",
+        "Art. 938 CC",
+        "Art. 959 CC",
+        "Art. 960 CC",
+        "Art. 961 CC",
+        "Art. 962 CC",
+        "Art. 963 CC",
+        "Art. 964 CC",
+        "Art. 965 CC",
+        "Art. 966 CC",
+        "Art. 967 CC",
+        "Art. 968 CC",
+        "Art. 969 CC",
+        "Art. 970 CC",
+        "Art. 971 CC",
+        "Art. 972 CC",
+        "Art. 973 CC",
+        "Art. 974 CC",
+        "Art. 975 CC",
+        "Art. 976 CC",
+        "Art. 977 CC",
+        "Art. 978 CC",
+        "Art. 979 CC",
+        "Art. 1147 CC",
+        "Art. 1150 CC",
+        "Art. 1154 CC",
+        "Art. 1167 CC",
+        "Art. 1168 CC",
+        "Art. 1172 CC",
+        "Art. 1192 CC",
+        "Art. 1194 CC",
+        "Art. 1196 CC"
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "C01",
+      "texto": "La legislación hondureña distingue dos modalidades sucesorias: sucesión testada (con testamento) y sucesión intestada (sin testamento).",
+      "ubicacion": "body > h2:Tipos de sucesión",
+      "verificacion": "OK",
+      "fundamento": "Art. 960 CC regula la sucesión intestada; Art. 976 CC menciona expresamente ambas modalidades al disponer que 'cuando en un mismo patrimonio se ha de suceder por testamento y ab intestado, se cumplirán primero las disposiciones testamentarias'; Art. 979 CC declara la testamentificación libre; Art. 980 CC define el testamento.",
+      "riesgo": "bajo"
+    },
+    {
+      "id": "C02",
+      "texto": "La sucesión testada requiere testamento válido otorgado en escritura pública ante notario.",
+      "ubicacion": "body > h3:Sucesión testada",
+      "verificacion": "PARCIAL",
+      "fundamento": "El Código Civil reconoce testamento solemne (Art. 989 CC) y menos solemne o privilegiado (Art. 989, 1023 CC — testamento verbal en ciertas circunstancias). Afirmar que solo procede 'en escritura pública ante notario' omite otras formas testamentarias admitidas por la ley.",
+      "riesgo": "medio"
+    },
+    {
+      "id": "C03",
+      "texto": "En la sucesión intestada, la ley sigue un orden de prelación: 1.er orden hijos y descendientes; 2.do orden ascendientes; 3.er orden cónyuge sobreviviente; 4.to orden hermanos y sobrinos; 5.to orden colaterales hasta el cuarto grado; 6.to orden el Estado de Honduras.",
+      "ubicacion": "body > h2:¿Qué pasa si no hay testamento?",
+      "verificacion": "ERROR",
+      "fundamento": "Art. 960 CC establece el orden real: 1. descendientes legítimos, 2. ascendientes legítimos, 3. colaterales legítimos, 4. hijos naturales o nietos naturales, 5. padres naturales o abuelos naturales, 6. hermanos naturales, 7. cónyuge sobreviviente, 8. municipios. El artículo coloca al cónyuge en 3.er lugar, pero el código lo sitúa en 7.mo (Art. 960.7). Además, el artículo dice 'Estado de Honduras' pero el código dice 'municipios' (Art. 973). El artículo omite la distinción entre herederos legítimos y naturales, central en el esquema del código.",
+      "riesgo": "alto"
+    },
+    {
+      "id": "C04",
+      "texto": "Los herederos de un orden excluyen a los del siguiente, salvo el cónyuge, que concurre con descendientes y ascendientes.",
+      "ubicacion": "body > h2:¿Qué pasa si no hay testamento? > p (último párrafo)",
+      "verificacion": "PARCIAL",
+      "fundamento": "La regla general de exclusión entre órdenes es correcta en el esquema del código. Sin embargo, el cónyuge no 'concurre con descendientes y ascendientes' en la forma simple que el artículo sugiere. Art. 965 CC: con hijos legítimos, el cónyuge solo tiene porción conyugal (cuarta parte, Art. 1150 CC). Art. 966 CC: sin descendientes legítimos, herencia dividida en tres: ascendientes legítimos, cónyuge, hijos naturales. La concurrencia es más compleja y depende de qué otras categorías de herederos existan.",
+      "riesgo": "medio"
+    },
+    {
+      "id": "C05",
+      "texto": "La Constitución de Honduras y el Código Civil reconocen igualdad de derechos sucesorios a todos los hijos, sin distinción entre matrimoniales y extramatrimoniales.",
+      "ubicacion": "body > h3:¿Los hijos extramatrimoniales tienen derecho a herencia?",
+      "verificacion": "ERROR",
+      "fundamento": "Art. 965 CC establece expresamente una distinción: 'la herencia se dividirá en cuatro partes: tres para los hijos legítimos y una para los hijos naturales, o nietos naturales' y añade: 'en ningún caso la porción de un hijo natural podrá exceder a la mitad de la porción de un hijo legítimo'. Esta disposición contradice directamente la afirmación de igualdad. El Código Civil sí reconoce derecho sucesorio a hijos extramatrimoniales, pero en proporción inferior.",
+      "riesgo": "alto"
+    },
+    {
+      "id": "C06",
+      "texto": "El cónyuge sobreviviente concurre con los hijos y hereda una porción igual a la de un hijo.",
+      "ubicacion": "body > h3:¿El cónyuge sobreviviente hereda todo?",
+      "verificacion": "ERROR",
+      "fundamento": "Art. 1150 CC dispone que el cónyuge sobreviviente que carece de lo necesario tiene derecho a la porción conyugal: 'la cuarta parte de los bienes del cónyuge premuerto'. No hereda 'una porción igual a la de un hijo'. Además, el cónyuge no concurre con los hijos legítimos en el reparto de la herencia en igualdad de condiciones; su derecho es vía porción conyugal (Art. 965, 1150 CC).",
+      "riesgo": "alto"
+    },
+    {
+      "id": "C07",
+      "texto": "Solo si no existen descendientes ni ascendientes, el cónyuge hereda la totalidad.",
+      "ubicacion": "body > h3:¿El cónyuge sobreviviente hereda todo?",
+      "verificacion": "ERROR",
+      "fundamento": "Art. 968 CC: sin descendientes, ascendientes ni hermanos legítimos, el cónyuge lleva la mitad y los hijos naturales la otra mitad. A falta de hijos naturales, padres naturales heredan (Art. 969). Solo si faltan TODOS los anteriores, el cónyuge hereda con colaterales y hermanos naturales (Art. 970, 972). El cónyuge nunca es heredero universal único bajo el esquema del código; en última instancia heredan los municipios (Art. 973).",
+      "riesgo": "alto"
+    },
+    {
+      "id": "C08",
+      "texto": "No existe un plazo legal máximo para iniciar el juicio sucesorio en Honduras.",
+      "ubicacion": "body > h2:Plazos para iniciar la sucesión",
+      "verificacion": "OK",
+      "fundamento": "No se encontró en el Código Civil un plazo máximo de caducidad para iniciar el juicio sucesorio. Art. 936 CC menciona que los derechos a la sucesión pueden prescribir pero no fija un plazo específico para el inicio del proceso. Sin embargo, existen plazos para acciones concretas (reforma del testamento: 4 años, Art. 1168 CC).",
+      "riesgo": "bajo"
+    },
+    {
+      "id": "C09",
+      "texto": "Se recomienda iniciar la sucesión dentro del año siguiente al fallecimiento.",
+      "ubicacion": "body > h2:Plazos para iniciar la sucesión",
+      "verificacion": "OPINION",
+      "fundamento": "Es una recomendación práctica, no una norma del Código Civil. No se cita artículo que imponga dicho plazo. Constituye consejo profesional, no afirmación jurídica verificable.",
+      "riesgo": "bajo"
+    },
+    {
+      "id": "C10",
+      "texto": "Los herederos responden por las deudas hereditarias hasta el valor de los bienes recibidos.",
+      "ubicacion": "body > h2:Errores frecuentes > li:Ignorar las deudas del causante",
+      "verificacion": "PARCIAL",
+      "fundamento": "Art. 1194 CC: la responsabilidad limitada al valor de los bienes heredados solo aplica si el heredero acepta con beneficio de inventario. Art. 1192 CC: quien acepta sin inventario previo 'sucede en todas las obligaciones transmisibles del difunto a prorrata de su cuota hereditaria, aunque le impongan un gravamen que exceda al valor de los bienes que hereda'. El artículo omite esta distinción fundamental.",
+      "riesgo": "medio"
+    },
+    {
+      "id": "C11",
+      "texto": "La renuncia a la herencia debe hacerse de forma expresa ante notario o en el juicio sucesorio, y una vez renunciada no se puede aceptar posteriormente.",
+      "ubicacion": "body > h3:¿Se puede renunciar a una herencia?",
+      "verificacion": "OK",
+      "fundamento": "Art. 1172 CC establece que 'todo asignatario puede aceptar o repudiar libremente'. La irrevocabilidad de la renuncia es principio general del derecho sucesorio. La forma notarial o judicial es práctica forense estándar.",
+      "riesgo": "bajo"
+    }
+  ],
+  "resumen_riesgos": {
+    "claims_totales": 11,
+    "ok": 3,
+    "parcial": 3,
+    "error": 4,
+    "opinion": 1,
+    "riesgo_alto": 4,
+    "riesgo_medio": 3,
+    "riesgo_bajo": 4
+  },
+  "hallazgos_criticos": [
+    "C03: El orden de prelación de la sucesión intestada publicado NO coincide con el Art. 960 CC. El cónyuge aparece en 3.er lugar cuando el código lo sitúa en 7.mo. Se menciona 'Estado de Honduras' cuando el código dice 'municipios'. Se omite completamente la distinción entre herederos legítimos y naturales.",
+    "C05: El artículo afirma igualdad de derechos sucesorios entre hijos matrimoniales y extramatrimoniales, pero Art. 965 CC asigna 3/4 a hijos legítimos y 1/4 a hijos naturales, con limitación expresa de que un hijo natural no puede recibir más de la mitad de lo que recibe un hijo legítimo.",
+    "C06: Afirmar que el cónyuge hereda 'porción igual a la de un hijo' contradice Art. 1150 CC (porción conyugal = cuarta parte) y Arts. 965-970 CC.",
+    "C07: El artículo sugiere que el cónyuge puede heredar la totalidad si no hay descendientes ni ascendientes, lo cual es falso bajo el esquema de Arts. 966-973 CC."
+  ]
+}

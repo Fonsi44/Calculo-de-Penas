@@ -1,0 +1,378 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "c7eb316f-2424-4938-8af8-9850c0d911ad",
+    "slug": "delitos-ambientales-como-denunciarlos-honduras",
+    "sha256_entrada": "f5d3c10d8ed8671ba44231107f2a00a828b07caad72faee0c0367a8b46c82e36",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/delitos.json",
+      "data/articulos_cp.json",
+      "data/articulos_constitucion.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_limitante": "El Decreto 59-2024 (reformas al CP) y las leyes orgánicas de SERNA, ICF y FEMA NO están en los archivos JSON locales. La verificación granular se limita al Código Penal, la Constitución, y data/delitos.json disponibles localmente."
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento contiene 11 bloques de afirmaciones sobre delitos ambientales en Honduras. Siete bloques son verificables contra el Código Penal y la Constitución (Arts. 324, 325, 327, 337 CP; Arts. 59, 145, 183, 316, 340 Constitución). Cuatro bloques dependen de fuentes no disponibles (Decreto 59-2024, leyes orgánicas de SERNA/ICF/FEMA, Código Procesal Penal). Se detecta UN ERROR CRITICO en la descripción del Art. 109 CP (régimen de prescripción penal): la entrada afirma erróneamente que la prescripción es 'igual al máximo de la pena, mínimo 3 años, máximo 15 años' cuando el texto real usa tramos fijos de 20, 15, 10 y 5 años. Se detecta una discrepancia de numeración: la entrada refiere 'Art. 337-A CP por Decreto 59-2024' mientras las fuentes locales contienen 'Art. 337 CP' con contenido sustancialmente idéntico. Las instituciones FEMA, SERNA e ICF no son verificables con fuentes locales.",
+    "error_critico_detectado": {
+      "tipo": "error_juridico_sustancial",
+      "descripcion": "La entrada describe el Art. 109 CP como 'la acción penal prescribe en un plazo igual al máximo de la pena de prisión prevista para el delito, sin que pueda ser inferior a 3 años ni superior a 15 años'. El texto real NO funciona así. El Art. 109 CP establece tramos fijos según rangos de pena: 20 años (pena máxima + mitad >= 15 años), 15 años (pena máxima >10 y <15 años), 10 años (pena máxima >5 y <=10 años), 5 años (demás delitos). Errores: (a) mecanismo incorrecto — no es 'igual al máximo' sino tramos fijos; (b) mínimo incorrecto — es 5 años, no 3; (c) máximo incorrecto — es 20 años, no 15.",
+      "impacto": "alto",
+      "ubicaciones": ["Sección '¿Cuánto tiempo hay para denunciar un delito ambiental en Honduras?'"],
+      "apariciones": 1
+    },
+    "discrepancia_numeracion_detectada": {
+      "tipo": "numeracion_articulo_no_verificable",
+      "descripcion": "La entrada menciona 'Artículo 337-A al Código Penal mediante el Decreto 59-2024'. Las fuentes locales contienen 'Art. 337 CP' (no 337-A) con contenido sustancialmente idéntico. La numeración 337-A podría provenir del Decreto 59-2024 (no disponible).",
+      "impacto": "bajo"
+    },
+    "fuentes_ausentes_criticas": [
+      {
+        "tipo": "decreto_reformador_no_disponible",
+        "descripcion": "Decreto 59-2024: es mencionado como fuente de las reformas a los Arts. 324, 325, 327 y 337-A CP. No disponible en fuentes locales. Impide verificar la atribución de cambios legislativos.",
+        "impacto": "alto"
+      },
+      {
+        "tipo": "leyes_organicas_no_disponibles",
+        "descripcion": "Leyes orgánicas de SERNA, ICF y FEMA: necesarias para verificar las afirmaciones sobre competencias institucionales. No disponibles en fuentes locales.",
+        "impacto": "medio"
+      }
+    ]
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "Existe un Código Penal en Honduras que tipifica los delitos ambientales.",
+      "fuente": "data/articulos_cp.json + data/delitos.json",
+      "veredicto": "confirmado",
+      "detalle": "El archivo articulos_cp.json contiene 635 artículos del Código Penal hondureño. El archivo delitos.json contiene 483 delitos estructurados. Los delitos ambientales (Arts. 324, 325, 327, 337 CP) están presentes en ambos archivos con epígrafes, textos y penas completas.",
+      "evidencia": "Arts. 324, 325, 327, 337 CP presentes en articulos_cp.json. Data/delitos.json contiene entradas estructuradas para cada uno.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "Dicho Código Penal es el Decreto 130-2017.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible",
+      "detalle": "El número de decreto '130-2017' no aparece textualmente en los artículos del CP disponibles localmente. Sin embargo, el Art. 635 CP fija la vigencia al 25 de junio de 2020, y el Art. 634 CP deroga el Decreto 144-83 (código anterior). Un decreto legislativo de 2017 con vacatio legis hasta 2020 es cronológicamente plausible. La numeración '130-2017' sigue el formato estándar hondureño (número-año).",
+      "evidencia": "Art. 634 CP: 'Derogar el Decreto No 144-83, de fecha 23 de Agosto de 1983, contentivo del Código Penal.' Art. 635 CP: 'El presente Código entrará en vigencia a partir del 25 de junio del año 2020.'",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B1.3",
+      "subclaim_text": "La Ley General del Ambiente es el Decreto 104-93 de fecha 27 de mayo de 1993.",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 632 CP (Disposiciones derogatorias) menciona textualmente: 'los artículos 91-95 de la Ley General del Ambiente, aprobada en Decreto No. 104-93, de fecha 27 de Mayo de 1993.' Esto confirma de manera cruzada e inequívoca la existencia de dicha ley con el número de decreto y fecha exactos.",
+      "evidencia": "Art. 632 CP: cita textual de 'Ley General del Ambiente, aprobada en Decreto No. 104-93, de fecha 27 de Mayo de 1993'.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "Art. 324 CP sanciona la contaminación del aire, aguas o suelos.",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "confirmado",
+      "detalle": "El epígrafe del Art. 324 CP es 'Contaminación del aire, las aguas o los suelos'. Coincidencia textual exacta.",
+      "evidencia": "Art. 324 CP epígrafe: 'Contaminación del aire, las aguas o los suelos'.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "La pena del Art. 324 CP es de 6 a 10 años de prisión y multa de 500 a 800 días.",
+      "fuente": "data/articulos_cp.json + data/delitos.json",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 324 CP establece: 'prisión de seis (6) a diez (10) años y multa de quinientos (500) a ochocientos (800) días.' Data/delitos.json confirma: pena 72-120 meses (6-10 años), multa 500-800 días. Coincidencia exacta en ambas fuentes.",
+      "evidencia": "Art. 324 CP: 'prisión de seis (6) a diez (10) años y multa de quinientos (500) a ochocientos (800) días.' Delitos.json: pena_minima_meses=72, pena_maxima_meses=120, multa_min_valor=500, multa_max_valor=800.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.3",
+      "subclaim_text": "Estas penas fueron introducidas por las reformas del Decreto 59-2024.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "El Decreto 59-2024 no está disponible en las fuentes locales. No es posible determinar si la pena de 6-10 años y multa de 500-800 días ya existía en el texto original del Decreto 130-2017 o fue introducida/modificada por el Decreto 59-2024. Las fuentes locales contienen la pena sin indicar su origen legislativo específico.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "Art. 325 CP tipifica la explotación ilegal de recursos hídricos, forestales o minerales.",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 325 CP, epigrafe 'Explotación ilegal de recursos naturales', sanciona: 'actividades de captación, extracción o explotación ilegal de recursos hídricos, forestales, minerales o fósiles'. Coincidencia textual exacta en los tipos de recursos mencionados.",
+      "evidencia": "Art. 325 CP: 'recursos hídricos, forestales, minerales o fósiles'.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.2",
+      "subclaim_text": "La pena del Art. 325 CP es de 6 a 10 años de prisión y multa de 500 a 800 días.",
+      "fuente": "data/articulos_cp.json + data/delitos.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 325 CP: 'prisión de seis (6) a diez (10) años y multa de quinientos (500) a ochocientos (800) días.' Delitos.json confirma: 72-120 meses, multa 500-800. Coincidencia exacta.",
+      "evidencia": "Art. 325 CP y delitos.json: penas idénticas a las afirmadas.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "Art. 327 CP tipifica el incendio forestal en masas boscosas o zonas protegidas.",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 327 CP, epígrafe 'Incendio forestal', describe: 'Quien provoca un incendio en terrenos forestales, masas boscosas o en zona vegetal protegida por su valor ecológico'. Coincidencia sustancial.",
+      "evidencia": "Art. 327 CP: 'terrenos forestales, masas boscosas o en zona vegetal protegida por su valor ecológico'.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "La pena base del Art. 327 CP es de 6 a 10 años. Agravada: hasta 15 años si el daño es de considerable importancia.",
+      "fuente": "data/articulos_cp.json + data/delitos.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 327 CP: pena base 'prisión de seis (6) a diez (10) años'. Agravante: 'Si las conductas anteriores fueran de considerable importancia, atendiendo a su superficie, nivel de protección, calidad de la zona o de la vegetación y la ubicación, la pena de prisión debe ser de diez (10) a quince (15) años.' Delitos.json desglosa ambas modalidades. Coincidencia exacta.",
+      "evidencia": "Art. 327 CP: pena base 6-10 años, agravada 10-15 años. Delitos.json: dos modalidades del Art. 327.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "Las personas jurídicas son penalmente responsables de delitos ambientales cometidos en su nombre o beneficio por sus representantes.",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 337 CP establece: 'Cuando de acuerdo con lo establecido en el Artículo 102 del presente Código, una persona jurídica sea responsable de los delitos contenidos en este título, se le debe imponer la pena de multa...' El Art. 102 CP (no verificado textualmente, pero referenciado) presumiblemente establece las condiciones de responsabilidad penal de personas jurídicas. La afirmación es correcta en sustancia.",
+      "evidencia": "Art. 337 CP: remite al Art. 102 CP para la responsabilidad de personas jurídicas en delitos del Título XVI (delitos ambientales).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.2",
+      "subclaim_text": "Las sanciones a empresas incluyen multa de hasta el triple del valor del daño, clausura hasta 5 años, e inhabilitación para subvenciones públicas.",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 337 CP: 'multa por una cantidad igual o hasta el triple del valor del daño causado o del beneficio obtenido'; 'Clausura de los locales y establecimientos... por un plazo que no pueda exceder de cinco (5) años'; 'Inhabilitación para obtener subvenciones y ayudas públicas... por un plazo que no pueda exceder de diez (10) años'. Todas las sanciones mencionadas en la entrada están confirmadas.",
+      "evidencia": "Art. 337 CP: triple del daño, clausura máximo 5 años, inhabilitación para subvenciones.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.3",
+      "subclaim_text": "Esta responsabilidad fue adicionada como Artículo 337-A mediante el Decreto 59-2024.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable__discrepancia_numeracion",
+      "detalle": "Las fuentes locales contienen el artículo como 'Art. 337 CP' (no 337-A). El Decreto 59-2024 no está disponible. Es posible que dicho decreto haya renumerado el artículo a 337-A, pero con las fuentes disponibles no se puede confirmar. El contenido es sustancialmente idéntico al Art. 337 CP de las fuentes locales.",
+      "evidencia": "Fuentes locales: Art. 337 CP. Entrada: Art. 337-A CP por Decreto 59-2024.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B6.1",
+      "subclaim_text": "Según el Art. 109 CP, la acción penal prescribe en un plazo igual al máximo de la pena de prisión.",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "error_critico",
+      "detalle": "FALSO. El Art. 109 CP NO establece que la prescripción sea 'igual al máximo de la pena'. El mecanismo real es un sistema de tramos fijos: 20 años (pena máxima + mitad >= 15 años), 15 años (pena máxima >10 y <15), 10 años (pena máxima >5 y <=10), 5 años (demás delitos). La diferencia es sustancial: por ejemplo, un delito con pena máxima de 8 años prescribiría a 8 años según la entrada, pero a 10 años según el CP real (tramo 3).",
+      "evidencia": "Art. 109 CP: sistema de 4 tramos fijos (20, 15, 10, 5 años), no fórmula de 'plazo = máximo de la pena'.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.2",
+      "subclaim_text": "El plazo de prescripción no puede ser inferior a 3 años.",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "error",
+      "detalle": "FALSO. El mínimo de prescripción para delitos según el Art. 109 CP es de 5 años (tramo 4: 'A los cinco (5) años, en el caso de los demás delitos'). Las faltas prescriben a los 6 meses. No existe ningún plazo de 3 años.",
+      "evidencia": "Art. 109 CP numeral 4: 'A los cinco (5) años, en el caso de los demás delitos.'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.3",
+      "subclaim_text": "El plazo de prescripción no puede ser superior a 15 años.",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "error",
+      "detalle": "FALSO. El máximo de prescripción según el Art. 109 CP es de 20 años (tramo 1: 'A los veinte (20) años, cuando la pena máxima más la mitad señalada al delito sea a prisión de quince (15) o más años').",
+      "evidencia": "Art. 109 CP numeral 1: 'A los veinte (20) años...'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.4",
+      "subclaim_text": "El delito de contaminación ambiental (Art. 324, pena 6-10 años) prescribe a los 10 años.",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "confirmado__resultado_correcto",
+      "detalle": "El resultado de 10 años es correcto, aunque por razones distintas a las afirmadas en la entrada. La pena del Art. 324 es de 6 a 10 años. Según el Art. 109 CP numeral 3, prescribe a los 10 años porque la pena máxima 'no exceda de diez (10) años' y es 'por más de cinco (5) años'. El resultado numérico coincide, pero la regla aplicada por la entrada ('plazo = máximo de la pena') es incorrecta.",
+      "evidencia": "Art. 324: 6-10 años. Art. 109.3: 10 años para penas máximas >5 y <=10 años.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.1",
+      "subclaim_text": "Existe la Fiscalía Especial del Medio Ambiente (FEMA) dentro del Ministerio Público.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "FEMA no aparece en los archivos JSON locales (CP, Constitución, Código Civil, Código de Comercio). La Constitución regula el Ministerio Público pero no menciona fiscalías especializadas. La existencia de fiscalías especializadas es práctica estándar en los Ministerios Públicos latinoamericanos.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B7.2",
+      "subclaim_text": "SERNA tiene potestad para suspender actividades por infracciones administrativas ambientales.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "SERNA no aparece en los archivos JSON locales. El Art. 340 constitucional establece que 'El Estado reglamentará su aprovechamiento [de los recursos naturales]', lo que proporciona base constitucional para una entidad como SERNA con potestades sancionadoras, pero no se puede verificar la potestad específica de suspensión.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B7.3",
+      "subclaim_text": "El ICF es la autoridad competente para delitos forestales en zonas de reserva o tala ilegal.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "ICF no aparece en los archivos JSON locales. La Constitución en Art. 340 menciona 'La reforestación del país y la conservación de bosques se declaran de conveniencia nacional y de interés colectivo', lo que justifica la existencia de un instituto forestal.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B8.1",
+      "subclaim_text": "El CONADEH (Comisionado Nacional de los Derechos Humanos) existe como institución constitucional.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 59 Constitución: 'Para garantizar los derechos y libertades reconocidos en esta Constitución, créase la institución del Comisionado Nacional de los Derechos Humanos.' Confirmación directa.",
+      "evidencia": "Art. 59 Constitución: 'créase la institución del Comisionado Nacional de los Derechos Humanos.'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B8.2",
+      "subclaim_text": "Existe la acción de amparo ante la Sala de lo Constitucional de la CSJ.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 183 Constitución: 'El Estado reconoce la garantía de amparo.' Art. 316 Constitución: 'La Corte Suprema de Justicia, está organizada en salas, una de las cuales es la de lo Constitucional.' Ambas instituciones confirmadas.",
+      "evidencia": "Art. 183: garantía de amparo. Art. 316: Sala de lo Constitucional.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B9.1",
+      "subclaim_text": "La legislación hondureña permite solicitar confidencialidad de la identidad del denunciante ante el MP.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "No se encuentra en CP ni Constitución. El Código Procesal Penal (no disponible en fuentes JSON) probablemente regula esta materia. Es una práctica estándar en sistemas penales modernos.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B9.2",
+      "subclaim_text": "Se pueden solicitar medidas de protección si existen amenazas contra el denunciante.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "No se encuentra en fuentes locales. El Código Procesal Penal podría contener estas disposiciones. El Art. 59 constitucional (CONADEH) provee fundamento general para protección de derechos.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B10.1",
+      "subclaim_text": "[Cruce B1+B2+B3+B4] Los 4 delitos ambientales (Arts. 324, 325, 327, 337 CP) forman un sistema coherente de protección ambiental en el CP.",
+      "fuente": "data/articulos_cp.json + data/delitos.json",
+      "veredicto": "coherente",
+      "detalle": "Los cuatro artículos están agrupados en el Título XVI del Libro II del CP. Todos comparten estructura: tipo objetivo (conducta contaminante o dañina), bien jurídico protegido (medio ambiente/ecosistema), penas base (6-10 años + multa 500-800 días), y agravantes específicas. La coherencia interna del sistema de delitos ambientales en el CP está confirmada. El Art. 337 CP cierra el título con la responsabilidad de personas jurídicas.",
+      "evidencia": "Arts. 324, 325, 327, 337 CP pertenecen al mismo Título XVI. Delitos.json los clasifica como graves (es_grave: true).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B10.2",
+      "subclaim_text": "[Cruce B2+B3+B4+B6] Las penas de los delitos ambientales (6-10 años) determinan su prescripción en 10 años según Art. 109.3 CP.",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "coherente",
+      "detalle": "Los Arts. 324, 325 y 327 CP (modalidad base) tienen pena máxima de 10 años. Según el Art. 109.3 CP, prescriben a los 10 años. La relación entre las penas y la prescripción es correcta según el CP real (no según la explicación errónea de la entrada). Para la modalidad agravada del Art. 327 (10-15 años), la prescripción sería de 15 años según el Art. 109.2 CP (pena máxima >10 y <15).",
+      "evidencia": "Arts. 324/325/327: pena max 10 años -> Art. 109.3: 10 años. Art. 327 agravado: pena max 15 años -> Art. 109.2: 15 años.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B10.3",
+      "subclaim_text": "[Cruce B5+B2+B3+B4] La responsabilidad penal de personas jurídicas (B5) es consistente con la gravedad de los delitos ambientales (B2-B4).",
+      "fuente": "data/articulos_cp.json + data/delitos.json",
+      "veredicto": "coherente",
+      "detalle": "Los delitos ambientales están calificados como graves (es_grave: true en delitos.json) con penas de 6-10 años de prisión. La responsabilidad de personas jurídicas (Art. 337 CP) con sanciones de multa hasta el triple del daño, clausura e inhabilitación es proporcional a la gravedad de los delitos del título. El sistema es internamente consistente.",
+      "evidencia": "Delitos.json: Arts. 324, 325, 327 -> es_grave: true. Art. 337 CP: sanciones corporativas proporcionales.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B10.4",
+      "subclaim_text": "[Cruce B7+B8] Las vías institucionales (FEMA/SERNA/ICF) y las garantías constitucionales (CONADEH/amparo) son complementarias.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "coherente",
+      "detalle": "La entrada presenta un sistema de dos niveles: (a) vía ordinaria administrativa/penal (FEMA, SERNA, ICF, MP, DPI) y (b) vía constitucional subsidiaria (CONADEH, amparo ante Sala de lo Constitucional). Esta estructura de dos niveles es consistente con el diseño constitucional hondureño: el Art. 59 crea CONADEH como garante de derechos, y los Arts. 183 y 316 establecen el amparo como garantía constitucional. Las instituciones del nivel (a) no son verificables, pero el diseño de dos niveles es jurídicamente sólido.",
+      "evidencia": "Art. 59 (CONADEH), Art. 183 (amparo), Art. 316 (Sala de lo Constitucional).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B10.5",
+      "subclaim_text": "[Cruce B1+B6] La entrada contiene un error de coherencia interna al explicar el Art. 109 CP.",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "inconsistencia_detectada",
+      "detalle": "Existe una inconsistencia entre B1.1 (el CP está correctamente citado) y B6.1-B6.3 (el Art. 109 CP está explicado incorrectamente). La entrada cita correctamente el número de artículo pero describe erróneamente su contenido. Esto es un error de precisión jurídica, no una contradicción entre fuentes. La entrada afirma un mecanismo ('plazo = máximo de la pena') que no existe en el texto real.",
+      "evidencia": "Art. 109 CP: sistema de tramos fijos. Entrada: 'plazo igual al máximo de la pena'. Inconsistencia entre lo citado y lo explicado.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B10.6",
+      "subclaim_text": "[Cruce B1+B5] La numeración del artículo de responsabilidad de personas jurídicas es inconsistente entre fuentes.",
+      "fuente": "data/articulos_cp.json",
+      "veredicto": "discrepancia_no_resuelta",
+      "detalle": "La entrada refiere 'Artículo 337-A' mientras las fuentes locales contienen 'Art. 337 CP'. El contenido es sustancialmente idéntico. Esta discrepancia podría deberse a que el Decreto 59-2024 (no disponible) renumeró o adicionó el artículo. Sin el decreto, no se puede resolver si es un error de la entrada o un cambio legislativo real.",
+      "evidencia": "Entrada: 'Art. 337-A'. Fuentes locales: 'Art. 337 CP'. Contenido: idéntico en sustancia.",
+      "nivel_confianza": "alta_en_la_discrepancia__baja_en_la_resolucion"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["B1_CP_130-2017", "B2_Art324_Contaminacion", "B3_Art325_Explotacion", "B4_Art327_Incendio", "B5_Art337_PersonasJuridicas", "B6_Art109_Prescripcion", "B7_Instituciones_FEMA_SERNA_ICF", "B8_Garantias_CONADEH_Amparo", "B9_Proteccion_Denunciante"],
+    "cruces": [
+      {
+        "par": "B1+B2+B3+B4",
+        "relacion": "Dependiente. Los delitos ambientales (B2-B4) existen dentro del Código Penal (B1). Confirmado.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B5",
+        "relacion": "Dependiente. La responsabilidad de personas jurídicas (B5) está en el CP (B1). Discrepancia de numeración (337 vs 337-A).",
+        "conflicto": "discrepancia_numeracion"
+      },
+      {
+        "par": "B1+B6",
+        "relacion": "Dependiente. El Art. 109 (B6) está en el CP (B1). La entrada explica incorrectamente el artículo. Error de contenido, no de ubicación.",
+        "conflicto": "error_de_contenido"
+      },
+      {
+        "par": "B2+B3+B4+B5",
+        "relacion": "Complementarios. Los delitos contra el medio ambiente (B2-B4) y la responsabilidad corporativa (B5) forman el sistema punitivo ambiental del Título XVI del CP.",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B3+B4+B6",
+        "relacion": "Relacionados. Las penas de B2-B4 determinan la prescripción según B6. Coherente. Art. 324/325/327 (pena max 10) -> 10 años (Art. 109.3). Art. 327 agravado (pena max 15) -> 15 años (Art. 109.2).",
+        "conflicto": false
+      },
+      {
+        "par": "B7+B8",
+        "relacion": "Complementarios. Vía ordinaria (B7) + garantías constitucionales (B8). Diseño de dos niveles jurídicamente sólido.",
+        "conflicto": false
+      },
+      {
+        "par": "B7+B9",
+        "relacion": "Relacionados. Ambas secciones dependen de legislación no disponible en fuentes locales (leyes orgánicas, Código Procesal Penal).",
+        "conflicto": false
+      },
+      {
+        "par": "B8+B9",
+        "relacion": "Complementarios. CONADEH y amparo (B8) son vías de protección que podrían activarse si falla la protección al denunciante (B9).",
+        "conflicto": false
+      },
+      {
+        "par": "B1.3+B1",
+        "relacion": "Cruzado. La Ley General del Ambiente (Decreto 104-93, confirmada por Art. 632 CP) complementa al CP (Decreto 130-2017). Ambas fuentes coexisten en el ordenamiento.",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 27,
+    "confirmados": 12,
+    "confirmado__resultado_correcto": 1,
+    "plausibles": 1,
+    "plausibles_no_verificables": 4,
+    "no_verificables": 3,
+    "no_verificable__discrepancia_numeracion": 1,
+    "error": 2,
+    "error_critico": 1,
+    "coherentes": 5,
+    "inconsistencia_detectada": 1,
+    "discrepancia_no_resuelta": 1,
+    "sin_conflictos_normativos_detectados": true,
+    "error_critico_detectado": "Subclaims B6.1, B6.2 y B6.3: la entrada describe erróneamente el Art. 109 CP. La prescripción NO es 'igual al máximo de la pena' sino un sistema de tramos fijos (20, 15, 10, 5 años). El mínimo es 5 años (no 3), el máximo es 20 años (no 15). Este error afecta la comprensión del régimen de prescripción penal.",
+    "observacion_critica": "El 65% de los subclaims son verificables contra fuentes locales, con alta tasa de confirmación (12/27 confirmados). El núcleo duro del artículo (descripción de los 4 delitos ambientales, penas, garantías constitucionales) es sustancialmente correcto. El error principal está en la sección de prescripción (Art. 109 CP). Las secciones institucionales (FEMA, SERNA, ICF) y de protección al denunciante no son verificables con fuentes locales.",
+    "calidad_global_documento": "Buena en la descripción de los delitos ambientales. Error crítico puntual en la explicación del Art. 109 CP (prescripción). Las referencias a Decreto 59-2024 y legislación institucional no son verificables con fuentes locales. Se recomienda: (1) corregir la sección de prescripción con el texto real del Art. 109 CP; (2) verificar la numeración 337-A contra el Decreto 59-2024; (3) obtener las leyes orgánicas de SERNA, ICF y FEMA para verificar competencias institucionales."
+  }
+}

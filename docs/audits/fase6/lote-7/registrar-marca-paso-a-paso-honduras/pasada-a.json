@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "79bbb24e-217f-4d66-920f-18231553cbce",
+    "slug": "registrar-marca-paso-a-paso-honduras",
+    "sha256_entrada": "bb403da60481517f0ea6b21b4ce3355c165032550a268079a52dfbaa5dc98d68",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "La autoridad competente es la Dirección General de la Propiedad Intelectual (DIGEPIH), adscrita al Instituto de la Propiedad.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "El Art. 1 de la Ley de Propiedad Industrial (Decreto No. 12-99) establece: 'Su aplicación corresponde a la Secretaría de Estado en los Despachos de Industria y Comercio, a través de la Oficina de Registro de la Propiedad Industrial, dependencia de la Dirección General de Propiedad Intelectual.' Esto confirma que la Dirección General de Propiedad Intelectual (DGPI) es la dependencia competente. Sin embargo, el acrónimo 'DIGEPIH' y la adscripción al 'Instituto de la Propiedad' no aparecen en el texto de la ley disponible. La ley refiere únicamente a 'Dirección General de Propiedad Intelectual' sin acrónimo, y no menciona un 'Instituto de la Propiedad'. Es posible que DIGEPIH sea una denominación administrativa posterior o que 'Instituto de la Propiedad' sea una reorganización no reflejada en la ley de 1999.",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "articulo": "Art. 1 LPI",
+        "texto": "Su aplicación corresponde a la Secretaría de Estado en los Despachos de Industria y Comercio, a través de la Oficina de Registro de la Propiedad Industrial, dependencia de la Dirección General de Propiedad Intelectual."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "El registro de marca otorga a su titular el derecho exclusivo de uso en Honduras para los productos o servicios protegidos. Sin registro, cualquier persona podría utilizar su nombre comercial sin consecuencias legales.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "Art. 80 LPI: 'El derecho al uso exclusivo de una marca se adquiere mediante su inscripción en el Registro de la Propiedad Industrial.' Art. 96 LPI enumera los derechos de actuar contra terceros que usen la marca sin consentimiento. Sin registro, no existe derecho exclusivo legalmente oponible. El Código de Comercio (Art. 667 CM) también establece que el derecho al uso exclusivo se adquiere mediante el registro.",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "articulos": [
+          "Art. 80 LPI: 'El derecho al uso exclusivo de una marca se adquiere mediante su inscripción en el Registro de la Propiedad Industrial.'",
+          "Art. 667 CM (codigo_comercio.json): 'El derecho al uso exclusivo de una marca... puede ser adquirido por el que la usa o quiere usar, mediante su registro.'"
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "La búsqueda de anterioridad puede realizarse en el sistema en línea de la DIGEPIH o mediante abogado especializado, con plazo de 3 a 5 días hábiles.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Ley de Propiedad Industrial no regula el procedimiento de búsqueda de anterioridad como etapa del registro. La ley establece que el procedimiento inicia con la solicitud (Art. 85 LPI) y contempla un examen de oficio de prohibiciones (Art. 87 LPI). La búsqueda de anterioridad es una práctica recomendada pero no un requisito legal obligatorio, como el propio documento reconoce. El plazo de '3 a 5 días hábiles' y la existencia de un 'sistema en línea' son datos operativos no verificables en el texto legal. El Art. 174(7)(c.3) LPI menciona 'acceso vía Internet' a la base de datos del Registro, lo cual da soporte parcial a la existencia de consultas electrónicas, pero no al sistema en línea descrito.",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "referencia_parcial": "Art. 174(7)(c.3) LPI menciona 'acceso vía Internet' a bases de datos del Registro de la Propiedad Industrial."
+      },
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "Honduras utiliza la Clasificación Internacional de Niza, que comprende 45 clases de productos y servicios.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "El Art. 85 LPI exige que la solicitud indique 'la clase internacional' de los productos o servicios. La Clasificación Internacional de Niza (Arreglo de Niza) es el estándar internacional que establece 45 clases (34 para productos y 11 para servicios). La ley hondureña remite a la clasificación internacional sin nombrar explícitamente 'Niza'. El número de 45 clases es correcto según el sistema internacional vigente, pero la fuente local no describe las clases. Honduras es parte del Arreglo de Niza, lo cual es verificable pero no está documentado en las fuentes locales disponibles.",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "articulo": "Art. 85 LPI",
+        "texto": "indicando la lista completa de los productos o servicios para los cuales se solicita el registro de la marca, la clase internacional"
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "La tasa oficial ronda entre 1,000 y 2,000 lempiras por clase, dependiendo del tipo de solicitante y del tipo de marca.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_discrepancia",
+      "detalle": "El Art. 174(4)(a) LPI establece: 'Por la inscripción de una marca, por clase: SETECIENTOS LEMPIRAS (L.700.00)'. La ley fija L.700.00 por clase, cifra inferior al rango de 1,000-2,000 lempiras indicado en el documento. Sin embargo, la ley data de 1999 (reformada en 2006) y el Art. 174 permite al Poder Ejecutivo solicitar revisión de tasas cada dos años al Poder Legislativo según el índice de precios al consumo. Es posible que las tasas se hayan actualizado mediante normativa posterior no incluida en las fuentes locales. La discrepancia existe pero tiene una explicación normativa plausible (actualización de tasas). El documento no especifica el fundamento normativo del rango 1,000-2,000.",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "articulo": "Art. 174(4)(a) LPI",
+        "texto": "Por la inscripción de una marca, por clase: SETECIENTOS LEMPIRAS (L.700.00)"
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "El examen de forma: la DIGEPIH emite un oficio de prevención con un plazo para subsanar de 15 días hábiles. Una prevención mal respondida o no respondida dentro del plazo provoca el abandono de la solicitud.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_error",
+      "detalle": "El Art. 86 LPI establece: 'El Registro notificará al solicitante para que cumpla con subsanar dentro del plazo de treinta (30) días el error u omisión, manteniendo en suspenso el trámite y bajo apercibimiento de considerarse abandonada la solicitud y archivarse de oficio.' La ley establece 30 días (no 15 días hábiles) para subsanar. El documento dice 'generalmente de 15 días hábiles', lo cual contradice el texto legal que otorga 30 días. La consecuencia de abandono por falta de subsanación sí es correcta (archivo de oficio).",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "articulo": "Art. 86 LPI",
+        "texto": "El Registro notificará al solicitante para que cumpla con subsanar dentro del plazo de treinta (30) días el error u omisión, manteniendo en suspenso el trámite y bajo apercibimiento de considerarse abandonada la solicitud y archivarse de oficio."
+      },
+      "errores_detectados": [
+        "El plazo legal para subsanar es de 30 días (Art. 86 LPI), no 15 días hábiles como indica el documento."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A7",
+      "claim_text": "Superado el examen de forma, la DIGEPIH ordena la publicación en La Gaceta y se abre un plazo de 30 días hábiles para oposición. Luego, si no hay oposiciones o se resuelven favorablemente, la DIGEPIH realiza un examen de fondo y emite el certificado.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_errores",
+      "detalle": "La secuencia legal correcta según los Art. 86-91 LPI es: (1) examen de forma y subsanación (Art. 86), (2) examen de fondo sobre prohibiciones absolutas y relativas (Art. 87), (3) publicación en La Gaceta por 3 veces con intervalos de 10 días (Art. 88), (4) oposición dentro de 30 días desde la última publicación (Art. 89), (5) registro/concesión si no hay oposición (Art. 91). El documento invierte el orden: coloca el examen de fondo DESPUÉS de la oposición, cuando la ley lo coloca ANTES de la publicación. Además, el Art. 89 LPI dice 'treinta (30) días' sin calificar como hábiles, mientras el documento dice '30 días hábiles'. La publicación en La Gaceta es correcta (Art. 88 LPI). La emisión del certificado es correcta (Art. 91 LPI).",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "articulos": [
+          "Art. 87 LPI: 'El Registro de la Propiedad Industrial examinará si la marca incurre en alguna de las prohibiciones previstas en los Artículos 83 y 84 numeral 1) y 4)' — examen de fondo ANTES de publicación.",
+          "Art. 88 LPI: 'Efectuados los exámenes de conformidad con los Artículos 86 y 87 de la presente Ley, el Registro... ordenará que se anuncie la solicitud mediante la publicación de un aviso en el Diario Oficial La Gaceta, por tres (3) veces, con intervalos de diez (10) días cada una.'",
+          "Art. 89 LPI: 'Cualquier persona interesada podrá presentar oposición... dentro del período de publicación y hasta treinta (30) días contados desde la fecha de la última publicación.'",
+          "Art. 91 LPI: 'Si no se presentara oposición... procederá a registrar la marca, previa emisión de la resolución correspondiente.'"
+        ]
+      },
+      "errores_detectados": [
+        "El documento describe el examen de fondo después de la oposición, pero la ley (Art. 87 LPI) lo sitúa ANTES de la publicación (Art. 88 LPI).",
+        "El plazo de oposición es de 30 días según el Art. 89 LPI; el documento añade 'hábiles' sin respaldo en el texto legal."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A8",
+      "claim_text": "El registro de marca en Honduras tiene una vigencia de 10 años contados desde la fecha de concesión, renovables por períodos iguales. La renovación debe solicitarse dentro del año anterior al vencimiento. Existe un período de gracia de 6 meses para renovar con recargo. Si no se renueva, la marca caduca y queda disponible.",
+      "fuente_verificacion": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "Art. 92 LPI: 'El registro de una marca caducará a los diez (10) años, contados desde la fecha de concesión del registro.' Art. 93 LPI: renovación por períodos sucesivos de 10 años. Art. 94 LPI: 'La renovación... se efectuará mediante la presentación de solicitud... dentro del año anterior a la fecha de vencimiento... La renovación también podrá hacerse dentro de un plazo de gracia de seis (6) meses contados de la fecha de vencimiento... debiendo en tal caso pagarse la sobretasa establecida.' Todo confirmado. Matiz: El documento dice que la marca 'queda disponible para que cualquier tercero la registre' tras la caducidad. Sin embargo, el Art. 83(10) LPI establece una prohibición de registrar una marca idéntica o similar a una cuyo registro haya vencido, hasta que transcurra un (1) año (o 2 años para marcas colectivas) desde el vencimiento. Por tanto, la marca no queda inmediatamente disponible para terceros tras la caducidad.",
+      "evidencia_local": {
+        "archivo": "data/pdfs-articulos/LEY DE PROPIEDAD INDUSTRIAL (actualizada-07).txt",
+        "articulos": [
+          "Art. 92 LPI: 'El registro de una marca caducará a los diez (10) años, contados desde la fecha de concesión del registro.'",
+          "Art. 93 LPI: renovación por periodos sucesivos de diez (10) años.",
+          "Art. 94 LPI: 'dentro del año anterior a la fecha de vencimiento... plazo de gracia de seis (6) meses... debiendo en tal caso pagarse la sobretasa.'",
+          "Art. 83(10) LPI: prohibición de registrar marca vencida hasta transcurrido 1 año desde el vencimiento."
+        ]
+      },
+      "nivel_confianza": "alta"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 8,
+    "confirmados": 1,
+    "confirmados_con_matiz": 1,
+    "parcialmente_confirmados": 1,
+    "parcialmente_confirmado_con_discrepancia": 1,
+    "parcialmente_confirmado_con_errores": 1,
+    "parcialmente_confirmado_con_error": 1,
+    "plausible_no_verificable": 2,
+    "errores_detectados": [
+      "El plazo para subsanar prevención de forma es de 30 días (Art. 86 LPI), no 15 días hábiles.",
+      "El examen de fondo ocurre ANTES de la publicación (Art. 87 LPI), no después de la oposición como describe el documento.",
+      "El plazo de oposición es de 30 días (Art. 89 LPI); el documento añade 'hábiles' sin respaldo legal.",
+      "Tasa oficial en la ley: L.700.00 por clase (Art. 174(4)(a) LPI) vs. 1,000-2,000 lempiras en el documento."
+    ],
+    "calidad_general": "aceptable_con_correcciones"
+  }
+}

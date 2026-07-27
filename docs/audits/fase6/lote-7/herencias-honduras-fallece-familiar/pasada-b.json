@@ -1,0 +1,302 @@
+{
+  "audit": {
+    "id": "62ef4cfe-0b17-47fd-8fea-e2969ce45d74",
+    "slug": "herencias-honduras-fallece-familiar",
+    "title": "Herencias en Honduras: ¿qué hacer cuando fallece un familiar?",
+    "category": "derecho-civil"
+  },
+  "pasada": "B",
+  "timestamp": "2026-07-27T00:00:00.000Z",
+  "entrada_sha256": "a458d827e382852582ec51c9c9056a7858419952e6f99c1b4d84cfe977e0dcd4",
+  "metodologia": {
+    "descripcion": "Verificación artículo por artículo del Código Civil de Honduras (data/codigo_civil.json, 2359 artículos) contra las afirmaciones jurídicas detectadas en el cuerpo del artículo. Cada claim se coteja con el texto literal de los artículos pertinentes.",
+    "fuente_primaria": "data/codigo_civil.json",
+    "alcance": "Artículos 77, 936, 938, 959–979, 1147–1156, 1167–1168, 1172, 1192–1198, 1202–1203 del Código Civil",
+    "limitaciones": "No se verificaron normas constitucionales ni procesales (Código Procesal Civil). El análisis se limita al Código Civil."
+  },
+  "verificaciones": [
+    {
+      "claim_id": "C01",
+      "claim": "La legislación hondureña distingue dos modalidades sucesorias: sucesión testada (con testamento) y sucesión intestada (sin testamento).",
+      "veredicto": "OK",
+      "normas": [
+        {
+          "articulo": "Art. 960 CC",
+          "epigrafe": "Son llamados a la sucesión intestada: 1.- Los descendientes legítimos del difunto...",
+          "texto": "Son llamados a la sucesión intestada: 1.- Los descendientes legítimos del difunto.2.- Sus ascendientes legítimos.3.- Sus colaterales legítimos.4.- Sus hijos naturales o nietos naturales.5.- Sus padres naturales o abuelos naturales. 6.- Sus hermanos naturales. 7.- El cónyuge sobreviviente. 8.- Los municipios.",
+          "comentario": "Regula expresamente la sucesión intestada (ab intestato)."
+        },
+        {
+          "articulo": "Art. 976 CC",
+          "epigrafe": "Cuando en un mismo patrimonio se ha de suceder por testamento y ab intestado...",
+          "texto": "Cuando en un mismo patrimonio se ha de suceder por testamento y ab intestado, se cumplirán primero las disposiciones testamentarias y el remanente se adjudicará a los herederos ab intestado, según las reglas generales.",
+          "comentario": "Menciona explícitamente ambas modalidades coexistiendo."
+        },
+        {
+          "articulo": "Art. 979 CC",
+          "epigrafe": "La testamentificación es libre.",
+          "texto": "La testamentificación es libre.No hay más asignaciones forzosas que los alimentos debidos por ley a ciertas personas y la porción conyugal.",
+          "comentario": "Consagra la libertad de testar, base de la sucesión testada."
+        }
+      ],
+      "analisis": "El Código Civil reconoce ambas modalidades de forma inequívoca. La afirmación del artículo es correcta."
+    },
+    {
+      "claim_id": "C02",
+      "claim": "La sucesión testada requiere testamento válido otorgado en escritura pública ante notario.",
+      "veredicto": "PARCIAL",
+      "normas": [
+        {
+          "articulo": "Art. 989 CC",
+          "epigrafe": "El testamento es solemne o menos solemne.",
+          "texto": "El testamento es solemne o menos solemne testamento solemne es aquel en que se han observado todas las solemnidades que la ley ordinariamente requiere. El menos solemne o privilegiado es aquel en que pueden omitirse algunas de estas solemnidades, por consideración a circunstancias particulares determinadas expresamente por la ley.",
+          "comentario": "Existen testamentos menos solemnes que no requieren todas las solemnidades del testamento notarial."
+        },
+        {
+          "articulo": "Art. 980 CC",
+          "epigrafe": "El testamento es un acto más o menos solemne...",
+          "texto": "El testamento es un acto más o menos solemne en que una persona dispone del todo o de una parte de sus bienes, para que tenga pleno efecto después de sus días, conservando la facultad de revocar las disposiciones contenidas en él mientras viviere.",
+          "comentario": "Define testamento sin exigir exclusivamente escritura pública."
+        },
+        {
+          "articulo": "Art. 1023 CC",
+          "epigrafe": "Si el testamento fuere verbal...",
+          "texto": "Si el testamento fuere verbal, el Juez de letras del departamento en que se hubiere otorgado, a instancia de cualquier persona que pueda tener interés en la sucesión, y con citación de los demás interesados residentes en el mismo departamento, tomará declaraciones juradas a los individuos que lo presenciaron...",
+          "comentario": "El código contempla el testamento verbal como forma válida en circunstancias particulares."
+        }
+      ],
+      "analisis": "La afirmación es incompleta. Si bien el testamento en escritura pública ante notario es la forma más común y segura, el Código Civil también admite testamentos menos solemnes o privilegiados (Art. 989 CC) e incluso el testamento verbal en circunstancias determinadas (Art. 1023 CC). El artículo omite estas alternativas, lo que podría inducir a error al lector que desconozca otras formas testamentarias válidas."
+    },
+    {
+      "claim_id": "C03",
+      "claim": "Orden de prelación en sucesión intestada: 1.er hijos/descendientes, 2.do ascendientes, 3.er cónyuge, 4.to hermanos/sobrinos, 5.to colaterales 4to grado, 6.to Estado de Honduras.",
+      "veredicto": "ERROR",
+      "normas": [
+        {
+          "articulo": "Art. 960 CC",
+          "epigrafe": "Son llamados a la sucesión intestada...",
+          "texto": "Son llamados a la sucesión intestada: 1.- Los descendientes legítimos del difunto.2.- Sus ascendientes legítimos.3.- Sus colaterales legítimos.4.- Sus hijos naturales o nietos naturales.5.- Sus padres naturales o abuelos naturales. 6.- Sus hermanos naturales. 7.- El cónyuge sobreviviente. 8.- Los municipios.",
+          "comentario": "Este es el orden real del código. Nótese que el cónyuge es 7.mo, no 3.er orden. El último llamado son los municipios, no 'el Estado de Honduras'."
+        },
+        {
+          "articulo": "Art. 973 CC",
+          "epigrafe": "A falta de todos los herederos ab intestato...",
+          "texto": "A falta de todos los herederos ab intestado, designados en los artículos precedentes, sucederán los municipios.",
+          "comentario": "Confirma que el heredero de último orden son los municipios, no el Estado."
+        },
+        {
+          "articulo": "Art. 965 CC",
+          "epigrafe": "Si el difunto hubiere dejado hijos legítimos...",
+          "texto": "Si el difunto hubiere dejado hijos legítimos, la herencia se dividirá en cuatro partes: tres para los hijos legítimos y una para los hijos naturales, o nietos naturales, sin perjuicio de la porción conyugal que corresponda al cónyuge sobreviviente. Pero en ningún caso la porción de un hijo natural podrá exceder a la mitad de la porción de un hijo legítimo.",
+          "comentario": "Demuestra que el código distingue entre legítimos y naturales, distinción omitida por el artículo."
+        }
+      ],
+      "analisis": "ERROR GRAVE. El orden de prelación publicado no coincide con el Art. 960 CC en tres aspectos críticos: (a) el cónyuge aparece en 3.er lugar cuando el código lo sitúa en 7.mo; (b) se menciona 'Estado de Honduras' cuando el código dice 'municipios' (Art. 973 CC); (c) se omite completamente la distinción entre herederos legítimos y naturales que es central en el esquema del Código Civil hondureño. Adicionalmente, el artículo no refleja que los Arts. 965-972 CC establecen reglas complejas de concurrencia entre categorías, no un orden lineal simple de exclusión."
+    },
+    {
+      "claim_id": "C04",
+      "claim": "Los herederos de un orden excluyen a los del siguiente, salvo el cónyuge, que concurre con descendientes y ascendientes.",
+      "veredicto": "PARCIAL",
+      "normas": [
+        {
+          "articulo": "Art. 965 CC",
+          "epigrafe": "Si el difunto hubiere dejado hijos legítimos...",
+          "texto": "Si el difunto hubiere dejado hijos legítimos, la herencia se dividirá en cuatro partes: tres para los hijos legítimos y una para los hijos naturales, o nietos naturales, sin perjuicio de la porción conyugal que corresponda al cónyuge sobreviviente.",
+          "comentario": "Con hijos legítimos, el cónyuge no 'concurre' en el reparto sino que recibe porción conyugal aparte."
+        },
+        {
+          "articulo": "Art. 966 CC",
+          "epigrafe": "Si el difunto no hubiere dejado descendientes legítimos...",
+          "texto": "Si el difunto no hubiere dejado descendientes legítimos, la herencia se dividirá en tres partes iguales: una para los ascendientes legítimos, otra para el cónyuge y otra para los hijos naturales o nietos naturales.",
+          "comentario": "Sin descendientes legítimos, el cónyuge sí concurre en partes iguales con ascendientes legítimos e hijos naturales."
+        },
+        {
+          "articulo": "Art. 967 CC",
+          "epigrafe": "Si el difunto no hubiere dejado descendientes ni ascendientes legítimos...",
+          "texto": "Si el difunto no hubiere dejado descendientes ni ascendientes legítimos, le sucederán sus hermanos legítimos, su cónyuge y sus hijos naturales o nietos naturales.",
+          "comentario": "El cónyuge concurre también con hermanos legítimos e hijos naturales en este escenario."
+        }
+      ],
+      "analisis": "La idea general de que el cónyuge concurre con otras categorías es correcta, pero el artículo la presenta de forma excesivamente simplificada. El cónyuge no concurre con descendientes legítimos en el reparto de la herencia (recibe porción conyugal aparte, Art. 965 CC), sino con ascendientes legítimos e hijos naturales cuando no hay descendientes legítimos (Art. 966 CC). La regla es más matizada de lo que el artículo transmite."
+    },
+    {
+      "claim_id": "C05",
+      "claim": "Igualdad de derechos sucesorios entre hijos matrimoniales y extramatrimoniales.",
+      "veredicto": "ERROR",
+      "normas": [
+        {
+          "articulo": "Art. 965 CC",
+          "epigrafe": "Si el difunto hubiere dejado hijos legítimos...",
+          "texto": "Si el difunto hubiere dejado hijos legítimos, la herencia se dividirá en cuatro partes: tres para los hijos legítimos y una para los hijos naturales, o nietos naturales, sin perjuicio de la porción conyugal que corresponda al cónyuge sobreviviente. Pero en ningún caso la porción de un hijo natural podrá exceder a la mitad de la porción de un hijo legítimo.",
+          "comentario": "Este artículo establece una discriminación expresa: 3/4 para legítimos, 1/4 para naturales, con tope del 50% de lo que recibe un legítimo."
+        },
+        {
+          "articulo": "Art. 960 CC",
+          "epigrafe": "Son llamados a la sucesión intestada...",
+          "texto": "Son llamados a la sucesión intestada: 1.- Los descendientes legítimos del difunto.2.- Sus ascendientes legítimos.3.- Sus colaterales legítimos.4.- Sus hijos naturales o nietos naturales.5.- Sus padres naturales o abuelos naturales. 6.- Sus hermanos naturales. 7.- El cónyuge sobreviviente. 8.- Los municipios.",
+          "comentario": "Los órdenes 1-3 son para legítimos; los 4-6 para naturales. Tratamiento separado y desigual."
+        }
+      ],
+      "analisis": "ERROR GRAVE. El artículo afirma textualmente que 'la Constitución de Honduras y el Código Civil reconocen igualdad de derechos sucesorios a todos los hijos, sin distinción entre matrimoniales y extramatrimoniales'. Esto es falso respecto al Código Civil. El Art. 965 CC asigna 3/4 de la herencia a los hijos legítimos y solo 1/4 a los hijos naturales, con una limitación adicional: ningún hijo natural puede recibir más de la mitad de lo que recibe un hijo legítimo. El propio orden de llamamiento del Art. 960 CC coloca a los descendientes legítimos en 1.er lugar y a los hijos naturales en 4.to. Si bien los hijos extramatrimoniales tienen derecho a heredar, lo hacen en proporción inferior."
+    },
+    {
+      "claim_id": "C06",
+      "claim": "El cónyuge sobreviviente concurre con los hijos y hereda una porción igual a la de un hijo.",
+      "veredicto": "ERROR",
+      "normas": [
+        {
+          "articulo": "Art. 1150 CC",
+          "epigrafe": "El cónyuge sobreviviente que carece de lo necesario...",
+          "texto": "El cónyuge sobreviviente que carece de lo necesario para su congrua subsistencia, tiene derecho, en calidad de porción conyugal, a la cuarta parte de los bienes del cónyuge premuerto.",
+          "comentario": "El derecho del cónyuge es a la cuarta parte como porción conyugal, no a una porción igual a la de un hijo."
+        },
+        {
+          "articulo": "Art. 965 CC",
+          "epigrafe": "Si el difunto hubiere dejado hijos legítimos...",
+          "texto": "Si el difunto hubiere dejado hijos legítimos, la herencia se dividirá en cuatro partes: tres para los hijos legítimos y una para los hijos naturales, o nietos naturales, sin perjuicio de la porción conyugal que corresponda al cónyuge sobreviviente.",
+          "comentario": "La porción conyugal es independiente — 'sin perjuicio de' — de la división entre hijos. No es una porción igual."
+        },
+        {
+          "articulo": "Art. 1147 CC",
+          "epigrafe": "Asignaciones forzosas son las que el testador es obligado a hacer...",
+          "texto": "Asignaciones forzosas son las que el testador es obligado a hacer, y que se suplen cuando no las ha hecho, aun con perjuicio de sus disposiciones testamentarias expresas. Son asignaciones forzosas:1.- Los alimentos que se deben por la ley a ciertas personas; y2.- La porción conyugal.",
+          "comentario": "La porción conyugal es asignación forzosa, categoría distinta a la cuota hereditaria de los hijos."
+        }
+      ],
+      "analisis": "ERROR. El cónyuge no hereda 'una porción igual a la de un hijo'. Su derecho es a la porción conyugal: la cuarta parte de los bienes si carece de lo necesario para su congrua subsistencia (Art. 1150 CC). Esta porción conyugal es una asignación forzosa (Art. 1147 CC), conceptualmente distinta de la cuota hereditaria de los hijos. El Art. 965 CC además establece que la porción conyugal opera 'sin perjuicio' de la división entre hijos legítimos y naturales, lo que refuerza que son categorías diferentes."
+    },
+    {
+      "claim_id": "C07",
+      "claim": "Solo si no existen descendientes ni ascendientes, el cónyuge hereda la totalidad.",
+      "veredicto": "ERROR",
+      "normas": [
+        {
+          "articulo": "Art. 966 CC",
+          "epigrafe": "Si el difunto no hubiere dejado descendientes legítimos...",
+          "texto": "Si el difunto no hubiere dejado descendientes legítimos, la herencia se dividirá en tres partes iguales: una para los ascendientes legítimos, otra para el cónyuge y otra para los hijos naturales o nietos naturales.",
+          "comentario": "Sin descendientes legítimos pero con ascendientes e hijos naturales, el cónyuge recibe 1/3, no la totalidad."
+        },
+        {
+          "articulo": "Art. 968 CC",
+          "epigrafe": "Si el difunto no ha dejado descendientes, ascendientes ni hermanos legítimos...",
+          "texto": "Si el difunto no ha dejado descendientes, ascendientes ni hermanos legítimos, llevarán la mitad de los bienes el cónyuge sobreviviente y la otra mitad los hijos naturales o nietos naturales.",
+          "comentario": "Aun sin descendientes ni ascendientes legítimos, el cónyuge solo recibe la mitad si existen hijos naturales."
+        },
+        {
+          "articulo": "Art. 969 CC",
+          "epigrafe": "A falta de descendientes legítimos, ascendientes legítimos, hermanos legítimos e hijos naturales...",
+          "texto": "A falta de descendientes legítimos, ascendientes legítimos, hermanos legítimos e hijos naturales, o nietos naturales serán llamados a suceder al difunto, sus padres naturales o sus abuelos naturales.",
+          "comentario": "Incluso sin los anteriores, aparecen los padres naturales antes que el cónyuge herede todo."
+        },
+        {
+          "articulo": "Art. 973 CC",
+          "epigrafe": "A falta de todos los herederos ab intestato...",
+          "texto": "A falta de todos los herederos ab intestado, designados en los artículos precedentes, sucederán los municipios.",
+          "comentario": "En última instancia heredan los municipios, no el cónyuge como heredero universal."
+        }
+      ],
+      "analisis": "ERROR. Es falso que el cónyuge herede la totalidad cuando no hay descendientes ni ascendientes. El Código Civil establece una cascada de herederos subsidiarios: hijos naturales (Art. 968), padres naturales (Art. 969), hermanos naturales (Art. 970), colaterales (Art. 972), y en última instancia los municipios (Art. 973). En ningún escenario el cónyuge es heredero universal único. El artículo induce a una creencia errónea sobre los derechos del cónyuge supérstite."
+    },
+    {
+      "claim_id": "C08",
+      "claim": "No existe un plazo legal máximo para iniciar el juicio sucesorio en Honduras.",
+      "veredicto": "OK",
+      "normas": [
+        {
+          "articulo": "Art. 936 CC",
+          "epigrafe": "Si el heredero o legatario cuyos derechos a la sucesión no han prescrito...",
+          "texto": "Si el heredero o legatario cuyos derechos a la sucesión no han prescrito, fallece antes de haber aceptado o repudiado la herencia legado que se le ha deferido, transmite a sus herederos el derecho de aceptar dicha herencia o legado, o repudiarlos, aún cuando fallezca sin saber que se le ha deferido.",
+          "comentario": "Menciona que los derechos pueden prescribir pero no fija un plazo específico para iniciar el juicio."
+        },
+        {
+          "articulo": "Art. 1168 CC",
+          "epigrafe": "La acción de reforma... prescribe en cuatro años...",
+          "texto": "La acción de reforma de que habla este Capítulo, no podrá entablarse sino después de la muerte del testador; y prescribe en cuatro años, contados desde el día en que los interesados tuvieron conocimiento del testamento.",
+          "comentario": "Existen plazos para acciones específicas (reforma del testamento: 4 años), pero no un plazo general de caducidad para iniciar el juicio sucesorio."
+        }
+      ],
+      "analisis": "La afirmación es correcta en cuanto al Código Civil. No se encontró un artículo que establezca un plazo máximo de caducidad para iniciar el juicio sucesorio como tal. Existen plazos para acciones concretas (reforma del testamento: 4 años, Art. 1168 CC), pero no un plazo general. La recomendación del artículo de iniciar dentro del año es consejo práctico, no exigencia legal."
+    },
+    {
+      "claim_id": "C09",
+      "claim": "Se recomienda iniciar la sucesión dentro del año siguiente al fallecimiento.",
+      "veredicto": "OPINION",
+      "normas": [],
+      "analisis": "No se encontró en el Código Civil ninguna disposición que establezca el plazo de un año. Constituye una recomendación práctica del autor, no una norma jurídica verificable. Es un consejo profesional razonable (evitar deterioro de pruebas, localización de testigos, etc.) pero no debe presentarse como si tuviera base legal."
+    },
+    {
+      "claim_id": "C10",
+      "claim": "Los herederos responden por las deudas hereditarias hasta el valor de los bienes recibidos.",
+      "veredicto": "PARCIAL",
+      "normas": [
+        {
+          "articulo": "Art. 1194 CC",
+          "epigrafe": "El beneficio de inventario consiste en no hacer a los herederos responsables...",
+          "texto": "El beneficio de inventario consiste en no hacer a los herederos que aceptan, responsables de las obligaciones hereditarias y testamentarias, sino hasta concurrencia del valor total de los bienes que han heredado.",
+          "comentario": "La limitación de responsabilidad SOLO aplica con beneficio de inventario."
+        },
+        {
+          "articulo": "Art. 1192 CC",
+          "epigrafe": "El que hace acto de heredero sin previo inventario solemne...",
+          "texto": "El que hace acto de heredero sin previo inventario solemne, sucede en todas las obligaciones transmisibles del difunto a prorrata de su cuota hereditaria, aunque le impongan un gravamen que exceda al valor de los bienes que hereda.",
+          "comentario": "Sin beneficio de inventario, el heredero responde ILIMITADAMENTE, incluso más allá del valor de los bienes recibidos."
+        },
+        {
+          "articulo": "Art. 1196 CC",
+          "epigrafe": "El testador no podrá prohibir a un heredero el aceptar con beneficio de inventario.",
+          "texto": "El testador no podrá prohibir a un heredero el aceptar con beneficio de inventario.",
+          "comentario": "El derecho a aceptar con beneficio de inventario es irrenunciable para el testador."
+        }
+      ],
+      "analisis": "La afirmación es PARCIALMENTE correcta pero OMITE una distinción fundamental. La limitación de responsabilidad al valor de los bienes heredados solo aplica si el heredero acepta con beneficio de inventario (Art. 1194 CC). Si acepta sin inventario previo, responde por TODAS las obligaciones del causante, incluso si exceden el valor de lo heredado (Art. 1192 CC). El artículo menciona las deudas como un 'error frecuente' pero no explica que la protección no es automática: depende de un acto procesal expreso del heredero."
+    },
+    {
+      "claim_id": "C11",
+      "claim": "La renuncia a la herencia debe ser expresa ante notario o en juicio, y es irrevocable.",
+      "veredicto": "OK",
+      "normas": [
+        {
+          "articulo": "Art. 1172 CC",
+          "epigrafe": "Todo asignatario puede aceptar o repudiar libremente.",
+          "texto": "Todo asignatario puede aceptar o repudiar libremente. Exceptuadse las personas que no tuvieren la libre administración de sus bienes, las cuales no podrán aceptar, sino por medio o con el consentimiento de sus representantes legales. Se les prohíbe aceptar por sísolas, aun con beneficio de inventario.",
+          "comentario": "Consagra el derecho a repudiar (renunciar) la herencia."
+        }
+      ],
+      "analisis": "El Art. 1172 CC reconoce el derecho a repudiar la herencia. La exigencia de forma expresa y la irrevocabilidad son principios generales del derecho sucesorio. La afirmación es correcta y no contradice el Código Civil."
+    }
+  ],
+  "estadisticas": {
+    "total_claims": 11,
+    "ok": 3,
+    "parcial": 3,
+    "error": 4,
+    "opinion": 1,
+    "tasa_acierto": "27%",
+    "tasa_error": "36%",
+    "tasa_parcial": "27%",
+    "riesgo_alto": ["C03", "C05", "C06", "C07"],
+    "riesgo_medio": ["C02", "C04", "C10"],
+    "riesgo_bajo": ["C01", "C08", "C09", "C11"]
+  },
+  "recomendaciones": [
+    {
+      "severidad": "critica",
+      "afecta": ["C03", "C05", "C06", "C07"],
+      "accion": "Reescribir las secciones sobre orden de prelación (h2: ¿Qué pasa si no hay testamento?), igualdad de hijos (h3: ¿Los hijos extramatrimoniales tienen derecho a herencia?) y derechos del cónyuge (h3: ¿El cónyuge sobreviviente hereda todo?). Estas cuatro secciones contienen errores jurídicos graves que contradicen directamente el Código Civil hondureño.",
+      "plazo": "inmediato"
+    },
+    {
+      "severidad": "alta",
+      "afecta": ["C02", "C04", "C10"],
+      "accion": "Matizar las afirmaciones sobre formas testamentarias (incluir testamento menos solemne y verbal), sobre concurrencia del cónyuge (detallar escenarios de Arts. 965-970), y sobre responsabilidad por deudas (explicar beneficio de inventario vs aceptación pura).",
+      "plazo": "antes de la siguiente publicación"
+    },
+    {
+      "severidad": "baja",
+      "afecta": ["C09"],
+      "accion": "Aclarar que el plazo de un año es recomendación práctica, no exigencia legal. Idealmente citar que no existe plazo máximo en el Código Civil.",
+      "plazo": "siguiente revisión editorial"
+    }
+  ],
+  "nota_final": "El artículo contiene 4 errores jurídicos graves (36% de los claims) que afectan el núcleo del contenido: el orden de prelación de herederos, la supuesta igualdad entre hijos legítimos y naturales, y los derechos del cónyuge sobreviviente. Estas imprecisiones podrían inducir a decisiones legales erróneas por parte de los lectores. Se recomienda revisión urgente con citación expresa de los artículos del Código Civil. Los aciertos del artículo (modalidades sucesorias, ausencia de plazo, derecho a renunciar) son correctos pero no compensan la gravedad de los errores detectados."
+}

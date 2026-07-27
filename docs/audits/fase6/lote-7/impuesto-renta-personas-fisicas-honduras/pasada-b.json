@@ -1,0 +1,301 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "67566dce-493d-4986-95d9-0dcd7d26a89d",
+    "slug": "impuesto-renta-personas-fisicas-honduras",
+    "sha256_entrada": "e1f197feecf2789d1289bcc5f0d3ad99bb0394fbd47ec869699825da5dcc5065",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_tributario.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_limitante": "La Ley del Impuesto Sobre la Renta (Ley ISR) —que contiene los Arts. 4 y 22-30, los tramos progresivos, el umbral de 50,000 lempiras, los gastos deducibles con sus requisitos, y las alícuotas— NO está en los archivos JSON locales. El Código Tributario establece el marco general (principios, sujetos, deberes, fiscalización, sanciones, prescripción). La verificación granular se limita a lo que es contrastable contra el CTrib: aproximadamente el 20% del contenido del artículo. El 80% restante depende directamente de la Ley ISR."
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento contiene 10 bloques de afirmaciones sobre ISR para personas físicas en Honduras. Un bloque se verifica satisfactoriamente contra el Código Tributario (marco sancionador y de fiscalización). Cuatro bloques se verifican parcialmente: la estructura de retención/devolución, la obligación de declarar, el concepto de renta neta gravable, y la progresividad del sistema. Cinco bloques dependen enteramente de la Ley ISR (tramos, tasas, umbral de 50,000 LPS, deducciones, el ejemplo numérico completo). Se detecta una TENSIÓN: el artículo afirma que el SAR puede revisar 'cinco' ejercicios fiscales, mientras que el CTrib (Art. 144) establece prescripción de 4 años. Esta discrepancia es significativa pero no resoluble sin la Ley ISR. No se detectan errores factuales en lo verificable contra el CTrib. Se detecta una OMISIÓN relevante: el artículo no menciona el derecho a compensación de saldos a favor (Art. 134 CTrib) ni el plazo de prescripción como límite temporal de la fiscalización.",
+    "tension_detectada": {
+      "tipo": "discrepancia_en_plazo_de_fiscalizacion",
+      "descripcion": "El artículo afirma: 'El SAR puede revisar hasta los últimos cinco ejercicios fiscales.' El Código Tributario (Art. 144) establece un plazo de prescripción de CUATRO (4) años para las acciones de fiscalización y determinación del Estado. Existe una discrepancia de un año. Dado que las normas de prescripción del CTrib son de aplicación general a todos los tributos (Art. 1 CTrib: 'son aplicables a todos los tributos'), los 4 años serían aplicables al ISR salvo que la Ley ISR establezca un plazo especial de 5 años como norma especial.",
+      "impacto": "medio",
+      "apariciones": 1,
+      "ubicaciones": [
+        "Sección 'Errores frecuentes al declarar el ISR en Honduras': 'El SAR puede revisar hasta los últimos cinco ejercicios fiscales'"
+      ]
+    },
+    "omision_detectada": {
+      "tipo": "derechos_del_contribuyente_omitidos",
+      "descripcion": "El artículo enfatiza las obligaciones y sanciones, pero omite derechos relevantes del contribuyente establecidos en el CTrib: (a) derecho a compensación de saldos a favor (Art. 134 CTrib); (b) derecho a solicitar devolución de pagos indebidos o en exceso (Art. 113 CTrib); (c) derecho a rectificar declaraciones (Art. 114 CTrib, hasta 2 rectificaciones); (d) derecho a que las obligaciones prescritas sean descargadas de oficio (Art. 146 CTrib). Estos derechos son de alta utilidad práctica para el lector.",
+      "impacto": "medio",
+      "evidencia": "Arts. 113, 114, 134, 146 CTrib"
+    },
+    "fuente_ausente_critica": {
+      "tipo": "ley_primaria_isr_no_disponible",
+      "descripcion": "La Ley del Impuesto Sobre la Renta es la fuente jurídica central de este artículo. Su ausencia impide verificar aproximadamente el 80% del contenido: tramos (Arts. 22-30), umbral de 50,000 LPS (Art. 4), lista de gastos deducibles, tasas (10%, 15%, 25%), y el ejemplo numérico completo.",
+      "impacto": "alto"
+    }
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "Existe una Ley del Impuesto Sobre la Renta en Honduras.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "plausible",
+      "detalle": "El Art. 207 CTrib (disposición final) ordena al Poder Ejecutivo presentar al Congreso Nacional los 'nuevos proyectos de Ley del Impuesto Sobre la Renta'. Esto confirma la existencia prevista de una Ley ISR como parte del ordenamiento. Además, el Art. 209 CTrib faculta al Ejecutivo para suscribir convenios para evitar la doble tributación 'en Materia de Impuesto Sobre la Renta y el Patrimonio'. La existencia de la Ley ISR es una certeza jurídica derivada del propio CTrib.",
+      "evidencia": "Art. 207 CTrib: 'debe presentar al Congreso Nacional los nuevos proyectos de Ley del Impuesto Sobre la Renta.' Art. 209 CTrib: 'Convenios para Evitar la Doble Tributación en Materia de Impuesto Sobre la Renta y el Patrimonio.'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "El Artículo 4 de la Ley ISR establece la obligación de declarar para quienes tengan ingresos brutos superiores a 50,000 lempiras.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "La Ley ISR no está en fuentes locales. El CTrib (Art. 424) establece el deber genérico de presentar declaraciones, pero remite a cada ley especial los umbrales y condiciones. Ni el monto de 50,000 LPS ni el Art. 4 de la Ley ISR son verificables.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B1.3",
+      "subclaim_text": "Los artículos 22 al 30 de la Ley ISR detallan las alícuotas aplicables y los tramos progresivos.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "La Ley ISR no está en fuentes locales. La numeración 'Arts. 22-30' sigue el formato estándar de una ley tributaria (artículos operativos después de las disposiciones generales). No es verificable ni refutable.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "El ISR hondureño es un sistema progresivo basado en el principio de capacidad contributiva.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 4 CTrib define el impuesto como el tributo que toma 'en consideración la capacidad contributiva' del obligado. El Art. 11 CTrib reserva al Congreso Nacional la facultad de 'fijar la base imponible, la tarifa y el plazo del tributo'. El principio de progresividad es la forma natural de implementar la capacidad contributiva en un impuesto a la renta. El CTrib no ordena expresamente la progresividad, pero la capacidad contributiva es su fundamento constitucional (considerandos del CTrib citan los principios de 'legalidad, proporcionalidad, generalidad y equidad, de acuerdo con la capacidad económica del contribuyente').",
+      "evidencia": "Art. 4 CTrib: impuesto basado en la 'capacidad contributiva'. Considerandos: principios de proporcionalidad y equidad según capacidad económica.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "Los tramos iniciales de ingresos están exentos; los tramos intermedios gravan al 10% o 15%; los tramos superiores al 25%.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "Las tasas del 10%, 15% y 25% no están en el CTrib. Pertenecen a la Ley ISR. La estructura de tramos con exención inicial y tasas crecientes es el diseño estándar de un ISR progresivo, pero los valores específicos no son verificables.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "La renta neta gravable se calcula restando las deducciones autorizadas a los ingresos totales.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "consistente_con_marco_general",
+      "detalle": "El CTrib (Art. 11.2) menciona 'deducciones' como un elemento de la obligación tributaria que compete establecer al Congreso Nacional. El concepto de base imponible como ingresos menos deducciones es inherente al impuesto sobre la renta. El CTrib (Art. 102) define el hecho generador como 'el acto real o supuesto que... tipifica cualquier clase de tributo y cuya realización origina el nacimiento de la obligación tributaria'. La fórmula ingresos - deducciones = renta neta gravable es el estándar internacional y consistente con el marco hondureño.",
+      "evidencia": "Art. 11.2 CTrib: mención de 'deducciones'. Art. 102 CTrib: concepto de hecho generador.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "El empleador actúa como agente de retención, efectuando retenciones mensuales y enterándolas al SAR.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 29 CTrib: 'Es agente de retención la persona o entidad a quien la ley de cada tributo... le obliga a retener y enterar los tributos... de otros obligados tributarios.' Art. 29.2: 'La retención se debe efectuar en el momento en que se realice el pago o devengo del tributo, lo que se realice primero.' El empleador encaja perfectamente en esta definición legal. Art. 22.2 CTrib incluye a 'los obligados a realizar pagos a cuenta' como sujetos pasivos. El mecanismo de retención está sólidamente establecido en el CTrib.",
+      "evidencia": "Art. 29 CTrib: definición y obligaciones del agente de retención. Art. 22 CTrib: sujetos pasivos incluyen obligados a pagos a cuenta.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "El SAR (Servicio de Administración de Rentas) es la entidad que recibe las retenciones y administra el ISR.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El CTrib se refiere genéricamente a la 'Administración Tributaria' como el ente encargado de la gestión de los tributos (Art. 18: 'El sujeto activo... delega en el ente público constituido al efecto, la potestad administrativa para la gestión y exigencia del tributo'). El SAR es el nombre operativo de la Administración Tributaria en Honduras, creado por legislación especial. El CTrib no menciona 'SAR' ni 'Servicio de Administración de Rentas' por su nombre.",
+      "evidencia": "Art. 18 CTrib: sujeto activo delega en 'ente público constituido al efecto'. La denominación SAR corresponde a legislación orgánica no incluida.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B4.3",
+      "subclaim_text": "Si las retenciones superan el impuesto real, el contribuyente puede solicitar devolución; si son inferiores, debe pagar la diferencia.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 113 CTrib: 'El obligado tributario tiene derecho de acción para reclamar la restitución de lo pagado en exceso o indebidamente.' Art. 113.2: 'el obligado tributario tiene derecho a la autorización de la nota de crédito o la devolución de los saldos a su favor.' Art. 114 CTrib regula el procedimiento de devolución de pagos indebidos, incluyendo 'cuando la cantidad pagada haya sido superior al importe a pagar resultante de un acto administrativo o de una autoliquidación'. El mecanismo de ajuste anual (devolución o pago complementario) está respaldado por el CTrib.",
+      "evidencia": "Arts. 113 y 114 CTrib: derecho y procedimiento de devolución de pagos indebidos o en exceso.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "Son deducibles: gastos médicos, educativos, intereses hipotecarios, aportaciones a fondos de pensiones (IHSS, RAP, privados) y donaciones a entidades autorizadas.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "La lista de gastos deducibles pertenece enteramente a la Ley ISR, no disponible. El CTrib (Art. 11.2) confirma que compete al Congreso establecer deducciones, y el Art. 19 CTrib establece que 'las exenciones y exoneraciones... sólo comprenden los tributos expresamente señalados en la Ley', confirmando que cualquier deducción debe estar en ley. Pero la enumeración específica no es verificable.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B5.2",
+      "subclaim_text": "Se requiere factura fiscal emitida a nombre del contribuyente y con su número de RTN para que los gastos sean deducibles.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "plausible_parcialmente_verificado",
+      "detalle": "PARCIALMENTE VERIFICADO: El Art. 63 CTrib establece la obligación de inscribirse en el RTN, y que 'la expedición de este documento debe ser inmediata y gratuita por primera vez'. El Art. 77 CTrib menciona 'el régimen de imprentas y facturación'. El Art. 70 CTrib establece que las declaraciones y datos consignados 'deben ser objeto de verificación, comprobación o fiscalización'. El requisito de documentación fehaciente para deducciones es una consecuencia lógica del deber de comprobación (Art. 70) y de las facultades de fiscalización (Arts. 120-122). NO VERIFICABLE: la exigencia específica de factura fiscal con RTN para cada tipo de deducción del ISR pertenece a la Ley ISR y su reglamento.",
+      "evidencia": "Art. 63 CTrib (RTN), Art. 70 CTrib (verificación), Art. 77 CTrib (régimen de facturación).",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B6.1",
+      "subclaim_text": "No presentar la declaración genera multas automáticas.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "Art. 150 CTrib: 'Son faltas tributarias o aduaneras el incumplimiento de las obligaciones formales y materiales.' Art. 153 CTrib: 'La investigación, determinación y sanción de las faltas, corresponde a la Administración Tributaria.' Art. 156 CTrib contiene una tabla de sanciones por faltas formales graduadas según ingresos brutos anuales (desde 10% de un salario mínimo hasta 2 salarios mínimos). MATIZ: el CTrib no usa el término 'multas automáticas'. Las sanciones requieren un procedimiento administrativo con derecho a defensa (Art. 149.2: 'siguiendo el debido proceso y garantizando el derecho a la defensa').",
+      "evidencia": "Arts. 149, 150, 153, 156 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.2",
+      "subclaim_text": "Presentar información falsa u omitir ingresos puede desencadenar una fiscalización del SAR y configurar el delito de defraudación fiscal con sanciones penales.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "CONFIRMADO el mecanismo de fiscalización: Arts. 120-122 CTrib regulan las atribuciones, procedimiento y alcance de la fiscalización. Art. 107 CTrib: 'mediante fiscalización, en cualquier momento y antes de producirse la prescripción, puede determinar de oficio la obligación tributaria.' CONFIRMADO que existen delitos tributarios penales: Art. 165 CTrib: 'Son delitos tributarios los tipificados en el Código Penal.' Art. 166 CTrib: la Administración debe formular denuncia ante el Ministerio Público. MATIZ: el CTrib no usa la expresión 'defraudación fiscal'; remite al Código Penal. Asimismo, el Art. 163 CTrib prevé la figura de 'responsabilidad por cumplimiento voluntario': el pago voluntario antes del requerimiento fiscal del Ministerio Público extingue la persecución penal.",
+      "evidencia": "Arts. 107, 120-122, 163, 165, 166 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.1",
+      "subclaim_text": "El SAR cuenta con herramientas de cruce de información con bancos, CNBS y otras fuentes.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "no_verificable",
+      "detalle": "El CTrib no menciona a la CNBS. El Art. 72 CTrib impone a todo obligado tributario el deber de cooperar proporcionando 'toda clase de datos, informes o antecedentes con trascendencia tributaria... derivados directamente de sus relaciones económicas, profesionales o financieras con otras personas.' Esto proporciona base legal para requerir información a bancos, pero no describe sistemas de cruce automatizado. Los convenios interinstitucionales específicos no están en el corpus.",
+      "evidencia": "Art. 72 CTrib: deber de información. La CNBS no es mencionada en el CTrib.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B8.1",
+      "subclaim_text": "El SAR puede revisar hasta los últimos cinco ejercicios fiscales.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "tension_detectada",
+      "detalle": "El CTrib (Art. 144) establece un plazo de prescripción de 4 años para las acciones de fiscalización del Estado. Art. 145: el cómputo inicia desde 'el día hábil siguiente en que se presente la declaración.' La afirmación de 'cinco ejercicios fiscales' discrepa con los 4 años del CTrib. Si la Ley ISR establece un plazo especial de 5 años, prevalecería como ley especial, pero dicha ley no está disponible. Con las fuentes locales, el plazo es de 4 años.",
+      "evidencia": "Arts. 144 y 145 CTrib: prescripción de 4 años desde la presentación de la declaración.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B9.1",
+      "subclaim_text": "Ejemplo completo: María, 240,000 LPS ingresos, 60,000 deducciones, 180,000 neto, tramos (50,000 exento, 50,001-150,000 al 10%, 150,001-180,000 al 15%), ISR total = 14,500 LPS.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "Todos los datos del ejemplo (umbrales de tramos, tasas) dependen de la Ley ISR. La aritmética interna del ejemplo es correcta (100,000 x 0.10 = 10,000; 30,000 x 0.15 = 4,500), pero los parámetros no son verificables.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B10.1",
+      "subclaim_text": "Los asalariados con un solo empleador e ingresos bajo el umbral no requieren presentar declaración, pues el empleador retiene. Con múltiples empleadores sí deben declarar.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El CTrib confirma la figura del agente de retención (Art. 29) y la obligación genérica de declarar (Art. 424). El Art. 25 define contribuyentes. La exención de declaración para asalariados bajo cierto umbral con un solo empleador es una disposición típica de las leyes de ISR, pero el umbral y las condiciones específicas para Honduras pertenecen a la Ley ISR. La lógica de que múltiples empleadores generan obligación de declarar es una consecuencia del sistema de retención (cada empleador retiene como si fuera el único), pero la regla concreta no es verificable.",
+      "evidencia": "Arts. 25, 29, 424 CTrib: marco general de contribuyentes, retención y deber de declarar.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B11.1",
+      "subclaim_text": "[Cruce B2+B3] La progresividad (B2) y el concepto de renta neta gravable (B3) son coherentes entre sí y con el CTrib.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "coherente",
+      "detalle": "El principio de capacidad contributiva (Art. 4 CTrib) implica que el impuesto debe calcularse sobre una base que refleje la verdadera capacidad económica: la renta neta (ingresos menos deducciones). Ambos conceptos se refuerzan mutuamente. La progresividad (tasas crecientes sobre tramos de renta neta) es la implementación natural de la capacidad contributiva en un impuesto a la renta. No hay contradicción entre estos dos pilares del artículo.",
+      "evidencia": "Art. 4 CTrib: capacidad contributiva. Art. 11.2 CTrib: deducciones como elemento del tributo.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B11.2",
+      "subclaim_text": "[Cruce B4+B6] El sistema de retención (B4) y el régimen sancionador (B6) son compatibles en el marco del CTrib.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "compatibles",
+      "detalle": "El CTrib regula ambas figuras en títulos separados pero complementarios: la retención como mecanismo de recaudación (Arts. 29, 31) y las sanciones como consecuencia del incumplimiento (Arts. 149-156). La retención es una obligación del agente; su incumplimiento genera responsabilidad (Art. 29: 'es el único responsable ante el Estado por el importe percibido y por el que haya dejado de percibir'). El sistema es internamente coherente.",
+      "evidencia": "Arts. 29, 31 (retención), Arts. 149-156 (sanciones) CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B11.3",
+      "subclaim_text": "[Cruce B6+B8] Las sanciones (B6) están limitadas temporalmente por la prescripción (B8). Hay tensión en el plazo (5 vs 4 años).",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "tension_en_plazo",
+      "detalle": "El CTrib (Art. 144) establece prescripción de 4 años para la acción de fiscalización. El artículo afirma 5 años. La diferencia de un año tiene implicaciones prácticas: un contribuyente podría creer que está expuesto a fiscalización por 5 ejercicios cuando legalmente (según el CTrib) podrían ser 4. La prescripción es un límite temporal tanto para determinar tributos como para imponer sanciones (Art. 145.2: 'la prescripción de la acción para exigir y hacer efectiva una multa debe comenzar a computarse...'). Si el plazo correcto es 4 años, el artículo induce a error al lector sobre el alcance temporal del riesgo de fiscalización.",
+      "evidencia": "Arts. 144 y 145 CTrib.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B11.4",
+      "subclaim_text": "[Cruce B4+B5+B6] La retención del empleador (B4), las deducciones del contribuyente (B5) y las sanciones por incumplimiento (B6) forman un ecosistema de cumplimiento fiscal interdependiente.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "marco_coherente",
+      "detalle": "El CTrib provee un marco coherente: el agente de retención (B4) recauda durante el año; el contribuyente puede ajustar su carga fiscal mediante deducciones legales (B5); y el incumplimiento de cualquiera de estas obligaciones —no retener, no declarar, declarar falsamente— activa el sistema sancionador (B6) y las facultades de fiscalización (Arts. 120-122). Las tres dimensiones operan como un sistema integrado de cumplimiento tributario. El CTrib proporciona la arquitectura legal para esta interdependencia.",
+      "evidencia": "Arts. 29 (retención), 11.2 (deducciones como elemento legal), 149-156 (sanciones), 120-122 (fiscalización) CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B11.5",
+      "subclaim_text": "[Cruce B1+B2+B4+B6] La Ley ISR (B1), el principio de progresividad (B2), el mecanismo de retención (B4) y el régimen sancionador (B6) son estratos normativos complementarios en el ordenamiento hondureño.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "arquitectura_juridica_coherente",
+      "detalle": "El CTrib funciona como ley marco: establece los principios generales (Arts. 1-14), define los sujetos (Arts. 18-41), regula los deberes formales (Arts. 61-77), la determinación (Arts. 102-123) y las sanciones (Arts. 149-166). La Ley ISR (B1) sería la ley especial que, dentro de ese marco, define el hecho imponible concreto, los tramos (B2), los sujetos obligados a retener (B4) y las consecuencias del incumplimiento específico del ISR (B6). Esta arquitectura de ley marco + leyes especiales es el diseño estándar de los códigos tributarios modernos y es perfectamente coherente. El CTrib mismo lo anticipa en su Art. 1: 'son aplicables a todos los tributos' y en sus disposiciones finales (Art. 207) que ordenan la emisión de leyes especiales.",
+      "evidencia": "Arts. 1, 207 CTrib: código como ley marco aplicable a todos los tributos, con leyes especiales complementarias.",
+      "nivel_confianza": "alta"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["B1_Ley_ISR", "B2_Progresividad", "B3_Renta_Neta", "B4_Retencion", "B5_Deducciones", "B6_Sanciones", "B7_Cruce_Info", "B8_Prescripcion"],
+    "cruces": [
+      {
+        "par": "B1+B2",
+        "relacion": "Complementarios. La Ley ISR implementa la progresividad que el CTrib fundamenta en el principio de capacidad contributiva (Art. 4).",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B3",
+        "relacion": "Coherentes. La progresividad se aplica sobre la renta neta gravable, reflejando la verdadera capacidad contributiva.",
+        "conflicto": false
+      },
+      {
+        "par": "B4+B6",
+        "relacion": "Complementarios. El agente de retención (B4) está sujeto al mismo régimen sancionador (B6) que los demás obligados tributarios (Art. 29: responsable ante el Estado).",
+        "conflicto": false
+      },
+      {
+        "par": "B4+B8",
+        "relacion": "Independientes. La retención es un mecanismo de recaudación; la prescripción es un límite temporal a la acción fiscal. No hay conflicto directo.",
+        "conflicto": false
+      },
+      {
+        "par": "B6+B8",
+        "relacion": "TENSIÓN. El artículo afirma que el SAR puede fiscalizar 5 ejercicios; el CTrib establece 4 años de prescripción. La discrepancia es de 1 año y tiene impacto práctico en la planificación fiscal del contribuyente.",
+        "conflicto": true,
+        "tension": "Plazo de fiscalización: 5 años (artículo) vs 4 años (Art. 144 CTrib)"
+      },
+      {
+        "par": "B1+B5",
+        "relacion": "La Ley ISR (no disponible) contendría la lista de gastos deducibles. Sin ella, B5 es completamente no verificable.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B8",
+        "relacion": "Si la Ley ISR estableciera expresamente un plazo de 5 años, este prevalecería sobre los 4 del CTrib como ley especial. Sin la Ley ISR, prevalece el CTrib (4 años).",
+        "conflicto": true,
+        "tension": "Posible conflicto ley general (CTrib: 4 años) vs ley especial (Ley ISR: posiblemente 5 años)"
+      },
+      {
+        "par": "B3+B5",
+        "relacion": "Complementarios. La renta neta (B3) es ingresos menos deducciones (B5). La definición de deducciones autorizadas es crítica para determinar la base imponible.",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 22,
+    "confirmados": 3,
+    "confirmados_con_matiz": 2,
+    "consistentes_con_marco_general": 1,
+    "plausibles": 1,
+    "plausibles_no_verificables": 3,
+    "plausible_parcialmente_verificado": 1,
+    "no_verificables": 5,
+    "tension_detectada": 2,
+    "coherentes": 1,
+    "compatibles": 1,
+    "tension_en_plazo": 1,
+    "marco_coherente": 1,
+    "arquitectura_juridica_coherente": 1,
+    "tensiones_detectadas": "B8.1 y B11.3: El artículo afirma que el SAR fiscaliza 'cinco ejercicios fiscales'. El CTrib (Art. 144) establece prescripción de 4 años. Discrepancia de 1 año con impacto práctico para el contribuyente. B11.3: posible conflicto entre ley general (CTrib: 4 años) y ley especial (Ley ISR: quizás 5 años), no resoluble sin la Ley ISR.",
+    "omision_detectada": "El artículo omite derechos del contribuyente establecidos en el CTrib: compensación de saldos a favor (Art. 134), devolución de pagos indebidos (Art. 113), rectificación de declaraciones (Art. 114, hasta 2 rectificaciones), y descargo de oficio de obligaciones prescritas (Art. 146). También omite que la defraudación fiscal está tipificada en el Código Penal (Art. 165 CTrib), no en el CTrib mismo, y que el pago voluntario antes del requerimiento fiscal extingue la persecución penal (Art. 163 CTrib).",
+    "sin_errores_factuales_confirmables": true,
+    "observacion_critica": "El ~80% del contenido normativo específico del artículo depende de la Ley del Impuesto Sobre la Renta, no disponible en fuentes locales. Las afirmaciones verificables contra el Código Tributario son sustancialmente correctas. La tensión principal (5 años de fiscalización vs 4 de prescripción) es significativa pero no resoluble sin la Ley ISR. Si la Ley ISR estableciera 5 años, el artículo sería correcto y el CTrib aplicaría supletoriamente. Si la Ley ISR guarda silencio, aplicarían los 4 años del CTrib y el artículo contendría un error.",
+    "calidad_global_documento": "Buena en lo verificable contra el Código Tributario. El artículo demuestra comprensión del sistema tributario hondureño (progresividad, retención, fiscalización, sanciones). La estructura es pedagógica y cubre aspectos prácticos relevantes. La tensión del plazo de fiscalización (5 vs 4 años) es el punto más débil identificable con fuentes locales. Las omisiones de derechos del contribuyente (compensación, devolución, rectificación) restan balance al contenido, que enfatiza obligaciones y sanciones sobre derechos."
+  }
+}

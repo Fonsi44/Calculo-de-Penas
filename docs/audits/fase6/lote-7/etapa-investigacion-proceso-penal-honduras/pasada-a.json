@@ -1,0 +1,120 @@
+{
+  "pasada": "A",
+  "tipo": "documental",
+  "sha256_entrada": "4dee86b027b17350bc6dff6c99190ab58cbf64c4cccb9e76ffed30764fc4bf50",
+  "fuentes_locales": [
+    {
+      "archivo": "data/codigo_procesal_penal_verificado.json",
+      "sha256": "7f8312f62673969c0e5460169e5f65cd5b202c52f878db0858187729eab06681",
+      "descripcion": "Codigo Procesal Penal de Honduras (Decreto 130-2017) — 46 articulos verificados. Cubre garantias (Arts. 1-2), acusacion privada (Arts. 96, 99), defensa (Arts. 101, 119), allanamiento (Art. 212), etapas del proceso (Arts. 264-266), denuncia (Arts. 267-270), detencion (Arts. 282, 285), declaracion del imputado (Arts. 287-289), audiencia inicial (Art. 294), sobreseimiento (Arts. 295-296), acusacion formal (Art. 301), juicio oral (Arts. 306, 308, 310, 316-319), prueba (Arts. 325, 330, 332-333), sentencia (Arts. 334-336, 338-339) y recursos (Arts. 354, 356, 359-360, 363). NOTA: Los articulos 3-95 y 97-98 del CPP NO estan en el corpus verificado, lo que incluye los Arts. 56 y 58 citados en el articulo."
+    },
+    {
+      "archivo": "data/articulos_cp.json",
+      "sha256": "d7c112be63327abe7a502c5fdf0819f8f895086dede6df179c99f204d64573f6",
+      "descripcion": "Codigo Penal de Honduras — 635 articulos. Derecho penal sustantivo. Contiene referencias a prision preventiva y medidas cautelares (Art. 59 CP), accion penal (Arts. 106-111 CP), secreto profesional (Arts. 272, 274 CP), documents secretos (Arts. 503, 505-506 CP), Corte Suprema de Justicia (Art. 541 CP), y Policia Nacional (Art. 555 CP). No regula procedimiento penal."
+    }
+  ],
+  "claims_extraidos": [
+    {"id": "C1", "claim": "El Libro II, Titulo I del Codigo Procesal Penal de Honduras designa al Ministerio Publico como titular de la accion penal y director de la investigacion (Articulo 56)."},
+    {"id": "C2", "claim": "La Policia Nacional actua como auxiliar, ejecutando las diligencias ordenadas por el fiscal."},
+    {"id": "C3", "claim": "El fiscal tiene la obligacion de investigar tanto los indicios perjudiciales como los favorables al investigado (Articulo 58)."},
+    {"id": "C4", "claim": "La investigacion preliminar tiene un plazo maximo de seis meses."},
+    {"id": "C5", "claim": "El plazo de seis meses puede ser prorrogado por el juez a solicitud justificada del fiscal, especialmente en casos de complejidad. La Corte Suprema de Justicia puede revisar estas prorrogas."},
+    {"id": "C6", "claim": "El abogado defensor tiene el derecho de acceder al contenido de la investigacion (expediente)."},
+    {"id": "C7", "claim": "Las unicas excepciones al acceso al expediente son aquellas diligencias que, por motivos de seguridad o para no obstaculizar la investigacion, sean declaradas reservadas por el juez competente."},
+    {"id": "C8", "claim": "Existen procedimientos legales para impugnar la orden de captura o solicitar medidas cautelares alternativas a la prision preventiva ante los Juzgados de Letras correspondientes."},
+    {"id": "C9", "claim": "La etapa de investigacion se rige principalmente por los articulos 56 al 78 del Codigo Procesal Penal de Honduras (Decreto 130-2017)."},
+    {"id": "C10", "claim": "La etapa preparatoria comprende la investigacion preliminar, donde se recopilan los elementos probatorios que determinaran si se formula una acusacion formal o se procede al sobreseimiento."},
+    {"id": "C11", "claim": "Durante la investigacion, el fiscal puede entrevistar testigos, obtener documentos, realizar peritajes y, con autorizacion judicial, ejecutar allanamientos o intervenciones de comunicaciones."},
+    {"id": "C12", "claim": "Si usted es citado a declarar como investigado, tiene derecho a guardar silencio y a contar con la asistencia de un abogado."},
+    {"id": "C13", "claim": "La normativa vigente garantiza derechos esenciales como el derecho a la defensa, el derecho al silencio y el derecho a conocer las actuaciones fiscales."}
+  ],
+  "resultados_verificacion": [
+    {
+      "claim_id": "C1",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "El Articulo 56 del CPP no forma parte del corpus verificado (codigo_procesal_penal_verificado.json contiene 46 articulos: Arts. 1-2, 96, 99, 101, 119, 212, 264-270, 282, 285, 287-289, 294-296, 301, 306, 308, 310, 316-319, 325, 330, 332-336, 338-339, 354, 356, 359-360, 363). El rango 3-95 esta ausente. El Codigo Penal menciona 'Ministerio Publico' y 'accion penal' (Arts. 37, 40, 73, 75, 77-79, 81, 95, 106-111, 234, 268, 277 CP) pero en contextos de derecho sustantivo, no de direccion de la investigacion. Sin acceso al texto del Art. 56 CPP, no es posible verificar esta afirmacion.",
+      "fuente_exacta": "Art. 56 CPP no incluido en el corpus. Arts. 106-111 CP (accion penal, prescripcion) no abordan direccion de la investigacion."
+    },
+    {
+      "claim_id": "C2",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Ni el CPP verificado ni el Codigo Penal contienen disposiciones sobre el rol auxiliar de la Policia Nacional en la investigacion penal. El CP menciona 'Policia Nacional' en Art. 555 (traicion a la patria) y Art. 633 (derogaciones), pero no en el contexto de auxiliar de investigacion. El CPP verificado no contiene los articulos sobre la funcion policial en la investigacion.",
+      "fuente_exacta": "Ninguna fuente del corpus describe el rol auxiliar de la Policia Nacional en la etapa de investigacion."
+    },
+    {
+      "claim_id": "C3",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "El Articulo 58 del CPP no forma parte del corpus verificado. El deber de objetividad del fiscal (investigar lo favorable y lo desfavorable) es un principio del sistema acusatorio, pero sin el texto del Art. 58 CPP no puede corroborarse. El CPP verificado (Art. 101) garantiza derechos del imputado, y el CP (Art. 1) establece el principio de legalidad que incluye la aplicacion retroactiva favorable, pero ninguno aborda la obligacion del fiscal de investigar indicios favorables.",
+      "fuente_exacta": "Art. 58 CPP no incluido en el corpus. Art. 101 CPP (derechos del imputado); Art. 1 CP (principio de legalidad)."
+    },
+    {
+      "claim_id": "C4",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "El corpus no contiene disposicion alguna sobre el plazo de seis meses para la investigacion preliminar. El CPP verificado (Art. 285) establece un plazo de 24 horas (48 en casos complejos) para poner a la persona detenida a disposicion judicial, pero ese es un plazo de detencion, no de investigacion preliminar. El CP menciona plazos de prescripcion de la accion penal (Art. 109-111) pero no plazos de investigacion.",
+      "fuente_exacta": "Art. 285 CPP (plazo de 24/48h para puesta a disposicion judicial del detenido, distinto al plazo de investigacion preliminar). Arts. 109-111 CP (prescripcion de la accion penal)."
+    },
+    {
+      "claim_id": "C5",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Ni el CPP verificado ni el CP contienen disposiciones sobre prorroga del plazo de investigacion preliminar. El CP menciona 'Corte Suprema de Justicia (CSJ)' en Art. 541 (perturbacion ilicita del funcionamiento de instituciones) en un contexto no relacionado con la revision de prorrogas de investigacion. El Art. 285 CPP permite 48 horas en investigaciones complejas, pero esto se refiere al plazo de detencion, no a la prorroga de la fase de investigacion.",
+      "fuente_exacta": "Art. 285 CPP (plazo ampliado de detencion en casos complejos); Art. 541 CP (mencion de CSJ en contexto no relacionado)."
+    },
+    {
+      "claim_id": "C6",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "El CPP verificado establece el derecho a la defensa tecnica y a la entrevista privada con el defensor (Art. 101 CPP: 'Reconoce al imputado, entre otros derechos, defensa tecnica, entrevista privada con su defensor, silencio y presencia de su defensor al declarar'). Tambien regula la defensa privada y la designacion de defensor publico (Art. 119 CPP). Estos derechos implican acceso a la informacion del caso, pero el corpus no contiene una disposicion explicita sobre el 'derecho de acceder al contenido de la investigacion' o al expediente fiscal. El CP (Arts. 272, 503-506) regula el acceso indebido a secretos como delito, no como derecho del imputado.",
+      "fuente_exacta": "Arts. 101, 119 CPP (derecho de defensa y entrevista privada con defensor, fundamento implicito del acceso)."
+    },
+    {
+      "claim_id": "C7",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "El corpus no contiene disposiciones sobre reserva de diligencias de investigacion. El CPP verificado no incluye los articulos sobre secreto de la investigacion o reserva de actuaciones. El CP regula delitos relacionados con secretos (Arts. 272, 274, 395, 503-506 CP), pero estos tipifican conductas delictivas de acceso indebido o revelacion, no el regimen de reserva de diligencias en la investigacion penal.",
+      "fuente_exacta": "Arts. 272, 274, 503-506 CP (delitos contra secretos, aplicables a terceros, no regimen procesal de reserva)."
+    },
+    {
+      "claim_id": "C8",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "VERIFICADO en cuanto a la existencia de mecanismos procesales: CPP Art. 282 regula la aprehension y las garantias de la persona detenida; CPP Art. 285 establece que la persona detenida debe ser puesta a disposicion judicial en 24/48 horas; CPP Art. 354 determina las resoluciones contra las que procede recurso de apelacion; CPP Art. 356 fija plazo de 3 dias habiles para apelar. El CP Art. 59 menciona 'prision preventiva' y 'medidas cautelares' en el contexto de abono de prision provisional. NO VERIFICABLE en cuanto a los 'Juzgados de Letras' y 'medidas cautelares alternativas a la prision preventiva', que no se mencionan en el corpus.",
+      "fuente_exacta": "Arts. 282, 285, 354, 356 CPP (garantias de detenidos y recursos); Art. 59 CP (mencion de prision preventiva y medidas cautelares)."
+    },
+    {
+      "claim_id": "C9",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "VERIFICADO en cuanto a la existencia de una etapa de investigacion dentro del proceso penal: CPP Art. 264 establece que 'La etapa preparatoria comprende la denuncia, la investigacion preliminar, el requerimiento fiscal y la audiencia inicial'. NO VERIFICABLE en cuanto al rango especifico de articulos 56 al 78 y la referencia al Decreto 130-2017, ya que los articulos 56-78 del CPP no estan en el corpus verificado y el numero de decreto no es confirmable con las fuentes disponibles.",
+      "fuente_exacta": "Art. 264 CPP (confirma la investigacion preliminar como parte de la etapa preparatoria). Arts. 56-78 CPP no incluidos en el corpus."
+    },
+    {
+      "claim_id": "C10",
+      "veredicto": "VERIFICADO",
+      "evidencia": "CPP Art. 264: 'La etapa preparatoria comprende la denuncia, la investigacion preliminar, el requerimiento fiscal y la audiencia inicial.' CPP Art. 295 regula el sobreseimiento provisional y la reapertura por nuevas pruebas dentro de cinco anos. CPP Art. 296 regula los supuestos del sobreseimiento definitivo. CPP Art. 301 regula la formalizacion de la acusacion y su contenido en la audiencia preliminar. La estructura general descrita en el articulo —investigacion preliminar que conduce a acusacion o sobreseimiento— coincide con el diseno del CPP.",
+      "fuente_exacta": "Arts. 264, 295, 296, 301 CPP (estructura de la etapa preparatoria, sobreseimiento y acusacion formal)."
+    },
+    {
+      "claim_id": "C11",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "VERIFICADO en cuanto a la necesidad de autorizacion judicial para allanamientos: CPP Art. 212 'Regula los presupuestos, la orden judicial escrita y las excepciones del allanamiento de morada', lo que confirma que los allanamientos requieren intervencion judicial. NO VERIFICABLE en cuanto a las demas facultades del fiscal (entrevistar testigos, obtener documentos, realizar peritajes, intervenir comunicaciones), que no estan detalladas en el corpus verificado del CPP.",
+      "fuente_exacta": "Art. 212 CPP (allanamiento con orden judicial). Resto de facultades investigativas no cubiertas por el corpus."
+    },
+    {
+      "claim_id": "C12",
+      "veredicto": "VERIFICADO",
+      "evidencia": "CPP Art. 101: 'Reconoce al imputado, entre otros derechos, defensa tecnica, entrevista privada con su defensor, silencio y presencia de su defensor al declarar.' CPP Art. 287 regula la informacion de derechos a la persona imputada. CPP Art. 288 prohibe coaccion, amenazas, tortura y otros medios que afecten la libertad de decision del imputado. CPP Art. 289: 'La declaracion del imputado debe recibirse en presencia de su defensor, bajo sancion de nulidad.' Los derechos al silencio y a la asistencia de abogado estan expresamente reconocidos.",
+      "fuente_exacta": "Arts. 101, 287, 288, 289 CPP (derecho al silencio y asistencia letrada del imputado)."
+    },
+    {
+      "claim_id": "C13",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "VERIFICADO en cuanto al derecho a la defensa y al silencio: CPP Art. 101 reconoce expresamente 'defensa tecnica' y 'silencio'; CPP Art. 119 regula la defensa privada y publica; CPP Art. 287 garantiza la informacion de derechos; CPP Art. 289 exige presencia del defensor en la declaracion bajo sancion de nulidad. NO VERIFICABLE en cuanto al 'derecho a conocer las actuaciones fiscales', que no aparece formulado explicitamente en el corpus del CPP verificado.",
+      "fuente_exacta": "Arts. 101, 119, 287, 289 CPP (defensa y silencio verificados). Derecho a conocer actuaciones fiscales no formulado explicitamente."
+    }
+  ],
+  "resumen_estadistico": {
+    "total_claims": 13,
+    "verificados": 2,
+    "parcialmente_verificados": 5,
+    "no_verificables": 6,
+    "refutados": 0
+  },
+  "conclusion": "El corpus documental disponible (Codigo Procesal Penal verificado con 46 articulos y Codigo Penal con 635 articulos) proporciona una base de verificacion limitada para el articulo sobre la etapa de investigacion penal en Honduras. La limitacion principal es que los articulos 56 al 78 del CPP —citados expresamente en el articulo como el nucleo normativo de la etapa de investigacion— NO estan en el corpus verificado. Esto impide verificar los claims centrales sobre el Ministerio Publico como director de la investigacion (Art. 56 CPP), la obligacion de investigar lo favorable y desfavorable (Art. 58 CPP), y el plazo de seis meses. De los 13 claims extraidos, solo 2 estan plenamente verificados (la estructura general de la etapa preparatoria que conduce a acusacion o sobreseimiento, confirmada por Arts. 264, 295, 296, 301 CPP; y los derechos al silencio y asistencia letrada del imputado, confirmados por Arts. 101, 287-289 CPP). Cinco claims estan parcialmente verificados, destacando la confirmacion de que los allanamientos requieren orden judicial (Art. 212 CPP) y que existen mecanismos de impugnacion (Arts. 354, 356 CPP). Seis claims resultan no verificables por ausencia de los articulos pertinentes en el corpus. No se detectaron refutaciones. La verificacion es consistente con el marco general del proceso penal hondureno en lo que el corpus alcanza a cubrir, pero la ausencia de los articulos 56-78 del CPP deja sin verificar el nucleo duro del contenido."
+}
