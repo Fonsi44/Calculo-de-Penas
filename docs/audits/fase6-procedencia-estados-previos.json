@@ -1,0 +1,640 @@
+{
+  "counts": {
+    "lote1": 13,
+    "lote2": 15,
+    "lote3": 15,
+    "editorial": 100,
+    "sin_evidencia": 0,
+    "landings": 14
+  },
+  "detalle": [
+    {
+      "slug": "registro-medicamentos-productos-farmaceuticos-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "contratos-empleadas-domesticas-obligaciones-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "registro-sanitario-alimentos-arsa-paso-a-paso-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "calcular-prestaciones-laborales-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "habilitacion-clinicas-hospitales",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "zonas-libres-zoli-beneficios-fiscales-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "reformas-legales-recientes-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "contratos-mercantiles-proteger-negocio",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "licencia-ambiental-categorias-plazos-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "constitucion-empresas-honduras-pasos-legales",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "centro-conciliacion-arbitraje-ccic",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "expropiacion-forzosa-derechos-propietario-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "codigo-aduanero-centroamericano",
+      "procedencia": "Lote 3"
+    },
+    {
+      "slug": "abogado-civil-choluteca",
+      "procedencia": "landings"
+    },
+    {
+      "slug": "pension-alimenticia-choluteca",
+      "procedencia": "Lote 2"
+    },
+    {
+      "slug": "residencia-temporal-requisitos-plazos-honduras",
+      "procedencia": "Lote 2"
+    },
+    {
+      "slug": "sobreseimiento-definitivo-provisional",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "derechos-de-autor-proteccion-registro-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "guarda-custodia-menores-tipos-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "impuestos-pequenas-empresas-guia-basica-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "abogado-familia-choluteca",
+      "procedencia": "landings"
+    },
+    {
+      "slug": "ejecucion-hipotecaria-honduras-que-hacer",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "pension-alimenticia-porcentaje-honduras-2026",
+      "procedencia": "Lote 2"
+    },
+    {
+      "slug": "mediacion-familiar-cuando-funciona-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "impuesto-renta-guia-personas-fisicas-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "importar-mercancias-guia-aduanera",
+      "procedencia": "Lote 3"
+    },
+    {
+      "slug": "incumplimiento-contrato-comercial-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "proteccion-marcas-competencia-desleal",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "despido-laboral-honduras-derechos",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "refugio-asilo-solicitarlo",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "testamentos-sucesiones-herencia-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "visas-inversion-rentista-pensionado",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "derechos-detenido-honduras-guia-constitucional",
+      "procedencia": "Lote 1"
+    },
+    {
+      "slug": "como-elegir-abogado-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "abogados-en-san-marcos-de-colon-choluteca",
+      "procedencia": "landings"
+    },
+    {
+      "slug": "abogados-en-san-lorenzo",
+      "procedencia": "landings"
+    },
+    {
+      "slug": "poder-notarial-honduras-tipos-requisitos",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "reclamar-deuda-legalmente-honduras",
+      "procedencia": "Lote 3"
+    },
+    {
+      "slug": "contratos-trabajo-tipos-clausulas-honduras",
+      "procedencia": "Lote 3"
+    },
+    {
+      "slug": "evaluacion-impacto-ambiental-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "diferencia-denuncia-querella-acusacion-honduras",
+      "procedencia": "Lote 1"
+    },
+    {
+      "slug": "isv-impuesto-venta-tasas-obligaciones-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "habeas-corpus-cuando-interponer-honduras",
+      "procedencia": "Lote 2"
+    },
+    {
+      "slug": "importaciones-san-lorenzo",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "cuando-necesito-abogado-penalista-honduras",
+      "procedencia": "Lote 1"
+    },
+    {
+      "slug": "abogados-en-pespire-choluteca",
+      "procedencia": "landings"
+    },
+    {
+      "slug": "abogado-penalista-sur-honduras",
+      "procedencia": "landings"
+    },
+    {
+      "slug": "clausulas-abusivas-contratos-como-detectar-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "riesgos-profesionales-accidentes",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "contratos-arrendamiento-derechos-obligaciones-honduras",
+      "procedencia": "Lote 2"
+    },
+    {
+      "slug": "arbitraje-honduras-guia-completa",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "contratos-franquicia-aspectos",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "abogado-empresas-san-lorenzo",
+      "procedencia": "landings"
+    },
+    {
+      "slug": "cobro-deudas-choluteca",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "problemas-legales-familiares-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "derechos-consumidor-financiero-honduras-cnbs",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "banco-demanda-deuda-defensa-opciones-honduras",
+      "procedencia": "Lote 3"
+    },
+    {
+      "slug": "facturacion-electronica-requisitos-sar",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "adopcion-requisitos-proceso-honduras",
+      "procedencia": "Lote 3"
+    },
+    {
+      "slug": "derechos-laborales-basicos-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "herencias-honduras-fallece-familiar",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "violencia-domestica-ruta-legal-honduras",
+      "procedencia": "Lote 1"
+    },
+    {
+      "slug": "reagrupacion-familiar-hondurenos-espana",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "allanamiento-ilegal-violacion-domicilio-honduras",
+      "procedencia": "Lote 1"
+    },
+    {
+      "slug": "delitos-ambientales-como-denunciarlos-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "costos-honorarios-abogados-como-funcionan-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "divorcio-tipos-requisitos-tiempos-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "central-riesgos-honduras-consultar-impugnar",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "recursos-sentencia-penal-apelacion-casacion-honduras",
+      "procedencia": "Lote 2"
+    },
+    {
+      "slug": "devolucion-impuestos-como-solicitarla-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "derecho-ambiental-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "registrar-marca-paso-a-paso-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "acoso-laboral-mobbing-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "custodia-hijos-honduras-juez",
+      "procedencia": "Lote 2"
+    },
+    {
+      "slug": "etapa-investigacion-proceso-penal-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "audiencia-inicial-proceso-penal-honduras",
+      "procedencia": "Lote 1"
+    },
+    {
+      "slug": "pension-alimenticia-honduras-como-solicitarla",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "impuesto-renta-personas-fisicas-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "jornada-laboral-horas-extra-descansos-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "elegir-bufete-abogados-nacaome",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "delitos-mas-comunes-honduras",
+      "procedencia": "Lote 1"
+    },
+    {
+      "slug": "presentar-denuncia-conadeh-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "abogado-aduanero-san-lorenzo",
+      "procedencia": "landings"
+    },
+    {
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "procedencia": "Lote 1"
+    },
+    {
+      "slug": "tarjetas-credito-intereses-cargos-defensa-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "antejuicio-en-honduras",
+      "procedencia": "Lote 1"
+    },
+    {
+      "slug": "union-de-hecho-requisitos-derechos-honduras",
+      "procedencia": "Lote 3"
+    },
+    {
+      "slug": "abogados-en-amapala-valle",
+      "procedencia": "landings"
+    },
+    {
+      "slug": "sar-notifica-fiscalizacion-que-hacer-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "derecho-de-peticion-instituciones-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "arraigo-social-laboral-hondurenos-espana",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "asuntos-familiares-honduras-espana",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "pineda-asociados-bufete-multidisciplinario-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "defensa-sar-choluteca",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "tributar-espana-bienes-guia",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "lavado-activos-obligaciones",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "responsabilidad-medica-mala-praxis-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "estafas-fraudes-tipos-penales-honduras",
+      "procedencia": "Lote 1"
+    },
+    {
+      "slug": "patentes-requisitos-proceso-solicitud-honduras",
+      "procedencia": "Lote 3"
+    },
+    {
+      "slug": "guia-aduanera-importaciones-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "danos-perjuicios-indemnizacion-honduras",
+      "procedencia": "Lote 2"
+    },
+    {
+      "slug": "usucapion-prescripcion-adquisitiva-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "abogados-en-nacaome",
+      "procedencia": "landings"
+    },
+    {
+      "slug": "competencia-desleal-como-denunciar-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "importar-china-guia-aduanera",
+      "procedencia": "Lote 3"
+    },
+    {
+      "slug": "proteccion-datos-personales-derechos-arco-honduras",
+      "procedencia": "Lote 3"
+    },
+    {
+      "slug": "tipos-sociedad-mercantil-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "titulos-valores-cheques-sin-fondo-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "compraventa-inmuebles-aspectos-legales-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "registrar-marca-honduras-paso-a-paso",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "contratos-confidencialidad-nda-secreto-comercial-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "como-elegir-buen-abogado-guia-practica-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "como-obtener-rtn-personas-empresas-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "permiso-trabajo-extranjeros-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "libertad-expresion-redes-sociales-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "elegir-bufete-multidisciplinario-ventajas-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "poder-desde-espana-para-tramites-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "divorcio-honduras-guia-completa",
+      "procedencia": "Lote 2"
+    },
+    {
+      "slug": "defensa-penal-honduras",
+      "procedencia": "Lote 1"
+    },
+    {
+      "slug": "demanda-laboral-choluteca",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "constituir-empresa-guia-paso-a-paso-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "procedencia": "Lote 1"
+    },
+    {
+      "slug": "hondurenos-espana-documentos",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "fianza-medidas-cautelares-proceso-penal-honduras",
+      "procedencia": "Lote 1"
+    },
+    {
+      "slug": "abogados-en-choluteca",
+      "procedencia": "landings"
+    },
+    {
+      "slug": "derechos-trabajadora-embarazada-honduras",
+      "procedencia": "Lote 2"
+    },
+    {
+      "slug": "preguntas-frecuentes-antes-contratar-abogado-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "empleador-no-paga-salario-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "juicio-oral-etapas-que-esperar-honduras",
+      "procedencia": "Lote 2"
+    },
+    {
+      "slug": "proceso-consulta-legal-pineda",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "errores-contratos-civiles-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "accidente-transito-choluteca",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "recurso-de-amparo-honduras-guia-completa",
+      "procedencia": "Lote 3"
+    },
+    {
+      "slug": "despido-injustificado-honduras-derechos-trabajador",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "abogado-laboral-choluteca",
+      "procedencia": "landings"
+    },
+    {
+      "slug": "herencias-transfronterizas-bienes",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "despido-laboral-honduras-guia-completa",
+      "procedencia": "Lote 2"
+    },
+    {
+      "slug": "tramites-legales-nacaome",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "abogado-penalista-choluteca",
+      "procedencia": "landings"
+    },
+    {
+      "slug": "pension-alimenticia-honduras-guia-completa",
+      "procedencia": "Lote 2"
+    },
+    {
+      "slug": "naturalizacion-nacionalidad-hondurena",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "calcular-liquidacion-laboral-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "abogados-en-marcovia-choluteca",
+      "procedencia": "landings"
+    },
+    {
+      "slug": "prescripcion-deudas-plazos-honduras",
+      "procedencia": "Lote 2"
+    },
+    {
+      "slug": "como-preparar-demanda-guia-no-abogados-honduras",
+      "procedencia": "Lote 3"
+    },
+    {
+      "slug": "creditos-reestructuracion-deudas",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "contratos-mercantiles-esenciales-empresas-honduras",
+      "procedencia": "Lote 3"
+    },
+    {
+      "slug": "derechos-indigenas-consulta-previa-honduras",
+      "procedencia": "Lote 3"
+    },
+    {
+      "slug": "despido-empleados-publicos-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "medidas-sustitutivas-prision-preventiva-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "nacionalidad-espanola-para-hondurenos-residencia-plazos",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "divorcio-choluteca",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "que-hacer-si-me-detienen-en-honduras",
+      "procedencia": "Lote 2"
+    },
+    {
+      "slug": "sanciones-administrativas-como-defenderse-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "poder-legal-honduras-cuando-se-necesita",
+      "procedencia": "Lote 3"
+    },
+    {
+      "slug": "servicios-legales-empresas-sur-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    },
+    {
+      "slug": "tramites-notariales-frecuentes-honduras",
+      "procedencia": "estado editorial reviewed sin auditoria"
+    }
+  ]
+}

@@ -1,0 +1,600 @@
+[
+  {
+    "slug": "codigo-aduanero-centroamericano",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-27T00:20:34.741Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "41e1adf554e7bac0219fd2ecd56048148a9909cceac0297a7244066f5b7d4143",
+    "hash_body_despues": "41e1adf554e7bac0219fd2ecd56048148a9909cceac0297a7244066f5b7d4143",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "pension-alimenticia-porcentaje-honduras-2026",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": ".backups/fase6-lote4-backup.json",
+    "timestamp": "2026-07-26T18:50:50.092Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "e0b2fbd4bc37e37595b6593262a215fd79409075818baa1c32152f7f73d501dd",
+    "hash_body_despues": "e0b2fbd4bc37e37595b6593262a215fd79409075818baa1c32152f7f73d501dd",
+    "resultado_rollback": "Restaurado exitosamente a estado verificado en backup",
+    "evidenciaAnterior": "Backup Lote 4 file content"
+  },
+  {
+    "slug": "importar-mercancias-guia-aduanera",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-27T00:20:34.468Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "03f41c872342ff33e968556bf5735efde69f3f0f1be321b202af2ea18c2e4e7d",
+    "hash_body_despues": "03f41c872342ff33e968556bf5735efde69f3f0f1be321b202af2ea18c2e4e7d",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "derechos-detenido-honduras-guia-constitucional",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-26T16:23:55.661Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "3f91757e7b5c393d62850087af82beef841bb0701d5ddb6edcfd9e12e03897c1",
+    "hash_body_despues": "3f91757e7b5c393d62850087af82beef841bb0701d5ddb6edcfd9e12e03897c1",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "reclamar-deuda-legalmente-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-27T00:20:33.924Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "8f4fe78855ae0f8ce2499c5c46a3f08653cb2ae3f4cb4572320486a636bf09e3",
+    "hash_body_despues": "8f4fe78855ae0f8ce2499c5c46a3f08653cb2ae3f4cb4572320486a636bf09e3",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "diferencia-denuncia-querella-acusacion-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": ".backups/fase6-lote4-backup.json",
+    "timestamp": "2026-07-26T16:08:52.200Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "0102707b9d88b5d107744281d6dfff7152831a9592c4d280a8dc4111a15027a2",
+    "hash_body_despues": "0102707b9d88b5d107744281d6dfff7152831a9592c4d280a8dc4111a15027a2",
+    "resultado_rollback": "Restaurado exitosamente a estado verificado en backup",
+    "evidenciaAnterior": "Backup Lote 4 file content"
+  },
+  {
+    "slug": "cuando-necesito-abogado-penalista-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-26T16:08:50.971Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "cb4a495154c3cf26df9c6c3fbbb0b1cc0e7a9876694d588901ec41e1254e52b2",
+    "hash_body_despues": "cb4a495154c3cf26df9c6c3fbbb0b1cc0e7a9876694d588901ec41e1254e52b2",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "abogado-penalista-sur-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-26T16:08:50.420Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "9449f7336feb57744dc6a6bc75ddaf526ed7e2059b605b2643c299505649bff8",
+    "hash_body_despues": "9449f7336feb57744dc6a6bc75ddaf526ed7e2059b605b2643c299505649bff8",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "adopcion-requisitos-proceso-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-27T00:20:35.366Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "3c2c7cd60aecd69fb136b1b7c167ebaac98b6a9a8969041e1fdfed2a2736164a",
+    "hash_body_despues": "3c2c7cd60aecd69fb136b1b7c167ebaac98b6a9a8969041e1fdfed2a2736164a",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "violencia-domestica-ruta-legal-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-26T16:08:52.579Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "4d0409ea4349a148cdbc3d43868e4e0eb8e8ab1448b6fd86903e5dd3dcae890b",
+    "hash_body_despues": "4d0409ea4349a148cdbc3d43868e4e0eb8e8ab1448b6fd86903e5dd3dcae890b",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "allanamiento-ilegal-violacion-domicilio-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-26T16:23:54.991Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "458cad4fdafe0a53d34d096a21700f66b46abff93efcec7ce5aa88a3039cc3a5",
+    "hash_body_despues": "458cad4fdafe0a53d34d096a21700f66b46abff93efcec7ce5aa88a3039cc3a5",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "audiencia-inicial-proceso-penal-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-26T16:08:50.780Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "88865dd442259b095ab267227531b7790d83ca24a90f71f31e9cb1bb2678addf",
+    "hash_body_despues": "88865dd442259b095ab267227531b7790d83ca24a90f71f31e9cb1bb2678addf",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "delitos-mas-comunes-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-26T16:23:55.437Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "bc2b09050bbf32d723892efe8fc3c0dd10aa21c0f00c323313184505ee4e6d0a",
+    "hash_body_despues": "bc2b09050bbf32d723892efe8fc3c0dd10aa21c0f00c323313184505ee4e6d0a",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "cuando-prescribe-delito-en-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": ".backups/fase6-lote4-backup.json",
+    "timestamp": "2026-07-26T16:08:51.166Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "60988525da867d7abc4ab35f29c0cd08397957a7c5c8e6a2c5f08ae8fe330cba",
+    "hash_body_despues": "60988525da867d7abc4ab35f29c0cd08397957a7c5c8e6a2c5f08ae8fe330cba",
+    "resultado_rollback": "Restaurado exitosamente a estado verificado en backup",
+    "evidenciaAnterior": "Backup Lote 4 file content"
+  },
+  {
+    "slug": "antejuicio-en-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-26T16:23:55.217Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "5103a3e4816c73c05a88aaca057fe1244671dbef87fe2d3db148eae0e5dad1f1",
+    "hash_body_despues": "5103a3e4816c73c05a88aaca057fe1244671dbef87fe2d3db148eae0e5dad1f1",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "union-de-hecho-requisitos-derechos-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-27T00:20:35.635Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "63dba72fafa9700f2c6e9ef4e659ee2e0aae6f7664dc76da66a9c3a123edf44d",
+    "hash_body_despues": "63dba72fafa9700f2c6e9ef4e659ee2e0aae6f7664dc76da66a9c3a123edf44d",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "estafas-fraudes-tipos-penales-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": ".backups/fase6-lote4-backup.json",
+    "timestamp": "2026-07-26T16:23:55.931Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "3830925c724c34e3c83ff9914743f0fae780383e6a2809507af536186aaf4fd5",
+    "hash_body_despues": "3830925c724c34e3c83ff9914743f0fae780383e6a2809507af536186aaf4fd5",
+    "resultado_rollback": "Restaurado exitosamente a estado verificado en backup",
+    "evidenciaAnterior": "Backup Lote 4 file content"
+  },
+  {
+    "slug": "patentes-requisitos-proceso-solicitud-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-27T00:20:35.008Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "e3da596a63956b7686f22715ae2e6d6c366dadee3e10576280bf1cb5d7dae89f",
+    "hash_body_despues": "e3da596a63956b7686f22715ae2e6d6c366dadee3e10576280bf1cb5d7dae89f",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "importar-china-guia-aduanera",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-27T00:20:34.196Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "7169de277b587636329a60a730fbd2949fc6b2f6043580d59edf043673ed0148",
+    "hash_body_despues": "7169de277b587636329a60a730fbd2949fc6b2f6043580d59edf043673ed0148",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "defensa-penal-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-26T16:08:51.382Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "235caf1b232587a9f1fabc18feef1326083bc6e09a3ee67a3d9c0ae70c134988",
+    "hash_body_despues": "235caf1b232587a9f1fabc18feef1326083bc6e09a3ee67a3d9c0ae70c134988",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "defensa-penal-menores-edad-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": ".backups/fase6-lote4-backup.json",
+    "timestamp": "2026-07-26T16:08:51.577Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "80322667de1cd2333c1f2e6136493cfd82bb09afcbbbadd2db0af6481fcbdb91",
+    "hash_body_despues": "80322667de1cd2333c1f2e6136493cfd82bb09afcbbbadd2db0af6481fcbdb91",
+    "resultado_rollback": "Restaurado exitosamente a estado verificado en backup",
+    "evidenciaAnterior": "Backup Lote 4 file content"
+  },
+  {
+    "slug": "fianza-medidas-cautelares-proceso-penal-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-26T16:08:52.468Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "55dc7bbbbbf485727ec4763a39bedfcbed040773a221350ec926738edc499863",
+    "hash_body_despues": "55dc7bbbbbf485727ec4763a39bedfcbed040773a221350ec926738edc499863",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "recurso-de-amparo-honduras-guia-completa",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-27T00:20:36.173Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "41f05b4d6818ed3a00873c41667100308dbc50106cd7a9f0b62c08c34bb739ae",
+    "hash_body_despues": "41f05b4d6818ed3a00873c41667100308dbc50106cd7a9f0b62c08c34bb739ae",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "abogado-penalista-choluteca",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-26T16:08:50.292Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "792cc8d37a98951832bd6d4d70f11e4b9ce1a5b4af01feb3b4971bf9b6ab10af",
+    "hash_body_despues": "792cc8d37a98951832bd6d4d70f11e4b9ce1a5b4af01feb3b4971bf9b6ab10af",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "derechos-indigenas-consulta-previa-honduras",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review (estimado por Lote 4)",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": "Incierta (sin backup JSON específico previo a hoy para estos slugs, salvo Lote 4)",
+    "timestamp": "2026-07-27T00:20:35.903Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "77156fca08704ea0084d8666e096d5f7a972037fa3a57649de114aadb6601306",
+    "hash_body_despues": "77156fca08704ea0084d8666e096d5f7a972037fa3a57649de114aadb6601306",
+    "resultado_rollback": "Restaurado a needs_human_review preventivamente, estado original exacto incierto",
+    "evidenciaAnterior": "incierta"
+  },
+  {
+    "slug": "poder-legal-honduras-cuando-se-necesita",
+    "campos_modificados": [
+      "reviewStatus",
+      "aiReviewStatus"
+    ],
+    "valor_anterior_demostrado": "needs_human_review",
+    "valor_artificial": {
+      "reviewStatus": "reviewed",
+      "aiReviewStatus": "completed"
+    },
+    "valor_restaurado": {
+      "reviewStatus": "needs_human_review",
+      "aiReviewStatus": null
+    },
+    "fuente_del_valor_anterior": ".backups/fase6-lote4-backup.json",
+    "timestamp": "2026-07-27T00:20:33.523Z",
+    "script_responsable": "fase6-auto-orchestrator.ts",
+    "hash_body_antes": "160edca4e27b0b924d62aea3e7ea6c53d2a5b35cfcc09f9fd91d84b69a034699",
+    "hash_body_despues": "160edca4e27b0b924d62aea3e7ea6c53d2a5b35cfcc09f9fd91d84b69a034699",
+    "resultado_rollback": "Restaurado exitosamente a estado verificado en backup",
+    "evidenciaAnterior": "Backup Lote 4 file content"
+  }
+]

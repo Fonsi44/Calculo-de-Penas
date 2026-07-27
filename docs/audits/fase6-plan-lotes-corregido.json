@@ -1,0 +1,44 @@
+{
+  "total_lotes": 2,
+  "tamano_maximo_lote": 15,
+  "lotes": [
+    {
+      "numero": 1,
+      "cantidad": 15,
+      "slugs": [
+        "codigo-aduanero-centroamericano",
+        "pension-alimenticia-porcentaje-honduras-2026",
+        "importar-mercancias-guia-aduanera",
+        "derechos-detenido-honduras-guia-constitucional",
+        "reclamar-deuda-legalmente-honduras",
+        "diferencia-denuncia-querella-acusacion-honduras",
+        "cuando-necesito-abogado-penalista-honduras",
+        "abogado-penalista-sur-honduras",
+        "adopcion-requisitos-proceso-honduras",
+        "allanamiento-ilegal-violacion-domicilio-honduras",
+        "violencia-domestica-ruta-legal-honduras",
+        "audiencia-inicial-proceso-penal-honduras",
+        "delitos-mas-comunes-honduras",
+        "cuando-prescribe-delito-en-honduras",
+        "union-de-hecho-requisitos-derechos-honduras"
+      ]
+    },
+    {
+      "numero": 2,
+      "cantidad": 11,
+      "slugs": [
+        "antejuicio-en-honduras",
+        "estafas-fraudes-tipos-penales-honduras",
+        "patentes-requisitos-proceso-solicitud-honduras",
+        "importar-china-guia-aduanera",
+        "defensa-penal-honduras",
+        "defensa-penal-menores-edad-honduras",
+        "fianza-medidas-cautelares-proceso-penal-honduras",
+        "recurso-de-amparo-honduras-guia-completa",
+        "abogado-penalista-choluteca",
+        "derechos-indigenas-consulta-previa-honduras",
+        "poder-legal-honduras-cuando-se-necesita"
+      ]
+    }
+  ]
+}
