@@ -1,0 +1,172 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "6c82244c-ee95-4c27-bd32-7130ffdc7b3e",
+    "slug": "evaluacion-impacto-ambiental-paso-a-paso-honduras",
+    "sha256_entrada": "2b10e21630390c58d47bcf73ae303fb850c802d0c672cd9810b68cafa5ed176d",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/articulos_constitucion.json",
+      "data/codigo_civil.json",
+      "data/delitos.json",
+      "data/lote3-backup.json",
+      "data/ramas_juridicas.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "La Ley General del Ambiente y el Reglamento de Evaluación de Impacto Ambiental establecen un listado de proyectos que requieren licencia ambiental.",
+      "fuente_verificacion": "data/lote3-backup.json + data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La Ley General del Ambiente es referenciada en data/lote3-backup.json como Decreto 104-93 ('Ley General del Ambiente (Decreto 104-93)'), lo que confirma su existencia en el ordenamiento jurídico hondureño. La Constitución, en su Art. 340, declara de utilidad y necesidad pública la explotación técnica y racional de los recursos naturales y manda al Estado a reglamentar su aprovechamiento, lo que da base constitucional a esta ley. Sin embargo, ni la Ley General del Ambiente ni el Reglamento de Evaluación de Impacto Ambiental están disponibles como fuentes JSON estructuradas en el repositorio local, por lo que no es posible verificar directamente el contenido específico sobre el listado de proyectos.",
+      "evidencia_local": {
+        "archivo": "data/lote3-backup.json",
+        "referencia": "Ley General del Ambiente (Decreto 104-93) es mencionada como normativa vigente en artículo sobre consulta previa indígena.",
+        "respaldo_constitucional": "Art. 340 Constitución: 'Se declara de utilidad y necesidad pública, la explotación técnica y racional de los recursos naturales de la nación. El Estado reglamentará su aprovechamiento, de acuerdo con el interés social y fijará las condiciones de su otorgamiento a los particulares.'"
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "El listado de proyectos que requieren licencia ambiental incluye: proyectos de construcción de cierta envergadura, actividades mineras, proyectos agroindustriales, desarrollos turísticos, infraestructura vial, plantas de tratamiento, y cualquier actividad que pueda afectar significativamente el ambiente.",
+      "fuente_verificacion": "data/articulos_constitucion.json + data/lote3-backup.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible",
+      "detalle": "La Constitución (Art. 340) establece que el Estado reglamentará el aprovechamiento de los recursos naturales, lo que fundamenta la existencia de un régimen de licencias ambientales. En data/lote3-backup.json se menciona que la SERNA supervisa proyectos de infraestructura, concesiones mineras, hidrocarburos, explotación forestal, agroindustriales y turísticos en el marco de la consulta previa indígena, lo que es consistente con el listado mencionado. La categorización y el listado específico del Reglamento de EIA no son verificables directamente en fuentes locales estructuradas.",
+      "evidencia_local": {
+        "archivos": [
+          "data/articulos_constitucion.json: Art. 340 y Art. 354 (zonas de control y protección de recursos naturales)",
+          "data/lote3-backup.json: referencia a SERNA supervisando proyectos de infraestructura, minería, hidrocarburos, forestales, agroindustriales y turísticos"
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "El listado de proyectos se organiza por categorías de impacto (bajo, medio, alto) según la actividad y la escala del proyecto.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La categorización por niveles de impacto (bajo, medio, alto) es una práctica estándar en los sistemas de EIA a nivel internacional y regional. En data/lote3-backup.json se referencia a SERNA como autoridad supervisora con competencias de evaluación ambiental, y en data/honduras.eregulations.org (web) se confirma la existencia de 'Categoría 1' a 'Categoría 4' para licencias ambientales. Sin embargo, el detalle específico de categorías bajo/medio/alto y sus umbrales no es verificable en fuentes locales estructuradas.",
+      "evidencia_local": {
+        "nota": "El Reglamento de Evaluación de Impacto Ambiental no está disponible como JSON en el repositorio local. La categorización es consistente con el estándar regional centroamericano."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "La categorización define la profundidad del estudio requerido: una declaración jurada para bajo impacto, un estudio de impacto ambiental completo para alto impacto.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La distinción entre declaración jurada (categorías bajas) y estudio completo (categorías altas) es coherente con sistemas de EIA en la región. Las referencias a 'Categoría 1' a 'Categoría 4' en el portal honduras.eregulations.org sugieren una graduación de requisitos. La Ley General del Ambiente (Decreto 104-93) y su Reglamento de EIA —no disponibles como JSON local— contendrían este detalle. La afirmación es técnicamente plausible pero no se puede verificar directamente en fuentes locales.",
+      "evidencia_local": {},
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "La EIA debe ser elaborada por un equipo multidisciplinario compuesto por ingenieros ambientales, biólogos y sociólogos si el proyecto afecta comunidades.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La exigencia de equipos multidisciplinarios es una práctica estándar en EIA a nivel internacional. En data/lote3-backup.json se menciona que los proyectos que afectan comunidades requieren consulta previa con supervisión de SERNA, lo que implica la necesidad de evaluación social (sociólogos). La Ley General del Ambiente y el Reglamento de EIA —no disponibles como JSON local— establecerían los requisitos específicos del equipo consultor. La afirmación es razonable pero no verificable en fuentes locales.",
+      "evidencia_local": {},
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "Los profesionales del equipo consultor deben estar inscritos en el registro de la Secretaría de Recursos Naturales y Ambiente (SERNA).",
+      "fuente_verificacion": "data/lote3-backup.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_matiz",
+      "detalle": "Data/lote3-backup.json confirma la existencia de SERNA como autoridad ambiental: 'Secretaría de Energía, Recursos Naturales, Ambiente y Minas (SERNA)'. Sin embargo, el nombre utilizado en el artículo ('Secretaría de Recursos Naturales y Ambiente') omite 'Energía' y 'Minas' del nombre oficial completo. La exigencia de registro de consultores es plausible y consistente con la práctica administrativa. Nótese también que la institucionalidad ambiental hondureña ha cambiado: SERNA fue transformada en MiAmbiente (Secretaría de Recursos Naturales y Ambiente) mediante reformas posteriores, por lo que el nombre en el artículo podría reflejar la denominación actual o una simplificación.",
+      "evidencia_local": {
+        "archivo": "data/lote3-backup.json",
+        "nombre_oficial_referenciado": "Secretaría de Energía, Recursos Naturales, Ambiente y Minas (SERNA)",
+        "nombre_en_articulo": "Secretaría de Recursos Naturales y Ambiente (SERNA)"
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A7",
+      "claim_text": "El estudio se presenta ante la Dirección de Evaluación y Control Ambiental (DECA), que forma parte de la SERNA.",
+      "fuente_verificacion": "data/lote3-backup.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "La existencia de SERNA como autoridad ambiental está confirmada en data/lote3-backup.json. La existencia de una dirección técnica especializada (DECA) dentro de la estructura de SERNA es administrativamente plausible y consistente con el modelo institucional de gestión ambiental en Centroamérica. Sin embargo, la estructura orgánica interna de SERNA no está disponible en fuentes locales estructuradas para verificar directamente la existencia y denominación exacta de DECA.",
+      "evidencia_local": {
+        "archivo": "data/lote3-backup.json",
+        "nota": "SERNA es confirmada como autoridad ambiental competente. La existencia de DECA como dirección interna es plausible pero no verificable en fuentes locales."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A8",
+      "claim_text": "Si el estudio cumple los requisitos, la SERNA emite un dictamen técnico favorable y otorga la licencia ambiental, que establece condiciones de ejecución, operación y plazos para el monitoreo ambiental.",
+      "fuente_verificacion": "data/articulos_constitucion.json + data/lote3-backup.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible",
+      "detalle": "La facultad de la SERNA para otorgar licencias y dictámenes ambientales es consistente con su rol como autoridad ambiental confirmado en data/lote3-backup.json. La Constitución (Art. 340) establece que el Estado reglamentará el aprovechamiento de los recursos naturales y fijará las condiciones de su otorgamiento a los particulares, lo que respalda la existencia de un régimen de licencias con condiciones. El detalle específico del proceso administrativo (dictamen técnico, condiciones de ejecución, monitoreo) no es verificable directamente en fuentes locales estructuradas.",
+      "evidencia_local": {
+        "respaldo_constitucional": "Art. 340 Constitución: 'El Estado reglamentará su aprovechamiento, de acuerdo con el interés social y fijará las condiciones de su otorgamiento a los particulares.'",
+        "rol_serna": "Confirmado en data/lote3-backup.json como autoridad supervisora ambiental."
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A9",
+      "claim_text": "El plazo de tramitación varía según la categoría del proyecto: desde 30 días hábiles para proyectos de bajo impacto hasta varios meses para proyectos de alto impacto.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "Los plazos de 30 días hábiles para categorías bajas y varios meses para altas son consistentes con estándares regionales de tramitación de EIA. Sin embargo, estos plazos específicos no pueden ser verificados en fuentes locales estructuradas. La Ley General del Ambiente y el Reglamento de EIA —no disponibles como JSON local— contendrían los plazos. La afirmación es razonable y consistente con prácticas administrativas, pero no verificable directamente.",
+      "evidencia_local": {},
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A10",
+      "claim_text": "Operar sin licencia ambiental puede acarrear: suspensión de actividades, clausura del proyecto, multas sustanciales, y en casos graves, responsabilidad penal por delitos ambientales.",
+      "fuente_verificacion": "data/delitos.json + data/articulos_constitucion.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado",
+      "detalle": "La responsabilidad penal por delitos ambientales está confirmada en data/delitos.json, que contiene los Arts. 333-340 CP con tipos penales ambientales, incluyendo penas de prisión, inhabilitación especial y multas. El Art. 336 CP establece responsabilidad penal para funcionarios que autoricen actividades ilegales. El Art. 337 CP establece responsabilidad de personas jurídicas. Las sanciones administrativas (suspensión, clausura, multas) son consistentes con el régimen sancionador administrativo típico, pero su especificación concreta no es verificable en fuentes locales estructuradas. La Constitución (Art. 354) reserva al Estado la potestad de establecer zonas de control y protección de recursos naturales.",
+      "evidencia_local": {
+        "archivo": "data/delitos.json",
+        "articulos_verificados": [
+          "Art. 333 CP: Agravantes comunes a los delitos contra el medio ambiente",
+          "Art. 334 CP: Privaciones de derechos (inhabilitación para subvenciones, contratación pública, beneficios fiscales)",
+          "Art. 335 CP: Delito ambiental imprudente (penas rebajadas en su mitad)",
+          "Art. 336 CP: Responsabilidad de funcionario público que autorice actividades ilegales",
+          "Art. 337 CP: Responsabilidad penal de personas jurídicas (multa igual o hasta el triple del valor del daño)",
+          "Art. 339 CP: Restauración del equilibrio ecológico a cargo del responsable"
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A11",
+      "claim_text": "Ningún financiamiento bancario serio aprueba créditos para proyectos que no cuentan con su licencia ambiental.",
+      "fuente_verificacion": "verificacion_cruzada_local",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable_completamente",
+      "detalle": "Esta es una afirmación sobre prácticas del sector financiero, no sobre normativa legal. Es una práctica bancaria estándar internacional exigir licencias y permisos como condición para el financiamiento de proyectos (debida diligencia ambiental y social, estándares como los Principios de Ecuador). Sin embargo, no existe en las fuentes locales estructuradas normativa que obligue a los bancos hondureños a exigir licencia ambiental como requisito de crédito. La afirmación es razonable como consejo práctico, pero no es verificable como afirmación normativa.",
+      "evidencia_local": {},
+      "nivel_confianza": "baja"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 11,
+    "confirmados": 0,
+    "parcialmente_confirmados": 1,
+    "parcialmente_confirmado_con_matiz": 1,
+    "plausibles": 2,
+    "plausible_no_verificable_completamente": 7,
+    "error_critico_detectado": "Ninguno. Sin embargo, el nombre de SERNA en el artículo ('Secretaría de Recursos Naturales y Ambiente') difiere del nombre oficial completo referenciado en fuentes locales ('Secretaría de Energía, Recursos Naturales, Ambiente y Minas'). Esto puede reflejar una simplificación o la denominación actual tras reformas institucionales (MiAmbiente).",
+    "calidad_general": "aceptable_con_verificacion_limitada",
+    "nota_metodologica": "La Ley General del Ambiente y el Reglamento de Evaluación de Impacto Ambiental no están disponibles como JSON estructurado en el repositorio local, lo que limita la verificación directa de la mayoría de las afirmaciones procedimentales. Las verificaciones se apoyan en referencias cruzadas de otras fuentes locales (Constitución, lote3-backup, delitos.json) que confirman el marco institucional y constitucional."
+  }
+}

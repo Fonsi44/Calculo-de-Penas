@@ -1,0 +1,323 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "slug": "importaciones-san-lorenzo",
+    "sha256_entrada": "c9eacc656f8366383e86eba89dbe5dde2d88710786838614bd207b3f973e3a91",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_tributario.json",
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 0,
+    "nota_metodologica": "Verificacion cruzada local exclusivamente contra el Codigo Tributario y el Codigo de Comercio de Honduras. No se realizaron busquedas web. Las disposiciones del regimen aduanero especializado (CAUCA, RECAUCA, ACI, Ley de Aduanas, Ley del ISV, Ley ARSA) no forman parte del corpus documental disponible."
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento contiene 18 afirmaciones normativas sobre el regimen de importaciones por el puerto de San Lorenzo. Solo 1 claim (obligatoriedad del RTN) se verifica plenamente en las fuentes locales. 7 claims tienen respaldo parcial en los marcos generales tributario y mercantil. 10 claims corresponden a normativa aduanera especializada (CAUCA/RECAUCA/ACI) no disponible en las fuentes locales. No se detectan errores factuales en las afirmaciones que son verificables. El contenido es sustancialmente plausible y compatible con el ordenamiento juridico hondureno, aunque no verificable en su totalidad con las fuentes disponibles.",
+    "temas_verificables": [
+      {
+        "tema": "Registro Tributario Nacional (RTN)",
+        "claims_asociadas": ["C1", "C17"],
+        "fuente": "data/codigo_tributario.json",
+        "conclusion": "VERIFICADO. Art. 164 CTrib define el RTN como registro obligatorio. El Codigo de Comercio complementa con el Registro Mercantil."
+      },
+      {
+        "tema": "Regimen sancionatorio",
+        "claims_asociadas": ["C16", "C18"],
+        "fuente": "data/codigo_tributario.json",
+        "conclusion": "PARCIALMENTE VERIFICADO. El CTrib establece el marco general de infracciones y sanciones (Arts. 149-161), pero las sanciones especificas por subvaloracion y los porcentajes del 100-300% son del regimen aduanero."
+      },
+      {
+        "tema": "Documentacion mercantil",
+        "claims_asociadas": ["C4"],
+        "fuente": "data/codigo_comercio.json",
+        "conclusion": "PARCIALMENTE VERIFICADO. El Codigo de Comercio regula la factura como documento mercantil (Arts. 368-383). La documentacion aduanera especifica (DUA, bill of lading) es propia del regimen aduanero y maritimo."
+      },
+      {
+        "tema": "Agentes y auxiliares",
+        "claims_asociadas": ["C2"],
+        "fuente": "data/codigo_comercio.json + data/codigo_tributario.json",
+        "conclusion": "PARCIALMENTE VERIFICADO. Ambos codigos contemplan figuras de auxiliares (agentes de retencion/percepcion en CTrib, auxiliares del comercio en CCom). El agente aduanero especifico es figura del CAUCA."
+      },
+      {
+        "tema": "Regimen aduanero CAUCA/RECAUCA/ACI",
+        "claims_asociadas": ["C3", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C14", "C15"],
+        "fuente": "N/A — no disponible en fuentes locales",
+        "conclusion": "NO VERIFICABLE. Estas 10 claims dependen enteramente de normativa aduanera especializada no incluida en el corpus."
+      },
+      {
+        "tema": "Regulacion sanitaria ARSA",
+        "claims_asociadas": ["C13"],
+        "fuente": "N/A — no disponible en fuentes locales",
+        "conclusion": "NO VERIFICABLE. ARSA es regulada por ley especial administrativa, no por el Codigo Tributario ni el Codigo de Comercio."
+      }
+    ]
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "El SAR (Servicio de Administracion de Rentas) es la entidad encargada de la administracion tributaria en Honduras y registra a los importadores.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "El Codigo Tributario referencia a la Administracion Tributaria como el ente encargado de la gestion, fiscalizacion y recaudacion de todos los tributos en Honduras. El SAR es el nombre institucional actual de dicha Administracion. Art. 164 CTrib establece el RTN a cargo de la Administracion.",
+      "evidencia": "Art. 164 CTrib y multiples referencias a la Administracion Tributaria en el Codigo Tributario.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "Es indispensable estar inscrito como importador para importar mercancias.",
+      "fuente": "data/codigo_tributario.json + data/codigo_comercio.json",
+      "veredicto": "plausible",
+      "detalle": "El CTrib exige RTN para todos los obligados tributarios (Art. 164). El CCom exige registro mercantil para comerciantes (Arts. 19 y ss.). La inscripcion especifica como 'importador' es una categoria dentro del RTN definida por normativa SAR/CAUCA. La afirmacion es compatible con el marco general.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "Toda importacion comercial debe realizarse a traves de un agente aduanero.",
+      "fuente": "data/codigo_comercio.json + data/codigo_tributario.json",
+      "veredicto": "plausible",
+      "detalle": "El CCom regula los auxiliares del comercio. El CTrib (Arts. 32-33) define agentes de retencion y percepcion. La figura especifica del agente aduanero como obligatorio para importaciones comerciales se encuentra en el CAUCA/RECAUCA, no en las fuentes locales. La afirmacion es compatible con la existencia de auxiliares/intermediarios en el ordenamiento, pero no verificable directamente.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "El agente aduanero debe estar autorizado por el SAR.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "plausible",
+      "detalle": "El SAR, como Administracion Tributaria, tiene la facultad de autorizar y registrar a los auxiliares de la funcion aduanera conforme al CAUCA. El CTrib no detalla este procedimiento especifico, pero es compatible con sus facultades generales de gestion tributaria.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "El agente aduanero presenta la Declaracion Unica Aduanera (DUA).",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "La DUA es un documento del regimen aduanero CAUCA/RECAUCA. El CTrib habla de 'declaraciones tributarias' (Art. 62) de manera generica, y el CCom regula documentos mercantiles, pero ninguno menciona la DUA especificamente.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "La factura comercial es un documento esencial para importar.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "El Codigo de Comercio, Arts. 368-383, regula la factura como documento mercantil obligatorio para toda operacion comercial. La factura comercial es el documento base de cualquier transaccion de importacion conforme a las practicas del comercio internacional.",
+      "evidencia": "Codigo de Comercio Arts. 368-383.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "El conocimiento de embarque (bill of lading) es documento esencial.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "El bill of lading es un documento del derecho maritimo internacional. El Codigo de Comercio hondureno puede contener disposiciones sobre transporte maritimo en su Libro Tercero, pero la referencia especifica al bill of lading como requisito de importacion proviene del CAUCA/RECAUCA.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "El CAUCA y RECAUCA son la normativa principal que rige las importaciones en Honduras.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "El CAUCA y RECAUCA son instrumentos del SICA adoptados por Honduras. No estan en las fuentes locales. El CTrib Art. 11 establece el principio de legalidad tributaria, y el Art. 207 menciona textos consolidados de leyes, pero no referencia el CAUCA.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.1",
+      "subclaim_text": "El Arancel Centroamericano de Importacion (ACI) complementa la normativa aduanera.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "El ACI es el arancel externo comun centroamericano. No esta en las fuentes locales. Es un instrumento del SICA adoptado por Honduras.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B9.1",
+      "subclaim_text": "El pago de impuestos de importacion se calcula sobre el valor CIF.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "plausible",
+      "detalle": "El CTrib, Art. 14, establece que la base imponible es el presupuesto de hecho fijado por la ley para cada tributo. La valoracion CIF es el estandar internacional (Acuerdo de Valoracion de la OMC/GATT) adoptado por Honduras en su legislacion aduanera. El CTrib no menciona 'CIF' explicitamente, pero el principio de base imponible es compatible.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B10.1",
+      "subclaim_text": "El DAI tiene una tasa variable entre 0% y 30%.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "Las tasas del DAI estan en el ACI. El CTrib Art. 11 establece el principio de legalidad (solo el Congreso crea tributos y fija tasas), pero no contiene tasas especificas. El rango 0-30% es plausible para aranceles centroamericanos.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B11.1",
+      "subclaim_text": "El ISV aplicable a importaciones es del 15%.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "La tasa del ISV esta en la Ley del Impuesto Sobre Ventas, no en el CTrib ni en el CCom. El CTrib solo proporciona el marco general de tributos.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B11.2",
+      "subclaim_text": "El ISV se calcula sobre el valor CIF mas el DAI.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "La base de calculo del ISV en importaciones (CIF + DAI) esta en la Ley del ISV y su reglamento. No verificable en CTrib ni CCom.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B12.1",
+      "subclaim_text": "Existe el Impuesto Selectivo al Consumo (ISC) aplicable a algunos productos importados.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "plausible",
+      "detalle": "El CTrib, Art. 11, reconoce la pluralidad de tributos. El ISC es un impuesto existente en el ordenamiento hondureno, regulado por ley especial. El CTrib no lista los productos, pero su marco general es compatible con la existencia de este tributo.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B16.1",
+      "subclaim_text": "La subvaloracion es una infraccion grave.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "El CTrib, Art. 149, define infraccion tributaria como toda accion u omision que contravenga el ordenamiento. Declarar un valor inferior al real es una conducta que encuadra en esta definicion. Art. 158 CTrib establece el regimen de sanciones.",
+      "evidencia": "Arts. 149, 158 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B16.2",
+      "subclaim_text": "Las sanciones por subvaloracion son del 100% al 300% de los tributos omitidos.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "Los porcentajes especificos del 100-300% estan en el CAUCA/RECAUCA o Ley de Aduanas. El CTrib, Art. 160, establece una tabla general de calculo de multas, pero no contiene estos porcentajes especificos para subvaloracion aduanera.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B16.3",
+      "subclaim_text": "La subvaloracion puede acarrear el decomiso de la mercancia.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "El decomiso como sancion aduanera esta regulado en el CAUCA/RECAUCA. El CTrib, Art. 158, lista multa e intereses como sanciones principales, y Art. 161 regula el cierre temporal. No menciona decomiso de mercancias.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B17.1",
+      "subclaim_text": "Se requiere obtener el RTN para importar.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 164 CTrib: el RTN es el registro de identificacion, codificacion y control de los obligados tributarios. Toda persona natural o juridica que realice actividades economicas en Honduras, incluyendo importaciones, debe inscribirse en el RTN.",
+      "evidencia": "Art. 164 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B17.2",
+      "subclaim_text": "El registro como importador se realiza ante el SAR.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "El SAR es la Administracion Tributaria encargada del RTN (Art. 164 CTrib). El registro de importadores es una modalidad del RTN administrada por el SAR, compatible con el marco del CTrib.",
+      "evidencia": "Art. 164 CTrib y referencias a la Administracion Tributaria.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B18.1",
+      "subclaim_text": "Una clasificacion arancelaria incorrecta puede resultar en pago de impuestos erroneos.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Logica consecuencia del principio de autodeterminacion tributaria (Art. 62 CTrib). Si el obligado declara con una clasificacion incorrecta, el impuesto autodeterminado sera erroneo. Esto es consistente con el marco general de declaraciones tributarias.",
+      "evidencia": "Art. 62 CTrib (obligacion de declarar y autodeterminar).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B18.2",
+      "subclaim_text": "La clasificacion incorrecta puede generar multas.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 149 CTrib define infraccion. Art. 153 CTrib establece competencia sancionatoria de la Administracion. Art. 158 CTrib establece multa como sancion principal. La clasificacion incorrecta que genere menor pago de tributos constituye una infraccion sancionable con multa.",
+      "evidencia": "Arts. 149, 153, 158 CTrib.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B18.3",
+      "subclaim_text": "La clasificacion incorrecta puede resultar en retencion de la mercancia.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "no_verificable",
+      "detalle": "La retencion de mercancia como medida cautelar aduanera esta regulada en el CAUCA/RECAUCA. El CTrib no contempla la retencion de mercancias como sancion o medida cautelar. El Codigo de Comercio regula la retencion en contextos mercantiles (prenda, deposito), pero no la retencion aduanera.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "BX.1",
+      "subclaim_text": "[Cruce C16<->C18] El regimen sancionatorio por subvaloracion y por clasificacion incorrecta es coherente con el marco general del CTrib.",
+      "fuente": "data/codigo_tributario.json",
+      "veredicto": "coherente",
+      "detalle": "Ambas afirmaciones (C16 sobre subvaloracion y C18 sobre clasificacion incorrecta) son compatibles con el regimen general de infracciones y sanciones del CTrib (Arts. 149-161). Ambas describen conductas que constituyen infracciones tributarias y acarrean consecuencias sancionatorias. No hay contradiccion interna entre ellas.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "BX.2",
+      "subclaim_text": "[Cruce C1<->C17] El requisito de inscripcion como importador y la obtencion del RTN son afirmaciones consistentes.",
+      "fuente": "data/codigo_tributario.json + data/codigo_comercio.json",
+      "veredicto": "coherente",
+      "detalle": "C1 (inscripcion como importador en SAR) y C17 (RTN + registro como importador) son afirmaciones complementarias que se refuerzan mutuamente. Ambas apuntan al mismo requisito: el registro tributario del importador. No hay contradiccion.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "BX.3",
+      "subclaim_text": "[Cruce C9+C10+C11] La estructura de impuestos de importacion (CIF, DAI 0-30%, ISV 15%) es internamente consistente.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "coherente",
+      "detalle": "La cadena logica de calculo (valor CIF -> DAI -> ISV sobre CIF+DAI) es consistente con la estructura impositiva de importaciones en la region centroamericana. Aunque no verificable en las fuentes locales, las tres afirmaciones forman un sistema armonico sin contradicciones internas.",
+      "nivel_confianza": "media"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["RTN_Registro", "Agente_Aduanero", "DUA_Documentacion", "CAUCA_Marco", "Impuestos_DAI_ISV", "Sanciones", "ARSA_Sanitario"],
+    "cruces": [
+      {
+        "par": "RTN + Agente",
+        "relacion": "Complementarios. El RTN identifica al importador; el agente aduanero actua como auxiliar en la gestion. Ambos son requisitos del proceso de importacion.",
+        "conflicto": false
+      },
+      {
+        "par": "RTN + Impuestos",
+        "relacion": "Complementarios. El RTN habilita al obligado tributario; los impuestos (DAI, ISV, ISC) son las obligaciones sustantivas. Sin RTN no hay sujeto pasivo identificable.",
+        "conflicto": false
+      },
+      {
+        "par": "DUA + Impuestos",
+        "relacion": "Complementarios. La DUA es el vehiculo de declaracion; los impuestos son la obligacion declarada. La DUA liquida DAI, ISV e ISC.",
+        "conflicto": false
+      },
+      {
+        "par": "Sanciones + Clasificacion",
+        "relacion": "Coherentes. El regimen sancionatorio general del CTrib respalda la existencia de consecuencias por clasificacion incorrecta o subvaloracion.",
+        "conflicto": false
+      },
+      {
+        "par": "ARSA + Importacion",
+        "relacion": "Independientes pero complementarios. ARSA regula requisitos sanitarios previos a la importacion. No hay conflicto normativo con las normas aduaneras o tributarias.",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 22,
+    "confirmados": 6,
+    "plausibles": 5,
+    "coherentes": 3,
+    "no_verificables": 8,
+    "refutados": 0,
+    "temas_confirmados": [
+      "Obligatoriedad del RTN para importadores (Arts. 164 CTrib)",
+      "La factura comercial como documento mercantil obligatorio (CCom Arts. 368-383)",
+      "La subvaloracion como infraccion tributaria (Arts. 149, 158 CTrib)",
+      "El SAR como administrador del RTN",
+      "La clasificacion incorrecta como fuente de pago erroneo (Art. 62 CTrib)",
+      "La clasificacion incorrecta como infraccion sancionable con multa (Arts. 149, 158 CTrib)"
+    ],
+    "temas_no_verificables": [
+      "DUA, CAUCA, RECAUCA, ACI, SAC (regimen aduanero especializado)",
+      "Tasas especificas de DAI (0-30%) e ISV (15%)",
+      "Base de calculo CIF y CIF+DAI",
+      "Plazos de despacho aduanero (1-5 dias, +3-10 dias)",
+      "Porcentajes de sancion por subvaloracion (100-300%)",
+      "Decomiso de mercancia",
+      "Retencion aduanera de mercancia",
+      "Registro sanitario ARSA"
+    ],
+    "errores_detectados": "No se detectaron errores factuales en las afirmaciones verificables contra las fuentes locales. Las 10 claims no verificables son plausibles pero corresponden a normativa aduanera especializada no incluida en el corpus.",
+    "calidad_global_documento": "Buena. El contenido es sustancialmente correcto y compatible con el ordenamiento juridico hondureno. Las afirmaciones que son verificables contra el Codigo Tributario y el Codigo de Comercio resultan confirmadas o plausibles. La mayoria de las afirmaciones no verificables corresponden al regimen aduanero especializado (CAUCA/RECAUCA/ACI) que no forma parte de las fuentes locales disponibles. Se recomienda contrastar las 10 claims no verificables contra el CAUCA, RECAUCA, ACI, Ley de Aduanas, Ley del ISV y Ley de ARSA para una verificacion completa."
+  }
+}

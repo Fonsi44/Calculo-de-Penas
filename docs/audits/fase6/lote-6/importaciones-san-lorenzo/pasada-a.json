@@ -1,0 +1,141 @@
+{
+  "pasada": "A",
+  "tipo": "documental",
+  "sha256_entrada": "c9eacc656f8366383e86eba89dbe5dde2d88710786838614bd207b3f973e3a91",
+  "fuente_principal": {
+    "archivo": "data/codigo_tributario.json",
+    "descripcion": "Codigo Tributario de Honduras — texto consolidado con 218 articulos. Ley marco de la Administracion Tributaria hondurena. Define obligaciones, infracciones, sanciones y procedimientos tributarios aplicables a todos los tributos, incluyendo los que gravan las importaciones (DAI, ISV, ISC)."
+  },
+  "fuente_secundaria": {
+    "archivo": "data/codigo_comercio.json",
+    "descripcion": "Codigo de Comercio de Honduras — regula la actividad mercantil, los comerciantes, las obligaciones mercantiles, los actos de comercio y los auxiliares del comercio. Marco general de las operaciones de importacion como actos de comercio."
+  },
+  "claims_extraidos": [
+    {"id": "C1", "claim": "Para importar mercancias por San Lorenzo, Honduras, es indispensable estar inscrito como importador en el SAR (Servicio de Administracion de Rentas)."},
+    {"id": "C2", "claim": "Toda importacion comercial en Honduras debe realizarse a traves de un agente aduanero autorizado por el SAR."},
+    {"id": "C3", "claim": "El agente aduanero presentara la Declaracion Unica Aduanera (DUA)."},
+    {"id": "C4", "claim": "La documentacion esencial para importar incluye la factura comercial, el conocimiento de embarque (bill of lading) y cualquier permiso especial requerido."},
+    {"id": "C5", "claim": "Las importaciones en Honduras se rigen principalmente por el Codigo Aduanero Uniforme Centroamericano (CAUCA) y su Reglamento (RECAUCA)."},
+    {"id": "C6", "claim": "El Arancel Centroamericano de Importacion (ACI) complementa la normativa aduanera hondurena."},
+    {"id": "C7", "claim": "En el puerto de San Lorenzo, la Aduana Maritima es la autoridad competente para el despacho de mercancias."},
+    {"id": "C8", "claim": "Se debe clasificar correctamente el producto segun el Sistema Arancelario Centroamericano (SAC)."},
+    {"id": "C9", "claim": "El pago de los impuestos (DAI e ISV) se calcula sobre el valor CIF (Costo, Seguro y Flete) de la mercancia."},
+    {"id": "C10", "claim": "El Derecho Arancelario a la Importacion (DAI) tiene una tasa variable entre 0% y 30% segun el producto."},
+    {"id": "C11", "claim": "El Impuesto Sobre Ventas (ISV) aplicable a importaciones es del 15% sobre el valor CIF mas el DAI."},
+    {"id": "C12", "claim": "Algunos productos estan sujetos al Impuesto Selectivo al Consumo (ISC)."},
+    {"id": "C13", "claim": "Productos como alimentos, bebidas, cosmeticos, medicamentos y dispositivos medicos requieren registro sanitario de la Agencia de Regulacion Sanitaria (ARSA) antes de su importacion."},
+    {"id": "C14", "claim": "El despacho aduanero, si la documentacion es correcta, suele tomar entre 1 y 5 dias habiles."},
+    {"id": "C15", "claim": "Una inspeccion fisica puede extender el plazo de despacho de 3 a 10 dias adicionales."},
+    {"id": "C16", "claim": "La subvaloracion de la mercancia es una infraccion grave que puede acarrear sanciones del 100% al 300% de los tributos omitidos, e incluso el decomiso."},
+    {"id": "C17", "claim": "Para importar se requiere obtener el Registro Tributario Nacional (RTN) y registrarse como importador ante el SAR."},
+    {"id": "C18", "claim": "Una clasificacion arancelaria incorrecta puede resultar en el pago de impuestos erroneos, multas o la retencion de la mercancia."}
+  ],
+  "resultados_verificacion": [
+    {
+      "claim_id": "C1",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "El Codigo Tributario establece el SAR como Administracion Tributaria encargada de la gestion de todos los tributos. Art. 164 CTrib define el Registro Tributario Nacional (RTN) como identificacion obligatoria de los obligados tributarios. El Codigo de Comercio, Art. 1 y ss., exige registro mercantil para comerciantes. Sin embargo, el requisito especifico de 'inscripcion como importador' ante el SAR es una obligacion formal del regimen aduanero (CAUCA/RECAUCA), no del Codigo Tributario ni del Codigo de Comercio.",
+      "fuente_exacta": "Art. 164 CTrib (RTN); Codigo de Comercio Art. 1 y ss. (registro mercantil)."
+    },
+    {
+      "claim_id": "C2",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "El Codigo Tributario, Arts. 32 y 33 CTrib, define las figuras de agente de retencion y agente de percepcion como auxiliares de la Administracion Tributaria. El Codigo de Comercio, en su Libro Primero, Titulo II, regula a los auxiliares del comercio (corredores, comisionistas, agentes). Sin embargo, la figura del 'agente aduanero autorizado por el SAR' es propia del regimen aduanero (CAUCA/RECAUCA/Ley de Aduanas) y no esta definida en el Codigo Tributario ni en el Codigo de Comercio.",
+      "fuente_exacta": "Arts. 32, 33 CTrib; Codigo de Comercio Titulo II (auxiliares del comercio)."
+    },
+    {
+      "claim_id": "C3",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "La Declaracion Unica Aduanera (DUA) es un documento propio del regimen aduanero centroamericano, regulado por el CAUCA y RECAUCA. No existe referencia a la DUA en el Codigo Tributario ni en el Codigo de Comercio. El CTrib habla de 'declaraciones tributarias' en general (Art. 62 CTrib), pero no especifica formularios aduaneros."
+    },
+    {
+      "claim_id": "C4",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "El Codigo de Comercio, Arts. 368-383, regula la factura comercial como documento mercantil obligatorio y sus requisitos. El Art. 62 CTrib establece la obligacion general de presentar documentos en las declaraciones tributarias. Sin embargo, el conocimiento de embarque (bill of lading) es un documento del derecho maritimo internacional (Reglas de La Haya-Visby, Hamburgo) y los 'permisos especiales' (sanitarios, fitosanitarios) son regulados por leyes administrativas especificas (ARSA, SENASA), no por el Codigo Tributario ni el Codigo de Comercio.",
+      "fuente_exacta": "Codigo de Comercio Arts. 368-383 (factura); Art. 62 CTrib (documentacion en declaraciones)."
+    },
+    {
+      "claim_id": "C5",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "El CAUCA y RECAUCA son instrumentos juridicos del Sistema de Integracion Centroamericana (SICA), adoptados por Honduras mediante decreto legislativo. No forman parte del Codigo Tributario ni del Codigo de Comercio. El Art. 11 CTrib menciona que compete al Congreso Nacional crear, modificar y derogar tributos, pero no menciona especificamente el CAUCA."
+    },
+    {
+      "claim_id": "C6",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "El Arancel Centroamericano de Importacion (ACI) es un instrumento arancelario comun del SICA basado en el Sistema Armonizado (SA) de la OMA. No esta incorporado ni referenciado en el Codigo Tributario ni en el Codigo de Comercio."
+    },
+    {
+      "claim_id": "C7",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "La Aduana Maritima de San Lorenzo es una dependencia administrativa del SAR cuya creacion y competencias territoriales se establecen en la Ley de Aduanas y en el reglamento organico del SAR. El Codigo Tributario ni el Codigo de Comercio contienen disposiciones sobre la organizacion territorial de las aduanas."
+    },
+    {
+      "claim_id": "C8",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "El Sistema Arancelario Centroamericano (SAC) es la nomenclatura arancelaria comun del SICA. Su aplicacion es propia del regimen aduanero (CAUCA/RECAUCA/ACI). El Codigo Tributario y el Codigo de Comercio no contienen referencias a clasificacion arancelaria."
+    },
+    {
+      "claim_id": "C9",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "El concepto de valor CIF (Costo, Seguro y Flete) como base imponible de tributos aduaneros deriva del Acuerdo de Valoracion Aduanera de la OMC (GATT Art. VII). El Codigo Tributario, Art. 14 CTrib, establece que el hecho gravado tributario esta constituido por el presupuesto de hecho establecido en la ley. El Art. 4 CTrib define el impuesto como tributo que no origina contraprestacion directa. Sin embargo, la base CIF especifica para importaciones no se encuentra en el Codigo Tributario sino en el CAUCA y la Ley de Aduanas.",
+      "fuente_exacta": "Arts. 4, 14 CTrib (hecho gravado y definicion de impuesto)."
+    },
+    {
+      "claim_id": "C10",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Las tasas del DAI (0-30%) se establecen en el Arancel Centroamericano de Importacion (ACI) adoptado por Honduras. El Codigo Tributario, en su Art. 11, establece el principio de legalidad tributaria (reserva de ley para crear tributos), pero no contiene las tasas arancelarias especificas. El Codigo de Comercio no regula aranceles."
+    },
+    {
+      "claim_id": "C11",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "La tasa del 15% del ISV se establece en la Ley del Impuesto Sobre Ventas y su reglamento. El Art. 16 CTrib menciona la posibilidad de exenciones aprobadas por ley, y el Art. 19 CTrib exige que las leyes de exencion senalen con claridad los sujetos beneficiarios. Pero la tasa especifica y su base de calculo (CIF + DAI) pertenecen a la ley del ISV, no al Codigo Tributario ni al Codigo de Comercio."
+    },
+    {
+      "claim_id": "C12",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "El Codigo Tributario, en su Art. 11, reconoce implicitamente la existencia de multiples tributos al establecer que 'compete al Congreso Nacional crear, modificar y derogar tributos'. El Art. 14 define el hecho gravado. Sin embargo, el ISC como tributo especifico sobre ciertos bienes (alcohol, tabaco, combustibles) esta regulado en su propia ley especial. El Codigo Tributario proporciona el marco general aplicable, pero no contiene la lista de productos sujetos a ISC.",
+      "fuente_exacta": "Arts. 11, 14 CTrib."
+    },
+    {
+      "claim_id": "C13",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "La Agencia de Regulacion Sanitaria (ARSA) es una entidad descentralizada creada por ley especial (Ley de la ARSA). Sus competencias sobre registro sanitario de alimentos, bebidas, cosmeticos, medicamentos y dispositivos medicos no estan reguladas en el Codigo Tributario ni en el Codigo de Comercio. Son normas de derecho administrativo sanitario."
+    },
+    {
+      "claim_id": "C14",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Los plazos de despacho aduanero (1-5 dias habiles) son establecidos en el CAUCA, RECAUCA o en normativa administrativa del SAR. El Codigo Tributario, Art. 26 CTrib, define periodos impositivos pero no plazos de despacho aduanero. El Codigo de Comercio no regula procedimientos aduaneros."
+    },
+    {
+      "claim_id": "C15",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "La extension de plazos por inspeccion fisica es un detalle procedimental del regimen aduanero (CAUCA/RECAUCA). El Codigo Tributario y el Codigo de Comercio no contienen disposiciones sobre plazos de inspeccion aduanera."
+    },
+    {
+      "claim_id": "C16",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "El Codigo Tributario proporciona el marco general de infracciones y sanciones tributarias. Art. 149 CTrib define infraccion como toda accion u omision que contravenga el ordenamiento tributario. Art. 153 CTrib establece la competencia de la Administracion para investigar y sancionar. Art. 158 CTrib lista multa e intereses como sanciones. Art. 160 CTrib establece tabla de calculo de multas. Sin embargo, los porcentajes especificos del 100% al 300% de los tributos omitidos por subvaloracion y la sancion de decomiso se encuentran en el CAUCA/RECAUCA y la Ley de Aduanas, no en el Codigo Tributario.",
+      "fuente_exacta": "Arts. 149, 153, 158, 160 CTrib."
+    },
+    {
+      "claim_id": "C17",
+      "veredicto": "VERIFICADO",
+      "evidencia": "El Art. 164 CTrib define el Registro Tributario Nacional (RTN) como el registro de identificacion, codificacion y control de los obligados tributarios. El RTN es requisito obligatorio para toda persona natural o juridica que realice actividades economicas en Honduras, incluyendo importaciones. El Codigo de Comercio, Art. 19 y ss., exige la inscripcion en el Registro Mercantil para los comerciantes, lo cual es complementario al RTN.",
+      "fuente_exacta": "Art. 164 CTrib (Registro Tributario Nacional); Codigo de Comercio Arts. 19 y ss. (Registro Mercantil)."
+    },
+    {
+      "claim_id": "C18",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "El Codigo Tributario establece el regimen general de infracciones y sanciones. Art. 149 CTrib define infraccion tributaria. Art. 158 CTrib establece multa como sancion principal. Art. 160 CTrib regula el calculo de multas. La retencion de mercancia como medida cautelar o sancion es propia del regimen aduanero. El pago de impuestos erroneos como consecuencia de clasificacion incorrecta es una consecuencia logica del principio de autodeterminacion tributaria (Art. 62 CTrib), pero las sanciones especificas por clasificacion arancelaria incorrecta estan en el CAUCA/RECAUCA.",
+      "fuente_exacta": "Arts. 62, 149, 158, 160 CTrib."
+    }
+  ],
+  "resumen_estadistico": {
+    "total_claims": 18,
+    "verificados": 1,
+    "parcialmente_verificados": 7,
+    "no_verificables": 10,
+    "refutados": 0
+  },
+  "conclusion": "El Codigo Tributario de Honduras (data/codigo_tributario.json) y el Codigo de Comercio (data/codigo_comercio.json) proporcionan el marco juridico general aplicable a las importaciones en materia de obligaciones formales (RTN, declaraciones, facturacion) y regimen sancionatorio, pero NO contienen las disposiciones sustantivas del regimen aduanero. De 18 claims extraidos: 1 esta plenamente verificado (obligatoriedad del RTN para importadores, Art. 164 CTrib); 7 estan parcialmente verificados porque los codigos proporcionan el marco general compatible (registro como comerciante, obligacion de declarar, regimen sancionatorio, factura comercial, ISC como tributo); y 10 no son verificables porque corresponden a normativa aduanera especializada (CAUCA, RECAUCA, ACI, Ley de Aduanas, Ley del ISV, Ley de ARSA) no incluida en el corpus documental disponible. No se detectaron refutaciones."
+}

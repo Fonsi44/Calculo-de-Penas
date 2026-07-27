@@ -1,0 +1,144 @@
+{
+  "pasada": "B",
+  "tipo": "web",
+  "sha256_entrada": "d468c0c0b802b92424b34b92272155fb5ac5a1d1f6bf9d4d15200b5231afc3c1",
+  "fuentes_web": [
+    {
+      "id": "W1",
+      "url": "https://www.poderjudicial.gob.hn/cedij/leyes/Paginas/Codigo-Civil.aspx",
+      "titulo": "Poder Judicial de Honduras — CEDIJ — Codigo Civil",
+      "fecha_consulta": "2026-07-27",
+      "resultado": "FALLIDO — Error TLS: unable to verify the first certificate (UNABLE_TO_VERIFY_LEAF_SIGNATURE)",
+      "contenido_relevante": "No se pudo acceder al contenido. El sitio del Poder Judicial de Honduras presenta un certificado SSL no verificable desde este entorno.",
+      "credibilidad": "ALTA (fuente oficial) — pero inaccesible"
+    },
+    {
+      "id": "W2",
+      "url": "https://www.tsc.gob.hn/biblioteca/index.php/leyes/577-codigo-de-comercio",
+      "titulo": "Tribunal Superior de Cuentas — Biblioteca — Codigo de Comercio",
+      "fecha_consulta": "2026-07-27",
+      "resultado": "FALLIDO — HTTP 500 Internal Server Error",
+      "contenido_relevante": "No se pudo acceder al contenido. El servidor del TSC devolvio error interno.",
+      "credibilidad": "ALTA (fuente oficial) — pero inaccesible"
+    },
+    {
+      "id": "W3",
+      "url": "https://en.wikipedia.org/wiki/Law_of_Honduras",
+      "titulo": "Wikipedia — Law of Honduras",
+      "fecha_consulta": "2026-07-27",
+      "resultado": "FALLIDO — HTTP 404 Not Found",
+      "contenido_relevante": "La pagina no existe o fue movida.",
+      "credibilidad": "MEDIA — Wikipedia como fuente terciaria"
+    },
+    {
+      "id": "W4",
+      "url": "https://iclg.com/practice-areas/enforcement-of-judgments-laws-and-regulations/honduras",
+      "titulo": "ICLG — Enforcement of Judgments — Honduras",
+      "fecha_consulta": "2026-07-27",
+      "resultado": "FALLIDO — HTTP 404 Not Found",
+      "contenido_relevante": "La pagina no existe o fue movida.",
+      "credibilidad": "ALTA — ICLG es una referencia legal internacional reconocida"
+    },
+    {
+      "id": "W5",
+      "url": "https://www.doingbusiness.org/en/data/exploreeconomies/honduras",
+      "titulo": "World Bank — Doing Business — Honduras",
+      "fecha_consulta": "2026-07-27",
+      "resultado": "FALLIDO — HTTP 301 redirect a worldbank.org sin contenido especifico de Honduras",
+      "contenido_relevante": "El sitio Doing Business fue descontinuado y redirige al Business Enabling Environment del Banco Mundial, que no contiene datos especificos por pais.",
+      "credibilidad": "ALTA — pero el recurso ya no existe"
+    },
+    {
+      "id": "W6",
+      "url": "https://honduras.eregulations.org",
+      "titulo": "eRegulations Honduras — Procedimientos de negocio",
+      "fecha_consulta": "2026-07-27",
+      "resultado": "EXITOSO — pero sin contenido relevante",
+      "contenido_relevante": "La pagina muestra un menu de navegacion general y una vision general de procedimientos administrativos para negocios en Honduras. No contiene informacion sobre prescripcion de deudas, tasas de interes legal, ni reglas de embargo.",
+      "credibilidad": "MEDIA-ALTA — plataforma respaldada por UNCTAD"
+    }
+  ],
+  "nota_metodologica": "Se realizaron 6 intentos de consulta a fuentes web oficiales hondurenas (Poder Judicial, TSC) y fuentes internacionales (Wikipedia, ICLG, Doing Business, eRegulations). Las fuentes oficiales hondurenas fallaron por errores de certificado SSL y error interno de servidor (HTTP 500). Las fuentes internacionales devolvieron errores HTTP 404 o contenido sin relevancia juridica. eRegulations Honduras (W6) fue la unica que respondio exitosamente pero sin contenido util para la verificacion de claims. Ninguna fuente web pudo verificar ni refutar los claims extraidos del articulo. Se recomienda verificacion con navegador humano o acceso VPN a Honduras para sortear restricciones geograficas y de certificados.",
+  "claims_extraidos": [
+    {"id": "C1", "claim": "El Codigo Civil establece un plazo de prescripcion de 10 anos para las acciones personales."},
+    {"id": "C2", "claim": "El Codigo de Comercio fija plazos de 3 a 5 anos para las deudas de naturaleza mercantil."},
+    {"id": "C3", "claim": "La Ley de Titulos Valores establece un plazo de 1 ano para las acciones cambiarias derivadas de instrumentos como los cheques."},
+    {"id": "C4", "claim": "Para acciones cambiarias derivadas de cheques sin fondos, el plazo para el protesto es de 8 dias."},
+    {"id": "C5", "claim": "La accion cambiaria del cheque caduca a los 6 meses desde su vencimiento."},
+    {"id": "C6", "claim": "En ausencia de pacto, se aplicaran los intereses legales, que corresponden a un 1% mensual sobre el saldo insoluto."},
+    {"id": "C7", "claim": "Se pueden embargar salarios (hasta el 50%)."},
+    {"id": "C8", "claim": "Quedan excluidos del embargo el salario minimo legal, los bienes de uso domestico indispensable y las herramientas necesarias para el ejercicio de la profesion u oficio del deudor."},
+    {"id": "C9", "claim": "La falta de protesto notarial de un cheque sin fondos dentro de los 8 dias siguientes a su presentacion invalida la accion cambiaria directa."},
+    {"id": "C10", "claim": "Las deudas civiles prescriben a los 10 anos."}
+  ],
+  "resultados_verificacion": [
+    {
+      "claim_id": "C1",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Ninguna fuente web accesible proporciono informacion sobre plazos de prescripcion en el Codigo Civil de Honduras.",
+      "fuente": "N/A"
+    },
+    {
+      "claim_id": "C2",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Ninguna fuente web accesible contenia plazos de prescripcion mercantil hondurena.",
+      "fuente": "N/A"
+    },
+    {
+      "claim_id": "C3",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Ninguna fuente web accesible abordaba la prescripcion de acciones cambiarias de cheques en Honduras.",
+      "fuente": "N/A"
+    },
+    {
+      "claim_id": "C4",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Ninguna fuente web accesible contenia informacion sobre plazos de protesto de cheques en Honduras.",
+      "fuente": "N/A"
+    },
+    {
+      "claim_id": "C5",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Ninguna fuente web accesible contenia informacion sobre caducidad de acciones cambiarias de cheques.",
+      "fuente": "N/A"
+    },
+    {
+      "claim_id": "C6",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Ninguna fuente web accesible proporciono la tasa de interes legal vigente en Honduras.",
+      "fuente": "N/A"
+    },
+    {
+      "claim_id": "C7",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Ninguna fuente web accesible describia las reglas de embargo salarial en Honduras.",
+      "fuente": "N/A"
+    },
+    {
+      "claim_id": "C8",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Ninguna fuente web accesible listaba los bienes inembargables segun la legislacion hondurena.",
+      "fuente": "N/A"
+    },
+    {
+      "claim_id": "C9",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Ninguna fuente web accesible describia las consecuencias de la falta de protesto de cheques en Honduras.",
+      "fuente": "N/A"
+    },
+    {
+      "claim_id": "C10",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Ninguna fuente web accesible confirmaba el plazo de prescripcion de deudas civiles en Honduras.",
+      "fuente": "N/A"
+    }
+  ],
+  "resumen_estadistico": {
+    "total_claims": 10,
+    "verificados": 0,
+    "parcialmente_verificados": 0,
+    "no_verificables": 10,
+    "refutados": 0
+  },
+  "conclusion": "La verificacion web fue infructuosa. De 6 URLs intentadas cubriendo fuentes oficiales hondurenas (Poder Judicial, TSC) y fuentes internacionales (Wikipedia, ICLG, Doing Business, eRegulations), 5 fallaron por errores HTTP/TLS y 1 (eRegulations) devolvio contenido sin relevancia juridica. Las 10 claims resultaron NO VERIFICABLES por via web con las herramientas disponibles. Las fuentes oficiales hondurenas presentan barreras tecnicas de acceso (certificados SSL no verificables, error interno de servidor) que impiden la consulta remota automatizada. Se recomienda: (a) verificacion manual con navegador humano, preferiblemente desde una IP hondurena; (b) consulta directa a bufetes de abogados locales; (c) uso de bases de datos juridicas comerciales (vLex, LexisNexis) que indexen legislacion hondurena. La verificacion documental (PASADA A) contra el corpus local de codigos proporciona resultados sustantivos que compensan esta limitacion."
+}

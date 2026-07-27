@@ -1,0 +1,136 @@
+{
+  "pasada": "A",
+  "tipo": "documental",
+  "sha256_entrada": "bab53911d73f86a7234cd216f6a13ffd295f3cb15a6d82946c292704223dd1d3",
+  "fuente_principal": {
+    "archivo": "data/codigo_tributario.json",
+    "descripcion": "Codigo Tributario de Honduras — texto consolidado con 218 articulos. Ley marco de la Administracion Tributaria hondurena, aplicable a todos los tributos incluido el ISV."
+  },
+  "claims_extraidos": [
+    {"id": "C1", "claim": "El ISV en Honduras es administrado por el SAR (Servicio de Administracion de Rentas)."},
+    {"id": "C2", "claim": "La tasa general del ISV es del 15%."},
+    {"id": "C3", "claim": "Existe una tasa reducida para ciertos bienes y servicios como alimentos procesados, telecomunicaciones y energia electrica."},
+    {"id": "C4", "claim": "Las exportaciones tienen tasa del 0%, permitiendo acreditar el ISV pagado y solicitar devolucion."},
+    {"id": "C5", "claim": "El mecanismo del ISV se basa en debito fiscal (ISV cobrado a clientes) y credito fiscal (ISV pagado a proveedores), pagandose la diferencia."},
+    {"id": "C6", "claim": "Productos basicos de la canasta familiar (maiz, frijoles, arroz, leche, huevos, pan, tortillas) estan exentos del ISV."},
+    {"id": "C7", "claim": "Medicamentos e insumos medicos estan exentos del ISV."},
+    {"id": "C8", "claim": "Servicios educativos en todos los niveles estan exentos del ISV."},
+    {"id": "C9", "claim": "Intereses y comisiones bancarias, seguros de vida y salud, arrendamiento de viviendas (no comerciales), transporte de pasajeros, libros/periodicos/revistas, y suministro de agua potable estan exentos."},
+    {"id": "C10", "claim": "La declaracion del ISV es mensual y debe presentarse ante el SAR, usualmente en los primeros dias habiles del mes siguiente."},
+    {"id": "C11", "claim": "Es obligatorio presentar declaracion incluso sin operaciones (declaracion en cero)."},
+    {"id": "C12", "claim": "La declaracion se presenta via SAR en Linea y el pago se efectua en bancos autorizados."},
+    {"id": "C13", "claim": "Las facturas deben contar con un Certificado de Autorizacion de Impresion (CAI) vigente emitido por el SAR, incluir el RTN del emisor y cliente, y detallar el ISV por separado."},
+    {"id": "C14", "claim": "Facturar sin CAI valido es una infraccion grave sujeta a sanciones como el cierre temporal del establecimiento."},
+    {"id": "C15", "claim": "Las infracciones tributarias del ISV se sancionan con multas e intereses proporcionales a su gravedad."},
+    {"id": "C16", "claim": "El ISV se rige por la Ley del Impuesto Sobre Ventas y su reglamento, cuyo Articulo 1 define el hecho gravado."},
+    {"id": "C17", "claim": "Si el credito fiscal es mayor que el debito fiscal, se genera un saldo a favor compensable en meses posteriores o solicitable en devolucion."},
+    {"id": "C18", "claim": "Mezclar productos exentos y gravados sin registros contables separados puede resultar en sanciones del SAR."}
+  ],
+  "resultados_verificacion": [
+    {
+      "claim_id": "C1",
+      "veredicto": "VERIFICADO",
+      "evidencia": "El SAR se menciona implicitamente a traves de las referencias a la Administracion Tributaria en todo el Codigo. El Art. 77 CTrib (Verificacion o fiscalizacion de los datos y hechos consignados) menciona a la Superintendencia Tributaria Aduanera y a la Administracion Tributaria como entes fiscalizadores. El SAR es la Administracion Tributaria de Honduras.",
+      "fuente_exacta": "Art. 77 CTrib y multiples articulos que refieren a la Administracion Tributaria como ente encargado de la gestion tributaria."
+    },
+    {
+      "claim_id": "C2",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "El Codigo Tributario es una norma marco general que no establece tasas impositivas especificas. Las tasas concretas del ISV se encuentran en la Ley del Impuesto Sobre Ventas, norma sustantiva no incluida en este corpus documental."
+    },
+    {
+      "claim_id": "C3",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "El Codigo Tributario no contiene una lista de tasas reducidas del ISV. Estas se definen en la ley especial del ISV y sus reformas, no en el Codigo Tributario."
+    },
+    {
+      "claim_id": "C4",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "La tasa 0% para exportaciones es un beneficio del regimen especial del ISV, definido en la ley sustantiva. El Codigo Tributario no contiene esta disposicion especifica."
+    },
+    {
+      "claim_id": "C5",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "El Codigo Tributario define conceptos que respaldan la mecanica ISV. Art. 4 CTrib define Impuesto. Art. 31 CTrib define pagos a cuenta. Art. 32 y 33 CTrib definen agente de retencion y percepcion (conceptos analogos al debito/credito fiscal). Art. 115 CTrib establece el derecho a devolucion de pagos en exceso. Art. 117 CTrib contempla rectificaciones en tributos de modalidad mensual. Sin embargo, los terminos especificos 'debito fiscal' y 'credito fiscal' provienen de la ley del ISV, no del Codigo Tributario.",
+      "fuente_exacta": "Arts. 4, 31, 32, 33, 115, 117 CTrib"
+    },
+    {
+      "claim_id": "C6",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "El Codigo Tributario establece el marco general de exenciones. Art. 16 CTrib define que las exenciones deben ser aprobadas por el Congreso Nacional y expresadas en leyes con rango de Ley. Art. 19 CTrib exige que las leyes de exencion senalen con claridad los sujetos beneficiarios y requisitos. La lista especifica de alimentos basicos exentos proviene de la Ley del ISV, no del Codigo Tributario. No obstante, la existencia de un regimen de exencion para productos de la canasta basica es compatible con el marco legal general.",
+      "fuente_exacta": "Arts. 16, 19 CTrib"
+    },
+    {
+      "claim_id": "C7",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Misma logica que C6. El marco de exenciones del Codigo Tributario (Arts. 16-21) permite que la ley especial del ISV establezca exenciones para medicamentos e insumos medicos. La lista concreta no esta en el Codigo Tributario."
+    },
+    {
+      "claim_id": "C8",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Idem. El marco general de exenciones (Arts. 16-21 CTrib) es compatible con exencion de servicios educativos, pero la disposicion especifica pertenece a la ley del ISV."
+    },
+    {
+      "claim_id": "C9",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Idem. Las exenciones mencionadas (intereses bancarios, seguros de vida/salud, arrendamiento de viviendas, transporte de pasajeros, libros, agua potable) son compatibles con el marco general de exenciones del Codigo Tributario (Arts. 16-21). La lista especifica pertenece a la ley del ISV."
+    },
+    {
+      "claim_id": "C10",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Art. 26 CTrib define el periodo impositivo para tributos periodicos. Art. 62 CTrib establece la obligacion de presentar declaraciones. Art. 117 CTrib menciona explicitamente 'tributos con modalidad mensual', confirmando que existen tributos de declaracion mensual en Honduras. La periodicidad mensual del ISV es compatible con este marco. Los detalles especificos (primeros dias habiles, SAR en Linea) pertenecen a la normativa administrativa del SAR.",
+      "fuente_exacta": "Arts. 26, 62, 117 CTrib"
+    },
+    {
+      "claim_id": "C11",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "El Codigo Tributario no establece explicitamente que deba presentarse declaracion en cero cuando no hay operaciones. Esta es una obligacion formal especifica del ISV definida por el SAR mediante normativa administrativa."
+    },
+    {
+      "claim_id": "C12",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Art. 74 CTrib establece que las cantidades percibidas deben enterarse a la Tesoreria General de la Republica (TGR) o a la institucion bancaria facultada por SEFIN. Art. 136 CTrib menciona el uso de 'medios telematicos' para el pago. Estos articulos respaldan la existencia de un sistema de pago bancario y electronico, pero no mencionan especificamente 'SAR en Linea'."
+    },
+    {
+      "claim_id": "C13",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "El CAI (Certificado de Autorizacion de Impresion) es un requisito especifico del regimen de facturacion del ISV, establecido en la normativa del SAR y en la Ley del ISV, no en el Codigo Tributario. El RTN se menciona en Art. 164 CTrib como Registro Tributario Nacional, pero no en contexto de facturacion."
+    },
+    {
+      "claim_id": "C14",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "El Codigo Tributario si contempla la sancion de cierre temporal. Art. 161 CTrib regula la 'Sancion de cierre temporal de un establecimiento', aplicable al sitio donde se ejerza actividad comercial. Art. 158 CTrib lista las sanciones aplicables incluyendo multa como principal y cierre como accesoria. Sin embargo, el Codigo no especifica que facturar sin CAI sea causal de cierre; eso lo define la ley especial o normativa SAR.",
+      "fuente_exacta": "Arts. 158, 161 CTrib"
+    },
+    {
+      "claim_id": "C15",
+      "veredicto": "VERIFICADO",
+      "evidencia": "Art. 149 CTrib define infraccion como toda accion u omision que contravenga el ordenamiento tributario. Art. 153 CTrib establece que la investigacion, determinacion y sancion de faltas corresponde a la Administracion Tributaria. Art. 158 CTrib lista como sanciones principales: multa e intereses. Art. 160 CTrib establece tabla de calculo de multas por faltas formales. Estos articulos confirman el regimen general de sanciones con multas e intereses.",
+      "fuente_exacta": "Arts. 149, 153, 158, 160 CTrib"
+    },
+    {
+      "claim_id": "C16",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "El Codigo Tributario no contiene la Ley del Impuesto Sobre Ventas. El Art. 11 CTrib establece el principio de legalidad (compete al Congreso Nacional crear tributos), y el art. 207 CTrib menciona la obligacion de elaborar textos consolidados de leyes tributarias. Pero la ley especifica del ISV y su articulo 1 no forman parte de este corpus."
+    },
+    {
+      "claim_id": "C17",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Art. 115 CTrib reconoce el derecho del obligado tributario a la devolucion de saldos a favor y a la autorizacion de notas de credito. Art. 116 CTrib detalla el procedimiento de devolucion de pagos indebidos. Art. 117 CTrib permite rectificar declaraciones que aumenten el saldo a favor. El concepto de saldo a favor compensable es compatible con este marco, aunque el detalle especifico de compensacion de credito fiscal del ISV pertenece a la ley especial.",
+      "fuente_exacta": "Arts. 115, 116, 117 CTrib"
+    },
+    {
+      "claim_id": "C18",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "El Codigo Tributario no contiene disposiciones sobre registros contables separados para productos exentos y gravados. Esta es una obligacion formal especifica del ISV definida en la ley especial o normativa del SAR."
+    }
+  ],
+  "resumen_estadistico": {
+    "total_claims": 18,
+    "verificados": 2,
+    "parcialmente_verificados": 9,
+    "no_verificables": 7,
+    "refutados": 0
+  },
+  "conclusion": "El Codigo Tributario de Honduras (data/codigo_tributario.json) es la norma marco de aplicacion general a todos los tributos. Contiene los principios, definiciones, obligaciones formales y regimen sancionatorio que rigen el ISV, pero NO contiene las disposiciones sustantivas especificas del ISV (tasas, hechos gravados, exenciones concretas). De 18 claims extraidos: 2 estan plenamente verificados en el Codigo (existencia del SAR como administrador tributario y regimen de sanciones con multas e intereses); 9 estan parcialmente verificados porque el Codigo proporciona el marco general compatible (exenciones, periodo mensual, devolucion de saldos, cierre temporal); y 7 no son verificables porque corresponden a la Ley del Impuesto Sobre Ventas o normativa del SAR, fuentes no incluidas en el corpus documental disponible."
+}

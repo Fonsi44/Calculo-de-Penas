@@ -1,0 +1,14 @@
+{
+  "slug": "cobro-deudas-choluteca",
+  "article_id": "f85fc7d9-14bc-4a5a-896b-b0a83e638466",
+  "sha256_original": "",
+  "fecha_consolidacion": "2026-07-27T06:30:00.000Z",
+  "estado_final": "needs_human_review",
+  "razon": "Claims no verificables contra fuentes disponibles",
+  "claims_totales_a": 10,
+  "claims_totales_b": 10,
+  "errores_detectados": 0,
+  "correcciones_pendientes": 0,
+  "requiere_abogado": true,
+  "version_esquema": "1.0"
+}

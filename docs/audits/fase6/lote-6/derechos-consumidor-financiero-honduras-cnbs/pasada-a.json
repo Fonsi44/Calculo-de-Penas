@@ -1,0 +1,160 @@
+{
+  "pasada": "A",
+  "tipo": "documental",
+  "sha256_entrada": "b548dc6fb8da8314c629fcef4f9fa8907e17cb01354db53602f7311c1725ec83",
+  "fuentes_locales": [
+    {
+      "archivo": "data/articulos_constitucion.json",
+      "sha256": "37b129c3f133103b2dc467ba9ae6db656c8b2713b12e9afe0bba235d85b84175",
+      "descripcion": "Constitucion de la Republica de Honduras — 378 articulos. Norma suprema que establece los derechos fundamentales, garantias constitucionales y el regimen economico, incluyendo la regulacion bancaria y monetaria (Arts. 331-343)."
+    },
+    {
+      "archivo": "data/codigo_comercio.json",
+      "sha256": "699a1404f6c4c65b11cc3cfeb8f43610416d48e7fd613e0b2b139ae8cf59dd25",
+      "descripcion": "Codigo de Comercio de Honduras — texto consolidado. Regula los actos de comercio, comerciantes, operaciones bancarias, depositos, secreto bancario y obligaciones mercantiles."
+    },
+    {
+      "archivo": "data/codigo_civil.json",
+      "sha256": "6f5b7e553f8698af7f917ca0098b05700f834a78916e89cd98b902a69b74429c",
+      "descripcion": "Codigo Civil de Honduras — texto consolidado. Regula las obligaciones, contratos, consentimiento, vicios del consentimiento, nulidad, y responsabilidad civil por danos y perjuicios."
+    }
+  ],
+  "claims_extraidos": [
+    {"id": "C1", "claim": "La Ley de Proteccion al Consumidor Financiero y la normativa de la CNBS constituyen el marco normativo principal que ampara los derechos del consumidor financiero en Honduras."},
+    {"id": "C2", "claim": "Las entidades financieras deben proporcionar informacion clara y previa por escrito sobre tasas de interes, comisiones, plazos y costo total antes de contratar cualquier producto financiero."},
+    {"id": "C3", "claim": "Las instituciones financieras no pueden realizar debitos o cargos sin la aceptacion expresa del cliente. Comisiones, membresias o seguros deben ser consentidos por escrito."},
+    {"id": "C4", "claim": "El banco tiene un plazo de 15 dias habiles para responder por escrito a los reclamos de los usuarios."},
+    {"id": "C5", "claim": "Las entidades deben notificar previamente al usuario antes de reportarlo como deudor moroso en la Central de Riesgos."},
+    {"id": "C6", "claim": "Los clientes pueden solicitar la cancelacion de productos financieros en cualquier momento, siempre que no exista un saldo pendiente."},
+    {"id": "C7", "claim": "Existe un proceso de reclamacion en tres niveles: reclamo directo al banco, queja ante la CNBS, y demanda judicial ante los tribunales competentes."},
+    {"id": "C8", "claim": "La CNBS ofrece un canal gratuito para presentar quejas si el reclamo inicial ante el banco no fue resuelto."},
+    {"id": "C9", "claim": "La CNBS puede ordenar al banco la correccion de practicas abusivas y la restitucion de fondos."},
+    {"id": "C10", "claim": "En caso de no obtener resolucion favorable en la CNBS, se puede interponer una demanda judicial ante los tribunales competentes, requiriendo asistencia de abogado."},
+    {"id": "C11", "claim": "No se deben suspender pagos unilateralmente ante un cobro cuestionable, ya que esto podria generar reportes negativos en la Central de Riesgos."},
+    {"id": "C12", "claim": "Cualquier acuerdo con la entidad financiera debe formalizarse por escrito para tener validez."},
+    {"id": "C13", "claim": "Es importante revisar y responder por escrito a las notificaciones del banco sobre cambios en las condiciones de los productos, para evitar que el silencio sea interpretado como aceptacion."},
+    {"id": "C14", "claim": "Se recomienda presentar el reclamo dentro de los 30 dias posteriores al cobro indebido."},
+    {"id": "C15", "claim": "Si el banco no responde en 15 dias habiles, el silencio constituye un incumplimiento sancionable y el consumidor puede acudir directamente a la CNBS."},
+    {"id": "C16", "claim": "El procedimiento ante la CNBS es gratuito y puede ser gestionado directamente por el consumidor sin necesidad de abogado."},
+    {"id": "C17", "claim": "Los cargos por seguros no solicitados son indebidos cuando no fueron informados claramente al momento de la contratacion."},
+    {"id": "C18", "claim": "Las modificaciones de tasas de interes no pactadas o no notificadas son impugnables."}
+  ],
+  "resultados_verificacion": [
+    {
+      "claim_id": "C1",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "La Constitucion establece el marco general de proteccion economica. Art. 331: el Estado reconoce, garantiza y fomenta las libertades de consumo, ahorro, inversion y contratacion. Art. 332: el Estado puede dictar medidas para supervisar la iniciativa privada. Art. 333: la intervencion estatal en la economia tiene por base el interes publico y social. Art. 342: el regimen bancario, monetario y crediticio sera regulado por ley. Estos articulos proporcionan la base constitucional para una ley de proteccion al consumidor financiero, pero la Ley de Proteccion al Consumidor Financiero y las resoluciones de la CNBS no forman parte del corpus documental.",
+      "fuente_exacta": "Arts. 331, 332, 333, 342 Constitucion"
+    },
+    {
+      "claim_id": "C2",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "El Codigo Civil establece que el consentimiento se forma por el concurso de oferta y aceptacion (Art. 1544) y que los contratos deben ejecutarse de buena fe (Art. 1537). El Codigo de Comercio contiene una subseccion titulada 'Obligacion de informacion — Informacion previa al contrato' dentro del capitulo de seguros (Subseccion Sexta), demostrando que el ordenamiento mercantil hondureno reconoce el principio de informacion previa. Sin embargo, la obligacion especifica de detallar tasas de interes, comisiones y costo total para productos financieros proviene de la Ley de Proteccion al Consumidor Financiero, no incluida en el corpus.",
+      "fuente_exacta": "Arts. 1537, 1544 Codigo Civil; Subseccion Sexta Codigo de Comercio"
+    },
+    {
+      "claim_id": "C3",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "El Codigo Civil establece requisitos esenciales para la validez de los contratos (Art. 1543): consentimiento, objeto cierto y causa. El consentimiento debe ser libre de vicios como error, violencia, intimidacion o dolo (Art. 1547). Cargos no consentidos vulneran el principio de consentimiento contractual, pilar del derecho civil hondureno. Sin embargo, la prohibicion especifica de cargos no autorizados por instituciones financieras y la exigencia de consentimiento por escrito provienen de la normativa sectorial de proteccion al consumidor financiero.",
+      "fuente_exacta": "Arts. 1543, 1547 Codigo Civil"
+    },
+    {
+      "claim_id": "C4",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Ni la Constitucion, ni el Codigo Civil, ni el Codigo de Comercio establecen un plazo de 15 dias habiles para que los bancos respondan reclamos de consumidores. La Constitucion Art. 80 garantiza el derecho de peticion y de obtener pronta respuesta 'en el plazo legal', lo que remite a la ley ordinaria. El plazo especifico de 15 dias habiles pertenece a la Ley de Proteccion al Consumidor Financiero o normativa CNBS, no incluidas en el corpus.",
+      "fuente_exacta": "Art. 80 Constitucion (marco general, sin plazo especifico)"
+    },
+    {
+      "claim_id": "C5",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "El Codigo de Comercio (art. 947) protege el secreto bancario: las instituciones 'no podran dar noticias de los depositos y demas operaciones sino al depositante, deudor o beneficiario' salvo requerimiento judicial. Este articulo establece un deber de confidencialidad del banco hacia el cliente. La obligacion de notificar previamente antes de reportar a la Central de Riesgos es una extension logica de este principio, pero la regulacion especifica de la Central de Riesgos pertenece a la normativa de la CNBS.",
+      "fuente_exacta": "Art. 947 Codigo de Comercio (secreto bancario)"
+    },
+    {
+      "claim_id": "C6",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "El Codigo de Comercio (art. 949) establece que los depositos bancarios 'seran retirables a la vista, a plazo, o previo aviso', y que sin mencion especial de plazo se entienden retirables a la vista. El Codigo Civil (Art. 1377) reconoce la facultad de resolver obligaciones reciprocas. Estos principios respaldan el derecho a cancelar productos financieros, pero la regulacion especifica sobre cancelacion de tarjetas de credito, prestamos y otros productos sin condiciones adicionales pertenece a la normativa de proteccion al consumidor financiero.",
+      "fuente_exacta": "Art. 949 Codigo de Comercio; Art. 1377 Codigo Civil"
+    },
+    {
+      "claim_id": "C7",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "La Constitucion establece las bases de los tres niveles. Art. 80: derecho de peticion a las autoridades y obtener pronta respuesta (fundamento del reclamo administrativo ante el banco y la CNBS). Art. 82: libre acceso a los tribunales para ejercitar acciones (fundamento de la via judicial). Sin embargo, el diseno especifico de tres niveles con la CNBS como instancia intermedia proviene de la Ley de Proteccion al Consumidor Financiero y la ley organica de la CNBS, no incluidas en el corpus.",
+      "fuente_exacta": "Arts. 80, 82 Constitucion"
+    },
+    {
+      "claim_id": "C8",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "La Constitucion no menciona a la CNBS ni establece canales gratuitos especificos para quejas de consumidores financieros. La CNBS es una entidad creada por ley especial (Ley de la Comision Nacional de Bancos y Seguros). La gratuidad del procedimiento de queja es una caracteristica definida en dicha ley organica, no incluida en el corpus documental.",
+      "fuente_exacta": "Ninguna fuente del corpus menciona a la CNBS"
+    },
+    {
+      "claim_id": "C9",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Las facultades sancionatorias y de restitucion de la CNBS estan definidas en su ley organica y en la Ley de Proteccion al Consumidor Financiero. Ninguno de los tres cuerpos normativos del corpus (Constitucion, Codigo Civil, Codigo de Comercio) atribuye potestades especificas a la CNBS.",
+      "fuente_exacta": "Ninguna fuente del corpus atribuye potestades a la CNBS"
+    },
+    {
+      "claim_id": "C10",
+      "veredicto": "VERIFICADO",
+      "evidencia": "Constitucion Art. 82: 'El derecho de defensa es inviolable. Los habitantes de la Republica tienen libre acceso a los tribunales para ejercitar sus acciones en la forma que senalan las leyes.' Codigo Civil Art. 1337: las obligaciones nacen de la ley, los contratos y de actos ilicitos. Art. 1486: incumbe la prueba de las obligaciones al que reclama su cumplimiento. La via judicial esta constitucionalmente garantizada para cualquier persona que considere vulnerados sus derechos.",
+      "fuente_exacta": "Arts. 82 Constitucion; Arts. 1337, 1486 Codigo Civil"
+    },
+    {
+      "claim_id": "C11",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Codigo Civil Art. 1339: 'Las obligaciones que nacen de los contratos tienen fuerza de ley entre las partes contratantes, y deben cumplirse al tenor de los mismos.' Art. 1537: 'Los contratos deben ejecutarse de buena fe.' Suspender pagos unilateralmente constituye incumplimiento contractual segun estos principios generales. Sin embargo, la advertencia especifica sobre reportes negativos en la Central de Riesgos como consecuencia es propia de la normativa de la CNBS.",
+      "fuente_exacta": "Arts. 1339, 1537 Codigo Civil"
+    },
+    {
+      "claim_id": "C12",
+      "veredicto": "VERIFICADO",
+      "evidencia": "Codigo Civil Art. 1518: 'Deberan constar por escrito los actos o contratos que contienen la entrega o promesa de una cosa que valga mas de doscientos pesos.' Art. 1565: si la ley exige forma especial, los contratantes pueden compelerse reciprocamente a llenarla. Art. 1566 enumera actos que deben constar en documento publico. El ordenamiento civil hondureno exige formalidad escrita para actos juridicos de contenido economico relevante.",
+      "fuente_exacta": "Arts. 1518, 1565, 1566 Codigo Civil"
+    },
+    {
+      "claim_id": "C13",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Codigo de Comercio Art. 946: 'Las condiciones generales establecidas por las instituciones de credito... podran ser cambiadas por aquellas previo aviso dado por escrito a los depositantes, con cinco dias de anticipacion.' Este articulo demuestra que el ordenamiento mercantil exige notificacion escrita previa para cambios en condiciones bancarias. Codigo Civil Art. 1544: el consentimiento requiere concurso de oferta y aceptacion. El silencio, como regla general, no constituye aceptacion en el derecho civil hondureno. Sin embargo, la aplicacion especifica al contexto de notificaciones de cambios en productos financieros proviene de la normativa de proteccion al consumidor.",
+      "fuente_exacta": "Art. 946 Codigo de Comercio; Art. 1544 Codigo Civil"
+    },
+    {
+      "claim_id": "C14",
+      "veredicto": "NO VERIFICABLE",
+      "evidencia": "Ni la Constitucion, ni el Codigo Civil, ni el Codigo de Comercio contienen una recomendacion de 30 dias para presentar reclamos por cobros indebidos. Esta es una recomendacion practica formulada en el articulo, basada posiblemente en criterios de conveniencia o en normativa administrativa de la CNBS no incluida en el corpus.",
+      "fuente_exacta": "Ninguna fuente del corpus contiene este plazo"
+    },
+    {
+      "claim_id": "C15",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Constitucion Art. 80: 'Toda persona o asociacion de personas tiene el derecho de presentar peticiones a las autoridades... y de obtener pronta respuesta en el plazo legal.' Este articulo constitucionaliza el derecho de peticion y la obligacion de respuesta. Sin embargo, los detalles especificos —el plazo de 15 dias habiles, la calificacion del silencio como incumplimiento sancionable, y la posibilidad de acudir directamente a la CNBS— pertenecen a la Ley de Proteccion al Consumidor Financiero.",
+      "fuente_exacta": "Art. 80 Constitucion"
+    },
+    {
+      "claim_id": "C16",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Constitucion Art. 83: 'Corresponde al Estado nombrar procuradores para la defensa de los pobres... Daran a ellos asistencia legal y los representaran judicialmente en la defensa de su libertad individual y demas derechos.' Art. 82 garantiza el libre acceso a los tribunales. La Constitucion establece el principio de acceso a la justicia sin necesidad de representacion letrada obligatoria en sede administrativa. Sin embargo, la gratuidad especifica del procedimiento ante la CNBS es una caracteristica de su ley organica.",
+      "fuente_exacta": "Arts. 82, 83 Constitucion"
+    },
+    {
+      "claim_id": "C17",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Codigo Civil Art. 1543: para que exista contrato se requiere consentimiento, objeto cierto y causa. Arts. 1547-1552: el consentimiento puede estar viciado por error, violencia, intimidacion o dolo. El dolo se configura 'cuando con palabras o maquinaciones insidiosas de parte de uno de los contratantes, es inducido el otro a celebrar un contrato que, sin ellas, no hubiera hecho' (Art. 1551). Cargos por seguros no informados claramente podrian constituir dolo o error que vicia el consentimiento. La regulacion especifica sobre seguros vinculados a productos financieros proviene de la normativa de la CNBS.",
+      "fuente_exacta": "Arts. 1543, 1547, 1551, 1552 Codigo Civil"
+    },
+    {
+      "claim_id": "C18",
+      "veredicto": "PARCIALMENTE VERIFICADO",
+      "evidencia": "Codigo de Comercio Art. 946: cambios en condiciones de depositos requieren 'previo aviso dado por escrito a los depositantes, con cinco dias de anticipacion.' Codigo Civil Art. 1537: los contratos deben ejecutarse de buena fe. Art. 1539: 'La validez y el cumplimiento de los contratos no puede dejarse al arbitrio de uno de los contratantes.' Modificar tasas sin notificacion vulnera el principio de buena fe contractual y la prohibicion de dejar el cumplimiento al arbitrio de una sola parte. La regulacion especifica de tasas de interes en productos financieros corresponde a la normativa del Banco Central y la CNBS.",
+      "fuente_exacta": "Art. 946 Codigo de Comercio; Arts. 1537, 1539 Codigo Civil"
+    }
+  ],
+  "resumen_estadistico": {
+    "total_claims": 18,
+    "verificados": 2,
+    "parcialmente_verificados": 12,
+    "no_verificables": 4,
+    "refutados": 0
+  },
+  "conclusion": "La Constitucion de Honduras, el Codigo Civil y el Codigo de Comercio proporcionan un marco juridico general que respalda parcialmente los derechos del consumidor financiero. La Constitucion (Arts. 80, 82, 331-333, 342) establece las bases del derecho de peticion, acceso a la justicia, libertades economicas y regulacion bancaria. El Codigo Civil aporta los principios de consentimiento contractual, vicios del consentimiento, buena fe y formalidad escrita. El Codigo de Comercio regula operaciones bancarias, depositos, secreto bancario y notificacion de cambios en condiciones. Sin embargo, las disposiciones especificas sobre la CNBS, los plazos concretos de 15 y 30 dias, la Central de Riesgos y la Ley de Proteccion al Consumidor Financiero no forman parte del corpus documental. De 18 claims: 2 estan plenamente verificados (acceso a tribunales y exigencia de formalidad escrita); 12 estan parcialmente verificados porque los principios generales los respaldan pero los detalles especificos pertenecen a legislacion especial no incluida; y 4 no son verificables por referirse a normas o procedimientos exclusivos de la CNBS o la Ley de Proteccion al Consumidor Financiero."
+}

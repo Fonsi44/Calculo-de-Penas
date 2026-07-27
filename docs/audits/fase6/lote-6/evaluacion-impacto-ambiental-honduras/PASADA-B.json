@@ -1,0 +1,143 @@
+{
+  "pasada": "B",
+  "timestamp": "2026-07-27T18:05:00.000Z",
+  "sha256_entrada": "92fcbf8f2085fe84ef2f14ef996416961213fa24b243d1e148e3fbe738b6b7fd",
+  "metodologia": "Verificación exclusivamente contra fuentes locales (Constitución, Código Penal, Código Civil). Sin dependencia de fuentes web.",
+  "analisis_por_bloque": {
+    "bloque_marco_legal_general": {
+      "claims": [
+        "Ley General del Ambiente (Decreto 104-93)",
+        "Reglamento de Evaluación de Impacto Ambiental (Acuerdo 189-2004)",
+        "Ley de Procedimiento Administrativo",
+        "Código Penal (delitos ambientales)"
+      ],
+      "hallazgos": {
+        "decreto_104_93": {
+          "verificacion": "El Código Penal (Decreto 130-2017), en su sección de disposiciones derogatorias, establece: '3) Los artículos 91-95 de la Ley General del Ambiente, aprobada en Decreto No. 104-93, de fecha 27 de Mayo de 1993.' Esto confirma de manera inequívoca la existencia, fecha y numeración oficial de la Ley General del Ambiente.",
+          "implicacion": "Los artículos 91-95 fueron derogados por el Código Penal de 2017, lo que indica que las disposiciones penales ambientales migraron de la Ley General del Ambiente al Código Penal. Esto es relevante porque el artículo bajo auditoría cita los artículos 45-60 de la misma ley para el procedimiento de EIA."
+        },
+        "acuerdo_189_2004": {
+          "verificacion": "No se encuentra referencia al Acuerdo 189-2004 en ninguna fuente local disponible. La Constitución en su Art. 340 establece que 'El Estado reglamentará su aprovechamiento', proporcionando base para reglamentos como este, pero sin confirmar su numeración exacta.",
+          "riesgo": "Alto — Sin verificación independiente del número de acuerdo."
+        },
+        "ley_procedimiento_administrativo": {
+          "verificacion": "No se encuentra en las fuentes locales disponibles. El dato es plausible como ley complementaria en cualquier procedimiento administrativo."
+        },
+        "codigo_penal": {
+          "verificacion": "CONFIRMADO. El Código Penal (Decreto 130-2017) contiene un título dedicado a delitos contra el medio ambiente: contaminación (Arts. con epígrafe 'Contaminación del aire, las aguas o los suelos', prisión 6-10 años), explotación ilegal de recursos naturales (prisión 6-10 años), incendios forestales (prisión 6-15 años), construcción sin licencia en zonas protegidas (prisión 2-5 años), agravantes comunes, delito ambiental imprudente, y restauración del equilibrio ecológico."
+        }
+      }
+    },
+    "bloque_institucional": {
+      "claims": [
+        "SERNA (Secretaría de Recursos Naturales y Ambiente) administra el sistema",
+        "DECA (Dirección de Evaluación y Control Ambiental) realiza la revisión técnica",
+        "Registro Nacional de Prestadores de Servicios Ambientales para consultores"
+      ],
+      "hallazgos": {
+        "serna_y_deca": {
+          "verificacion": "No se encuentran referencias a SERNA o DECA en la Constitución, Código Penal ni Código Civil disponibles. La Constitución menciona 'Procurador del Medio Ambiente' (Art. 199) como cargo público, y establece que las Fuerzas Armadas deben 'cooperar con las Secretarías de Estado... en protección del ambiente' (Art. 274), confirmando que existen Secretarías de Estado con competencia ambiental, aunque sin nombrarlas explícitamente.",
+          "nivel_confianza": "Medio — La existencia de una secretaría de ambiente es consistente con el andamiaje constitucional."
+        },
+        "registro_prestadores": {
+          "verificacion": "Sin evidencia en fuentes locales.",
+          "nivel_confianza": "Bajo."
+        }
+      }
+    },
+    "bloque_procedimental": {
+      "claims": [
+        "Art. 45 LGdA: obligación de someter proyectos a EIA",
+        "Arts. 46-60 LGdA: procedimientos y sanciones",
+        "Categorización de proyectos (bajo, medio, alto)",
+        "Vigencia de licencia: generalmente 5 años"
+      ],
+      "hallazgos": {
+        "articulos_45_60_lgda": {
+          "verificacion": "No se puede verificar el texto de estos artículos con las fuentes locales. Solo se tiene certeza de la existencia de la ley (Decreto 104-93) por referencia del Código Penal.",
+          "nota_importante": "El hecho de que los artículos 91-95 de la misma ley fueran derogados por el Código Penal de 2017 sugiere que la Ley General del Ambiente ha tenido reformas significativas. Los artículos 45-60 podrían haber sido también modificados por legislación posterior."
+        },
+        "categorizacion": {
+          "verificacion": "Sin evidencia directa. Es un esquema común en sistemas de EIA latinoamericanos."
+        },
+        "vigencia_5_anios": {
+          "verificacion": "Sin evidencia en fuentes locales. El plazo de 5 años es común en licencias ambientales de la región."
+        }
+      }
+    },
+    "bloque_sanciones": {
+      "claims": [
+        "Suspensión de actividades",
+        "Clausura del proyecto",
+        "Multas sustanciales",
+        "Responsabilidad penal en casos graves"
+      ],
+      "hallazgos": {
+        "sanciones_administrativas": {
+          "verificacion": "No verificables directamente. Son consistentes con potestades sancionadoras típicas de la administración pública."
+        },
+        "responsabilidad_penal": {
+          "verificacion": "CONFIRMADO. El Código Penal establece penas de prisión para delitos ambientales: contaminación (6-10 años), explotación ilegal de recursos (6-10 años), incendios forestales (6-15 años), construcción sin licencia en zonas protegidas (2-5 años). También incluye inhabilitación para obtener subvenciones, contratar con el sector público y gozar de beneficios fiscales."
+        }
+      }
+    },
+    "bloque_constitucional": {
+      "claims": [
+        "El artículo no cita explícitamente artículos constitucionales, pero su contenido se fundamenta en el marco constitucional de protección ambiental"
+      ],
+      "hallazgos": {
+        "base_constitucional": {
+          "articulos_relevantes": {
+            "art_145": "El Estado conservará el medio ambiente adecuado para proteger la salud de las personas. [...] Se garantiza la preservación de las fuentes de agua.",
+            "art_172": "Los sitios de belleza natural, monumentos y zonas reservadas, estarán bajo la protección del Estado.",
+            "art_340": "Se declara de utilidad y necesidad pública, la explotación técnica y racional de los recursos naturales de la nación. El Estado reglamentará su aprovechamiento, de acuerdo con el interés social y fijará las condiciones de su otorgamiento a los particulares.",
+            "art_354": "El Estado se reserva la potestad de establecer o modificar la demarcación de las zonas de control y protección de los recursos naturales en el territorio nacional.",
+            "art_301": "Deberán ingresar al tesoro municipal los impuestos y contribuciones que graven los ingresos provenientes de inversiones que se realicen en la respectiva comprensión municipal, lo mismo que la participación que le corresponda por la explotación o industrialización de los recursos naturales ubicados en su jurisdicción municipal."
+          },
+          "conclusion": "La Constitución proporciona base sólida para un sistema de evaluación de impacto ambiental. El Art. 340 es particularmente relevante al declarar de utilidad pública la explotación racional de recursos y facultar al Estado para reglamentar su aprovechamiento."
+        }
+      }
+    }
+  },
+  "tabla_resumen_verificabilidad": {
+    "confirmado": [
+      "Existencia de la Ley General del Ambiente (Decreto 104-93, 27 mayo 1993) — fuente: Código Penal",
+      "Tipificación de delitos ambientales en el Código Penal (Decreto 130-2017) — fuente: Código Penal",
+      "Base constitucional para protección ambiental y regulación de recursos naturales — fuente: Constitución Arts. 145, 172, 340, 354"
+    ],
+    "parcialmente_confirmado": [
+      "Existencia de Secretarías de Estado con competencia ambiental — fuente: Constitución Art. 274 menciona cooperación con Secretarías de Estado en protección del ambiente, sin nombrar SERNA"
+    ],
+    "no_verificable": [
+      "Numeración exacta del Reglamento de EIA (Acuerdo 189-2004)",
+      "Texto de los artículos 45-60 de la Ley General del Ambiente",
+      "Existencia y nombre exacto de DECA",
+      "Registro Nacional de Prestadores de Servicios Ambientales",
+      "Vigencia de 5 años de la licencia ambiental",
+      "Categorización de proyectos (bajo, medio, alto) como esquema oficial",
+      "Procedimiento detallado de obtención de licencia"
+    ]
+  },
+  "hallazgos_criticos": {
+    "derogacion_parcial": "Los artículos 91-95 de la Ley General del Ambiente fueron DEROGADOS por el Código Penal de 2017. Esto significa que las disposiciones penales de la LGdA ya no están vigentes. Si el artículo bajo auditoría cita la LGdA como fuente de sanciones penales, debe actualizarse para referir al Código Penal vigente.",
+    "codigo_civil_irrelevante": "El Código Civil de Honduras no contiene disposiciones relevantes sobre derecho ambiental o evaluación de impacto ambiental. Su mención en este contexto sería inapropiada."
+  },
+  "recomendaciones": {
+    "para_el_articulo": [
+      "Verificar que los artículos 45-60 de la LGdA no hayan sido reformados o derogados por legislación posterior a 1993.",
+      "Actualizar la sección de sanciones para referir al Código Penal (Decreto 130-2017) en lugar de —o además de— la Ley General del Ambiente.",
+      "Confirmar el número exacto del Reglamento de EIA (Acuerdo 189-2004) contra el Diario Oficial La Gaceta.",
+      "Verificar los nombres institucionales actuales: SERNA pudo haber cambiado de nombre en reestructuraciones gubernamentales."
+    ],
+    "para_verificacion_futura": [
+      "Consultar el texto completo de la Ley General del Ambiente (Decreto 104-93) en el Diario Oficial La Gaceta o en el sitio web del Poder Judicial de Honduras.",
+      "Consultar el Reglamento del Sistema Nacional de Evaluación de Impacto Ambiental (SINEIA) para verificar si corresponde al Acuerdo 189-2004."
+    ]
+  },
+  "fuentes_utilizadas": [
+    "data/articulos_constitucion.json — texto completo (2651 líneas)",
+    "data/articulos_cp.json — Código Penal Decreto 130-2017",
+    "data/codigo_civil.json — Código Civil de Honduras (sin hallazgos relevantes para derecho ambiental)"
+  ],
+  "nota_final": "Esta pasada B se realizó exclusivamente con fuentes locales. No se utilizaron fuentes web. Los hallazgos son consistentes con la Pasada A en cuanto a los claims confirmados y no verificables. La diferencia principal es que la Pasada A incluye la confirmación web (Wikipedia) del Decreto 104-93, mientras que la Pasada B obtiene la misma confirmación de una fuente local más robusta: el propio Código Penal hondureño."
+}

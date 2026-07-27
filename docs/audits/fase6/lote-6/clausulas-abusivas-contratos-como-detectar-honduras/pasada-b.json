@@ -1,0 +1,236 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "d210688e-dcf5-4fcf-b724-3c26fe658070",
+    "slug": "clausulas-abusivas-contratos-como-detectar-honduras",
+    "sha256_entrada": "062ebf204f09ab9dec729689a0db97f0b09d0382033bd5031bac8ffb20b6d586",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_civil.json",
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento contiene 7 afirmaciones normativas principales sobre cláusulas abusivas en Honduras. La base del Código Civil (Art. 9, Arts. 1586-1598) está correctamente identificada y verificada. Se detecta un hallazgo complementario relevante: el Art. 713 del Código de Comercio regula actos abusivos en la contratación con empresas concesionarias, norma que el artículo del blog no cita pero que refuerza su tesis. Se detecta una imprecisión: la afirmación de que la nulidad absoluta es 'imprescriptible' no es consistente con el Art. 1589 CC, que indica que prescribe transcurrido el plazo de prescripción ordinaria. Tres de las fuentes citadas (Ley de Protección al Consumidor, CNBS, Constitución) no están disponibles en las fuentes locales para verificación directa, aunque las conclusiones del artículo son jurídicamente sólidas por fundamentos alternativos del Código Civil.",
+    "hallazgo_complementario": {
+      "tipo": "norma_relevante_no_citada",
+      "descripcion": "El Art. 713 del Código de Comercio establece que 'Nadie puede ser obligado a contratar, sino cuando el rehusarse a ello constituya un acto ilícito o abusivo' y que se considera ilícita la renuencia de empresas concesionarias o que imponen precios. Esta norma es directamente aplicable al tema de cláusulas abusivas en contratos de adhesión y no fue citada en el artículo.",
+      "impacto": "relevancia_alta",
+      "ubicacion_fuente": "data/codigo_comercio.json, Art. 713 CM"
+    },
+    "imprecision_detectada": {
+      "tipo": "afirmacion_doctrinal_vs_texto_legal",
+      "descripcion": "El artículo afirma que 'la nulidad absoluta es imprescriptible'. El Art. 1589 CC establece que la nulidad absoluta 'no puede subsanarse... ni por un lapso menor que el que se exige para la prescripción ordinaria', lo que implica que SÍ prescribe, solo que requiere el plazo completo de prescripción ordinaria (no plazos cortos). La afirmación es debatible doctrinalmente pero no está respaldada por el texto expreso del CC hondureño.",
+      "impacto": "medio"
+    }
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "El Artículo 9 del Código Civil establece que los actos prohibidos por la ley son nulos y de ningún valor.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Texto exacto del Art. 9 CC: 'Los actos que prohíbe la ley son nulos y de ningún valor, salvo en cuanto designe expresamente otro efecto que el de nulidad para el caso de contravención.' Es el fundamento normativo correcto para declarar la nulidad de cláusulas contractuales que contravengan prohibiciones legales.",
+      "evidencia": "Art. 9 CC, data/codigo_civil.json: epígrafe 'Los actos que prohíbe la ley son nulos'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "El Artículo 10 del Código Civil refuerza la nulidad cuando la ley la establece para precaver fraude o proveer a la conveniencia pública.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 10 CC complementa al Art. 9 CC estableciendo que la nulidad declarada por la ley para precaver fraude o proveer a la conveniencia pública o privada se aplica aunque se pruebe que el acto anulado no fue fraudulento. Refuerza la tesis del artículo sobre nulidad de cláusulas abusivas por razones de orden público.",
+      "evidencia": "Art. 10 CC: 'Cuando la ley declara nulo algún acto con el fin expreso o tácito de precaver un fraude, o de proveer a algún objeto de conveniencia pública o privada, no se dejará de aplicar la ley...'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.3",
+      "subclaim_text": "El Artículo 11 del Código Civil impide que los particulares modifiquen o eludan leyes de orden público mediante convenciones privadas.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 11 CC: 'Las Leyes que interesan al orden Público y a las buenas costumbres, no podrán eludirse ni modificarse por convenciones de los particulares; pero podrán renunciarse los derechos Conferidos por las leyes, con tal que solo miren al interés individual del renunciante y que no esté prohibida su renuncia.' Este artículo es el fundamento indirecto para declarar nulas cláusulas que pretendan eludir normas de orden público mediante pacto privado, aunque el artículo del blog no lo cita explícitamente.",
+      "evidencia": "Art. 11 CC, data/codigo_civil.json",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "Los Artículos 1586 a 1598 del Código Civil existen y regulan la nulidad y rescisión de los contratos.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Los 13 artículos (1586-1598) están verificados en data/codigo_civil.json. Pertenecen al CAPITULO V 'DE LA NULIDAD Y RESCISION DE LOS CONTRATOS' del Libro IV. Cubren nulidad absoluta, nulidad relativa, legitimación, plazos y efectos restitutorios.",
+      "evidencia": "data/codigo_civil.json, 13 artículos verificados desde Art. 1586 CC hasta Art. 1598 CC.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "El Código Civil distingue nulidad absoluta (Art. 1586 CC) de nulidad relativa (Art. 1587 CC).",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 1586 CC: nulidad absoluta por falta de condiciones esenciales, falta de formalidades exigidas por la naturaleza del acto, o incapacidad absoluta. Art. 1587 CC: nulidad relativa por condiciones imperfectas, falta de formalidades en interés particular de las partes, o incapacidad relativa. La distinción es clara y está correctamente recogida en el Código.",
+      "evidencia": "Arts. 1586 y 1587 CC, data/codigo_civil.json",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.3",
+      "subclaim_text": "La nulidad absoluta es imprescriptible.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "matizado",
+      "detalle": "El Art. 1589 CC establece que la nulidad absoluta 'no puede subsanarse por la confirmación o ratificación de las partes, ni por un lapso menor que el que se exige para la prescripción ordinaria.' Esto significa que NO es imprescriptible: prescribe, pero requiere el plazo completo de prescripción ordinaria. Además, la nulidad absoluta puede y debe declararse de oficio por el juez cuando conste en autos. La afirmación del blog ('imprescriptible') es una simplificación que no encuentra respaldo en el texto expreso del CC hondureño, aunque existe debate doctrinal al respecto.",
+      "evidencia": "Art. 1589 CC: '...no puede subsanarse por la confirmación o ratificación de las partes, ni por un lapso menor que el que se exige para la prescripción ordinaria.'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.4",
+      "subclaim_text": "La reclamación de pagos indebidos está sujeta a plazos de prescripción.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 1593 CC: 'El plazo para pedir la rescisión, será de cuatro años...' contados desde la celebración del acto o contrato en los casos generales. Art. 1596 CC: la nulidad declarada da derecho a restitución mutua. La afirmación del artículo es correcta: los pagos realizados bajo una cláusula nula pueden reclamarse, pero sujetos al plazo de prescripción de 4 años.",
+      "evidencia": "Arts. 1593 y 1596 CC, data/codigo_civil.json",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "Existe una Ley de Protección al Consumidor en Honduras que prohíbe cláusulas que impongan obligaciones desproporcionadas.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible",
+      "detalle": "La ley no está disponible en las fuentes locales (codigo_civil.json, codigo_comercio.json). Su existencia es plausible por ser una ley común en ordenamientos contemporáneos, pero no es verificable directamente.",
+      "nivel_confianza": "baja"
+    },
+    {
+      "subclaim_id": "B3.2",
+      "subclaim_text": "[Cruce CC+CM] El Art. 713 del Código de Comercio complementa la protección contra cláusulas abusivas al sancionar la negativa abusiva a contratar.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 713 CM: 'Nadie puede ser obligado a contratar, sino cuando el rehusarse a ello constituya un acto ilícito o abusivo. Se considerará ilícita la renuencia cuando provenga de empresas que gocen de concesiones, autorizaciones o permisos para operar con el público, o se encuentren en situación de imponer precios a las mercancías o a los servicios que proporcionen.' Esta norma es directamente relevante al tema de cláusulas abusivas y contratos de adhesión, y no fue citada en el artículo. Refuerza la tesis central del blog.",
+      "evidencia": "Art. 713 CM, data/codigo_comercio.json",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "La CNBS existe como entidad reguladora del sector financiero en Honduras.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "plausible",
+      "detalle": "La CNBS no aparece por su nombre en las fuentes locales disponibles. El Código de Comercio regula extensamente el sector bancario (Sección Segunda, operaciones bancarias e instituciones de crédito) y menciona la autorización de la Secretaría de Hacienda, pero no nombra a la CNBS. Su existencia es plausible como entidad supervisora especializada creada por ley posterior.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "El sector financiero hondureño tiene un marco regulatorio específico en el Código de Comercio.",
+      "fuente": "data/codigo_comercio.json",
+      "veredicto": "confirmado",
+      "detalle": "El Código de Comercio dedica la Sección Segunda a 'Operaciones bancarias' con disposiciones sobre establecimientos bancarios, depósitos, secreto bancario, créditos y otras operaciones financieras (Arts. 675+ CM). Solo los establecimientos autorizados por la Secretaría de Hacienda pueden practicar estas operaciones. La afirmación general del artículo sobre regulación del sector financiero es correcta.",
+      "evidencia": "data/codigo_comercio.json, Sección Segunda: Operaciones bancarias, Arts. 675+ CM",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "La Constitución de Honduras garantiza el acceso a la justicia como derecho fundamental.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible",
+      "detalle": "La Constitución no está en las fuentes locales disponibles. El acceso a la justicia es un derecho fundamental común a todas las constituciones modernas. Su existencia es altamente plausible pero no verificable en las fuentes designadas.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B5.2",
+      "subclaim_text": "[Cruce CC] La nulidad de cláusulas que renuncian a acciones legales se fundamenta también en los Arts. 9 y 11 del Código Civil.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Aunque la Constitución no esté disponible para verificación, el Código Civil provee fundamento autónomo: Art. 11 CC prohíbe eludir leyes de orden público por convenciones privadas; Art. 9 CC sanciona con nulidad los actos que prohíbe la ley. La renuncia anticipada al acceso a la justicia contraviene el orden público, por lo que la cláusula sería nula incluso sin recurrir al texto constitucional.",
+      "evidencia": "Arts. 9 y 11 CC, data/codigo_civil.json",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.1",
+      "subclaim_text": "La anulación de una cláusula abusiva no invalida todo el contrato (principio de conservación).",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "plausible_con_soporte_implicito",
+      "detalle": "El Código Civil no enuncia expresamente el 'principio de conservación del contrato'. Sin embargo, el Art. 1585 CC establece que el contrato es nulo solo si las dudas recaen sobre el objeto principal y no puede conocerse la intención de los contratantes — a contrario sensu, si la cláusula problemática es accesoria, el contrato subsiste. El Art. 1596 CC ordena la restitución mutua en caso de nulidad, sin disponer la anulación total automática. La conclusión del artículo es doctrinalmente correcta aunque el principio no esté codificado con ese nombre.",
+      "evidencia": "Arts. 1585 y 1596 CC, data/codigo_civil.json",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B7.1",
+      "subclaim_text": "[Cruce B1+B2] Consistencia entre el Art. 9 CC (nulidad general de actos prohibidos) y los Arts. 1586+ CC (régimen específico de nulidad contractual).",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "coherente",
+      "detalle": "El Art. 9 CC establece el principio general de nulidad por contravención legal. Los Arts. 1586-1598 CC desarrollan el régimen específico para contratos: causales (1586-1587), efectos procesales (1589-1590), plazos (1593) y restitución (1596). Ambas normas son complementarias y no presentan conflicto: el Art. 9 CC es la norma de remisión general y los Arts. 1586+ CC son el desarrollo específico para la nulidad contractual.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.2",
+      "subclaim_text": "[Cruce B1+B5] Arts. 9 y 11 CC fundan autónomamente la nulidad de cláusulas de renuncia a acciones legales.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "coherente",
+      "detalle": "La cadena normativa es: Art. 11 CC (prohíbe modificar leyes de orden público por convención) + Art. 9 CC (sanciona con nulidad los actos prohibidos). El acceso a la justicia es materia de orden público. Una cláusula que pretenda su renuncia es nula por esta vía, sin necesidad de invocar la Constitución. El artículo llega a la conclusión correcta aunque funda su razonamiento en la Constitución en lugar del Código Civil.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.3",
+      "subclaim_text": "[Cruce B2+B3] Compatibilidad entre el régimen de nulidad del CC y la Ley de Protección al Consumidor.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "compatible",
+      "detalle": "Aunque la Ley de Protección al Consumidor no está disponible para verificación, el régimen de nulidad del Código Civil (Arts. 1586+ CC) es el marco general supletorio. Las leyes especiales de protección al consumidor suelen establecer nulidades específicas que operan dentro del marco general del Código Civil. El Art. 713 CM (acto abusivo en contratación) es un ejemplo de norma especial complementaria dentro del mismo sistema. No se detecta conflicto normativo.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B7.4",
+      "subclaim_text": "[Cruce B2+B6] La nulidad parcial (solo la cláusula abusiva) es compatible con el régimen de nulidad del CC.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "coherente",
+      "detalle": "El Art. 1585 CC dispone que el contrato es nulo cuando la duda recae sobre el objeto principal y no puede determinarse la intención de los contratantes. Esto implica que si la irregularidad afecta solo una cláusula accesoria, el resto del contrato puede subsistir. El Art. 1596 CC ordena la restitución sin exigir la anulación total. La nulidad parcial de cláusulas abusivas es compatible con el régimen del Código Civil.",
+      "nivel_confianza": "alta"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["B1_Base_Normativa_General", "B2_Regimen_Nulidad", "B3_Ley_Consumidor", "B4_CNBS_Sector_Financiero", "B5_Constitucion_Acceso_Justicia", "B6_Conservacion_Contrato"],
+    "cruces": [
+      {
+        "par": "B1+B2",
+        "relacion": "Complementarios. Art. 9 CC (principio general) + Arts. 1586-1598 CC (régimen específico de nulidad contractual). Sin conflicto.",
+        "conflicto": false
+      },
+      {
+        "par": "B1+B5",
+        "relacion": "Complementarios. Art. 11 CC (orden público) + Art. 9 CC (nulidad) fundan autónomamente la nulidad de cláusulas de renuncia a acciones legales. La Constitución es fuente adicional no verificada pero convergente.",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B3",
+        "relacion": "Compatibles. Régimen general del CC + ley especial de consumidor (no verificada). El Art. 713 CM es norma especial complementaria verificada.",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B6",
+        "relacion": "Complementarios. El Art. 1585 CC implica que solo la nulidad del objeto principal anula todo el contrato. Nulidad parcial de cláusulas accesorias es compatible.",
+        "conflicto": false
+      },
+      {
+        "par": "B3+B4",
+        "relacion": "Independientes. Protección al consumidor (general) y regulación bancaria (sectorial). Sin conflicto. Ambas no verificables directamente.",
+        "conflicto": false
+      },
+      {
+        "par": "B2.3+B2.4",
+        "relacion": "Tensión doctrinal. El blog afirma que la nulidad absoluta es imprescriptible (B2.3) pero que la reclamación de pagos prescribe (B2.4). El Art. 1589 CC sugiere que ambas prescriben, con distinto plazo. La distinción que hace el blog es doctrinalmente defendible pero no refleja fielmente el texto del CC.",
+        "conflicto": false,
+        "nota": "Tensión entre afirmación doctrinal y texto legal"
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 18,
+    "confirmados": 9,
+    "matizados": 1,
+    "plausibles": 3,
+    "plausible_con_soporte_implicito": 1,
+    "coherentes": 3,
+    "compatibles": 1,
+    "refutados": 0,
+    "hallazgo_relevante": "Art. 713 CM (Código de Comercio) regula expresamente el 'acto abusivo' en la contratación con empresas concesionarias. No fue citado en el artículo y es directamente aplicable al tema.",
+    "imprecision_principal": "B2.3: La afirmación de que la nulidad absoluta es imprescriptible no es consistente con el Art. 1589 CC, que indica que prescribe transcurrido el plazo de prescripción ordinaria.",
+    "fuentes_no_verificables": "Ley de Protección al Consumidor, CNBS y Constitución de Honduras no están en las fuentes locales. Sus conclusiones son respaldadas por fundamentos alternativos del Código Civil.",
+    "calidad_global_documento": "Buena. La base del Código Civil está correctamente identificada y verificada. Contiene una imprecisión doctrinal menor sobre imprescriptibilidad de la nulidad absoluta. Omite el Art. 713 CM como norma relevante complementaria."
+  }
+}

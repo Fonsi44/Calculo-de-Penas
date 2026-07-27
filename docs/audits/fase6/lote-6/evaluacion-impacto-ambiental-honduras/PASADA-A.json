@@ -1,0 +1,75 @@
+{
+  "pasada": "A",
+  "timestamp": "2026-07-27T18:00:00.000Z",
+  "sha256_entrada": "92fcbf8f2085fe84ef2f14ef996416961213fa24b243d1e148e3fbe738b6b7fd",
+  "metodologia": "Verificación de claims del artículo contra fuentes locales (Constitución, Código Penal, Código Civil) y 1 fuente web confirmada (Wikipedia).",
+  "claims_verificados": [
+    {
+      "id": "C01",
+      "claim": "La Ley General del Ambiente (Decreto 104-93) establece la obligatoriedad de la EIA",
+      "fuente_local": "data/articulos_cp.json — El Código Penal vigente (Decreto 130-2017), en su sección de derogatorias, referencia explícitamente: 'los artículos 91-95 de la Ley General del Ambiente, aprobada en Decreto No. 104-93, de fecha 27 de Mayo de 1993'.",
+      "fuente_web": "Wikipedia (es.wikipedia.org/wiki/Honduras) confirma: 'Ley General del Ambiente... Decreto 104-93... en 1993... estableció que la gestión del ambiente es responsabilidad municipal y de la sociedad civil.'",
+      "veredicto": "CONFIRMADO — La existencia del Decreto 104-93 está verificada por dos fuentes independientes (Código Penal hondureño y Wikipedia).",
+      "precision_del_texto": "ALTA — El decreto es real. Sin embargo, los artículos 45-60 mencionados en el artículo no pudieron verificarse textualmente. Nótese que los artículos 91-95 de la misma ley fueron derogados por el Código Penal de 2017, lo que implica que la ley ha sufrido modificaciones."
+    },
+    {
+      "id": "C02",
+      "claim": "El Reglamento de Evaluación de Impacto Ambiental (Acuerdo 189-2004) define categorías de proyectos y requisitos técnicos",
+      "fuente_local": "data/articulos_constitucion.json — Art. 340: 'Se declara de utilidad y necesidad pública, la explotación técnica y racional de los recursos naturales de la nación. El Estado reglamentará su aprovechamiento, de acuerdo con el interés social y fijará las condiciones de su otorgamiento a los particulares.' Esto proporciona la base constitucional para un reglamento como el Acuerdo 189-2004.",
+      "fuente_web": "No se pudo verificar independientemente. Los intentos de acceso a FAOLEX, ILO NATLEX, y sitios gubernamentales hondureños fallaron (404, 403, errores TLS).",
+      "veredicto": "NO VERIFICABLE INDEPENDIENTEMENTE — La existencia de un reglamento de EIA es consistente con el mandato constitucional del Art. 340, pero el número exacto 'Acuerdo 189-2004' no pudo confirmarse mediante fuentes accesibles. Se recomienda verificación cruzada con el Diario Oficial La Gaceta.",
+      "precision_del_texto": "MEDIA — Consistente con el marco legal pero no directamente verificable."
+    },
+    {
+      "id": "C03",
+      "claim": "La SERNA, a través de la DECA, es la entidad encargada de administrar el sistema de EIA",
+      "fuente_local": "No se encontró referencia directa a SERNA o DECA en los archivos locales (constitución, código penal, código civil).",
+      "fuente_web": "No verificable por fallos en fuentes web.",
+      "veredicto": "NO VERIFICABLE — Las siglas SERNA (Secretaría de Recursos Naturales y Ambiente) y DECA (Dirección de Evaluación y Control Ambiental) son plausibles dado el marco institucional hondureño, pero no pudieron confirmarse con las fuentes disponibles.",
+      "precision_del_texto": "MEDIA — Nombres institucionales plausibles pero no confirmados."
+    },
+    {
+      "id": "C04",
+      "claim": "Los consultores deben estar inscritos en el Registro Nacional de Prestadores de Servicios Ambientales",
+      "fuente_local": "No se encontró referencia en fuentes locales.",
+      "veredicto": "NO VERIFICABLE — Requisito plausible para un sistema de EIA regulado, pero no confirmable con las fuentes disponibles.",
+      "precision_del_texto": "BAJA — Sin evidencia directa."
+    },
+    {
+      "id": "C05",
+      "claim": "La vigencia de la licencia ambiental es generalmente de cinco años",
+      "fuente_local": "No se encontró referencia en fuentes locales.",
+      "veredicto": "NO VERIFICABLE — Plazo común en regímenes de licencias ambientales latinoamericanos, pero no confirmable para Honduras con las fuentes disponibles.",
+      "precision_del_texto": "BAJA — Sin evidencia directa."
+    },
+    {
+      "id": "C06",
+      "claim": "Operar sin licencia ambiental conlleva suspensión de actividades, clausura y multas; en casos graves, responsabilidad penal",
+      "fuente_local": "data/articulos_cp.json — El Código Penal (Decreto 130-2017) tipifica delitos ambientales: 'Contaminación del aire, las aguas o los suelos' (prisión 6-10 años), 'Explotación ilegal de recursos naturales' (prisión 6-10 años), e 'incendios forestales' (prisión 6-15 años). También sanciona construir sin licencia en zonas protegidas (prisión 2-5 años).",
+      "veredicto": "CONFIRMADO PARCIALMENTE — La responsabilidad penal por delitos ambientales está ampliamente confirmada en el Código Penal hondureño. Las sanciones administrativas (suspensión, clausura, multas) son consistentes con el régimen sancionador típico pero no se verificaron en fuentes locales.",
+      "precision_del_texto": "ALTA en lo penal; MEDIA en lo administrativo."
+    },
+    {
+      "id": "C07",
+      "claim": "El artículo cita el Código Penal como base legal para delitos ambientales",
+      "fuente_local": "data/articulos_cp.json — CONFIRMADO. El Código Penal (Decreto 130-2017) contiene un título específico sobre delitos contra el medio ambiente con los epígrafes: 'Contaminación del aire, las aguas o los suelos', 'Explotación ilegal de recursos naturales', 'Agravantes comunes a los delitos contra el medio ambiente', 'Delito ambiental imprudente', y 'Restauración del equilibrio ecológico'.",
+      "veredicto": "CONFIRMADO — El Código Penal hondureño vigente tipifica delitos ambientales de manera expresa y detallada.",
+      "precision_del_texto": "ALTA."
+    },
+    {
+      "id": "C08",
+      "claim": "Base constitucional: el Estado debe conservar el medio ambiente y regular los recursos naturales",
+      "fuente_local": "data/articulos_constitucion.json — Art. 145: 'El Estado conservará el medio ambiente adecuado para proteger la salud de las personas.' Art. 340: 'Se declara de utilidad y necesidad pública, la explotación técnica y racional de los recursos naturales de la nación. El Estado reglamentará su aprovechamiento.' Art. 354: 'El Estado se reserva la potestad de establecer o modificar la demarcación de las zonas de control y protección de los recursos naturales.' Art. 172: 'Los sitios de belleza natural, monumentos y zonas reservadas, estarán bajo la protección del Estado.'",
+      "veredicto": "CONFIRMADO — La Constitución hondureña contiene múltiples disposiciones que fundamentan la protección ambiental y la regulación estatal de los recursos naturales.",
+      "precision_del_texto": "ALTA."
+    }
+  ],
+  "resumen_ejecutivo": "De 8 claims analizados: 3 CONFIRMADOS (C01, C07, C08), 1 CONFIRMADO PARCIALMENTE (C06), 4 NO VERIFICABLES (C02, C03, C04, C05). El núcleo jurídico-constitucional es sólido. Los detalles procedimentales (SERNA/DECA, registro de consultores, vigencia de licencia) no pudieron verificarse con las fuentes disponibles. Se recomienda verificar el Acuerdo 189-2004 contra el Diario Oficial La Gaceta.",
+  "fuentes_utilizadas": [
+    "data/articulos_constitucion.json (Arts. 145, 172, 199, 301, 340, 354)",
+    "data/articulos_cp.json (Código Penal Decreto 130-2017, Título Delitos contra el Medio Ambiente)",
+    "data/codigo_civil.json (sin hallazgos relevantes)",
+    "Web: Wikipedia (confirmación Decreto 104-93)"
+  ],
+  "limitaciones": "Fallos en acceso a fuentes web gubernamentales hondureñas (FAOLEX 404, ILO NATLEX 403/redirect loops, poderjudicial.gob.hn TLS error). No se pudo verificar el texto exacto del Acuerdo 189-2004 ni de los artículos 45-60 de la Ley General del Ambiente."
+}

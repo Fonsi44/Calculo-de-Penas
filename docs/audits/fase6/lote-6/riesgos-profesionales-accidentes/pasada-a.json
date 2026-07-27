@@ -1,0 +1,228 @@
+{
+  "meta": {
+    "pasada": "A",
+    "enfoque": "conservador_articulo_por_articulo",
+    "documento_id": "b23cb63b-2fc0-446f-ba65-9bc4a80ae485",
+    "slug": "riesgos-profesionales-accidentes",
+    "sha256_entrada": "785c9bf8ca6fbbd32764b2ea74102e316e0d4f2d867384732d85fb20037bbff8",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_trabajo.json",
+      "data/codigo_trabajo_verificado.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "resultados": [
+    {
+      "claim_id": "A1",
+      "claim_text": "El Artículo 106 del Código de Trabajo de Honduras define los riesgos profesionales como aquellos accidentes y enfermedades a los que los trabajadores están expuestos en el ejercicio de sus labores.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "refutado",
+      "detalle": "El Artículo 106 del Código de Trabajo NO define riesgos profesionales. El Art. 106 CT trata sobre la suspensión del contrato de trabajo en el caso del inciso 9o del artículo correspondiente (suspensión por detención). La definición correcta de riesgos profesionales se encuentra en el Art. 402 CT: 'Riesgos profesionales son los accidentes o enfermedades a que están expuestos los trabajadores a causa de las labores que ejecutan por cuenta ajena.' La definición de accidente de trabajo está en el Art. 403 CT. El documento incurre en un error de cita: atribuye al Art. 106 una definición que corresponde al Art. 402.",
+      "evidencia_local": {
+        "articulo_citado_erroneamente": {
+          "articulo": "Art. 106 CT",
+          "epigrafe": "En el caso del inciso 9o. del",
+          "texto_real": "En el caso del inciso 9o. del [artículo de suspensión de contrato]"
+        },
+        "articulo_correcto": {
+          "articulo": "Art. 402 CT",
+          "epigrafe": "Riesgos profesionales son los accidentes o enfermedades a",
+          "texto_real": "Riesgos profesionales son los accidentes o enfermedades a que están expuestos los trabajadores a causa de las labores que ejecutan por cuenta ajena."
+        }
+      },
+      "errores_detectados": [
+        "El Art. 106 CT no define riesgos profesionales. La definición está en Art. 402 CT.",
+        "El documento atribuye incorrectamente la definición de riesgo profesional al artículo 106."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A2",
+      "claim_text": "Los Artículos 106 al 113 del Código de Trabajo constituyen el marco legal que regula los riesgos profesionales en Honduras.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "refutado",
+      "detalle": "Los Artículos 106 al 113 del Código de Trabajo regulan la suspensión y terminación del contrato de trabajo, NO los riesgos profesionales. Específicamente: Art. 106-109 CT (suspensión del contrato), Art. 110 CT (despido injustificado con derecho a reintegro), Art. 111 CT (causas de terminación), Art. 112 CT (causas justas de despido), Art. 113 CT (efectos de la terminación y derecho de emplazamiento). La regulación de riesgos profesionales se encuentra en el Título correspondiente del Código de Trabajo, que abarca los Artículos 391 al 459 CT.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulos_106_113_reales": "Suspensión del contrato (106-109), despido injustificado (110), causas de terminación (111), causas justas de despido (112), efectos de la terminación (113).",
+        "articulos_riesgos_profesionales": "Arts. 391-459 CT: obligaciones de seguridad (391-392), definición de riesgos profesionales (402), accidente de trabajo (403), responsabilidad del patrono (413-415), prestaciones (418-419), indemnizaciones (423-428), aviso de accidentes (435-436), exenciones (439-440), readmisión (441), prescripción (453)."
+      },
+      "errores_detectados": [
+        "El rango 106-113 CT no regula riesgos profesionales sino suspensión/terminación del contrato.",
+        "El rango correcto para riesgos profesionales es 391-459 CT."
+      ],
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A3",
+      "claim_text": "La Ley del Seguro Social exige la inscripción de todo trabajador en el Instituto Hondureño de Seguridad Social (IHSS) y el pago de las cuotas correspondientes por parte del empleador. La omisión de esta obligación transfiere al empleador la responsabilidad total de los costos.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "sustancialmente_correcto_no_verificable_en_fuente_primaria",
+      "detalle": "La Ley del Seguro Social no está disponible como JSON estructurado en las fuentes locales. Sin embargo, el Código de Trabajo en su Art. 413 CT confirma que 'El patrono es responsable de la reparación de los riesgos profesionales ocurridos a sus trabajadores', lo cual es consistente con el principio de que el empleador asume responsabilidad. El Art. 453 CT menciona específicamente 'el trabajador no asegurado contra riesgos profesionales', confirmando implícitamente que existe un régimen de aseguramiento (IHSS). La lógica de que la omisión de asegurar transfiere responsabilidad directa al empleador es consistente con el Art. 413 CT, aunque no se puede verificar la norma específica de la Ley del Seguro Social.",
+      "evidencia_local": {
+        "articulos_respaldo": [
+          {
+            "articulo": "Art. 413 CT",
+            "texto": "El patrono es responsable de la reparación de los riesgos profesionales ocurridos a sus trabajadores, en los términos de los artículos 403 y 404."
+          },
+          {
+            "articulo": "Art. 453 CT",
+            "texto": "...cuando el trabajador no asegurado contra riesgos profesionales..."
+          }
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A4",
+      "claim_text": "El empleador debe inscribir al trabajador en el IHSS dentro de los primeros tres días de iniciada la relación laboral.",
+      "fuente_verificacion": "data/codigo_trabajo.json + data/codigo_trabajo_verificado.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "Ni el Código de Trabajo ni las fuentes locales disponibles contienen disposiciones sobre plazos de inscripción al IHSS. Esta obligación corresponde a la Ley del Seguro Social y sus reglamentos, que no están disponibles en el repositorio local. El Código de Trabajo sí establece obligaciones del patrono en materia de seguridad (Arts. 391-392 CT) y responsabilidad por riesgos profesionales (Art. 413 CT), pero no específica el plazo de 3 días para inscripción al IHSS.",
+      "evidencia_local": {},
+      "nivel_confianza": "baja"
+    },
+    {
+      "claim_id": "A5",
+      "claim_text": "El empleador debe notificar cualquier accidente al IHSS en un plazo de 24 horas.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "parcialmente_confirmado_con_matiz",
+      "detalle": "El Art. 435 CT establece que 'El patrono está obligado a dar aviso de los accidentes ocurridos, a la Inspección General del Trabajo o a sus representantes y al Juzgado de Letras del Trabajo que corresponda, dentro de las primeras 24 horas.' El plazo de 24 horas es correcto, pero el destinatario del aviso según el CT es la Inspección General del Trabajo y el Juzgado de Letras del Trabajo, no el IHSS. La obligación de notificar al IHSS específicamente provendría de la Ley del Seguro Social, no disponible en fuentes locales. El CT también exige proporcionar datos detallados del accidente (Art. 436 CT).",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulo": "Art. 435 CT",
+        "texto": "El patrono está obligado a dar aviso de los accidentes ocurridos, a la Inspección General del Trabajo o a sus representantes y al Juzgado de Letras del Trabajo que corresponda, dentro de las primeras 24 horas."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A6",
+      "claim_text": "La acción legal para reclamar prestaciones por riesgo profesional prescribe en el plazo de un año, contado a partir de la fecha de diagnóstico de la enfermedad o del accidente.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "El Art. 453 CT confirma el plazo de un año: 'Los derechos y acciones para reclamar las indemnizaciones prescriben en un (1) año, contado desde el día en que ocurrió el riesgo profesional.' Sin embargo, el cómputo del plazo según la ley es desde que 'ocurrió el riesgo profesional', no desde la 'fecha de diagnóstico'. Esta diferencia es relevante para enfermedades profesionales donde el diagnóstico puede ser posterior al riesgo. El propio artículo añade una salvedad: 'cuando el trabajador no asegurado contra riesgos profesionales ignore...' que puede extender el plazo. El documento usa 'diagnóstico' que es una simplificación razonable pero no exactamente lo que dice la ley.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulo": "Art. 453 CT",
+        "texto": "Los derechos y acciones para reclamar las indemnizaciones prescriben en un (1) año, contado desde el día en que ocurrió el riesgo profesional. Sin embargo, cuando el trabajador no asegurado contra riesgos profesionales ignore..."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A7",
+      "claim_text": "El Reglamento General de Medidas Preventivas de Accidentes de Trabajo establece obligaciones de seguridad e higiene en el lugar de trabajo.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "plausible_no_verificable",
+      "detalle": "El Código de Trabajo hace referencia a obligaciones de seguridad e higiene (Art. 391 CT: 'Todo patrono o empresa está obligado a suministrar y acondicionar locales y equipos de trabajo que garanticen la seguridad y la salud de los trabajadores'; Art. 392 CT: obligación de acatar medidas de prevención dictadas por la Secretaría de Trabajo). El Art. 398 CT menciona un 'reglamento especial' sobre medidas preventivas. Sin embargo, el Reglamento General de Medidas Preventivas de Accidentes de Trabajo como tal no está disponible en las fuentes locales para verificar su contenido exacto.",
+      "evidencia_local": {
+        "articulos_relacionados": [
+          "Art. 391 CT: obligación de garantizar seguridad y salud",
+          "Art. 392 CT: acatar medidas de prevención de riesgos",
+          "Art. 398 CT: reglamento especial de medidas preventivas"
+        ]
+      },
+      "nivel_confianza": "media"
+    },
+    {
+      "claim_id": "A8",
+      "claim_text": "El patrono es responsable de la reparación de los riesgos profesionales ocurridos a sus trabajadores.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 413 CT establece expresamente: 'El patrono es responsable de la reparación de los riesgos profesionales ocurridos a sus trabajadores, en los términos de los artículos 403 y 404.' El Art. 414 CT añade que si el riesgo fue consecuencia de delito o cuasidelito imputable al patrono, se entiende que hay responsabilidad civil independiente. El Art. 440 CT refuerza que no exime al patrono el que el trabajador haya asumido el riesgo ni que el accidente haya sido causado por descuido o imprudencia del trabajador.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulos": [
+          {
+            "articulo": "Art. 413 CT",
+            "texto": "El patrono es responsable de la reparación de los riesgos profesionales ocurridos a sus trabajadores, en los términos de los artículos 403 y 404."
+          },
+          {
+            "articulo": "Art. 440 CT",
+            "texto": "No exime al patrono, de las obligaciones que le impone este Título: 1.Que el trabajador explícita o implícitamente haya asumido el riesgo de su ocupación; 2.Que el accidente haya sido causado por descuido o imprudencia del trabajador..."
+          }
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A9",
+      "claim_text": "Los trabajadores que sufran un riesgo profesional tienen derecho a asistencia médica y quirúrgica, medicamentos, indemnización por incapacidad y gastos funerarios.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 418 CT enumera los derechos: 'Los trabajadores que sufran un riesgo profesional, tendrán derecho a: 1.Asistencia médica y quirúrgica; 2.Administración de medicamentos y material de curación; 3.La indemnización fijada en el presente Título; 4.Los gastos de traslado, hospitalización y funerarios.' El Art. 419 CT añade la obligación de proporcionar inmediatamente medicamentos y materiales para curación. Las indemnizaciones por incapacidad están detalladas en Arts. 425 CT (total permanente: 620 días de salario), 426 CT (parcial permanente: % según tabla), 428 CT (temporal: 75% del salario).",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulos": [
+          {
+            "articulo": "Art. 418 CT",
+            "texto": "Los trabajadores que sufran un riesgo profesional, tendrán derecho a: 1.Asistencia médica y quirúrgica; 2.Administración de medicamentos y material de curación; 3.La indemnización fijada en el presente Título; 4.Los gastos de traslado, hospitalización y funerarios."
+          }
+        ]
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A10",
+      "claim_text": "Todo patrono está obligado a readmitir en su ocupación al trabajador que haya dejado de desempeñarla por haber sufrido algún riesgo profesional, en cuanto esté capacitado.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 441 CT establece textualmente: 'Todo patrono está obligado a readmitir en su ocupación al trabajador que haya dejado de desempeñarla por haber sufrido algún riesgo profesional, en cuanto esté capacitado, y siempre que no haya recibido indemnización por incapacidad total permanente.' Este artículo confirma exactamente lo afirmado en el documento.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulo": "Art. 441 CT",
+        "texto": "Todo patrono está obligado a readmitir en su ocupación al trabajador que haya dejado de desempeñarla por haber sufrido algún riesgo profesional, en cuanto esté capacitado, y siempre que no haya recibido indemnización por incapacidad total permanente."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A11",
+      "claim_text": "Se entiende por accidente de trabajo todo suceso imprevisto y repentino que sobrevenga por causa o con ocasión del trabajo y que produzca una lesión orgánica o perturbación funcional permanente o temporal.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado",
+      "detalle": "El Art. 403 CT define: 'Se entiende por accidente de trabajo todo suceso imprevisto y repentino que sobrevenga por causa o con ocasión del trabajo y que produzca al trabajador una lesión orgánica o perturbación funcional permanente o temporal.' La definición del documento es esencialmente correcta, aunque el artículo citado en el texto (Art. 106) es incorrecto. La definición real está en el Art. 403 CT.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulo": "Art. 403 CT",
+        "texto": "Se entiende por accidente de trabajo todo suceso imprevisto y repentino que sobrevenga por causa o con ocasión del trabajo y que produzca al trabajador una lesión orgánica o perturbación funcional permanente o temporal."
+      },
+      "nivel_confianza": "alta"
+    },
+    {
+      "claim_id": "A12",
+      "claim_text": "El patrono queda exento de responsabilidad cuando el accidente ocurra encontrándose el trabajador en estado de embriaguez o bajo efectos de drogas.",
+      "fuente_verificacion": "data/codigo_trabajo.json",
+      "tipo_verificacion": "local",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "El Art. 439 CT establece: 'El patrono quedará exento de toda responsabilidad por riesgos profesionales: 1.Cuando el accidente ocurra encontrándose el trabajador en estado de embriaguez, salvo la excepción establecida en el párrafo...' La excepción es que si el patrono o sus representantes permitieron que el trabajador ejecutara labores en ese estado, no opera la exención. La mención de 'drogas' no aparece explícitamente en el Art. 439 CT en la fuente disponible. La embriaguez sí está confirmada como causal de exención.",
+      "evidencia_local": {
+        "archivo": "data/codigo_trabajo.json",
+        "articulo": "Art. 439 CT",
+        "texto": "El patrono quedará exento de toda responsabilidad por riesgos profesionales: 1.Cuando el accidente ocurra encontrándose el trabajador en estado de embriaguez, salvo la excepción establecida en el párrafo..."
+      },
+      "nivel_confianza": "alta"
+    }
+  ],
+  "resumen_conservador": {
+    "total_claims_verificados": 12,
+    "confirmados": 4,
+    "confirmados_con_matiz": 2,
+    "parcialmente_confirmado_con_matiz": 1,
+    "plausible_no_verificable": 2,
+    "sustancialmente_correcto_no_verificable": 1,
+    "refutados": 2,
+    "error_critico_detectado": "El documento cita los Artículos 106-113 CT como reguladores de riesgos profesionales, cuando en realidad esos artículos regulan suspensión y terminación del contrato de trabajo. El rango correcto es 391-459 CT. La definición de riesgo profesional está en el Art. 402 CT, no en el 106.",
+    "calidad_general": "inconsistente_con_errores_de_cita"
+  }
+}

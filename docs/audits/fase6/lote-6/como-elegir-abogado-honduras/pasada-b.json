@@ -1,0 +1,187 @@
+{
+  "meta": {
+    "pasada": "B",
+    "enfoque": "cruzado_granular",
+    "documento_id": "7e718c4d-2626-4c7e-aa1b-5eb9d36a3d40",
+    "slug": "como-elegir-abogado-honduras",
+    "sha256_entrada": "d8f88f0a11ee07f4ced5d03702ae534bc545488633e46403539f69ae266b7b07",
+    "fecha_verificacion": "2026-07-27",
+    "fuentes_locales_consultadas": [
+      "data/codigo_civil.json",
+      "data/articulos_constitucion.json",
+      "data/codigo_comercio.json"
+    ],
+    "busquedas_web_realizadas": 0
+  },
+  "analisis_cruzado": {
+    "resumen_ejecutivo": "El documento contiene 6 afirmaciones normativas principales. Cuatro de ellas se verifican satisfactoriamente con matices menores. Se detecta UN error factual significativo: la atribución del Decreto 76-84 al Código Civil (en realidad corresponde al Código de Familia). También se detecta imprecisión en la cita de los artículos 1551-1564 CC, que son provisiones generales de contratos, no específicas de servicios profesionales.",
+    "error_critico": {
+      "tipo": "atribucion_normativa_incorrecta",
+      "descripcion": "El documento atribuye al Código Civil el Decreto 76-84. El Código Civil hondureño fue promulgado por Decreto No. 76 de 1906. El Decreto 76-84 corresponde al Código de Familia de Honduras.",
+      "impacto": "medio",
+      "apariciones": 2,
+      "ubicaciones": [
+        "párrafo 2 del body: 'Código Civil de Honduras (Decreto 76-84)'",
+        "último párrafo del body: 'Código Civil (Decreto 76-84)'"
+      ]
+    },
+    "imprecision_detectada": {
+      "tipo": "cita_imprecisa_de_articulos",
+      "descripcion": "El rango 1551-1564 CC cubre requisitos generales de validez contractual (no es específico del contrato de servicios profesionales). La conexión con servicios profesionales se da vía Art. 1778 CC.",
+      "impacto": "bajo"
+    }
+  },
+  "claims_granulares": [
+    {
+      "subclaim_id": "B1.1",
+      "subclaim_text": "Existe una Ley Orgánica del Colegio de Abogados de Honduras que regula el ejercicio de la abogacía.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "plausible",
+      "detalle": "El Art. 177 constitucional establece la colegiación profesional obligatoria y remite a ley reglamentaria. La Ley Orgánica del Colegio de Abogados de Honduras es dicha ley reglamentaria para la profesión jurídica. No está disponible en fuentes locales estructuradas, pero su existencia es verificable por el mandato constitucional.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B1.2",
+      "subclaim_text": "La colegiación es requisito obligatorio para el ejercicio profesional de la abogacía en Honduras.",
+      "fuente": "data/articulos_constitucion.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 177 Constitución: 'Se establece la colegiación profesional obligatoria.' El mandato es constitucional y general para todas las profesiones, incluida la abogacía.",
+      "evidencia": "Art. 177 Constitución: 'Se establece la colegiación profesional obligatoria. La ley reglamentará su organización y funcionamiento.'",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.1",
+      "subclaim_text": "Los Artículos 1551 a 1564 del Código Civil de Honduras existen y tratan sobre contratos.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Los 14 artículos existen en data/codigo_civil.json. Versan sobre: estipulación a favor de tercero (1551), requisitos del contrato: consentimiento, objeto, causa (1552-1553), capacidad (1554-1555), vicios del consentimiento: error, violencia, intimidación, dolo (1556-1561), y objeto del contrato (1562-1564).",
+      "evidencia": "data/codigo_civil.json, líneas 10797-10893. 14 artículos verificados: Art. 1551 CC a Art. 1564 CC.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.2",
+      "subclaim_text": "El Código Civil de Honduras corresponde al Decreto 76-84.",
+      "fuente": "data/codigo_civil.json + verificación_cruzada",
+      "veredicto": "refutado",
+      "detalle": "El Código Civil hondureño es Decreto No. 76 del 8 de febrero de 1906, no Decreto 76-84. El Decreto 76-84 corresponde al Código de Familia de Honduras (referenciado así en data/lote3-backup.json: 'Código de Familia (Decreto 76-84 y sus reformas)').",
+      "evidencia": "data/lote3-backup.json confirma que Decreto 76-84 = Código de Familia. El Código Civil data de 1906 (Decreto No. 76).",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B2.3",
+      "subclaim_text": "Los artículos 1551-1564 CC son específicamente sobre 'contrato de servicios profesionales'.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "refutado",
+      "detalle": "Los artículos 1551-1564 son normas generales de teoría contractual aplicables a TODO contrato, no específicas de servicios profesionales. El epígrafe de la sección es 'CAPITULO II DE LOS REQUISITOS ESENCIALES PARA LA VALIDEZ DE LOS CONTRATOS'. La vinculación específica con servicios profesionales se encuentra en el Art. 1778 CC: 'Los artículos precedentes se aplican a los servicios de las profesiones y carreras que suponen largos estudios... en lo que no contraríen las reglas del mandato.'",
+      "evidencia": "Art. 1778 CC como conector entre reglas generales de contratos y servicios profesionales. Art. 1888-1917 CC sobre mandato como régimen supletorio.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B3.1",
+      "subclaim_text": "El poder de representación legal se otorga conforme al Código Procesal Civil.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "plausible",
+      "detalle": "El Código Procesal Civil (Decreto 211-2006) es referenciado en múltiples fuentes locales (codigo_trabajo.json, codigo_tributario.json) como normativa vigente. Sin embargo, no está disponible como JSON estructurado en el repositorio local. Adicionalmente, el Código Civil contiene disposiciones sobre mandato/poder (Arts. 1732-1750 y 1888-1917 CC) que también son aplicables. Es plausible que el CPC regule aspectos procesales del poder de representación.",
+      "nivel_confianza": "media"
+    },
+    {
+      "subclaim_id": "B4.1",
+      "subclaim_text": "El cliente puede revocar el poder otorgado a su abogado.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado",
+      "detalle": "Art. 1912 CC: 'El mandante puede revocar el mandato a su voluntad, y compeler al mandatario a la devolución del documento en que conste el mandato.'",
+      "evidencia": "Art. 1912 CC",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.2",
+      "subclaim_text": "La revocación puede hacerse en cualquier etapa del proceso.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "confirmado_con_matiz",
+      "detalle": "El Art. 1912 CC no impone limitación temporal. El Art. 1911 CC enumera la revocación como primera causal de terminación del mandato sin condicionarla a etapa procesal. Sin embargo, el Art. 1913 CC establece que 'Cuando el mandato se haya dado para contratar con determinadas personas, su revocación no puede perjudicar a éstas si no se les ha hecho saber', lo cual es una limitación frente a terceros, no al derecho mismo de revocar.",
+      "evidencia": "Arts. 1911, 1912 y 1913 CC.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B4.3",
+      "subclaim_text": "El derecho de revocación es 'irrestricto'.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "matizado",
+      "detalle": "Aunque el Art. 1912 CC otorga amplia libertad ('a su voluntad'), el Art. 1913 CC impone la obligación de notificar a terceros que hayan contratado con el mandatario para que la revocación no los perjudique. Esto constituye una restricción procesal, no sustantiva, al ejercicio del derecho. El calificativo 'irrestricto' es una simplificación que omite este matiz.",
+      "evidencia": "Arts. 1912 y 1913 CC.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B5.1",
+      "subclaim_text": "La normativa fundamental incluye Ley Orgánica del Colegio de Abogados, Código Civil y Código Procesal Civil.",
+      "fuente": "verificacion_cruzada_local",
+      "veredicto": "sustancialmente_correcto",
+      "detalle": "Las tres fuentes normativas existen en el ordenamiento hondureño y son pertinentes al ejercicio de la abogacía. La Constitución (Art. 177) es también fuente fundamental pero no se menciona. El Código de Comercio podría ser relevante para ciertos aspectos, pero no es esencial para la relación abogado-cliente general.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.1",
+      "subclaim_text": "[Cruce B2+B5] El decreto 76-84 mencionado en el texto como Código Civil es consistente en todo el documento.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "error_consistente_pero_falso",
+      "detalle": "El error se repite dos veces en el documento ('Código Civil de Honduras (Decreto 76-84)' y 'Código Civil (Decreto 76-84)'). Es internamente consistente pero factualmente incorrecto. Decreto 76-84 = Código de Familia. Código Civil = Decreto No. 76 de 1906.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.2",
+      "subclaim_text": "[Cruce B2+B4] La base contractual (1551-1564 CC) y la base del mandato (revocación) son coherentes entre sí.",
+      "fuente": "data/codigo_civil.json",
+      "veredicto": "coherente",
+      "detalle": "El Código Civil provee tanto el marco general de contratos (Arts. 1551-1564) como las reglas específicas del mandato (Arts. 1888-1917, incluyendo revocación en Arts. 1911-1914). Ambos regímenes son complementarios: las reglas generales contractuales se aplican supletoriamente al mandato como especie contractual. Coherencia normativa confirmada.",
+      "nivel_confianza": "alta"
+    },
+    {
+      "subclaim_id": "B6.3",
+      "subclaim_text": "[Cruce B1+B4] La colegiación obligatoria (Ley Orgánica CAH) y la facultad de revocar el poder son compatibles.",
+      "fuente": "data/articulos_constitucion.json + data/codigo_civil.json",
+      "veredicto": "compatible",
+      "detalle": "La colegiación obligatoria afecta al abogado (requisito para ejercer), mientras que la facultad de revocar el poder afecta al cliente (derecho del mandante). Son normas de distinta naturaleza que operan en planos diferentes: una regula el acceso a la profesión, la otra regula la relación contractual. No existe conflicto normativo.",
+      "nivel_confianza": "alta"
+    }
+  ],
+  "matriz_cruce": {
+    "columnas": ["B1_Colegiacion", "B2_CC_1551-1564", "B3_CPC_Poder", "B4_Revocacion", "B5_Normativa"],
+    "cruces": [
+      {
+        "par": "B1+B2",
+        "relacion": "Independientes. Colegiación regula quién puede ser abogado; 1551-1564 CC regulan cómo se forma el contrato una vez colegiado.",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B4",
+        "relacion": "Complementarios. Art. 1551-1564 CC (contratos generales) + Arts. 1911-1912 CC (revocación del mandato).",
+        "conflicto": false
+      },
+      {
+        "par": "B2+B5",
+        "relacion": "Error compartido: ambas claims atribuyen Decreto 76-84 al Código Civil.",
+        "conflicto": false,
+        "error_comun": "Decreto 76-84 mal atribuido al Código Civil"
+      },
+      {
+        "par": "B1+B4",
+        "relacion": "Compatibles. Planos normativos diferentes.",
+        "conflicto": false
+      }
+    ]
+  },
+  "resumen_granular": {
+    "total_subclaims": 13,
+    "confirmados": 3,
+    "confirmados_con_matiz": 1,
+    "matizados": 1,
+    "plausibles": 2,
+    "sustancialmente_correcto": 1,
+    "coherentes": 1,
+    "compatibles": 1,
+    "refutados": 2,
+    "error_critico": "B2.2: Decreto 76-84 no corresponde al Código Civil. Es el Código de Familia.",
+    "error_secundario": "B2.3: Arts. 1551-1564 CC no son específicos de servicios profesionales sino normas generales de contratos.",
+    "calidad_global_documento": "Bueno con un error factual corregible (decreto mal atribuido) y una imprecisión técnica menor."
+  }
+}
