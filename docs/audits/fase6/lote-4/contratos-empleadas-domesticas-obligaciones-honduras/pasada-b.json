@@ -1,0 +1,45 @@
+{
+  "id": "04c4ced4-414f-4ee9-b9d7-cd3146f3fdf1",
+  "slug": "contratos-empleadas-domesticas-obligaciones-honduras",
+  "hash": "11d8eb1a96fb327c322021f0c7423449667833f675b1a93cd193607caf4a64f4",
+  "claims": [
+    {
+      "claim": "El trabajo doméstico se rige por los Artículos 149 al 164 (Capítulo II, Trabajo de los Servidores Domésticos) del Código de Trabajo.",
+      "type": "central",
+      "verdict": "correcto",
+      "correction": "El hallazgo de Pasada A es correcto. El Título III, Capítulo II (Arts. 149-164) regula específicamente el trabajo de los servidores domésticos, corrigiendo la afirmación del artículo original que citaba los Arts. 114-120, los cuales son disposiciones generales sobre preaviso y despido.",
+      "source": "Código de Trabajo de Honduras, Arts. 149-164"
+    },
+    {
+      "claim": "El Código de Trabajo (Art. 22) permite expresamente que el contrato de servicio doméstico sea verbal.",
+      "type": "central",
+      "verdict": "incorrecto",
+      "correction": "Pasada A erró en la cita legal. El artículo que permite que el contrato de servicio doméstico sea verbal es el Art. 39, inciso a) del Código del Trabajo, no el Art. 22. El Art. 22 trata sobre la pluralidad de contratos con distintos patronos.",
+      "source": "Código de Trabajo de Honduras, Art. 39"
+    },
+    {
+      "claim": "Las empleadas domésticas están expresamente excluidas de la jornada máxima legal (Art. 322).",
+      "type": "central",
+      "verdict": "incorrecto",
+      "correction": "Pasada A cita incorrectamente el Art. 322. La exclusión expresa de la jornada máxima legal para el servicio doméstico se encuentra en el Art. 325, inciso b). El Art. 322 establece los límites generales de la jornada ordinaria diurna y nocturna, no las exclusiones.",
+      "source": "Código de Trabajo de Honduras, Art. 325 inciso b"
+    },
+    {
+      "claim": "En trabajo doméstico el preaviso es de 7 días, y de 1 mes si tiene más de 1 año (Art. 158). Además, la cesantía general en Honduras tiene un límite máximo de 25 meses.",
+      "type": "central",
+      "verdict": "correcto",
+      "correction": "Esta afirmación de Pasada A es correcta. El Art. 158 regula específicamente los tiempos de preaviso para el trabajo doméstico, y el Art. 120 reformado establece el límite de 25 meses para el cálculo del auxilio de cesantía.",
+      "source": "Código de Trabajo de Honduras, Arts. 158 y 120"
+    },
+    {
+      "claim": "Para 2026, el salario mínimo para 1 a 10 trabajadores es de L 9,596.64.",
+      "type": "contextual",
+      "verdict": "incorrecto",
+      "correction": "Pasada A confunde las categorías de la tabla salarial. El monto de L 9,596.64 es el salario mínimo más bajo de 2026, correspondiente a la rama de 'Agricultura' (1-10 trabajadores). El servicio doméstico debe encuadrarse en 'Servicios comunales, sociales y personales', cuyo salario es sustancialmente mayor, aunque no exista una categoría exclusiva para 'servicio doméstico'.",
+      "source": "Acuerdo Ejecutivo SETRASS-233-2026"
+    }
+  ],
+  "needs_human_review": true,
+  "human_review_reason": "La Pasada A contuvo errores de citación (confundió el Art. 39 con el 22, y el Art. 325 con el 322) y una interpretación incorrecta de las tablas salariales de 2026, asignando el sueldo agrícola al servicio doméstico. Se debe reescribir el artículo original usando las citas correctas (Arts. 149-164, 39, 325, 120, 154) y aclarando cómo se determina el salario mínimo en el sector servicios.",
+  "status": "completado"
+}

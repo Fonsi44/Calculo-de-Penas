@@ -1,0 +1,24 @@
+{
+  "archivo": "docs/audits/fase6/lote-4/central-riesgos-consultar-impugnar-honduras/pasada-a.json",
+  "sha256": "4708b1bd743db3b9a51d5035a58e829d74825cd4f233d91134880413ee1d98da",
+  "evaluacion_pasada_a": {
+    "aciertos": [
+      "Identificación correcta de que la consulta a través de 'Mi Reporte Crediticio' de la CNBS es gratuita y sin el límite anual aplicable a burós privados.",
+      "Corrección precisa de las categorías de riesgo, confirmando que la normativa vigente de la CNBS utiliza categorías I a V (1 a 5) y no letras A a E.",
+      "Aplicación correcta de la reforma sobre permanencia de historial negativo (2 años para deudas menores a $3,000).",
+      "Precisión sobre el plazo de 10 días hábiles para responder reclamos según la GPUF de la CNBS."
+    ],
+    "errores_de_auditoria": []
+  },
+  "veredicto_final": {
+    "texto_es_preciso": false,
+    "requiere_correccion": true,
+    "notas_verificacion": "La Pasada A fue rigurosa. Se intentó refutar los hallazgos mediante búsqueda adversarial (verificando normativas de la CNBS, el plazo de retención de 2 años para saldos <$3000, el uso de números vs. letras en las categorías de riesgo, y el plazo de respuesta a reclamos). Todas las búsquedas independientes confirmaron que la Pasada A es correcta; los señalamientos al texto original (entrada.json) están debidamente fundamentados."
+  },
+  "correcciones_validadas": [
+    "Aclarar que la consulta en la plataforma de la CNBS (Mi Reporte Crediticio) es gratuita sin límite anual, diferenciándolo de los burós privados.",
+    "Actualizar las categorías de riesgo a la nomenclatura oficial de la CNBS (Categorías 1 a 5 o I a V).",
+    "Actualizar los plazos de permanencia de la información negativa para reflejar las reformas recientes (2 años para deudas menores a $3,000 y actualización al mes siguiente por pago total).",
+    "Precisar que el plazo de respuesta de la institución financiera ante reclamos es de 10 días hábiles según la normativa de la GPUF/CNBS."
+  ]
+}

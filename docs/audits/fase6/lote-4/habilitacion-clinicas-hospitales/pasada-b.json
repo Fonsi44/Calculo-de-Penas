@@ -1,0 +1,58 @@
+{
+  "id": "5f5d38c4-cba3-4f4d-b5b4-8140e538bb23",
+  "adversarial_review": {
+    "verifier_model": "antigravity",
+    "timestamp": "2026-07-27T05:25:00+02:00",
+    "refutation_attempts": [
+      {
+        "claim": "La licencia sanitaria en Honduras es una autorización oficial emitida por la Secretaría de Salud (SESAL), a través de la Agencia de Regulación Sanitaria (ARSA).",
+        "pass_a_status": "needs_correction",
+        "refutation_strategy": "Verificar si ARSA es realmente independiente de SESAL y si existe el doble requisito de 'Habilitación' (SESAL) y 'Licencia Sanitaria' (ARSA) para clínicas y hospitales.",
+        "evidence_found": "La investigación confirma que ARSA y SESAL son entidades separadas con competencias distintas. La normativa hondureña (Decreto 7-2021) establece que la regulación de los proveedores de servicios de salud está bajo la SESAL (Habilitación), mientras que ARSA otorga Licencias Sanitarias para establecimientos de interés sanitario (farmacias, alimentos). Una clínica requiere habilitación de SESAL y, si aplica (ej. tiene farmacia o cafetería), licencia de ARSA.",
+        "conclusion": "El hallazgo de la Pasada A es válido. ARSA no es un apéndice de SESAL y los requisitos (Habilitación vs Licencia) son distintos.",
+        "pass_a_upheld": true
+      },
+      {
+        "claim": "Reglamento para el Control Sanitario de Productos, Servicios y Establecimientos de Interés Sanitario (Acuerdo N° 06-2005)",
+        "pass_a_status": "verified",
+        "refutation_strategy": "Buscar si existe una normativa más reciente que reemplace al Acuerdo 06-2005 o si es necesario citar la ley de creación de ARSA.",
+        "evidence_found": "El Reglamento 06-2005 sigue siendo el marco general, pero la creación de ARSA (Decreto 32-2017) trasladó competencias y creó un marco normativo actualizado específico para ARSA.",
+        "conclusion": "La sugerencia de la Pasada A de complementar con el Decreto 32-2017 es precisa.",
+        "pass_a_upheld": true
+      },
+      {
+        "claim": "Protocolos Sanitarios: Manual de Buenas Prácticas de Manufactura (BPM) o plan de manejo de desechos hospitalarios, según aplique.",
+        "pass_a_status": "needs_correction",
+        "refutation_strategy": "Comprobar si BPM aplica a clínicas y hospitales en Honduras o solo a alimentos/fármacos.",
+        "evidence_found": "BPM (Buenas Prácticas de Manufactura) aplica estrictamente a plantas de alimentos, laboratorios y distribuidoras. A clínicas y hospitales se les exige el Plan de Gestión de Desechos Sólidos y Bioinfecciosos y manuales de bioseguridad, como indicó la Pasada A.",
+        "conclusion": "El hallazgo de la Pasada A es correcto. El texto original confunde los requisitos de diferentes tipos de establecimientos.",
+        "pass_a_upheld": true
+      },
+      {
+        "claim": "El pago se realiza mediante el formulario TGR-1 en cualquier agencia bancaria autorizada",
+        "pass_a_status": "verified",
+        "refutation_strategy": "Verificar si el TGR-1 es el único método y si ARSA sigue recaudando a través de este formulario.",
+        "evidence_found": "La plataforma de SEFIN y los lineamientos de ARSA confirman que el recibo oficial TGR-1 es el instrumento de pago vigente.",
+        "conclusion": "La Pasada A tiene razón en mantener este punto como verdadero.",
+        "pass_a_upheld": true
+      },
+      {
+        "claim": "La vigencia suele oscilar entre 2 y 5 años",
+        "pass_a_status": "needs_correction",
+        "refutation_strategy": "Verificar la duración exacta estipulada por ARSA para las licencias sanitarias de establecimientos.",
+        "evidence_found": "La normativa de ARSA establece que las licencias sanitarias se otorgan por periodos específicos de 2, 4 o 6 años, a elección del interesado. No existe la figura de '5 años' para establecimientos en general.",
+        "conclusion": "La Pasada A corrigió correctamente la inexactitud del texto original.",
+        "pass_a_upheld": true
+      },
+      {
+        "claim": "debiendo solicitar la renovación al menos 3 meses antes de su vencimiento.",
+        "pass_a_status": "verified",
+        "refutation_strategy": "Comprobar si el plazo de renovación es de 3 meses (90 días) antes del vencimiento según ARSA.",
+        "evidence_found": "La normativa vigente de ARSA requiere explícitamente presentar la solicitud de renovación dentro de los tres (3) meses previos a la fecha de vencimiento.",
+        "conclusion": "La afirmación es correcta y la Pasada A fue precisa al validarla.",
+        "pass_a_upheld": true
+      }
+    ],
+    "final_verdict": "Se validan y aprueban todas las correcciones propuestas por la Pasada A. La diferenciación entre Habilitación (SESAL) y Licencia Sanitaria (ARSA) es crucial legalmente, al igual que los plazos exactos de vigencia de ARSA (2, 4, 6 años) frente a la afirmación errónea de '2 a 5 años'."
+  }
+}

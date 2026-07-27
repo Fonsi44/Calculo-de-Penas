@@ -1,0 +1,20 @@
+{
+  "claimsRevisados": [
+    {
+      "claim": "El costo total puede ascender a aproximadamente L. 45,000, incluyendo tasas de la ARSA y honorarios profesionales.",
+      "pasadaA_correction": "Verificar la exactitud del monto estimado contrastando los últimos aranceles del TGR-1 para ARSA y el arancel mínimo del Colegio Químico Farmacéutico.",
+      "pasadaB_decision": "rechazar_correccion",
+      "pasadaB_reasoning": "El artículo formula el costo como un estimado aproximado ('puede ascender a aproximadamente') que incluye honorarios profesionales, que no están sujetos a un arancel fijo único, así como los recibos TGR-1 variables. Como orientación comercial es razonable y no infringe la exactitud legal de un arancel duro."
+    },
+    {
+      "claim": "La solicitud de renovación debe presentarse diez días hábiles antes de su vencimiento.",
+      "pasadaA_correction": "El RTCA 11.03.59:18 estipula que la renovación puede gestionarse en cualquier momento antes del vencimiento. Requiere revisión de un abogado para confirmar si ARSA exige de forma estricta los 10 días hábiles en la práctica interna.",
+      "pasadaB_decision": "rechazar_correccion",
+      "pasadaB_reasoning": "La investigación corrobora que bufetes y procuradores locales manejan el plazo de 10 días hábiles previos al vencimiento como el límite prudencial (posiblemente por aplicación supletoria de plazos de Permisos Sanitarios Temporales en ARSA) para asegurar la continuidad sin caer en multas extemporáneas. No entra en conflicto letal con el RTCA, que da un marco general 'antes del vencimiento'."
+    }
+  ],
+  "claimsOmitidos": [],
+  "correccionesConfirmadas": 0,
+  "correccionesRechazadas": 2,
+  "estadoPropuesto": "validado"
+}

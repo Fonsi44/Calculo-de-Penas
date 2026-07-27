@@ -1,0 +1,86 @@
+{
+  "id": "c4a7fe2b-7fee-4efa-b2db-a2a2be4a7132",
+  "slug": "calcular-prestaciones-laborales-honduras",
+  "sha256": "8dd6ed3850e0d35c17052e5056c22be5556f97d0266d7c526b113b14020d6dc6",
+  "claims": [
+    {
+      "claim": "Las prestaciones básicas como la cesantía se pagan siempre, incluso si el trabajador renuncia voluntariamente.",
+      "type": "central",
+      "is_verifiable": true,
+      "verification_result": "false",
+      "official_sources": [
+        "Código del Trabajo de Honduras, Artículo 120"
+      ],
+      "explanation": "El auxilio de cesantía es una indemnización que procede por terminación del contrato sin causa justificada (despido injustificado) o causas ajenas a la voluntad del trabajador. En caso de renuncia voluntaria, no se paga la cesantía completa, salvo el 50% correspondiente a la Reserva Laboral según la Ley Marco del Sistema de Protección Social, lo cual el artículo no aclara."
+    },
+    {
+      "claim": "La cesantía se calcula aplicando un porcentaje sobre el total de salarios devengados... 1 año: 10%... 10 años: 55%.",
+      "type": "central",
+      "is_verifiable": true,
+      "verification_result": "false",
+      "official_sources": [
+        "Código del Trabajo de Honduras, Artículo 120"
+      ],
+      "explanation": "Es totalmente incorrecto en Honduras. El artículo 120 establece que la cesantía equivale a 10 días de salario (3-6 meses), 20 días (6-12 meses) y 1 mes de salario por cada año de servicio, no un porcentaje progresivo."
+    },
+    {
+      "claim": "La cesantía tiene un tope máximo equivalente a 15 meses de salario promedio.",
+      "type": "central",
+      "is_verifiable": true,
+      "verification_result": "false",
+      "official_sources": [
+        "Código del Trabajo de Honduras, Artículo 120 (Reformado por Decreto 150-2008)"
+      ],
+      "explanation": "El tope máximo de la cesantía fue reformado y actualmente es de 25 meses de salario, no 15."
+    },
+    {
+      "claim": "Preaviso: Para trabajadores con antigüedad de 3 meses a 1 año: 7 días... 1 a 5 años: 15 días... más de 5 años: 30 días.",
+      "type": "central",
+      "is_verifiable": true,
+      "verification_result": "false",
+      "official_sources": [
+        "Código del Trabajo de Honduras, Artículo 116"
+      ],
+      "explanation": "El artículo 116 establece plazos diferentes: de 3 a 6 meses (1 semana), de 6 a 12 meses (2 semanas), de 1 a 2 años (1 mes), y más de 2 años (2 meses)."
+    },
+    {
+      "claim": "Vacaciones: Después de 4 años de servicio continuo o más: 15 días hábiles de vacaciones (el máximo legal).",
+      "type": "central",
+      "is_verifiable": true,
+      "verification_result": "false",
+      "official_sources": [
+        "Código del Trabajo de Honduras, Artículo 346"
+      ],
+      "explanation": "El artículo 346 establece que después de 3 años son 15 días hábiles, y después de 4 años o más son 20 días hábiles consecutivos."
+    },
+    {
+      "claim": "La indemnización por despido injustificado... es adicional a las prestaciones laborales (cesantía, vacaciones y aguinaldo proporcionales) y no las sustituye.",
+      "type": "central",
+      "is_verifiable": true,
+      "verification_result": "false",
+      "official_sources": [
+        "Código del Trabajo de Honduras, Artículo 120"
+      ],
+      "explanation": "El texto confunde la naturaleza jurídica de la cesantía. El auxilio de cesantía ES la indemnización principal por despido injustificado. No son dos rubros separados que se suman (1 mes por año de cesantía + 1 mes por año de indemnización), lo cual resulta en un cálculo ficticio que duplica el pago en el ejemplo."
+    },
+    {
+      "claim": "Las acciones para reclamar por despido injustificado prescriben a los 60 días hábiles.",
+      "type": "supporting",
+      "is_verifiable": true,
+      "verification_result": "false",
+      "official_sources": [
+        "Código del Trabajo de Honduras, Artículo 864"
+      ],
+      "explanation": "La prescripción genérica es de dos (2) meses calendario, no 60 días hábiles."
+    }
+  ],
+  "needs_human_review": true,
+  "proposed_corrections": [
+    "Reescribir completamente la sección de cesantía y eliminar los porcentajes inventados. Explicar la regla de 1 mes por año trabajado con tope de 25 meses.",
+    "Corregir los plazos de preaviso según el Artículo 116 (24h, 1 semana, 2 semanas, 1 mes, 2 meses).",
+    "Ajustar la tabla de vacaciones para reflejar los 20 días hábiles a partir del cuarto año (Artículo 346).",
+    "Unificar 'Cesantía' e 'Indemnización por despido injustificado' como el mismo concepto en el caso de Honduras.",
+    "Corregir el ejemplo numérico ya que actualmente suma erróneamente 'Cesantía' e 'Indemnización', duplicando el monto legal correspondiente a la terminación.",
+    "Corregir el plazo de prescripción a 2 meses (Artículo 864) y aclarar que son meses calendario, no días hábiles."
+  ]
+}

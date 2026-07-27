@@ -1,0 +1,42 @@
+{
+  "sha256": "e2853f59583b15de164bb3ff5fc15635f69cf8b3290dd9b099673117572e2590",
+  "claims": [
+    {
+      "texto": "La Licencia Ambiental en Honduras es un documento oficial emitido por la Secretaría de Recursos Naturales y Ambiente (MiAmbiente+).",
+      "importancia": "Alta",
+      "verificacion": "Correcto. La Secretaría de Energía, Recursos Naturales, Ambiente y Minas (SERNA, conocida temporalmente como MiAmbiente+) es la autoridad competente.",
+      "fuente": "Ley General del Ambiente (Decreto No. 104-93)"
+    },
+    {
+      "texto": "El marco normativo es la Ley General del Ambiente (Decreto No. 104-93) y el Reglamento del SINEIA bajo el Acuerdo Ejecutivo No. 008-2015.",
+      "importancia": "Alta",
+      "verificacion": "Correcto. El Acuerdo Ejecutivo No. 008-2015 aprobó el Reglamento del Sistema Nacional de Evaluación de Impacto Ambiental (SINEIA).",
+      "fuente": "Reglamento del SINEIA (Acuerdo Ejecutivo No. 008-2015)"
+    },
+    {
+      "texto": "El proyecto se categoriza del 1 al 4: Categoría 1 (Bajo impacto), Categoría 2 (Impacto moderado), Categoría 3 (Alto impacto), Categoría 4 (Megaproyectos).",
+      "importancia": "Alta",
+      "verificacion": "Generalmente correcto en la estructura de 4 categorías. Sin embargo, la Tabla de Categorización Ambiental oficial define la Categoría 3 como 'Moderado - Alto impacto' y la Categoría 4 como 'Alto impacto' o 'Alto riesgo'. 'Megaproyectos' es un término práctico pero no la nomenclatura legal exacta.",
+      "fuente": "Tabla de Categorización Ambiental del SINEIA"
+    },
+    {
+      "texto": "Proyectos de Categoría 1 pueden demorar semanas, mientras que las Categorías 3 o 4 pueden tomar desde 6 meses hasta más de un año.",
+      "importancia": "Media",
+      "verificacion": "Preciso en la práctica. Aunque normativamente los plazos administrativos son más cortos (ej. 2 a 4 meses), la realidad administrativa de la SERNA/MiAmbiente+ hace que Categorías 3 y 4 tarden frecuentemente un año o más.",
+      "fuente": "Práctica administrativa de SERNA y tiempos del SINEIA"
+    },
+    {
+      "texto": "La operación sin licencia ambiental conlleva sanciones severas dictadas por MiAmbiente+ y la Procuraduría General de la República (PGR), incluyendo la clausura inmediata, multas millonarias e investigaciones penales.",
+      "importancia": "Alta",
+      "verificacion": "Correcto. La Ley General del Ambiente tipifica multas, clausuras temporales o definitivas, y el Código Penal tipifica delitos contra el medio ambiente.",
+      "fuente": "Ley General del Ambiente y Código Penal de Honduras"
+    }
+  ],
+  "correcciones_propuestas": [
+    {
+      "claim": "Nomenclatura de Categorías 3 y 4",
+      "correccion": "Ajustar la descripción para indicar que legalmente la Categoría 3 es 'Moderado - Alto impacto' y la Categoría 4 es 'Alto impacto o riesgo'. Se puede mantener la referencia a 'megaproyectos' como un ejemplo de la Categoría 4, en lugar de como el nombre de la categoría en sí."
+    }
+  ],
+  "requiere_abogado": false
+}

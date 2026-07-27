@@ -1,0 +1,58 @@
+{
+  "id": "e9940c7b-1843-4cee-9629-fb4a9524e7fc",
+  "adversarial_review": {
+    "verifier_model": "antigravity",
+    "timestamp": "2026-07-27T05:22:00+02:00",
+    "refutation_attempts": [
+      {
+        "claim": "El trámite de registro sanitario de alimentos se realiza ante la Agencia de Regulación Sanitaria (ARSA).",
+        "pass_a_status": "verified",
+        "refutation_strategy": "Verificar si existe otra entidad que comparta la competencia para el registro sanitario de alimentos en Honduras.",
+        "evidence_found": "La Ley General de Salud y los decretos de creación confirman que la ARSA es la única autoridad con competencia para otorgar registros sanitarios de alimentos en el país.",
+        "conclusion": "La afirmación es correcta. La Pasada A se mantiene.",
+        "pass_a_upheld": true
+      },
+      {
+        "claim": "El etiquetado debe cumplir con el Reglamento Técnico Centroamericano (RTCA) 67.01.07:10.",
+        "pass_a_status": "verified",
+        "refutation_strategy": "Buscar si existe una normativa hondureña más reciente o específica que sustituya o modifique la aplicabilidad del RTCA 67.01.07:10.",
+        "evidence_found": "El RTCA 67.01.07:10 es el reglamento técnico de aplicación regional en Centroamérica y es exigido expresamente por ARSA para alimentos preenvasados, sin derogaciones locales recientes que lo invaliden.",
+        "conclusion": "La afirmación es precisa. La Pasada A se mantiene.",
+        "pass_a_upheld": true
+      },
+      {
+        "claim": "El comprobante de pago exigido es el recibo oficial TGR-1.",
+        "pass_a_status": "verified",
+        "refutation_strategy": "Comprobar si existen otros medios de pago exclusivos o si el TGR-1 ha sido reemplazado para los trámites de ARSA.",
+        "evidence_found": "La plataforma de la Secretaría de Finanzas y ARSA establecen que el TGR-1 sigue siendo el recibo oficial obligatorio para el pago de tasas de los servicios que presta ARSA.",
+        "conclusion": "La afirmación es correcta. La Pasada A se mantiene.",
+        "pass_a_upheld": true
+      },
+      {
+        "claim": "El proceso de Registro Sanitario paso a paso incluye la Inspección de instalaciones para verificar Buenas Prácticas de Manufactura (BPM).",
+        "pass_a_status": "needs_correction",
+        "refutation_strategy": "Intentar demostrar que, según las normativas de ARSA, la inspección de instalaciones es un requisito o paso concurrente dentro del expediente de solicitud de Registro Sanitario del producto.",
+        "evidence_found": "La investigación independiente revela que la ARSA separa claramente ambas autorizaciones: la Licencia Sanitaria (que ampara el establecimiento físico y conlleva la inspección de BPM) y el Registro Sanitario (que ampara el producto). Para productos nacionales, contar con la Licencia Sanitaria del establecimiento es un requisito previo al Registro Sanitario del producto, por lo que la inspección no es una etapa del trámite del producto, sino del establecimiento.",
+        "conclusion": "El hallazgo de la Pasada A es totalmente válido. El artículo original confunde dos trámites diferentes que, aunque relacionados secuencialmente, tienen propósitos y procesos distintos.",
+        "pass_a_upheld": true
+      },
+      {
+        "claim": "El trámite suele demorar entre 30 y 60 días hábiles.",
+        "pass_a_status": "verified",
+        "refutation_strategy": "Verificar plazos oficiales estipulados por ARSA y contrastar con tiempos reales para ver si el plazo de 30-60 días es inexacto.",
+        "evidence_found": "Si bien la normativa establece plazos que pueden ser menores en teoría, en la práctica (y sin requerimientos de subsanación) el tiempo de 30 a 60 días hábiles es el rango realista y estándar comunicado para la resolución de estos expedientes.",
+        "conclusion": "El dato temporal es aceptablemente preciso. La Pasada A se mantiene.",
+        "pass_a_upheld": true
+      },
+      {
+        "claim": "La vigencia del registro sanitario es de 5 años.",
+        "pass_a_status": "verified",
+        "refutation_strategy": "Buscar excepciones a la vigencia de 5 años o actualizaciones regulatorias que modifiquen este plazo.",
+        "evidence_found": "De acuerdo a las normativas aplicadas por ARSA y el RTCA correspondiente, el registro sanitario de alimentos y bebidas se otorga con una vigencia estándar de 5 años en todo Centroamérica.",
+        "conclusion": "El plazo de vigencia es correcto. La Pasada A se mantiene.",
+        "pass_a_upheld": true
+      }
+    ],
+    "final_verdict": "Se aprueban las correcciones sugeridas en la Pasada A. Es esencial corregir la confusión conceptual entre la Licencia Sanitaria (para el establecimiento, requiere inspección) y el Registro Sanitario (para el producto, requiere análisis y revisión documental)."
+  }
+}

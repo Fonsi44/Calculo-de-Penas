@@ -1,0 +1,36 @@
+{
+  "archivo": "docs/audits/fase6/lote-4/zonas-libres-zoli-beneficios-fiscales-honduras/entrada.json",
+  "sha256_body": "f20a223616f6c902a3fc4f1c489d4a22c22adb9b85662229ef3dd7c3df9eb703",
+  "claims": [
+    {
+      "texto": "El marco normativo principal es la Ley Constitutiva de la Zona Libre de Puerto Cortés (Decreto 356-1976 y sus reformas mediante Decreto 08-2020).",
+      "importancia": "alta",
+      "verificacion": "verificado"
+    },
+    {
+      "texto": "La supervisión y autorización recaen en entidades fiscalizadoras actuales como la Secretaría de Desarrollo Económico (SDE) y la Administración Aduanera de Honduras.",
+      "importancia": "media",
+      "verificacion": "verificado"
+    },
+    {
+      "texto": "El período de exención del ISR varía según el régimen y la ubicación, usualmente entre 10 y 20 años.",
+      "importancia": "alta",
+      "verificacion": "falso",
+      "correccion": "La exención del ISR para las empresas acogidas al régimen de Zonas Libres, conforme al Decreto 08-2020, se otorga por un término de quince (15) años, prorrogables.",
+      "requiere_abogado": false
+    },
+    {
+      "texto": "La empresa deberá exportar al menos el 80% de su producción, permitiendo la venta del 20% restante en el mercado local.",
+      "importancia": "alta",
+      "verificacion": "falso",
+      "correccion": "De acuerdo con el Decreto 08-2020, las empresas industriales y comerciales bajo el régimen ZOLI pueden destinar hasta el 50% de sus ventas o producción al mercado nacional, previo despacho aduanero y pago de tributos.",
+      "requiere_abogado": false
+    },
+    {
+      "texto": "Exención del Impuesto Sobre la Venta (ISV): Aplicable a compras locales e importaciones de bienes y servicios vinculados a la actividad de la empresa.",
+      "importancia": "alta",
+      "verificacion": "verificado"
+    }
+  ],
+  "decision_final": "requiere_correccion"
+}

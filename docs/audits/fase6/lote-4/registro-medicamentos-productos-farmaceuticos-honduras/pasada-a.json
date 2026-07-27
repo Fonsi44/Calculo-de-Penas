@@ -1,0 +1,96 @@
+{
+  "article_id": "ad19fe36-743c-4c7a-97d6-e50136c01514",
+  "sha256_original": "dcb9d10c48e8329bfecc9aa0ecd1123e58109021f06fde7ac6e4b2ed192b2bb0",
+  "claims": [
+    {
+      "claim": "Agencia de Regulación Sanitaria (ARSA), entidad creada por mandato presidencial mediante Decreto PCM-032-2017.",
+      "type": "legal_framework",
+      "importance": "central",
+      "verification_status": "verified",
+      "sources": [
+        "Decreto Ejecutivo PCM-032-2017"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Ningún producto farmacéutico puede ser comercializado sin un registro sanitario vigente.",
+      "type": "obligation",
+      "importance": "central",
+      "verification_status": "verified",
+      "sources": [
+        "Código de Salud de Honduras",
+        "Reglamento para el Control Sanitario"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Certificado de producto farmacéutico tipo OMS con vigencia no mayor a 2 años al momento de la presentación.",
+      "type": "requirement",
+      "importance": "supporting",
+      "verification_status": "verified",
+      "sources": [
+        "RTCA 11.03.59:18"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Estudios de estabilidad adaptados a la zona climática IV (cálido y húmedo de Honduras).",
+      "type": "requirement",
+      "importance": "supporting",
+      "verification_status": "verified",
+      "sources": [
+        "RTCA de Estabilidad de Medicamentos"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "Acreditación del Regente: Constancia de estar inscrito y activo en el Colegio Químico Farmacéutico de Honduras.",
+      "type": "requirement",
+      "importance": "supporting",
+      "verification_status": "verified",
+      "sources": [
+        "Ley Orgánica del Colegio Químico Farmacéutico de Honduras"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    },
+    {
+      "claim": "El costo total puede ascender a aproximadamente L. 45,000, incluyendo tasas de la ARSA y honorarios profesionales.",
+      "type": "financial",
+      "importance": "supporting",
+      "verification_status": "needs_review",
+      "sources": [],
+      "needs_human_review": true,
+      "suggested_correction": "Verificar la exactitud del monto estimado contrastando los últimos aranceles del TGR-1 para ARSA y el arancel mínimo del Colegio Químico Farmacéutico."
+    },
+    {
+      "claim": "La solicitud de renovación debe presentarse diez días hábiles antes de su vencimiento.",
+      "type": "procedure",
+      "importance": "central",
+      "verification_status": "needs_review",
+      "sources": [
+        "RTCA 11.03.59:18"
+      ],
+      "needs_human_review": true,
+      "suggested_correction": "El RTCA 11.03.59:18 estipula que la renovación puede gestionarse en cualquier momento antes del vencimiento. Requiere revisión de un abogado para confirmar si ARSA exige de forma estricta los 10 días hábiles en la práctica interna."
+    },
+    {
+      "claim": "Evaluación que puede durar hasta 60 días hábiles. El tiempo total del trámite puede variar entre 4 y 8 meses.",
+      "type": "procedure",
+      "importance": "supporting",
+      "verification_status": "verified",
+      "sources": [
+        "ARSA normativas de tiempos de respuesta",
+        "Práctica administrativa local"
+      ],
+      "needs_human_review": false,
+      "suggested_correction": null
+    }
+  ],
+  "global_assessment": "El artículo es preciso y refiere correctamente al marco legal principal (PCM-032-2017) y técnico (RTCA). Dos afirmaciones (el monto exacto de L.45,000 y el plazo estricto de 10 días hábiles previos para renovar) requieren validación humana final para asegurar alineación milimétrica con la práctica actual de ARSA.",
+  "ready_for_pasada_b": false
+}

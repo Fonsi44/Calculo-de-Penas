@@ -1,0 +1,47 @@
+{
+  "sha256": "66aa971fd8b03e2efd8608cb7944185a7b22bca4983fd7d8b1a86c3bddfde442",
+  "claims": [
+    {
+      "claim": "El Centro de Conciliación y Arbitraje de la CCIC permite a empresas dirimir conflictos comerciales y civiles alternativamente al sistema judicial.",
+      "type": "central",
+      "status": "valid",
+      "source": "Ley de Conciliación y Arbitraje (Decreto 161-2000)",
+      "notes": "Confirmado por la existencia de la institución facultada por la ley."
+    },
+    {
+      "claim": "El arbitraje está regido por la Ley de Conciliación y Arbitraje de Honduras (Decreto No. 161-2000).",
+      "type": "central",
+      "status": "valid",
+      "source": "Decreto 161-2000",
+      "notes": "Exacto."
+    },
+    {
+      "claim": "Los tribunales arbitrales de la CCIC emiten laudos en plazos de 6 a 9 meses.",
+      "type": "supporting",
+      "status": "needs_correction",
+      "source": "Ley de Conciliación y Arbitraje, Art. 59.",
+      "notes": "El artículo 59 establece que, a falta de plazo pactado, el laudo debe emitirse en 5 meses (prorrogables). Debe mencionarse el plazo legal por defecto en lugar de una estimación empírica."
+    },
+    {
+      "claim": "El laudo arbitral es impugnable únicamente por recurso de nulidad ante la Corte de Apelaciones por causales de forma, no de fondo.",
+      "type": "central",
+      "status": "valid",
+      "source": "Ley de Conciliación y Arbitraje, Art. 71",
+      "notes": "Correcto. El recurso de nulidad se interpone contra el laudo arbitral y sus causales son tasadas y estrictas."
+    },
+    {
+      "claim": "Los honorarios están estandarizados mediante un Arancel basado en la cuantía del litigio.",
+      "type": "contextual",
+      "status": "valid",
+      "source": "Reglamentos de la CCIC",
+      "notes": "Es una práctica reglamentaria confirmada de los centros de arbitraje en Honduras."
+    }
+  ],
+  "corrections": [
+    {
+      "original": "Los tribunales arbitrales de la CCIC emiten laudos (sentencias) en plazos drásticamente menores que los tribunales estatales (generalmente entre 6 y 9 meses).",
+      "proposed": "Los tribunales arbitrales de la CCIC emiten laudos (sentencias) en plazos drásticamente menores que los tribunales estatales (la ley establece un plazo subsidiario de 5 meses, el cual puede ser prorrogado)."
+    }
+  ],
+  "requires_lawyer": false
+}

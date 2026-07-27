@@ -1,0 +1,58 @@
+{
+  "id": "e9940c7b-1843-4cee-9629-fb4a9524e7fc",
+  "slug": "registro-sanitario-alimentos-arsa-paso-a-paso-honduras",
+  "sha256": "1bc2b55c1cf2a22c91ec567702e5287974e9e8993b8963143621c3fadb23db8a",
+  "claims": [
+    {
+      "text": "El trámite de registro sanitario de alimentos se realiza ante la Agencia de Regulación Sanitaria (ARSA).",
+      "importance": "central",
+      "verification_status": "verified",
+      "source_url": "https://www.arsa.gob.hn/",
+      "explanation": "ARSA es la autoridad competente en Honduras para el registro sanitario de productos de consumo."
+    },
+    {
+      "text": "El etiquetado debe cumplir con el Reglamento Técnico Centroamericano (RTCA) 67.01.07:10.",
+      "importance": "central",
+      "verification_status": "verified",
+      "source_url": "https://www.arsa.gob.hn/",
+      "explanation": "El RTCA 67.01.07:10 es el marco normativo regional vigente y exigido por ARSA para el etiquetado de alimentos preenvasados."
+    },
+    {
+      "text": "El comprobante de pago exigido es el recibo oficial TGR-1.",
+      "importance": "central",
+      "verification_status": "verified",
+      "source_url": "https://tgr1.sefin.gob.hn/",
+      "explanation": "Los pagos por servicios de ARSA se realizan mediante el formulario TGR-1 de la Secretaría de Finanzas."
+    },
+    {
+      "text": "El proceso de Registro Sanitario paso a paso incluye la Inspección de instalaciones para verificar Buenas Prácticas de Manufactura (BPM).",
+      "importance": "central",
+      "verification_status": "needs_correction",
+      "source_url": "https://www.arsa.gob.hn/",
+      "explanation": "Se confunde el Registro Sanitario (para el producto) con la Licencia Sanitaria (para el establecimiento). La inspección de BPM es para obtener la Licencia Sanitaria, la cual es un requisito previo para solicitar el Registro Sanitario del producto."
+    },
+    {
+      "text": "El trámite suele demorar entre 30 y 60 días hábiles.",
+      "importance": "contextual",
+      "verification_status": "verified",
+      "source_url": "https://www.arsa.gob.hn/",
+      "explanation": "Es un estimado realista para el tiempo de resolución en ARSA si no hay requerimientos de subsanación."
+    },
+    {
+      "text": "La vigencia del registro sanitario es de 5 años.",
+      "importance": "central",
+      "verification_status": "verified",
+      "source_url": "https://www.arsa.gob.hn/",
+      "explanation": "El registro sanitario de alimentos otorgado por ARSA tiene una vigencia legal de 5 años."
+    }
+  ],
+  "overall_assessment": "El artículo es en su mayor parte preciso y menciona correctamente a la ARSA, el RTCA 67.01.07:10 y el pago vía TGR-1. Sin embargo, comete un error conceptual importante al incluir la 'Inspección de instalaciones' como un paso dentro del trámite de Registro Sanitario de un alimento. La inspección es parte del trámite de 'Licencia Sanitaria' del establecimiento, que debe obtenerse *antes* de solicitar el Registro Sanitario del producto. Este error metodológico en una guía 'paso a paso' requiere corrección para no confundir a los clientes.",
+  "needs_human_review": true,
+  "proposed_corrections": [
+    {
+      "original_text": "<li><strong>Inspección de instalaciones:</strong> Verificación de Buenas Prácticas de Manufactura (BPM).</li>\n  <li><strong>Emisión del registro:</strong> Se asigna un número único.</li>",
+      "proposed_text": "<li><strong>Emisión del registro:</strong> Si el producto cumple, se le asigna un número único.</li> (Nota: Asegúrese de aclarar que la inspección de instalaciones se realiza previamente al tramitar la Licencia Sanitaria del establecimiento, no como parte del registro del producto).",
+      "reason": "Separar claramente los conceptos de Licencia Sanitaria (establecimiento) y Registro Sanitario (producto)."
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "documentId": "1e76e53c-9f85-4aa2-8227-013bb93d9a4c",
+  "sha256": "4b07635633b4efd6e7b47d5aed6a72a3e88ce32d3bc4a6a625d1431142e96abb",
+  "claims": [
+    {
+      "claim": "Un contrato es ley entre las partes. Una vez firmado, sus cláusulas son obligatorias y, salvo vicios del consentimiento o nulidades, no puede modificarse unilateralmente.",
+      "type": "legal",
+      "importance": "central",
+      "verification": {
+        "status": "verified",
+        "source": "Código Civil de Honduras",
+        "notes": "Se aplica el principio pacta sunt servanda y se reconocen los vicios del consentimiento y nulidades como excepciones a la obligatoriedad."
+      }
+    },
+    {
+      "claim": "Firmar con alguien que no está debidamente identificado o que carece de capacidad legal para contratar puede invalidar el acuerdo o dificultar su cumplimiento.",
+      "type": "legal",
+      "importance": "central",
+      "verification": {
+        "status": "verified",
+        "source": "Código Civil de Honduras",
+        "notes": "La capacidad legal es un requisito esencial para la validez del contrato; su ausencia genera nulidad."
+      }
+    },
+    {
+      "claim": "Algunos contratos contienen cláusulas que desequilibran la relación contractual en perjuicio de una parte: intereses excesivos, penalidades desproporcionadas... Estas cláusulas pueden ser declaradas nulas.",
+      "type": "legal",
+      "importance": "contextual",
+      "verification": {
+        "status": "verified",
+        "source": "Código Civil de Honduras",
+        "notes": "Hace alusión a la cláusula penal civil y los límites a los intereses excesivos, cuya desproporción puede derivar en nulidad relativa o ajustes judiciales."
+      }
+    },
+    {
+      "claim": "El objeto del contrato debe ser determinado o determinable.",
+      "type": "legal",
+      "importance": "central",
+      "verification": {
+        "status": "verified",
+        "source": "Código Civil de Honduras (Art. 1552)",
+        "notes": "El objeto cierto es uno de los requisitos esenciales de los contratos en Honduras."
+      }
+    },
+    {
+      "claim": "Los contratos verbales son válidos para ciertos tipos de obligaciones, pero son difíciles de probar en caso de incumplimiento.",
+      "type": "legal",
+      "importance": "central",
+      "verification": {
+        "status": "verified",
+        "source": "Código Civil de Honduras",
+        "notes": "El acuerdo de voluntades verbal es válido en general, salvo que la ley exija formalidades específicas, aunque la prueba testimonial está limitada."
+      }
+    },
+    {
+      "claim": "Ciertos contratos como la compraventa de bienes inmuebles o la constitución de una sociedad sí deben constar en escritura pública para su inscripción registral.",
+      "type": "legal",
+      "importance": "central",
+      "verification": {
+        "status": "verified",
+        "source": "Código Civil de Honduras y Leyes Registrales",
+        "notes": "Correcto. Existen contratos solemnes que requieren escritura pública para su plena eficacia y registro."
+      }
+    }
+  ],
+  "proposedCorrections": [
+    {
+      "original": "El objeto del contrato debe ser determinado o determinable.",
+      "proposed": "El contrato debe cumplir con tres requisitos esenciales: el consentimiento libre, un objeto cierto que sea determinado o determinable, y una causa lícita.",
+      "reason": "El texto original menciona solo el objeto. Es prudente mencionar conjuntamente los tres requisitos de validez del Código Civil hondureño (consentimiento, objeto y causa) para mayor precisión jurídica."
+    }
+  ],
+  "requiresLawyer": false
+}

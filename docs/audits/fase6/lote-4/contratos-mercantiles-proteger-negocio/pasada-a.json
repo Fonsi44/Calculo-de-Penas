@@ -1,0 +1,34 @@
+{
+  "sha256": "983bf3c6643c6a77924e6d95d8e006db902b48fe241a8499b205fda1b133008e",
+  "claims": [
+    {
+      "claim": "La parte afectada puede exigir el cumplimiento forzoso, la resolución del contrato con indemnización de daños, o ambas, según lo establecido en el Código de Comercio.",
+      "importancia": "Alta",
+      "verificacion": "Falso/Impreciso. Según el Código de Comercio (Art. 747) y Civil, se puede exigir el cumplimiento o la resolución, pero no ambas a la vez, aunque ambas opciones conllevan el derecho a indemnización por daños y perjuicios.",
+      "correccion_propuesta": "Modificar el texto a: 'La parte afectada puede exigir el cumplimiento forzoso o la resolución del contrato, pudiendo en ambos casos reclamar también indemnización de daños y perjuicios.'",
+      "requiere_abogado": true
+    },
+    {
+      "claim": "Honduras cuenta con una Ley de Arbitraje y Conciliación que reconoce el laudo arbitral como título ejecutivo.",
+      "importancia": "Alta",
+      "verificacion": "Verdadero. La Ley de Conciliación y Arbitraje (Decreto No. 161-2000) otorga al laudo arbitral eficacia de cosa juzgada y mérito de título ejecutivo.",
+      "correccion_propuesta": null,
+      "requiere_abogado": false
+    },
+    {
+      "claim": "Defina fechas concretas, hitos intermedios y penalidades por retraso.",
+      "importancia": "Media",
+      "verificacion": "Verdadero. Las cláusulas penales son perfectamente válidas en Honduras para predeterminar la indemnización en caso de retraso o incumplimiento (Art. 1380 Código Civil).",
+      "correccion_propuesta": null,
+      "requiere_abogado": false
+    },
+    {
+      "claim": "Para ciertos contratos mercantiles la ley exige la forma escrita.",
+      "importancia": "Media",
+      "verificacion": "Verdadero. Aunque rige el principio de libertad de forma (Art. 714 Código de Comercio), ciertos contratos requieren solemnidad o constar por escrito (ej. constitución de sociedades, fideicomisos).",
+      "correccion_propuesta": null,
+      "requiere_abogado": false
+    }
+  ],
+  "notas_adicionales": "El documento no hace mención a la validez de las firmas electrónicas en contratos mercantiles. En Honduras, la Ley sobre Firmas Electrónicas (Decreto 149-2013) les otorga la misma validez que la firma autógrafa. Se recomienda a los abogados considerar incluir un párrafo al respecto, dado su alto uso en el comercio actual."
+}
