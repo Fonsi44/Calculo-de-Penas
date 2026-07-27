@@ -1,0 +1,138 @@
+{
+  "metadata": {
+    "fecha": "2026-07-27",
+    "hash": "b2eeeaa8",
+    "modelo": "DeepSeek V4 Pro",
+    "denominacion": "Auditoría jurídica y editorial exhaustiva asistida por DeepSeek V4 Pro"
+  },
+  "matriz": [
+    {
+      "claim_id": "F7B-001",
+      "slug": "etapa-investigacion-proceso-penal-honduras",
+      "lote": "E",
+      "descripcion": "Cita 'Código Procesal Penal (Decreto 130-2017)'. El 130-2017 es el Código Penal, no el Procesal Penal.",
+      "severidad": "alta",
+      "decision_final": "needs_human_review",
+      "correccion_aplicada": "Sí — Decreto 130-2017 → 9-99-E en contexto CPP. Artículo mantiene 130-2017 en contexto CP (correcto).",
+      "needs_human_review": true,
+      "articulo_requiere_abogado": true,
+      "fuente": "data/articulos_cp.json + consistencia con otros artículos del blog",
+      "estado_actual_body": "Corregido parcialmente. Decreto CPP corregido. Números de artículo requieren verificación de abogado."
+    },
+    {
+      "claim_id": "F7B-002",
+      "slug": "antejuicio-en-honduras",
+      "lote": "C",
+      "descripcion": "Mismo error: CPP citado como Decreto 130-2017.",
+      "severidad": "alta",
+      "decision_final": "needs_human_review",
+      "correccion_aplicada": "Sí — Decreto 130-2017 → 9-99-E en contexto CPP.",
+      "needs_human_review": true,
+      "articulo_requiere_abogado": true,
+      "fuente": "data/articulos_cp.json",
+      "estado_actual_body": "Corregido. 9-99-E presente. Pendiente verificar números de artículo del CPP."
+    },
+    {
+      "claim_id": "F7B-003",
+      "slug": "fianza-medidas-cautelares-proceso-penal-honduras",
+      "lote": "D",
+      "descripcion": "Cita dos decretos distintos para el CPP. Al inicio cita 9-99-E correctamente, al final cita 130-2017 incorrectamente.",
+      "severidad": "alta",
+      "decision_final": "needs_human_review",
+      "correccion_aplicada": "Sí — unificada la referencia a 9-99-E.",
+      "needs_human_review": true,
+      "articulo_requiere_abogado": true,
+      "fuente": "data/articulos_cp.json",
+      "estado_actual_body": "Corregido. Referencia unificada a 9-99-E."
+    },
+    {
+      "claim_id": "F7B-004",
+      "slug": "medidas-sustitutivas-prision-preventiva-honduras",
+      "lote": "I",
+      "descripcion": "Cita 'Código Procesal Penal (Decreto 130-2017)'.",
+      "severidad": "alta",
+      "decision_final": "needs_human_review",
+      "correccion_aplicada": "Sí — Decreto 130-2017 → 9-99-E en contexto CPP.",
+      "needs_human_review": true,
+      "articulo_requiere_abogado": true,
+      "fuente": "data/articulos_cp.json",
+      "estado_actual_body": "Corregido. 9-99-E presente."
+    },
+    {
+      "claim_id": "F7B-005",
+      "slug": "que-hacer-si-me-detienen-en-honduras",
+      "lote": "H",
+      "descripcion": "Cita 'Código Procesal Penal (Decreto 130-2017), artículos 279 al 292'.",
+      "severidad": "alta",
+      "decision_final": "needs_human_review",
+      "correccion_aplicada": "Sí — Decreto 130-2017 → 9-99-E. 2 ocurrencias corregidas.",
+      "needs_human_review": true,
+      "articulo_requiere_abogado": true,
+      "fuente": "data/articulos_cp.json",
+      "estado_actual_body": "Corregido. 9-99-E presente. Artículos 279-292 requieren verificación."
+    },
+    {
+      "claim_id": "F7B-006",
+      "slug": "servicios-legales-empresas-sur-honduras",
+      "lote": "H",
+      "descripcion": "Cita 'Código Procesal Penal</strong> (Decreto 130-2017 y sus reformas)'. El HTML contiene </strong> entre Penal y (. El regex de Fase 7B no lo capturó por los tags HTML intermedios y espacios extra.",
+      "severidad": "alta",
+      "decision_final": "needs_human_review",
+      "correccion_aplicada": "Sí — Corregido en Fase 7C (commit b2eeeaa8). 2 ocurrencias. Regex adaptado a HTML.",
+      "needs_human_review": true,
+      "articulo_requiere_abogado": true,
+      "fuente": "data/articulos_cp.json",
+      "estado_actual_body": "Corregido en Fase 7C. 9-99-E presente. Falso positivo del regex de Fase 7B por no considerar tags HTML."
+    },
+    {
+      "claim_id": "F7B-007",
+      "slug": "allanamiento-ilegal-violacion-domicilio-honduras",
+      "lote": "B",
+      "descripcion": "Cita correctamente 'Código Procesal Penal (CPP) de Honduras (Decreto 9-99-E)'.",
+      "severidad": "baja",
+      "decision_final": "confirmed",
+      "correccion_aplicada": "Ninguna — ya era correcto.",
+      "needs_human_review": false,
+      "articulo_requiere_abogado": false,
+      "fuente": "Coherente con Decreto 9-99-E",
+      "estado_actual_body": "Correcto. Sin cambios necesarios."
+    },
+    {
+      "claim_id": "F7B-008",
+      "slug": "delitos-ambientales-como-denunciarlos-honduras",
+      "lote": "A",
+      "descripcion": "Error en plazo de prescripción: dice 3-15 años, CP Art. 109 establece 5-20 años. Decreto 59-2024 no verificado. Art. 337-A numeración cuestionable.",
+      "severidad": "alta",
+      "decision_final": "needs_human_review",
+      "correccion_aplicada": "No — requiere interpretación profesional del CP para verificar plazos exactos y vigencia del Decreto 59-2024.",
+      "needs_human_review": true,
+      "articulo_requiere_abogado": true,
+      "fuente": "data/articulos_cp.json — Art. 109 CP",
+      "estado_actual_body": "Sin cambios. Clasificado NHR. Requiere abogado para verificar Art. 109 CP y Decreto 59-2024."
+    },
+    {
+      "claim_id": "F7B-009",
+      "slug": "jornada-laboral-horas-extra-descansos-honduras",
+      "lote": "G",
+      "descripcion": "Recargo dominical 75% vs 100% (Art. 340 CT). Lista de feriados incompleta.",
+      "severidad": "alta",
+      "decision_final": "needs_human_review",
+      "correccion_aplicada": "No — los datos locales del CT tienen el Art. 330 truncado. Se requiere verificación del texto completo del CT.",
+      "needs_human_review": true,
+      "articulo_requiere_abogado": true,
+      "fuente": "data/codigo_trabajo.json — Art. 340 CT (datos truncados)",
+      "estado_actual_body": "Sin cambios. Clasificado NHR. Requiere verificación del texto completo del Código de Trabajo."
+    }
+  ],
+  "reconciliacion": {
+    "total_hallazgos": 9,
+    "confirmed": 1,
+    "needs_human_review": 8,
+    "correcciones_aplicadas": 6,
+    "correcciones_no_aplicadas_por_nhr": 2,
+    "falsos_positivos_resueltos": 1,
+    "explicacion_8nhr_5articulos": "8 claims NHR corresponden a 5 artículos distintos porque algunos artículos tienen múltiples claims. La distribución es: etapa-investigacion(1), antejuicio(1), fianza(1), medidas-sustitutivas(1), que-hacer(1), servicios-legales(1), delitos-ambientales(1), jornada-laboral(1). Los últimos 2 comparten artículo con otros claims? No — cada claim está en un artículo distinto. Son 8 claims en 8 artículos. Pero solo 5 artículos estaban en el conjunto original de 'artículos que requieren abogado' del informe de Fase 7 porque 3 de estos claims (F7B-004, F7B-005, F7B-006) se detectaron en Fase 7B, después del informe inicial de Fase 7 que identificó 5.",
+    "hallazgos_sin_decision": 0,
+    "corrected_no_aplicados": 0
+  }
+}
