@@ -24,6 +24,7 @@ describe('fixtures públicos sanitizados de Preview', () => {
       'derecho-laboral',
       'derecho-de-familia',
       'derecho-civil',
+      'derecho-mercantil',
     ]));
   });
 

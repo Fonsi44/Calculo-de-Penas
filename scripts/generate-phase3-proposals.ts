@@ -333,6 +333,47 @@ async function main() {
     lawyerVerified: false,
     overrides: previewOverrides,
   }, null, 2)}\n`);
+  const previewSnapshot = JSON.parse(readFileSync('data/seo/preview-blog-fixtures.json', 'utf8')) as {
+    version: number;
+    generated_at: string;
+    source: string;
+    production_import_forbidden: boolean;
+    allowed_columns: string[];
+    fixtures: Array<Record<string, unknown>>;
+  };
+  const retainedFixtures = previewSnapshot.fixtures.filter((fixture) =>
+    fixture.phase3_article_specific !== true,
+  );
+  const phase3Fixtures = proposals.filter((proposal) => previewSlugs.has(proposal.slug))
+    .map((proposal) => ({
+      slug: proposal.slug,
+      category: bySlug.get(proposal.slug)!.category,
+      title: proposal.proposed.title,
+      description: proposal.proposed.summary,
+      meta_title: proposal.proposed.metaTitle,
+      meta_description: proposal.proposed.metaDescription,
+      body: proposal.proposed.body,
+      cover_image: null,
+      og_image: null,
+      tags: [],
+      published_at: bySlug.get(proposal.slug)!.publishedAt?.toISOString() ?? TODAY,
+      updated_at: proposal.current.updatedAt,
+      canonical_url: proposal.url,
+      noindex: true,
+      reading_time: bySlug.get(proposal.slug)!.readingTime ?? '8 min',
+      author: proposal.proposed.author,
+      review_status: 'lawyer_review_pending',
+      reviewed_by: null,
+      reviewed_at: null,
+      published: true,
+      fixture_only: true,
+      phase3_article_specific: true,
+    }));
+  writeFileSync('data/seo/preview-blog-fixtures.json', `${JSON.stringify({
+    ...previewSnapshot,
+    generated_at: TODAY,
+    fixtures: [...retainedFixtures, ...phase3Fixtures],
+  }, null, 2)}\n`);
 
   for (const csvPath of [
     'docs/seo/current/content-action-matrix.csv',
