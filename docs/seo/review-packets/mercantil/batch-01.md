@@ -1,174 +1,171 @@
 # Paquete de revisión jurídica — mercantil — lote 01
 
-> `INVALID_GENERIC_SCAFFOLD_DO_NOT_APPLY`: paquete invalidado; conserva datos
-> de trazabilidad, pero no constituye contenido revisable ni puede aplicarse.
+> Estado: `lawyer_review_pending`. Ningún contenido de este paquete puede aplicarse en Production.
 
-> Estado: `documentary_review` → `lawyer_review_pending`. Autor y revisor son propuestas internas, no una firma pública.
-
-## 1. Contrato de Franquicia en Honduras: Cláusulas y Riesgos
+## 1. Contratos de Franquicia en Honduras: Guia Legal
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/contratos-franquicia-aspectos
-- Consulta objetivo: contrato de franquicia en honduras: cláusulas y riesgos
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Contratos de Franquicia en Honduras: Guia Legal
-- Title propuesto: Contrato de Franquicia en Honduras: Cláusulas y Riesgos
-- Meta anterior: Entienda los contratos de franquicia en Honduras: cláusulas esenciales, riesgos y protección legal. Asesoría experta en derecho mercantil.
-- Meta propuesta: El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-COM-CODE, HN-CPC-211-2006.
-- Fuentes exactas: HN-COM-CODE (https://www.tsc.gob.hn/biblioteca/index.php/codigos; sociedades, obligaciones y contratos mercantiles según negocio); HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: contrato de franquicia honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Contratos de Franquicia en Honduras: Guia Legal → Contratos de Franquicia en Honduras: Guia Legal
+- Meta propuesta: Contrato de franquicia honduras: análisis de marca, territorio, regalías, asistencia, terminación y competencia con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar marca, territorio, regalías, asistencia, terminación y competencia. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras; https://www.pinedayasociadoshn.com/blog/derecho-mercantil/competencia-desleal-como-denunciar-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-mercantil
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CCOM-73-50, disposición específica pendiente de validación humana en el Código de Comercio [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula marca, territorio, regalías, asistencia, terminación y competencia en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/mercantil/contratos-franquicia-aspectos.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Canon de entrada, regalías, exclusividad territorial, no competencia y causales de terminación. Riesgos para el franquiciado y cómo negociar un contrato que
++ Este asunto requiere comprobar marca, territorio, regalías, asistencia, terminación y competencia. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar marca, territorio, regalías, asistencia, terminación y competencia. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 2. Contratos Mercantiles en Honduras: 5 Esenciales
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras
-- Consulta objetivo: codigo de comercio contratos mercantiles
-- GSC: 4 impresiones; 0 clics; CTR 0.0000; posición 6.25.
-- Title anterior: Contratos Mercantiles en Honduras: 5 Esenciales
-- Title propuesto: Contratos Mercantiles en Honduras: 5 Esenciales
-- Meta anterior: Conozca los 5 contratos mercantiles esenciales en Honduras: compraventa, distribución, agencia, franquicia y suministro. Proteja su empresa con
-- Meta propuesta: El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-COM-CODE, HN-CPC-211-2006.
-- Fuentes exactas: HN-COM-CODE (https://www.tsc.gob.hn/biblioteca/index.php/codigos; sociedades, obligaciones y contratos mercantiles según negocio); HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: contratos mercantiles para empresas honduras (GSC_QUERY_MATCHED)
+- Intención: informational
+- Title actual/propuesto: Contratos Mercantiles en Honduras: 5 Esenciales → Contratos Mercantiles en Honduras: 5 Esenciales
+- Meta propuesta: Contratos mercantiles para empresas honduras: análisis de objeto, representación, pagos, garantías y solución de controversias con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar objeto, representación, pagos, garantías y solución de controversias. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/competencia-desleal-como-denunciar-honduras; https://www.pinedayasociadoshn.com/blog/derecho-mercantil/incumplimiento-contrato-comercial-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-mercantil
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CCOM-73-50, disposición específica pendiente de validación humana en el Código de Comercio [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula objeto, representación, pagos, garantías y solución de controversias en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/mercantil/contratos-mercantiles-esenciales-empresas-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- De la constitución de sociedad al contrato de distribución: guía práctica de los contratos mercantiles esenciales para empresas en Honduras. Qué cláusulas
++ Este asunto requiere comprobar objeto, representación, pagos, garantías y solución de controversias. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar objeto, representación, pagos, garantías y solución de controversias. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 3. Competencia Desleal en Honduras
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/competencia-desleal-como-denunciar-honduras
-- Consulta objetivo: competencia desleal en honduras
-- GSC: 42 impresiones; 5 clics; CTR 0.1190; posición 7.10.
-- Title anterior: Competencia Desleal en Honduras
-- Title propuesto: Competencia Desleal en Honduras
-- Meta anterior: Descubra qué es la competencia desleal en Honduras, las conductas sancionables y las vías legales para denunciar.
-- Meta propuesta: El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-COM-CODE, HN-CPC-211-2006.
-- Fuentes exactas: HN-COM-CODE (https://www.tsc.gob.hn/biblioteca/index.php/codigos; sociedades, obligaciones y contratos mercantiles según negocio); HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: competencia desleal honduras (GSC_QUERY_MATCHED)
+- Intención: informational
+- Title actual/propuesto: Competencia Desleal en Honduras → Competencia Desleal en Honduras
+- Meta propuesta: Competencia desleal honduras: análisis de conducta, mercado afectado, evidencia, cese y reparación con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar conducta, mercado afectado, evidencia, cese y reparación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/incumplimiento-contrato-comercial-honduras; https://www.pinedayasociadoshn.com/blog/derecho-mercantil/constitucion-empresas-honduras-pasos-legales
-- Servicio relacionado: /servicios-juridicos/derecho-mercantil
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CCOM-73-50, disposición específica pendiente de validación humana en el Código de Comercio [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula conducta, mercado afectado, evidencia, cese y reparación en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/mercantil/competencia-desleal-como-denunciar-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Confusión, denigración, engaño, aprovechamiento de la reputación ajena y violación de secretos. Vías: Instituto de la Propiedad, demanda judicial y denuncia
++ Este asunto requiere comprobar conducta, mercado afectado, evidencia, cese y reparación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar conducta, mercado afectado, evidencia, cese y reparación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 4. Incumplimiento de contrato en Honduras
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/incumplimiento-contrato-comercial-honduras
-- Consulta objetivo: incumplimiento de contrato en honduras
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Incumplimiento de contrato en Honduras
-- Title propuesto: Incumplimiento de contrato en Honduras
-- Meta anterior: Sepa qué hacer ante un incumplimiento de contrato en Honduras. Conozca sus derechos, plazos y acciones legales según el Código de Comercio.
-- Meta propuesta: El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-COM-CODE, HN-CPC-211-2006.
-- Fuentes exactas: HN-COM-CODE (https://www.tsc.gob.hn/biblioteca/index.php/codigos; sociedades, obligaciones y contratos mercantiles según negocio); HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: incumplimiento contrato comercial honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Incumplimiento de contrato en Honduras → Incumplimiento de contrato en Honduras
+- Meta propuesta: Incumplimiento contrato comercial honduras: análisis de obligación, mora, excepciones, daños y terminación con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar obligación, mora, excepciones, daños y terminación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/constitucion-empresas-honduras-pasos-legales; https://www.pinedayasociadoshn.com/blog/derecho-mercantil/titulos-valores-cheques-sin-fondo-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-mercantil
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CCOM-73-50, disposición específica pendiente de validación humana en el Código de Comercio [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula obligación, mora, excepciones, daños y terminación en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/mercantil/incumplimiento-contrato-comercial-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Guía para reaccionar ante un incumplimiento contractual en Honduras: pasos legales, reclamación formal, mediación y vía judicial.
++ Este asunto requiere comprobar obligación, mora, excepciones, daños y terminación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar obligación, mora, excepciones, daños y terminación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 5. Constitución de empresas en Honduras: pasos legales básicos
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/constitucion-empresas-honduras-pasos-legales
-- Consulta objetivo: constitución de empresas en honduras: pasos legales básicos
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Constitución de empresas en Honduras: pasos legales básicos
-- Title propuesto: Constitución de empresas en Honduras: pasos legales básicos
-- Meta anterior: Guía paso a paso para constituir una empresa en Honduras: tipo de sociedad, escritura, RTN, permisos y obligaciones legales iniciales.
-- Meta propuesta: El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-COM-CODE, HN-CPC-211-2006.
-- Fuentes exactas: HN-COM-CODE (https://www.tsc.gob.hn/biblioteca/index.php/codigos; sociedades, obligaciones y contratos mercantiles según negocio); HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: crear empresa en honduras pasos (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Constitución de empresas en Honduras: pasos legales básicos → Constitución de empresas en Honduras: pasos legales básicos
+- Meta propuesta: Crear empresa en honduras pasos: análisis de socios, capital, escritura, registro y obligaciones iniciales con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar socios, capital, escritura, registro y obligaciones iniciales. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/titulos-valores-cheques-sin-fondo-honduras; https://www.pinedayasociadoshn.com/blog/derecho-mercantil/elegir-tipo-sociedad-empresa-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-mercantil
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CCOM-73-50, disposición específica pendiente de validación humana en el Código de Comercio [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula socios, capital, escritura, registro y obligaciones iniciales en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/mercantil/constitucion-empresas-honduras-pasos-legales.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Guía paso a paso para constituir una empresa en Honduras: tipo de sociedad, escritura, RTN, permisos y obligaciones legales iniciales.
++ Este asunto requiere comprobar socios, capital, escritura, registro y obligaciones iniciales. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar socios, capital, escritura, registro y obligaciones iniciales. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 6. Cheques sin Fondo en Honduras: Protesto Notarial
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/titulos-valores-cheques-sin-fondo-honduras
-- Consulta objetivo: cheques sin fondo en honduras: protesto notarial
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Cheques sin Fondo en Honduras: Protesto Notarial
-- Title propuesto: Cheques sin Fondo en Honduras: Protesto Notarial
-- Meta anterior: Descubra c&oacute;mo actuar ante un cheque sin fondos en Honduras. Plazos, protesto notarial, acci&oacute;n cambiaria y denuncia penal. Proteja sus
-- Meta propuesta: El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-COM-CODE, HN-CPC-211-2006.
-- Fuentes exactas: HN-COM-CODE (https://www.tsc.gob.hn/biblioteca/index.php/codigos; sociedades, obligaciones y contratos mercantiles según negocio); HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: cheque sin fondos honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Cheques sin Fondo en Honduras: Protesto Notarial → Cheques sin Fondo en Honduras: Protesto Notarial
+- Meta propuesta: Cheque sin fondos honduras: análisis de presentación, constancia, acción cambiaria y posibles vías con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar presentación, constancia, acción cambiaria y posibles vías. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/contratos-franquicia-aspectos; https://www.pinedayasociadoshn.com/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-mercantil
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CCOM-73-50, disposición específica pendiente de validación humana en el Código de Comercio [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula presentación, constancia, acción cambiaria y posibles vías en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/mercantil/titulos-valores-cheques-sin-fondo-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Protesto notarial obligatorio en 8 días, acción cambiaria en 6 meses, qué puede reclamar (importe + intereses + gastos) y cuándo un cheque sin fondo es delito
++ Este asunto requiere comprobar presentación, constancia, acción cambiaria y posibles vías. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar presentación, constancia, acción cambiaria y posibles vías. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 7. Cómo elegir el tipo de sociedad para su empresa en Honduras
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/elegir-tipo-sociedad-empresa-honduras
-- Consulta objetivo: cómo elegir el tipo de sociedad para su empresa en honduras
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Cómo elegir el tipo de sociedad para su empresa en Honduras
-- Title propuesto: Cómo elegir el tipo de sociedad para su empresa en Honduras
-- Meta anterior: Explica las diferencias entre SA, SRL, EHI y otros tipos societarios en Honduras, capital mínimo, responsabilidad fiscal y recomendaciones según el negocio.
-- Meta propuesta: El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-COM-CODE, HN-CPC-211-2006.
-- Fuentes exactas: HN-COM-CODE (https://www.tsc.gob.hn/biblioteca/index.php/codigos; sociedades, obligaciones y contratos mercantiles según negocio); HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: qué tipo de sociedad elegir honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Cómo elegir el tipo de sociedad para su empresa en Honduras → Cómo elegir el tipo de sociedad para su empresa en Honduras
+- Meta propuesta: Qué tipo de sociedad elegir honduras: análisis de responsabilidad, administración, capital y entrada de socios con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar responsabilidad, administración, capital y entrada de socios. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras; https://www.pinedayasociadoshn.com/blog/derecho-mercantil/competencia-desleal-como-denunciar-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-mercantil
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CCOM-73-50, disposición específica pendiente de validación humana en el Código de Comercio [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula responsabilidad, administración, capital y entrada de socios en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/mercantil/elegir-tipo-sociedad-empresa-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Explica las diferencias entre SA, SRL, EHI y otros tipos societarios en Honduras, capital mínimo, responsabilidad fiscal y recomendaciones según el negocio.
++ Este asunto requiere comprobar responsabilidad, administración, capital y entrada de socios. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar responsabilidad, administración, capital y entrada de socios. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 8. Tipos de Sociedad Mercantil en Honduras
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/tipos-sociedad-mercantil-honduras
-- Consulta objetivo: tipos de sociedad mercantil en honduras
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Tipos de Sociedad Mercantil en Honduras
-- Title propuesto: Tipos de Sociedad Mercantil en Honduras
-- Meta anterior: Descubra los tipos de sociedades mercantiles en Honduras (S.A., S. de R.L., E.I.R.L.) y elija la más adecuada para su negocio.
-- Meta propuesta: El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-COM-CODE, HN-CPC-211-2006.
-- Fuentes exactas: HN-COM-CODE (https://www.tsc.gob.hn/biblioteca/index.php/codigos; sociedades, obligaciones y contratos mercantiles según negocio); HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: tipos de sociedades mercantiles honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Tipos de Sociedad Mercantil en Honduras → Tipos de Sociedad Mercantil en Honduras
+- Meta propuesta: Tipos de sociedades mercantiles honduras: análisis de estructura, responsabilidad, administración y formalización con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar estructura, responsabilidad, administración y formalización. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-mercantil/competencia-desleal-como-denunciar-honduras; https://www.pinedayasociadoshn.com/blog/derecho-mercantil/incumplimiento-contrato-comercial-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-mercantil
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CCOM-73-50, disposición específica pendiente de validación humana en el Código de Comercio [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula estructura, responsabilidad, administración y formalización en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/mercantil/tipos-sociedad-mercantil-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- S. de R.L., S.A., E.I.R.L. y Sociedad en Comandita comparadas: responsabilidad de los socios, costos de constitución, requisitos de gobierno corporativo y
++ Este asunto requiere comprobar estructura, responsabilidad, administración y formalización. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar estructura, responsabilidad, administración y formalización. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```

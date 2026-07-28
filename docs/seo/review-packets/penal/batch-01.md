@@ -1,174 +1,171 @@
 # Paquete de revisión jurídica — penal — lote 01
 
-> `INVALID_GENERIC_SCAFFOLD_DO_NOT_APPLY`: paquete invalidado; conserva datos
-> de trazabilidad, pero no constituye contenido revisable ni puede aplicarse.
-
-> Estado: `documentary_review` → `lawyer_review_pending`. Autor y revisor son propuestas internas, no una firma pública.
+> Estado: `lawyer_review_pending`. Ningún contenido de este paquete puede aplicarse en Production.
 
 ## 1. ¿Qué Hacer Si Me Detienen en Honduras? Guía
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-penal/que-hacer-si-me-detienen-en-honduras
-- Consulta objetivo: en honduras
-- GSC: 6 impresiones; 0 clics; CTR 0.0000; posición 3.67.
-- Title anterior: ¿Qué Hacer Si Me Detienen en Honduras? Guía
-- Title propuesto: ¿Qué Hacer Si Me Detienen en Honduras? Guía
-- Meta anterior: Si es detenido en Honduras, conozca sus derechos constitucionales y el procedimiento legal. Asesoría legal inmediata es crucial. ¡Actúe ahora!
-- Meta propuesta: La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CONST-131-1982, HN-CPP-9-99-E, HN-CP-130-2017.
-- Fuentes exactas: HN-CONST-131-1982 (https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf; artículos 68, 71, 82, 84, 89 y 99); HN-CPP-9-99-E (https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf; artículos 101, 112–115, 282 y 285–294); HN-CP-130-2017 (https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf; artículos 104–110, 263–271 y tipos específicos aplicables)
-- Autor propuesto: Danilo Pineda Maradiaga
+- Query: qué hacer si me detienen en honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: ¿Qué Hacer Si Me Detienen en Honduras? Guía → ¿Qué Hacer Si Me Detienen en Honduras? Guía
+- Meta propuesta: Qué hacer ante una detención en Honduras: defensa, declaraciones, comunicación, documentos urgentes y errores que conviene evitar.
+- Respuesta directa: Desde el primer momento de una detención, pida que le informen el motivo y la autoridad actuante, solicite defensa técnica, evite declarar sobre los hechos sin asesoramiento y procure que una persona de confianza conozca dónde se encuentra. Conserve citaciones, actas y datos de testigos; no firme documentos que no comprenda ni se resista físicamente a la autoridad.
+- Autor: Danilo Pineda Maradiaga
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-penal/cuando-prescribe-delito-en-honduras; https://www.pinedayasociadoshn.com/blog/derecho-penal/fianza-medidas-cautelares-proceso-penal-honduras
-- Servicio relacionado: /derecho-penal
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CPP-9-99-E, artículos 101, 282 y 285–287 [VERIFIED]
+- Pregunta jurídica: ¿La explicación sobre información de derechos, comunicación y declaración refleja la práctica vigente desde la aprehensión?
+- Propuesta completa: data/seo/article-editorial-proposals/penal/que-hacer-si-me-detienen-en-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
 
-## 2. Prescripción Penal en Honduras: Plazos y Cálculo
+```diff
+- Guía práctica sobre sus derechos al ser detenido en Honduras: qué hacer en las primeras 24 horas, cómo es la audiencia inicial, qué NO firmar y cuándo
++ Desde el primer momento de una detención, pida que le informen el motivo y la autoridad actuante, solicite defensa técnica, evite declarar sobre los hechos sin asesoramiento y procure que una persona de confianza conozca dónde se encuentra. Conserve citaciones, actas y datos de testigos; no firme documentos que no comprenda ni se resista físicamente a la autoridad.
++ Desde el primer momento de una detención, pida que le informen el motivo y la autoridad actuante, solicite defensa técnica, evite declarar sobre los hechos sin asesoramiento y procure que una persona de confianza conozca dónde se encuentra. Conserve citaciones, actas y datos de testigos; no firme documentos que no comprenda ni se resista físicamente a la autoridad.
+```
+
+## 2. ¿Cuándo Prescribe un Delito en Honduras? Plazos
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-penal/cuando-prescribe-delito-en-honduras
-- Consulta objetivo: a los cuantos años prescribe un delito
-- GSC: 8 impresiones; 0 clics; CTR 0.0000; posición 4.25.
-- Title anterior: ¿Cuándo Prescribe un Delito en Honduras? Plazos
-- Title propuesto: Prescripción Penal en Honduras: Plazos y Cálculo
-- Meta anterior: Entienda cuándo prescribe un delito en Honduras. Conozca los plazos, interrupciones y consecuencias según el Código Penal hondureño.
-- Meta propuesta: La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CONST-131-1982, HN-CPP-9-99-E, HN-CP-130-2017.
-- Fuentes exactas: HN-CONST-131-1982 (https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf; artículos 68, 71, 82, 84, 89 y 99); HN-CPP-9-99-E (https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf; artículos 101, 112–115, 282 y 285–294); HN-CP-130-2017 (https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf; artículos 104–110, 263–271 y tipos específicos aplicables)
-- Autor propuesto: Danilo Pineda Maradiaga
+- Query: prescripción de delitos en honduras (GSC_QUERY_MATCHED)
+- Intención: informational
+- Title actual/propuesto: ¿Cuándo Prescribe un Delito en Honduras? Plazos → ¿Cuándo Prescribe un Delito en Honduras? Plazos
+- Meta propuesta: Cómo analizar la prescripción penal en Honduras según delito, pena, inicio del cómputo, interrupciones y reformas aplicables.
+- Respuesta directa: La prescripción penal no tiene un plazo único: exige identificar el delito, la pena legal aplicable, la fecha desde la que comienza el cómputo y los actos con efecto interruptivo. También debe distinguirse la prescripción de la acción penal de la prescripción de la pena y comprobar las reformas vigentes para el hecho investigado.
+- Autor: Danilo Pineda Maradiaga
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-penal/fianza-medidas-cautelares-proceso-penal-honduras; https://www.pinedayasociadoshn.com/blog/derecho-penal/audiencia-inicial-proceso-penal-honduras
-- Servicio relacionado: /derecho-penal
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CP-130-2017, artículos 104–110 [VERIFIED]
+- Pregunta jurídica: ¿Confirma que el punto inicial y los efectos interruptivos descritos corresponden a la versión vigente de los artículos 104 a 110?
+- Propuesta completa: data/seo/article-editorial-proposals/penal/cuando-prescribe-delito-en-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Guía sobre la prescripción penal en Honduras: qué es, cómo se calcula, plazos según la gravedad del delito, causas de interrupción y cuándo consultar a un
++ La prescripción penal no tiene un plazo único: exige identificar el delito, la pena legal aplicable, la fecha desde la que comienza el cómputo y los actos con efecto interruptivo. También debe distinguirse la prescripción de la acción penal de la prescripción de la pena y comprobar las reformas vigentes para el hecho investigado.
++ La prescripción penal no tiene un plazo único: exige identificar el delito, la pena legal aplicable, la fecha desde la que comienza el cómputo y los actos con efecto interruptivo. También debe distinguirse la prescripción de la acción penal de la prescripción de la pena y comprobar las reformas vigentes para el hecho investigado.
+```
 
 ## 3. Fianzas y Medidas Cautelares en el Proceso Penal
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-penal/fianza-medidas-cautelares-proceso-penal-honduras
-- Consulta objetivo: medidas cautelares en el proceso penal honduras
-- GSC: 2 impresiones; 0 clics; CTR 0.0000; posición 11.50.
-- Title anterior: Fianzas y Medidas Cautelares en el Proceso Penal
-- Title propuesto: Fianzas y Medidas Cautelares en el Proceso Penal
-- Meta anterior: Conozca las fianzas y medidas cautelares en Honduras según el Código Procesal Penal (Decreto 9-99-E). Asegure su defensa y libertad durante el proceso.
-- Meta propuesta: La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CONST-131-1982, HN-CPP-9-99-E, HN-CP-130-2017.
-- Fuentes exactas: HN-CONST-131-1982 (https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf; artículos 68, 71, 82, 84, 89 y 99); HN-CPP-9-99-E (https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf; artículos 101, 112–115, 282 y 285–294); HN-CP-130-2017 (https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf; artículos 104–110, 263–271 y tipos específicos aplicables)
-- Autor propuesto: Danilo Pineda Maradiaga
+- Query: medidas cautelares proceso penal honduras (GSC_QUERY_MATCHED)
+- Intención: informational
+- Title actual/propuesto: Fianzas y Medidas Cautelares en el Proceso Penal → Fianzas y Medidas Cautelares en el Proceso Penal
+- Meta propuesta: Finalidad, tipos, criterios judiciales y revisión de las medidas cautelares penales en Honduras, incluida la documentación útil.
+- Respuesta directa: Las medidas cautelares buscan asegurar la presencia de la persona imputada y proteger el proceso; no constituyen una pena anticipada. El juez debe valorar los riesgos procesales, la necesidad y la proporcionalidad, elegir la medida adecuada y revisar su mantenimiento cuando cambien las circunstancias o se proponga una alternativa suficiente.
+- Autor: Danilo Pineda Maradiaga
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-penal/audiencia-inicial-proceso-penal-honduras; https://www.pinedayasociadoshn.com/blog/derecho-penal/estafas-fraudes-tipos-penales-honduras
-- Servicio relacionado: /derecho-penal
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CPP-9-99-E, artículos 172–188 [VERIFIED]
+- Pregunta jurídica: ¿Debe precisarse qué documentos suelen acreditar arraigo y cuándo resulta viable solicitar sustitución o revisión de la medida?
+- Propuesta completa: data/seo/article-editorial-proposals/penal/fianza-medidas-cautelares-proceso-penal-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Escala de medidas (presentación, arraigo, vigilancia, fianza, prisión preventiva). Cómo se fija el monto de la fianza, tipos de caución y consecuencias del
++ Las medidas cautelares buscan asegurar la presencia de la persona imputada y proteger el proceso; no constituyen una pena anticipada. El juez debe valorar los riesgos procesales, la necesidad y la proporcionalidad, elegir la medida adecuada y revisar su mantenimiento cuando cambien las circunstancias o se proponga una alternativa suficiente.
++ Las medidas cautelares buscan asegurar la presencia de la persona imputada y proteger el proceso; no constituyen una pena anticipada. El juez debe valorar los riesgos procesales, la necesidad y la proporcionalidad, elegir la medida adecuada y revisar su mantenimiento cuando cambien las circunstancias o se proponga una alternativa suficiente.
+```
 
 ## 4. Audiencia inicial en Honduras: proceso y decisiones
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-penal/audiencia-inicial-proceso-penal-honduras
-- Consulta objetivo: audiencia inicial en honduras: proceso y decisiones
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Audiencia inicial en Honduras: proceso y decisiones
-- Title propuesto: Audiencia inicial en Honduras: proceso y decisiones
-- Meta anterior: Qué ocurre en la audiencia inicial penal, quiénes participan y qué resoluciones puede adoptar el juez después de examinar el caso.
-- Meta propuesta: La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CONST-131-1982, HN-CPP-9-99-E, HN-CP-130-2017.
-- Fuentes exactas: HN-CONST-131-1982 (https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf; artículos 68, 71, 82, 84, 89 y 99); HN-CPP-9-99-E (https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf; artículos 101, 112–115, 282 y 285–294); HN-CP-130-2017 (https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf; artículos 104–110, 263–271 y tipos específicos aplicables)
-- Autor propuesto: Danilo Pineda Maradiaga
+- Query: audiencia inicial proceso penal honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Audiencia inicial en Honduras: proceso y decisiones → Audiencia inicial en Honduras: proceso y decisiones
+- Meta propuesta: Qué ocurre en la audiencia inicial penal en Honduras: participantes, prueba, decisiones posibles, preparación y efectos posteriores.
+- Respuesta directa: En la audiencia inicial el juez conoce la imputación y la prueba presentada para decidir si el proceso continúa y bajo qué situación cautelar. Fiscalía, defensa, persona imputada y juez intervienen con funciones distintas; la preparación debe centrarse en el expediente, los argumentos jurídicos, la prueba pertinente y los riesgos de la medida solicitada.
+- Autor: Danilo Pineda Maradiaga
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-penal/estafas-fraudes-tipos-penales-honduras; https://www.pinedayasociadoshn.com/blog/derecho-penal/allanamiento-ilegal-violacion-domicilio-honduras
-- Servicio relacionado: /derecho-penal
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CPP-9-99-E, artículos 294–297 [VERIFIED]
+- Pregunta jurídica: ¿Las decisiones posibles y el momento para proponer o controvertir prueba están descritos conforme al trámite vigente?
+- Propuesta completa: data/seo/article-editorial-proposals/penal/audiencia-inicial-proceso-penal-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
 
-## 5. Estafa en Honduras: Tipos, Denuncia y Defensa
+```diff
+- La audiencia inicial es una etapa clave del proceso penal en Honduras. Conozca qué sucede, quién interviene, qué se decide y cómo prepararse con defensa
++ En la audiencia inicial el juez conoce la imputación y la prueba presentada para decidir si el proceso continúa y bajo qué situación cautelar. Fiscalía, defensa, persona imputada y juez intervienen con funciones distintas; la preparación debe centrarse en el expediente, los argumentos jurídicos, la prueba pertinente y los riesgos de la medida solicitada.
++ En la audiencia inicial el juez conoce la imputación y la prueba presentada para decidir si el proceso continúa y bajo qué situación cautelar. Fiscalía, defensa, persona imputada y juez intervienen con funciones distintas; la preparación debe centrarse en el expediente, los argumentos jurídicos, la prueba pertinente y los riesgos de la medida solicitada.
+```
+
+## 5. Estafas en Honduras: Tipos Penales
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-penal/estafas-fraudes-tipos-penales-honduras
-- Consulta objetivo: delito de estafa en honduras
-- GSC: 28 impresiones; 0 clics; CTR 0.0000; posición 9.14.
-- Title anterior: Estafas en Honduras: Tipos Penales
-- Title propuesto: Estafa en Honduras: Tipos, Denuncia y Defensa
-- Meta anterior: Conozca los principales tipos de estafa y fraude en Honduras, sus posibles consecuencias y qué considerar al denunciar o preparar una defensa.
-- Meta propuesta: La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CONST-131-1982, HN-CPP-9-99-E, HN-CP-130-2017.
-- Fuentes exactas: HN-CONST-131-1982 (https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf; artículos 68, 71, 82, 84, 89 y 99); HN-CPP-9-99-E (https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf; artículos 101, 112–115, 282 y 285–294); HN-CP-130-2017 (https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf; artículos 104–110, 263–271 y tipos específicos aplicables)
-- Autor propuesto: Danilo Pineda Maradiaga
+- Query: delito de estafa en honduras (GSC_QUERY_MATCHED)
+- Intención: informational
+- Title actual/propuesto: Estafas en Honduras: Tipos Penales → Estafas en Honduras: Tipos Penales
+- Meta propuesta: Elementos de la estafa en Honduras, prueba útil, denuncia, defensa y diferencia entre fraude penal e incumplimiento contractual.
+- Respuesta directa: Una estafa requiere algo más que una deuda incumplida: debe analizarse si existió un engaño idóneo, si ese engaño provocó una disposición patrimonial y si produjo perjuicio. Mensajes, contratos, transferencias, publicidad y la conducta anterior y posterior son relevantes para denunciar o defenderse y para distinguir el delito de un conflicto contractual civil.
+- Autor: Danilo Pineda Maradiaga
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-penal/allanamiento-ilegal-violacion-domicilio-honduras; https://www.pinedayasociadoshn.com/blog/derecho-penal/derechos-detenido-honduras-guia-constitucional
-- Servicio relacionado: /derecho-penal
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CP-130-2017, artículos 365–368 [VERIFIED]
+- Pregunta jurídica: ¿La distinción entre engaño penalmente relevante e incumplimiento civil incorpora correctamente el elemento subjetivo vigente?
+- Propuesta completa: data/seo/article-editorial-proposals/penal/estafas-fraudes-tipos-penales-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
 
-## 6. Allanamiento en Honduras: Derechos y Qué Hacer
+```diff
+- ¿Víctima de estafa? Conozca los 7 tipos penales, penas de prisión y los 3 pasos para denunciar y recuperar su dinero en Honduras. Plazos y pruebas.
++ Una estafa requiere algo más que una deuda incumplida: debe analizarse si existió un engaño idóneo, si ese engaño provocó una disposición patrimonial y si produjo perjuicio. Mensajes, contratos, transferencias, publicidad y la conducta anterior y posterior son relevantes para denunciar o defenderse y para distinguir el delito de un conflicto contractual civil.
++ Una estafa requiere algo más que una deuda incumplida: debe analizarse si existió un engaño idóneo, si ese engaño provocó una disposición patrimonial y si produjo perjuicio. Mensajes, contratos, transferencias, publicidad y la conducta anterior y posterior son relevantes para denunciar o defenderse y para distinguir el delito de un conflicto contractual civil.
+```
+
+## 6. Allanamiento Ilegal en Honduras - ¿Qué Hacer?
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-penal/allanamiento-ilegal-violacion-domicilio-honduras
-- Consulta objetivo: allanamiento en honduras: derechos y qué hacer
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Allanamiento Ilegal en Honduras - ¿Qué Hacer?
-- Title propuesto: Allanamiento en Honduras: Derechos y Qué Hacer
-- Meta anterior: Horario, orden judicial, urgencia y derechos ante un registro o allanamiento ilegal de una vivienda en Honduras.
-- Meta propuesta: La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CONST-131-1982, HN-CPP-9-99-E, HN-CP-130-2017.
-- Fuentes exactas: HN-CONST-131-1982 (https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf; artículos 68, 71, 82, 84, 89 y 99); HN-CPP-9-99-E (https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf; artículos 101, 112–115, 282 y 285–294); HN-CP-130-2017 (https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf; artículos 104–110, 263–271 y tipos específicos aplicables)
-- Autor propuesto: Danilo Pineda Maradiaga
+- Query: allanamiento ilegal honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Allanamiento Ilegal en Honduras - ¿Qué Hacer? → Allanamiento Ilegal en Honduras - ¿Qué Hacer?
+- Meta propuesta: Cuándo procede un allanamiento en Honduras, requisitos de la orden, excepciones, acta de registro y defensa ante irregularidades.
+- Respuesta directa: La entrada y registro de un domicilio debe partir de una orden válida o de una excepción legal comprobable. Conviene verificar la autoridad, el lugar autorizado, el alcance de la diligencia, el inventario de lo ocupado y las circunstancias de urgencia alegadas, sin obstaculizar físicamente la actuación.
+- Autor: Danilo Pineda Maradiaga
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-penal/que-hacer-si-me-detienen-en-honduras; https://www.pinedayasociadoshn.com/blog/derecho-penal/cuando-prescribe-delito-en-honduras
-- Servicio relacionado: /derecho-penal
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CPP-9-99-E, artículos 212–220 [VERIFIED]
+- Pregunta jurídica: ¿Las excepciones a la orden y los requisitos del acta están delimitados con suficiente precisión para evitar una regla absoluta?
+- Propuesta completa: data/seo/article-editorial-proposals/penal/allanamiento-ilegal-violacion-domicilio-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Cuándo es legal un allanamiento, cómo actuar durante uno ilegal (no resistirse, documentar, exigir la orden), y vías de impugnación: hábeas corpus, denuncia
++ La entrada y registro de un domicilio debe partir de una orden válida o de una excepción legal comprobable. Conviene verificar la autoridad, el lugar autorizado, el alcance de la diligencia, el inventario de lo ocupado y las circunstancias de urgencia alegadas, sin obstaculizar físicamente la actuación.
++ La entrada y registro de un domicilio debe partir de una orden válida o de una excepción legal comprobable. Conviene verificar la autoridad, el lugar autorizado, el alcance de la diligencia, el inventario de lo ocupado y las circunstancias de urgencia alegadas, sin obstaculizar físicamente la actuación.
+```
 
 ## 7. Derechos del detenido en Honduras: explicación práctica
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-penal/derechos-detenido-honduras-guia-constitucional
-- Consulta objetivo: derechos del detenido en honduras: explicación práctica
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Derechos del detenido en Honduras: explicación práctica
-- Title propuesto: Derechos del detenido en Honduras: explicación práctica
-- Meta anterior: Abogado defensor, derecho al silencio, información sobre la detención, plazos y hábeas corpus explicados de forma práctica.
-- Meta propuesta: La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CONST-131-1982, HN-CPP-9-99-E, HN-CP-130-2017.
-- Fuentes exactas: HN-CONST-131-1982 (https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf; artículos 68, 71, 82, 84, 89 y 99); HN-CPP-9-99-E (https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf; artículos 101, 112–115, 282 y 285–294); HN-CP-130-2017 (https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf; artículos 104–110, 263–271 y tipos específicos aplicables)
-- Autor propuesto: Danilo Pineda Maradiaga
+- Query: derechos del detenido en honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Derechos del detenido en Honduras: explicación práctica → Derechos del detenido en Honduras: explicación práctica
+- Meta propuesta: Derechos de una persona detenida en Honduras: información, silencio, defensa, integridad, comunicación y control de la detención.
+- Respuesta directa: Una persona detenida conserva su integridad, su derecho a conocer los motivos, a guardar silencio, a recibir defensa y a que la privación de libertad sea controlada por la autoridad competente. Registrar hora, lugar, agentes intervinientes y comunicaciones ayuda a verificar la legalidad de la actuación.
+- Autor: Danilo Pineda Maradiaga
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-penal/cuando-prescribe-delito-en-honduras; https://www.pinedayasociadoshn.com/blog/derecho-penal/fianza-medidas-cautelares-proceso-penal-honduras
-- Servicio relacionado: /derecho-penal
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CPP-9-99-E, artículo 101 y artículos 282–287 [VERIFIED]
+- Pregunta jurídica: ¿Debe matizarse algún derecho de comunicación o plazo de puesta a disposición según la forma concreta de aprehensión?
+- Propuesta completa: data/seo/article-editorial-proposals/penal/derechos-detenido-honduras-guia-constitucional.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Derecho a saber por qué lo detienen, a guardar silencio, a un abogado desde el primer momento, a ser presentado ante un juez en 24 horas y a no ser
++ Una persona detenida conserva su integridad, su derecho a conocer los motivos, a guardar silencio, a recibir defensa y a que la privación de libertad sea controlada por la autoridad competente. Registrar hora, lugar, agentes intervinientes y comunicaciones ayuda a verificar la legalidad de la actuación.
++ Una persona detenida conserva su integridad, su derecho a conocer los motivos, a guardar silencio, a recibir defensa y a que la privación de libertad sea controlada por la autoridad competente. Registrar hora, lugar, agentes intervinientes y comunicaciones ayuda a verificar la legalidad de la actuación.
+```
 
 ## 8. Denuncia vs querella y acusación en Honduras
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-penal/diferencia-denuncia-querella-acusacion-honduras
-- Consulta objetivo: querella en honduras
-- GSC: 53 impresiones; 1 clics; CTR 0.0189; posición 8.92.
-- Title anterior: Denuncia vs querella y acusación en Honduras
-- Title propuesto: Denuncia vs querella y acusación en Honduras
-- Meta anterior: Quién puede informar un delito, cómo participa la víctima y cuándo formaliza la acusación el Ministerio Público en Honduras.
-- Meta propuesta: La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CONST-131-1982, HN-CPP-9-99-E, HN-CP-130-2017.
-- Fuentes exactas: HN-CONST-131-1982 (https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf; artículos 68, 71, 82, 84, 89 y 99); HN-CPP-9-99-E (https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf; artículos 101, 112–115, 282 y 285–294); HN-CP-130-2017 (https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf; artículos 104–110, 263–271 y tipos específicos aplicables)
-- Autor propuesto: Danilo Pineda Maradiaga
+- Query: diferencia denuncia querella acusación honduras (GSC_QUERY_MATCHED)
+- Intención: informational
+- Title actual/propuesto: Denuncia vs querella y acusación en Honduras → Denuncia vs querella y acusación en Honduras
+- Meta propuesta: Diferencias entre denuncia, querella y acusación en Honduras, quién puede presentarlas y qué efectos tienen en el proceso penal.
+- Respuesta directa: Denuncia, querella y acusación no son sinónimos: la denuncia comunica hechos posiblemente delictivos; la querella incorpora a la víctima con las facultades que reconoce el proceso; y la acusación formula la pretensión penal en la etapa correspondiente. La vía depende del delito, la legitimación y el momento procesal.
+- Autor: Danilo Pineda Maradiaga
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-penal/fianza-medidas-cautelares-proceso-penal-honduras; https://www.pinedayasociadoshn.com/blog/derecho-penal/audiencia-inicial-proceso-penal-honduras
-- Servicio relacionado: /derecho-penal
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CPP-9-99-E, artículos 267–276 y 293–301 [VERIFIED]
+- Pregunta jurídica: ¿La explicación de legitimación y efectos distingue correctamente delitos de acción pública y de acción privada?
+- Propuesta completa: data/seo/article-editorial-proposals/penal/diferencia-denuncia-querella-acusacion-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Conozca las diferencias clave entre denuncia, querella y acusación en el sistema penal hondureño. Cada figura tiene requisitos, efectos y procedimientos
++ Denuncia, querella y acusación no son sinónimos: la denuncia comunica hechos posiblemente delictivos; la querella incorpora a la víctima con las facultades que reconoce el proceso; y la acusación formula la pretensión penal en la etapa correspondiente. La vía depende del delito, la legitimación y el momento procesal.
++ Denuncia, querella y acusación no son sinónimos: la denuncia comunica hechos posiblemente delictivos; la querella incorpora a la víctima con las facultades que reconoce el proceso; y la acusación formula la pretensión penal en la etapa correspondiente. La vía depende del delito, la legitimación y el momento procesal.
+```

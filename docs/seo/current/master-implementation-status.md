@@ -54,6 +54,9 @@ humana.
   `lawyer_review_pending` solo para satisfacer una métrica.
 - Se conservan hashes y datos de deriva como evidencia de reconstrucción.
   Production está explícitamente prohibida.
+- El nuevo gate `npm run seo:phase3-quality` detecta actualmente 62 pares con
+  similitud semántica excesiva. Las propuestas generadas se mantienen como
+  `RECONSTRUCTION_DRAFT_NOT_APPLICABLE` hasta que ese resultado sea cero.
 
 ## Bloqueos posteriores a la Fase 3
 

@@ -1,174 +1,171 @@
 # Paquete de revisión jurídica — laboral — lote 01
 
-> `INVALID_GENERIC_SCAFFOLD_DO_NOT_APPLY`: paquete invalidado; conserva datos
-> de trazabilidad, pero no constituye contenido revisable ni puede aplicarse.
+> Estado: `lawyer_review_pending`. Ningún contenido de este paquete puede aplicarse en Production.
 
-> Estado: `documentary_review` → `lawyer_review_pending`. Autor y revisor son propuestas internas, no una firma pública.
-
-## 1. Despido Injustificado en Honduras: Prestaciones y Plazos
+## 1. Despido Laboral en Honduras: Guia de
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-laboral/despido-laboral-honduras-guia-completa
-- Consulta objetivo: despido injustificado honduras
-- GSC: 21 impresiones; 1 clics; CTR 0.0476; posición 12.00.
-- Title anterior: Despido Laboral en Honduras: Guia de
-- Title propuesto: Despido Injustificado en Honduras: Prestaciones y Plazos
-- Meta anterior: Conozca sus derechos ante un despido injustificado en Honduras. Aprenda qué indemnización le corresponde y cómo reclamarla ante la Secretaría de Trabajo.
-- Meta propuesta: La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CT-189-59.
-- Fuentes exactas: HN-CT-189-59 (https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf; artículos 112–126, 321–346 y 664–669)
-- Autor propuesto: Emil Barahona
+- Query: despido injustificado honduras (GSC_QUERY_MATCHED)
+- Intención: informational
+- Title actual/propuesto: Despido Laboral en Honduras: Guia de → Despido Laboral en Honduras: Guia de
+- Meta propuesta: Despido injustificado honduras: análisis de causa del despido, preaviso, cesantía y prueba documental con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar causa del despido, preaviso, cesantía y prueba documental. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-laboral/despido-injustificado-honduras-derechos-trabajador; https://www.pinedayasociadoshn.com/blog/derecho-laboral/calcular-prestaciones-laborales-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-laboral
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula causa del despido, preaviso, cesantía y prueba documental en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/laboral/despido-laboral-honduras-guia-completa.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Tipos de despido, indemnización por antigüedad con ejemplos en Lempiras, preaviso, plazos para reclamar y errores que debilitan su caso. Basado en el Código de
++ Este asunto requiere comprobar causa del despido, preaviso, cesantía y prueba documental. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar causa del despido, preaviso, cesantía y prueba documental. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 2. Despido Injustificado en Honduras
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-laboral/despido-injustificado-honduras-derechos-trabajador
-- Consulta objetivo: despido injustificado en honduras
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Despido Injustificado en Honduras
-- Title propuesto: Despido Injustificado en Honduras
-- Meta anterior: Descubre tus derechos ante un despido injustificado en Honduras. Conoce la indemnización, preaviso y plazos para reclamar según el Código del Trabajo.
-- Meta propuesta: La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CT-189-59.
-- Fuentes exactas: HN-CT-189-59 (https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf; artículos 112–126, 321–346 y 664–669)
-- Autor propuesto: Emil Barahona
+- Query: derechos por despido injustificado honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Despido Injustificado en Honduras → Despido Injustificado en Honduras
+- Meta propuesta: Derechos por despido injustificado honduras: análisis de opciones del trabajador, reintegro, indemnización y salarios con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar opciones del trabajador, reintegro, indemnización y salarios. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-laboral/calcular-prestaciones-laborales-honduras; https://www.pinedayasociadoshn.com/blog/derecho-laboral/calcular-liquidacion-laboral-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-laboral
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula opciones del trabajador, reintegro, indemnización y salarios en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/laboral/despido-injustificado-honduras-derechos-trabajador.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Despido con o sin justa causa: guía práctica para saber si su despido fue legal, cuánto le deben pagar (preaviso, cesantía, aguinaldo proporcional) y cómo
++ Este asunto requiere comprobar opciones del trabajador, reintegro, indemnización y salarios. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar opciones del trabajador, reintegro, indemnización y salarios. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 3. Calcula tus prestaciones laborales en Honduras
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-laboral/calcular-prestaciones-laborales-honduras
-- Consulta objetivo: calcula tus prestaciones laborales en honduras
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Calcula tus prestaciones laborales en Honduras
-- Title propuesto: Calcula tus prestaciones laborales en Honduras
-- Meta anterior: Guía práctica sobre el cálculo orientativo de prestaciones en Honduras. Diferencia entre Derechos Adquiridos por renuncia e Indemnizaciones por despido.
-- Meta propuesta: La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CT-189-59.
-- Fuentes exactas: HN-CT-189-59 (https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf; artículos 112–126, 321–346 y 664–669)
-- Autor propuesto: Emil Barahona
+- Query: calcular prestaciones laborales honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Calcula tus prestaciones laborales en Honduras → Calcula tus prestaciones laborales en Honduras
+- Meta propuesta: Calcular prestaciones laborales honduras: análisis de salario base, antigüedad, vacaciones, décimo tercero y décimo cuarto con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar salario base, antigüedad, vacaciones, décimo tercero y décimo cuarto. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-laboral/calcular-liquidacion-laboral-honduras; https://www.pinedayasociadoshn.com/blog/derecho-laboral/empleador-no-paga-salario-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-laboral
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula salario base, antigüedad, vacaciones, décimo tercero y décimo cuarto en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/laboral/calcular-prestaciones-laborales-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Guía práctica para entender y calcular prestaciones laborales en Honduras: aguinaldo, décimo tercer mes, vacaciones, indemnización y más.
++ Este asunto requiere comprobar salario base, antigüedad, vacaciones, décimo tercero y décimo cuarto. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar salario base, antigüedad, vacaciones, décimo tercero y décimo cuarto. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 4. Liquidación Laboral en Honduras
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-laboral/calcular-liquidacion-laboral-honduras
-- Consulta objetivo: liquidación laboral en honduras
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Liquidación Laboral en Honduras
-- Title propuesto: Liquidación Laboral en Honduras
-- Meta anterior: Guía completa sobre cómo calcular tu liquidación laboral en Honduras. Conoce tus derechos sobre cesantía, vacaciones y despido injustificado.
-- Meta propuesta: La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CT-189-59.
-- Fuentes exactas: HN-CT-189-59 (https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf; artículos 112–126, 321–346 y 664–669)
-- Autor propuesto: Emil Barahona
+- Query: liquidación laboral honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Liquidación Laboral en Honduras → Liquidación Laboral en Honduras
+- Meta propuesta: Liquidación laboral honduras: análisis de forma de terminación, conceptos devengados y deducciones comprobables con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar forma de terminación, conceptos devengados y deducciones comprobables. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-laboral/empleador-no-paga-salario-honduras; https://www.pinedayasociadoshn.com/blog/derecho-laboral/jornada-laboral-horas-extra-descansos-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-laboral
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula forma de terminación, conceptos devengados y deducciones comprobables en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/laboral/calcular-liquidacion-laboral-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Indemnización, preaviso, vacaciones y aguinaldo: cómo calcular cada concepto con ejemplos numéricos. Errores frecuentes que pueden costarle dinero al
++ Este asunto requiere comprobar forma de terminación, conceptos devengados y deducciones comprobables. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar forma de terminación, conceptos devengados y deducciones comprobables. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 5. ¿Qué hacer si mi empleador no me paga en
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-laboral/empleador-no-paga-salario-honduras
-- Consulta objetivo: despido laboral
-- GSC: 3 impresiones; 0 clics; CTR 0.0000; posición 8.33.
-- Title anterior: ¿Qué hacer si mi empleador no me paga en
-- Title propuesto: ¿Qué hacer si mi empleador no me paga en
-- Meta anterior: Tu empleador no te paga en Honduras? Conoce tus derechos laborales, pasos a seguir y plazos. Asesoría legal para reclamar salarios impagos.
-- Meta propuesta: La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CT-189-59.
-- Fuentes exactas: HN-CT-189-59 (https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf; artículos 112–126, 321–346 y 664–669)
-- Autor propuesto: Emil Barahona
+- Query: empleador no paga salario honduras (GSC_QUERY_MATCHED)
+- Intención: informational
+- Title actual/propuesto: ¿Qué hacer si mi empleador no me paga en → ¿Qué hacer si mi empleador no me paga en
+- Meta propuesta: Empleador no paga salario honduras: análisis de prueba del salario, requerimiento, inspección y reclamación con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar prueba del salario, requerimiento, inspección y reclamación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-laboral/jornada-laboral-horas-extra-descansos-honduras; https://www.pinedayasociadoshn.com/blog/derecho-laboral/derechos-trabajadora-embarazada-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-laboral
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula prueba del salario, requerimiento, inspección y reclamación en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/laboral/empleador-no-paga-salario-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
 
-## 6. Jornada Laboral en Honduras: Horas Extra y Recargos
+```diff
+- Pasos legales para reclamar salarios impagos en Honduras. Derechos del trabajador, vías administrativas y judiciales disponibles.
++ Este asunto requiere comprobar prueba del salario, requerimiento, inspección y reclamación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar prueba del salario, requerimiento, inspección y reclamación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
+
+## 6. Jornada Laboral en Honduras: Horas Extra
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-laboral/jornada-laboral-horas-extra-descansos-honduras
-- Consulta objetivo: jornada laboral en honduras: horas extra y recargos
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Jornada Laboral en Honduras: Horas Extra
-- Title propuesto: Jornada Laboral en Honduras: Horas Extra y Recargos
-- Meta anterior: Revise los límites de jornada, descansos y recargos por horas extra en Honduras, además de la documentación útil para un reclamo laboral.
-- Meta propuesta: La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CT-189-59.
-- Fuentes exactas: HN-CT-189-59 (https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf; artículos 112–126, 321–346 y 664–669)
-- Autor propuesto: Emil Barahona
+- Query: jornada laboral horas extra honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Jornada Laboral en Honduras: Horas Extra → Jornada Laboral en Honduras: Horas Extra
+- Meta propuesta: Jornada laboral horas extra honduras: análisis de jornada ordinaria, trabajo extraordinario, recargos y descansos con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar jornada ordinaria, trabajo extraordinario, recargos y descansos. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-laboral/despido-laboral-honduras-guia-completa; https://www.pinedayasociadoshn.com/blog/derecho-laboral/despido-injustificado-honduras-derechos-trabajador
-- Servicio relacionado: /servicios-juridicos/derecho-laboral
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula jornada ordinaria, trabajo extraordinario, recargos y descansos en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/laboral/jornada-laboral-horas-extra-descansos-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Guía completa sobre la jornada laboral en Honduras: tipos de jornada (diurna, nocturna, mixta), horas extra y su recargo, descansos obligatorios, vacaciones y
++ Este asunto requiere comprobar jornada ordinaria, trabajo extraordinario, recargos y descansos. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar jornada ordinaria, trabajo extraordinario, recargos y descansos. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 7. Despido por Embarazo en Honduras
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-laboral/derechos-trabajadora-embarazada-honduras
-- Consulta objetivo: derechos de la mujer embarazada en el trabajo en honduras
-- GSC: 15 impresiones; 0 clics; CTR 0.0000; posición 11.33.
-- Title anterior: Despido por Embarazo en Honduras
-- Title propuesto: Despido por Embarazo en Honduras
-- Meta anterior: Conozca sus derechos laborales en Honduras ante un despido por embarazo. Fuero maternal, licencia y protección legal.
-- Meta propuesta: La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CT-189-59.
-- Fuentes exactas: HN-CT-189-59 (https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf; artículos 112–126, 321–346 y 664–669)
-- Autor propuesto: Emil Barahona
+- Query: derechos trabajadora embarazada honduras (GSC_QUERY_MATCHED)
+- Intención: informational
+- Title actual/propuesto: Despido por Embarazo en Honduras → Despido por Embarazo en Honduras
+- Meta propuesta: Derechos trabajadora embarazada honduras: análisis de estabilidad reforzada, licencia, comunicación y autorización con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar estabilidad reforzada, licencia, comunicación y autorización. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-laboral/despido-injustificado-honduras-derechos-trabajador; https://www.pinedayasociadoshn.com/blog/derecho-laboral/calcular-prestaciones-laborales-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-laboral
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula estabilidad reforzada, licencia, comunicación y autorización en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/laboral/derechos-trabajadora-embarazada-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- ¿La despidieron estando embarazada? El fuero maternal la protege en Honduras. Licencia de 10 semanas, lactancia y cómo demandar un despido ilegal.
++ Este asunto requiere comprobar estabilidad reforzada, licencia, comunicación y autorización. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar estabilidad reforzada, licencia, comunicación y autorización. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 8. Acoso Laboral en Honduras: Cómo Identificarlo y Denunciarlo Legalmente
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-laboral/acoso-laboral-mobbing-honduras
-- Consulta objetivo: acoso laboral en honduras: cómo identificarlo y denunciarlo legalmente
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Acoso Laboral en Honduras: Cómo Identificarlo y Denunciarlo Legalmente
-- Title propuesto: Acoso Laboral en Honduras: Cómo Identificarlo y Denunciarlo Legalmente
-- Meta anterior: Conozca cómo identificar y denunciar el acoso laboral en Honduras. Explicación del despido indirecto (Art. 114) y el acoso vertical (Art. 294 CP).
-- Meta propuesta: La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CT-189-59.
-- Fuentes exactas: HN-CT-189-59 (https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf; artículos 112–126, 321–346 y 664–669)
-- Autor propuesto: Emil Barahona
+- Query: acoso laboral honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Acoso Laboral en Honduras: Cómo Identificarlo y Denunciarlo Legalmente → Acoso Laboral en Honduras: Cómo Identificarlo y Denunciarlo Legalmente
+- Meta propuesta: Acoso laboral honduras: análisis de conductas reiteradas, prueba, prevención y vías de reclamación con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar conductas reiteradas, prueba, prevención y vías de reclamación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-laboral/calcular-prestaciones-laborales-honduras; https://www.pinedayasociadoshn.com/blog/derecho-laboral/calcular-liquidacion-laboral-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-laboral
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula conductas reiteradas, prueba, prevención y vías de reclamación en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/laboral/acoso-laboral-mobbing-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Guía sobre acoso laboral en Honduras: qué conductas constituyen mobbing, cómo probarlo, vías de denuncia (Secretaría de Trabajo, vía civil, vía penal) y cómo
++ Este asunto requiere comprobar conductas reiteradas, prueba, prevención y vías de reclamación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar conductas reiteradas, prueba, prevención y vías de reclamación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```

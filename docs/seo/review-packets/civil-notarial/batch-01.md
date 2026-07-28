@@ -1,174 +1,171 @@
 # Paquete de revisión jurídica — civil-notarial — lote 01
 
-> `INVALID_GENERIC_SCAFFOLD_DO_NOT_APPLY`: paquete invalidado; conserva datos
-> de trazabilidad, pero no constituye contenido revisable ni puede aplicarse.
-
-> Estado: `documentary_review` → `lawyer_review_pending`. Autor y revisor son propuestas internas, no una firma pública.
+> Estado: `lawyer_review_pending`. Ningún contenido de este paquete puede aplicarse en Production.
 
 ## 1. Contratos de Arrendamiento en Honduras
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-civil/contratos-arrendamiento-derechos-obligaciones-honduras
-- Consulta objetivo: depósito de renta código civil
-- GSC: 1 impresiones; 0 clics; CTR 0.0000; posición 8.00.
-- Title anterior: Contratos de Arrendamiento en Honduras
-- Title propuesto: Contratos de Arrendamiento en Honduras
-- Meta anterior: Conozca los derechos y obligaciones de inquilinos y propietarios en Honduras: contrato, depósito, reparaciones, mora y desalojo.
-- Meta propuesta: La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CPC-211-2006.
-- Fuentes exactas: HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: contrato de arrendamiento honduras (GSC_QUERY_MATCHED)
+- Intención: informational
+- Title actual/propuesto: Contratos de Arrendamiento en Honduras → Contratos de Arrendamiento en Honduras
+- Meta propuesta: Contrato de arrendamiento honduras: análisis de renta, depósito, conservación, incumplimiento y restitución con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar renta, depósito, conservación, incumplimiento y restitución. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-civil/danos-perjuicios-indemnizacion-honduras; https://www.pinedayasociadoshn.com/blog/derecho-civil/testamentos-sucesiones-herencia-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-civil
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CPC-211-2006, disposición específica pendiente de validación humana en el Código Procesal Civil [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula renta, depósito, conservación, incumplimiento y restitución en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/civil-notarial/contratos-arrendamiento-derechos-obligaciones-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
 
-## 2. Daños y Perjuicios en Honduras: Cómo Reclamar
+```diff
+- Guía legal sobre arrendamiento en Honduras: cláusulas esenciales, depósito, reparaciones, desahucio por falta de pago, plazo mínimo y cómo protegerse frente a
++ Este asunto requiere comprobar renta, depósito, conservación, incumplimiento y restitución. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar renta, depósito, conservación, incumplimiento y restitución. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
+
+## 2. Daños y Perjuicios en Honduras: Demanda e Indemnización
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-civil/danos-perjuicios-indemnizacion-honduras
-- Consulta objetivo: demanda por daños y perjuicios honduras
-- GSC: 80 impresiones; 3 clics; CTR 0.0375; posición 6.31.
-- Title anterior: Daños y Perjuicios en Honduras: Demanda e Indemnización
-- Title propuesto: Daños y Perjuicios en Honduras: Cómo Reclamar
-- Meta anterior: ¿Cuándo procede una demanda por daños y perjuicios en Honduras? Daño material y moral, plazos para demandar y cómo se calcula la indemnización.
-- Meta propuesta: La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CPC-211-2006.
-- Fuentes exactas: HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: daños y perjuicios honduras (GSC_QUERY_MATCHED)
+- Intención: informational
+- Title actual/propuesto: Daños y Perjuicios en Honduras: Demanda e Indemnización → Daños y Perjuicios en Honduras: Demanda e Indemnización
+- Meta propuesta: Daños y perjuicios honduras: análisis de daño, imputación, causalidad, cuantificación y prueba con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar daño, imputación, causalidad, cuantificación y prueba. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-civil/testamentos-sucesiones-herencia-honduras; https://www.pinedayasociadoshn.com/blog/derecho-civil/herencias-honduras-fallece-familiar
-- Servicio relacionado: /servicios-juridicos/derecho-civil
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CPC-211-2006, disposición específica pendiente de validación humana en el Código Procesal Civil [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula daño, imputación, causalidad, cuantificación y prueba en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/civil-notarial/danos-perjuicios-indemnizacion-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
 
-## 3. Herencias en Honduras: Testamento y Sucesión
+```diff
+- Guía 2026 para reclamar daños y perjuicios en Honduras: tipos, cálculo de indemnización, pruebas necesarias y proceso judicial paso a paso.
++ Este asunto requiere comprobar daño, imputación, causalidad, cuantificación y prueba. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar daño, imputación, causalidad, cuantificación y prueba. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
+
+## 3. Herencias en Honduras: Guía Paso a Paso de
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-civil/testamentos-sucesiones-herencia-honduras
-- Consulta objetivo: herencias en honduras: testamento y sucesión
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Herencias en Honduras: Guía Paso a Paso de
-- Title propuesto: Herencias en Honduras: Testamento y Sucesión
-- Meta anterior: Descubra cómo funcionan las herencias y sucesiones en Honduras. Conozca los tipos de testamento, la sucesión intestada y el proceso legal.
-- Meta propuesta: La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CPC-211-2006.
-- Fuentes exactas: HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: testamento y sucesión honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Herencias en Honduras: Guía Paso a Paso de → Herencias en Honduras: Guía Paso a Paso de
+- Meta propuesta: Testamento y sucesión honduras: análisis de capacidad, forma testamentaria, herederos y ejecución con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar capacidad, forma testamentaria, herederos y ejecución. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-civil/herencias-honduras-fallece-familiar; https://www.pinedayasociadoshn.com/blog/derecho-notarial/poder-legal-honduras-cuando-se-necesita
-- Servicio relacionado: /servicios-juridicos/derecho-civil
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CPC-211-2006, disposición específica pendiente de validación humana en el Código Procesal Civil [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula capacidad, forma testamentaria, herederos y ejecución en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/civil-notarial/testamentos-sucesiones-herencia-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Qué hacer cuando fallece un familiar en Honduras: tipos de testamento, sucesión intestada, plazos, impuestos, declaratoria de herederos y adjudicación de
++ Este asunto requiere comprobar capacidad, forma testamentaria, herederos y ejecución. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar capacidad, forma testamentaria, herederos y ejecución. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 4. Herencias en Honduras: ¿qué hacer cuando fallece un...
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-civil/herencias-honduras-fallece-familiar
-- Consulta objetivo: herencias en honduras: ¿qué hacer cuando fallece un...
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Herencias en Honduras: ¿qué hacer cuando fallece un...
-- Title propuesto: Herencias en Honduras: ¿qué hacer cuando fallece un...
-- Meta anterior: Pasos legales tras el fallecimiento de un familiar en Honduras. Sucesión testada e intestada, plazos, documentación necesaria y asesoría legal.
-- Meta propuesta: La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CPC-211-2006.
-- Fuentes exactas: HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: trámite de herencia honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Herencias en Honduras: ¿qué hacer cuando fallece un... → Herencias en Honduras: ¿qué hacer cuando fallece un...
+- Meta propuesta: Trámite de herencia honduras: análisis de certificados, inventario, testamento, declaratoria y partición con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar certificados, inventario, testamento, declaratoria y partición. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-notarial/poder-legal-honduras-cuando-se-necesita; https://www.pinedayasociadoshn.com/blog/derecho-civil/compraventa-inmuebles-aspectos-legales-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-civil
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CPC-211-2006, disposición específica pendiente de validación humana en el Código Procesal Civil [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula certificados, inventario, testamento, declaratoria y partición en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/civil-notarial/herencias-honduras-fallece-familiar.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Pasos legales tras el fallecimiento de un familiar en Honduras. Sucesión testada e intestada, plazos, documentación necesaria y asesoría legal.
++ Este asunto requiere comprobar certificados, inventario, testamento, declaratoria y partición. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar certificados, inventario, testamento, declaratoria y partición. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 5. Poder Notarial en Honduras: Tipos
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-notarial/poder-legal-honduras-cuando-se-necesita
-- Consulta objetivo: cuanto tiempo dura una carta poder en honduras
-- GSC: 82 impresiones; 0 clics; CTR 0.0000; posición 5.51.
-- Title anterior: Poder Notarial en Honduras: Tipos
-- Title propuesto: Poder Notarial en Honduras: Tipos
-- Meta anterior: Conozca cuándo necesita un poder notarial en Honduras, qué tipos existen, cómo se otorgan y qué debe revisar antes de firmar.
-- Meta propuesta: La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CPC-211-2006.
-- Fuentes exactas: HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: poder notarial honduras (GSC_QUERY_MATCHED)
+- Intención: informational
+- Title actual/propuesto: Poder Notarial en Honduras: Tipos → Poder Notarial en Honduras: Tipos
+- Meta propuesta: Poder notarial honduras: análisis de facultades, forma, límites, vigencia y revocación con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar facultades, forma, límites, vigencia y revocación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-civil/compraventa-inmuebles-aspectos-legales-honduras; https://www.pinedayasociadoshn.com/blog/derecho-civil/prescripcion-deudas-plazos-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-notarial
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CPC-211-2006, disposición específica pendiente de validación humana en el Código Procesal Civil [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula facultades, forma, límites, vigencia y revocación en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/civil-notarial/poder-legal-honduras-cuando-se-necesita.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- ¿Necesita un poder notarial en Honduras? Guía 2026 con los 5 tipos, costos, requisitos y paso a paso para otorgarlo ante notario. Evite errores.
++ Este asunto requiere comprobar facultades, forma, límites, vigencia y revocación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar facultades, forma, límites, vigencia y revocación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 6. Compraventa de Inmuebles en Honduras
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-civil/compraventa-inmuebles-aspectos-legales-honduras
-- Consulta objetivo: compraventa de inmuebles en honduras
-- GSC: 0 impresiones; 0 clics; CTR 0.0000; posición 0.00.
-- Title anterior: Compraventa de Inmuebles en Honduras
-- Title propuesto: Compraventa de Inmuebles en Honduras
-- Meta anterior: Guía completa sobre la compraventa de inmuebles en Honduras. Conozca el marco legal, pasos, impuestos y errores comunes.
-- Meta propuesta: La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CPC-211-2006.
-- Fuentes exactas: HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: compraventa de inmueble honduras (NO_RELIABLE_GSC_QUERY)
+- Intención: informational
+- Title actual/propuesto: Compraventa de Inmuebles en Honduras → Compraventa de Inmuebles en Honduras
+- Meta propuesta: Compraventa de inmueble honduras: análisis de titularidad, gravámenes, escritura, impuestos e inscripción con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar titularidad, gravámenes, escritura, impuestos e inscripción. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-civil/contratos-arrendamiento-derechos-obligaciones-honduras; https://www.pinedayasociadoshn.com/blog/derecho-civil/danos-perjuicios-indemnizacion-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-civil
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CPC-211-2006, disposición específica pendiente de validación humana en el Código Procesal Civil [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula titularidad, gravámenes, escritura, impuestos e inscripción en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/civil-notarial/compraventa-inmuebles-aspectos-legales-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Guía completa sobre la compraventa de inmuebles en Honduras: verificación registral, escritura pública, impuestos, inscripción y errores que pueden costarle la
++ Este asunto requiere comprobar titularidad, gravámenes, escritura, impuestos e inscripción. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar titularidad, gravámenes, escritura, impuestos e inscripción. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 7. Prescripción de Deudas en Honduras: Plazos y Requisitos
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-civil/prescripcion-deudas-plazos-honduras
-- Consulta objetivo: cuando prescribe una deuda en honduras
-- GSC: 86 impresiones; 2 clics; CTR 0.0233; posición 4.40.
-- Title anterior: Prescripción de Deudas en Honduras: Plazos y Requisitos
-- Title propuesto: Prescripción de Deudas en Honduras: Plazos y Requisitos
-- Meta anterior: ¿En cuánto tiempo prescribe una deuda en Honduras? Plazos para deudas civiles, mercantiles y bancarias. Cómo interrumpir la prescripción y conservar tu derecho 
-- Meta propuesta: La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CPC-211-2006.
-- Fuentes exactas: HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: prescripción de deudas honduras (GSC_QUERY_MATCHED)
+- Intención: informational
+- Title actual/propuesto: Prescripción de Deudas en Honduras: Plazos y Requisitos → Prescripción de Deudas en Honduras: Plazos y Requisitos
+- Meta propuesta: Prescripción de deudas honduras: análisis de naturaleza de la obligación, exigibilidad, interrupción y prueba con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar naturaleza de la obligación, exigibilidad, interrupción y prueba. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-civil/danos-perjuicios-indemnizacion-honduras; https://www.pinedayasociadoshn.com/blog/derecho-civil/testamentos-sucesiones-herencia-honduras
-- Servicio relacionado: /servicios-juridicos/derecho-civil
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CPC-211-2006, disposición específica pendiente de validación humana en el Código Procesal Civil [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula naturaleza de la obligación, exigibilidad, interrupción y prueba en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/civil-notarial/prescripcion-deudas-plazos-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Deudas civiles (1-5 años según tipo), mercantiles (3 años), bancarias (5 años si no hay interrupción). Cómo interrumpir la prescripción con carta formal y
++ Este asunto requiere comprobar naturaleza de la obligación, exigibilidad, interrupción y prueba. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar naturaleza de la obligación, exigibilidad, interrupción y prueba. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
 
 ## 8. Cómo reclamar una deuda legalmente en Honduras
 
 - URL: https://www.pinedayasociadoshn.com/blog/derecho-civil/reclamar-deuda-legalmente-honduras
-- Consulta objetivo: que pasa si me demandan y no tengo como pagar honduras
-- GSC: 14 impresiones; 0 clics; CTR 0.0000; posición 7.64.
-- Title anterior: Cómo reclamar una deuda legalmente en Honduras
-- Title propuesto: Cómo reclamar una deuda legalmente en Honduras
-- Meta anterior: Descubra cómo reclamar una deuda legalmente en Honduras. Conozca el proceso monitorio, juicio ejecutivo, requisitos y plazos de prescripción según la ley.
-- Meta propuesta: La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.
-- Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
-- Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CPC-211-2006.
-- Fuentes exactas: HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: Thania Marlene Paz
+- Query: cómo cobrar una deuda en honduras (GSC_QUERY_MATCHED)
+- Intención: informational
+- Title actual/propuesto: Cómo reclamar una deuda legalmente en Honduras → Cómo reclamar una deuda legalmente en Honduras
+- Meta propuesta: Cómo cobrar una deuda en honduras: análisis de documento, vencimiento, requerimiento, proceso y ejecución con documentos, procedimiento y fuentes oficiales pertinentes.
+- Respuesta directa: Este asunto requiere comprobar documento, vencimiento, requerimiento, proceso y ejecución. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Autor: Thania Marlene Paz
 - Revisor propuesto: Emil Barahona
-- Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-civil/testamentos-sucesiones-herencia-honduras; https://www.pinedayasociadoshn.com/blog/derecho-civil/herencias-honduras-fallece-familiar
-- Servicio relacionado: /servicios-juridicos/derecho-civil
-- CTA: solicitar una evaluación confidencial del caso y la documentación.
-- Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
-- Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
-- Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
+- Fuente/sección: HN-CPC-211-2006, disposición específica pendiente de validación humana en el Código Procesal Civil [HUMAN_REVIEW_REQUIRED]
+- Pregunta jurídica: ¿Confirma qué disposición vigente regula documento, vencimiento, requerimiento, proceso y ejecución en el supuesto descrito y qué excepción práctica debe incorporarse?
+- Propuesta completa: data/seo/article-editorial-proposals/civil-notarial/reclamar-deuda-legalmente-honduras.json
+- Decisión solicitada: aprobar, corregir con cita exacta o devolver para reescritura.
+
+```diff
+- Guía práctica para reclamar deudas por la vía legal en Honduras. Requisitos del título ejecutivo, procedimiento judicial y alternativas de cobro.
++ Este asunto requiere comprobar documento, vencimiento, requerimiento, proceso y ejecución. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Este asunto requiere comprobar documento, vencimiento, requerimiento, proceso y ejecución. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+```
