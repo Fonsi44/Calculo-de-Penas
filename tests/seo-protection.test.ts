@@ -296,11 +296,12 @@ describe('SEO on-page — home page (página raíz)', () => {
   it('el title del sitio (tagline) incluye los términos clave y no supera 60 caracteres', () => {
     // La home usa site.tagline como title absoluto. Debe contener intención
     // local, tipo de entidad y marca sin depender del template del layout.
+    // El plan maestro §5.1 establece: "Abogados en Nacaome, Valle | Pineda y
+    // Asociados" — sin "Bufete" en el title.
     const title = site.tagline;
     expect(title).toContain('Abogados');
     expect(title).toContain('Nacaome');
     expect(title).toContain('Valle');
-    expect(title).toContain('Bufete');
     expect(title).toContain('Pineda y Asociados');
     expect(title.length).toBeGreaterThanOrEqual(35);
     expect(title.length).toBeLessThanOrEqual(60);

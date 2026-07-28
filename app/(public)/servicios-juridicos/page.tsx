@@ -25,10 +25,10 @@ import { FAQ_SERVICIOS_JURIDICOS } from '@/data/faqs-hubs';
 import { hubPenal } from '@/data/areas-juridicas';
 
 export const metadata: Metadata = buildMetadata({
-  // 48 chars. Antes 69 (se truncaba en SERP). Mantiene intención local.
-  title: `Servicios Jurídicos en ${site.address.city} | 14 Áreas`,
-  // 153 chars.
-  description: `Servicios legales en ${site.address.city} y sur de Honduras: penal, familia, laboral, civil, mercantil y tributario. Presupuesto por escrito. WhatsApp ${site.whatsappDisplay}.`,
+  // 47 chars. Plan maestro §7.1: "Servicios Jurídicos en Nacaome | Áreas de Práctica"
+  title: `Servicios Jurídicos en ${site.address.city} | Áreas de Práctica`,
+  // 157 chars. Plan §7.1
+  description: `Defensa penal y asesoría en familia, laboral, civil, notarial, mercantil y administrativo. Identifique el área adecuada y consulte con un abogado colegiado.`,
   canonicalPath: '/servicios-juridicos',
   keywords: ['abogados Nacaome', 'abogado Valle Honduras', 'áreas del derecho Nacaome', 'derecho familia Valle', 'derecho laboral Nacaome', 'derecho mercantil Valle', 'derecho civil Choluteca', 'bufete jurídico Nacaome'],
   ogImage: '/og/civil.webp',
@@ -60,7 +60,7 @@ export default async function AreasJuridicasPage() {
       <PageHero
         eyebrow={contentMap['hero.eyebrow'] || 'Servicios Jurídicos'}
         badge={contentMap['hero.badge'] || 'Cobertura integral'}
-        title={contentMap['hero.title'] || `Servicios Jurídicos en ${site.address.city}, ${site.address.department} — Ramas principales del derecho`}
+        title={contentMap['hero.title'] || `Servicios jurídicos para personas, familias y empresas`}
         subtitle={contentMap['hero.subtitle'] || 'Desde Nacaome, Valle, ofrecemos cobertura legal integral en las principales ramas del derecho hondureño. La defensa penal es nuestra especialidad destacada y la acompañamos con servicios especializados en familia, laboral, civil, mercantil, tributario y más.'}
         cta={<CTAGroup variant="inverse" />}
         bgImage="/images/servicios/servicios-bg.webp"
