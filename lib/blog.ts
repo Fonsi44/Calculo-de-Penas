@@ -55,9 +55,16 @@ function polishedExcerpt(value: string): string {
   return `${text}…`;
 }
 
-function polishedTitle(value: string): string {
-  const text = value.trim();
-  return /\b(?:en|de|del|la|las|los|y|para|por)$/i.test(text) ? `${text}…` : text;
+export function polishedTitle(value: string): string {
+  // Plan maestro SEO/GEO §8.2 y §10: prohibido publicar titles incompletos,
+  // cortados artificialmente o terminados en preposición con elipsis. Antes
+  // este helper añadía "…" a títulos terminados en preposición, generando
+  // exactly los titles rotos que el plan denuncia (p. ej.
+  // "Abogados en Nacaome, Valle: 15 Años de…"). Ahora se devuelve el título
+  // sin alterar: la corrección real vive en EDITORIAL_OVERRIDES y en la
+  // reescritura de los artículos (Fase 4, con revisión jurídica humana).
+  // No recortar por caracteres (tampoco): se conservaría una frase incompleta.
+  return value.trim();
 }
 
 export async function getAllPosts(): Promise<Post[]> {
