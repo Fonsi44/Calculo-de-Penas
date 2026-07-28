@@ -23,13 +23,12 @@ vi.mock('@/lib/db', () => ({
 describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
   
   describe('1. Redirecciones 301/308 de posts locales', () => {
-    it('las 7 redirecciones locales de canibalización están configuradas en next.config.ts', async () => {
+    it('las 6 redirecciones locales vigentes están configuradas y Nacaome queda informativo', async () => {
       const redirects = await nextConfig.redirects?.();
       expect(redirects).toBeDefined();
       if (!redirects) return;
 
       const localRedirects = [
-        { src: '/blog/practica-legal/abogados-en-nacaome', dest: '/abogados-en-nacaome' },
         { src: '/blog/practica-legal/abogados-en-choluteca', dest: '/abogados-en-choluteca' },
         { src: '/blog/practica-legal/abogados-en-san-lorenzo', dest: '/abogados-en-san-lorenzo' },
         { src: '/blog/practica-legal/abogados-en-pespire-choluteca', dest: '/abogados-en-pespire' },
@@ -44,14 +43,16 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
         expect(match?.destination).toBe(rule.dest);
         expect(match?.permanent).toBe(true);
       }
+      expect(redirects.some((rule: { source: string }) => (
+        rule.source === '/blog/practica-legal/abogados-en-nacaome'
+      ))).toBe(false);
     });
 
-    it('no existen redirecciones circulares ni en cadena entre los 7 posts locales y sus destinos', async () => {
+    it('no existen redirecciones circulares ni en cadena entre los 6 posts locales y sus destinos', async () => {
       const redirects = await nextConfig.redirects?.() || [];
       const sources = new Set(redirects.map((r: { source: string }) => r.source));
       
       const localDestinations = [
-        '/abogados-en-nacaome',
         '/abogados-en-choluteca',
         '/abogados-en-san-lorenzo',
         '/abogados-en-pespire',
@@ -68,13 +69,12 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
   });
 
   describe('2. Hardening del Sitemap y RSS', () => {
-    it('ninguno de los 7 posts locales redirigidos aparece en sitemap.ts', async () => {
+    it('ninguno de los 6 posts locales redirigidos aparece en sitemap.ts', async () => {
       // Incluso si la DB estuviera online, las URL están excluidas vía REDIRECT_SOURCE_PATHS
       const urls = await sitemap();
       const urlsSet = new Set(urls.map(u => new URL(u.url).pathname));
 
       const pathsToExclude = [
-        '/blog/practica-legal/abogados-en-nacaome',
         '/blog/practica-legal/abogados-en-choluteca',
         '/blog/practica-legal/abogados-en-san-lorenzo',
         '/blog/practica-legal/abogados-en-pespire-choluteca',
@@ -88,14 +88,13 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
       }
     });
 
-    it('ninguno de los 7 posts locales redirigidos aparece en el feed RSS', async () => {
+    it('ninguno de los 6 posts locales redirigidos aparece en el feed RSS', async () => {
       // RSS consume getAllPosts() que filtra por published = true. Al estar despublicados,
       // no deben listarse en el XML.
       const res = await getFeed();
       const body = await res.text();
 
       const slugsToExclude = [
-        'abogados-en-nacaome',
         'abogados-en-choluteca',
         'abogados-en-san-lorenzo',
         'abogados-en-pespire-choluteca',
