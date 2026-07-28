@@ -4,11 +4,12 @@ Fecha de corte: 2026-07-28
 
 ## Veredicto
 
-`FASE 2 IMPLEMENTADA EN PREVIEW`. La arquitectura pública, los perfiles,
-las seis áreas prioritarias, la FAQ corporativa, los inventarios locales,
-la intención Nacaome, la conversión prudente y los sitemaps segmentados están
-implementados. La publicación en Production sigue bloqueada por la puerta
-editorial y la Fase 3 de revisión jurídica de artículos.
+`FASE 3 IMPLEMENTADA EN PREVIEW`. La home es la única URL comercial primaria
+para Nacaome; la landing de oficina tiene intención operativa secundaria y el
+artículo conserva intención informativa. Los 175 artículos están clasificados,
+40 prioridades tienen mejora documental aplicada en la capa pending, patches
+seguros y paquetes concretos para revisión. La publicación en Production sigue
+bloqueada por la puerta editorial y la revisión jurídica humana.
 
 ## Base y trazabilidad
 
@@ -22,7 +23,7 @@ editorial y la Fase 3 de revisión jurídica de artículos.
 ## Datos live
 
 - GSC: 340 clics, 14.055 impresiones y 467 pares consulta×página.
-- GA4: 151 usuarios en la extracción disponible.
+- GA4: 156 usuarios en la extracción disponible.
 - Bing: 6.932 URLs rastreadas y 290 consultas.
 - `seo:doctor`: 21 OK, 0 ERROR, 2 pendientes opcionales.
 
@@ -39,7 +40,19 @@ editorial y la Fase 3 de revisión jurídica de artículos.
 - Por contrato de seguridad editorial, ninguno es indexable/sitemap hasta una
   revisión jurídica humana real y una migración editorial autorizada.
 
-## Bloqueos posteriores a la Fase 2
+## Implementación documental de Fase 3
+
+- 40 artículos agrupados en cinco lotes: penal, laboral, familia,
+  civil-notarial y mercantil.
+- 14 remediaciones prioritarias de title y meta registradas.
+- 72 relaciones claim-documento en el registro jurídico: documentos
+  verificados y fuentes oficiales que requieren concreción adicional separadas.
+- 53 clusters sin objetivo público seguro documentados; no se enlazan artículos
+  `lawyer_review_pending` solo para satisfacer una métrica.
+- 40 patches dry-run con hash de body, `updatedAt`, estado esperado,
+  transacción, drift check y rollback. Production está explícitamente prohibida.
+
+## Bloqueos posteriores a la Fase 3
 
 - Revisión jurídica humana específica para convertir artículos concretos a
   `lawyer_verified`.
@@ -47,8 +60,9 @@ editorial y la Fase 3 de revisión jurídica de artículos.
 - La DB exclusiva de Vercel Preview no contiene artículos publicados. El
   frontend ya no falla si faltan columnas operativas de revisión IA: `/blog`
   responde 200 sin resultados y las rutas de posts ausentes responden 404.
-- La Fase 3 debe completar investigación, fuentes y revisión jurídica real de
-  los 175 artículos. La Fase 2 no atribuye esas revisiones.
+- La Fase 4 debe validar los claims con los abogados, resolver fuentes ambiguas,
+  autorizar patches concretos y decidir el cutover. La Fase 3 no atribuye
+  revisiones jurídicas inexistentes.
 
 ## Verificación de Preview
 
