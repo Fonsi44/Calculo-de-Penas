@@ -29,9 +29,9 @@ import { FAQ_SOLICITAR_CONSULTA } from '@/data/faqs-hubs';
 export const metadata: Metadata = buildMetadata({
   title: 'Consulte a un Abogado en Nacaome, Valle',
   // 152 chars. Antes 162.
-  description: 'Solicite consulta confidencial sin costo. Respuesta en horario hábil. Abogados en Nacaome, Valle — defensa penal, familia, laboral y civil.',
+  description: 'Solicite una evaluación legal confidencial. Respuesta en horario hábil. Abogados en Nacaome, Valle para asuntos penales, familiares, laborales y civiles.',
   canonicalPath: '/solicitar-consulta',
-  keywords: ['consulta legal gratuita Nacaome', 'abogado consulta Valle', 'asesoría legal sin costo sur Honduras', 'consulta penal confidencial Nacaome', 'contactar abogado San Lorenzo', 'cita legal Choluteca', 'abogado Goascorán consulta', 'contactar abogado Amapala', 'cita legal Pespire', 'contactar abogado sur de Honduras'],
+  keywords: ['evaluación legal Nacaome', 'abogado consulta Valle', 'asesoría legal sur Honduras', 'consulta penal confidencial Nacaome', 'contactar abogado San Lorenzo', 'cita legal Choluteca', 'abogado Goascorán consulta', 'contactar abogado Amapala', 'cita legal Pespire', 'contactar abogado sur de Honduras'],
   ogImageAlt: `${site.name} - Solicitar Consulta Legal`,
 });
 
@@ -65,7 +65,7 @@ export default async function SolicitarConsultaPage() {
       ]} />
       <PageHero
         eyebrow="Solicitar consulta"
-        badge="Confidencial · Sin costo"
+        badge="Evaluación confidencial"
         title={heroTitle}
         subtitle={<>{heroSubtitle}</>}
       />
@@ -76,8 +76,9 @@ export default async function SolicitarConsultaPage() {
             <Card id="formulario" padding="md" className="border-l-4 border-l-accent">
               <h2 className="font-bold text-base text-primary">Formulario de consulta</h2>
               <p className="text-sm text-text-secondary mt-1 mb-5">
-                Los campos marcados con * son obligatorios. Por seguridad, no incluya
-                contraseñas, números de tarjeta ni documentos de identidad completos.
+                Los campos marcados con * son obligatorios. No envíe confesiones,
+                contraseñas ni documentos sensibles hasta que el despacho confirme el
+                canal adecuado.
               </p>
               <SolicitarConsultaForm />
             </Card>
@@ -296,7 +297,7 @@ export default async function SolicitarConsultaPage() {
           {
             '@context': 'https://schema.org',
             '@type': 'ContactPage',
-            name: 'Solicitar Consulta Legal Gratuita — Pineda y Asociados',
+            name: 'Solicitar Evaluación Legal — Pineda y Asociados',
             description: 'Solicite una consulta confidencial con un abogado penalista en Nacaome, Valle. Le respondemos en horario hábil.',
             url: `${site.url}/solicitar-consulta`,
             inLanguage: 'es-HN',

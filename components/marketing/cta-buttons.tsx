@@ -60,7 +60,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
           className="btn-shimmer inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer"
         >
           <Calendar size={16} aria-hidden="true" />
-          Solicitar consulta
+          Solicitar evaluación confidencial
         </a>
       </div>
     );
@@ -75,7 +75,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
           className="btn-shimmer inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer"
         >
           <Calendar size={16} aria-hidden="true" />
-          Solicitar consulta
+          Solicitar evaluación confidencial
         </a>
         <a
           href={telHref()}
@@ -98,7 +98,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
         className="btn-shimmer inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer"
       >
         <Calendar size={16} aria-hidden="true" />
-        Solicitar consulta
+        Solicitar evaluación confidencial
       </a>
       <a
         href={telHref()}
@@ -220,4 +220,3 @@ export function ContactStrip({ variant = 'horizontal', className }: ContactStrip
     </div>
   );
 }
-

@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   // redirects 301 y todos los canonicals. La normalización de Next es segura.
   // Auditoría 2026-07-06 (A-02): decisión documentada, sin cambio de código.
   alternates: { canonical: `${site.url}/` },
-  keywords: ['abogados Nacaome', 'bufete jurídico Valle', 'defensa penal Nacaome', 'abogado penalista Valle', 'abogados San Lorenzo', 'abogados Choluteca', 'abogados Goascorán', 'abogados San Marcos de Colón', 'abogados El Triunfo', 'abogados Marcovia', 'abogados Pespire', 'abogados Namasigüe', 'abogados Orocuina', 'abogados sur Honduras', 'abogados zona sur Honduras', 'consulta legal gratuita Nacaome', 'despacho jurídico Nacaome'],
+  keywords: ['abogados Nacaome', 'bufete jurídico Valle', 'defensa penal Nacaome', 'abogado penalista Valle', 'abogados San Lorenzo', 'abogados Choluteca', 'abogados Goascorán', 'abogados San Marcos de Colón', 'abogados El Triunfo', 'abogados Marcovia', 'abogados Pespire', 'abogados Namasigüe', 'abogados Orocuina', 'abogados sur Honduras', 'abogados zona sur Honduras', 'evaluación legal confidencial Nacaome', 'despacho jurídico Nacaome'],
   robots: {
     index: true,
     follow: true,
@@ -204,7 +204,7 @@ export default async function HomePage() {
                 </span>
               </div>
               <h1 className="font-serif font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight text-text-inverse text-balance">
-                Defensa penal y asesoría jurídica en Nacaome y Honduras
+                Abogados en Nacaome para defensa penal y asesoría jurídica
               </h1>
               <p className="mt-4 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-2xl text-pretty">
                 {t('hero.subtitle')}
@@ -258,7 +258,7 @@ export default async function HomePage() {
                   )}
                   <div className="flex items-center gap-2 pt-0.5">
                     <CheckCircle2 size={13} className="text-accent flex-shrink-0" />
-                    <p className="text-xs text-text-inverse/80">Consulta inicial sin costo · Presupuesto por escrito</p>
+                    <p className="text-xs text-text-inverse/80">Evaluación confidencial · Presupuesto por escrito</p>
                   </div>
                 </div>
               </div>

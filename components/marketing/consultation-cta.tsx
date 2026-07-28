@@ -40,7 +40,7 @@ export function ConsultationCTA({
   eyebrow,
   className,
 }: ConsultationCTAProps) {
-  const defaultEyebrow = 'Consulta confidencial sin costo en Nacaome, Valle';
+  const defaultEyebrow = 'Evaluación confidencial en Nacaome, Valle';
   const defaultTitle = 'Cada caso es único. Cuéntenos el suyo y le orientamos sin compromiso.';
   const defaultSubtitle =
     'Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones legales disponibles. Atendemos en Nacaome, San Lorenzo, Amapala, Langue, Goascorán, Choluteca, Pespiré, San Marcos de Colón, Marcovia y El Triunfo. Presupuesto por escrito antes de cualquier actuación. Sus datos están protegidos por el secreto profesional del abogado.';
@@ -54,7 +54,7 @@ export function ConsultationCTA({
               {title ?? '¿Necesita asesoría jurídica confidencial?'}
             </p>
             <p className="mt-2 text-sm text-text-secondary max-w-xl mx-auto text-pretty">
-              {subtitle ?? 'Primera consulta sin costo. Presupuesto por escrito. Atención directa del abogado responsable.'}
+              {subtitle ?? 'Evaluación confidencial. Presupuesto por escrito. Atención directa del abogado responsable.'}
             </p>
             <div className="mt-5 flex justify-center">
               <CTAGroup variant="inline" />
