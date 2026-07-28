@@ -13,7 +13,7 @@
  *   node tools/ci/repo-hygiene.mjs --quick  — solo raíz + secretos (rápido)
  */
 
-import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { resolve, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
@@ -46,23 +46,24 @@ const CANONICAL_ROOT_DIRS = new Set([
   'drizzle', 'public', 'data', 'scripts', 'node_modules',
 ]);
 
-const rootEntries = readdirSync(ROOT);
-for (const entry of rootEntries) {
-  const entryPath = resolve(ROOT, entry);
-  const isDir = statSync(entryPath).isDirectory();
-  if (isDir) {
-    if (!CANONICAL_ROOT_DIRS.has(entry) && !entry.startsWith('.')) {
-      warn(`Directorio no canónico en raíz: ${entry}/`);
-    }
-  } else {
-    if (!CANONICAL_ROOT_FILES.has(entry)) {
-      if (entry.endsWith('.zip') || entry.endsWith('.tar.gz') || entry.endsWith('.7z')) {
-        error(`ZIP/backup en raíz: ${entry}`);
-      } else if (entry.endsWith('.md') && !CANONICAL_ROOT_FILES.has(entry)) {
-        warn(`Markdown no canónico en raíz: ${entry}`);
-      } else if (entry.endsWith('.csv')) {
-        warn(`CSV en raíz: ${entry}`);
-      }
+const trackedPaths = execFileSync('git', ['ls-files', '-z'], { cwd: ROOT, encoding: 'utf8' })
+  .split('\0').filter(Boolean);
+const trackedRootFiles = trackedPaths.filter((path) => !path.includes('/'));
+const trackedRootDirs = new Set(trackedPaths.filter((path) => path.includes('/')).map((path) => path.split('/')[0]));
+
+for (const entry of trackedRootDirs) {
+  if (!CANONICAL_ROOT_DIRS.has(entry) && !entry.startsWith('.')) {
+    warn(`Directorio no canónico versionado en raíz: ${entry}/`);
+  }
+}
+for (const entry of trackedRootFiles) {
+  if (!CANONICAL_ROOT_FILES.has(entry)) {
+    if (entry.endsWith('.zip') || entry.endsWith('.tar.gz') || entry.endsWith('.7z')) {
+      error(`ZIP/backup versionado en raíz: ${entry}`);
+    } else if (entry.endsWith('.md') && !CANONICAL_ROOT_FILES.has(entry)) {
+      warn(`Markdown no canónico versionado en raíz: ${entry}`);
+    } else if (entry.endsWith('.csv')) {
+      warn(`CSV versionado en raíz: ${entry}`);
     }
   }
 }
