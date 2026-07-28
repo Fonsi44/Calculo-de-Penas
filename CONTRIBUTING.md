@@ -21,13 +21,9 @@ modifique código debe seguir este proceso.
 
 5. **Actualizar documentación** existente (no crear documentos nuevos en raíz).
 
-6. **Ejecutar validaciones**:
+6. **Ejecutar la interfaz estable de validación**:
    ```bash
-   npm run lint
-   npx tsc --noEmit
-   npm test
-   npm run build
-   npm run db:migrations:validate
+   npm run verify
    ```
 
 7. **Revisar diff**:
@@ -42,7 +38,7 @@ modifique código debe seguir este proceso.
    git commit -m "feat(dominio): descripción breve"
    ```
 
-9. **Pull request** (cuando el flujo del proyecto lo requiera).
+9. **Abrir pull request obligatorio**. `main` no admite trabajo directo.
 
 10. **Limpiar artefactos temporales** después del merge.
 
@@ -96,4 +92,5 @@ Cada PR debe incluir:
 - [ ] Sin archivos huérfanos/generados/backups.
 - [ ] Documentación actualizada.
 - [ ] Feature flags con owner y fecha de expiración.
-- [ ] `npm run build` verde.
+- [ ] `npm run verify` verde.
+- [ ] Rollback y riesgos residuales documentados.
