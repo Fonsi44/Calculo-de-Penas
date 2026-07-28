@@ -1,0 +1,872 @@
+import { pgTable, pgEnum, uuid, text, integer, boolean, timestamp, varchar, foreignKey, unique, serial, jsonb, index } from 'drizzle-orm/pg-core';
+export const ramasJuridicas = pgTable('ramas_juridicas', {
+  id: varchar('id', { length: 100 }).primaryKey(),
+  nombre: varchar('nombre', { length: 300 }).notNull(),
+  parentId: varchar('parent_id', { length: 100 }),
+  nivel: integer('nivel').notNull().default(1),
+  orden: integer('orden').notNull().default(0),
+}, (table) => ({
+  parentRef: foreignKey({ columns: [table.parentId], foreignColumns: [table.id] }),
+}));
+
+export const articulosConstitucion = pgTable('articulos_constitucion', {
+  id: integer('id').primaryKey(),
+  articulo: varchar('articulo', { length: 100 }).notNull(),
+  titulo: varchar('titulo', { length: 200 }),
+  capitulo: varchar('capitulo', { length: 200 }),
+  texto: text('texto'),
+});
+
+export const articulosCp = pgTable('articulos_cp', {
+  id: serial('id').primaryKey(),
+  articulo: varchar('articulo', { length: 50 }).notNull().unique(),
+  libro: varchar('libro', { length: 200 }),
+  titulo: varchar('titulo', { length: 200 }),
+  capitulo: varchar('capitulo', { length: 200 }),
+  seccion: varchar('seccion', { length: 200 }),
+  epigrafe: varchar('epigrafe', { length: 300 }),
+  texto: text('texto').notNull(),
+  tema: varchar('tema', { length: 100 }),
+});
+
+export const delitos = pgTable('delitos', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  nombre: varchar('nombre', { length: 500 }).notNull(),
+  articulo: varchar('articulo', { length: 100 }).notNull(),
+  conducta: text('conducta'),
+  clasificacion: varchar('clasificacion', { length: 200 }),
+  ramaId: varchar('rama_id', { length: 100 }),
+  constitucionArticuloId: integer('constitucion_articulo_id'),
+  penaMinimaMeses: integer('pena_minima_meses').notNull(),
+  penaMaximaMeses: integer('pena_maxima_meses').notNull(),
+  tienePenaAlternativa: boolean('tiene_pena_alternativa').default(false),
+  penaAlternativaMin: integer('pena_alternativa_min').default(0),
+  penaAlternativaMax: integer('pena_alternativa_max').default(0),
+  penasAccesorias: text('penas_accesorias').array().default([]),
+  observaciones: text('observaciones'),
+  esGrave: boolean('es_grave').default(false),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+  penaPorRemisionNormativa: boolean('pena_por_remision_normativa').default(false),
+  articulosRemitidosParaPena: text('articulos_remitidos_para_pena'),
+  penaBaseResueltaDesdeArticulo: varchar('pena_base_resuelta_desde_articulo', { length: 200 }),
+  condicionParaAplicarPenaRemitida: text('condicion_para_aplicar_pena_remitida'),
+  agravacionPorArticuloRemitido: text('agravacion_por_articulo_remitido'),
+  formulaCalculoRemision: text('formula_calculo_remision'),
+  requiereDatosEconomicos: boolean('requiere_datos_economicos').default(false),
+  variablesNecesariasParaCalculo: text('variables_necesarias_para_calculo'),
+  penaResueltaMinMeses: integer('pena_resuelta_min_meses'),
+  penaResueltaMaxMeses: integer('pena_resuelta_max_meses'),
+  observacionesRemisionNormativa: text('observaciones_remision_normativa'),
+}, (table) => ({
+  ramaRef: foreignKey({ columns: [table.ramaId], foreignColumns: [ramasJuridicas.id] }),
+  constitucionRef: foreignKey({ columns: [table.constitucionArticuloId], foreignColumns: [articulosConstitucion.id] }),
+  uniqueNombreArticulo: unique('delitos_nombre_articulo_unique').on(table.nombre, table.articulo),
+  ramaIdx: index('delitos_rama_idx').on(table.ramaId),
+  nombreIdx: index('delitos_nombre_idx').on(table.nombre),
+  articuloIdx: index('delitos_articulo_idx').on(table.articulo),
+}));
+
+export const bufetes = pgTable('bufetes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  nombre: varchar('nombre', { length: 200 }).notNull(),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+});
+
+export const usuarios = pgTable('usuarios', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  passwordHash: varchar('password_hash', { length: 255 }).notNull(),
+  nombre: varchar('nombre', { length: 200 }).notNull(),
+  rol: varchar('rol', { length: 50 }).notNull().default('pendiente'),
+  bufeteId: uuid('bufete_id'),
+  active: boolean('active').default(false),
+  mustChangePassword: boolean('must_change_password').default(false),
+  // Invalida todas las sesiones emitidas antes de un cambio de credenciales.
+  tokenVersion: integer('token_version').notNull().default(0),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  // SGIE — gobernanza de accesos (Fase 2). Columnas aditivas, no rompen filas existentes.
+  // `active=false` es desactivación (soft-delete). `bloqueado=true` es revocación de acceso
+  // distinguible (usuario existe, no se elimina, no puede entrar). El documento SGIE §6.2
+  // pide ambos explícitamente.
+  ultimoAcceso: timestamp('ultimo_acceso', { withTimezone: true }),
+  bloqueado: boolean('bloqueado').default(false),
+  bloqueadoEn: timestamp('bloqueado_en', { withTimezone: true }),
+  bloqueadoMotivo: varchar('bloqueado_motivo', { length: 500 }),
+  correoCorporativoVinculado: boolean('correo_corporativo_vinculado').default(false),
+}, (table) => ({
+  bufeteRef: foreignKey({ columns: [table.bufeteId], foreignColumns: [bufetes.id] }),
+  activeIdx: index('usuarios_active_idx').on(table.active),
+  bloqueadoIdx: index('usuarios_bloqueado_idx').on(table.bloqueado),
+}));
+
+export const casos = pgTable('casos', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  usuarioId: uuid('usuario_id').notNull(),
+  titulo: varchar('titulo', { length: 300 }).notNull(),
+  cliente: varchar('cliente', { length: 200 }),
+  estado: varchar('estado', { length: 50 }).notNull().default('borrador'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }),
+  usuarioIdx: index('casos_usuario_idx').on(table.usuarioId),
+  creadoEnIdx: index('casos_creado_en_idx').on(table.creadoEn),
+}));
+
+export const calculos = pgTable('calculos', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  casoId: uuid('caso_id').notNull(),
+  config: jsonb('config').notNull(),
+  resultado: jsonb('resultado').notNull(),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  casoRef: foreignKey({ columns: [table.casoId], foreignColumns: [casos.id] }),
+  casoIdx: index('calculos_caso_idx').on(table.casoId),
+  creadoEnIdx: index('calculos_creado_en_idx').on(table.creadoEn),
+}));
+
+export const auditoriaAccionEnum = pgEnum('auditoria_accion', [
+  'login',
+  'logout',
+  'login_failed',
+  'caso_created',
+  'caso_updated',
+  'caso_deleted',
+  'calculo_created',
+  'calculo_deleted',
+  'delito_created',
+  'delito_updated',
+  'delito_deleted',
+  'rate_limited',
+  'unauthorized_access',
+  'usuario_created',
+  'usuario_updated',
+  'usuario_deleted',
+  'invitacion_created',
+  'invitacion_accepted',
+  'invitacion_revoked',
+  'invitacion_resent',
+  'password_reset',
+  'password_changed',
+  'blog_created',
+  'blog_updated',
+  'blog_deleted',
+  'blog_generated',
+  'faq_created',
+  'faq_updated',
+  'faq_deleted',
+  'site_config_updated',
+  'categoria_blog_created',
+  'categoria_blog_updated',
+  'categoria_blog_deleted',
+  'categoria_faq_created',
+  'categoria_faq_updated',
+  'categoria_faq_deleted',
+  'tag_created',
+  'tag_updated',
+  'tag_deleted',
+  'autor_created',
+  'autor_updated',
+  'autor_deleted',
+  'pagina_cms_created',
+  'pagina_cms_updated',
+  'pagina_cms_deleted',
+  'area_juridica_created',
+  'area_juridica_updated',
+  'area_juridica_deleted',
+  'medio_created',
+  'medio_updated',
+  'medio_deleted',
+  'redirect_created',
+  'redirect_updated',
+  'redirect_deleted',
+  'menu_updated',
+  'rol_created',
+  'rol_updated',
+  'rol_deleted',
+  'permiso_updated',
+  // Fase 3/5 — agravantes específicas del tipo penal.
+  'agravante_especifica_created',
+  'agravante_especifica_updated',
+  'agravante_especifica_deleted',
+  // LegalTech — gestión automatizada de expedientes (Fase 1+).
+  'expediente_created',
+  'expediente_updated',
+  'expediente_estado_changed',
+  'expediente_deleted',
+  'cliente_created',
+  'cliente_updated',
+  'cliente_deleted',
+  'documento_uploaded',
+  'documento_updated',
+  'documento_deleted',
+  'documento_ia_processed',
+  // Fase 4B-1: aprobación documental en bloque.
+  'documento_bulk_approved',
+  'documento_bulk_reverted',
+  'enlace_created',
+  'enlace_revoked',
+  'enlace_used',
+  'magic_link_accessed',
+  'magic_link_expired',
+  'tarea_created',
+  'tarea_updated',
+  'tarea_completed',
+  'tarea_deleted',
+  'evento_created',
+  'evento_updated',
+  'evento_deleted',
+  'nota_created',
+  'nota_deleted',
+  'plantilla_created',
+  'plantilla_updated',
+  'plantilla_deleted',
+  'correo_sent',
+  'correo_failed',
+  'notificacion_created',
+  'notificacion_read',
+  'validacion_aprobada',
+  'validacion_rechazada',
+  // Fase 2 — seguimiento documental, recordatorios y bloqueo por cliente.
+  'reminder_sent',
+  'case_blocked_by_client',
+  'case_unblocked',
+  'internal_escalation_created',
+  // Fase 3 — pipeline de extracción documental y revisión asistente.
+  'document_extraction_started',
+  'document_extraction_completed',
+  'document_extraction_failed',
+  'document_requires_ocr',
+  'document_extraction_retried',
+  'document_manual_reviewed',
+  // Fase 4 — IA documental (DeepSeek): análisis, revisión humana y auditoría.
+  'ai_analysis_started',
+  'ai_analysis_completed',
+  'ai_analysis_failed',
+  'ai_analysis_skipped_no_text',
+  'ai_analysis_not_configured',
+  'ai_suggestion_accepted',
+  'ai_suggestion_rejected',
+  'ai_human_review_requested',
+  'ai_correction_requested',
+  // Fase 5 — puerta "Listo para revisión" y revisión documental.
+  'readiness_evaluation_completed',
+  'case_ready_for_review',
+  'case_returned_by_lawyer',
+  'case_documental_review_approved',
+  'case_additional_info_requested',
+  // Fase 2 — Workflows, Outbox, Jobs.
+  'workflow_transition',
+  'outbox_dispatched',
+  'outbox_failed',
+  'job_claimed',
+  'job_completed',
+  'job_failed',
+  'job_dead_lettered',
+  'job_requeued',
+  // Fase 2 — Comunicaciones.
+  'comunicacion_created',
+  'comunicacion_approved',
+  'comunicacion_rejected',
+  'comunicacion_sent',
+  'comunicacion_failed',
+  'comunicacion_bounced',
+  'comunicacion_suppressed',
+  'webhook_received',
+  'webhook_processed',
+  // Fase 2 — IA y OCR.
+  'ai_task_routed',
+  'ai_task_completed',
+  'ai_task_reviewed',
+  'ocr_completed',
+  'ocr_failed',
+  // Fase 3 — Portal del cliente y sesiones.
+  'portal_session_created',
+  'portal_session_expired',
+  'portal_document_uploaded',
+  // Fase 4A — Orquestación documental IA y feature flags.
+  'ai_pipeline_run_started',
+  'ai_pipeline_run_completed',
+  'ai_pipeline_run_failed',
+  'feature_flag_changed',
+  // Fase 4B-1 — Aprobación documental en bloque.
+  'documento_bulk_approved',
+  'documento_bulk_reverted',
+  // Fase 4B-2 — Paquetes preparados para firma.
+  'signature_package_created',
+  'signature_package_ready',
+  'signature_package_locked',
+  'signature_package_cancelled',
+  'signature_package_superseded',
+  'signature_package_verified',
+  // Fase 4B-3 — Firma electrónica.
+  'signature_envelope_created',
+  'signature_envelope_sent',
+  'signature_envelope_completed',
+  'signature_envelope_cancelled',
+  'signature_envelope_declined',
+  'signature_envelope_expired',
+  'signature_webhook_received',
+  'signature_artifact_downloaded',
+  // Fase 4B-4 — Calendario externo.
+  'calendar_connection_created',
+  'calendar_event_synced',
+  'calendar_event_sync_failed',
+  'calendar_conflict_resolved',
+  'calendar_feed_created',
+  'calendar_feed_revoked',
+]);
+
+export const auditoriaEventos = pgTable('auditoria_eventos', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  usuarioId: uuid('usuario_id'),
+  accion: auditoriaAccionEnum('accion').notNull(),
+  recurso: varchar('recurso', { length: 100 }),
+  recursoId: varchar('recurso_id', { length: 100 }),
+  ip: varchar('ip', { length: 64 }),
+  userAgent: varchar('user_agent', { length: 500 }),
+  metadata: jsonb('metadata'),
+  exito: boolean('exito').notNull().default(true),
+  mensaje: text('mensaje'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }),
+  accionIdx: index('auditoria_accion_idx').on(table.accion),
+  usuarioIdx: index('auditoria_usuario_idx').on(table.usuarioId),
+  creadoEnIdx: index('auditoria_creado_en_idx').on(table.creadoEn),
+}));
+
+export const rateLimits = pgTable('rate_limits', {
+  identifier: varchar('identifier', { length: 255 }).notNull(),
+  keyPrefix: varchar('key_prefix', { length: 50 }).notNull(),
+  count: integer('count').notNull().default(1),
+  windowStart: timestamp('window_start', { withTimezone: true }).notNull(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+}, (table) => ({
+  pk: unique('rate_limits_pk').on(table.identifier, table.keyPrefix),
+  expiresIdx: index('rate_limits_expires_idx').on(table.expiresAt),
+}));
+
+export const aceptacionesLegales = pgTable('aceptaciones_legales', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  usuarioId: uuid('usuario_id').notNull(),
+  version: varchar('version', { length: 20 }).notNull(),
+  aceptadoEn: timestamp('aceptado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }),
+  uniqueUsuarioVersion: unique('aceptacion_unique').on(table.usuarioId, table.version),
+}));
+
+export type AuditoriaAccion = typeof auditoriaAccionEnum.enumValues[number];
+export type AuditoriaEvento = typeof auditoriaEventos.$inferSelect;
+export type AuditoriaEventoInsert = typeof auditoriaEventos.$inferInsert;
+
+export const solicitudesConsulta = pgTable('solicitudes_consulta', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  nombre: varchar('nombre', { length: 200 }).notNull(),
+  telefono: varchar('telefono', { length: 50 }).notNull(),
+  email: varchar('email', { length: 255 }),
+  motivo: varchar('motivo', { length: 100 }).notNull(),
+  resumen: text('resumen').notNull(),
+  ip: varchar('ip', { length: 45 }),
+  userAgent: text('user_agent'),
+  emailStatus: varchar('email_status', { length: 20 }).default('pending'),
+  emailId: varchar('email_id', { length: 255 }),
+  emailError: text('email_error'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  creadoEnIdx: index('solicitudes_consulta_creado_en_idx').on(table.creadoEn),
+  emailStatusIdx: index('solicitudes_consulta_email_status_idx').on(table.emailStatus),
+}));
+
+export type SolicitudConsulta = typeof solicitudesConsulta.$inferSelect;
+export type SolicitudConsultaInsert = typeof solicitudesConsulta.$inferInsert;
+
+export const blogPosts = pgTable('blog_posts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  slug: varchar('slug', { length: 300 }).notNull().unique(),
+  title: varchar('title', { length: 500 }).notNull(),
+  description: text('description').notNull(),
+  body: text('body').notNull(),
+  publishedAt: timestamp('published_at', { withTimezone: true }).notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }),
+  category: varchar('category', { length: 200 }).notNull(),
+  tags: text('tags').array().default([]),
+  author: varchar('author', { length: 200 }).default('Pineda y Asociados'),
+  readingTime: varchar('reading_time', { length: 20 }).default('3 min'),
+  coverImage: varchar('cover_image', { length: 500 }),
+  featured: boolean('featured').default(false),
+  published: boolean('published').default(true),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+
+  // SEO metadata
+  metaTitle: varchar('meta_title', { length: 500 }),
+  metaDescription: text('meta_description'),
+  ogImage: varchar('og_image', { length: 500 }),
+
+  // Indexation control
+  noindex: boolean('noindex').default(false),
+
+  // Canonical override
+  canonicalUrl: varchar('canonical_url', { length: 500 }),
+
+  // Author relationship
+  authorId: uuid('author_id'),
+
+  // Legal review workflow
+  reviewStatus: varchar('review_status', { length: 50 }).default('published'),
+  reviewedBy: varchar('reviewed_by', { length: 200 }),
+  reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
+  legalReviewNotes: text('legal_review_notes'),
+
+  // AI review workflow (Fase 3)
+  aiReviewStatus: varchar('ai_review_status', { length: 50 }).default('not_started'),
+  aiReviewedAt: timestamp('ai_reviewed_at', { withTimezone: true }),
+  aiReviewProvider: varchar('ai_review_provider', { length: 100 }),
+  aiReviewModel: varchar('ai_review_model', { length: 100 }),
+  aiReviewVersion: varchar('ai_review_version', { length: 100 }),
+  aiReviewConfidence: varchar('ai_review_confidence', { length: 50 }),
+  aiReviewSources: jsonb('ai_review_sources').default('[]'),
+  aiReviewClaimsCount: integer('ai_review_claims_count').default(0),
+  aiReviewConfirmedClaims: integer('ai_review_confirmed_claims').default(0),
+  aiReviewCorrectedClaims: integer('ai_review_corrected_claims').default(0),
+  aiReviewUnresolvedClaims: integer('ai_review_unresolved_claims').default(0),
+  aiReviewRequiresHuman: boolean('ai_review_requires_human').default(false),
+  aiResearchProvider: varchar('ai_research_provider', { length: 100 }),
+  aiSearchQueriesCount: integer('ai_search_queries_count').default(0),
+  aiOfficialSourcesCount: integer('ai_official_sources_count').default(0),
+
+  // Content audit
+  lastReviewedAt: timestamp('last_reviewed_at', { withTimezone: true }),
+  nextReviewDueAt: timestamp('next_review_due_at', { withTimezone: true }),
+}, (table) => ({
+  slugIdx: index('blog_posts_slug_idx').on(table.slug),
+  categoryIdx: index('blog_posts_category_idx').on(table.category),
+  publishedAtIdx: index('blog_posts_published_at_idx').on(table.publishedAt),
+  publishedIdx: index('blog_posts_published_idx').on(table.published),
+  featuredIdx: index('blog_posts_featured_idx').on(table.featured),
+}));
+
+export type BlogPost = typeof blogPosts.$inferSelect;
+export type BlogPostInsert = typeof blogPosts.$inferInsert;
+
+export const faqEntries = pgTable('faq_entries', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  category: varchar('category', { length: 200 }).notNull(),
+  question: text('question').notNull(),
+  answer: text('answer').notNull(),
+  sortOrder: integer('sort_order').default(0),
+  published: boolean('published').default(true),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  categoryIdx: index('faq_entries_category_idx').on(table.category),
+  sortOrderIdx: index('faq_entries_sort_order_idx').on(table.sortOrder),
+  publishedIdx: index('faq_entries_published_idx').on(table.published),
+}));
+
+export type FaqEntry = typeof faqEntries.$inferSelect;
+export type FaqEntryInsert = typeof faqEntries.$inferInsert;
+
+export const configuracionSitio = pgTable('configuracion_sitio', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  clave: varchar('clave', { length: 100 }).notNull().unique(),
+  valor: text('valor').notNull(),
+  descripcion: varchar('descripcion', { length: 300 }),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }).defaultNow(),
+});
+
+export type ConfiguracionSitio = typeof configuracionSitio.$inferSelect;
+export type ConfiguracionSitioInsert = typeof configuracionSitio.$inferInsert;
+
+export const pageContent = pgTable('page_content', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  page: varchar('page', { length: 200 }).notNull(),
+  section: varchar('section', { length: 200 }).notNull(),
+  field: varchar('field', { length: 100 }).notNull(),
+  content: text('content').notNull().default(''),
+  lang: varchar('lang', { length: 10 }).default('es-HN'),
+  updatedBy: uuid('updated_by'),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  pageSectionFieldIdx: index('page_content_page_section_field_idx').on(table.page, table.section, table.field),
+  pageIdx: index('page_content_page_idx').on(table.page),
+}));
+
+export type PageContent = typeof pageContent.$inferSelect;
+export type PageContentInsert = typeof pageContent.$inferInsert;
+
+// ============================================================
+// Fase 1 — CMS Tables
+// ============================================================
+
+export const categoriasBlog = pgTable('categorias_blog', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  slug: varchar('slug', { length: 200 }).notNull().unique(),
+  nombre: varchar('nombre', { length: 200 }).notNull(),
+  descripcion: varchar('descripcion', { length: 500 }),
+  color: varchar('color', { length: 50 }),
+  icono: varchar('icono', { length: 100 }),
+  sortOrder: integer('sort_order').default(0),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  slugIdx: index('categorias_blog_slug_idx').on(table.slug),
+}));
+
+export type CategoriaBlog = typeof categoriasBlog.$inferSelect;
+export type CategoriaBlogInsert = typeof categoriasBlog.$inferInsert;
+
+export const categoriasFaq = pgTable('categorias_faq', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  slug: varchar('slug', { length: 200 }).notNull().unique(),
+  titulo: varchar('titulo', { length: 200 }).notNull(),
+  descripcion: varchar('descripcion', { length: 500 }),
+  icono: varchar('icono', { length: 100 }),
+  color: varchar('color', { length: 50 }),
+  sortOrder: integer('sort_order').default(0),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  slugIdx: index('categorias_faq_slug_idx').on(table.slug),
+}));
+
+export type CategoriaFaq = typeof categoriasFaq.$inferSelect;
+export type CategoriaFaqInsert = typeof categoriasFaq.$inferInsert;
+
+export const tags = pgTable('tags', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  slug: varchar('slug', { length: 200 }).notNull().unique(),
+  nombre: varchar('nombre', { length: 200 }).notNull(),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  slugIdx: index('tags_slug_idx').on(table.slug),
+}));
+
+export type Tag = typeof tags.$inferSelect;
+export type TagInsert = typeof tags.$inferInsert;
+
+export const postsTags = pgTable('posts_tags', {
+  postId: uuid('post_id').notNull(),
+  tagId: uuid('tag_id').notNull(),
+}, (table) => ({
+  postRef: foreignKey({ columns: [table.postId], foreignColumns: [blogPosts.id] }),
+  tagRef: foreignKey({ columns: [table.tagId], foreignColumns: [tags.id] }),
+  pk: unique('posts_tags_pk').on(table.postId, table.tagId),
+  postIdx: index('posts_tags_post_idx').on(table.postId),
+  tagIdx: index('posts_tags_tag_idx').on(table.tagId),
+}));
+
+export const autores = pgTable('autores', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  slug: varchar('slug', { length: 200 }).notNull().unique(),
+  nombre: varchar('nombre', { length: 200 }).notNull(),
+  email: varchar('email', { length: 255 }),
+  bio: text('bio'),
+  foto: varchar('foto', { length: 500 }),
+  redes: jsonb('redes').$type<{ twitter?: string; linkedin?: string; web?: string }>(),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+});
+
+export type Autor = typeof autores.$inferSelect;
+export type AutorInsert = typeof autores.$inferInsert;
+
+export const paginasCms = pgTable('paginas_cms', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  slug: varchar('slug', { length: 200 }).notNull().unique(),
+  titulo: varchar('titulo', { length: 300 }).notNull(),
+  descripcion: text('descripcion'),
+  contenido: jsonb('contenido').$type<Record<string, unknown>>(),
+  plantilla: varchar('plantilla', { length: 100 }).default('default'),
+  estado: varchar('estado', { length: 20 }).default('borrador'),
+  seo: jsonb('seo').$type<{ title?: string; description?: string; ogImage?: string; canonical?: string; robots?: string; noindex?: boolean }>(),
+  parentId: uuid('parent_id'),
+  sortOrder: integer('sort_order').default(0),
+  createdBy: uuid('created_by'),
+  publishedAt: timestamp('published_at', { withTimezone: true }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  slugIdx: index('paginas_cms_slug_idx').on(table.slug),
+  parentRef: foreignKey({ columns: [table.parentId], foreignColumns: [table.id] }),
+  createdByRef: foreignKey({ columns: [table.createdBy], foreignColumns: [usuarios.id] }),
+}));
+
+export type PaginaCms = typeof paginasCms.$inferSelect;
+export type PaginaCmsInsert = typeof paginasCms.$inferInsert;
+
+export const areasJuridicas = pgTable('areas_juridicas', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  slug: varchar('slug', { length: 200 }).notNull().unique(),
+  titulo: varchar('titulo', { length: 300 }).notNull(),
+  descripcionCorta: text('descripcion_corta'),
+  descripcionLarga: text('descripcion_larga'),
+  icono: varchar('icono', { length: 100 }),
+  imagen: varchar('imagen', { length: 500 }),
+  categoria: varchar('categoria', { length: 50 }).notNull().default('servicio'),
+  grupo: varchar('grupo', { length: 200 }),
+  subservicios: jsonb('subservicios').$type<{ titulo: string; descripcion: string }[]>(),
+  faqs: jsonb('faqs').$type<{ pregunta: string; respuesta: string }[]>(),
+  seo: jsonb('seo').$type<{ title?: string; description?: string; ogImage?: string }>(),
+  sortOrder: integer('sort_order').default(0),
+  estado: varchar('estado', { length: 20 }).default('publicado'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  slugIdx: index('areas_juridicas_slug_idx').on(table.slug),
+  categoriaIdx: index('areas_juridicas_categoria_idx').on(table.categoria),
+}));
+
+export type AreaJuridica = typeof areasJuridicas.$inferSelect;
+export type AreaJuridicaInsert = typeof areasJuridicas.$inferInsert;
+
+export const medios = pgTable('medios', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  nombreArchivo: varchar('nombre_archivo', { length: 500 }).notNull(),
+  altText: varchar('alt_text', { length: 500 }),
+  titulo: varchar('titulo', { length: 300 }),
+  descripcion: text('descripcion'),
+  tipoMime: varchar('tipo_mime', { length: 100 }).notNull(),
+  tamaño: integer('tamaño').notNull(),
+  dimensiones: jsonb('dimensiones').$type<{ width: number; height: number }>(),
+  url: varchar('url', { length: 500 }).notNull(),
+  formatos: jsonb('formatos').$type<{ original: string; webp?: string; thumb?: string; medium?: string }>(),
+  createdBy: uuid('created_by'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  createdByRef: foreignKey({ columns: [table.createdBy], foreignColumns: [usuarios.id] }),
+}));
+
+export type Medio = typeof medios.$inferSelect;
+export type MedioInsert = typeof medios.$inferInsert;
+
+export const versionesContenido = pgTable('versiones_contenido', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  entidadTipo: varchar('entidad_tipo', { length: 50 }).notNull(),
+  entidadId: varchar('entidad_id', { length: 100 }).notNull(),
+  contenido: jsonb('contenido').notNull(),
+  version: integer('version').notNull(),
+  creadoPor: uuid('creado_por'),
+  descripcion: varchar('descripcion', { length: 500 }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  creadoPorRef: foreignKey({ columns: [table.creadoPor], foreignColumns: [usuarios.id] }),
+  entidadIdx: index('versiones_entidad_idx').on(table.entidadTipo, table.entidadId),
+}));
+
+export type VersionContenido = typeof versionesContenido.$inferSelect;
+export type VersionContenidoInsert = typeof versionesContenido.$inferInsert;
+
+export const redirects = pgTable('redirects', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  origen: varchar('origen', { length: 500 }).notNull().unique(),
+  destino: varchar('destino', { length: 500 }).notNull(),
+  tipo: integer('tipo').notNull().default(301),
+  activo: boolean('activo').default(true),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+});
+
+export type Redirect = typeof redirects.$inferSelect;
+export type RedirectInsert = typeof redirects.$inferInsert;
+
+export const menus = pgTable('menus', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  nombre: varchar('nombre', { length: 100 }).notNull().unique(),
+  items: jsonb('items').$type<{ label: string; url?: string; slug?: string; target?: string; icon?: string; children?: { label: string; url: string }[] }[]>(),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+});
+
+export type Menu = typeof menus.$inferSelect;
+export type MenuInsert = typeof menus.$inferInsert;
+
+export const roles = pgTable('roles', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  nombre: varchar('nombre', { length: 100 }).notNull().unique(),
+  descripcion: varchar('descripcion', { length: 300 }),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+});
+
+export type Rol = typeof roles.$inferSelect;
+export type RolInsert = typeof roles.$inferInsert;
+
+export const permisos = pgTable('permisos', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  recurso: varchar('recurso', { length: 100 }).notNull(),
+  accion: varchar('accion', { length: 100 }).notNull(),
+  descripcion: varchar('descripcion', { length: 300 }),
+}, (table) => ({
+  recursoAccionUnique: unique('permisos_recurso_accion_unique').on(table.recurso, table.accion),
+}));
+
+export type Permiso = typeof permisos.$inferSelect;
+export type PermisoInsert = typeof permisos.$inferInsert;
+
+export const rolesPermisos = pgTable('roles_permisos', {
+  rolId: uuid('rol_id').notNull(),
+  permisoId: uuid('permiso_id').notNull(),
+}, (table) => ({
+  rolRef: foreignKey({ columns: [table.rolId], foreignColumns: [roles.id] }),
+  permisoRef: foreignKey({ columns: [table.permisoId], foreignColumns: [permisos.id] }),
+  pk: unique('roles_permisos_pk').on(table.rolId, table.permisoId),
+}));
+
+export const usuariosRoles = pgTable('usuarios_roles', {
+  usuarioId: uuid('usuario_id').notNull(),
+  rolId: uuid('rol_id').notNull(),
+}, (table) => ({
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }),
+  rolRef: foreignKey({ columns: [table.rolId], foreignColumns: [roles.id] }),
+  pk: unique('usuarios_roles_pk').on(table.usuarioId, table.rolId),
+}));
+
+export const equipos = pgTable('equipos', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  nombre: varchar('nombre', { length: 200 }).notNull().unique(),
+  activo: boolean('activo').notNull().default(true),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+});
+
+export const equiposMiembros = pgTable('equipos_miembros', {
+  equipoId: uuid('equipo_id').notNull(),
+  usuarioId: uuid('usuario_id').notNull(),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  equipoRef: foreignKey({ columns: [table.equipoId], foreignColumns: [equipos.id] }).onDelete('cascade'),
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }).onDelete('cascade'),
+  pk: unique('equipos_miembros_pk').on(table.equipoId, table.usuarioId),
+  usuarioIdx: index('equipos_miembros_usuario_idx').on(table.usuarioId),
+}));
+
+export const usuariosCapacidades = pgTable('usuarios_capacidades', {
+  usuarioId: uuid('usuario_id').notNull(),
+  permisoId: uuid('permiso_id').notNull(),
+  permitido: boolean('permitido').notNull().default(true),
+  concedidoPor: uuid('concedido_por'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }).onDelete('cascade'),
+  permisoRef: foreignKey({ columns: [table.permisoId], foreignColumns: [permisos.id] }).onDelete('cascade'),
+  concedidoPorRef: foreignKey({ columns: [table.concedidoPor], foreignColumns: [usuarios.id] }),
+  pk: unique('usuarios_capacidades_pk').on(table.usuarioId, table.permisoId),
+}));
+
+export const invitacionEstadoEnum = pgEnum('invitacion_estado', [
+  'pendiente', 'aceptada', 'expirada', 'revocada',
+]);
+
+export const invitaciones = pgTable('invitaciones', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: varchar('email', { length: 255 }).notNull(),
+  nombre: varchar('nombre', { length: 200 }).notNull(),
+  tokenHash: varchar('token_hash', { length: 64 }).notNull().unique(),
+  estado: invitacionEstadoEnum('estado').notNull().default('pendiente'),
+  rolInicial: varchar('rol_inicial', { length: 50 }).notNull(),
+  equipoId: uuid('equipo_id'),
+  accesoSgie: boolean('acceso_sgie').notNull().default(false),
+  capacidades: jsonb('capacidades').$type<string[]>().notNull().default([]),
+  creadaPor: uuid('creada_por').notNull(),
+  creadaEn: timestamp('creada_en', { withTimezone: true }).defaultNow(),
+  expiraEn: timestamp('expira_en', { withTimezone: true }).notNull(),
+  aceptadaEn: timestamp('aceptada_en', { withTimezone: true }),
+  revocadaEn: timestamp('revocada_en', { withTimezone: true }),
+  usuarioId: uuid('usuario_id'),
+  emailEstado: varchar('email_estado', { length: 50 }).notNull().default('pendiente'),
+  emailError: varchar('email_error', { length: 500 }),
+  resendId: varchar('resend_id', { length: 200 }),
+}, (table) => ({
+  equipoRef: foreignKey({ columns: [table.equipoId], foreignColumns: [equipos.id] }),
+  creadaPorRef: foreignKey({ columns: [table.creadaPor], foreignColumns: [usuarios.id] }),
+  usuarioRef: foreignKey({ columns: [table.usuarioId], foreignColumns: [usuarios.id] }),
+  emailIdx: index('invitaciones_email_idx').on(table.email),
+  estadoIdx: index('invitaciones_estado_idx').on(table.estado),
+  expiraIdx: index('invitaciones_expira_idx').on(table.expiraEn),
+}));
+
+// ============================================================
+// Newsletter subscriptions
+// ============================================================
+
+export const newsletterSubscriptions = pgTable('newsletter_subscriptions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  source: varchar('source', { length: 50 }).default('blog'),
+  confirmedAt: timestamp('confirmed_at', { withTimezone: true }),
+  unsubscribedAt: timestamp('unsubscribed_at', { withTimezone: true }),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  emailIdx: index('newsletter_email_idx').on(table.email),
+}));
+
+export type NewsletterSubscription = typeof newsletterSubscriptions.$inferSelect;
+export type NewsletterSubscriptionInsert = typeof newsletterSubscriptions.$inferInsert;
+
+// ============================================================
+// Fase 2 — Supuesto Penal Calculable
+// ============================================================
+
+export const tipoPenaEnum = pgEnum('tipo_pena', ['prision', 'multa', 'perpetuidad']);
+
+export const supuestosPenales = pgTable('supuestos_penales', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  delitoId: uuid('delito_id').notNull(),
+  numeral: varchar('numeral', { length: 50 }),
+  literal: varchar('literal', { length: 50 }),
+  inciso: varchar('inciso', { length: 50 }),
+  textoModalidad: text('texto_modalidad'),
+  penaMinMeses: integer('pena_min_meses').notNull(),
+  penaMaxMeses: integer('pena_max_meses').notNull(),
+  tipoPena: tipoPenaEnum('tipo_pena').notNull().default('prision'),
+  tieneAgravantesEspecificas: boolean('tiene_agravantes_especificas').default(false),
+  observaciones: text('observaciones'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+  actualizadoEn: timestamp('actualizado_en', { withTimezone: true }),
+}, (table) => ({
+  delitoRef: foreignKey({ columns: [table.delitoId], foreignColumns: [delitos.id] }),
+  delitoIdx: index('supuestos_penales_delito_idx').on(table.delitoId),
+  numeralLiteralIncisoIdx: index('supuestos_penales_numeral_literal_inciso_idx').on(table.numeral, table.literal, table.inciso),
+}));
+
+export type SupuestoPenal = typeof supuestosPenales.$inferSelect;
+export type SupuestoPenalInsert = typeof supuestosPenales.$inferInsert;
+
+export const agravantesEspecificas = pgTable('agravantes_especificas', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  supuestoPenalId: uuid('supuesto_penal_id').notNull(),
+  articuloCp: varchar('articulo_cp', { length: 100 }).notNull(),
+  numeral: varchar('numeral', { length: 50 }),
+  literal: varchar('literal', { length: 50 }),
+  textoAgravante: text('texto_agravante').notNull(),
+  fraccionAumento: varchar('fraccion_aumento', { length: 20 }).notNull(),
+  obligatoria: boolean('obligatoria').default(false),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  supuestoRef: foreignKey({ columns: [table.supuestoPenalId], foreignColumns: [supuestosPenales.id] }),
+  supuestoIdx: index('agravantes_especificas_supuesto_idx').on(table.supuestoPenalId),
+  articuloIdx: index('agravantes_especificas_articulo_idx').on(table.articuloCp),
+}));
+
+export type AgravanteEspecifica = typeof agravantesEspecificas.$inferSelect;
+export type AgravanteEspecificaInsert = typeof agravantesEspecificas.$inferInsert;
+
+export const remisionesNormativas = pgTable('remisiones_normativas', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  articuloOrigen: varchar('articulo_origen', { length: 100 }).notNull(),
+  numeralOrigen: varchar('numeral_origen', { length: 50 }),
+  articuloDestino: varchar('articulo_destino', { length: 100 }).notNull(),
+  numeralDestino: varchar('numeral_destino', { length: 50 }),
+  textoRemision: text('texto_remision').notNull(),
+  condicionAplicacion: text('condicion_aplicacion'),
+  creadoEn: timestamp('creado_en', { withTimezone: true }).defaultNow(),
+}, (table) => ({
+  articuloOrigenIdx: index('remisiones_articulo_origen_idx').on(table.articuloOrigen),
+  articuloDestinoIdx: index('remisiones_articulo_destino_idx').on(table.articuloDestino),
+}));
+
+export type RemisionNormativa = typeof remisionesNormativas.$inferSelect;
+export type RemisionNormativaInsert = typeof remisionesNormativas.$inferInsert;

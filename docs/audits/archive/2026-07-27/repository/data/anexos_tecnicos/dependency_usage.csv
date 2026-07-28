@@ -1,0 +1,51 @@
+dependency,version,declared_in,import_references,sample_files,candidate
+@neondatabase/serverless,^1.1.0,dependencies,76,drizzle/seed-sgie-demo-carlos.ts | drizzle/seed-sgie-procedimientos.ts | drizzle/seed.ts | lib/db.ts | lib/rag/embeddings.ts | scripts/ajustar-seo-residual-blog.ts | scripts/archive/_edit-post.cjs | scripts/archive/_f17_check_words.mjs | scripts/archive/agent-loop.ts | scripts/archive/fetch-article.ts | scripts/archive/fetch-lote1.ts | scripts/archive/fetch-next.ts | scripts/archive/fetch-pending.ts | scripts/archive/native-update.ts | scripts/archive/re-audit-loop.ts,used
+@react-pdf/renderer,^4.5.1,dependencies,5,app/api/calcular/pdf/route.ts | app/api/casos/[id]/pdf/route.ts | app/api/descargar/route.ts | lib/lead-magnet-pdf.tsx | lib/pdf-document.tsx,used
+@vercel/blob,^2.6.1,dependencies,2,lib/sgie/util.ts | lib/storage.ts,used
+@vercel/speed-insights,^2.0.0,dependencies,1,app/layout.tsx,used
+bcryptjs,^3.0.3,dependencies,6,lib/auth.ts | scripts/e2e/fase5a-risk-workload-e2e.mjs | scripts/e2e/fase5b-document-intelligence-e2e.mjs | scripts/e2e/fase5c-daily-brief-e2e.mjs | scripts/e2e/fase5d-autonomy-portal-e2e.mjs | scripts/e2e/seed.mjs,used
+dotenv,^17.4.2,dependencies,115,playwright.e2e.config.ts | scripts/ajustar-seo-residual-blog.ts | scripts/analytics-validate.mjs | scripts/analytics/funnel-report.mjs | scripts/archive/_f17_check_words.mjs | scripts/archive/agent-loop.ts | scripts/archive/fetch-article.ts | scripts/archive/fetch-next.ts | scripts/archive/fetch-pending.ts | scripts/archive/native-update.ts | scripts/archive/submit-blog-urls.ts | scripts/archive/update-block.ts | scripts/archive/update-next.ts | scripts/audit-internal-links-db.ts | scripts/auditar-indexacion-prioritaria.mjs,used
+drizzle-orm,^0.45.2,dependencies,233,app/api/admin/agravantes/[id]/route.ts | app/api/admin/agravantes/route.ts | app/api/admin/auditoria/route.ts | app/api/admin/comunicaciones/route.ts | app/api/admin/evaluacion-ia/route.ts | app/api/admin/invitaciones/route.ts | app/api/admin/knowledge/[action]/route.ts | app/api/admin/knowledge/route.ts | app/api/admin/operaciones/route.ts | app/api/admin/sgie/asignaciones/route.ts | app/api/admin/sgie/metricas/route.ts | app/api/admin/sgie/reglas/route.ts | app/api/admin/simulador/route.ts | app/api/admin/supuestos-penales/route.ts | app/api/admin/usuarios/[id]/acceso-sgie/route.ts,used
+googleapis,^144.0.0,dependencies,13,app/api/oauth/callback/route.ts | lib/google.ts | scripts/analytics/funnel-report.mjs | scripts/google-analytics-config.mjs | scripts/google-analytics-live.mjs | scripts/google-search-console-live.mjs | scripts/gsc-analytics.mjs | scripts/inspect-urls.mjs | scripts/oauth-get-refresh-token.mjs | scripts/oauth-url.mjs | scripts/seo-audit-gsc-ga4.mjs | scripts/submit-sitemap-gsc.mjs | scripts/test-service-account.mjs,used
+jsonwebtoken,^9.0.3,dependencies,2,lib/auth.ts | tests/auth.test.ts,used
+lucide-react,^0.577.0,dependencies,160,app/(public)/abogado-civil-nacaome/page.tsx | app/(public)/abogado-de-familia-nacaome/page.tsx | app/(public)/abogado-laboralista-nacaome/page.tsx | app/(public)/abogado-penalista-choluteca/page.tsx | app/(public)/abogado-penalista-nacaome/page.tsx | app/(public)/abogados-en-nacaome/page.tsx | app/(public)/blog/[categoria]/[slug]/page.tsx | app/(public)/blog/[categoria]/page.tsx | app/(public)/como-llegar/page.tsx | app/(public)/derecho-penal/[slug]/page.tsx | app/(public)/derecho-penal/page.tsx | app/(public)/despacho/page.tsx | app/(public)/guia-legal-abogados-honduras/page.tsx | app/(public)/hondurenos-en-espana/[slug]/page.tsx | app/(public)/page.tsx,used
+next,16.2.11,dependencies,147,app/(public)/abogado-civil-nacaome/page.tsx | app/(public)/abogado-de-familia-nacaome/page.tsx | app/(public)/abogado-laboralista-nacaome/page.tsx | app/(public)/abogado-penalista-choluteca/page.tsx | app/(public)/abogado-penalista-nacaome/page.tsx | app/(public)/abogados-en-alianza/page.tsx | app/(public)/abogados-en-amapala/page.tsx | app/(public)/abogados-en-caridad/page.tsx | app/(public)/abogados-en-choluteca/page.tsx | app/(public)/abogados-en-concepcion-de-maria/page.tsx | app/(public)/abogados-en-el-triunfo/page.tsx | app/(public)/abogados-en-goascoran/page.tsx | app/(public)/abogados-en-langue/page.tsx | app/(public)/abogados-en-marcovia/page.tsx | app/(public)/abogados-en-nacaome/page.tsx,used
+openai,^6.49.0,dependencies,1,lib/rag/embeddings.ts,used
+pdfjs-dist,^4.10.38,dependencies,2,lib/sgie/motor-documental.ts | lib/sgie/ocr/tesseract.ts,used
+pdfkit,^0.19.1,dependencies,1,lib/sgie/pdf.ts,used
+react,19.2.7,dependencies,156,app/(public)/layout.tsx | app/api/calcular/pdf/route.ts | app/api/casos/[id]/pdf/route.ts | app/article-modal.tsx | app/auth-context.tsx | app/cargar/[token]/page.tsx | app/cargar/[token]/portal-carga-client.tsx | app/error-boundary.tsx | app/error.tsx | app/global-error-boundary.tsx | app/intranet/activar-invitacion/[token]/page.tsx | app/intranet/admin/agravantes/page.tsx | app/intranet/admin/auditoria/page.tsx | app/intranet/admin/calculadora/page.tsx | app/intranet/admin/casos/[id]/page.tsx,used
+react-dom,19.2.7,dependencies,1,components/chat/chat-widget.tsx,used
+recharts,^3.9.2,dependencies,0,,no-static-import
+resend,^6.17.2,dependencies,2,lib/email-staging-wrapper.ts | lib/email.ts,used
+sanitize-html,^2.17.6,dependencies,2,lib/sanitize.ts | lib/strip-html.ts,used
+tesseract.js,^7.0.0,dependencies,1,lib/sgie/ocr/tesseract.ts,used
+zod,^4.4.3,dependencies,74,app/api/admin/agravantes/[id]/route.ts | app/api/admin/agravantes/route.ts | app/api/admin/alertas/route.ts | app/api/admin/auditoria/route.ts | app/api/admin/evaluacion-ia/route.ts | app/api/admin/invitaciones/route.ts | app/api/admin/knowledge/[action]/route.ts | app/api/admin/knowledge/route.ts | app/api/admin/reglas-comunicacion/route.ts | app/api/admin/sgie/asignaciones/route.ts | app/api/admin/sgie/plantillas/route.ts | app/api/admin/sgie/reglas/route.ts | app/api/admin/simulador/route.ts | app/api/admin/usuarios/[id]/acceso-sgie/route.ts | app/api/admin/usuarios/[id]/bloqueo/route.ts,used
+@cyclonedx/cyclonedx-npm,^6.0.0,devDependencies,0,,no-static-import
+@google/genai,^2.13.0,devDependencies,4,scripts/archive/agent-loop.ts | scripts/archive/re-audit-loop.ts | scripts/archive/update-block.ts | scripts/corregir-articulos.ts,used
+@modelcontextprotocol/server-filesystem,^2026.7.10,devDependencies,0,,no-static-import
+@next/bundle-analyzer,16.2.11,devDependencies,1,next.config.ts,used
+@playwright/test,^1.61.1,devDependencies,17,e2e/admin-agravantes.spec.ts | e2e/auth-flow.spec.ts | e2e/fase3e-visual.spec.ts | e2e/fase4b-visual.spec.ts | e2e/fase5-design.spec.ts | e2e/hydration.spec.ts | e2e/intranet-sidebar.spec.ts | e2e/sgie-demo.spec.ts | e2e/smoke.spec.ts | playwright.config.ts | playwright.e2e.config.ts | scripts/fase5-capturas.mjs | tests/e2e/critical-auth.spec.ts | tests/e2e/critical-authorization.spec.ts | tests/e2e/critical-descargar.spec.ts,used
+@tailwindcss/postcss,^4,devDependencies,0,,no-static-import
+@testing-library/dom,^10.4.1,devDependencies,0,,no-static-import
+@testing-library/jest-dom,^6.9.1,devDependencies,1,tests/setup.ts,used
+@testing-library/react,^16.3.2,devDependencies,7,tests/analytics-consent-integration.test.tsx | tests/components/badge.test.tsx | tests/components/button.test.tsx | tests/components/chip.test.tsx | tests/components/circunstancia-picker.test.tsx | tests/cookie-consent-dialog.test.tsx | tests/fase3-ai-review-notice.test.tsx,used
+@testing-library/user-event,^14.6.1,devDependencies,4,tests/components/button.test.tsx | tests/components/chip.test.tsx | tests/components/circunstancia-picker.test.tsx | tests/cookie-consent-dialog.test.tsx,used
+@types/bcryptjs,^2.4.6,devDependencies,0,,no-static-import
+@types/jsonwebtoken,^9.0.10,devDependencies,0,,no-static-import
+@types/node,^20,devDependencies,0,,no-static-import
+@types/pdfkit,^0.17.6,devDependencies,0,,no-static-import
+@types/react,^19,devDependencies,0,,no-static-import
+@types/react-dom,^19,devDependencies,0,,no-static-import
+@types/sanitize-html,^2.16.1,devDependencies,0,,no-static-import
+@vitest/coverage-v8,^4.1.10,devDependencies,0,,no-static-import
+drizzle-kit,^0.31.10,devDependencies,1,drizzle.config.ts,used
+eslint,^9,devDependencies,1,eslint.config.mjs,used
+eslint-config-next,16.2.11,devDependencies,1,eslint.config.mjs,used
+jsdom,^29.1.1,devDependencies,0,,no-static-import
+pixelmatch,^7.2.0,devDependencies,1,scripts/visual-regression.cjs,used
+playwright,^1.60.0,devDependencies,5,scripts/fase5a-validacion-visual.mjs | scripts/playwright-audit.mjs | scripts/qa-visual-cierre.mjs | scripts/screenshot-audit.cjs | scripts/visual-regression.cjs,used
+pngjs,^7.0.0,devDependencies,1,scripts/visual-regression.cjs,used
+sharp,^0.35.3,devDependencies,2,scripts/gen-favicon.mjs | scripts/optimize-images.mjs,used
+tailwindcss,^4,devDependencies,0,,no-static-import
+typescript,^5,devDependencies,0,,no-static-import
+vitest,^4.1.8,devDependencies,97,tests/2fa-verify-route.test.ts | tests/analytics-config.test.ts | tests/analytics-consent-integration.test.tsx | tests/api-chat.test.ts | tests/api/bulk-approval.test.ts | tests/api/calcular.test.ts | tests/api/contacto.test.ts | tests/api/email-inbound-catchall.test.ts | tests/api/revalidate.test.ts | tests/audit.test.ts | tests/auth-lazy-load.test.ts | tests/auth-secret-validation.test.ts | tests/auth.test.ts | tests/blog-internal-links.test.ts | tests/blog-verification-phase2.test.ts,used

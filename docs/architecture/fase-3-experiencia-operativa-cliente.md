@@ -1,3 +1,12 @@
+---
+status: current
+owner: engineering
+created: 2026-07-28
+last_reviewed: 2026-07-28
+review_due: 2026-10-28
+supersedes: null
+superseded_by: null
+---
 # Fase 3 — Experiencia operativa, portal del cliente y comunicaciones avanzadas
 
 Estado: implementación local en `main` (commit `be926a5`), migración 0037 aplicable en staging.

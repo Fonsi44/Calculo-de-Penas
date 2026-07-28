@@ -1,3 +1,12 @@
+---
+status: current
+owner: engineering
+created: 2026-07-28
+last_reviewed: 2026-07-28
+review_due: 2026-10-28
+supersedes: null
+superseded_by: null
+---
 # Fase 2 — Núcleo durable de procedimientos, documentos, comunicaciones, OCR e IA
 
 Estado del documento: implementación local en `main` (commit `c74840d`), migraciones 0034–0036 aplicables en staging.

@@ -14,6 +14,7 @@ import {
   verifyPassword,
   AuthError,
   COOKIE_NAME,
+  getCookieName,
 } from '../lib/auth';
 import jwt from 'jsonwebtoken';
 
@@ -164,7 +165,9 @@ describe('lib/auth — createAuthResponse / createLogoutResponse', () => {
     const r = createAuthResponse({ ok: true }, 'jwt.token.here');
     const set = r.headers.get('set-cookie');
     expect(set).not.toBeNull();
-    expect(set).toContain(`${COOKIE_NAME}=jwt.token.here`);
+    // El nombre de la cookie depende del entorno (getCookieName). En test
+    // (NODE_ENV=test) se usa 'token'.
+    expect(set).toContain(`${getCookieName()}=jwt.token.here`);
     expect(set).toContain('HttpOnly');
     expect(set).toContain('SameSite=Lax');
   });
@@ -174,6 +177,81 @@ describe('lib/auth — createAuthResponse / createLogoutResponse', () => {
     const set = r.headers.get('set-cookie');
     expect(set).toContain(`${COOKIE_NAME}=`);
     expect(set).toContain('Max-Age=0');
+  });
+});
+
+describe('lib/auth — cookie según entorno (getCookieName / shouldUseHostCookie)', () => {
+  const originalNodeEnv = process.env.NODE_ENV;
+  const env = process.env as Record<string, string | undefined>;
+
+  afterEach(() => {
+    env.NODE_ENV = originalNodeEnv;
+    const g = globalThis as { __E2E_LOCAL_HTTP?: boolean };
+    delete g.__E2E_LOCAL_HTTP;
+  });
+
+  it('development: token sin Secure', () => {
+    env.NODE_ENV = 'development';
+    const g = globalThis as { __E2E_LOCAL_HTTP?: boolean };
+    g.__E2E_LOCAL_HTTP = false;
+    expect(getCookieName()).toBe('token');
+  });
+
+  it('test: token sin Secure', () => {
+    env.NODE_ENV = 'test';
+    expect(getCookieName()).toBe('token');
+  });
+
+  it('production, global false: __Host-token con Secure', () => {
+    env.NODE_ENV = 'production';
+    const g = globalThis as { __E2E_LOCAL_HTTP?: boolean };
+    g.__E2E_LOCAL_HTTP = false;
+    expect(getCookieName()).toBe('__Host-token');
+  });
+
+  it('production + variables E2E, global false: __Host-token (no degrada)', () => {
+    env.NODE_ENV = 'production';
+    env.E2E_ENVIRONMENT = 'staging';
+    env.E2E_LOCAL_HTTP = 'true';
+    const g = globalThis as { __E2E_LOCAL_HTTP?: boolean };
+    g.__E2E_LOCAL_HTTP = false; // instrumentation NO activó el modo
+    expect(getCookieName()).toBe('__Host-token');
+  });
+
+  it('production, global true (E2E validado): token sin Secure', () => {
+    env.NODE_ENV = 'production';
+    const g = globalThis as { __E2E_LOCAL_HTTP?: boolean };
+    g.__E2E_LOCAL_HTTP = true;
+    expect(getCookieName()).toBe('token');
+  });
+
+  it('Host y Origin no afectan la decisión', () => {
+    env.NODE_ENV = 'production';
+    const g = globalThis as { __E2E_LOCAL_HTTP?: boolean };
+    g.__E2E_LOCAL_HTTP = false;
+    // Simular request con Host falsificado no cambia nada:
+    expect(getCookieName()).toBe('__Host-token');
+  });
+
+  it('createAuthResponse en producción usa __Host-token + Secure', () => {
+    env.NODE_ENV = 'production';
+    const g = globalThis as { __E2E_LOCAL_HTTP?: boolean };
+    g.__E2E_LOCAL_HTTP = false;
+    const r = createAuthResponse({ ok: true }, 'jwt.token.here');
+    const set = r.headers.get('set-cookie') || '';
+    expect(set).toContain('__Host-token=jwt.token.here');
+    expect(set).toContain('Secure');
+    expect(set).toContain('HttpOnly');
+  });
+
+  it('createAuthResponse en E2E validado usa token sin Secure', () => {
+    env.NODE_ENV = 'production';
+    const g = globalThis as { __E2E_LOCAL_HTTP?: boolean };
+    g.__E2E_LOCAL_HTTP = true;
+    const r = createAuthResponse({ ok: true }, 'jwt.token.here');
+    const set = r.headers.get('set-cookie') || '';
+    expect(set).toContain('token=jwt.token.here');
+    expect(set).not.toContain('Secure');
   });
 });
 

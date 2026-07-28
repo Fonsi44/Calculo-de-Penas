@@ -3,7 +3,7 @@
  *
  * Helpers de seguridad documental: generación de tokens criptográficos,
  * cálculo de hash SHA-256, validación por magic bytes, saneamiento de nombres
- * y detección de MIME real. Referencia: pinedayasociados.md §12.4, §22.2.
+ * y detección de MIME real. Ver docs/architecture/ §12.4, §22.2.
  */
 import { createHash, randomBytes } from 'crypto';
 import { put } from '@vercel/blob';

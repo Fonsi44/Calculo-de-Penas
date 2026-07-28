@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { accessService } from '@/lib/access-service';
 import { httpErrorResponse, correlationIdFrom } from '@/lib/http-errors';
 import { listarReglas, crearRegla } from '@/lib/sgie/communication-rules-service';
+import { validateCsrf } from '@/lib/csrf';
 
 const getQuerySchema = z.object({
   estado: z.string().optional(),
@@ -14,7 +15,7 @@ const postSchema = z.object({
   nombre: z.string().min(1).max(200),
   plantillaSlug: z.string().min(1).max(100),
   disparador: z.string().optional(),
-  condiciones: z.any().optional(),
+  condiciones: z.record(z.string(), z.unknown()).optional(),
   destinatario: z.string().optional(),
   retrasoMinutos: z.number().int().min(0).optional(),
   horarioInicio: z.string().optional(),
@@ -62,6 +63,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const auth = await requireAdmin(request);
+    validateCsrf(request);
     const correlationId = correlationIdFrom(request);
     const body = await request.json();
     const parsed = postSchema.parse(body);

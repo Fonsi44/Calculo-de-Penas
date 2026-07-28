@@ -3,19 +3,26 @@ import { db } from '@/lib/db';
 import { sql } from 'drizzle-orm';
 import { isEmailConfigured } from '@/lib/email';
 import { getEnvironmentName } from '@/lib/staging-guard';
+import drizzleJournal from '@/drizzle/migrations/meta/_journal.json';
+import manualMigrationManifest from '@/tools/db/manual-migrations.json';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-interface ReadinessCheck {
+export interface ReadinessCheck {
   name: string;
   status: 'healthy' | 'degraded' | 'unready';
   details?: string;
 }
 
+export function summarizeReadiness(checks: ReadinessCheck[]) {
+  if (checks.some(({ status }) => status === 'unready')) return 'unready' as const;
+  if (checks.some(({ status }) => status === 'degraded')) return 'degraded' as const;
+  return 'healthy' as const;
+}
+
 export async function GET() {
   const checks: ReadinessCheck[] = [];
-  let overallStatus: 'healthy' | 'degraded' | 'unready' = 'healthy';
   const env = getEnvironmentName();
 
   // DB check
@@ -25,19 +32,28 @@ export async function GET() {
   } catch (e) {
     const msg = e instanceof Error ? e.message : 'unknown';
     checks.push({ name: 'database', status: 'unready', details: msg });
-    overallStatus = 'unready';
   }
 
   // Migrations check
   try {
     const result = await db.execute(
-      sql`SELECT COUNT(*)::int AS count FROM drizzle.__drizzle_migrations`,
+      sql`SELECT
+        (SELECT COUNT(*)::int FROM drizzle.__drizzle_migrations) AS drizzle_count,
+        (SELECT COUNT(*)::int FROM sgie_schema_migrations) AS manual_count`,
     );
-    const count = (result.rows?.[0] as { count?: number })?.count ?? 0;
-    checks.push({ name: 'migrations', status: count >= 55 ? 'healthy' : 'degraded', details: `${count} migraciones` });
+    const row = result.rows?.[0] as { drizzle_count?: number; manual_count?: number } | undefined;
+    const drizzleCount = row?.drizzle_count ?? 0;
+    const manualCount = row?.manual_count ?? 0;
+    const expectedDrizzle = drizzleJournal.entries.length;
+    const expectedManual = manualMigrationManifest.entries.length;
+    const migrationsHealthy = drizzleCount >= expectedDrizzle && manualCount >= expectedManual;
+    checks.push({
+      name: 'migrations',
+      status: migrationsHealthy ? 'healthy' : 'degraded',
+      details: `${drizzleCount}/${expectedDrizzle} Drizzle, ${manualCount}/${expectedManual} manuales`,
+    });
   } catch {
     checks.push({ name: 'migrations', status: 'unready', details: 'no_accetable' });
-    if (overallStatus === 'healthy') overallStatus = 'degraded';
   }
 
   // Blob token check
@@ -68,6 +84,7 @@ export async function GET() {
     checks.push({ name: 'ai_provider', status: 'degraded', details: 'IA no configurada (modo heuristic)' });
   }
 
+  const overallStatus = summarizeReadiness(checks);
   return NextResponse.json(
     {
       status: overallStatus,

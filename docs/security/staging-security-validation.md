@@ -1,3 +1,12 @@
+---
+status: current
+owner: engineering
+created: 2026-07-28
+last_reviewed: 2026-07-28
+review_due: 2026-10-28
+supersedes: null
+superseded_by: null
+---
 # Validacion segura de staging para seguridad Fase 0
 
 Este documento describe como validar en Neon staging/preview la migracion `0024_security_user_defaults.sql` sin exponer secretos y sin tocar produccion.

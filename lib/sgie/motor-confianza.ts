@@ -17,7 +17,7 @@
  *
  * La IA nunca aprueba/firma/cierra. Confianza alta ≠ acción automática.
  *
- * Referencia: pinedayasociados.md §14.3.
+ * Ver docs/architecture/ §14.3.
  */
 import { db } from '@/lib/db';
 import {

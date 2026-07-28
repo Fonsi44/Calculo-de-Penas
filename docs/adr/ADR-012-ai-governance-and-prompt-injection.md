@@ -1,3 +1,12 @@
+---
+status: current
+owner: engineering
+created: 2026-07-28
+last_reviewed: 2026-07-28
+review_due: 2026-10-28
+supersedes: null
+superseded_by: null
+---
 # ADR-012: Gobernanza de IA y mitigación de prompt injection
 
 **Fecha:** 2026-07-19. **Estado:** Aceptado.

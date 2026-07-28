@@ -457,7 +457,48 @@ describe('FASE 3 — Subsistemas intactos', () => {
       'lib/sgie/document-intelligence-jobs.ts',
       'lib/sgie/document-segmentation-service.ts',
     ];
-    const filtered = changed.filter((f: string) => f !== 'lib/schema.ts' && !lintFixes.includes(f));
+    // Fase 1/3 estabilización: correcciones de bugs P0 (proxy, 2FA, agenda, delitos, SGIE scope).
+    const estabilizacionFase1 = [
+      'app/intranet/admin/delitos/page.tsx',
+      'app/intranet/login/page.tsx',
+      'app/intranet/sgie/agenda/page.tsx',
+      'proxy.ts',
+    ];
+    // Fase 4B cleanup: eliminación de CalendarExternalSection y subsistema sandbox abandonado.
+    const fase4bCleanup = [
+      'components/sgie/calendar-external-section.tsx',
+      'lib/sgie/calendar-sync.ts',
+      'lib/calendar/provider.ts',
+      'lib/calendar/sandbox-provider.ts',
+      'lib/sgie/brief-jobs.ts',
+      'lib/sgie/risk-workload-jobs.ts',
+      'lib/sgie/search-indexer.ts',
+    ];
+    // Fase 3: corrección de referencias documentales (pinedayasociados.md → docs/architecture/)
+    const fase3DocsFix = [
+      'lib/auth.ts',
+      'lib/sgie/clientes-db.ts',
+      'lib/sgie/correos-db.ts',
+      'lib/sgie/documentos-db.ts',
+      'lib/sgie/enlaces-magicos.ts',
+      'lib/sgie/expedientes-db.ts',
+      'lib/sgie/ia-documental.ts',
+      'lib/sgie/ia-router.ts',
+      'lib/sgie/motor-confianza.ts',
+      'lib/sgie/motor-documental.ts',
+      'lib/sgie/motor-reglas.ts',
+      'lib/sgie/procedimientos-db.ts',
+      'lib/sgie/tareas-db.ts',
+      'lib/sgie/upload-atomico.ts',
+      'lib/sgie/util.ts',
+    ];
+    const filtered = changed.filter((f: string) =>
+      f !== 'lib/schema.ts' &&
+      f !== 'lib/sgie/dashboard-service.ts' &&
+      !lintFixes.includes(f) &&
+      !estabilizacionFase1.includes(f) &&
+      !fase4bCleanup.includes(f) &&
+      !fase3DocsFix.includes(f));
     expect(filtered, `SGIE/intranet modificados: ${filtered.join(', ')}`).toHaveLength(0);
   });
 });

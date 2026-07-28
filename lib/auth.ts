@@ -107,7 +107,45 @@ function getSecretPrevious(): string | null {
   return _secretPrevious;
 }
 
-export const COOKIE_NAME = IS_PROD ? '__Host-token' : 'token';
+/**
+ * En producción real la cookie se llama `__Host-token` (requiere Secure + HTTPS).
+ * En staging local sobre HTTP se usa `token` simple porque las cookies __Host-
+ * requieren HTTPS y el navegador las rechazaría.
+ *
+ * La decisión depende del runtime global `__E2E_LOCAL_HTTP`, seteado por
+ * `instrumentation.ts` SOLO después de validar que:
+ *   - E2E_ENVIRONMENT=staging
+ *   - VERCEL_ENV no es production
+ *   - VERCEL_ENV no es preview
+ *   - E2E_LOCAL_HTTP=true
+ *
+ * Si el runtime global no está activo (por defecto), production usa
+ * `__Host-token` aunque las variables de entorno estén presentes accident-
+ * almente. Esto evita que un error de configuración degrade la cookie.
+ *
+ * En desarrollo y test (NODE_ENV != production) siempre se usa `token`
+ * (HTTP local, sin Secure).
+ */
+function isRuntimeE2ELocalHttpMode(): boolean {
+  const g = globalThis as { __E2E_LOCAL_HTTP?: boolean };
+  return g.__E2E_LOCAL_HTTP === true;
+}
+
+function shouldUseHostCookie(): boolean {
+  // Desarrollo y test local: cookie simple sobre HTTP.
+  if (process.env.NODE_ENV !== 'production') {
+    return false;
+  }
+  // Producción real o Preview: cookie segura a menos que instrumentation
+  // haya validado explícitamente el modo E2E local.
+  return !isRuntimeE2ELocalHttpMode();
+}
+
+export function getCookieName(): string {
+  return shouldUseHostCookie() ? '__Host-token' : 'token';
+}
+
+export const COOKIE_NAME = '__Host-token';
 export const COOKIE_NAME_FALLBACK = 'token';
 
 export const ALLOWED_EMAIL_DOMAIN = '@pinedayasociadoshn.com';
@@ -128,7 +166,9 @@ export function isAllowedAuthEmail(email: string): boolean {
 
 function cookieAttrs(): string {
   const parts = ['HttpOnly', 'Path=/', 'SameSite=Lax', `Max-Age=${TOKEN_TTL_SECONDS}`];
-  if (IS_PROD) {
+  // En producción real se requiere Secure. En staging local sobre HTTP
+  // (E2E_LOCAL_HTTP) no se añade Secure porque el navegador lo rechazaría.
+  if (shouldUseHostCookie()) {
     parts.unshift('Secure');
   }
   return parts.join('; ');
@@ -241,12 +281,10 @@ function readCookie(cookieHeader: string | null, name: string): string | null {
 
 export function getTokenFromCookies(request: Request): string | null {
   const cookieHeader = request.headers.get('cookie');
-  const primary = readCookie(cookieHeader, COOKIE_NAME);
+  // Probar el nombre canónico y el fallback. En staging local (E2E_LOCAL_HTTP)
+  // la cookie se setea como 'token'; en producción como '__Host-token'.
+  const primary = readCookie(cookieHeader, COOKIE_NAME) ?? readCookie(cookieHeader, COOKIE_NAME_FALLBACK);
   if (primary) return primary;
-  if (IS_PROD) {
-    const fallback = readCookie(cookieHeader, COOKIE_NAME_FALLBACK);
-    return fallback;
-  }
   return null;
 }
 
@@ -357,7 +395,7 @@ export async function requireAdmin(request: Request): Promise<AuthUser> {
  * El admin conserva acceso total al módulo SGIE (supervisión global),
  * por lo que ambos roles acceden. El scope fino por abogado (qué expedientes
  * ve un abogado) lo aplican las queries de `lib/sgie/expedientes-db.ts`,
- * no esta función. Referencia: pinedayasociados.md §6.1.
+ * no esta función. Ver docs/architecture/ §6.1.
  *
  * La verificación de bloqueo/revocación (posterior al JWT) se hace vía
  * `validateSessionFreshness` (token_version + active + bloqueado), con caché
@@ -389,8 +427,8 @@ export function authFailureResponse(err: unknown): Response {
 export function createAuthResponse(data: unknown, token?: string) {
   const headers = new Headers({ 'Content-Type': 'application/json' });
   if (token) {
-    headers.append('Set-Cookie', `${COOKIE_NAME}=${token}; ${cookieAttrs()}`);
-    if (IS_PROD) {
+    headers.append('Set-Cookie', `${getCookieName()}=${token}; ${cookieAttrs()}`);
+    if (shouldUseHostCookie()) {
       headers.append('Set-Cookie', `${COOKIE_NAME_FALLBACK}=; Path=/; Max-Age=0; SameSite=Lax; Secure`);
     }
   }
@@ -398,10 +436,9 @@ export function createAuthResponse(data: unknown, token?: string) {
 }
 
 export function createLogoutResponse() {
-  const clearPrimary = IS_PROD
-    ? `${COOKIE_NAME}=; Path=/; Max-Age=0; Secure; SameSite=Lax`
-    : `${COOKIE_NAME}=; Path=/; Max-Age=0; SameSite=Lax`;
-  const clearFallback = `${COOKIE_NAME_FALLBACK}=; Path=/; Max-Age=0; SameSite=Lax${IS_PROD ? '; Secure' : ''}`;
+  const secureAttr = shouldUseHostCookie() ? '; Secure' : '';
+  const clearPrimary = `${COOKIE_NAME}=; Path=/; Max-Age=0${secureAttr}; SameSite=Lax`;
+  const clearFallback = `${COOKIE_NAME_FALLBACK}=; Path=/; Max-Age=0; SameSite=Lax${secureAttr}`;
   const headers = new Headers({ 'Content-Type': 'application/json' });
   headers.append('Set-Cookie', clearPrimary);
   headers.append('Set-Cookie', clearFallback);

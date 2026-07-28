@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./auth-context";
-import { ThemeProvider } from "./theme-context";
+import { ThemeProvider } from '@/components/providers/theme-context';
 import { ToastProvider } from "@/components/ui/toast";
 import { ConfirmProvider } from "@/components/ui/confirm";
 import { PromptDialogProvider } from "@/components/ui/prompt-dialog";

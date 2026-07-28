@@ -1,3 +1,12 @@
+---
+status: current
+owner: engineering
+created: 2026-07-28
+last_reviewed: 2026-07-28
+review_due: 2026-10-28
+supersedes: null
+superseded_by: null
+---
 # Validación staging — cierre de Fase 2
 
 Fecha: 18 de julio de 2026. Commit: `c74840d`.

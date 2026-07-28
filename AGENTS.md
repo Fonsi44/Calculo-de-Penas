@@ -14,7 +14,7 @@ de la tarea y respetarse hasta el final.
 | Modo | Lectura | Escritura | Commits | Llamadas externas | Instalaciones / migraciones |
 |------|---------|-----------|---------|-------------------|------------------------------|
 | **`AUDITORÍA`** | Sí, **sin exclusiones** | No | No | Solo GET sin efectos | No |
-| **`IMPLEMENTACIÓN`** | Sí | Cambios autorizados, pequeños y trazables | Commits locales atómicos permitidos (ver §5) | Solo con autorización expresa | Solo con autorización expresa |
+| **`IMPLEMENTACIÓN`** | Sí | Cambios autorizados, pequeños y trazables | Solo con autorización expresa del usuario | Solo con autorización expresa | Solo con autorización expresa |
 | **`VERIFICACIÓN`** | Sí | No | No | Solo comprobaciones de solo lectura | No |
 
 **Ningún archivo, subsistema o directorio queda excluido de lectura durante una
@@ -31,17 +31,19 @@ autorización. La capacidad de observación es total; la de modificación, acota
 ## 1. Flujo de trabajo obligatorio
 
 1. Leer `AGENTS.md` (este archivo).
-2. Ejecutar `git status` y confirmar que la rama activa es `main` (ver R19).
-   Si no es `main`, detenerse inmediatamente y volver a `main` sin descartar cambios.
+2. Ejecutar `git status` antes y después de cada bloque de trabajo. Preservar
+   siempre los cambios locales preexistentes.
 3. **Solo para tareas SEO/Analytics live:** `npm run seo:doctor` (debe dar 0
    ERROR) y `npm run seo:collect`. Revisar `docs/audits/seo-live-summary.md`.
 4. Leer los archivos que se van a modificar (no asumir contenido).
 5. Aplicar cambios pequeños y justificados (modo `IMPLEMENTACIÓN`).
 6. Validar según la matriz de la §4 (no siempre hace falta la suite completa).
-7. Documentar la acción: `CHANGELOG.md` para releases,
-   `AUDIT_REPOSITORY_REPORT.md` para saneamientos, `auditoria-acciones.md`
-   para operaciones estándar.
-8. No hacer push.
+7. No hacer push.
+8. No generar informes Markdown nuevos en la raíz por cada tarea. El informe
+   final se entrega en la respuesta del agente, no como archivo nuevo. Solo
+   crear archivos de informe cuando el usuario lo solicite expresamente.
+9. Actualizar `CHANGELOG.md` solo para releases; documentos existentes antes
+   de crear nuevos.
 
 ---
 
@@ -92,7 +94,10 @@ fuentes; los índices derivados (como `embeddings`) no son fuente primaria.
 | R16 | Design tokens canónicos: radius `rounded-lg`, sombras vía `.btn-shadow-*`, icono `w-11 h-11`. Dorado solo acento. |
 | R17 | IA en blog: verificar contra fuentes canónicas. Dry-run por defecto. Sin relleno genérico. |
 | R18 | Footer/Home: solo 10 ciudades prioritarias (Nacaome, Choluteca, San Lorenzo, Goascorán, San Marcos de Colón, El Triunfo, Marcovia, Pespire, Namasigüe, Orocuina). |
-| R19 | **Rama única de trabajo: `main`.** Prohibido crear ramas, worktrees, forks, PRs o merges. Todo el trabajo se realiza directamente sobre `main`. Si la rama activa no es `main`, detenerse y volver a `main` sin descartar cambios. No ejecutar `git merge`, `git pull` de otras ramas, `git cherry-pick` entre ramas ni `git rebase`. No crear PRs en GitHub. |
+| R19 | No borrar código muerto sin comprobar imports, rutas dinámicas, scripts, tests, cron, webhooks y despliegues. |
+| R20 | No ocultar errores con `try/catch` vacíos, casts inseguros, desactivación de reglas o exclusión de tests. |
+| R21 | No declarar una tarea completada sin ejecutar las validaciones correspondientes. |
+| R22 | Mantener aislados la web pública, el blog, la intranet, SGIE y administración cuando el cambio no afecte a todos. |
 
 ---
 
@@ -131,17 +136,19 @@ Comandos base: `npm run lint`, `npm run typecheck` (`tsc --noEmit`),
 
 - **`AUDITORÍA`:** no se crean commits. El árbol de trabajo debe quedar
   inalterado o, si se generan artefactos de inspección, devueltos a su estado.
-- **`IMPLEMENTACIÓN`:** pueden crearse **commits locales atómicos** (un cambio
-  lógico por commit, mensaje en español con prefijo `feat`/`fix`/`chore`/`docs`).
+- **`IMPLEMENTACIÓN`:** los commits solo se crean con autorización expresa del
+  usuario. No se hacen commits automáticos.
 - **Nunca se hace push** sin orden expresa del usuario.
-- **Prohibido crear ramas, feature branches o worktrees.** Todo el trabajo se
-  realiza directamente sobre `main` (R19).
-- **Prohibido ejecutar `git merge`, `git pull` de otras ramas, `git cherry-pick`
-  entre ramas, `git rebase` o cualquier operación que mezcle líneas de desarrollo.**
-- **Prohibido crear Pull Requests en GitHub.**
-- Si la rama activa no es `main`, **detenerse inmediatamente**. No ejecutar
-  ningún comando. Volver a `main` con `git checkout main` (sin descartar cambios
-  pendientes). Si hay cambios sin versionar, guardarlos con `git stash` temporal.
+- **Nunca se despliega** en Vercel o producción sin orden expresa del usuario.
+- **Nunca se ejecutan migraciones de producción** sin orden expresa del usuario.
+- **Prohibido** usar `git reset --hard`, `git clean -fd` o reescribir el
+  historial Git.
+- **Preservar siempre** los cambios locales preexistentes del usuario.
+- El flujo de trabajo normal del proyecto utiliza ramas cortas y pull requests.
+  No trabajar directamente sobre `main` salvo instrucción explícita del usuario.
+- No ejecutar `git merge`, `git pull` de otras ramas, `git cherry-pick` entre
+  ramas ni `git rebase` sin autorización.
+- Revisar `git status` antes y después de cada bloque de trabajo.
 
 ---
 
@@ -218,6 +225,10 @@ Los manuales operativos extensos viven bajo `docs/`, no en este protocolo.
 
 ## 9. Formato de entrega
 
+El informe final del agente se entrega en la respuesta, no como archivo nuevo
+en el repositorio. Solo crear archivos de informe cuando el usuario lo solicite
+expresamente.
+
 ```
 Porcentaje completado:
 Porcentaje restante:
@@ -229,3 +240,22 @@ Riesgos pendientes:
 NO VALIDADO:
 Próximo paso recomendado:
 ```
+
+---
+
+## 10. Organización del repositorio
+
+- No crear documentación nueva en la raíz salvo archivos canónicos expresamente
+  autorizados (`AGENTS.md`, `README.md`, `CHANGELOG.md`, `package.json`).
+- No generar un informe Markdown por cada ejecución.
+- Actualizar documentos existentes antes de crear otros.
+- Colocar documentación técnica dentro de `docs/`.
+- No guardar outputs, backups, exports, logs o temporales dentro del repositorio.
+- No duplicar scripts que ya tengan una función equivalente.
+- Cada script debe tener propósito, responsable funcional y consumidor
+  identificable.
+- Mantener nombres consistentes y evitar variantes del mismo concepto.
+- El código actual y las pruebas son la fuente de verdad técnica.
+- Los informes antiguos son evidencia histórica, no instrucciones vigentes.
+- Las decisiones arquitectónicas duraderas deben documentarse como ADR en
+  `docs/adr/`.

@@ -6,7 +6,7 @@
  * Orquesta la ejecución contra el proveedor adecuado y gestiona revisión
  * humana cuando la confianza es baja.
  *
- * Referencia: pinedayasociados.md §13, §14.
+ * Ver docs/architecture/ §13, §14.
  */
 import { db } from '@/lib/db';
 import { aiTaskRouting } from '@/lib/schema';

@@ -29,7 +29,10 @@ const EXP_A1 = 'cccccccc-0000-4000-a000-000000000001';
 
 async function loginAs(request: import('@playwright/test').APIRequestContext, email: string, password: string): Promise<string> {
   const res = await request.post('/api/auth/login', { data: { email, password } });
-  return res.headers()['set-cookie'] || '';
+  // Extraer solo el par name=value del header Set-Cookie (sin atributos como
+  // HttpOnly, Path, SameSite que son inválidos en un header Cookie de request).
+  const setCookie = res.headers()['set-cookie'] || '';
+  return setCookie.split(';')[0];
 }
 
 test.describe('@critical Authorization — Roles y scope', () => {
@@ -70,10 +73,11 @@ test.describe('@critical Authorization — Roles y scope', () => {
 
   test('11. Abogado B no puede modificar cliente de A (mutación cruzada → 404 sin filas)', async ({ request }) => {
     const cookiesB = await loginAs(request, ABOGADO_B.email, ABOGADO_B.password);
-    // PATCH cliente de A con notas de "ataque"
+    // PATCH cliente de A con notas de "ataque". Origin requerido por CSRF
+    // (un navegador real siempre lo envía en mutaciones).
     const res = await request.patch(`/api/sgie/clientes/${CLI_A1}`, {
       data: { notas: 'HACK ATTEMPT' },
-      headers: { cookie: cookiesB },
+      headers: { cookie: cookiesB, Origin: 'http://localhost:3100' },
     });
     // Debe devolver 404 (no 403, para no revelar existencia)
     expect(res.status()).toBe(404);
@@ -86,8 +90,10 @@ test.describe('@critical Authorization — Roles y scope', () => {
     });
     expect(res.ok()).toBeTruthy();
     const body = await res.json();
-    expect(body.id).toBe(CLI_A1);
-    expect(body.email).toBeTruthy();
+    // El API devuelve { cliente: { id, ... } }.
+    const cliente = body.cliente ?? body;
+    expect(cliente.id).toBe(CLI_A1);
+    expect(cliente.email).toBeTruthy();
   });
 
   test('12. Admin puede acceder a cualquier expediente', async ({ request }) => {

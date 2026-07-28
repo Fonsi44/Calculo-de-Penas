@@ -84,7 +84,7 @@ export default function AdminArticuloCPPage() {
           </div>
           <div className="space-y-1">
             {articulo.delitos_relacionados.map(d => (
-              <Link key={d.id} href={`/delito-form?id=${d.id}`}
+              <Link key={d.id} href={`/intranet/admin/delito-form?id=${d.id}`}
                 className="flex items-center gap-2 h-9 px-2.5 rounded-md hover:bg-surface-alt text-sm focus-visible:outline-none">
                 <ExternalLink size={12} className="text-text-muted flex-shrink-0" />
                 <span className="font-semibold text-text flex-1 truncate">{d.nombre}</span>

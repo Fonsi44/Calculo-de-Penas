@@ -2,5 +2,5 @@
   "framework": "nextjs",
   "buildCommand": "npm run build:ci",
   "outputDirectory": ".next",
-  "installCommand": "npm ci"
+  "installCommand": "npm install --no-audit --no-fund"
 }

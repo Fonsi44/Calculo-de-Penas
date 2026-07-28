@@ -5,7 +5,7 @@
  * vinculadas a expedientes donde esté asignado o tenga permiso. El admin ve
  * todas. El scope se aplica SIEMPRE en la query (no en UI).
  *
- * Referencia: pinedayasociados.md §9 (Agenda/tareas), §6.2 (scope).
+ * Ver docs/architecture/ §9 (Agenda/tareas), §6.2 (scope).
  *
  * Modelo: la tabla `tareas` (lib/schema.ts) NO tiene tabla de comentarios
  * asociada. Los comentarios quedan PENDIENTES de un futuro cambio de schema

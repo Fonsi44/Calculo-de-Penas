@@ -36,8 +36,9 @@ test.describe('@navigation Navegación web pública', () => {
     // Buscar primer post del blog (puede variar, verificamos que la página no de 404)
     const res = await page.goto('/blog');
     expect(res?.status()).toBe(200);
-    // Hacer clic en el primer enlace de post
-    const firstPost = page.locator('a[href^="/blog/"]').first();
+    // Hacer clic en el primer enlace de post. Excluir paths especiales del
+    // blog (feed.xml, categorías) que no son posts individuales.
+    const firstPost = page.locator('a[href^="/blog/"]:not([href$="/feed.xml"]):not([href*="/category/"])').first();
     if (await firstPost.isVisible()) {
       await firstPost.click();
       await expect(page).not.toHaveURL('/blog');

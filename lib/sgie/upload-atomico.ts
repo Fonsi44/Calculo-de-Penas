@@ -5,7 +5,7 @@
  * registro documental en una transacción DB que garantiza consistencia entre
  * inserción de documento, outbox event y encolado de job.
  *
- * Referencia: pinedayasociados.md §12.6, §23.2.
+ * Ver docs/architecture/ §12.6, §23.2.
  */
 import { db } from '@/lib/db';
 import {

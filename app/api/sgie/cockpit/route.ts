@@ -78,8 +78,16 @@ export async function GET(request: Request) {
       docsPendientes = r?.c ?? 0;
     }
 
-    // Correos fallidos (global, no scope)
-    const [correosR] = await db.select({ c: count() }).from(correosEnviados).where(eq(correosEnviados.estado, 'fallido'));
+    // Correos fallidos: scope por abogado (solo admin ve todos)
+    let correosFallidos = 0;
+    if (accesibles) {
+      const [r] = await db.select({ c: count() }).from(correosEnviados)
+        .where(and(eq(correosEnviados.estado, 'fallido'), inArray(correosEnviados.expedienteId, accesibles)));
+      correosFallidos = r?.c ?? 0;
+    } else {
+      const [r] = await db.select({ c: count() }).from(correosEnviados).where(eq(correosEnviados.estado, 'fallido'));
+      correosFallidos = r?.c ?? 0;
+    }
 
     return Response.json({
       expedientes: rows,
@@ -88,7 +96,7 @@ export async function GET(request: Request) {
         listosRevisar, conFaltantes, listosFirma,
         alertasActivas: alertasCount, tareasHoy: tareasCount,
         documentosPendientes: docsPendientes,
-        correosFallidos: correosR?.c ?? 0,
+        correosFallidos,
         total: rows.length,
       },
     });

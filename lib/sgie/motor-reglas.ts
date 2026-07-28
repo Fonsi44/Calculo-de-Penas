@@ -13,7 +13,7 @@
  * Idempotencia: UNIQUE (expediente_id, regla_id, ventana_temporal).
  * Repetir validación no duplica alertas, tareas ni correos.
  *
- * Referencia: pinedayasociados.md §14.
+ * Ver docs/architecture/ §14.
  */
 import { db } from '@/lib/db';
 import {
