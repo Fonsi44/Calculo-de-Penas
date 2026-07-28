@@ -267,7 +267,11 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
       ) : null}
 
       {area.situacionesHabituales && area.situacionesHabituales.length > 0 ? (
-        <SituacionesHabituales items={area.situacionesHabituales} />
+        <SituacionesHabituales
+          items={area.situacionesHabituales ?? area.subservicios
+            .slice(0, 8)
+            .map((service) => `${service.titulo}: ${service.descripcion}`)}
+        />
       ) : null}
 
       {area.separacionAudiencias && area.separacionAudiencias.length > 0 ? (

@@ -28,6 +28,8 @@ interface ServiceCardProps {
   static?: boolean;
   /** Texto del CTA. Por defecto: "Conocer servicios de [título]" */
   ctaLabel?: string;
+  /** Profesional o criterio de asignación responsable del área. */
+  responsible?: string;
   /** Prioridad de carga (LCP). Solo para la imagen visible inicialmente. */
   priority?: boolean;
 }
@@ -69,6 +71,7 @@ export function ServiceCard({
   className,
   static: isStatic = false,
   ctaLabel,
+  responsible,
   priority = false,
 }: ServiceCardProps) {
   const resolvedImage = resolveImage(imageSrc, slug, category);
@@ -113,6 +116,11 @@ export function ServiceCard({
         {description && (
           <p className="mt-2 text-sm leading-relaxed text-text-secondary line-clamp-3">
             {description}
+          </p>
+        )}
+        {responsible && (
+          <p className="mt-2 text-xs font-semibold text-text-muted">
+            Área dirigida por {responsible}
           </p>
         )}
         <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-accent-dark group-hover:gap-2 transition-all">

@@ -46,6 +46,8 @@ const MOTIVO_FROM_QUERY: Record<string, string> = {
   'derecho-de-familia': 'Divorcio, custodia o pensión de alimentos',
   'derecho-laboral': 'Despido o prestaciones laborales',
   'derecho-civil-y-notarial': 'Contrato, propiedad, sucesión o trámite notarial',
+  'derecho-mercantil-empresarial': 'Otro asunto',
+  'derecho-administrativo-y-servicio-civil': 'Otro asunto',
   'hondurenos-en-espana': 'Asunto desde España',
 };
 

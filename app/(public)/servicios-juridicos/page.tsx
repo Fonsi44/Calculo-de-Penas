@@ -24,6 +24,31 @@ import { HubFaq } from '@/components/marketing/hub-faq';
 import { FAQ_SERVICIOS_JURIDICOS } from '@/data/faqs-hubs';
 import { hubPenal } from '@/data/areas-juridicas';
 
+const RESPONSIBLE_BY_AREA: Record<string, string> = {
+  'derecho-penal': 'Danilo Pineda Maradiaga',
+  'derecho-de-familia': 'Thania Marlene Paz',
+  'derecho-laboral': 'Emil Barahona',
+  'derecho-civil-y-notarial': 'Thania Marlene Paz, con apoyo de Emil Barahona',
+  'derecho-mercantil-empresarial': 'Thania Marlene Paz',
+  'derecho-administrativo-y-servicio-civil': 'Thania Marlene Paz',
+};
+
+const CTA_BY_AREA: Record<string, string> = {
+  'derecho-penal': 'Ver servicios de defensa penal',
+  'derecho-de-familia': 'Consultar asuntos de familia',
+  'derecho-laboral': 'Revisar un conflicto laboral',
+  'derecho-civil-y-notarial': 'Revisar contrato, propiedad o herencia',
+  'derecho-mercantil-empresarial': 'Solicitar revisión mercantil',
+  'derecho-administrativo-y-servicio-civil': 'Consultar un procedimiento administrativo',
+};
+
+function cardSummary(value: string): string {
+  const plain = value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const words = plain.split(' ');
+  if (words.length >= 35) return `${words.slice(0, 42).join(' ')}${words.length > 42 ? '…' : ''}`;
+  return `${plain} Le orientamos sobre actuaciones, documentación y siguientes pasos desde nuestra sede en Nacaome, con alcance y presupuesto por escrito.`;
+}
+
 export const metadata: Metadata = buildMetadata({
   // 47 chars. Plan maestro §7.1: "Servicios Jurídicos en Nacaome | Áreas de Práctica"
   title: `Servicios Jurídicos en ${site.address.city} | Áreas de Práctica`,
@@ -118,9 +143,11 @@ export default async function AreasJuridicasPage() {
                   href={area.slug === 'derecho-penal' ? '/derecho-penal' : `/servicios-juridicos/${area.slug}`}
                   slug={area.slug}
                   title={area.titulo}
-                  description={area.descripcionCorta}
+                  description={cardSummary(area.descripcionCorta)}
                   category="services"
                   tone={isPriority ? 'primary' : 'administrativo'}
+                  responsible={RESPONSIBLE_BY_AREA[area.slug] ?? 'el profesional asignado según la materia'}
+                  ctaLabel={CTA_BY_AREA[area.slug] ?? `Consultar servicios de ${area.titulo.toLowerCase()}`}
                   className="h-full"
                 />
               </Reveal>

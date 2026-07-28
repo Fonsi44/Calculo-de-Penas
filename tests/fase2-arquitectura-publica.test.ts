@@ -5,6 +5,7 @@ import { landingsLocales } from '@/data/landings-locales';
 import { parseCsv } from '@/lib/csv';
 import { LAWYER_PROFILES, site } from '@/lib/site';
 import { sitemapXml } from '@/lib/sitemap-xml';
+import { areasGenerales, hubPenal } from '@/data/areas-juridicas';
 
 const read = (path: string) => readFileSync(path, 'utf8');
 
@@ -92,5 +93,44 @@ describe('Fase 2 — contratos de arquitectura pública', () => {
     }]);
     expect(xml).toContain('&amp;');
     expect(xml).toContain('<priority>0.8</priority>');
+  });
+
+  it('las seis áreas prioritarias exponen la arquitectura editorial completa', () => {
+    const areas = [
+      hubPenal,
+      ...[
+        'derecho-de-familia',
+        'derecho-laboral',
+        'derecho-civil-y-notarial',
+        'derecho-mercantil-empresarial',
+        'derecho-administrativo-y-servicio-civil',
+      ].map((slug) => areasGenerales.find((area) => area.slug === slug)!),
+    ];
+    expect(areas).toHaveLength(6);
+    for (const area of areas) {
+      expect(area.respuestaDirecta).toBeTruthy();
+      expect(area.documentosIniciales?.items.length).toBeGreaterThanOrEqual(5);
+      expect(area.proceso?.pasos.length).toBeGreaterThanOrEqual(6);
+      expect(area.faqs.length).toBeGreaterThanOrEqual(2);
+      expect(area.fuentesGenerales?.length).toBeGreaterThanOrEqual(2);
+      expect(area.ctaContextual?.href).toContain('/solicitar-consulta');
+    }
+  });
+
+  it('las tarjetas centrales identifican responsable y CTA específico', () => {
+    const services = read('app/(public)/servicios-juridicos/page.tsx');
+    for (const profile of LAWYER_PROFILES) {
+      expect(services).toContain(profile.name);
+    }
+    for (const label of [
+      'Ver servicios de defensa penal',
+      'Consultar asuntos de familia',
+      'Revisar un conflicto laboral',
+      'Revisar contrato, propiedad o herencia',
+      'Solicitar revisión mercantil',
+      'Consultar un procedimiento administrativo',
+    ]) {
+      expect(services).toContain(label);
+    }
   });
 });
