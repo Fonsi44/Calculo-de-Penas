@@ -1,0 +1,51 @@
+{
+  "formatVersion": 1,
+  "description": "Clasificación y claves naturales para comparar seeds contractuales sin confundir configuración o datos operativos con una base canónica vacía.",
+  "tables": {
+    "roles": {
+      "classification": "contractual_required_subset",
+      "naturalKey": ["nombre"],
+      "contractColumns": ["nombre", "descripcion"]
+    },
+    "permisos": {
+      "classification": "contractual_required_subset",
+      "naturalKey": ["recurso", "accion"],
+      "contractColumns": ["recurso", "accion", "descripcion"]
+    },
+    "roles_permisos": {
+      "classification": "contractual_required_subset",
+      "naturalKey": ["rol.nombre", "permiso.recurso", "permiso.accion"],
+      "contractColumns": ["rol.nombre", "permiso.recurso", "permiso.accion"]
+    },
+    "configuracion_sitio": {
+      "classification": "mutable_configuration",
+      "naturalKey": ["clave"],
+      "contractColumns": []
+    },
+    "tipos_procedimiento": {
+      "classification": "operational_data",
+      "naturalKey": ["slug", "version"],
+      "contractColumns": []
+    },
+    "procedimiento_fases": {
+      "classification": "operational_data",
+      "naturalKey": ["procedimiento_version_id", "slug"],
+      "contractColumns": []
+    },
+    "procedimiento_transiciones": {
+      "classification": "operational_data",
+      "naturalKey": ["procedimiento_version_id", "desde_fase_id", "hacia_fase_id"],
+      "contractColumns": []
+    },
+    "extraction_schema_versions": {
+      "classification": "contractual_required_subset",
+      "naturalKey": ["tipo_documento", "version"],
+      "contractColumns": ["tipo_documento", "version", "campos", "activo"]
+    },
+    "feature_flags": {
+      "classification": "contractual_required_subset",
+      "naturalKey": ["flag_key", "scope_level", "organization_id", "team_id", "user_id", "case_id", "procedure_id"],
+      "contractColumns": ["flag_key", "scope_level", "organization_id", "team_id", "user_id", "case_id", "procedure_id", "enabled", "config", "kill_switch", "valid_from", "valid_until"]
+    }
+  }
+}

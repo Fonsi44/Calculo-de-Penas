@@ -21,13 +21,15 @@ import { resolve, dirname } from 'node:path';
 import { execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import {
-  beginLockedTransaction, insertExactTracking, signPlan, verifyPlan,
+  beginLockedTransaction, compareRequiredSubset, insertExactTracking, signPlan,
+  validateCanonicalExport, verifyPlan,
 } from './baseline-safety.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..', '..');
 const PLAN_PATH = resolve(ROOT, '.local', 'production-baseline-pr20.json');
 const CANONICAL_PATH = resolve(ROOT, '.local', 'canonical-tracking-pr20.json');
+const SEED_MANIFEST_PATH = resolve(ROOT, 'tools', 'db', 'contractual-seeds.json');
 
 function sha256(content) { return createHash('sha256').update(content).digest('hex'); }
 const SEED_TABLES = [
@@ -50,6 +52,28 @@ async function seedFingerprint(sql, table) {
   } catch {
     return { status: 'NO_APLICABLE' };
   }
+}
+
+const CONTRACT_QUERIES = {
+  roles: `SELECT nombre, descripcion FROM roles ORDER BY nombre`,
+  permisos: `SELECT recurso, accion, descripcion FROM permisos ORDER BY recurso, accion`,
+  roles_permisos: `SELECT r.nombre AS rol, p.recurso, p.accion
+    FROM roles_permisos rp
+    JOIN roles r ON r.id=rp.rol_id
+    JOIN permisos p ON p.id=rp.permiso_id
+    ORDER BY r.nombre,p.recurso,p.accion`,
+  extraction_schema_versions: `SELECT tipo_documento,version,campos,activo
+    FROM extraction_schema_versions ORDER BY tipo_documento,version`,
+  feature_flags: `SELECT flag_key,scope_level,organization_id,team_id,user_id,case_id,
+    procedure_id,enabled,config,kill_switch,valid_from,valid_until
+    FROM feature_flags ORDER BY flag_key,scope_level,organization_id,team_id,user_id,case_id,procedure_id`,
+};
+
+async function seedContractRows(sql, table) {
+  const query = CONTRACT_QUERIES[table];
+  if (!query) return [];
+  const result = await sql.query(query);
+  return result.rows.map((row) => JSON.parse(JSON.stringify(row)));
 }
 function getGitHead() {
   try { return execSync('git rev-parse HEAD', { encoding: 'utf8' }).trim(); }
@@ -88,7 +112,19 @@ async function canonicalExport(sql) {
   const journalHash = sha256(readFileSync(resolve(ROOT, 'drizzle/migrations/meta/_journal.json'), 'utf8'));
   const manifestHash = sha256(readFileSync(resolve(ROOT, 'tools/db/manual-migrations.json'), 'utf8'));
   
+  const seedManifest = JSON.parse(readFileSync(SEED_MANIFEST_PATH, 'utf8'));
+  const seedContracts = {};
+  for (const [table, contract] of Object.entries(seedManifest.tables)) {
+    seedContracts[table] = {
+      classification: contract.classification,
+      naturalKey: contract.naturalKey.map((key) => key.replace('rol.nombre', 'rol').replace('permiso.', '')),
+      rows: contract.classification === 'contractual_required_subset'
+        ? await seedContractRows(sql, table) : [],
+    };
+  }
+
   const canonical = {
+    formatVersion: 3,
     exportedAt: new Date().toISOString(),
     head: getGitHead(),
     database: db,
@@ -99,6 +135,7 @@ async function canonicalExport(sql) {
     },
     schema: { tables: tableCount, columns: colCount, enums: enumCount, indexes: indexCount },
     seeds,
+    seedContracts,
     journalHash,
     manifestHash,
   };
@@ -121,6 +158,12 @@ async function plan(sql) {
   
   if (!existsSync(CANONICAL_PATH)) { console.error('⛔ canonical-export no se ha ejecutado. Ejecuta primero:\n   npm run db:migrations:baseline:canonical-export'); process.exit(1); }
   const canonical = JSON.parse(readFileSync(CANONICAL_PATH, 'utf8'));
+  const canonicalFailures = validateCanonicalExport(canonical, SEED_TABLES);
+  if (canonicalFailures.length) {
+    console.error(`⛔ Export canónico obsoleto o incompleto: ${canonicalFailures.join(', ')}`);
+    console.error('   Regenera canonical-tracking-pr20.json desde canonical_pr20 antes de crear un plan.');
+    process.exit(1);
+  }
   
   const id = await sql.query("SELECT current_database() AS db, current_setting('neon.branch_id', true) AS bid");
   const cloneDb = id.rows[0]?.db;
@@ -162,6 +205,21 @@ async function plan(sql) {
       seedStatus[table] = 'DIVERGENTE';
     }
   }
+
+  const cloneSeedContracts = {};
+  for (const [table, contract] of Object.entries(canonical.seedContracts)) {
+    if (contract.classification === 'contractual_required_subset') {
+      const candidateRows = await seedContractRows(sql, table);
+      cloneSeedContracts[table] = compareRequiredSubset(contract.rows, candidateRows, contract.naturalKey);
+    } else {
+      cloneSeedContracts[table] = {
+        status: contract.classification === 'mutable_configuration'
+          ? 'MUTABLE_CONFIGURATION' : 'OPERATIONAL_DATA',
+      };
+    }
+  }
+  const seedContractsMatch = Object.values(cloneSeedContracts)
+    .every((result) => !String(result.status).startsWith('DIVERGENTE'));
   
   // Equivalencia = schema idéntico + tracking vacío.
   // Seeds y datos difieren (clone tiene datos productivos, canonical es vacía).
@@ -191,13 +249,19 @@ async function plan(sql) {
     publicDrift,
     equivalence: equivalent ? 'EQUIVALENTE' : 'DIVERGENTE',
     schema: { canonical: canonical.schema, clone: { tables: tableCount, columns: colCount, enums: enumCount, indexes: indexCount }, match: schemaMatch },
-    seeds: { canonical: canonical.seeds, clone: cloneSeeds, status: seedStatus },
+    seeds: {
+      canonical: canonical.seeds,
+      clone: cloneSeeds,
+      status: seedStatus,
+      contracts: cloneSeedContracts,
+      match: seedContractsMatch,
+    },
     tracking: { drizzleN: drizzleTrackN, manualN: manualTrackN, match: trackingZero },
     data: { usuarios: usuariosN, blog: blogN, blogPublished: blogPubN, clientes: clientesN, expedientes: expN },
     journalHash: sha256(readFileSync(resolve(ROOT, 'drizzle/migrations/meta/_journal.json'), 'utf8')),
     manifestHash: sha256(readFileSync(resolve(ROOT, 'tools/db/manual-migrations.json'), 'utf8')),
   };
-  planDoc.equivalence = schemaMatch && trackingZero && publicDrift === 0
+  planDoc.equivalence = schemaMatch && trackingZero && publicDrift === 0 && seedContractsMatch
     ? 'EQUIVALENTE' : 'DIVERGENTE';
   planDoc.signature = signPlan(planDoc);
   

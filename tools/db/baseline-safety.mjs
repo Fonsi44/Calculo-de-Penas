@@ -29,6 +29,50 @@ export function verifyPlan(plan, context) {
   return failures;
 }
 
+export function validateCanonicalExport(canonical, seedTables) {
+  const failures = [];
+  if (canonical?.formatVersion !== 3) failures.push('format_version');
+  if (canonical?.tracking?.drizzle?.count !== 39) failures.push('drizzle_tracking');
+  if (canonical?.tracking?.manual?.count !== 20) failures.push('manual_tracking');
+  for (const table of seedTables) {
+    const fingerprint = canonical?.seeds?.[table];
+    if (
+      !fingerprint
+      || (fingerprint.status !== 'NO_APLICABLE'
+        && (!Number.isInteger(fingerprint.count) || !/^[a-f0-9]{64}$/.test(fingerprint.sha256 ?? '')))
+    ) {
+      failures.push(`seed_fingerprint:${table}`);
+    }
+  }
+  if (!canonical?.seedContracts || typeof canonical.seedContracts !== 'object') {
+    failures.push('seed_contracts');
+  }
+  return failures;
+}
+
+export function compareRequiredSubset(requiredRows, candidateRows, naturalKey) {
+  const keyOf = (row) => naturalKey.map((field) => JSON.stringify(row[field] ?? null)).join('|');
+  const candidateByKey = new Map(candidateRows.map((row) => [keyOf(row), row]));
+  const missing = [];
+  const conflicts = [];
+  for (const required of requiredRows) {
+    const key = keyOf(required);
+    const candidate = candidateByKey.get(key);
+    if (!candidate) {
+      missing.push(key);
+    } else if (stableJson(candidate) !== stableJson(required)) {
+      conflicts.push(key);
+    }
+  }
+  return {
+    status: missing.length === 0 && conflicts.length === 0 ? 'EQUIVALENTE_SUBSET' : 'DIVERGENTE_CONTRACTUAL',
+    required: requiredRows.length,
+    candidate: candidateRows.length,
+    missing,
+    conflicts,
+  };
+}
+
 export async function beginLockedTransaction(sql, lockId) {
   await sql.query('BEGIN');
   await sql.query('SELECT pg_advisory_xact_lock($1)', [lockId]);

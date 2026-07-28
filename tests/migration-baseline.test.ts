@@ -1,8 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
 import {
   beginLockedTransaction,
+  compareRequiredSubset,
   insertExactTracking,
   signPlan,
+  validateCanonicalExport,
   verifyPlan,
 } from '../tools/db/baseline-safety.mjs';
 
@@ -56,5 +58,49 @@ describe('canonical migration baseline safety', () => {
       .mockResolvedValueOnce({ rows: [] })
       .mockRejectedValueOnce(new Error('revocation'));
     await expect(beginLockedTransaction({ query }, 20)).rejects.toThrow('revocation');
+  });
+
+  it('rejects legacy canonical exports that contain seed counts without hashes', () => {
+    const failures = validateCanonicalExport({
+      tracking: { drizzle: { count: 39 }, manual: { count: 20 } },
+      seeds: { roles: 3 },
+    }, ['roles']);
+    expect(failures).toEqual(['format_version', 'seed_fingerprint:roles', 'seed_contracts']);
+  });
+
+  it('accepts versioned canonical exports with normalized seed fingerprints', () => {
+    const failures = validateCanonicalExport({
+      formatVersion: 3,
+      tracking: { drizzle: { count: 39 }, manual: { count: 20 } },
+      seeds: { roles: { count: 3, sha256: 'a'.repeat(64) } },
+      seedContracts: { roles: { rows: [] } },
+    }, ['roles']);
+    expect(failures).toEqual([]);
+  });
+
+  it('accepts additional mutable rows when every contractual seed matches by natural key', () => {
+    expect(compareRequiredSubset(
+      [{ nombre: 'admin', descripcion: 'Administrador' }],
+      [
+        { nombre: 'admin', descripcion: 'Administrador' },
+        { nombre: 'operador', descripcion: 'Operador local' },
+      ],
+      ['nombre'],
+    )).toMatchObject({ status: 'EQUIVALENTE_SUBSET', missing: [], conflicts: [] });
+  });
+
+  it('reports missing and conflicting contractual seeds separately', () => {
+    expect(compareRequiredSubset(
+      [
+        { recurso: 'usuarios', accion: 'leer' },
+        { recurso: 'usuarios', accion: 'editar' },
+      ],
+      [{ recurso: 'usuarios', accion: 'leer', descripcion: 'extra' }],
+      ['recurso', 'accion'],
+    )).toMatchObject({
+      status: 'DIVERGENTE_CONTRACTUAL',
+      missing: ['"usuarios"|"editar"'],
+      conflicts: ['"usuarios"|"leer"'],
+    });
   });
 });
