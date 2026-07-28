@@ -5,33 +5,69 @@ import type { BlogPost } from '@/lib/schema';
 import { getPublishedPosts, getPostBySlug as getPostBySlugDb, getBlogCategories } from '@/lib/blog-db';
 
 const EDITORIAL_OVERRIDES: Record<string, { title: string; description: string }> = {
+  'abogados-en-nacaome': {
+    title: 'Cómo Elegir Abogado en Nacaome: 10 Criterios antes de Contratar',
+    description: 'Criterios prácticos para elegir abogado en Nacaome: especialidad, honorarios, comunicación y experiencia antes de contratar servicios jurídicos en Valle.',
+  },
   'abogados-en-pespire-choluteca': {
     title: 'Abogados en Pespire, Honduras: orientación legal para su caso',
     description: 'Asesoría jurídica para personas, familias y empresas de Pespire y la zona sur de Honduras, con atención desde Nacaome y presupuesto por escrito.',
-  },
-  'cuando-necesito-abogado-penalista-honduras': {
-    title: '¿Cuándo necesita un abogado penalista en Honduras?',
-    description: 'Situaciones en las que conviene buscar defensa penal temprana, qué información preparar y cómo se desarrolla una primera consulta.',
   },
   'audiencia-inicial-proceso-penal-honduras': {
     title: 'Audiencia inicial en Honduras: proceso y preparación',
     description: 'Explicación general de la audiencia inicial, la importancia de la defensa técnica y la documentación que conviene organizar con antelación.',
   },
+  'cuando-necesito-abogado-penalista-honduras': {
+    title: '¿Cuándo necesita un abogado penalista en Honduras?',
+    description: 'Situaciones en las que conviene buscar defensa penal temprana, qué información preparar y cómo se desarrolla una primera consulta.',
+  },
+  'custodia-hijos-honduras-juez': {
+    title: 'Custodia de Hijos en Honduras: Criterios del Juez',
+    description: 'Criterios que el juez evalúa en procesos de custodia en Honduras: interés superior del menor, capacidad parental y régimen de visitas.',
+  },
+  'danos-perjuicios-indemnizacion-honduras': {
+    title: 'Daños y Perjuicios en Honduras: Cómo Reclamar',
+    description: 'Requisitos y pasos para reclamar daños y perjuicios en Honduras: tipos de indemnización, plazos, documentos y procedimiento judicial.',
+  },
   'defensa-penal-honduras': {
     title: 'Defensa penal en Honduras: guía de las primeras actuaciones',
     description: 'Orientación general ante una detención, citación o investigación penal y sobre la importancia de recibir asesoría jurídica desde el inicio.',
   },
+  'despido-laboral-honduras-guia-completa': {
+    title: 'Despido Injustificado en Honduras: Prestaciones y Plazos',
+    description: 'Prestaciones y plazos ante un despido injustificado en Honduras. Revisión de documentos, cálculo de liquidación y opciones de reclamación laboral.',
+  },
+  'estafas-fraudes-tipos-penales-honduras': {
+    title: 'Estafa en Honduras: Tipos, Denuncia y Defensa',
+    description: 'Tipos de estafa según el Código Penal de Honduras, cómo denunciar y cuándo buscar defensa legal ante acusaciones por fraude.',
+  },
   'herencias-honduras-fallece-familiar': {
-    title: 'Herencias en Honduras: guía paso a paso',
-    description: 'Pasos generales para ordenar una sucesión, identificar documentos y determinar si el trámite corresponde a la vía notarial o judicial.',
+    title: 'Herencias en Honduras: Testamento y Sucesión',
+    description: 'Pasos para ordenar una herencia en Honduras: testamentos, sucesión intestada, documentos necesarios y diferencias entre vía notarial y judicial.',
+  },
+  'jornada-laboral-horas-extra-descansos-honduras': {
+    title: 'Jornada Laboral en Honduras: Horas Extra y Recargos',
+    description: 'Límites de la jornada laboral en Honduras, horas extra, recargos, descansos obligatorios y derechos del trabajador según el Código de Trabajo.',
+  },
+  'pension-alimenticia-honduras-guia-completa': {
+    title: 'Pensión Alimenticia en Honduras: Requisitos y Pasos',
+    description: 'Requisitos y procedimiento para solicitar pensión alimenticia en Honduras. Montos, plazos, documentos y ejecución ante incumplimiento.',
+  },
+  'poder-legal-honduras-cuando-se-necesita': {
+    title: 'Poder notarial en Honduras: tipos, alcance y requisitos',
+    description: 'Qué es un poder notarial, para qué trámites puede utilizarse y qué conviene revisar antes de otorgarlo dentro o fuera de Honduras.',
+  },
+  'proteccion-datos-personales-derechos-arco-honduras': {
+    title: 'Derechos ARCO en Honduras: Cómo Ejercerlos',
+    description: 'Derechos de acceso, rectificación, cancelación y oposición (ARCO) en Honduras. Cómo solicitar información y proteger sus datos personales.',
   },
   'que-hacer-si-me-detienen-en-honduras': {
     title: '¿Qué hacer si me detienen en Honduras? Guía práctica',
     description: 'Recomendaciones generales para actuar con prudencia ante una detención y solicitar asistencia jurídica sin interferir con la actuación de la autoridad.',
   },
-  'poder-legal-honduras-cuando-se-necesita': {
-    title: 'Poder notarial en Honduras: tipos, alcance y requisitos',
-    description: 'Qué es un poder notarial, para qué trámites puede utilizarse y qué conviene revisar antes de otorgarlo dentro o fuera de Honduras.',
+  'union-de-hecho-requisitos-derechos-honduras': {
+    title: 'Unión de Hecho en Honduras: Requisitos y Derechos',
+    description: 'Requisitos para el reconocimiento de la unión de hecho en Honduras, derechos patrimoniales y sucesorios, y diferencias con el matrimonio.',
   },
 };
 

@@ -23,10 +23,10 @@ import { EditorialBlock } from '@/components/marketing/editorial-block';
 import { TrustLimits } from '@/components/marketing/trust-limits';
 
 export const metadata: Metadata = buildMetadata({
-  // 56 chars. Antes 38 (subutilizado).
-  title: `Bufete de Abogados en ${site.address.city} | 15+ Años de Experiencia`,
-  // 152 chars. Antes 198 (se truncaba).
-  description: `Bufete en ${site.address.city}, Valle. Más de 15 años en defensa penal, familia, laboral, civil y mercantil. Consulta confidencial y presupuesto por escrito.`,
+  // 50 chars. Plan maestro §6.1: "Bufete de Abogados en Nacaome | Nuestro Equipo"
+  title: `Bufete de Abogados en ${site.address.city} | Nuestro Equipo`,
+  // 155 chars. Plan §6.1
+  description: `Conozca a los abogados colegiados de ${site.name}, sus áreas de práctica y la metodología de atención del bufete en ${site.address.city} y la zona sur de Honduras.`,
   canonicalPath: '/despacho',
   keywords: ['abogados Nacaome', 'bufete jurídico Valle Honduras', 'abogados Nacaome Valle', 'despacho jurídico sur Honduras', 'equipo legal Nacaome', 'consulta confidencial Valle', 'bufete jurídico Nacaome', 'bufete jurídico sur Honduras', 'abogados Goascorán', 'abogados Amapala', 'abogados Pespire', 'abogados San Marcos de Colón', 'abogados Marcovia'],
   ogImage: `/api/og?tag=El+Despacho&title=${encodeURIComponent(`Bufete en ${site.address.city}, ${site.address.department}`)}&subtitle=${encodeURIComponent('Compromiso legal, rigor técnico y visión de vanguardia. Más de 15 años de ejercicio profesional.')}`,
@@ -38,7 +38,7 @@ function despachoContent(content: Record<string, string>) {
   const storedHeroSubtitle = content['hero.subtitle']?.trim();
   const heroTitle =
     !storedHeroTitle || storedHeroTitle.includes('Visión de Vanguardia')
-      ? 'Bufete de abogados en Nacaome, Valle'
+      ? 'Bufete de abogados en Nacaome con experiencia en distintas áreas del derecho'
       : storedHeroTitle;
   const heroSubtitle =
     !storedHeroSubtitle
@@ -128,7 +128,7 @@ export default async function DespachoPage() {
           <AnswerBlock
             eyebrow="El bufete"
             question="¿Quién es Pineda y Asociados?"
-            answer={`${site.name} es un bufete jurídico fundado en Nacaome, Valle (Honduras), con más de 15 años de ejercicio profesional. Su pilar histórico es la defensa penal, complementada con derecho de familia, laboral, civil y notarial, mercantil y empresarial, administrativo y migratorio. Atiende con un único punto de contacto por caso y coordina internamente entre especialistas cuando un asunto cruza varias ramas del derecho.`}
+            answer={`${site.name} es un bufete jurídico con sede en ${site.address.city}, ${site.address.department}. El despacho atiende asuntos penales, familiares, laborales, civiles, notariales, mercantiles y administrativos mediante un equipo de abogados colegiados en Honduras. Cada caso se asigna según el área de práctica del abogado responsable y se gestiona con confidencialidad, trazabilidad documental y comunicación directa.`}
           />
         </Container>
       </Section>
@@ -255,12 +255,20 @@ export default async function DespachoPage() {
               oral en el departamento de Valle y zonas circunvecinas. La defensa penal es
               el pilar histórico del despacho.
             </p>
-            <Link
-              href="/derecho-penal"
-              className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
-            >
-              Ver especialidad en defensa penal <ArrowRight size={14} />
-            </Link>
+            <div className="flex flex-wrap items-center gap-2 mt-3">
+              <Link
+                href={`/equipo/danilo-pineda-maradiaga`}
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+              >
+                Ver perfil completo <ArrowRight size={14} />
+              </Link>
+              <Link
+                href="/derecho-penal"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+              >
+                Defensa penal <ArrowRight size={14} />
+              </Link>
+            </div>
           </Card>
 
           {/* Thania Marlene Paz — socia fundadora (administrativo, familia,
@@ -292,12 +300,20 @@ export default async function DespachoPage() {
               administrativo, familia, civil y notarial, y mercantil y empresarial.
               Atiende casos en Nacaome, Valle y la zona sur de Honduras.
             </p>
-            <Link
-              href="/servicios-juridicos/derecho-de-familia"
-              className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
-            >
-              Ver especialidad en derecho de familia <ArrowRight size={14} />
-            </Link>
+            <div className="flex flex-wrap items-center gap-2 mt-3">
+              <Link
+                href={`/equipo/thania-marlene-paz`}
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+              >
+                Ver perfil completo <ArrowRight size={14} />
+              </Link>
+              <Link
+                href="/servicios-juridicos/derecho-de-familia"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+              >
+                Derecho de familia <ArrowRight size={14} />
+              </Link>
+            </div>
           </Card>
 
           {/* Emil Barahona — socio del bufete (laboral, penal, civil y notarial). */}
@@ -327,12 +343,20 @@ export default async function DespachoPage() {
               Abogado socio del bufete. Especializado en derecho laboral, civil y
               notarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.
             </p>
-            <Link
-              href="/servicios-juridicos/derecho-laboral"
-              className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
-            >
-              Ver especialidad en derecho laboral <ArrowRight size={14} />
-            </Link>
+            <div className="flex flex-wrap items-center gap-2 mt-3">
+              <Link
+                href={`/equipo/emil-barahona`}
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+              >
+                Ver perfil completo <ArrowRight size={14} />
+              </Link>
+              <Link
+                href="/servicios-juridicos/derecho-laboral"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+              >
+                Derecho laboral <ArrowRight size={14} />
+              </Link>
+            </div>
           </Card>
         </div>
       </Section>
