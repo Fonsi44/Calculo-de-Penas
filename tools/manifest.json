@@ -2,6 +2,20 @@
   "formatVersion": 1,
   "tools": [
     {
+      "id": "audit.reconcile-remediation-ledger",
+      "path": "tools/audit/reconcile-remediation-ledger.mjs",
+      "owner": "engineering",
+      "status": "active",
+      "purpose": "Reconciliar cada fila histórica del ledger contra el HEAD y sus gates reproducibles.",
+      "command": "npm run audit:ledger:reconcile",
+      "mutates": true,
+      "dryRun": false,
+      "requiredEnv": [],
+      "rollback": "Revertir el commit de reconciliación del ledger.",
+      "lastValidated": "2026-07-28",
+      "expiresAt": null
+    },
+    {
       "id": "ci.cleanup-e2e",
       "path": "tools/ci/cleanup-e2e.mjs",
       "owner": "engineering",

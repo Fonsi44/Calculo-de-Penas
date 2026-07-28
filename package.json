@@ -21,6 +21,7 @@
     "check:ci": "npm run check && npm run build",
     "verify": "npm run check:ci && npm run repo:knip",
     "repo:knip": "node tools/ci/knip-baseline.mjs",
+    "audit:ledger:reconcile": "node tools/audit/reconcile-remediation-ledger.mjs",
     "docs:links": "node tools/ci/docs-links.mjs",
     "governance": "node tools/ci/governance.mjs",
     "lint": "eslint",

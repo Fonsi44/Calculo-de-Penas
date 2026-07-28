@@ -80,7 +80,7 @@ for (const file of files) visit(file, []);
 
 const tracked = execFileSync('git', ['ls-files'], { cwd: ROOT, encoding: 'utf8' }).split('\n');
 const forbiddenTracked = tracked.filter((file) =>
-  /^(?:\.local|\.backups|output|reports|generated|coverage|playwright-report|test-results)\//.test(file)
+  /^(?:\.local|\.backups|data\/backups|output|reports|generated|coverage|playwright-report|test-results)\//.test(file)
   || /\.(?:log|dump|sql\.gz)$/.test(file));
 if (forbiddenTracked.length) failures.push(`artefactos locales versionados: ${forbiddenTracked.join(', ')}`);
 
