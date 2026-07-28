@@ -318,6 +318,49 @@ async function apply() {
       console.error('⛔ --execute requiere DATABASE_URL.');
       process.exit(1);
     }
+
+    // ── Verificación de branch Neon (obligatoria para --execute) ──
+    const prodBranchId = process.env.NEON_PRODUCTION_BRANCH_ID;
+    if (!prodBranchId) {
+      console.error('⛔ NEON_PRODUCTION_BRANCH_ID no definido. Abortando.');
+      process.exit(1);
+    }
+    const { Pool } = await import('@neondatabase/serverless');
+    let pool;
+    try {
+      pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
+      const r = await pool.query("SELECT current_setting('neon.branch_id', true) AS id");
+      const current = r.rows[0]?.id;
+      if (!current) {
+        console.error('⛔ No se pudo obtener el branch_id de Neon. Abortando.');
+        process.exit(1);
+      }
+      const isProduction = current === prodBranchId;
+      if (isProduction) {
+        // Producción requiere ambas: MIGRATE_PRODUCTION=true + confirmation string.
+        if (process.env.MIGRATE_PRODUCTION !== 'true') {
+          console.error('⛔ Branch es producción. Establece MIGRATE_PRODUCTION=true para autorizar.');
+          process.exit(1);
+        }
+        if (process.env.PRODUCTION_MIGRATION_CONFIRMATION !== 'APPLY_PR20_MIGRATIONS') {
+          console.error('⛔ Branch es producción. Falta PRODUCTION_MIGRATION_CONFIRMATION.');
+          process.exit(1);
+        }
+        console.log('✓ Branch verificado como producción. Autorización confirmada.');
+      } else {
+        // Staging: requiere ALLOW_STAGING_MIGRATIONS=true.
+        if (process.env.ALLOW_STAGING_MIGRATIONS !== 'true') {
+          console.error('⛔ Branch NO es producción. Establece ALLOW_STAGING_MIGRATIONS=true para staging.');
+          process.exit(1);
+        }
+        console.log('✓ Branch verificado como staging (≠ producción).');
+      }
+    } catch (e) {
+      console.error(`⛔ Error al verificar branch Neon: ${e.message}`);
+      process.exit(1);
+    } finally {
+      if (pool) await pool.end();
+    }
   }
 
   // Validar primero
