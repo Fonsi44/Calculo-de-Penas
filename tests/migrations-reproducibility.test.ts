@@ -44,7 +44,7 @@ describe('Migraciones — Runner unificado', () => {
     expect(r.exitCode).toBe(0);
     expect(r.stdout).toContain('Drizzle Journal');
     expect(r.stdout).toContain('Migraciones Manuales');
-    expect(r.stdout).toContain('39/57'); // 39 en journal de 57 total
+    expect(r.stdout).toContain('39/58'); // 39 en journal de 58 total (39 Drizzle + 19 manuales)
   });
 
   it('validate pasa con 0 errores', () => {
@@ -71,7 +71,7 @@ describe('Migraciones — Runner unificado', () => {
 
   it('todos los SQL están cubiertos (journal + manifiesto = 57)', () => {
     const r = runRunner('status');
-    expect(r.stdout).toContain('Journal + Manifiesto: 57');
+    expect(r.stdout).toContain('Journal + Manifiesto: 58');
     expect(r.stdout).toContain('Sin tracking: 0');
   });
 
@@ -94,6 +94,6 @@ describe('Migraciones — Runner unificado', () => {
   it('apply sin DATABASE_URL informa que es necesario configurar', () => {
     const r = runRunner('apply');
     // apply valida primero, luego informa sobre la necesidad de DB
-    expect(r.stdout).toContain('Aplicar migraciones pendientes');
+    expect(r.stdout).toContain('Aplicar migraciones');
   });
 });

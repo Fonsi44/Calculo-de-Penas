@@ -48,6 +48,25 @@ function readSql(filePath) {
   return readFileSync(abs, 'utf8');
 }
 
+/**
+ * Extrae solo la sección UP de un SQL.
+ *
+ * Algunas migraciones (0030, 0031) incluyen la reversión DOWN en el mismo
+ * archivo tras el marcador `--> >><down>`. Aplicar todo el SQL ejecutaría UP
+ * y luego DOWN, dejando las tablas borradas. Esta función devuelve solo UP.
+ *
+ * Si no hay marcador DOWN, devuelve el SQL completo sin cambios.
+ */
+const DOWN_MARKER = '>><down>';
+
+function readSqlUpOnly(filePath) {
+  const raw = readSql(filePath);
+  const idx = raw.indexOf(DOWN_MARKER);
+  if (idx === -1) return raw;
+  // Tomar todo hasta el marcador DOWN (excluyendo la línea que lo contiene).
+  return raw.slice(0, idx).replace(/-->\s*$/, '').trimEnd();
+}
+
 function isProductionEnv() {
   const dbUrl = process.env.DATABASE_URL || '';
   return process.env.NODE_ENV === 'production' || dbUrl.includes('prod');
@@ -247,14 +266,59 @@ async function checksums() {
   console.log(`\n✓ ${manifest.entries.length} checksums actualizados en ${MANIFEST_PATH}`);
 }
 
-// ── Apply (dry-run por defecto en entornos no explícitos) ───────────────
+// ── Apply ────────────────────────────────────────────────────────────────
+//
+// Dos modos:
+//   apply            → dry-run: valida y muestra el orden (no toca la DB).
+//   apply --execute  → ejecuta realmente el SQL en orden, de forma idempotente.
+//
+// Idempotencia:
+//   - Drizzle journal → registrado en drizzle.__drizzle_migrations (estándar).
+//   - Manifiesto manual → registrado en sgie_schema_migrations (con checksum).
+//   Una migración ya registrada se salta sin error.
+
+const EXECUTE_FLAG = '--execute';
+
+function buildOrderedMigrations() {
+  const journal = loadJson(JOURNAL_PATH);
+  const manifest = loadJson(MANIFEST_PATH);
+  const list = [];
+  for (const e of journal.entries) {
+    list.push({
+      kind: 'drizzle',
+      id: e.tag,
+      file: `drizzle/migrations/${e.tag}.sql`,
+      description: e.tag,
+      checksum: null, // Drizzle gestiona su propio hash internamente
+    });
+  }
+  for (const entry of manifest.entries) {
+    list.push({
+      kind: 'manual',
+      id: entry.id,
+      file: entry.file,
+      description: entry.description,
+      checksum: entry.checksum || sha256(readSql(entry.file)),
+    });
+  }
+  return list;
+}
 
 async function apply() {
   productionGuard('apply');
-  
-  console.log('═══ Aplicar migraciones pendientes ═══');
-  console.log('NOTA: La ejecución real de SQL requiere conexión a base de datos.');
-  console.log('      Este runner valida el orden y checksums antes de ejecutar.\n');
+  const execute = process.argv.includes(EXECUTE_FLAG);
+
+  console.log('═══ Aplicar migraciones ═══');
+  if (!execute) {
+    console.log('NOTA: Modo dry-run. Para ejecutar realmente usa --execute.');
+    console.log('      El runner valida el orden y checksums antes de ejecutar.\n');
+  } else {
+    console.log('MODO EJECUCIÓN (--execute): se aplicará el SQL a DATABASE_URL.\n');
+    if (!process.env.DATABASE_URL) {
+      console.error('⛔ --execute requiere DATABASE_URL.');
+      process.exit(1);
+    }
+  }
 
   // Validar primero
   const valid = await validate();
@@ -263,19 +327,102 @@ async function apply() {
     process.exit(1);
   }
 
-  // Orden topológico: journal Drizzle primero, luego manifiesto en orden
+  const migrations = buildOrderedMigrations();
   console.log('Orden de aplicación:');
-  const journal = loadJson(JOURNAL_PATH);
-  console.log(`  1-${journal.entries.length}: Migraciones Drizzle (journal)`);
-  
-  const manifest = loadJson(MANIFEST_PATH);
-  for (let i = 0; i < manifest.entries.length; i++) {
-    const entry = manifest.entries[i];
-    console.log(`  ${journal.entries.length + i + 1}: ${entry.id} — ${entry.description}`);
+  console.log(`  1-${migrations.filter(m => m.kind === 'drizzle').length}: Migraciones Drizzle (journal)`);
+  const manuals = migrations.filter(m => m.kind === 'manual');
+  for (let i = 0; i < manuals.length; i++) {
+    console.log(`  ${migrations.length - manuals.length + i + 1}: ${manuals[i].id} — ${manuals[i].description}`);
   }
 
-  console.log('\nPara aplicar realmente: configura DATABASE_URL y usa --execute');
-  console.log('El runner ejecutará cada SQL en orden, verificando checksums antes y registrando en sgie_schema_migrations.');
+  if (!execute) {
+    console.log('\nPara aplicar realmente: configura DATABASE_URL y usa --execute');
+    console.log('El runner ejecutará cada SQL en orden, verificando checksums antes y registrando en sgie_schema_migrations.');
+    return;
+  }
+
+  // ── Ejecución real ──
+  // Usar el driver del proyecto (@neondatabase/serverless).
+  // La mayoría de migraciones Drizzle usan sentencias CREATE TABLE no
+  // transaccionables; ejecutamos sentencia a sentencia sin wrapper BEGIN.
+  const { Pool } = await import('@neondatabase/serverless');
+  const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
+  const query = (text, params) => pool.query(text, params);
+
+  let applied = 0, skipped = 0;
+  // El esquema de `sgie_schema_migrations` lo define manual-0038; no se crea
+  // aquí. Hasta que esa migración se aplique, la tabla no existe y por tanto
+  // no puede haber migraciones manuales "ya aplicadas".
+  let manualTableExists = false;
+
+  // Comprobar de forma perezosa si la tabla de tracking manual existe.
+  async function refreshManualTableExists() {
+    const r = await query(`
+      SELECT EXISTS (
+        SELECT 1 FROM information_schema.tables
+        WHERE table_name = 'sgie_schema_migrations'
+          AND table_schema NOT IN ('pg_catalog','information_schema')
+      ) AS exists
+    `);
+    manualTableExists = r.rows[0]?.exists === true;
+  }
+
+  try {
+    // Tracking Drizzle (esquema dedicado, ajeno al manifiesto manual).
+    await query(`CREATE SCHEMA IF NOT EXISTS drizzle`);
+    await query(`
+      CREATE TABLE IF NOT EXISTS drizzle.__drizzle_migrations (
+        id SERIAL PRIMARY KEY,
+        hash TEXT NOT NULL,
+        created_at BIGINT
+      )
+    `);
+
+    for (const m of migrations) {
+      // Para ejecución usamos solo la sección UP (readSqlUpOnly), para no
+      // aplicar la reversión DOWN que algunas migraciones incluyen en el mismo
+      // archivo. El checksum se calcula sobre el archivo completo (readSql).
+      const fileSql = readSqlUpOnly(m.file);
+      const fullSql = readSql(m.file);
+      if (m.kind === 'drizzle') {
+        const hash = sha256(fullSql);
+        const already = await query(`SELECT 1 FROM drizzle.__drizzle_migrations WHERE hash = $1`, [hash]);
+        if (already.rows.length > 0) { skipped++; continue; }
+        await query(fileSql);
+        await query(`INSERT INTO drizzle.__drizzle_migrations (hash, created_at) VALUES ($1, $2)`, [hash, Date.now()]);
+        console.log(`  ✓ [drizzle] ${m.id}`);
+        applied++;
+      } else {
+        // Antes de cada manual, refrescar si la tabla de tracking existe.
+        await refreshManualTableExists();
+        if (manualTableExists) {
+          const already = await query(`SELECT 1 FROM sgie_schema_migrations WHERE name = $1`, [m.id]);
+          if (already.rows.length > 0) { skipped++; continue; }
+        }
+        await query(fileSql);
+        // Tras aplicar el SQL (que puede ser el que crea la tabla), volver a
+        // comprobar y registrar si ya existe.
+        await refreshManualTableExists();
+        if (manualTableExists) {
+          await query(
+            `INSERT INTO sgie_schema_migrations (name, hash, rows_affected) VALUES ($1, $2, 0)
+             ON CONFLICT (name) DO NOTHING`,
+            [m.id, m.checksum]
+          );
+        }
+        console.log(`  ✓ [manual]  ${m.id} — ${m.description}`);
+        applied++;
+      }
+    }
+
+    console.log(`\n═══ Aplicación completa: ${applied} aplicadas, ${skipped} omitidas (ya registradas) ═══`);
+  } catch (err) {
+    console.error(`\n⛔ Error aplicando migraciones: ${err.message}`);
+    if (err.position) console.error(`   Posición: ${err.position}`);
+    process.exit(1);
+  } finally {
+    await pool.end();
+  }
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────

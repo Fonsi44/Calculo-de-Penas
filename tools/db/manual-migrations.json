@@ -199,6 +199,17 @@
       "checksum": "396752387b0a960b79eb0224ff53d326852861a6e5f430724d7d80bfec9db294",
       "transactional": true,
       "applied": false
+    },
+    {
+      "id": "manual-0056",
+      "file": "drizzle/migrations/0056_fix_blog_posts_ai_review_columns.sql",
+      "description": "Fix: add ai_review_* columns referenced by lib/schema.ts but missing from migrations (drift correction)",
+      "dependsOn": [
+        "manual-0055"
+      ],
+      "checksum": "cbb922dd150cacee0ce54b56540a01ad6de6cd0bd0e1015790b56ec64131495c",
+      "transactional": true,
+      "applied": false
     }
   ]
 }

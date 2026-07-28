@@ -53,7 +53,7 @@ const s = runRunner('status');
 assert(s.ok, 'status termina sin error');
 assert(s.stdout.includes('Drizzle Journal'), 'status muestra Drizzle Journal');
 assert(s.stdout.includes('Migraciones Manuales'), 'status muestra Migraciones Manuales');
-assert(s.stdout.includes('Journal + Manifiesto: 57'), '57/57 SQL cubiertos');
+assert(s.stdout.includes('Journal + Manifiesto: 58'), '58/58 SQL cubiertos');
 assert(s.stdout.includes('Sin tracking: 0'), '0 SQL sin tracking');
 
 // 2. Validate
@@ -63,7 +63,7 @@ assert(v.ok, 'validate termina sin error');
 assert(v.stdout.includes('✓ VÁLIDO'), 'validate devuelve VÁLIDO');
 assert(v.stdout.includes('Sin colisiones'), 'sin colisiones journal/manifiesto');
 assert(v.stdout.includes('Sin ciclos'), 'sin dependencias circulares');
-assert(v.stdout.includes('OK: 18'), '18 checksums OK');
+assert(v.stdout.includes('OK: 19'), '19 checksums OK');
 
 // 3. Checksums
 console.log('\n3. Checksums:');
