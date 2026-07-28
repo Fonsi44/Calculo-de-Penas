@@ -210,6 +210,17 @@
       "checksum": "cbb922dd150cacee0ce54b56540a01ad6de6cd0bd0e1015790b56ec64131495c",
       "transactional": true,
       "applied": false
+    },
+    {
+      "id": "manual-0057",
+      "file": "drizzle/migrations/0057_reconcile_pr20_schema_contract.sql",
+      "description": "Reconcile PR20 nullability, preview-token uniqueness and vector index",
+      "dependsOn": [
+        "manual-0056"
+      ],
+      "checksum": "898efdf2b6ccc39e13822eefd6002f4daea52ec9a6ba5efc8318690fd6d093a0",
+      "transactional": false,
+      "applied": false
     }
   ]
 }

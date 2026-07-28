@@ -67,6 +67,13 @@ function readSqlUpOnly(filePath) {
   return raw.slice(0, idx).replace(/-->\s*$/, '').trimEnd();
 }
 
+function splitStatements(sql) {
+  return sql
+    .split(/^\s*-->\s*statement-breakpoint\s*$/m)
+    .map((statement) => statement.trim())
+    .filter(Boolean);
+}
+
 function isProductionEnv() {
   const dbUrl = process.env.DATABASE_URL || '';
   return process.env.NODE_ENV === 'production' || dbUrl.includes('prod');
@@ -299,6 +306,7 @@ function buildOrderedMigrations() {
       file: entry.file,
       description: entry.description,
       checksum: entry.checksum || sha256(readSql(entry.file)),
+      transactional: entry.transactional !== false,
     });
   }
   return list;
@@ -468,7 +476,11 @@ async function apply() {
         const hash = sha256(fullSql);
         const already = await query(`SELECT 1 FROM drizzle.__drizzle_migrations WHERE hash = $1`, [hash]);
         if (already.rows.length > 0) { skipped++; continue; }
-        await query(fileSql);
+        if (m.transactional === false) {
+          for (const statement of splitStatements(fileSql)) await query(statement);
+        } else {
+          await query(fileSql);
+        }
         await query(`INSERT INTO drizzle.__drizzle_migrations (hash, created_at) VALUES ($1, $2)`, [hash, Date.now()]);
         console.log(`  ✓ [drizzle] ${m.id}`);
         applied++;
@@ -479,7 +491,11 @@ async function apply() {
           const already = await query(`SELECT 1 FROM sgie_schema_migrations WHERE name = $1`, [m.id]);
           if (already.rows.length > 0) { skipped++; continue; }
         }
-        await query(fileSql);
+        if (m.transactional === false) {
+          for (const statement of splitStatements(fileSql)) await query(statement);
+        } else {
+          await query(fileSql);
+        }
         // Tras aplicar el SQL (que puede ser el que crea la tabla), volver a
         // comprobar y registrar si ya existe.
         await refreshManualTableExists();

@@ -1433,7 +1433,7 @@ export const documentTextPages = pgTable('document_text_pages', {
   text: text('text').notNull(),
   method: varchar('method', { length: 30 }).notNull().default('pdf_text'),
   confidence: real('confidence'),
-  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 }, (table) => ({
   documentoRef: foreignKey({ columns: [table.documentoId], foreignColumns: [documentosExpediente.id] }).onDelete('cascade'),
   extractionRef: foreignKey({ columns: [table.extractionId], foreignColumns: [extraccionesIa.id] }).onDelete('set null'),
@@ -1942,7 +1942,7 @@ export const caseReadinessRuns = pgTable('case_readiness_runs', {
   checksWarn: integer('checks_warn').default(0),
   checksFail: integer('checks_fail').default(0),
   iniciadoPor: varchar('iniciado_por', { length: 50 }).default('sistema'),
-  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 }, (table) => ({
   expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
   expedienteIdx: index('case_readiness_runs_expediente_idx').on(table.expedienteId),
@@ -1960,7 +1960,7 @@ export const caseReadinessChecks = pgTable('case_readiness_checks', {
   reason: text('reason'),
   resolvedAt: timestamp('resolved_at', { withTimezone: true }),
   resolvedBy: uuid('resolved_by'),
-  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 }, (table) => ({
   runRef: foreignKey({ columns: [table.runId], foreignColumns: [caseReadinessRuns.id] }).onDelete('cascade'),
   expedienteRef: foreignKey({ columns: [table.expedienteId], foreignColumns: [expedientes.id] }).onDelete('cascade'),
