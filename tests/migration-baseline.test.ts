@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import {
+  authorizeBaselineTarget,
   beginLockedTransaction,
   compareRequiredSubset,
   insertExactTracking,
@@ -17,6 +18,31 @@ function validPlan() {
 }
 
 describe('canonical migration baseline safety', () => {
+  it('requires a distinct explicit confirmation for production', () => {
+    const context = {
+      branchId: 'production',
+      productionBranchId: 'production',
+      allowedBranchId: 'production',
+    };
+    expect(authorizeBaselineTarget({
+      ...context,
+      confirmation: 'BASELINE_PREFLIGHT_CLONE',
+    })).toEqual({ authorized: false, reason: 'confirmation' });
+    expect(authorizeBaselineTarget({
+      ...context,
+      confirmation: 'BASELINE_PRODUCTION_PR20_AUTHORIZED',
+    })).toEqual({ authorized: true, production: true });
+  });
+
+  it('does not accept the production confirmation on a clone', () => {
+    expect(authorizeBaselineTarget({
+      branchId: 'clone',
+      productionBranchId: 'production',
+      allowedBranchId: 'clone',
+      confirmation: 'BASELINE_PRODUCTION_PR20_AUTHORIZED',
+    })).toEqual({ authorized: false, reason: 'confirmation' });
+  });
+
   it.each([
     ['manipulated plan', (p: Record<string, string>) => { p.database = 'other'; }, 'plan_signature'],
     ['different HEAD', () => {}, 'head'],

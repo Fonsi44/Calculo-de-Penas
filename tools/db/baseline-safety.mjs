@@ -29,6 +29,28 @@ export function verifyPlan(plan, context) {
   return failures;
 }
 
+export function authorizeBaselineTarget({
+  branchId,
+  productionBranchId,
+  allowedBranchId,
+  confirmation,
+}) {
+  if (!branchId || !productionBranchId || !allowedBranchId) {
+    return { authorized: false, reason: 'branch_ids' };
+  }
+  if (branchId !== allowedBranchId) {
+    return { authorized: false, reason: 'branch_not_allowed' };
+  }
+  const production = branchId === productionBranchId;
+  const expectedConfirmation = production
+    ? 'BASELINE_PRODUCTION_PR20_AUTHORIZED'
+    : 'BASELINE_PREFLIGHT_CLONE';
+  if (confirmation !== expectedConfirmation) {
+    return { authorized: false, reason: 'confirmation' };
+  }
+  return { authorized: true, production };
+}
+
 export function validateCanonicalExport(canonical, seedTables, expectedTracking = { drizzle: 39, manual: 20 }) {
   const failures = [];
   if (canonical?.formatVersion !== 3) failures.push('format_version');

@@ -21,7 +21,7 @@ import { resolve, dirname } from 'node:path';
 import { execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import {
-  beginLockedTransaction, compareRequiredSubset, insertExactTracking, signPlan,
+  authorizeBaselineTarget, beginLockedTransaction, compareRequiredSubset, insertExactTracking, signPlan,
   validateCanonicalExport, verifyPlan,
 } from './baseline-safety.mjs';
 
@@ -297,12 +297,6 @@ async function apply(sql) {
     console.error('⛔ BASELINE_PLAN requerido. Apunta al JSON generado por plan.');
     process.exit(1);
   }
-  const confirmation = process.env.MIGRATION_BASELINE_CONFIRMATION;
-  if (confirmation !== 'BASELINE_PREFLIGHT_CLONE') {
-    console.error('⛔ MIGRATION_BASELINE_CONFIRMATION=BASELINE_PREFLIGHT_CLONE requerido.');
-    process.exit(1);
-  }
-  
   const planDoc = JSON.parse(readFileSync(planPath, 'utf8'));
   if (planDoc.equivalence !== 'EQUIVALENTE') {
     console.error('⛔ El plan NO es EQUIVALENTE. No se puede aplicar tracking.');
@@ -315,13 +309,18 @@ async function apply(sql) {
   const db = id.rows[0]?.db;
   const prodBranchId = process.env.NEON_PRODUCTION_BRANCH_ID;
   const allowedBranchId = process.env.BASELINE_ALLOWED_BRANCH_ID;
-  
-  if (!branch) { console.error('⛔ No branch_id'); process.exit(1); }
-  if (!prodBranchId || !allowedBranchId) { console.error('⛔ Branch IDs obligatorios.'); process.exit(1); }
-  if (branch === prodBranchId) { console.error('⛔ Es producción. Abortando.'); process.exit(1); }
-  if (branch !== allowedBranchId) { console.error('⛔ Branch no autorizado.'); process.exit(1); }
+  const authorization = authorizeBaselineTarget({
+    branchId: branch,
+    productionBranchId: prodBranchId,
+    allowedBranchId,
+    confirmation: process.env.MIGRATION_BASELINE_CONFIRMATION,
+  });
+  if (!authorization.authorized) {
+    console.error(`⛔ Destino no autorizado (${authorization.reason}).`);
+    process.exit(1);
+  }
   if (db !== 'neondb') { console.error(`⛔ Base incorrecta: ${db}`); process.exit(1); }
-  console.log(`✓ Clon: base ${db}, ≠ producción`);
+  console.log(`✓ Destino autorizado: ${authorization.production ? 'PRODUCTION' : 'CLON'}, base ${db}`);
   
   // Re-verify tracking zero
   const dt0 = (await sql.query("SELECT count(*)::int AS n FROM drizzle.__drizzle_migrations")).rows[0].n;

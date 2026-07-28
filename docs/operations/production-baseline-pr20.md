@@ -26,8 +26,8 @@ Se verificaron contra el clon:
 - **CREATE INDEX**: 56/58 índices existen (2 difieren en nombre: `enlaces_magicos_token_idx`, `embeddings_vector_idx`)
 - **CREATE TYPE (enum)**: todos los tipos existen con valores correctos
 - **Tracking en Production**: 0 Drizzle + 0 manuales; no aplicado
-- **Plan firmado**: `EQUIVALENTE`, `publicDrift=0`, HEAD
-  `fccc1614e11777d9b0e54d1d5969dd1d00fb30a6`
+- **Plan firmado**: debe ser `EQUIVALENTE`, `publicDrift=0` y estar ligado al
+  HEAD exacto que se vaya a desplegar.
 
 ## Procedimiento de baseline
 
@@ -51,13 +51,15 @@ Debe mostrar 39 migraciones Drizzle y 21 manuales verificadas.
 ```bash
 # No ejecutar sin la autorización productiva única.
 BASELINE_PLAN=.local/production-baseline-pr20.json \
-MIGRATION_BASELINE_CONFIRMATION=<confirmación autorizada> \
+BASELINE_ALLOWED_BRANCH_ID="$NEON_PRODUCTION_BRANCH_ID" \
+MIGRATION_BASELINE_CONFIRMATION=BASELINE_PRODUCTION_PR20_AUTHORIZED \
 npm run db:migrations:baseline:apply
 ```
 
-Esto registraría 39 entradas en `drizzle.__drizzle_migrations` y 21 en
-`sgie_schema_migrations` usando advisory lock y transacción. A fecha de este
-documento no se ha ejecutado contra Production.
+Esto registra 39 entradas en `drizzle.__drizzle_migrations` y 21 en
+`sgie_schema_migrations` usando advisory lock y una única transacción. El token
+productivo no es válido en clones y el token de ensayo no es válido en
+Production.
 
 ### 4. Verificar
 
