@@ -112,23 +112,33 @@ function getSecretPrevious(): string | null {
  * En staging local sobre HTTP se usa `token` simple porque las cookies __Host-
  * requieren HTTPS y el navegador las rechazaría.
  *
- * La decisión depende EXCLUSIVAMENTE de configuración server-side explícita.
- * NO se usan headers de request (Host, Origin) porque el cliente los controla
- * y un atacante podría falsificarlos para degradar la cookie a `token` sin
- * Secure. La función isE2ELocalHttpMode se evalúa en runtime vía
- * instrumentation.ts (no plegable por el bundler), usando E2E_ENVIRONMENT y
- * E2E_LOCAL_HTTP que solo están presentes en el server E2E controlado.
+ * La decisión depende del runtime global `__E2E_LOCAL_HTTP`, seteado por
+ * `instrumentation.ts` SOLO después de validar que:
+ *   - E2E_ENVIRONMENT=staging
+ *   - VERCEL_ENV no es production
+ *   - VERCEL_ENV no es preview
+ *   - E2E_LOCAL_HTTP=true
+ *
+ * Si el runtime global no está activo (por defecto), production usa
+ * `__Host-token` aunque las variables de entorno estén presentes accident-
+ * almente. Esto evita que un error de configuración degrade la cookie.
+ *
+ * En desarrollo y test (NODE_ENV != production) siempre se usa `token`
+ * (HTTP local, sin Secure).
  */
-function isE2ELocalHttpMode(): boolean {
-  return (
-    process.env.E2E_ENVIRONMENT === 'staging' &&
-    process.env.E2E_LOCAL_HTTP === 'true' &&
-    process.env.NODE_ENV === 'production'
-  );
+function isRuntimeE2ELocalHttpMode(): boolean {
+  const g = globalThis as { __E2E_LOCAL_HTTP?: boolean };
+  return g.__E2E_LOCAL_HTTP === true;
 }
 
 function shouldUseHostCookie(): boolean {
-  return !isE2ELocalHttpMode();
+  // Desarrollo y test local: cookie simple sobre HTTP.
+  if (process.env.NODE_ENV !== 'production') {
+    return false;
+  }
+  // Producción real o Preview: cookie segura a menos que instrumentation
+  // haya validado explícitamente el modo E2E local.
+  return !isRuntimeE2ELocalHttpMode();
 }
 
 export function getCookieName(): string {

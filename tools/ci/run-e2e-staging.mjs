@@ -193,31 +193,34 @@ function recordStep(name, ok, detail = '') {
 // lea process.env.E2E_* recibirá el valor del fixture automáticamente.
 // Las contraseñas se importan del módulo compartido tools/ci/e2e-credentials.mjs
 // (única fuente de credenciales sintéticas para seed, runner y tests).
+// Fallo-closed: si no se puede cargar el fixture o las credenciales, aborta.
 function exportE2EVarsFromFixture() {
   const fixturePath = resolve(ROOT, 'tests/e2e/fixtures/identities.json');
+  let f;
   try {
-    const f = JSON.parse(readFileSync(fixturePath, 'utf8'));
-    const map = {
-      E2E_ADMIN_EMAIL: f.users.admin.email,
-      E2E_ADMIN_PASSWORD: E2E_PASSWORDS.admin,
-      E2E_ABOGADO_A_EMAIL: f.users.lawyerA.email,
-      E2E_ABOGADO_A_PASSWORD: E2E_PASSWORDS.lawyerA,
-      E2E_ABOGADO_B_EMAIL: f.users.lawyerB.email,
-      E2E_ABOGADO_B_PASSWORD: E2E_PASSWORDS.lawyerB,
-      E2E_USER_2FA_EMAIL: f.users.twoFactorUser.email,
-      E2E_USER_2FA_PASSWORD: E2E_PASSWORDS.twoFactorUser,
-      E2E_AUTH_USER_EMAIL: f.users.authUser.email,
-      E2E_AUTH_USER_PASSWORD: E2E_PASSWORDS.authUser,
-      E2E_SIDEBAR_USER_EMAIL: f.users.sidebarUser.email,
-      E2E_SIDEBAR_USER_PASSWORD: E2E_PASSWORDS.sidebarUser,
-    };
-    for (const [k, v] of Object.entries(map)) {
-      if (!process.env[k]) process.env[k] = v;
-    }
-    console.log('✓ Variables E2E_* derivadas del fixture.');
-  } catch (e) {
-    console.warn(`⚠  No se pudo cargar el fixture para variables E2E_*: ${e.message}`);
+    f = JSON.parse(readFileSync(fixturePath, 'utf8'));
+	  } catch {
+	    console.error(`⛔ No se pudo cargar el fixture: ${fixturePath}`);
+    process.exit(1);
   }
+  const map = {
+    E2E_ADMIN_EMAIL: f.users.admin.email,
+    E2E_ADMIN_PASSWORD: E2E_PASSWORDS.admin,
+    E2E_ABOGADO_A_EMAIL: f.users.lawyerA.email,
+    E2E_ABOGADO_A_PASSWORD: E2E_PASSWORDS.lawyerA,
+    E2E_ABOGADO_B_EMAIL: f.users.lawyerB.email,
+    E2E_ABOGADO_B_PASSWORD: E2E_PASSWORDS.lawyerB,
+    E2E_USER_2FA_EMAIL: f.users.twoFactorUser.email,
+    E2E_USER_2FA_PASSWORD: E2E_PASSWORDS.twoFactorUser,
+    E2E_AUTH_USER_EMAIL: f.users.authUser.email,
+    E2E_AUTH_USER_PASSWORD: E2E_PASSWORDS.authUser,
+    E2E_SIDEBAR_USER_EMAIL: f.users.sidebarUser.email,
+    E2E_SIDEBAR_USER_PASSWORD: E2E_PASSWORDS.sidebarUser,
+  };
+  for (const [k, v] of Object.entries(map)) {
+    if (!process.env[k]) process.env[k] = v;
+  }
+  console.log('✓ Variables E2E_* derivadas del fixture.');
 }
 exportE2EVarsFromFixture();
 
@@ -277,15 +280,22 @@ try {
   recordStep('build', true);
 
   // 8. Iniciar next start (build real, NODE_ENV=production).
+  // El runner pasa explícitamente las variables E2E al servidor.
   // E2E_LOCAL_HTTP=true: el server corre sobre HTTP (no HTTPS), por
   // lo que las cookies __Host-token (que requieren Secure) no funcionarían.
-  // Esta variable hace que lib/auth.ts use cookies 'token' sin Secure.
-  // Variable server-side (NUNCA NEXT_PUBLIC_*) para evitar constant-folding.
+  // instrumentation.ts lee estas variables y setea globalThis.__E2E_LOCAL_HTTP.
+  // NUNCA se usan NEXT_PUBLIC_* para flags de seguridad.
   console.log(`\n▶ Starting next start on port ${PORT}...`);
   server = spawn('npx', ['next', 'start', '-p', String(PORT)], {
     cwd: ROOT,
     stdio: ['ignore', 'pipe', 'pipe'],
-    env: { ...process.env, NODE_ENV: 'production', E2E_LOCAL_HTTP: 'true', E2E_ENVIRONMENT: 'staging' },
+    env: {
+      ...process.env,
+      NODE_ENV: 'production',
+      E2E_ENVIRONMENT: 'staging',
+      E2E_LOCAL_HTTP: 'true',
+      E2E_DISABLE_RATE_LIMIT: 'true',
+    },
     detached: true, // grupo propio para matar huérfanos
   });
   const serverLog = [];
@@ -310,13 +320,14 @@ try {
   // posts específicos que no existen en una DB E2E vacía. Esos specs se
   // ejecutan por separado contra producción.
   //
-  // DISABLE_RATE_LIMIT=true: los specs hacen múltiples logins en paralelo y el
-  // rate limit (5/60s) los bloquearía. El spec auth-flow ya contempla esta
-  // variable y usa una aserción alternativa para su test de rate limit.
-  //
   // PW_WORKERS=1: los specs critical-auth y critical-authorization comparten
   // usuarios (abogado-a) y mutan estado (token_version, bloqueo). Si corren
   // en paralelo se interfieren. Workers=1 garantiza aislamiento secuencial.
+  //
+  // DISABLE_RATE_LIMIT (para Playwright, no para el servidor): los specs
+  // auth-flow y critical-descargar usan esta variable para elegir su expectativa
+  // sobre rate limiting. El servidor usa E2E_DISABLE_RATE_LIMIT (vía
+  // instrumentation.ts) que ya se pasa en el entorno del servidor arriba.
   console.log('\n▶ Running Playwright (staging suite, excluye @production-only)...');
   const pwEnv = {
     ...process.env,

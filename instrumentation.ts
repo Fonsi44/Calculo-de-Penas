@@ -7,20 +7,26 @@
  * producción.
  *
  * SEGURIDAD:
- *   Solo las siguientes condiciones ACTIVAN el modo E2E local:
- *   - E2E_ENVIRONMENT === 'staging'
- *   - E2E_LOCAL_HTTP === 'true' (para cookies sin Secure)
- *   - E2E_DISABLE_RATE_LIMIT === 'true' (para tests paralelos)
- *   - VERCEL_ENV !== 'production' (Vercel Production nunca activa modo E2E)
+ *   Los globals runtime se inicializan a false. Solo se activan cuando:
+ *   1. E2E_ENVIRONMENT === 'staging'
+ *   2. VERCEL_ENV no es 'production' ni 'preview'
+ *   3. La flag server-side correspondiente es exactamente 'true'
  *
- *   En Vercel Preview: E2E_ENVIRONMENT no está definido → modo E2E inactivo.
- *   En producción local tradicional: E2E_ENVIRONMENT no está definido → inactivo.
+ *   Esto garantiza que:
+ *   - Vercel Production nunca activa modo E2E (aunque tenga env vars).
+ *   - Vercel Preview nunca activa modo E2E.
+ *   - El build no puede plegar la decisión (lectura runtime via globalThis).
+ *   - Una instancia reutilizada no conserva un flag anterior (inicialización).
  */
 export async function register() {
-  const g = globalThis as {
-    __E2E_DISABLE_RATE_LIMIT?: boolean;
-    __E2E_LOCAL_HTTP?: boolean;
+  const g = globalThis as unknown as {
+    __E2E_DISABLE_RATE_LIMIT: boolean;
+    __E2E_LOCAL_HTTP: boolean;
   };
+
+  // Valores seguros por defecto: ningún flag activo.
+  g.__E2E_DISABLE_RATE_LIMIT = false;
+  g.__E2E_LOCAL_HTTP = false;
 
   const isE2E =
     process.env.E2E_ENVIRONMENT === 'staging' &&
