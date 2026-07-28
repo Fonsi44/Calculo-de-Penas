@@ -21,6 +21,12 @@
 
 export type LegalReviewStatus = 'pending' | 'verified' | 'needs_update';
 
+export function normalizeReviewStatus(status: string | null | undefined): LegalReviewStatus {
+  if (status?.toLowerCase() === 'verified') return 'verified';
+  if (status?.toLowerCase() === 'needs_update') return 'needs_update';
+  return 'pending';
+}
+
 export type LegalJurisdiction = 'HN' | 'ES' | 'HN_ES' | 'general';
 
 export interface LegalReviewSource {
