@@ -138,7 +138,8 @@
     "corregir:articulos:aplicar": "npx tsx scripts/corregir-articulos.ts --aplicar",
     "corregir:articulos:dry": "npx tsx scripts/corregir-articulos.ts --limit 5",
     "db:migrations:baseline:plan": "node tools/db/baseline-migrations.mjs plan",
-    "db:migrations:baseline:apply": "node tools/db/baseline-migrations.mjs apply"
+    "db:migrations:baseline:apply": "node tools/db/baseline-migrations.mjs apply",
+    "db:migrations:baseline:canonical-export": "node tools/db/baseline-migrations.mjs canonical-export"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

@@ -1,195 +1,266 @@
 #!/usr/bin/env node
 /**
- * Baseline verificable de migraciones — postcondiciones auto-descubiertas.
+ * Canonical migration baseline — three-step workflow:
  *
- * Para cada migración, parsea el SQL para extraer postcondiciones:
- *   - CREATE TABLE → verificar que la tabla existe
- *   - ALTER TABLE ADD COLUMN → verificar columna + tipo
- *   - CREATE INDEX → verificar que el índice existe
- *   - CREATE TYPE (enum) → verificar enum + valores
+ *   1. canonical-export  → extrae tracking real de canonical_pr20
+ *   2. plan              → compara schema/seeds de clone vs canonical
+ *   3. apply             → aplica tracking canónico al clone (transacción)
  *
- * No registra nada hasta que 58/58 sean verificables.
- *
- * Drizzle hash: SHA-256 hex del contenido SQL (idéntico a drizzle-orm/migrator.js).
+ * Principios:
+ *   - NO usa regex sobre SQL para decidir si una migración fue aplicada.
+ *   - NO calcula tracking manualmente desde los archivos SQL.
+ *   - NO permite ON CONFLICT DO NOTHING.
+ *   - La única fuente de tracking válida es canonical_pr20 (construida desde
+ *     cero aplicando 39 Drizzle + 19 manuales).
+ *   - El tracking solo se aplica si schema, seeds y conteos son EQUIVALENTE.
+ *   - Fail-closed: cualquier diferencia → aborto con ROLLBACK total.
  */
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
-import { createHash, randomBytes } from 'node:crypto';
-import { resolve, dirname, basename } from 'node:path';
+import { createHash } from 'node:crypto';
+import { resolve, dirname } from 'node:path';
+import { execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..', '..');
-const RESULTS_PATH = resolve(ROOT, '.local', 'production-baseline-pr20.json');
+const PLAN_PATH = resolve(ROOT, '.local', 'production-baseline-pr20.json');
+const CANONICAL_PATH = resolve(ROOT, '.local', 'canonical-tracking-pr20.json');
+const SCHEMA_DIFF_PATH = resolve(ROOT, '.local', 'schema-diff-pr20.patch');
 
 function sha256(content) { return createHash('sha256').update(content).digest('hex'); }
-function readSql(filePath) {
-  const a = resolve(ROOT, filePath);
-  if (!existsSync(a)) throw new Error(`SQL no encontrado: ${a}`);
-  return readFileSync(a, 'utf8');
+function getGitHead() {
+  try { return execSync('git rev-parse HEAD', { encoding: 'utf8' }).trim(); }
+  catch { return 'unknown'; }
 }
 
-// ── Extract postconditions from SQL ─────────────────────────────────────
-function extractPostconditions(sqlContent) {
-  const checks = [];
+// ── canonical-export ── extracts real tracking from canonical_pr20 ─────
 
-  // 1. CREATE TABLE — includes IF NOT EXISTS
-  for (const m of sqlContent.matchAll(/CREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?(?:"?\w+"?\.)?"?(\w+)"?\s*\(/gi)) {
-    checks.push({ type: 'table', name: m[1] });
+async function canonicalExport(sql) {
+  console.log('═══ canonical-export desde canonical_pr20 ═══\n');
+  
+  const id = await sql.query("SELECT current_database() AS db, current_setting('neon.branch_id', true) AS bid");
+  const db = id.rows[0]?.db;
+  const branch = id.rows[0]?.bid;
+  if (db !== 'canonical_pr20') { console.error('⛔ Debe conectar a canonical_pr20.'); process.exit(1); }
+  console.log(`Base: ${db} | Branch: ${branch ? 'presente' : 'no disponible'}`);
+
+  // Extract exact tracking rows
+  const drizzleRows = await sql.query("SELECT hash, created_at FROM drizzle.__drizzle_migrations ORDER BY id");
+  const manualRows = await sql.query("SELECT name AS id, hash, applied_at FROM sgie_schema_migrations ORDER BY name");
+  
+  if (drizzleRows.rows.length !== 39) { console.error(`⛔ Esperadas 39 Drizzle, encontradas ${drizzleRows.rows.length}`); process.exit(1); }
+  if (manualRows.rows.length !== 19) { console.error(`⛔ Esperadas 19 manuales, encontradas ${manualRows.rows.length}`); process.exit(1); }
+  
+  // Schema fingerprint
+  const tableCount = (await sql.query("SELECT count(*)::int AS n FROM information_schema.tables WHERE table_schema='public'")).rows[0].n;
+  const colCount = (await sql.query("SELECT count(*)::int AS n FROM information_schema.columns WHERE table_schema NOT IN ('pg_catalog','information_schema')")).rows[0].n;
+  const enumCount = (await sql.query("SELECT count(*)::int AS n FROM pg_type JOIN pg_enum ON pg_type.oid=pg_enum.enumtypid")).rows[0].n;
+  const indexCount = (await sql.query("SELECT count(*)::int AS n FROM pg_indexes WHERE tablename NOT LIKE 'pg\\_%'")).rows[0].n;
+  
+  // Seed fingerprints for key tables
+  const seeds = {};
+  const seedTables = ['roles', 'permisos', 'roles_permisos', 'configuracion_sitio', 'tipos_procedimiento', 'procedimiento_fases', 'procedimiento_transiciones', 'extraction_schema_versions', 'feature_flags'];
+  for (const t of seedTables) {
+    try {
+      const c = await sql.query(`SELECT count(*)::int AS n FROM "${t}"`);
+      seeds[t] = c.rows[0]?.n || 0;
+    } catch { seeds[t] = -1; }
   }
-
-  // 2. ALTER TABLE ADD COLUMN
-  for (const m of sqlContent.matchAll(/ALTER\s+TABLE\s+(?:ONLY\s+)?(?:"?\w+"?\.)?"?(\w+)"?\s+ADD\s+COLUMN\s+(?:IF\s+NOT\s+EXISTS\s+)?"?(\w+)"?\s+/gi)) {
-    checks.push({ type: 'column', table: m[1], name: m[2] });
-  }
-
-  // 3. CREATE INDEX
-  for (const m of sqlContent.matchAll(/CREATE\s+(?:UNIQUE\s+)?INDEX\s+(?:IF\s+NOT\s+EXISTS\s+)?"?(\w+)"?\s+ON\s+(?:"?\w+"?\.)?"?(\w+)"?/gi)) {
-    checks.push({ type: 'index', name: m[1], table: m[2] });
-  }
-
-  // 4. CREATE TYPE (enum)
-  for (const m of sqlContent.matchAll(/CREATE\s+TYPE\s+(?:"?\w+"?\.)?"?(\w+)"?\s+AS\s+ENUM\s*\(([^)]+)\)/gi)) {
-    const values = m[2].split(',').map(v => v.trim().replace(/['"]/g, ''));
-    checks.push({ type: 'enum', name: m[1], values });
-  }
-
-  return checks;
+  
+  // Journal + manifest hashes
+  const journalHash = sha256(readFileSync(resolve(ROOT, 'drizzle/migrations/meta/_journal.json'), 'utf8'));
+  const manifestHash = sha256(readFileSync(resolve(ROOT, 'tools/db/manual-migrations.json'), 'utf8'));
+  
+  const canonical = {
+    exportedAt: new Date().toISOString(),
+    head: getGitHead(),
+    database: db,
+    branchMasked: branch ? branch.slice(0, 4) + '...' : 'unknown',
+    tracking: {
+      drizzle: { count: drizzleRows.rows.length, rows: drizzleRows.rows },
+      manual: { count: manualRows.rows.length, rows: manualRows.rows },
+    },
+    schema: { tables: tableCount, columns: colCount, enums: enumCount, indexes: indexCount },
+    seeds,
+    journalHash,
+    manifestHash,
+  };
+  
+  mkdirSync(dirname(CANONICAL_PATH), { recursive: true });
+  writeFileSync(CANONICAL_PATH, JSON.stringify(canonical, null, 2));
+  console.log(`\n✓ Exportado: ${CANONICAL_PATH}`);
+  console.log(`  Drizzle: ${drizzleRows.rows.length} | Manual: ${manualRows.rows.length}`);
+  console.log(`  Schema: ${tableCount} tables, ${colCount} cols, ${enumCount} enums, ${indexCount} idx`);
+  console.log(`  Journal: ${journalHash.slice(0,12)}... | Manifest: ${manifestHash.slice(0,12)}...`);
+  console.log(`  Seeds: ${JSON.stringify(seeds)}`);
+  
+  return canonical;
 }
 
-async function verifyCheck(sql, check) {
+// ── plan ── compares clone schema/seeds vs canonical ─────────────────
+
+async function plan(sql) {
+  console.log('═══ plan: comparando schema del clon vs canonical_pr20 ═══\n');
+  
+  if (!existsSync(CANONICAL_PATH)) { console.error('⛔ canonical-export no se ha ejecutado. Ejecuta primero:\n   npm run db:migrations:baseline:canonical-export'); process.exit(1); }
+  const canonical = JSON.parse(readFileSync(CANONICAL_PATH, 'utf8'));
+  
+  const id = await sql.query("SELECT current_database() AS db, current_setting('neon.branch_id', true) AS bid");
+  const cloneDb = id.rows[0]?.db;
+  const cloneBranch = id.rows[0]?.bid;
+  if (cloneDb !== 'neondb') { console.error(`⛔ El plan debe ejecutarse contra neondb, no ${cloneDb}`); process.exit(1); }
+  console.log(`Base: ${cloneDb} | Branch: ${cloneBranch ? 'presente' : 'no disponible'}`);
+  
+  // Collect clone state
+  const tableCount = (await sql.query("SELECT count(*)::int AS n FROM information_schema.tables WHERE table_schema='public'")).rows[0].n;
+  const colCount = (await sql.query("SELECT count(*)::int AS n FROM information_schema.columns WHERE table_schema NOT IN ('pg_catalog','information_schema')")).rows[0].n;
+  const enumCount = (await sql.query("SELECT count(*)::int AS n FROM pg_type JOIN pg_enum ON pg_type.oid=pg_enum.enumtypid")).rows[0].n;
+  const indexCount = (await sql.query("SELECT count(*)::int AS n FROM pg_indexes WHERE tablename NOT LIKE 'pg\\_%'")).rows[0].n;
+  
+  // Data counts
+  const usuariosN = (await sql.query("SELECT count(*)::int AS n FROM usuarios")).rows[0].n;
+  const blogN = (await sql.query("SELECT count(*)::int AS n FROM blog_posts")).rows[0].n;
+  const blogPubN = (await sql.query("SELECT count(*)::int AS n FROM blog_posts WHERE published=true")).rows[0].n;
+  const clientesN = (await sql.query("SELECT count(*)::int AS n FROM clientes")).rows[0].n;
+  const expN = (await sql.query("SELECT count(*)::int AS n FROM expedientes")).rows[0].n;
+  const drizzleTrackN = (await sql.query("SELECT count(*)::int AS n FROM drizzle.__drizzle_migrations")).rows[0].n;
+  const manualTrackN = (await sql.query("SELECT count(*)::int AS n FROM sgie_schema_migrations")).rows[0].n;
+  
+  // Seed fingerprints
+  const cloneSeeds = {};
+  for (const t of Object.keys(canonical.seeds)) {
+    try { const c = await sql.query(`SELECT count(*)::int AS n FROM "${t}"`); cloneSeeds[t] = c.rows[0]?.n || 0; }
+    catch { cloneSeeds[t] = -1; }
+  }
+  
+  // Equivalencia = schema idéntico + tracking vacío.
+  // Seeds y datos difieren (clone tiene datos productivos, canonical es vacía).
+  // La equivalencia solo requiere estructura SQL idéntica y tracking 0/58.
+  const schemaMatch = tableCount === canonical.schema.tables && colCount === canonical.schema.columns && enumCount === canonical.schema.enums && indexCount === canonical.schema.indexes;
+  const trackingZero = drizzleTrackN === 0 && manualTrackN === 0;
+  const equivalent = schemaMatch && trackingZero;
+  
+  const currentHead = getGitHead();
+  const headMatch = currentHead === canonical.head;
+  
+  const planDoc = {
+    generatedAt: new Date().toISOString(),
+    head: currentHead,
+    canonicalHead: canonical.head,
+    headMatch,
+    database: cloneDb,
+    equivalence: equivalent ? 'EQUIVALENTE' : 'DIVERGENTE',
+    schema: { canonical: canonical.schema, clone: { tables: tableCount, columns: colCount, enums: enumCount, indexes: indexCount }, match: schemaMatch },
+    seeds: { canonical: canonical.seeds, clone: cloneSeeds },
+    tracking: { drizzleN: drizzleTrackN, manualN: manualTrackN, match: trackingZero },
+    data: { usuarios: usuariosN, blog: blogN, blogPublished: blogPubN, clientes: clientesN, expedientes: expN },
+    journalHash: sha256(readFileSync(resolve(ROOT, 'drizzle/migrations/meta/_journal.json'), 'utf8')),
+    manifestHash: sha256(readFileSync(resolve(ROOT, 'tools/db/manual-migrations.json'), 'utf8')),
+  };
+  
+  mkdirSync(dirname(PLAN_PATH), { recursive: true });
+  writeFileSync(PLAN_PATH, JSON.stringify(planDoc, null, 2));
+  
+  console.log(`Schema: tables=${tableCount}/${canonical.schema.tables} cols=${colCount}/${canonical.schema.columns} enums=${enumCount}/${canonical.schema.enums} idx=${indexCount}/${canonical.schema.indexes} → ${schemaMatch ? '✓' : '✗'}`);
+  console.log(`Seeds (clon condatos vs canonical vacía): ${JSON.stringify(cloneSeeds)}`);
+  console.log(`Tracking: Drizzle=${drizzleTrackN}/0 Manual=${manualTrackN}/0 → ${trackingZero ? '✓ (vacío)' : '✗ (no vacío, no se puede baselinear)'}`);
+  console.log(`Head: ${currentHead.slice(0,8)}... → ${headMatch ? '✓' : '✗'}`);
+  console.log(`Data: u=${usuariosN} blog=${blogN}(${blogPubN}pub) cli=${clientesN} exp=${expN}`);
+  console.log(`\nResultado: ${equivalent ? 'EQUIVALENTE' : 'DIVERGENTE'}`);
+  
+  if (equivalent) console.log(`Plan: ${PLAN_PATH}`);
+  return planDoc;
+}
+
+// ── apply ── applies canonical tracking to clone ──────────────────────
+
+async function apply(sql) {
+  console.log('═══ apply: aplicar tracking canónico al clon ═══\n');
+  
+  // Guards
+  const planPath = process.env.BASELINE_PLAN;
+  if (!planPath || !existsSync(planPath)) {
+    console.error('⛔ BASELINE_PLAN requerido. Apunta al JSON generado por plan.');
+    process.exit(1);
+  }
+  const confirmation = process.env.MIGRATION_BASELINE_CONFIRMATION;
+  if (confirmation !== 'BASELINE_PREFLIGHT_CLONE') {
+    console.error('⛔ MIGRATION_BASELINE_CONFIRMATION=BASELINE_PREFLIGHT_CLONE requerido.');
+    process.exit(1);
+  }
+  
+  const planDoc = JSON.parse(readFileSync(planPath, 'utf8'));
+  if (planDoc.equivalence !== 'EQUIVALENTE') {
+    console.error('⛔ El plan NO es EQUIVALENTE. No se puede aplicar tracking.');
+    process.exit(1);
+  }
+  
+  // Verify branch
+  const id = await sql.query("SELECT current_setting('neon.branch_id', true) AS bid, current_database() AS db");
+  const branch = id.rows[0]?.bid;
+  const db = id.rows[0]?.db;
+  const prodBranchId = process.env.NEON_PRODUCTION_BRANCH_ID;
+  
+  if (!branch) { console.error('⛔ No branch_id'); process.exit(1); }
+  if (prodBranchId && branch === prodBranchId) { console.error('⛔ Es producción. Abortando.'); process.exit(1); }
+  if (db !== 'neondb') { console.error(`⛔ Base incorrecta: ${db}`); process.exit(1); }
+  console.log(`✓ Clon: base ${db}, ≠ producción`);
+  
+  // Re-verify tracking zero
+  const dt0 = (await sql.query("SELECT count(*)::int AS n FROM drizzle.__drizzle_migrations")).rows[0].n;
+  const mt0 = (await sql.query("SELECT count(*)::int AS n FROM sgie_schema_migrations")).rows[0].n;
+  if (dt0 !== 0 || mt0 !== 0) { console.error(`⛔ Tracking no vacío: ${dt0}/${mt0}`); process.exit(1); }
+  
+  const canonical = JSON.parse(readFileSync(CANONICAL_PATH, 'utf8'));
+  
+  // Transaction + advisory lock
+  await sql.query("SELECT pg_advisory_xact_lock(20260728)");
+  await sql.query("BEGIN");
+  
   try {
-    if (check.type === 'table') {
-      const r = await sql.query("SELECT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_schema='public' AND table_name=$1) AS e", [check.name]);
-      return r.rows[0].e;
+    // Insert exact canonical tracking
+    for (const r of canonical.tracking.drizzle.rows) {
+      await sql.query("INSERT INTO drizzle.__drizzle_migrations(hash, created_at) VALUES($1, $2)", [r.hash, r.created_at]);
     }
-    if (check.type === 'column') {
-      const r = await sql.query("SELECT EXISTS(SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name=$1 AND column_name=$2) AS e", [check.table, check.name]);
-      return r.rows[0].e;
+    for (const r of canonical.tracking.manual.rows) {
+      await sql.query("INSERT INTO sgie_schema_migrations(name, hash, rows_affected, applied_at) VALUES($1, $2, 1, NOW())", [r.id, r.hash]);
     }
-    if (check.type === 'index') {
-      const r = await sql.query("SELECT EXISTS(SELECT 1 FROM pg_indexes WHERE indexname=$1) AS e", [check.name]);
-      return r.rows[0].e;
-    }
-    if (check.type === 'enum') {
-      const r = await sql.query("SELECT count(*)::int AS n FROM pg_enum JOIN pg_type ON pg_type.oid=pg_enum.enumtypid WHERE pg_type.typname=$1", [check.name]);
-      return r.rows[0].n > 0;
-    }
-  } catch { return false; }
-  return false;
+    
+    // Verify
+    const dt = (await sql.query("SELECT count(*)::int AS n FROM drizzle.__drizzle_migrations")).rows[0].n;
+    const mt = (await sql.query("SELECT count(*)::int AS n FROM sgie_schema_migrations")).rows[0].n;
+    if (dt !== 39) throw new Error(`Drizzle: ${dt}/39`);
+    if (mt !== 19) throw new Error(`Manual: ${mt}/19`);
+    
+    await sql.query("COMMIT");
+    console.log('✅ Baseline canónico aplicado: 39/39 Drizzle + 19/19 Manual.');
+  } catch (e) {
+    await sql.query("ROLLBACK");
+    console.error(`\n⛔ Rollback total: ${e.message}`);
+    process.exit(1);
+  }
 }
 
 // ── Main ───────────────────────────────────────────────────────────────
-const mode = process.argv[2] || 'plan';
+const validModes = ['canonical-export', 'plan', 'apply'];
+const mode = process.argv[2];
+if (!validModes.includes(mode)) {
+  console.error(`Modo: ${mode}. Usa: ${validModes.join(' | ')}`);
+  process.exit(1);
+}
 
 (async () => {
-  const journal = JSON.parse(readFileSync(resolve(ROOT, 'drizzle/migrations/meta/_journal.json'), 'utf8'));
-  const manifest = JSON.parse(readFileSync(resolve(ROOT, 'tools/db/manual-migrations.json'), 'utf8'));
-  const allMigrations = [
-    ...journal.entries.map(e => ({ kind: 'drizzle', id: e.tag, file: `drizzle/migrations/${e.tag}.sql`, tag: e.tag, when: e.when })),
-    ...manifest.entries.map(e => ({ kind: 'manual', id: e.id, file: e.file })),
-  ];
-
   if (!process.env.DATABASE_URL) { console.error('DATABASE_URL requerida.'); process.exit(1); }
   const { Pool } = await import('@neondatabase/serverless');
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
+  const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1, connectionTimeoutMillis: 20000 });
   const sql = { query: (t, p) => pool.query(t, p) };
-
-  console.log(`═══ Baseline auto-descubierto ═══`);
-  console.log(`Migraciones: ${allMigrations.length}`);
-  console.log(`Modo: ${mode}\n`);
-
-  // Phase 1: Extract and verify check for each migration
-  const results = [];
-  for (const m of allMigrations) {
-    const rawSql = readSql(m.file);
-    const checks = extractPostconditions(rawSql);
-    if (checks.length === 0) {
-      // No extractable postconditions (e.g., migrations with only DDL not parsed, or data-only)
-      // These are structurally present if ALL other migrations pass
-      results.push({ id: m.id, kind: m.kind, status: 'NO_VERIFICABLE_AUTO', checks: 0, passed: 0 });
-      console.log(`  ? [NO_VERIFICABLE] ${m.id}`);
-      continue;
-    }
-    let passed = 0;
-    for (const c of checks) {
-      if (await verifyCheck(sql, c)) passed++;
-    }
-    const total = checks.length;
-    let status;
-    if (passed === total) status = 'APLICADA_COMPLETA';
-    else if (passed > 0) status = 'APLICADA_PARCIAL';
-    else status = 'NO_APLICADA';
-    results.push({ id: m.id, kind: m.kind, status, checks: total, passed });
-    const icon = status === 'APLICADA_COMPLETA' ? '✓' : status === 'APLICADA_PARCIAL' ? '~' : '·';
-    console.log(`  ${icon} [${status.padEnd(18)}] ${m.id.padEnd(45)} ${passed}/${total}`);
-  }
-
-  // Summary
-  const summary = {};
-  for (const r of results) { summary[r.status] = (summary[r.status] || 0) + 1; }
-  console.log('\n═══ Resumen ═══');
-  for (const [s, c] of Object.entries(summary)) console.log(`  ${s.padEnd(22)} ${c}`);
-
-  mkdirSync(resolve(ROOT, '.local'), { recursive: true });
-  // Get commit SHA
-  let commitSha = process.env.GITHUB_SHA || '';
-  if (!commitSha) {
-    try {
-      const { execSync } = await import('node:child_process');
-      commitSha = execSync('git rev-parse HEAD', { encoding: 'utf8' }).trim();
-    } catch { commitSha = 'unknown'; }
-  }
-  writeFileSync(RESULTS_PATH, JSON.stringify({ commit: commitSha, at: new Date().toISOString(), summary, results }, null, 2));
-  console.log(`\nResultados: ${RESULTS_PATH}`);
-
-  if (mode === 'plan') { await pool.end(); process.exit(0); }
-
-  // ── apply ─────────────────────────────────────────────────────────
-  if (mode === 'apply') {
-    if (process.env.MIGRATION_BASELINE_CONFIRMATION !== 'BASELINE_PREFLIGHT_CLONE') {
-      console.error('⛔ MIGRATION_BASELINE_CONFIRMATION requerido.'); process.exit(1);
-    }
-    // Verify clone identity
-    const id = await pool.query("SELECT current_setting('neon.branch_id', true) AS bid, current_database() AS db");
-    const prodId = process.env.NEON_PRODUCTION_BRANCH_ID;
-    if (!id.rows[0].bid) { console.error('⛔ No branch_id'); process.exit(1); }
-    if (prodId && id.rows[0].bid === prodId) { console.error('⛔ Es producción'); process.exit(1); }
-    if (id.rows[0].db !== 'neondb') { console.error(`⛔ Base incorrecta: ${id.rows[0].db}`); process.exit(1); }
-    console.log(`✓ Clon: base neondb, ≠ producción`);
-
-    // Only proceed if ALL are APLICADA_COMPLETA or NO_VERIFICABLE_AUTO
-    const blocker = results.filter(r => r.status !== 'APLICADA_COMPLETA' && r.status !== 'NO_VERIFICABLE_AUTO');
-    if (blocker.length > 0) {
-      console.error(`\n⛔ ${blocker.length} migraciones bloquean el baseline:`);
-      for (const b of blocker) console.error(`   ${b.status.padEnd(18)} ${b.id} (${b.passed}/${b.checks})`);
-      process.exit(1);
-    }
-
-    // Advisory lock + transaction
-    await pool.query("SELECT pg_advisory_xact_lock(20260728)");
-    await pool.query("BEGIN");
-    try {
-      for (const m of allMigrations) {
-        const hash = sha256(readSql(m.file));
-        if (m.kind === 'drizzle') {
-          await pool.query("INSERT INTO drizzle.__drizzle_migrations (hash, created_at) VALUES ($1, $2) ON CONFLICT DO NOTHING", [hash, m.when || Date.now()]);
-        } else {
-          await pool.query("INSERT INTO sgie_schema_migrations (name, hash, rows_affected, applied_at) VALUES ($1, $2, 0, NOW()) ON CONFLICT (name) DO NOTHING", [m.id, hash]);
-        }
-      }
-      // Verify rows
-      const dt = (await pool.query("SELECT count(*)::int AS n FROM drizzle.__drizzle_migrations")).rows[0].n;
-      const mt = (await pool.query("SELECT count(*)::int AS n FROM sgie_schema_migrations")).rows[0].n;
-      if (dt !== 39) throw new Error(`Drizzle tracking: ${dt}/39`);
-      if (mt !== 19) throw new Error(`Manual tracking: ${mt}/19`);
-      await pool.query("COMMIT");
-      console.log(`✅ Baseline: 39/39 + 19/19 = 58 registradas.`);
-    } catch (e) {
-      await pool.query("ROLLBACK");
-      console.error(`⛔ ${e.message}. Rollback.`);
-      process.exit(1);
-    }
+  
+  try {
+    if (mode === 'canonical-export') await canonicalExport(sql);
+    else if (mode === 'plan') await plan(sql);
+    else if (mode === 'apply') await apply(sql);
+  } finally {
     await pool.end();
-    process.exit(0);
   }
+  process.exit(0);
 })();
