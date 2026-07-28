@@ -275,10 +275,10 @@ const PRIORITY_PENAL_SLUGS = [
                 <MessageCircle size={16} /> Hablar con él por WhatsApp
               </a>
               <Link
-                href="/despacho"
+                href="/equipo/danilo-pineda-maradiaga"
                 className="inline-flex items-center gap-2 h-11 px-5 rounded-lg border border-border-light bg-surface text-text text-sm font-bold hover:border-accent/40 transition-colors"
               >
-                Conozca el despacho <ArrowRight size={14} />
+                Ver perfil profesional <ArrowRight size={14} />
               </Link>
             </div>
           </div>

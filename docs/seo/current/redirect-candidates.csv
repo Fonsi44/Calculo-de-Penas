@@ -1,0 +1,4 @@
+"source","target","decision","evidence","production_action","rollback"
+"https://www.pinedayasociadoshn.com/","","KEEP_COMMERCIAL_BRAND","7 impresiones GSC","NONE","n/a"
+"https://www.pinedayasociadoshn.com/abogados-en-nacaome","","KEEP_INFORMATIONAL_LOCAL","1 impresiones GSC","NONE","n/a"
+"https://www.pinedayasociadoshn.com/blog/practica-legal/abogados-en-nacaome","/abogados-en-nacaome","REDIRECT_CANDIDATE","0 impresiones GSC; intención local solapada","PREPARE_ONLY","retirar regla antes de deploy"

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import {
   Scale,
   ShieldCheck,
@@ -9,7 +10,7 @@ import {
   Gavel,
   Award,
 } from 'lucide-react';
-import { site, FOUNDER_PROFILE } from '@/lib/site';
+import { site, FOUNDER_PROFILE, LAWYER_PROFILES } from '@/lib/site';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -317,6 +318,37 @@ export default async function HomePage() {
           points={WHY_POINTS}
           cta={{ href: '/despacho', label: 'Conozca el despacho' }}
         />
+      </Section>
+
+      <Section spacing="md" ariaLabel="Equipo de abogados">
+        <SectionHeader
+          eyebrow="Equipo"
+          title="Abogados responsables, con perfil público"
+          subtitle="Conozca quién dirige cada área y consulte su experiencia profesional antes de solicitar una valoración de su caso."
+        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {LAWYER_PROFILES.map((profile) => (
+            <Link
+              key={profile.slug}
+              href={`/equipo/${profile.slug}`}
+              className="group rounded-lg border border-border-light bg-surface p-5 hover:border-accent/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"
+              aria-label={`Ver perfil profesional de ${profile.name}`}
+            >
+              <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark">
+                {profile.jobTitle}
+              </p>
+              <h2 className="mt-2 font-serif text-xl font-extrabold text-primary group-hover:text-accent-dark transition-colors">
+                {profile.name}
+              </h2>
+              <p className="mt-3 text-sm text-text-secondary leading-relaxed">
+                {profile.areas.slice(0, 3).join(' · ')}
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark">
+                Ver perfil completo
+              </span>
+            </Link>
+          ))}
+        </div>
       </Section>
 
       {/* CÓMO TRABAJAMOS — proceso de atención (stepper) */}

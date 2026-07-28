@@ -4,6 +4,22 @@ import { formatHondurasDate } from '@/lib/datetime';
 import { getPublishedPosts, getPostBySlug as getPostBySlugDb, getBlogCategories } from '@/lib/blog-db';
 
 const EDITORIAL_OVERRIDES: Record<string, { title: string; description: string }> = {
+  'allanamiento-ilegal-violacion-domicilio-honduras': {
+    title: 'Allanamiento en Honduras: orden judicial y derechos',
+    description: 'Cuándo puede realizarse un allanamiento en Honduras, qué debe contener la orden judicial y cómo actuar sin obstaculizar a la autoridad.',
+  },
+  'contratos-franquicia-aspectos': {
+    title: 'Contrato de franquicia en Honduras: cláusulas y riesgos',
+    description: 'Cláusulas que conviene revisar en un contrato de franquicia en Honduras: territorio, regalías, uso de marca, terminación y solución de conflictos.',
+  },
+  'guia-aduanera-importaciones-honduras': {
+    title: 'Importaciones en Honduras: requisitos y proceso aduanero',
+    description: 'Documentos, clasificación arancelaria, tributos y etapas generales del despacho para importar mercancías legalmente en Honduras.',
+  },
+  'usucapion-prescripcion-adquisitiva-honduras': {
+    title: 'Usucapión en Honduras: requisitos y proceso judicial',
+    description: 'Qué es la prescripción adquisitiva, qué elementos deben acreditarse y cómo se tramita judicialmente una pretensión de usucapión en Honduras.',
+  },
   'abogados-en-nacaome': {
     title: 'Cómo Elegir Abogado en Nacaome: 10 Criterios antes de Contratar',
     description: 'Criterios prácticos para elegir abogado en Nacaome: especialidad, honorarios, comunicación y experiencia antes de contratar servicios jurídicos en Valle.',

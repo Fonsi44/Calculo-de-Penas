@@ -54,6 +54,7 @@ type LawyerProfile = {
   description: string;
   ctaHref: string;
   ctaLabel: string;
+  profileHref: string;
 };
 
 const AREA_LAWYER: Record<string, LawyerProfile> = {
@@ -66,6 +67,7 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     description: 'Más de 15 años de ejercicio profesional. Audiencias iniciales, preliminares, de sobreseimiento, juicio oral y recursos de casación en el departamento de Valle y la zona sur.',
     ctaHref: '/derecho-penal',
     ctaLabel: 'Ver defensa penal',
+    profileHref: '/equipo/danilo-pineda-maradiaga',
   },
   'derecho-de-familia': {
     name: THANIA_PROFILE.name,
@@ -76,6 +78,7 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     description: 'Socia fundadora del bufete. Atiende divorcios, custodia, pensión de alimentos, sucesiones, violencia intrafamiliar y mediación familiar en Nacaome, Valle y la zona sur.',
     ctaHref: whatsappHref('Hola, necesito consultar sobre un caso de derecho de familia.'),
     ctaLabel: 'Hablar con ella por WhatsApp',
+    profileHref: '/equipo/thania-marlene-paz',
   },
   'derecho-laboral': {
     name: EMIL_PROFILE.name,
@@ -86,6 +89,7 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     description: 'Socio del bufete. Despidos injustificados, prestaciones, accidentes de trabajo, acoso laboral, juicio oral laboral y recursos de casación laboral en Valle y la zona sur.',
     ctaHref: whatsappHref('Hola, necesito consultar sobre un caso de derecho laboral.'),
     ctaLabel: 'Hablar con él por WhatsApp',
+    profileHref: '/equipo/emil-barahona',
   },
   'derecho-civil-y-notarial': {
     name: THANIA_PROFILE.name,
@@ -96,6 +100,7 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     description: 'Socia fundadora del bufete. Compraventas, donaciones, hipotecas, poderes notariales, sociedades civiles, fideicomisos, prescripción adquisitiva y daños y perjuicios.',
     ctaHref: whatsappHref('Hola, necesito consultar sobre un caso de derecho civil o notarial.'),
     ctaLabel: 'Hablar con ella por WhatsApp',
+    profileHref: '/equipo/thania-marlene-paz',
   },
   'derecho-mercantil-empresarial': {
     name: THANIA_PROFILE.name,
@@ -106,6 +111,7 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     description: 'Socia fundadora del bufete. Constitución de sociedades, contratos mercantiles, gobierno corporativo, compliance, protección al consumidor, propiedad industrial y quiebras.',
     ctaHref: whatsappHref('Hola, necesito consultar sobre un caso de derecho mercantil o empresarial.'),
     ctaLabel: 'Hablar con ella por WhatsApp',
+    profileHref: '/equipo/thania-marlene-paz',
   },
   'derecho-administrativo-y-servicio-civil': {
     name: THANIA_PROFILE.name,
@@ -116,6 +122,7 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     description: 'Socia fundadora del bufete. Recursos administrativos, nulidad de actos, servicio civil, contratación del Estado, sanciones y litigio administrativo en Honduras.',
     ctaHref: whatsappHref('Hola, necesito consultar sobre un caso de derecho administrativo.'),
     ctaLabel: 'Hablar con ella por WhatsApp',
+    profileHref: '/equipo/thania-marlene-paz',
   },
 };
 
@@ -353,10 +360,10 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
                     </Link>
                   )}
                   <Link
-                    href="/despacho"
+                    href={lawyer.profileHref}
                     className="inline-flex items-center gap-2 h-11 px-5 rounded-lg border border-border-light bg-surface text-text text-sm font-bold hover:border-accent/40 transition-colors"
                   >
-                    Conozca el equipo <ArrowRight size={14} />
+                    Ver perfil profesional <ArrowRight size={14} />
                   </Link>
                 </div>
               </div>

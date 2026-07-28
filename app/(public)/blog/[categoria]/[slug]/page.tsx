@@ -341,8 +341,8 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
 
   const LAWYER_SLUGS: Record<string, string> = {
     'Danilo Pineda Maradiaga': 'danilo-pineda-maradiaga',
-    'Thania Marlene Paz': 'thania',
-    'Emil Barahona': 'emil',
+    'Thania Marlene Paz': 'thania-marlene-paz',
+    'Emil Barahona': 'emil-barahona',
   };
 
   const isReviewed =
@@ -352,7 +352,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
     post.reviewedAt;
 
   const authorSlug = post.author ? LAWYER_SLUGS[post.author] : null;
-  const authorHref = authorSlug ? `/despacho#${authorSlug}` : '/despacho';
+  const authorHref = authorSlug ? `/equipo/${authorSlug}` : '/despacho';
 
   // Inyecta CTA mid-article y luego asigna IDs estables a los H2/H3 del body
   // (server-side) para que el TOC y los fragment anchors (#section) existan en
@@ -429,7 +429,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                 <span className="flex items-center gap-1.5">
                   <BadgeCheck size={15} className="text-accent-dark" />
                   <span>Revisión jurídica:{' '}
-                  <Link href={`/despacho#${LAWYER_SLUGS[post.reviewedBy!]}`} className="hover:text-primary hover:underline transition-colors font-medium text-text-secondary font-semibold">
+                  <Link href={`/equipo/${LAWYER_SLUGS[post.reviewedBy!]}`} className="hover:text-primary hover:underline transition-colors font-medium text-text-secondary font-semibold">
                     {post.reviewedBy}
                   </Link>
                   {post.reviewedAt && (
@@ -540,7 +540,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                         <p className="mt-2 flex items-center gap-1.5 text-xs font-medium text-text-secondary">
                           <BadgeCheck size={14} className="text-accent-dark" />
                           Revisión jurídica:{' '}
-                          <Link href={`/despacho#${LAWYER_SLUGS[post.reviewedBy!]}`} className="hover:text-primary hover:underline transition-colors font-semibold">
+                          <Link href={`/equipo/${LAWYER_SLUGS[post.reviewedBy!]}`} className="hover:text-primary hover:underline transition-colors font-semibold">
                             {post.reviewedBy}
                           </Link>
                           {post.reviewedAt && (
