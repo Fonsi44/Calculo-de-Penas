@@ -58,6 +58,20 @@
       "expiresAt": null
     },
     {
+      "id": "ci.governance",
+      "path": "tools/ci/governance.mjs",
+      "owner": "engineering",
+      "status": "active",
+      "purpose": "Validar límites de archivos, imports, ciclos, duplicados, flags y artefactos locales.",
+      "command": "node tools/ci/governance.mjs",
+      "mutates": false,
+      "dryRun": true,
+      "requiredEnv": [],
+      "rollback": null,
+      "lastValidated": "2026-07-28",
+      "expiresAt": null
+    },
+    {
       "id": "ci.repo-hygiene",
       "path": "tools/ci/repo-hygiene.mjs",
       "owner": "engineering",
