@@ -29,11 +29,11 @@ export function verifyPlan(plan, context) {
   return failures;
 }
 
-export function validateCanonicalExport(canonical, seedTables) {
+export function validateCanonicalExport(canonical, seedTables, expectedTracking = { drizzle: 39, manual: 20 }) {
   const failures = [];
   if (canonical?.formatVersion !== 3) failures.push('format_version');
-  if (canonical?.tracking?.drizzle?.count !== 39) failures.push('drizzle_tracking');
-  if (canonical?.tracking?.manual?.count !== 20) failures.push('manual_tracking');
+  if (canonical?.tracking?.drizzle?.count !== expectedTracking.drizzle) failures.push('drizzle_tracking');
+  if (canonical?.tracking?.manual?.count !== expectedTracking.manual) failures.push('manual_tracking');
   for (const table of seedTables) {
     const fingerprint = canonical?.seeds?.[table];
     if (

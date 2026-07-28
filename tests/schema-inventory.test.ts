@@ -56,6 +56,56 @@ describe('semantic schema inventory', () => {
     expect(result[0].status).toBe('SAME_NAME_DIFFERENT_DEFINITION');
   });
 
+  it('normalizes column ordinal position in the contractual inventory', () => {
+    const canonical = {
+      ...empty,
+      columns: [{ schema: 'public', table: 't', name: 'c', position: 1, full_type: 'text', nullable: true }],
+    };
+    const clone = {
+      ...empty,
+      columns: [{ schema: 'public', table: 't', name: 'c', position: 9, full_type: 'text', nullable: true }],
+    };
+    const diff = compareInventories(canonical, clone) as unknown as {
+      objects: { columns: Array<{ status: string; compatibility?: string }> };
+    };
+    expect(diff.objects.columns[0]).toMatchObject({
+      status: 'IDENTICAL', compatibility: 'ORDINAL_POSITION_ONLY',
+    });
+  });
+
+  it('accepts append-only enum values present only in the clone', () => {
+    const canonical = { ...empty, enums: [{ schema: 'public', name: 'state', values: ['a', 'b'] }] };
+    const clone = { ...empty, enums: [{ schema: 'public', name: 'state', values: ['a', 'b', 'legacy'] }] };
+    const diff = compareInventories(canonical, clone) as unknown as {
+      objects: { enums: Array<{ status: string; compatibility?: string }> };
+    };
+    expect(diff.objects.enums[0]).toMatchObject({
+      status: 'IDENTICAL', compatibility: 'CLONE_APPEND_ONLY_SUPERSET',
+    });
+  });
+
+  it('accepts a clone UNIQUE constraint backed by the same canonical UNIQUE index', () => {
+    const index = {
+      schema: 'public', table: 'tokens', name: 'tokens_hash_unique',
+      unique: true, columns: ['hash'],
+    };
+    const canonical = { ...empty, indexes: [index] };
+    const clone = {
+      ...empty,
+      indexes: [index],
+      constraints: [{
+        schema: 'public', table: 'tokens', name: 'tokens_hash_unique',
+        type: 'UNIQUE', columns: ['hash'],
+      }],
+    };
+    const diff = compareInventories(canonical, clone) as unknown as {
+      objects: { constraints: Array<{ status: string; compatibility?: string }> };
+    };
+    expect(diff.objects.constraints[0]).toMatchObject({
+      status: 'IDENTICAL', compatibility: 'UNIQUE_INDEX_EQUIVALENT',
+    });
+  });
+
   it.each([
     ['routines', { schema: 'public', name: 'f', identity_arguments: '', kind: 'function', definition: 'SELECT 1' },
       { schema: 'public', name: 'f', identity_arguments: '', kind: 'function', definition: 'SELECT 2' }],

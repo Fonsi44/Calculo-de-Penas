@@ -221,6 +221,17 @@
       "checksum": "898efdf2b6ccc39e13822eefd6002f4daea52ec9a6ba5efc8318690fd6d093a0",
       "transactional": false,
       "applied": false
+    },
+    {
+      "id": "manual-0058",
+      "file": "drizzle/migrations/0058_reconcile_pgcrypto_contract.sql",
+      "description": "Reconcile pgcrypto extension required by migration 0025",
+      "dependsOn": [
+        "manual-0057"
+      ],
+      "checksum": "5d3a4c73599a55c094f980c15ee2aab5a58659cacb5d3e4a0f89833e0fe4a272",
+      "transactional": true,
+      "applied": false
     }
   ]
 }

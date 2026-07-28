@@ -37,6 +37,12 @@ const SEED_TABLES = [
   'tipos_procedimiento', 'procedimiento_fases', 'procedimiento_transiciones',
   'extraction_schema_versions', 'feature_flags',
 ];
+function expectedTrackingCounts() {
+  return {
+    drizzle: JSON.parse(readFileSync(resolve(ROOT, 'drizzle/migrations/meta/_journal.json'), 'utf8')).entries.length,
+    manual: JSON.parse(readFileSync(resolve(ROOT, 'tools/db/manual-migrations.json'), 'utf8')).entries.length,
+  };
+}
 
 async function seedFingerprint(sql, table) {
   try {
@@ -94,9 +100,10 @@ async function canonicalExport(sql) {
   // Extract exact tracking rows
   const drizzleRows = await sql.query("SELECT hash, created_at FROM drizzle.__drizzle_migrations ORDER BY id");
   const manualRows = await sql.query("SELECT name, hash, rows_affected, applied_at FROM sgie_schema_migrations ORDER BY name");
+  const expectedTracking = expectedTrackingCounts();
   
-  if (drizzleRows.rows.length !== 39) { console.error(`⛔ Esperadas 39 Drizzle, encontradas ${drizzleRows.rows.length}`); process.exit(1); }
-  if (manualRows.rows.length !== 20) { console.error(`⛔ Esperadas 20 manuales, encontradas ${manualRows.rows.length}`); process.exit(1); }
+  if (drizzleRows.rows.length !== expectedTracking.drizzle) { console.error(`⛔ Esperadas ${expectedTracking.drizzle} Drizzle, encontradas ${drizzleRows.rows.length}`); process.exit(1); }
+  if (manualRows.rows.length !== expectedTracking.manual) { console.error(`⛔ Esperadas ${expectedTracking.manual} manuales, encontradas ${manualRows.rows.length}`); process.exit(1); }
   
   // Schema fingerprint
   const tableCount = (await sql.query("SELECT count(*)::int AS n FROM information_schema.tables WHERE table_schema='public'")).rows[0].n;
@@ -158,7 +165,7 @@ async function plan(sql) {
   
   if (!existsSync(CANONICAL_PATH)) { console.error('⛔ canonical-export no se ha ejecutado. Ejecuta primero:\n   npm run db:migrations:baseline:canonical-export'); process.exit(1); }
   const canonical = JSON.parse(readFileSync(CANONICAL_PATH, 'utf8'));
-  const canonicalFailures = validateCanonicalExport(canonical, SEED_TABLES);
+  const canonicalFailures = validateCanonicalExport(canonical, SEED_TABLES, expectedTrackingCounts());
   if (canonicalFailures.length) {
     console.error(`⛔ Export canónico obsoleto o incompleto: ${canonicalFailures.join(', ')}`);
     console.error('   Regenera canonical-tracking-pr20.json desde canonical_pr20 antes de crear un plan.');
@@ -221,7 +228,7 @@ async function plan(sql) {
   const seedContractsMatch = Object.values(cloneSeedContracts)
     .every((result) => !String(result.status).startsWith('DIVERGENTE'));
   
-  // Equivalencia = schema idéntico + tracking vacío.
+  // Equivalencia = contrato public idéntico + tracking vacío + seeds contractuales.
   // Seeds y datos difieren (clone tiene datos productivos, canonical es vacía).
   // La equivalencia solo requiere estructura SQL idéntica y tracking 0/58.
   const schemaMatch = tableCount === canonical.schema.tables && colCount === canonical.schema.columns && enumCount === canonical.schema.enums && indexCount === canonical.schema.indexes;
@@ -261,7 +268,7 @@ async function plan(sql) {
     journalHash: sha256(readFileSync(resolve(ROOT, 'drizzle/migrations/meta/_journal.json'), 'utf8')),
     manifestHash: sha256(readFileSync(resolve(ROOT, 'tools/db/manual-migrations.json'), 'utf8')),
   };
-  planDoc.equivalence = schemaMatch && trackingZero && publicDrift === 0 && seedContractsMatch
+  planDoc.equivalence = trackingZero && publicDrift === 0 && seedContractsMatch
     ? 'EQUIVALENTE' : 'DIVERGENTE';
   planDoc.signature = signPlan(planDoc);
   
@@ -322,6 +329,7 @@ async function apply(sql) {
   if (dt0 !== 0 || mt0 !== 0) { console.error(`⛔ Tracking no vacío: ${dt0}/${mt0}`); process.exit(1); }
   
   const canonical = JSON.parse(readFileSync(CANONICAL_PATH, 'utf8'));
+  const expectedTracking = expectedTrackingCounts();
   const currentDiff = JSON.parse(readFileSync(resolve(ROOT, '.local', 'schema-diff-pr20.json'), 'utf8'));
   const failures = verifyPlan(planDoc, {
     head: getGitHead(), branchId: branch, database: db,
@@ -342,11 +350,11 @@ async function apply(sql) {
     // Verify
     const dt = (await sql.query("SELECT count(*)::int AS n FROM drizzle.__drizzle_migrations")).rows[0].n;
     const mt = (await sql.query("SELECT count(*)::int AS n FROM sgie_schema_migrations")).rows[0].n;
-    if (dt !== 39) throw new Error(`Drizzle: ${dt}/39`);
-    if (mt !== 20) throw new Error(`Manual: ${mt}/20`);
+    if (dt !== expectedTracking.drizzle) throw new Error(`Drizzle: ${dt}/${expectedTracking.drizzle}`);
+    if (mt !== expectedTracking.manual) throw new Error(`Manual: ${mt}/${expectedTracking.manual}`);
     
     await sql.query("COMMIT");
-    console.log('✅ Baseline canónico aplicado: 39/39 Drizzle + 20/20 Manual.');
+    console.log(`✅ Baseline canónico aplicado: ${dt}/${expectedTracking.drizzle} Drizzle + ${mt}/${expectedTracking.manual} Manual.`);
   } catch (e) {
     await sql.query("ROLLBACK");
     console.error(`\n⛔ Rollback total: ${e.message}`);

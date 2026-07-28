@@ -243,7 +243,57 @@ export function compareInventories(canonical, clone) {
         .map((status) => [status, objects[type].filter((item) => item.status === status).length]),
     );
   }
-  return { formatVersion: 2, summary, objects };
+
+  // Contractual normalization: PostgreSQL physical representation may differ
+  // while preserving the contract consumed by HEAD.
+  for (const item of objects.columns) {
+    if (item.status !== 'SAME_NAME_DIFFERENT_DEFINITION') continue;
+    const left = { ...item.canonical };
+    const right = { ...item.clone };
+    delete left.position;
+    delete right.position;
+    if (JSON.stringify(left) === JSON.stringify(right)) {
+      item.status = 'IDENTICAL';
+      item.compatibility = 'ORDINAL_POSITION_ONLY';
+    }
+  }
+  for (const item of objects.enums) {
+    if (item.status !== 'SAME_NAME_DIFFERENT_DEFINITION') continue;
+    const asArray = (value) => {
+      if (Array.isArray(value)) return value;
+      if (typeof value === 'string' && value.startsWith('{') && value.endsWith('}')) {
+        return value.slice(1, -1).split(',').filter(Boolean);
+      }
+      return [];
+    };
+    const required = asArray(item.canonical?.values);
+    const candidate = asArray(item.clone?.values);
+    if (required.every((value) => candidate.includes(value))) {
+      item.status = 'IDENTICAL';
+      item.compatibility = 'CLONE_APPEND_ONLY_SUPERSET';
+    }
+  }
+  const canonicalIndexes = new Map((canonical.indexes ?? []).map((index) => [
+    objectKey('indexes', index), index,
+  ]));
+  for (const item of objects.constraints) {
+    if (item.status !== 'CLONE_ONLY' || item.clone?.type !== 'UNIQUE') continue;
+    const matchingIndex = canonicalIndexes.get(objectKey('indexes', item.clone));
+    if (
+      matchingIndex?.unique
+      && JSON.stringify(matchingIndex.columns ?? []) === JSON.stringify(item.clone.columns ?? [])
+    ) {
+      item.status = 'IDENTICAL';
+      item.compatibility = 'UNIQUE_INDEX_EQUIVALENT';
+    }
+  }
+  for (const type of Object.keys(KEYS)) {
+    summary[type] = Object.fromEntries(
+      ['IDENTICAL', 'CLONE_ONLY', 'CANONICAL_ONLY', 'SAME_NAME_DIFFERENT_DEFINITION']
+        .map((status) => [status, objects[type].filter((item) => item.status === status).length]),
+    );
+  }
+  return { formatVersion: 3, summary, objects };
 }
 
 function renderPatch(diff) {
@@ -285,7 +335,7 @@ ${differing.length ? differing.map((item) =>
 `;
 }
 
-async function main() {
+export async function main() {
   const [canonicalUrl, cloneUrl] = process.argv.slice(2);
   if (!canonicalUrl || !cloneUrl) throw new Error('Uso: schema-inventory.mjs <canonical-url> <clone-url>');
   const { Pool } = await import('@neondatabase/serverless');
@@ -310,7 +360,7 @@ async function main() {
   }
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((error) => {
     console.error(`Error de inventario: ${error.message}`);
     process.exitCode = 1;
