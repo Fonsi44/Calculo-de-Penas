@@ -30,6 +30,20 @@
       "expiresAt": null
     },
     {
+      "id": "ci.knip-baseline",
+      "path": "tools/ci/knip-baseline.mjs",
+      "owner": "engineering",
+      "status": "active",
+      "purpose": "Impedir que aumente la deuda de archivos, exports y dependencias detectada por knip.",
+      "command": "node tools/ci/knip-baseline.mjs",
+      "mutates": false,
+      "dryRun": true,
+      "requiredEnv": [],
+      "rollback": null,
+      "lastValidated": "2026-07-28",
+      "expiresAt": null
+    },
+    {
       "id": "ci.repo-hygiene",
       "path": "tools/ci/repo-hygiene.mjs",
       "owner": "engineering",

@@ -128,11 +128,10 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     // Tree-shaking de importaciones nombradas en librerías grandes.
-    // lucide-react se importa masivamente; tiptap/recharts solo en admin pero
-    // esto garantiza que el bundle público no arrastre iconos sin usar.
+    // lucide-react se importa masivamente; tiptap solo en admin. Esto evita
+    // que el bundle público arrastre módulos sin uso.
     optimizePackageImports: [
       'lucide-react',
-      'recharts',
       '@tiptap/react',
       '@tiptap/core',
       '@tiptap/starter-kit',

@@ -47,20 +47,5 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Repo hygiene
-        run: node tools/ci/repo-hygiene.mjs
-
-      - name: Migrations validate
-        run: npm run db:migrations:validate
-
-      - name: Lint
-        run: npm run lint
-
-      - name: TypeScript
-        run: npx tsc --noEmit
-
-      - name: Unit tests
-        run: npm run test
-
-      - name: Build
-        run: npm run build
+      - name: Verify
+        run: npm run verify
