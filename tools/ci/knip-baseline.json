@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "generatedAt": "2026-07-28",
   "maximum": {
-    "files": 84,
+    "files": 58,
     "exports": 206,
     "types": 109,
     "duplicates": 1,
