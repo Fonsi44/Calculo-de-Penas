@@ -19,10 +19,10 @@ Cada fila tiene una decisión terminal, evidencia actual y un gate reproducible.
 | Estado | Filas |
 |---|---:|
 | ARCHIVE | 214 |
-| DELETE | 308 |
+| DELETE | 317 |
 | DONE_VERIFIED | 2789 |
 | KEEP | 7199 |
-| NO_LONGER_APPLIES | 421 |
+| NO_LONGER_APPLIES | 412 |
 
 ## Backlog gobernado
 

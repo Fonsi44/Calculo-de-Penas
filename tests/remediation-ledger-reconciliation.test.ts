@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   parseCsv,
   serializeCsv,
-} from '../tools/audit/reconcile-remediation-ledger.mjs';
+} from '../tools/audit/csv.mjs';
 
 describe('remediation ledger CSV contract', () => {
   it('round-trips commas, quotes and newlines', () => {

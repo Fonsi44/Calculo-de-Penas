@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { parseCsv, serializeCsv } from './csv.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..', '..');
 const LEDGER = resolve(ROOT, 'docs/audits/current/repository-remediation-ledger.csv');
@@ -10,7 +11,7 @@ const STATE = resolve(ROOT, '.local/repository-remediation-state.json');
 const DECISIONS = resolve(ROOT, 'docs/audits/current/repository-ledger-reconciliation.md');
 const MERGE_COMMIT = '65aaba2261b2e7c9cab8ff83e7de265ea2912e35';
 const HEAD = git(['rev-parse', 'HEAD']);
-const BASE_HEAD = git(['merge-base', 'HEAD', 'origin/main']);
+const BASE_HEAD = tryGit(['merge-base', 'HEAD', 'origin/main']) || HEAD;
 const tracked = new Set(git(['ls-files', '-z']).split('\0')
   .filter((path) => path && existsSync(resolve(ROOT, path))));
 const trackedByBasename = new Map();
@@ -25,54 +26,12 @@ function git(args) {
   return execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }).trim();
 }
 
-export function parseCsv(text) {
-  const rows = [];
-  let row = [];
-  let field = '';
-  let quoted = false;
-  const normalized = text.replace(/^\uFEFF/, '');
-  for (let index = 0; index < normalized.length; index += 1) {
-    const char = normalized[index];
-    if (quoted) {
-      if (char === '"' && normalized[index + 1] === '"') {
-        field += '"';
-        index += 1;
-      } else if (char === '"') {
-        quoted = false;
-      } else {
-        field += char;
-      }
-    } else if (char === '"') {
-      quoted = true;
-    } else if (char === ',') {
-      row.push(field);
-      field = '';
-    } else if (char === '\n') {
-      row.push(field.replace(/\r$/, ''));
-      rows.push(row);
-      row = [];
-      field = '';
-    } else {
-      field += char;
-    }
+function tryGit(args) {
+  try {
+    return git(args);
+  } catch {
+    return '';
   }
-  if (field || row.length) {
-    row.push(field.replace(/\r$/, ''));
-    rows.push(row);
-  }
-  const headers = rows.shift() ?? [];
-  return rows.filter((values) => values.some(Boolean)).map((values) =>
-    Object.fromEntries(headers.map((header, index) => [header, values[index] ?? ''])));
-}
-
-function quoteCsv(value) {
-  const text = String(value ?? '');
-  return /[",\n\r]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
-}
-
-export function serializeCsv(rows, headers = Object.keys(rows[0] ?? {})) {
-  return `${headers.join(',')}\n${rows.map((row) =>
-    headers.map((header) => quoteCsv(row[header])).join(',')).join('\n')}\n`;
 }
 
 function sha256(path) {

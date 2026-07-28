@@ -16,6 +16,20 @@
       "expiresAt": null
     },
     {
+      "id": "audit.csv",
+      "path": "tools/audit/csv.mjs",
+      "owner": "engineering",
+      "status": "active",
+      "purpose": "Parser y serializador CSV RFC 4180 compartido por la reconciliación del ledger.",
+      "command": "import desde tools/audit/reconcile-remediation-ledger.mjs",
+      "mutates": false,
+      "dryRun": true,
+      "requiredEnv": [],
+      "rollback": null,
+      "lastValidated": "2026-07-28",
+      "expiresAt": null
+    },
+    {
       "id": "ci.cleanup-e2e",
       "path": "tools/ci/cleanup-e2e.mjs",
       "owner": "engineering",
