@@ -48,6 +48,12 @@ Thumbs.db
 /playwright-report/
 /playwright/.cache/
 
+# ── E2E Staging (PR #20) ────────────────────────────────────
+# Entorno E2E aislado: artifacts locales + reports JSON.
+.env.e2e.local
+.local/
+.local/e2e-results.json
+
 # ── Debug & Logs ────────────────────────────────────────────
 npm-debug.log*
 yarn-debug.log*
@@ -91,3 +97,4 @@ nul
 .env.vercel
 .fase3b-fuentes/
 .fase3d-fuentes/
+.neon
