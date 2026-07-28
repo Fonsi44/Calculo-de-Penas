@@ -227,7 +227,12 @@ export default async function DespachoPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Danilo Pineda Maradiaga — socio director (identidad pública).
               Su foto y nombre se exponen con su consentimiento expreso. */}
-          <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col">
+          <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col relative group">
+            <Link
+              href="/equipo/danilo-pineda-maradiaga"
+              aria-label={`Ver perfil completo de ${FOUNDER_PROFILE.name}`}
+              className="absolute inset-0 z-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            />
             <div className="flex items-center gap-4">
               <span className="team-monogram" aria-hidden="true">DP</span>
               <div>
@@ -245,8 +250,8 @@ export default async function DespachoPage() {
             {(FOUNDER_PROFILE.cah || FOUNDER_PROFILE.linkedin || FOUNDER_PROFILE.directorio) && (
               <div className="flex flex-wrap gap-2 mt-4">
                 {FOUNDER_PROFILE.cah && <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary font-medium"><Award size={12}/> CAH: {FOUNDER_PROFILE.cah}</span>}
-                {FOUNDER_PROFILE.linkedin && <a href={FOUNDER_PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">LinkedIn</a>}
-                {FOUNDER_PROFILE.directorio && <a href={FOUNDER_PROFILE.directorio} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">Directorio Jurídico</a>}
+                {FOUNDER_PROFILE.linkedin && <a href={FOUNDER_PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="relative z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">LinkedIn</a>}
+                {FOUNDER_PROFILE.directorio && <a href={FOUNDER_PROFILE.directorio} target="_blank" rel="noopener noreferrer" className="relative z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">Directorio Jurídico</a>}
               </div>
             )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
@@ -258,13 +263,13 @@ export default async function DespachoPage() {
             <div className="flex flex-wrap items-center gap-2 mt-3">
               <Link
                 href={`/equipo/danilo-pineda-maradiaga`}
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+                className="relative z-10 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
               >
                 Ver perfil completo <ArrowRight size={14} />
               </Link>
               <Link
                 href="/derecho-penal"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+                className="relative z-10 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
               >
                 Defensa penal <ArrowRight size={14} />
               </Link>
@@ -273,7 +278,12 @@ export default async function DespachoPage() {
 
           {/* Thania Marlene Paz — socia fundadora (administrativo, familia,
               civil y notarial, mercantil y empresarial). */}
-          <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col">
+          <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col relative group">
+            <Link
+              href="/equipo/thania-marlene-paz"
+              aria-label={`Ver perfil completo de ${THANIA_PROFILE.name}`}
+              className="absolute inset-0 z-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            />
             <div className="flex items-center gap-4">
               <span className="team-monogram" aria-hidden="true">TP</span>
               <div>
@@ -291,8 +301,8 @@ export default async function DespachoPage() {
             {(THANIA_PROFILE.cah || THANIA_PROFILE.linkedin || THANIA_PROFILE.directorio) && (
               <div className="flex flex-wrap gap-2 mt-4">
                 {THANIA_PROFILE.cah && <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary font-medium"><Award size={12}/> CAH: {THANIA_PROFILE.cah}</span>}
-                {THANIA_PROFILE.linkedin && <a href={THANIA_PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">LinkedIn</a>}
-                {THANIA_PROFILE.directorio && <a href={THANIA_PROFILE.directorio} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">Directorio Jurídico</a>}
+                {THANIA_PROFILE.linkedin && <a href={THANIA_PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="relative z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">LinkedIn</a>}
+                {THANIA_PROFILE.directorio && <a href={THANIA_PROFILE.directorio} target="_blank" rel="noopener noreferrer" className="relative z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">Directorio Jurídico</a>}
               </div>
             )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
@@ -303,13 +313,13 @@ export default async function DespachoPage() {
             <div className="flex flex-wrap items-center gap-2 mt-3">
               <Link
                 href={`/equipo/thania-marlene-paz`}
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+                className="relative z-10 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
               >
                 Ver perfil completo <ArrowRight size={14} />
               </Link>
               <Link
                 href="/servicios-juridicos/derecho-de-familia"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+                className="relative z-10 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
               >
                 Derecho de familia <ArrowRight size={14} />
               </Link>
@@ -317,7 +327,12 @@ export default async function DespachoPage() {
           </Card>
 
           {/* Emil Barahona — socio del bufete (laboral, penal, civil y notarial). */}
-          <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col">
+          <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col relative group">
+            <Link
+              href="/equipo/emil-barahona"
+              aria-label={`Ver perfil completo de ${EMIL_PROFILE.name}`}
+              className="absolute inset-0 z-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            />
             <div className="flex items-center gap-4">
               <span className="team-monogram" aria-hidden="true">EB</span>
               <div>
@@ -335,8 +350,8 @@ export default async function DespachoPage() {
             {(EMIL_PROFILE.cah || EMIL_PROFILE.linkedin || EMIL_PROFILE.directorio) && (
               <div className="flex flex-wrap gap-2 mt-4">
                 {EMIL_PROFILE.cah && <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary font-medium"><Award size={12}/> CAH: {EMIL_PROFILE.cah}</span>}
-                {EMIL_PROFILE.linkedin && <a href={EMIL_PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">LinkedIn</a>}
-                {EMIL_PROFILE.directorio && <a href={EMIL_PROFILE.directorio} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">Directorio Jurídico</a>}
+                {EMIL_PROFILE.linkedin && <a href={EMIL_PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="relative z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">LinkedIn</a>}
+                {EMIL_PROFILE.directorio && <a href={EMIL_PROFILE.directorio} target="_blank" rel="noopener noreferrer" className="relative z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">Directorio Jurídico</a>}
               </div>
             )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
@@ -346,13 +361,13 @@ export default async function DespachoPage() {
             <div className="flex flex-wrap items-center gap-2 mt-3">
               <Link
                 href={`/equipo/emil-barahona`}
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+                className="relative z-10 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
               >
                 Ver perfil completo <ArrowRight size={14} />
               </Link>
               <Link
                 href="/servicios-juridicos/derecho-laboral"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+                className="relative z-10 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
               >
                 Derecho laboral <ArrowRight size={14} />
               </Link>
