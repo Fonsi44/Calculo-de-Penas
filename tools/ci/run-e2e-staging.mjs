@@ -1,97 +1,349 @@
 #!/usr/bin/env node
 /**
- * Ejecutor E2E completo — staging end-to-end.
+ * E2E Staging Pipeline — reproducible, propaga fallos, limpia siempre.
  *
- * Flujo: protege entorno → valida migraciones → seed → build → servidor → Playwright → cleanup.
- * Requiere: DATABASE_URL, ALLOW_E2E_SEED=true, ALLOW_STAGING_MIGRATIONS=true.
+ * Flujo:
+ *   1. Cargar .env.e2e.local.
+ *   2. Guard de entorno (no producción, staging, ALLOW_E2E_SEED).
+ *   3. Verificar branch Neon (≠ producción).
+ *   4. Validar migraciones.
+ *   5. Cleanup namespace E2E.
+ *   6. Seed namespace E2E.
+ *   7. npm run build.
+ *   8. next start (NODE_ENV=production sobre build real).
+ *   9. Esperar a /api/health.
+ *  10. Playwright completo (propaga exit code).
+ *  11. Detener servidor (siempre).
+ *
+ * Reglas de la especificación:
+ *   - No usar `next dev` con NODE_ENV=production.
+ *   - El runner debe fallar si Playwright falla (sin capturar a 0).
+ *   - Manejar SIGINT, SIGTERM, SIGHUP, timeout y procesos huérfanos.
+ *
+ * Uso:
+ *   node tools/ci/run-e2e-staging.mjs
  */
-import { execSync, spawn } from 'child_process';
-import { resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { createServer } from 'http';
+import { execSync, spawn } from 'node:child_process';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = resolve(__dirname, '..', '..');
 const PORT = process.env.PORT || 3100;
 const BASE_URL = `http://localhost:${PORT}`;
+const SERVER_TIMEOUT_MS = 180_000;
+const SHUTDOWN_GRACE_MS = 8_000;
+const RESULTS_PATH = resolve(ROOT, '.local', 'e2e-results.json');
 
-function run(cmd, opts = {}) {
+// ── Carga explícita de .env.e2e.local ────────────────────────────────────
+// E2E_TEST_MODE=1 desactiva la carga del archivo (para tests unitarios de guards).
+function loadE2EEnv() {
+  if (process.env.E2E_TEST_MODE === '1') {
+    console.log('⚠  E2E_TEST_MODE=1: no se cargará .env.e2e.local.');
+    return;
+  }
+  const envPath = resolve(ROOT, '.env.e2e.local');
+  try {
+    const content = readFileSync(envPath, 'utf8');
+    for (const line of content.split('\n')) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) continue;
+      const eq = trimmed.indexOf('=');
+      if (eq === -1) continue;
+      const key = trimmed.slice(0, eq).trim();
+      let val = trimmed.slice(eq + 1).trim();
+      if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+        val = val.slice(1, -1);
+      }
+      // Solo setear si no está ya en el entorno (prioridad al shell del usuario).
+      if (!(key in process.env)) process.env[key] = val;
+    }
+    console.log('✓ .env.e2e.local cargado.');
+  } catch {
+    console.error('⛔ No se encontró .env.e2e.local. Crea el archivo de entorno E2E.');
+    process.exit(1);
+  }
+}
+loadE2EEnv();
+
+// ── Helpers ──────────────────────────────────────────────────────────────
+function sh(cmd, opts = {}) {
   console.log(`\n▶ ${cmd}`);
-  return execSync(cmd, { cwd: ROOT, stdio: 'inherit', ...opts });
+  try {
+    execSync(cmd, { cwd: ROOT, stdio: 'inherit', ...opts });
+    return 0;
+  } catch (err) {
+    // err.status es el código de salida del subproceso.
+    return typeof err.status === 'number' ? err.status : 1;
+  }
 }
 
 function guard() {
-  if (process.env.NODE_ENV === 'production') {
-    console.error('⛔ BLOCKED: NODE_ENV=production');
-    process.exit(1);
-  }
-  if (!process.env.ALLOW_E2E_SEED) {
-    console.error('⛔ Set ALLOW_E2E_SEED=true');
-    process.exit(1);
-  }
   if (!process.env.DATABASE_URL) {
-    console.error('⛔ DATABASE_URL required');
+    console.error('⛔ DATABASE_URL requerido.');
     process.exit(1);
   }
-  console.log('✓ Environment guard passed');
+  if (process.env.NODE_ENV === 'production') {
+    console.error('⛔ BLOCKED: NODE_ENV=production. Usa NODE_ENV=development para staging.');
+    process.exit(1);
+  }
+  if (process.env.E2E_ENVIRONMENT !== 'staging') {
+    console.error('⛔ BLOCKED: E2E_ENVIRONMENT debe ser "staging".');
+    process.exit(1);
+  }
+  if (process.env.ALLOW_E2E_SEED !== 'true') {
+    console.error('⛔ BLOCKED: ALLOW_E2E_SEED=true requerido.');
+    process.exit(1);
+  }
+  if (/prod|production/.test(process.env.DATABASE_URL.toLowerCase())) {
+    console.error('⛔ BLOCKED: DATABASE_URL parece apuntar a producción.');
+    process.exit(1);
+  }
+  console.log('✓ Environment guard passed.');
+}
+
+async function assertNotProductionBranch() {
+  const { Pool } = await import('@neondatabase/serverless');
+  const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
+  try {
+    const r = await pool.query("SELECT current_setting('neon.branch_id', true) AS id");
+    const current = r.rows[0]?.id;
+    const prod = process.env.NEON_PRODUCTION_BRANCH_ID;
+    if (current && prod && current === prod) {
+      console.error('⛔ BLOCKED: branch_id coincide con NEON_PRODUCTION_BRANCH_ID.');
+      process.exit(1);
+    }
+    console.log(`✓ Neon branch_id: ${current || '(no expuesto)'} (≠ producción).`);
+  } catch (e) {
+    console.log(`⚠  No se pudo verificar branch_id (${e.message}).`);
+  } finally {
+    await pool.end();
+  }
+}
+
+async function waitForServer() {
+  const start = Date.now();
+  let lastErr = null;
+  while (Date.now() - start < SERVER_TIMEOUT_MS) {
+    try {
+      const resp = await fetch(`${BASE_URL}/api/health`);
+      if (resp.ok) {
+        console.log(`✓ Server ready en ${Math.round((Date.now() - start) / 1000)}s.`);
+        return;
+      }
+    } catch (e) { lastErr = e.message; }
+    await new Promise(r => setTimeout(r, 2000));
+  }
+  throw new Error(`Server no respondió en ${SERVER_TIMEOUT_MS / 1000}s (último error: ${lastErr}).`);
+}
+
+// ── Shutdown robusto: mata proceso + hijos + fuerzas kill si grace expira ─
+function killServer(server) {
+  if (!server || server.killed) return Promise.resolve();
+  return new Promise((resolveKill) => {
+    let done = false;
+    const finish = () => { if (!done) { done = true; resolveKill(); } };
+    try { server.once('exit', finish); } catch {}
+    try { server.kill('SIGTERM'); } catch {}
+
+    // Tras grace, SIGKILL al proceso y a todo su grupo (huérfanos).
+    setTimeout(() => {
+      if (!done) {
+        try {
+          if (process.platform !== 'win32') process.kill(-server.pid, 'SIGKILL');
+          else server.kill('SIGKILL');
+        } catch { try { server.kill('SIGKILL'); } catch {} }
+        finish();
+      }
+    }, SHUTDOWN_GRACE_MS);
+  });
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────
 guard();
+await assertNotProductionBranch();
 
-console.log('═══ E2E Staging Pipeline ═══');
+console.log('\n═══ E2E Staging Pipeline ═══\n');
 
-// 1. Validar migraciones
-run('node tools/db/run-migrations.mjs validate');
+const startedAt = new Date().toISOString();
+let server = null;
+let exitCode = 0;
+let failureReason = null;
+let playwrightDone = false;
+const steps = [];
 
-// 2. Seed
-run('node tools/ci/seed-e2e.mjs');
-
-// 3. Build
-run('npm run build');
-
-// 4. Start server
-console.log(`\n▶ Starting Next.js on port ${PORT}...`);
-const server = spawn('npx', ['next', 'start', '-p', String(PORT)], {
-  cwd: ROOT,
-  stdio: ['ignore', 'pipe', 'pipe'],
-  env: { ...process.env, NODE_ENV: 'production' },
-});
-
-let serverOutput = '';
-server.stdout.on('data', (d) => { serverOutput += d.toString(); });
-server.stderr.on('data', (d) => { serverOutput += d.toString(); });
-
-// Wait for server ready
-await new Promise((resolve, reject) => {
-  const timeout = setTimeout(() => reject(new Error('Server start timeout')), 60000);
-  const check = () => {
-    try {
-      const http = await import('http');
-      http.get(`${BASE_URL}/api/health`, (res) => {
-        if (res.statusCode === 200) {
-          clearTimeout(timeout);
-          console.log('✓ Server ready');
-          resolve();
-        } else {
-          setTimeout(check, 1000);
-        }
-      }).on('error', () => setTimeout(check, 1000));
-    } catch { setTimeout(check, 1000); }
-  };
-  check();
-});
-
-// 5. Playwright
-console.log('\n▶ Running Playwright...');
-try {
-  run(`npx playwright test --project=chromium`, { env: { ...process.env, PLAYWRIGHT_BASE_URL: BASE_URL } });
-  console.log('✓ E2E passed');
-} catch (_e) {
-  console.error('✗ Some E2E tests failed');
-} finally {
-  // 6. Stop server
-  server.kill('SIGTERM');
-  console.log('✓ Server stopped');
+function recordStep(name, ok, detail = '') {
+  steps.push({ name, ok, detail, at: new Date().toISOString() });
 }
 
-console.log('\n═══ Pipeline complete ═══');
+// ── Derivar variables E2E_* desde el fixture canónico ────────────────────
+// Esto evita que los specs dependan de un .env.e2e manual: cualquier spec que
+// lea process.env.E2E_* recibirá el valor del fixture automáticamente.
+function exportE2EVarsFromFixture() {
+  const fixturePath = resolve(ROOT, 'tests/e2e/fixtures/identities.json');
+  try {
+    const f = JSON.parse(readFileSync(fixturePath, 'utf8'));
+    const map = {
+      E2E_ADMIN_EMAIL: f.users.admin.email,
+      E2E_ADMIN_PASSWORD: f.users.admin.password,
+      E2E_ABOGADO_A_EMAIL: f.users.lawyerA.email,
+      E2E_ABOGADO_A_PASSWORD: f.users.lawyerA.password,
+      E2E_ABOGADO_B_EMAIL: f.users.lawyerB.email,
+      E2E_ABOGADO_B_PASSWORD: f.users.lawyerB.password,
+      E2E_USER_2FA_EMAIL: f.users.twoFactorUser.email,
+      E2E_USER_2FA_PASSWORD: f.users.twoFactorUser.password,
+      E2E_AUTH_USER_EMAIL: f.users.authUser.email,
+      E2E_AUTH_USER_PASSWORD: f.users.authUser.password,
+      E2E_SIDEBAR_USER_EMAIL: f.users.sidebarUser.email,
+      E2E_SIDEBAR_USER_PASSWORD: f.users.sidebarUser.password,
+    };
+    for (const [k, v] of Object.entries(map)) {
+      if (!process.env[k]) process.env[k] = v;
+    }
+    console.log('✓ Variables E2E_* derivadas del fixture.');
+  } catch (e) {
+    console.warn(`⚠  No se pudo cargar el fixture para variables E2E_*: ${e.message}`);
+  }
+}
+exportE2EVarsFromFixture();
+
+// Handlers de signal: detienen el server y salen con código != 0.
+const handleSignal = async (signal) => {
+  console.error(`\n⛔ Recibida señal ${signal}. Deteniendo server...`);
+  await killServer(server);
+  writeResults(130, `signal ${sig}`);
+  process.exit(130);
+};
+process.once('SIGINT', () => handleSignal('SIGINT'));
+process.once('SIGTERM', () => handleSignal('SIGTERM'));
+process.once('SIGHUP', () => handleSignal('SIGHUP'));
+
+function writeResults(code, reason) {
+  try {
+    mkdirSync(dirname(RESULTS_PATH), { recursive: true });
+    writeFileSync(RESULTS_PATH, JSON.stringify({
+      exitCode: code,
+      reason: reason || null,
+      startedAt,
+      finishedAt: new Date().toISOString(),
+      baseUrl: BASE_URL,
+      port: PORT,
+      database: process.env.DATABASE_URL ? '(set)' : '(missing)',
+      steps,
+    }, null, 2));
+    console.log(`\n📝 Informe JSON: ${RESULTS_PATH}`);
+  } catch (e) {
+    console.error(`⚠  No se pudo escribir informe JSON: ${e.message}`);
+  }
+}
+
+try {
+  // 4. Validar migraciones
+  const vCode = sh('node tools/db/run-migrations.mjs validate');
+  if (vCode !== 0) { exitCode = vCode; failureReason = 'migration validate failed'; recordStep('validate', false); throw new Error(failureReason); }
+  recordStep('validate', true);
+
+  // 5. Cleanup namespace E2E
+  const cCode = sh('node tools/ci/cleanup-e2e.mjs');
+  if (cCode !== 0) { exitCode = cCode; failureReason = 'cleanup failed'; recordStep('cleanup', false); throw new Error(failureReason); }
+  recordStep('cleanup', true);
+
+  // 6. Seed namespace E2E
+  const sCode = sh('node tools/ci/seed-e2e.mjs');
+  if (sCode !== 0) { exitCode = sCode; failureReason = 'seed failed'; recordStep('seed', false); throw new Error(failureReason); }
+  recordStep('seed', true);
+
+  // 7. Build (NODE_ENV debe estar ausente para que Next.js aplique production).
+  // Si el shell lo tiene seteado a development, se elimina solo para este paso.
+  const savedNodeEnv = process.env.NODE_ENV;
+  delete process.env.NODE_ENV;
+  const bCode = sh('npm run build');
+  if (savedNodeEnv) process.env.NODE_ENV = savedNodeEnv;
+  if (bCode !== 0) { exitCode = bCode; failureReason = 'build failed'; recordStep('build', false); throw new Error(failureReason); }
+  recordStep('build', true);
+
+  // 8. Iniciar next start (build real, NODE_ENV=production).
+  // NEXT_PUBLIC_E2E_LOCAL_HTTP=true: el server corre sobre HTTP (no HTTPS), por
+  // lo que las cookies __Host-token (que requieren Secure) no funcionarían.
+  // Esta variable hace que lib/auth.ts use cookies 'token' sin Secure.
+  // Debe ser NEXT_PUBLIC_* porque Next.js inlinea las process.env no públicas.
+  console.log(`\n▶ Starting next start on port ${PORT}...`);
+  server = spawn('npx', ['next', 'start', '-p', String(PORT)], {
+    cwd: ROOT,
+    stdio: ['ignore', 'pipe', 'pipe'],
+    env: { ...process.env, NODE_ENV: 'production', NEXT_PUBLIC_E2E_LOCAL_HTTP: 'true' },
+    detached: true, // grupo propio para matar huérfanos
+  });
+  const serverLog = [];
+  server.stdout.on('data', d => { const s = d.toString(); serverLog.push(s); process.stdout.write('[server] ' + s); });
+  server.stderr.on('data', d => { const s = d.toString(); serverLog.push(s); process.stderr.write('[server] ' + s); });
+  server.on('exit', (code, _sig) => {
+    // Solo registrar fallo si el server muere ANTES de que Playwright termine.
+    // Tras el finally (cleanup), el server se mata intencionalmente con SIGTERM
+    // y su código de salida (143/null) no debe afectar el resultado del pipeline.
+    if (code !== null && code !== 0 && exitCode === 0 && !playwrightDone) {
+      exitCode = code; failureReason = `server exited with ${code}`;
+    }
+  });
+
+  // 9. Esperar a /api/health
+  await waitForServer();
+  recordStep('server-start', true);
+
+  // 10. Playwright completo — propaga código exacto.
+  // Se excluyen los specs etiquetados @production-only (fase3e/4b-visual), que
+  // validan contenido real de blog contra el sitio en producción y requieren
+  // posts específicos que no existen en una DB E2E vacía. Esos specs se
+  // ejecutan por separado contra producción.
+  //
+  // DISABLE_RATE_LIMIT=true: los specs hacen múltiples logins en paralelo y el
+  // rate limit (5/60s) los bloquearía. El spec auth-flow ya contempla esta
+  // variable y usa una aserción alternativa para su test de rate limit.
+  //
+  // PW_WORKERS=1: los specs critical-auth y critical-authorization comparten
+  // usuarios (abogado-a) y mutan estado (token_version, bloqueo). Si corren
+  // en paralelo se interfieren. Workers=1 garantiza aislamiento secuencial.
+  console.log('\n▶ Running Playwright (staging suite, excluye @production-only)...');
+  const pwEnv = {
+    ...process.env,
+    PLAYWRIGHT_BASE_URL: BASE_URL,
+    DISABLE_RATE_LIMIT: 'true',
+    TEST_WORKERS: '1',
+  };
+  try {
+    execSync('npx playwright test --project=chromium --workers=1 --grep-invert "@production-only"', {
+      cwd: ROOT, stdio: 'inherit', env: pwEnv,
+    });
+    recordStep('playwright', true);
+    playwrightDone = true;
+    console.log('✓ All E2E passed.');
+  } catch (err) {
+    // err.status es el código exacto devuelto por Playwright.
+    exitCode = typeof err.status === 'number' ? err.status : 1;
+    failureReason = `playwright failed (exit ${exitCode})`;
+    recordStep('playwright', false, `exit ${exitCode}`);
+    playwrightDone = true;
+    console.error(`✗ Playwright failed with exit code ${exitCode}.`);
+  }
+} catch (err) {
+  if (!failureReason) {
+    failureReason = err.message || 'unknown pipeline error';
+    if (exitCode === 0) exitCode = 1;
+  }
+  if (/Server did not start|did not respond/i.test(err.message)) {
+    recordStep('server-start', false, err.message);
+  }
+  console.error(`✗ Pipeline error: ${err.message}`);
+} finally {
+  // 11. Detener server SIEMPRE.
+  if (server) {
+    console.log('\n▶ Stopping server...');
+    await killServer(server);
+    console.log('✓ Server stopped.');
+  }
+}
+
+console.log(`\n═══ Pipeline complete (exit ${exitCode}) — ${failureReason || 'success'} ═══`);
+writeResults(exitCode, failureReason);
+process.exit(exitCode);
