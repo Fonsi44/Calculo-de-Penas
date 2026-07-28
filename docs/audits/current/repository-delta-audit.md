@@ -13,18 +13,18 @@ superseded_by: null
 ## Estado de referencia
 
 - Rama: `refactor/repository-professionalization`
-- HEAD local/remoto y PR #20 al último lote: `ab88a1bf4db89711b5fedb4fc0b84d349a636c07`
-- PR #20: abierto, Draft, mergeable; checks remotos verdes para este HEAD.
-- Árbol local: contiene cambios SEO preexistentes y evidencias de auditoría sin versionar; se preservan.
+- HEAD local/remoto y PR #20 al último lote técnico: `f59b0597bebdaf67c8292d43f0a5a242659bd2fb`.
+- PR #20: abierto y Draft; los checks remotos se vuelven a ejecutar por cada lote.
+- Árbol local: conserva únicamente los dos cambios SEO preexistentes del usuario.
 
 ## Delta cuantitativo reproducido
 
 | Métrica | Snapshot 2026-07-27 | HEAD actual |
 |---|---:|---:|
-| Archivos | 3197 | 3199 |
-| Carpetas | 722 | 740 |
-| Markdown | 286 | 298 |
-| Scripts bajo `scripts/` | 268 (243 activos + 25 archivados) | 117 |
+| Archivos | 3197 | 3206 |
+| Carpetas | 722 | 710 |
+| Markdown | 286 | 304 |
+| Scripts bajo `scripts/` | 268 (243 activos + 25 archivados) | 97 activos + 24 archivados |
 | Migraciones SQL | 56 | 60 |
 | Journal Drizzle | 39 | 39 |
 | Migraciones manuales manifestadas | 0 | 21 |
@@ -44,23 +44,26 @@ Contra el inventario histórico: **240 rutas añadidas**, **238 ausentes**, **52
 
 “Modificada” o “ausente” no equivale a resuelta. El ledger exige commit, evidencia actual y prueba reproducible antes de `DONE_VERIFIED`.
 
-## Evidencia ejecutable inicial
+## Evidencia ejecutable actual
 
-- `npm run check:fast`: pasa; higiene emite 6 advertencias por las evidencias suministradas y `test-results/`; lint registra 2 warnings en `.local/`; TypeScript pasa.
-- Suite focalizada P0: 11 archivos, 209 tests, todos verdes.
+- `npm run verify`: pasa; 107 archivos y 1.932 tests, build de 350 rutas,
+  gobernanza sobre 564 fuentes y Knip por debajo del baseline.
+- E2E staging Neon: 111/111; cleanup posterior eliminó 7 usuarios y todas las
+  referencias sintéticas.
 - Migraciones: 39 Drizzle + 21 manuales = 60; manifiesto y checksums presentes.
 - DB preflight: `publicDrift=0`, seeds contractuales equivalentes, baseline
   39+21 aplicado y segunda ejecución idempotente.
 - Checks remotos del PR #20: GitGuardian, CI completa, Lighthouse y Vercel Preview verdes sobre el mismo HEAD.
 
-## Pendiente de recalcular antes del cierre de Fase 0
+## Cierre de Fase 0
 
-- reachability runtime/test/script con resolución actual;
-- controles de las rutas API y clasificación completa;
-- referencias de assets incluyendo DB autorizada;
-- enlaces Markdown vivos;
-- dependencias/exports mediante knip;
-- imports no resueltos de tooling;
-- clasificación contractual de las divergencias de schema y seeds.
+- Matriz de depuración: 280/280 decisiones verificadas.
+- Documentación viva: 54 archivos, 0 enlaces locales rotos.
+- Assets: 24 referencias DB, 2 contratos URL externos y 14 retirados.
+- Knip: 58 archivos, 206 exports, 109 tipos, 0 dependencias no usadas/no
+  listadas y 0 imports no resueltos; el baseline no puede aumentar.
+- Schema: barrel por dominios, 0 ciclos prohibidos y Drizzle conforme.
+- Dependencias: 0 críticas; deuda transitiva documentada en
+  `docs/security/dependency-risks.md`.
 
 El JSON reproducible detallado está en `.local/repository-delta-audit.json`. Esta auditoría es incremental y se actualizará tras cada lote.
