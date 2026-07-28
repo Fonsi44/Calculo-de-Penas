@@ -21,6 +21,37 @@
 
 export type LegalReviewStatus = 'pending' | 'verified' | 'needs_update';
 
+/**
+ * Conjunto de estados equivalente al modelo de 6 valores del plan maestro
+ * SEO/GEO (§6):
+ *   draft | documentary_review | lawyer_review_pending | lawyer_verified
+ *   | outdated | withdrawn
+ *
+ * El repositorio opera históricamente con tres estados (`pending | verified |
+ * needs_update`) coordinados con la DB (`lib/db/schema/core.ts`) y los tests
+ * (tests/legal-review.test.ts). En lugar de migrar la DB (restringido por
+ * AGENTS.md §7), este mapa declara la equivalencia semántica exigida por el
+ * plan maestro y la expone para tests, documentación y consumidores futuros
+ * sin romper el contrato vigente.
+ *
+ * Cualquier estado del plan NO contemplado en la tabla existente se trata
+ * como `pending` (no indexable por defecto), cumpliendo el gate de Fase 0
+ * del propio plan: "ningún artículo indexable declara revisión pendiente".
+ */
+export const PLAN_REVIEW_STATUS_MAP: Record<
+  'draft' | 'documentary_review' | 'lawyer_review_pending' | 'lawyer_verified' | 'outdated' | 'withdrawn',
+  LegalReviewStatus
+> = {
+  draft: 'pending',
+  documentary_review: 'pending',
+  lawyer_review_pending: 'pending',
+  lawyer_verified: 'verified',
+  outdated: 'needs_update',
+  withdrawn: 'needs_update',
+} as const;
+
+export type PlanLegalReviewStatus = keyof typeof PLAN_REVIEW_STATUS_MAP;
+
 export type LegalJurisdiction = 'HN' | 'ES' | 'HN_ES' | 'general';
 
 export interface LegalReviewSource {
@@ -190,4 +221,138 @@ export function getLegalReview(path: string): LegalReview {
       reviewStatus: 'pending',
     }
   );
+}
+
+/**
+ * Áreas de práctica cuya autoría NO se asigna automáticamente porque el
+ * plan maestro (§3.1) y AGENTS.md (R4) exigen confirmación humana previa del
+ * responsable interno. Para estas áreas, `getEditorialResponsibility` devuelve
+ * `requiresHumanAssignment: true` y el artículo debe permanecer en
+ * `lawyer_review_pending` (noindex) hasta que el despacho firme la
+ * asignación. No se inventa ningún abogado.
+ */
+export const REQUIRES_HUMAN_ASSIGNMENT_AREAS: ReadonlySet<string> = new Set([
+  'derecho-tributario',
+  'derecho-bancario',
+  'derecho-aduanero',
+  'regulacion-sanitaria',
+  'derecho-ambiental',
+  'propiedad-intelectual',
+  'extranjeria',
+]);
+
+export interface EditorialResponsibility {
+  /** Abogado autor principal (nombre canónico de `lib/site.ts`). */
+  author: string;
+  /** Revisor secundario recomendado cuando el tema es sensible/transversal. */
+  defaultReviewer: string | null;
+  /** true cuando el área exige asignación humana explícita (sin invención). */
+  requiresHumanAssignment: boolean;
+}
+
+/**
+ * Matriz central de autoría y revisión (plan maestro §10 / §3.1).
+ *
+ * `practiceArea` admite tanto el slug de área (p. ej. `derecho-penal`) como
+ * etiquetas legibles (`Penal`, `Laboral`). La función NO marca artículos como
+ * verificados: solo devuelve el par autor/revisor recomendado. La decisión de
+ * marcar `verified` exige revisión humana real (R4, R12) y se rige por
+ * `assertLegalReviewValid`.
+ *
+ * Temas mixtos:
+ *  - violencia intrafamiliar con componente penal → Thania autora, Danilo
+ *    revisor (se evalúa por `topic`).
+ *  - conflicto mercantil con componente laboral → Thania autora, Emil revisor.
+ *  - asunto civil con componente penal → autor del área principal y revisión
+ *    transversal (Danilo).
+ *
+ * Áreas con `requiresHumanAssignment: true` (tributario, bancario, aduanero,
+ * sanitario, ambiental, propiedad intelectual, extranjería) devuelven
+ * `author: ''` y `defaultReviewer: null`. El consumidor debe mantener el
+ * artículo en `lawyer_review_pending` y registrarlo en
+ * `REQUIRES_HUMAN_ASSIGNMENT_AREAS` hasta que el despacho asigne.
+ */
+export function getEditorialResponsibility(
+  practiceArea: string,
+  topic?: string,
+): EditorialResponsibility {
+  const area = practiceArea.trim().toLowerCase();
+  const t = (topic ?? '').toLowerCase();
+
+  // Temas mixtos: se evalúan primero porque cruzan áreas.
+  if (t.includes('violencia intrafamiliar') || t.includes('violencia domestica')) {
+    return { author: THANIA_PROFILE.name, defaultReviewer: FOUNDER_PROFILE.name, requiresHumanAssignment: false };
+  }
+  if (t.includes('mercantil') && t.includes('laboral')) {
+    return { author: THANIA_PROFILE.name, defaultReviewer: EMIL_PROFILE.name, requiresHumanAssignment: false };
+  }
+  if (t.includes('civil') && t.includes('penal')) {
+    return { author: THANIA_PROFILE.name, defaultReviewer: FOUNDER_PROFILE.name, requiresHumanAssignment: false };
+  }
+
+  if (REQUIRES_HUMAN_ASSIGNMENT_AREAS.has(area)) {
+    return { author: '', defaultReviewer: null, requiresHumanAssignment: true };
+  }
+
+  switch (area) {
+    case 'derecho-penal':
+    case 'penal':
+    case 'detenciones':
+    case 'audiencias':
+    case 'recursos':
+    case 'ejecucion-penal':
+      return { author: FOUNDER_PROFILE.name, defaultReviewer: EMIL_PROFILE.name, requiresHumanAssignment: false };
+    case 'derecho-laboral':
+    case 'laboral':
+    case 'despidos':
+    case 'prestaciones':
+      return { author: EMIL_PROFILE.name, defaultReviewer: THANIA_PROFILE.name, requiresHumanAssignment: false };
+    case 'derecho-de-familia':
+    case 'familia':
+    case 'divorcio':
+    case 'custodia':
+    case 'alimentos':
+    case 'union-de-hecho':
+      return { author: THANIA_PROFILE.name, defaultReviewer: EMIL_PROFILE.name, requiresHumanAssignment: false };
+    case 'derecho-civil':
+    case 'civil':
+    case 'civil-y-notarial':
+    case 'notarial':
+    case 'arrendamientos':
+    case 'herencias':
+    case 'contratos':
+    case 'propiedad':
+      return { author: THANIA_PROFILE.name, defaultReviewer: EMIL_PROFILE.name, requiresHumanAssignment: false };
+    case 'derecho-mercantil':
+    case 'mercantil':
+    case 'empresarial':
+      return { author: THANIA_PROFILE.name, defaultReviewer: EMIL_PROFILE.name, requiresHumanAssignment: false };
+    case 'derecho-administrativo':
+    case 'administrativo':
+    case 'servicio-civil':
+      return { author: THANIA_PROFILE.name, defaultReviewer: EMIL_PROFILE.name, requiresHumanAssignment: false };
+    case 'conciliacion':
+    case 'arbitraje':
+    case 'conciliacion-y-arbitraje':
+      return { author: THANIA_PROFILE.name, defaultReviewer: EMIL_PROFILE.name, requiresHumanAssignment: false };
+    default:
+      return { author: '', defaultReviewer: null, requiresHumanAssignment: true };
+  }
+}
+
+/**
+ * Normaliza el estado de revisión que puede venir tanto del modelo histórico
+ * (`pending | verified | needs_update`) como del modelo de 6 valores del plan
+ * maestro (`lawyer_verified`, `lawyer_review_pending`, etc.). Devuelve el
+ * estado canónico interno. Cualquier valor no reconocido se trata como
+ * `pending` (gate de Fase 0: lo no verificado no se indexa).
+ */
+export function normalizeReviewStatus(raw: string | undefined | null): LegalReviewStatus {
+  if (!raw) return 'pending';
+  const key = raw.trim().toLowerCase() as PlanLegalReviewStatus;
+  if (key in PLAN_REVIEW_STATUS_MAP) return PLAN_REVIEW_STATUS_MAP[key];
+  if (raw === 'verified' || raw === 'pending' || raw === 'needs_update') return raw;
+  // Valores sueltos de la DB (`published`, `reviewed`, …) se tratan como
+  // pending hasta que exista evidencia de revisión jurídica humana.
+  return 'pending';
 }
