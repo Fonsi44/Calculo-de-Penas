@@ -1,6 +1,7 @@
 import { db } from '@/lib/db';
 import { blogPosts } from '@/lib/schema';
 import { eq, and, desc, sql } from 'drizzle-orm';
+import { getPreviewBlogFixtures } from '@/lib/preview-blog-fixtures';
 
 /**
  * Contrato de lectura del blog público.
@@ -96,7 +97,8 @@ export async function getPublishedPosts(opts?: { limit?: number; category?: stri
 
     if (opts?.limit) query.limit(opts.limit);
 
-    return await query;
+    const rows = await query;
+    return rows.length > 0 ? rows : getPreviewBlogFixtures();
   } catch (err) {
     console.error('[blog-db] getPublishedPosts falló.', err);
     if (shouldThrowOnDbError()) {
@@ -116,7 +118,8 @@ export async function getPostBySlug(slug: string) {
   try {
     const [post] = await db.select(publicBlogPostSelection).from(blogPosts)
       .where(and(eq(blogPosts.slug, slug), eq(blogPosts.published, true)));
-    return post ?? null;
+    if (post) return post;
+    return getPreviewBlogFixtures().find((fixture) => fixture.slug === slug) ?? null;
   } catch (err) {
     console.error('[blog-db] getPostBySlug falló.', err);
     if (shouldThrowOnDbError()) {
