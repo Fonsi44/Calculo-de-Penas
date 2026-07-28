@@ -1,6 +1,6 @@
 # SEO Live Summary
 
-**Generado:** 2026-07-26T07:34:19.725Z
+**Generado:** 2026-07-28T14:39:54.025Z
 
 ## Fuentes
 
@@ -11,7 +11,7 @@
 | bing | ✅ | - |
 | indexnow | ✅ | - |
 | seoHealth | ✅ | - |
-| sitemap | ❌ | Command failed: node scripts/auditar-indexacion-prioritaria.mjs |
+| sitemap | ✅ | - |
 
 ## Archivos de datos
 

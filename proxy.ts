@@ -153,6 +153,7 @@ const PUBLIC_PAGE_PREFIXES = [
   '/servicios-juridicos',
   '/derecho-penal',
   '/hondurenos-en-espana',
+  '/equipo/', // Perfiles de abogados (plan maestro SEO/GEO §4)
   '/blog/',
   '/abogados-en-', // Landings locales de SEO (/abogados-en-nacaome, etc.)
   '/_next/',

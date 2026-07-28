@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import {
   Scale,
   ShieldCheck,
@@ -8,11 +9,13 @@ import {
   CheckCircle2,
   Gavel,
   Award,
+  ArrowRight,
 } from 'lucide-react';
-import { site, FOUNDER_PROFILE } from '@/lib/site';
+import { site, FOUNDER_PROFILE, LAWYER_PROFILES } from '@/lib/site';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
+import { Card } from '@/components/ui/card';
 import { areasGenerales, hubPenal } from '@/data/areas-juridicas';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
@@ -203,7 +206,7 @@ export default async function HomePage() {
                 </span>
               </div>
               <h1 className="font-serif font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight text-text-inverse text-balance">
-                Defensa penal y asesoría jurídica en Nacaome y Honduras
+                Abogados en Nacaome para defensa penal y asesoría jurídica
               </h1>
               <p className="mt-4 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-2xl text-pretty">
                 {t('hero.subtitle')}
@@ -300,6 +303,59 @@ export default async function HomePage() {
                 </Reveal>
               );
             })}
+        </div>
+      </Section>
+
+      {/* EQUIPO — bloque de autoridad (plan maestro §5.4).
+          El abogado responsable depende del área de su caso. Mostramos los
+          tres socios y enlazamos a su página de perfil individual (/equipo/[slug]),
+          que es la URL canónica de autoría reforzada con ProfilePage + Person
+          JSON-LD. Conserva el diseño visual existente (Card premium + monograma). */}
+      <Section background="muted" spacing="md" ariaLabel="Equipo de abogados">
+        <SectionHeader
+          eyebrow="Equipo"
+          title="El abogado responsable depende del área de su caso"
+          subtitle="Los artículos, servicios y consultas no deben presentarse como trabajo de una marca impersonal. Cada área cuenta con un abogado responsable y, cuando el asunto es transversal, con revisión de un segundo profesional."
+        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {LAWYER_PROFILES.map((profile) => {
+            const area =
+              profile.slug === 'danilo-pineda-maradiaga'
+                ? 'Dirección y defensa penal'
+                : profile.slug === 'thania-marlene-paz'
+                  ? 'Familia · Mercantil · Administrativo'
+                  : 'Laboral · Civil y Notarial';
+            const monogram = profile.name
+              .split(' ')
+              .slice(0, 2)
+              .map((w) => w[0])
+              .join('');
+            const summary =
+              profile.slug === 'danilo-pineda-maradiaga'
+                ? 'Abogado responsable del bufete. Más de 15 años de ejercicio profesional. La defensa penal es el pilar histórico del despacho.'
+                : profile.slug === 'thania-marlene-paz'
+                  ? 'Abogada socia fundadora. Derecho administrativo, familia, civil y notarial, y mercantil y empresarial.'
+                  : 'Abogado socio del bufete. Derecho laboral, civil y notarial, y apoyo en materia penal.';
+            return (
+              <Card key={profile.slug} padding="md" className="card-premium border-accent/30 h-full flex flex-col">
+                <div className="flex items-center gap-4">
+                  <span className="team-monogram" aria-hidden="true">{monogram}</span>
+                  <div>
+                    <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">{area}</p>
+                    <p className="font-serif font-bold text-base text-text leading-tight">{profile.name}</p>
+                    <p className="text-sm text-text-secondary leading-snug mt-0.5">{profile.jobTitle}</p>
+                  </div>
+                </div>
+                <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">{summary}</p>
+                <Link
+                  href={`/equipo/${profile.slug}`}
+                  className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+                >
+                  Ver perfil de {profile.name.split(' ')[0]} <ArrowRight size={14} />
+                </Link>
+              </Card>
+            );
+          })}
         </div>
       </Section>
 
