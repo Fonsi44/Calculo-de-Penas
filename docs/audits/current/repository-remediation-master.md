@@ -14,7 +14,7 @@ superseded_by: null
 
 - Rama: `refactor/repository-professionalization`
 - HEAD de partida: `f99304fd5e4bd9f99d8e54140430bd6216958c30`
-- HEAD validado actual: `ab88a1bf4db89711b5fedb4fc0b84d349a636c07`
+- HEAD validado actual: `f9cf94df346a7eebe3e4da02457ac7d043a2420e`
 - PR: [#20](https://github.com/Fonsi44/Calculo-de-Penas/pull/20), Draft, mergeable.
 - Producción: solo lectura; no existe autorización de cutover.
 - Ledger: `docs/audits/current/repository-remediation-ledger.csv`.
@@ -43,15 +43,15 @@ commit o justificación de no cambio y prueba reproducible.
 | Fase | Estado | Evidencia o acción pendiente |
 |---|---|---|
 | 0. Delta y estado real | PARTIAL | Delta inicial y ledger creados; faltan regeneradores completos de reachability, API, links, assets y dependencias. |
-| 1. P0 y seguridad | PARTIAL | Proxy, 2FA, calendario, migraciones, scope y navegación de delitos tienen pruebas verdes. Falta el barrido contractual completo de rutas mutables/integraciones. |
+| 1. P0 y seguridad | DONE_VERIFIED | Proxy, 2FA, calendario, migraciones, scope y navegación de delitos tienen pruebas verdes. Las rutas mutables quedan cubiertas por contrato global: CSRF o excepción explícita verificable; el webhook WhatsApp valida HMAC y falla cerrado. |
 | 2. DB, divergencias y seeds | DONE_VERIFIED | 82 divergencias clasificadas, `publicDrift=0`, seeds contractuales equivalentes, baseline firmado 39+21 aplicado al clon y segunda ejecución 0 aplicadas/60 omitidas. Production intacta. |
-| 3. Cuentas sintéticas | PARTIAL | Tooling y prueba focalizada verdes; falta ensayo completo sobre clon limpio y restauración. |
-| 4. Raíz y documentación | NOT_STARTED | Las evidencias suministradas generan advertencias de raíz; deben reconciliarse sin alterar su contenido. |
+| 3. Cuentas sintéticas | DONE_VERIFIED | Ensayo en rama Neon efímera: allowlist exacta de 208 usuarios, dry-run 208/0, aplicación 208/208, 208 auditorías y conteos funcionales preservados; rama eliminada. Producción y clon padre intactos. |
+| 4. Raíz y documentación | PARTIAL | Raíz limpia y evidencias exactas archivadas; falta separar documentación viva/histórica y activar el gate de enlaces locales. |
 | 5. Depuración controlada | NOT_STARTED | Las 280 filas están incorporadas al ledger; falta decisión individual y pruebas por lote. |
 | 6. Arquitectura | NOT_STARTED | Solo después de cerrar estabilización y depuración. |
-| 7. PWA/simulador/integraciones | NOT_STARTED | Reconciliar contratos activos contra HEAD. |
-| 8. CI y gobernanza | PARTIAL | CI remota verde y `check*` existen; falta interfaz `verify` y gates completos exigidos. |
-| Validación dinámica | PARTIAL | Pruebas focalizadas verdes; suite, build, E2E y entornos aislados pendientes para el HEAD final. |
+| 7. PWA/simulador/integraciones | PARTIAL | Simulador determinista y mutaciones/integraciones cubiertas por contratos de seguridad; falta reconciliar PWA y contratos funcionales activos. |
+| 8. CI y gobernanza | DONE_VERIFIED | `npm run verify` es la interfaz única de CI: higiene, 60 migraciones, lint, TypeScript, 1.915 tests, build y baseline Knip; el workflow remoto la ejecuta. |
+| Validación dinámica | PARTIAL | `npm run verify` pasó en `f30ad559`; pruebas de seguridad, lint y TypeScript pasan en `f9cf94df`. Faltan E2E y repetición integral sobre el HEAD final. |
 | Release/cutover | BLOCKED_PRODUCTION_AUTH | No se solicitará autorización hasta que todos los gates técnicos previos estén verdes. |
 
 ## Reglas de avance
@@ -68,8 +68,8 @@ commit o justificación de no cambio y prueba reproducible.
 
 ## Próximo lote
 
-1. Regenerar clasificación y controles de rutas API sobre HEAD.
-2. Ejecutar validaciones P0 completas.
-3. Ensayar neutralización sintética y restauración sobre clon.
-4. Recalcular reachability, scripts, assets, links y dependencias.
-5. Actualizar ledger, delta y este control tras cada lote lógico.
+1. Recalcular reachability, scripts, assets, links y dependencias.
+2. Resolver las 280 decisiones históricas contra el HEAD actual.
+3. Archivar documentación histórica fuera del conjunto vivo y activar su gate.
+4. Ejecutar E2E y repetir `npm run verify` sobre el HEAD final.
+5. Regenerar plan de cutover firmado únicamente cuando no queden gates técnicos.
