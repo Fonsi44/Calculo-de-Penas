@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useTheme } from '@/app/theme-context';
+import { useTheme } from '@/components/providers/theme-context';
 
 export function GlobalShortcuts() {
   const { toggle } = useTheme();
