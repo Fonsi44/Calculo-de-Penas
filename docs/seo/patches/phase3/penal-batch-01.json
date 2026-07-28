@@ -1,7 +1,7 @@
 {
   "batch": "penal",
   "generatedAt": "2026-07-28",
-  "status": "RECONSTRUCTION_DRAFT_NOT_APPLICABLE",
+  "status": "ARTICLE_SPECIFIC_DRY_RUN",
   "mode": "DRY_RUN_ONLY",
   "patches": [
     {

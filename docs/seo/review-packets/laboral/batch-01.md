@@ -9,7 +9,7 @@
 - Intención: informational
 - Title actual/propuesto: Despido Laboral en Honduras: Guia de → Despido Laboral en Honduras: Guia de
 - Meta propuesta: Despido injustificado honduras: análisis de causa del despido, preaviso, cesantía y prueba documental con documentos, procedimiento y fuentes oficiales pertinentes.
-- Respuesta directa: Este asunto requiere comprobar causa del despido, preaviso, cesantía y prueba documental. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Respuesta directa: Ante un despido, primero debe determinarse quién terminó la relación, qué causa comunicó y desde qué fecha produjo efectos. Carta de despido, contrato, planillas, comprobantes y mensajes permiten revisar preaviso, cesantía, vacaciones y demás cantidades sin asumir que toda terminación genera los mismos derechos.
 - Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
 - Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
@@ -19,8 +19,8 @@
 
 ```diff
 - Tipos de despido, indemnización por antigüedad con ejemplos en Lempiras, preaviso, plazos para reclamar y errores que debilitan su caso. Basado en el Código de
-+ Este asunto requiere comprobar causa del despido, preaviso, cesantía y prueba documental. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
-+ Este asunto requiere comprobar causa del despido, preaviso, cesantía y prueba documental. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Ante un despido, primero debe determinarse quién terminó la relación, qué causa comunicó y desde qué fecha produjo efectos. Carta de despido, contrato, planillas, comprobantes y mensajes permiten revisar preaviso, cesantía, vacaciones y demás cantidades sin asumir que toda terminación genera los mismos derechos.
++ Ante un despido, primero debe determinarse quién terminó la relación, qué causa comunicó y desde qué fecha produjo efectos. Carta de despido, contrato, planillas, comprobantes y mensajes permiten revisar preaviso, cesantía, vacaciones y demás cantidades sin asumir que toda terminación genera los mismos derechos.
 ```
 
 ## 2. Despido Injustificado en Honduras
@@ -30,7 +30,7 @@
 - Intención: informational
 - Title actual/propuesto: Despido Injustificado en Honduras → Despido Injustificado en Honduras
 - Meta propuesta: Derechos por despido injustificado honduras: análisis de opciones del trabajador, reintegro, indemnización y salarios con documentos, procedimiento y fuentes oficiales pertinentes.
-- Respuesta directa: Este asunto requiere comprobar opciones del trabajador, reintegro, indemnización y salarios. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Respuesta directa: Un despido se considera injustificado cuando el empleador no acredita una causa legal suficiente o incumple las garantías aplicables. La persona trabajadora debe preservar la comunicación de terminación y la prueba de salario y antigüedad para valorar indemnización, reintegro u otra pretensión dentro del plazo correspondiente.
 - Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
 - Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
@@ -40,8 +40,8 @@
 
 ```diff
 - Despido con o sin justa causa: guía práctica para saber si su despido fue legal, cuánto le deben pagar (preaviso, cesantía, aguinaldo proporcional) y cómo
-+ Este asunto requiere comprobar opciones del trabajador, reintegro, indemnización y salarios. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
-+ Este asunto requiere comprobar opciones del trabajador, reintegro, indemnización y salarios. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Un despido se considera injustificado cuando el empleador no acredita una causa legal suficiente o incumple las garantías aplicables. La persona trabajadora debe preservar la comunicación de terminación y la prueba de salario y antigüedad para valorar indemnización, reintegro u otra pretensión dentro del plazo correspondiente.
++ Un despido se considera injustificado cuando el empleador no acredita una causa legal suficiente o incumple las garantías aplicables. La persona trabajadora debe preservar la comunicación de terminación y la prueba de salario y antigüedad para valorar indemnización, reintegro u otra pretensión dentro del plazo correspondiente.
 ```
 
 ## 3. Calcula tus prestaciones laborales en Honduras
@@ -51,7 +51,7 @@
 - Intención: informational
 - Title actual/propuesto: Calcula tus prestaciones laborales en Honduras → Calcula tus prestaciones laborales en Honduras
 - Meta propuesta: Calcular prestaciones laborales honduras: análisis de salario base, antigüedad, vacaciones, décimo tercero y décimo cuarto con documentos, procedimiento y fuentes oficiales pertinentes.
-- Respuesta directa: Este asunto requiere comprobar salario base, antigüedad, vacaciones, décimo tercero y décimo cuarto. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Respuesta directa: El cálculo de prestaciones parte del salario computable, la antigüedad y la causa real de terminación. Después se separan preaviso, auxilio de cesantía, vacaciones pendientes, décimo tercero, décimo cuarto y salarios adeudados, evitando sumar conceptos incompatibles o usar una fecha de ingreso no demostrable.
 - Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
 - Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
@@ -61,8 +61,8 @@
 
 ```diff
 - Guía práctica para entender y calcular prestaciones laborales en Honduras: aguinaldo, décimo tercer mes, vacaciones, indemnización y más.
-+ Este asunto requiere comprobar salario base, antigüedad, vacaciones, décimo tercero y décimo cuarto. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
-+ Este asunto requiere comprobar salario base, antigüedad, vacaciones, décimo tercero y décimo cuarto. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ El cálculo de prestaciones parte del salario computable, la antigüedad y la causa real de terminación. Después se separan preaviso, auxilio de cesantía, vacaciones pendientes, décimo tercero, décimo cuarto y salarios adeudados, evitando sumar conceptos incompatibles o usar una fecha de ingreso no demostrable.
++ El cálculo de prestaciones parte del salario computable, la antigüedad y la causa real de terminación. Después se separan preaviso, auxilio de cesantía, vacaciones pendientes, décimo tercero, décimo cuarto y salarios adeudados, evitando sumar conceptos incompatibles o usar una fecha de ingreso no demostrable.
 ```
 
 ## 4. Liquidación Laboral en Honduras
@@ -72,7 +72,7 @@
 - Intención: informational
 - Title actual/propuesto: Liquidación Laboral en Honduras → Liquidación Laboral en Honduras
 - Meta propuesta: Liquidación laboral honduras: análisis de forma de terminación, conceptos devengados y deducciones comprobables con documentos, procedimiento y fuentes oficiales pertinentes.
-- Respuesta directa: Este asunto requiere comprobar forma de terminación, conceptos devengados y deducciones comprobables. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Respuesta directa: Una liquidación laboral debe conciliar lo efectivamente pagado con lo devengado hasta el último día de trabajo. Contrato, recibos, vacaciones disfrutadas, anticipos y forma de terminación cambian el resultado; por eso una cifra de calculadora es orientativa hasta revisar los documentos.
 - Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
 - Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
@@ -82,8 +82,8 @@
 
 ```diff
 - Indemnización, preaviso, vacaciones y aguinaldo: cómo calcular cada concepto con ejemplos numéricos. Errores frecuentes que pueden costarle dinero al
-+ Este asunto requiere comprobar forma de terminación, conceptos devengados y deducciones comprobables. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
-+ Este asunto requiere comprobar forma de terminación, conceptos devengados y deducciones comprobables. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Una liquidación laboral debe conciliar lo efectivamente pagado con lo devengado hasta el último día de trabajo. Contrato, recibos, vacaciones disfrutadas, anticipos y forma de terminación cambian el resultado; por eso una cifra de calculadora es orientativa hasta revisar los documentos.
++ Una liquidación laboral debe conciliar lo efectivamente pagado con lo devengado hasta el último día de trabajo. Contrato, recibos, vacaciones disfrutadas, anticipos y forma de terminación cambian el resultado; por eso una cifra de calculadora es orientativa hasta revisar los documentos.
 ```
 
 ## 5. ¿Qué hacer si mi empleador no me paga en
@@ -93,7 +93,7 @@
 - Intención: informational
 - Title actual/propuesto: ¿Qué hacer si mi empleador no me paga en → ¿Qué hacer si mi empleador no me paga en
 - Meta propuesta: Empleador no paga salario honduras: análisis de prueba del salario, requerimiento, inspección y reclamación con documentos, procedimiento y fuentes oficiales pertinentes.
-- Respuesta directa: Este asunto requiere comprobar prueba del salario, requerimiento, inspección y reclamación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Respuesta directa: Si el salario no se paga, conviene documentar períodos trabajados, monto pactado, horario y abonos parciales antes de formular el reclamo. Un requerimiento escrito y los registros bancarios o de planilla ayudan a definir si procede gestión ante Trabajo, conciliación o demanda.
 - Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
 - Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
@@ -103,8 +103,8 @@
 
 ```diff
 - Pasos legales para reclamar salarios impagos en Honduras. Derechos del trabajador, vías administrativas y judiciales disponibles.
-+ Este asunto requiere comprobar prueba del salario, requerimiento, inspección y reclamación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
-+ Este asunto requiere comprobar prueba del salario, requerimiento, inspección y reclamación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Si el salario no se paga, conviene documentar períodos trabajados, monto pactado, horario y abonos parciales antes de formular el reclamo. Un requerimiento escrito y los registros bancarios o de planilla ayudan a definir si procede gestión ante Trabajo, conciliación o demanda.
++ Si el salario no se paga, conviene documentar períodos trabajados, monto pactado, horario y abonos parciales antes de formular el reclamo. Un requerimiento escrito y los registros bancarios o de planilla ayudan a definir si procede gestión ante Trabajo, conciliación o demanda.
 ```
 
 ## 6. Jornada Laboral en Honduras: Horas Extra
@@ -114,7 +114,7 @@
 - Intención: informational
 - Title actual/propuesto: Jornada Laboral en Honduras: Horas Extra → Jornada Laboral en Honduras: Horas Extra
 - Meta propuesta: Jornada laboral horas extra honduras: análisis de jornada ordinaria, trabajo extraordinario, recargos y descansos con documentos, procedimiento y fuentes oficiales pertinentes.
-- Respuesta directa: Este asunto requiere comprobar jornada ordinaria, trabajo extraordinario, recargos y descansos. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Respuesta directa: Para reclamar horas extra hay que reconstruir la jornada realmente cumplida y distinguir horario ordinario, nocturno, mixto, descansos y trabajo extraordinario autorizado o tolerado. Marcaciones, turnos, mensajes y testigos son esenciales para cuantificar tiempo y recargos.
 - Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
 - Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
@@ -124,8 +124,8 @@
 
 ```diff
 - Guía completa sobre la jornada laboral en Honduras: tipos de jornada (diurna, nocturna, mixta), horas extra y su recargo, descansos obligatorios, vacaciones y
-+ Este asunto requiere comprobar jornada ordinaria, trabajo extraordinario, recargos y descansos. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
-+ Este asunto requiere comprobar jornada ordinaria, trabajo extraordinario, recargos y descansos. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ Para reclamar horas extra hay que reconstruir la jornada realmente cumplida y distinguir horario ordinario, nocturno, mixto, descansos y trabajo extraordinario autorizado o tolerado. Marcaciones, turnos, mensajes y testigos son esenciales para cuantificar tiempo y recargos.
++ Para reclamar horas extra hay que reconstruir la jornada realmente cumplida y distinguir horario ordinario, nocturno, mixto, descansos y trabajo extraordinario autorizado o tolerado. Marcaciones, turnos, mensajes y testigos son esenciales para cuantificar tiempo y recargos.
 ```
 
 ## 7. Despido por Embarazo en Honduras
@@ -135,7 +135,7 @@
 - Intención: informational
 - Title actual/propuesto: Despido por Embarazo en Honduras → Despido por Embarazo en Honduras
 - Meta propuesta: Derechos trabajadora embarazada honduras: análisis de estabilidad reforzada, licencia, comunicación y autorización con documentos, procedimiento y fuentes oficiales pertinentes.
-- Respuesta directa: Este asunto requiere comprobar estabilidad reforzada, licencia, comunicación y autorización. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Respuesta directa: El embarazo activa protecciones laborales que deben analizarse junto con la fecha en que el empleador conoció la situación, la causa alegada y cualquier autorización exigible. Certificados médicos, comunicaciones y carta de terminación permiten valorar estabilidad, licencia y consecuencias del despido.
 - Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
 - Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
@@ -145,8 +145,8 @@
 
 ```diff
 - ¿La despidieron estando embarazada? El fuero maternal la protege en Honduras. Licencia de 10 semanas, lactancia y cómo demandar un despido ilegal.
-+ Este asunto requiere comprobar estabilidad reforzada, licencia, comunicación y autorización. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
-+ Este asunto requiere comprobar estabilidad reforzada, licencia, comunicación y autorización. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ El embarazo activa protecciones laborales que deben analizarse junto con la fecha en que el empleador conoció la situación, la causa alegada y cualquier autorización exigible. Certificados médicos, comunicaciones y carta de terminación permiten valorar estabilidad, licencia y consecuencias del despido.
++ El embarazo activa protecciones laborales que deben analizarse junto con la fecha en que el empleador conoció la situación, la causa alegada y cualquier autorización exigible. Certificados médicos, comunicaciones y carta de terminación permiten valorar estabilidad, licencia y consecuencias del despido.
 ```
 
 ## 8. Acoso Laboral en Honduras: Cómo Identificarlo y Denunciarlo Legalmente
@@ -156,7 +156,7 @@
 - Intención: informational
 - Title actual/propuesto: Acoso Laboral en Honduras: Cómo Identificarlo y Denunciarlo Legalmente → Acoso Laboral en Honduras: Cómo Identificarlo y Denunciarlo Legalmente
 - Meta propuesta: Acoso laboral honduras: análisis de conductas reiteradas, prueba, prevención y vías de reclamación con documentos, procedimiento y fuentes oficiales pertinentes.
-- Respuesta directa: Este asunto requiere comprobar conductas reiteradas, prueba, prevención y vías de reclamación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
+- Respuesta directa: El acoso laboral se analiza como un patrón verificable, no como una etiqueta para cualquier desacuerdo en el trabajo. Es útil ordenar cronológicamente mensajes, cambios de funciones, sanciones, testigos y afectaciones, identificar quién intervino y activar canales internos o legales sin exponerse a represalias innecesarias.
 - Autor: Emil Barahona
 - Revisor propuesto: Thania Marlene Paz
 - Fuente/sección: HN-CT-189-59, disposición específica pendiente de validación humana en el Código del Trabajo [HUMAN_REVIEW_REQUIRED]
@@ -166,6 +166,6 @@
 
 ```diff
 - Guía sobre acoso laboral en Honduras: qué conductas constituyen mobbing, cómo probarlo, vías de denuncia (Secretaría de Trabajo, vía civil, vía penal) y cómo
-+ Este asunto requiere comprobar conductas reiteradas, prueba, prevención y vías de reclamación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
-+ Este asunto requiere comprobar conductas reiteradas, prueba, prevención y vías de reclamación. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.
++ El acoso laboral se analiza como un patrón verificable, no como una etiqueta para cualquier desacuerdo en el trabajo. Es útil ordenar cronológicamente mensajes, cambios de funciones, sanciones, testigos y afectaciones, identificar quién intervino y activar canales internos o legales sin exponerse a represalias innecesarias.
++ El acoso laboral se analiza como un patrón verificable, no como una etiqueta para cualquier desacuerdo en el trabajo. Es útil ordenar cronológicamente mensajes, cambios de funciones, sanciones, testigos y afectaciones, identificar quién intervino y activar canales internos o legales sin exponerse a represalias innecesarias.
 ```
