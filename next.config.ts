@@ -158,6 +158,8 @@ const nextConfig: NextConfig = {
       // pero Google/Bing llegaron sin el prefijo /blog/. Consolidamos con
       // 301 hacia el post canónico para conservar link equity.
       { source: '/hondurenos-en-espana/poder-desde-espana-para-tramites-honduras', destination: '/blog/hondurenos-en-espana/poder-desde-espana-para-tramites-honduras', permanent: true },
+      { source: '/blog/poder-desde-espana-para-tramites-honduras', destination: '/blog/hondurenos-en-espana/poder-desde-espana-para-tramites-honduras', permanent: true },
+      { source: '/blog/reclamar-deuda-legalmente-honduras', destination: '/blog/derecho-civil/reclamar-deuda-legalmente-honduras', permanent: true },
       // /derecho-penal/proceso-penal-completo/paso-1 backlink externo huérfano:
       // la landing legal /derecho-penal/proceso-penal-completo SÍ existe
       // (canonical-paths.json). Redirigimos el subpath 404 hacia la landing.
@@ -304,11 +306,6 @@ const nextConfig: NextConfig = {
       { source: '/defensa-penal-choluteca', destination: '/abogado-penalista-choluteca', permanent: true },
       { source: '/defensa-penal-nacaome', destination: '/abogado-penalista-nacaome', permanent: true },
       { source: '/defensa-penal-sur-honduras', destination: '/derecho-penal', permanent: true },
-      // === FIX 404: URL de naturalización huérfana con tráfico GSC (Fase 2) ===
-      // GSC reporta impresiones para /blog/extranjeria-migracion/naturalizacion-obtener-nacionalidad-hondurena
-      // pero el slug canónico publicado es naturalizacion-nacionalidad-hondurena.
-      // 301 conserva link equity hacia el post publicado.
-      { source: '/blog/extranjeria-migracion/naturalizacion-obtener-nacionalidad-hondurena', destination: '/blog/extranjeria-migracion/naturalizacion-nacionalidad-hondurena', permanent: true },
       // === CONSOLIDACIÓN DE POSTS LOCALES POST-AUDITORÍA (Jul 2026) ===
       { source: '/blog/practica-legal/abogados-en-nacaome', destination: '/abogados-en-nacaome', permanent: true },
       { source: '/blog/practica-legal/abogados-en-choluteca', destination: '/abogados-en-choluteca', permanent: true },
