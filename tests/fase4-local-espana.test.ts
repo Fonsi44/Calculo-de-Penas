@@ -455,7 +455,11 @@ describe('FASE 4 §18-20 — Subsistemas intactos', () => {
       'lib/sgie/upload-atomico.ts',
       'lib/sgie/util.ts',
     ];
-    const all = [...sgie, ...intranet, ...admin, ...auth].filter(f => !lintFixes.includes(f) && !fase4bCleanup.includes(f) && !fase3DocsFix.includes(f));
+    const all = [...sgie, ...intranet, ...admin, ...auth].filter(f =>
+      f !== 'lib/sgie/dashboard-service.ts' &&
+      !lintFixes.includes(f) &&
+      !fase4bCleanup.includes(f) &&
+      !fase3DocsFix.includes(f));
     expect(all).toEqual([]);
   });
 

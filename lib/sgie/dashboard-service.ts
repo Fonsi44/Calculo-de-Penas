@@ -26,7 +26,7 @@ export async function getDashboard(organizationId?: string, userId?: string): Pr
       (SELECT count(*)::int FROM signature_envelopes se JOIN signature_packages sp ON sp.id=se.signature_package_id WHERE se.estado_interno='sent' ${orgFilter}) as pending_signatures,
       (SELECT count(*)::int FROM tareas t JOIN expedientes e ON e.id=t.expediente_id WHERE t.estado!='completada' AND t.fecha_vencimiento < NOW() ${orgFilter} ${userFilter}) as overdue_tasks,
       (SELECT count(*)::int FROM events ev JOIN expedientes e ON e.id=ev.resource_id WHERE ev.event_type='deadline' AND ev.due_date BETWEEN NOW() AND NOW()+INTERVAL '7 days' ${orgFilter}) as upcoming_deadlines,
-      (SELECT count(*)::int FROM alertas a JOIN expedientes e ON e.id=a.expediente_id WHERE a.estado='activa' ${orgFilter}) as alerts_active
+      (SELECT count(*)::int FROM alertas a JOIN expedientes e ON e.id=a.expediente_id WHERE a.resuelta=false ${orgFilter}) as alerts_active
   `);
   const row = (data as unknown as { rows: Array<Record<string, unknown>> }).rows?.[0] || {};
 

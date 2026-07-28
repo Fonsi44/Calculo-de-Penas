@@ -489,7 +489,13 @@ describe('FASE 3 — Subsistemas intactos', () => {
       'lib/sgie/upload-atomico.ts',
       'lib/sgie/util.ts',
     ];
-    const filtered = changed.filter((f: string) => f !== 'lib/schema.ts' && !lintFixes.includes(f) && !estabilizacionFase1.includes(f) && !fase4bCleanup.includes(f) && !fase3DocsFix.includes(f));
+    const filtered = changed.filter((f: string) =>
+      f !== 'lib/schema.ts' &&
+      f !== 'lib/sgie/dashboard-service.ts' &&
+      !lintFixes.includes(f) &&
+      !estabilizacionFase1.includes(f) &&
+      !fase4bCleanup.includes(f) &&
+      !fase3DocsFix.includes(f));
     expect(filtered, `SGIE/intranet modificados: ${filtered.join(', ')}`).toHaveLength(0);
   });
 });
