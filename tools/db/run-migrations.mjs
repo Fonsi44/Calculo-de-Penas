@@ -353,15 +353,52 @@ async function apply() {
           console.error('⛔ Branch NO es producción. Establece ALLOW_STAGING_MIGRATIONS=true para staging.');
           process.exit(1);
         }
-        console.log('✓ Branch verificado como staging (≠ producción).');
-      }
-    } catch (e) {
-      console.error(`⛔ Error al verificar branch Neon: ${e.message}`);
-      process.exit(1);
-    } finally {
-      if (pool) await pool.end();
-    }
-  }
+	    console.log('✓ Branch verificado como staging (≠ producción).');
+	      }
+	
+	      // ── Guard: base poblada sin tracking ─────────────────────────
+	      // Si la base tiene tablas de aplicación pero tracking vacío,
+	      // no se pueden aplicar migraciones directamente (riesgo de
+	      // duplicación o corrupción). Requiere baseline primero.
+	      const tableCount = await pool.query(`
+	        SELECT count(*)::int AS n FROM information_schema.tables
+	        WHERE table_schema NOT IN ('pg_catalog','information_schema')
+	      `);
+	      const drizzleTrackCount = await pool.query(`
+	        SELECT count(*)::int AS n FROM information_schema.tables
+	        WHERE table_schema='drizzle' AND table_name='__drizzle_migrations'
+	      `);
+	      let hasDrizzleTracking = false;
+	      if (drizzleTrackCount.rows[0].n > 0) {
+	        const dt = await pool.query('SELECT count(*)::int AS n FROM drizzle.__drizzle_migrations');
+	        hasDrizzleTracking = dt.rows[0].n > 0;
+	      }
+	      let hasManualTracking = false;
+	      const manualTrackCount = await pool.query(`
+	        SELECT count(*)::int AS n FROM information_schema.tables
+	        WHERE table_schema='public' AND table_name='sgie_schema_migrations'
+	      `);
+	      if (manualTrackCount.rows[0].n > 0) {
+	        const mt = await pool.query('SELECT count(*)::int AS n FROM sgie_schema_migrations');
+	        hasManualTracking = mt.rows[0].n > 0;
+	      }
+	
+	      if (tableCount.rows[0].n > 0 && !hasDrizzleTracking && !hasManualTracking) {
+	        console.error('\n⛔ BASE POBLADA SIN BASELINE: ejecución bloqueada.');
+	        console.error('   La base tiene tablas de aplicación pero ninguna migración');
+	        console.error('   registrada en tracking. Ejecuta primero:');
+	        console.error('   npm run db:migrations:baseline:plan');
+	        console.error('   para verificar el estado estructural.');
+	        console.error('   Este guard no puede saltarse con MIGRATE_PRODUCTION=true.\n');
+	        process.exit(1);
+	      }
+	    } catch (e) {
+	      console.error(`⛔ Error al verificar branch Neon: ${e.message}`);
+	      process.exit(1);
+	    } finally {
+	      if (pool) await pool.end();
+	    }
+	  }
 
   // Validar primero
   const valid = await validate();
