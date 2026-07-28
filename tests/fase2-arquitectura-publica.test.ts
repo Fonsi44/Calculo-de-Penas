@@ -14,7 +14,7 @@ describe('Fase 2 — contratos de arquitectura pública', () => {
     const home = read('app/(public)/page.tsx');
     expect(site.tagline).toBe('Abogados en Nacaome, Valle | Pineda y Asociados');
     expect(site.description).toBe(
-      'Abogados colegiados en Nacaome para defensa penal, familia, asuntos laborales, civiles y mercantiles. Atención directa, consulta confidencial y presupuesto por escrito.',
+      'Abogados en Nacaome para defensa penal y asuntos de familia, laborales, civiles y mercantiles. Atención directa y presupuesto por escrito.',
     );
     expect(home).toContain('Abogados en Nacaome para defensa penal y asesoría jurídica');
   });
@@ -31,6 +31,20 @@ describe('Fase 2 — contratos de arquitectura pública', () => {
     expect(redirects).not.toMatch(
       /source:\s*'\/blog\/practica-legal\/abogados-en-nacaome'/,
     );
+  });
+
+  it('mantiene la landing de Nacaome como información operativa secundaria', () => {
+    const landing = landingsLocales.find((item) => item.slug === 'nacaome');
+    expect(landing?.title).toBe('Oficina en Nacaome | Ubicación y Atención Presencial');
+    expect(landing?.heroTitle).toBe('Cómo visitar nuestra oficina en Nacaome');
+    expect(landing?.description).toMatch(/Dirección, referencia de llegada, horario/);
+    expect(landing?.title).not.toMatch(/^Abogados en Nacaome/i);
+    expect(landing?.heroTitle).not.toMatch(/^Abogados en Nacaome/i);
+    const queryMap = read('docs/seo/current/query-url-map.csv');
+    expect(queryMap).toContain('"abogados en Nacaome","https://www.pinedayasociadoshn.com/"');
+    expect(queryMap).toContain('PRIMARY_COMMERCIAL');
+    expect(queryMap).toContain('SECONDARY_OPERATIONAL');
+    expect(queryMap).toContain('PRIMARY_INFORMATIONAL');
   });
 
   it('enlaza los tres perfiles desde home, despacho y áreas', () => {

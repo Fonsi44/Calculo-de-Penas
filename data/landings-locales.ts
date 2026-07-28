@@ -105,17 +105,15 @@ export const landingsLocales: LandingLocal[] = [
     departamento: 'Valle',
     sedeFisica: true,
     distanciaKm: 0,
-    // Title enfocado en intención de búsqueda local primaria.
-    // La home usa "${site.name} — ${site.tagline}" (ej: "Pineda y Asociados — Abogados en Nacaome, Valle, Honduras").
-    // Esta landing prioriza la keyword exacta "Abogados en Nacaome, Valle".
-    // NO incluye el nombre del bufete: el layout lo añade (%s | Pineda y Asociados).
-    title: 'Abogados en Nacaome, Valle | Sede Principal · Consulta sin Costo',
+    // Intención secundaria y operativa: la home es la URL comercial dominante
+    // para "abogados en Nacaome". Esta página explica cómo visitar la sede.
+    title: 'Oficina en Nacaome | Ubicación y Atención Presencial',
     description:
-      'Sede principal en Nacaome, Valle. Defensa penal, familia, laboral y civil. 15+ años de experiencia en el sur de Honduras. WhatsApp +504 9536-3724.',
-    heroEyebrow: 'Sede principal · Valle, Honduras',
-    heroTitle: 'Abogados en Nacaome, Valle',
+      'Dirección, referencia de llegada, horario y modalidades de atención de la oficina de Pineda y Asociados en Nacaome, Valle.',
+    heroEyebrow: 'Ubicación de la oficina · Valle, Honduras',
+    heroTitle: 'Cómo visitar nuestra oficina en Nacaome',
     heroSubtitle:
-      'Bufete jurídico con sede en Nacaome. Más de 15 años de ejercicio profesional en la zona sur de Honduras, con defensa penal técnica y asesoría jurídica integral.',
+      'Consulte la ubicación, el horario y cómo preparar una atención presencial o remota con el despacho.',
     intro:
       'Nacaome, cabecera del departamento de Valle, concentra gran parte de la actividad judicial y comercial del sur de Honduras. Nuestra sede está ubicada en el centro de la ciudad, cuadra y media al este de Hondutel, contiguo a la Clínica Dental Dra. Andara. Atendemos particulares, familias y empresas de Nacaome, San Lorenzo, Amapala y toda la zona sur.',
     servicios: [
@@ -149,7 +147,7 @@ export const landingsLocales: LandingLocal[] = [
       {
         pregunta: '¿La primera consulta tiene costo?',
         respuesta:
-          'Ofrecemos una primera consulta para evaluar su caso y entregarle un presupuesto por escrito. Puede agendarla por WhatsApp al +504 9536-3724 o mediante el formulario de contacto del sitio.',
+          'El costo depende del tipo de evaluación y del alcance solicitado. Puede pedir las condiciones y un presupuesto por escrito por WhatsApp al +504 9536-3724 o mediante el formulario de contacto.',
       },
       {
         pregunta: '¿Atienden emergencias penales fuera de horario?',

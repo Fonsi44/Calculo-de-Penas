@@ -127,8 +127,16 @@ writeCsv(
 
 writeCsv(
   'docs/seo/current/query-url-map.csv',
-  ['query', 'page', 'clicks', 'impressions', 'ctr', 'position'],
-  gsc.map((row) => [row.query, row.page, row.clicks, row.impressions, row.ctr, row.position]),
+  ['query', 'page', 'clicks', 'impressions', 'ctr', 'position', 'data_source', 'intent_role'],
+  [
+    ...gsc.map((row) => [
+      row.query, row.page, row.clicks, row.impressions, row.ctr, row.position,
+      'GSC_LIVE', 'OBSERVED',
+    ]),
+    ['abogados en Nacaome', 'https://www.pinedayasociadoshn.com/', '', '', '', '', 'ARCHITECTURE_CONTRACT', 'PRIMARY_COMMERCIAL'],
+    ['oficina de abogados en Nacaome', 'https://www.pinedayasociadoshn.com/abogados-en-nacaome', '', '', '', '', 'ARCHITECTURE_CONTRACT', 'SECONDARY_OPERATIONAL'],
+    ['cómo elegir abogado en Nacaome', 'https://www.pinedayasociadoshn.com/blog/practica-legal/abogados-en-nacaome', '', '', '', '', 'ARCHITECTURE_CONTRACT', 'PRIMARY_INFORMATIONAL'],
+  ],
 );
 
 const nacaomePaths = [
@@ -144,7 +152,16 @@ writeCsv(
     if (path.endsWith('/blog/practica-legal/abogados-en-nacaome')) {
       return [path, '', 'KEEP_INFORMATIONAL_REORIENTED', `${metrics?.impressions ?? 0} impresiones GSC; título informativo y enlace a home`, 'REMOVE_EXISTING_REDIRECT_IN_PREVIEW', 'restaurar regla si la validación SERP demuestra solapamiento'];
     }
-    return [path, '', path.endsWith('/abogados-en-nacaome') ? 'HUMAN_REVIEW_LOCAL_LANDING' : 'KEEP_COMMERCIAL_BRAND', `${metrics?.impressions ?? 0} impresiones GSC`, path.endsWith('/abogados-en-nacaome') ? 'PREPARE_DECISION_NO_PRODUCTION_CHANGE' : 'NONE', 'n/a'];
+    return [
+      path,
+      '',
+      path.endsWith('/abogados-en-nacaome') ? 'KEEP_SECONDARY_OPERATIONAL' : 'KEEP_PRIMARY_COMMERCIAL',
+      path.endsWith('/abogados-en-nacaome')
+        ? `${metrics?.impressions ?? 0} impresiones GSC; dirección, mapa, horario y modalidades de atención`
+        : `${metrics?.impressions ?? 0} impresiones GSC; contrato maestro de intención`,
+      'NONE',
+      'n/a',
+    ];
   }),
 );
 
@@ -155,7 +172,7 @@ writeCsv(
     const url = `https://www.pinedayasociadoshn.com${landing.path ?? `/abogados-en-${landing.slug}`}`;
     const metrics = gscByPage.get(url);
     const unique = (landing.localContext?.length ?? 0) > 0 && (landing.institutions?.length ?? 0) > 0;
-    const decision = landing.sedeFisica ? 'KEEP_AND_IMPROVE' : unique ? 'KEEP_AND_IMPROVE' : 'NOINDEX_UNTIL_UNIQUE';
+    const decision = landing.sedeFisica ? 'KEEP_SECONDARY_OPERATIONAL' : unique ? 'KEEP_AND_IMPROVE' : 'NOINDEX_UNTIL_UNIQUE';
     return [url, landing.ciudad, landing.sedeFisica ? 'yes' : 'no', landing.servedFrom ?? 'oficina de Nacaome', metrics?.clicks ?? 0, metrics?.impressions ?? 0, metrics ? (metrics.impressions ? metrics.clicks / metrics.impressions : 0) : 0, metrics?.position ?? 0, 'PENDING_SEMANTIC_SCORE', unique ? 'yes' : 'no', landing.institutions?.length ?? 0, decision, '', unique ? 'contexto e instituciones registrados' : 'falta valor local único demostrable', 'PREVIEW_ONLY'];
   }),
 );
@@ -167,7 +184,7 @@ writeCsv(
     const url = `https://www.pinedayasociadoshn.com${landing.path ?? `/abogados-en-${landing.slug}`}`;
     const metrics = gscByPage.get(url);
     const unique = (landing.localContext?.length ?? 0) > 0 && (landing.institutions?.length ?? 0) > 0;
-    const decision = landing.sedeFisica ? 'KEEP_AND_IMPROVE' : unique ? 'KEEP_AND_IMPROVE' : 'NOINDEX_UNTIL_UNIQUE';
+    const decision = landing.sedeFisica ? 'KEEP_SECONDARY_OPERATIONAL' : unique ? 'KEEP_AND_IMPROVE' : 'NOINDEX_UNTIL_UNIQUE';
     return [
       url,
       landing.ciudad,

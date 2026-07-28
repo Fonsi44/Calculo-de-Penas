@@ -31,6 +31,9 @@ const metadata = [
   '# timezone=America/Tegucigalpa',
   '# dimensions=query,page',
   `# rows=${data.queryPages.length}`,
+  '# nacaome_commercial_owner=https://www.pinedayasociadoshn.com/',
+  '# nacaome_office_page=https://www.pinedayasociadoshn.com/abogados-en-nacaome (secondary operational intent)',
+  '# nacaome_informational_owner=https://www.pinedayasociadoshn.com/blog/practica-legal/abogados-en-nacaome',
 ];
 
 function escapeCsv(val: string | number) {

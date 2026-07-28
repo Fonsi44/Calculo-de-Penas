@@ -280,13 +280,13 @@ const nextConfig: NextConfig = {
       { source: '/abogado-laboralista-valle', destination: '/abogado-laboralista-nacaome', permanent: true },
       { source: '/abogado-de-familia-valle', destination: '/abogado-de-familia-nacaome', permanent: true },
       { source: '/abogado-civil-valle', destination: '/abogado-civil-nacaome', permanent: true },
-      { source: '/bufete-juridico-valle', destination: '/abogados-en-nacaome', permanent: true },
+      { source: '/bufete-juridico-valle', destination: '/', permanent: true },
       { source: '/abogado-penalista-honduras', destination: '/abogado-penalista-nacaome', permanent: true },
       // === FIX 404: Landings locales huérfanas (Audit Jul 2026, Fase 2) ===
       // URLs de ciudades secundarias. Cuatro ya tienen landing propia (audit
       // P7 Jul 2026): Caridad, Alianza, Concepción de María, San Antonio de
       // Flores. Las restantes siguen redirigiendo al vecino más cercano.
-      { source: '/abogados-en-aramcina', destination: '/abogados-en-nacaome', permanent: true },
+      { source: '/abogados-en-aramcina', destination: '/', permanent: true },
       { source: '/abogados-en-apacilagua', destination: '/abogados-en-choluteca', permanent: true },
       { source: '/abogados-en-duyure', destination: '/abogados-en-san-marcos-de-colon', permanent: true },
       { source: '/abogados-en-morolica', destination: '/abogados-en-san-marcos-de-colon', permanent: true },
