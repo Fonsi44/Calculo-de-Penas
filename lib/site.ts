@@ -140,8 +140,7 @@ export const site = {
     process.env.NEXT_PUBLIC_SITE_TAGLINE ??
     'Abogados en Nacaome, Valle | Pineda y Asociados',
   description:
-    process.env.NEXT_PUBLIC_SITE_DESCRIPTION ??
-    'Abogados colegiados en Nacaome para defensa penal, familia, asuntos laborales, civiles y mercantiles. Atención directa, consulta confidencial y presupuesto por escrito.',
+    'Abogados colegiados en Nacaome para defensa penal y asuntos de familia, laborales, civiles y mercantiles. Atención directa y presupuesto por escrito.',
   keywords:
     (process.env.NEXT_PUBLIC_SITE_KEYWORDS ??
       'abogados Nacaome, bufete jurídico Valle Honduras, abogado penalista Nacaome, defensa penal sur Honduras, abogados San Lorenzo, abogados Choluteca, abogados Goascorán, abogados Amapala, abogados Pespire, abogados San Marcos de Colón, abogados Marcovia, abogado de familia Valle, abogado laboral Nacaome, derecho civil sur Honduras, abogado mercantil Nacaome, consulta legal gratuita Nacaome, bufete jurídico sur Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),
@@ -802,7 +801,7 @@ export const LAWYER_PROFILES: readonly LawyerProfileMeta[] = [
     jobTitle: FOUNDER_PROFILE.jobTitle,
     metaTitle: 'Danilo Pineda Maradiaga | Abogado Penalista en Honduras',
     metaDescription:
-      'Perfil de Danilo Pineda Maradiaga, abogado penalista, socio director de Pineda y Asociados y abogado colegiado en Honduras. Defensa penal en Nacaome y la zona sur.',
+      'Perfil de Danilo Pineda Maradiaga, abogado penalista y socio director. Defensa penal en Nacaome y la zona sur de Honduras.',
     h1: 'Danilo Pineda Maradiaga, abogado penalista',
     description:
       'Danilo Pineda Maradiaga es abogado penalista, socio director de Pineda y Asociados y abogado colegiado en Honduras. Su práctica se concentra en la defensa penal, la asistencia desde las primeras diligencias, las audiencias, los recursos y la ejecución de la pena. Atiende asuntos en Nacaome y en la zona sur de Honduras con un enfoque técnico, prudente y basado en el análisis individual de cada expediente.',

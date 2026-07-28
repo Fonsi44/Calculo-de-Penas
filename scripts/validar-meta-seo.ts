@@ -380,7 +380,11 @@ function validateRoute(route: RouteMetadata, sitemapPaths: Set<string>) {
   }
 
   const isNoindex = /\bnoindex\b/i.test(route.robots);
-  const expectsNoindex = NOINDEX_ROUTES.has(route.path);
+  // Los artículos jurídicos pendientes se sirven públicamente para revisión,
+  // pero su metadata debe ser `noindex, follow` y deben quedar fuera del
+  // sitemap. No confundir accesibilidad pública con autorización editorial.
+  const editorialNoindex = route.path.startsWith('/blog/') && isNoindex;
+  const expectsNoindex = NOINDEX_ROUTES.has(route.path) || editorialNoindex;
   if (!expectsNoindex && isNoindex) {
     addIssue(
       route.path,
