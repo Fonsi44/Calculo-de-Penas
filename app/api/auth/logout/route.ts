@@ -5,6 +5,8 @@ import { eq, sql } from 'drizzle-orm';
 
 export async function POST(request: Request) {
   const token = getTokenFromCookies(request);
+  let revocationFailed = false;
+
   if (token) {
     const payload = verifyToken(token);
     if (payload) {
@@ -12,12 +14,28 @@ export async function POST(request: Request) {
       // el token actual (con la versión vieja) deje de ser válido, incluso si
       // el cliente lo reenvía. Esto cierra la brecha donde logout solo limpiaba
       // la cookie del navegador pero el token seguía siendo funcional.
-      await db.update(usuarios)
-        .set({ tokenVersion: sql`${usuarios.tokenVersion} + 1` })
-        .where(eq(usuarios.id, payload.userId))
-        .catch(() => { /* best-effort: la cookie se limpia igualmente */ });
-      invalidateFreshness(payload.userId);
+      // Fail-closed: si la DB falla, NO silenciamos el error. Aun así se limpian
+      // las cookies del navegador, pero se devuelve 503 para auditoría.
+      try {
+        await db.update(usuarios)
+          .set({ tokenVersion: sql`${usuarios.tokenVersion} + 1` })
+          .where(eq(usuarios.id, payload.userId));
+        invalidateFreshness(payload.userId);
+      } catch (err) {
+        console.error('[logout] Error al revocar sesión:', err);
+        revocationFailed = true;
+        // Cookies se limpian igualmente (createLogoutResponse).
+      }
     }
   }
-  return createLogoutResponse(request);
+
+  if (revocationFailed) {
+    const resp = createLogoutResponse();
+    return new Response(resp.body, {
+      status: 503,
+      statusText: 'Sesión cerrada localmente; error al revocar en servidor',
+      headers: resp.headers,
+    });
+  }
+  return createLogoutResponse();
 }
