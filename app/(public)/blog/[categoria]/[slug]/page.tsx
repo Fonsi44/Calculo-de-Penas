@@ -18,7 +18,7 @@ import { RelatedService } from '@/components/blog/related-service';
 import { BlogCtaBar } from '@/components/blog/blog-cta-bar';
 import { LegalDisclaimer } from '@/components/marketing/legal-disclaimer';
 import { AiReviewNotice } from '@/components/blog/ai-review-notice';
-import { CANONICAL_REVIEWERS } from '@/lib/legal-review';
+import { CANONICAL_REVIEWERS, normalizeReviewStatus } from '@/lib/legal-review';
 import { extractFAQSchema, faqPageSchema } from '@/lib/faq-schema';
 import { BlogSidebar } from '@/components/blog/blog-sidebar';
 import {
@@ -269,7 +269,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   );
   const ogImg = post.ogImage || post.coverImage || '/og-image.webp';
   const canonical = post.canonicalUrl || `/blog/${post.category}/${post.slug}`;
-  const noindex = post.noindex === true;
+  // Plan maestro SEO/GEO §6, §8.1 y §9.6: una página YMYL jurídica que declara
+  // revisión pendiente no debe competir en Google afirmando que aún no está
+  // validada. Solo los artículos `lawyer_verified` (≈ `verified` en el modelo
+  // vigente) son indexables. El resto recibe `noindex, follow` con el mismo
+  // criterio independientemente del flag `noindex` de la DB: la ausencia de
+  // revisión jurídica humana es por sí sola motivo de noindex (gate de Fase 0).
+  const reviewedVerified = normalizeReviewStatus(post.reviewStatus) === 'verified';
+  const noindex = post.noindex === true || !reviewedVerified;
 
   return {
     title: { absolute: metaTitle },
