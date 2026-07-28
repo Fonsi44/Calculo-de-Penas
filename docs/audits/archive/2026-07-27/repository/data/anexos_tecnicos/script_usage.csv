@@ -1,0 +1,243 @@
+path,references_count,references,candidate_status
+scripts/bing-auth-status.mjs,3,package.json | package:auth:bing:status | package:bing:auth:status,active
+scripts/fix-editorial-placeholders.ts,6,CHANGELOG.md | docs/changelog/archive-2026-H1.md | package.json | package:blog:fix-placeholders | package:blog:fix-placeholders:aplicar | scripts/seo-ahrefs-audit.mjs,active
+scripts/google-analytics-live.mjs,4,package.json | package:analytics:ga4 | package:seo:ga4:live | scripts/seo-live-collect.mjs,active
+scripts/auditar-cp.js,5,.gitignore | package.json | package:audit:cp | package:audit:cp:fix | scripts/README.md,active
+scripts/gsc-analytics.mjs,4,auditoria-seo/followup-2026-06-23.md | package.json | package:seo:gsc | scripts/seo-collect-authenticated.mjs,active
+scripts/auditar-indexacion-prioritaria.mjs,8,auditoria-seo/seguimiento-2026-06-25-implementacion.md | docs/audits/auditoria-bing-webmaster-2026-07-08.md | docs/audits/seo-live-summary.md | package.json | package:audit:indexacion | scripts/README.md | scripts/seo-collect-authenticated.mjs | scripts/seo-live-collect.mjs,active
+scripts/seo-auth-doctor.mjs,1,scripts/README.md,active
+scripts/update-pension-db.ts,0,,unreferenced-candidate
+scripts/update-prestaciones-db.ts,0,,unreferenced-candidate
+scripts/extract-prestaciones.js,0,,unreferenced-candidate
+scripts/corregir-articulos.ts,8,AUDITORIA_SEO_GEO_LEGAL_PINEDA.md | AUDIT_REPOSITORY_REPORT.md | docs/changelog/archive-2026-H1.md | package.json | package:corregir:articulos | package:corregir:articulos:aplicar | package:corregir:articulos:dry | scripts/README.md,active
+scripts/check-info-items.ts,0,,unreferenced-candidate
+scripts/bing-site-explorer-auth.mjs,3,docs/audits/analisis-bing-warnings-excluded-2026-07-08.md | package.json | package:bing:site-explorer,active
+scripts/seo-submit-indexnow.mjs,2,auditoria_seo/README_AUDITORIA_BING.md | docs/changelog/archive-2026-H1.md,active
+scripts/prescripcion_original.html,2,scripts/edit-prescripcion.js | scripts/extract-prescripcion.js,active
+scripts/migrate-internal-links.ts,1,docs/analytics/fase-3-enlazado-conversion.md,active
+scripts/optimize-images.mjs,6,docs/changelog/archive-2026-H1.md | package.json | package:images:optimize | package:images:optimize:apply | package:images:recompress | package:images:recompress:apply,active
+scripts/auditar-performance-publico.ts,3,SEO_GEO_ACTION_PLAN.md | package.json | package:audit:performance,active
+scripts/update-changelog.js,0,,unreferenced-candidate
+scripts/fase3-validar-lote.ts,1,docs/audits/fase3b-lote1-rollback.md,active
+scripts/detectar-posts-plantilla.ts,3,package.json | package:blog:detectar-plantilla | scripts/blog-verify-fix.ts,active
+scripts/fase7b-aplicar-correcciones-juridicas.ts,0,,unreferenced-candidate
+scripts/fase7-consolidar-lote-a-corregido.ts,0,,unreferenced-candidate
+scripts/auditar-delitos.js,5,.gitignore | docs/auditoria/RESULTADOS-PRUEBAS-gemini3.5.md | package.json | package:audit:delitos | scripts/README.md,active
+scripts/fase5a-paquetes-revision-humana.ts,0,,unreferenced-candidate
+scripts/pension_original.html,2,scripts/edit-pension-surgical.js | scripts/extract-pension.js,active
+scripts/fase3b-reclasificar-lote.ts,2,docs/audits/fase3b-lote1-correcciones-aplicadas.md | docs/audits/fase3b-lote1-validacion.md,active
+scripts/analyze-topics.js,0,,unreferenced-candidate
+scripts/seo-live-doctor.mjs,6,AUDIT_REPOSITORY_REPORT.md | docs/ops/environment-variables.md | package.json | package:auth:all | package:seo:doctor | scripts/README.md,active
+scripts/fase4b-integridad-correcciones.ts,1,docs/audits/fase4b-rollback.md,active
+scripts/bing-import-dashboard-export.mjs,3,docs/audits/analisis-bing-warnings-excluded-2026-07-08.md | package.json | package:bing:import-dashboard,active
+scripts/fase7b-resolver-huerfanos.ts,0,,unreferenced-candidate
+scripts/fase3d-reconstruir-claims-ausentes.ts,1,tests/fase3d-claims-reconstruidos.test.ts,active
+scripts/fase7-aplicar-correcciones.ts,0,,unreferenced-candidate
+scripts/fase6-prepare-lote.ts,0,,unreferenced-candidate
+scripts/generar-inventario-completo.ts,0,,unreferenced-candidate
+scripts/test-auto-linker.ts,0,,unreferenced-candidate
+scripts/fase7c-crawl-134.ts,0,,unreferenced-candidate
+scripts/visual-regression.cjs,5,package.json | package:visual:baseline | package:visual:check | package:visual:update | scripts/README.md,active
+scripts/google-search-console-live.mjs,5,package.json | package:analytics:search-console | package:seo:gsc:live | scripts/README.md | scripts/seo-live-collect.mjs,active
+scripts/fase6d-restore-wrong.ts,0,,unreferenced-candidate
+scripts/fase3b-verificar-lote.ts,2,docs/audits/fase3c-rollback.md | scripts/fase3b-aplicar-correcciones.ts,active
+scripts/domesticas_modified.html,2,scripts/edit-domesticas.js | scripts/update-domesticas-db.ts,active
+scripts/restore-target-posts.ts,0,,unreferenced-candidate
+scripts/seo-ahrefs-audit.mjs,6,.zcode/plans/plan-sess_06a1d921-7917-4285-afa3-56626fa00cd6.md | .zcode/plans/plan-sess_7123e009-67a0-4478-9027-e4d925ad1d38.md | CHANGELOG.md | docs/changelog/archive-2026-H1.md | package.json | package:seo:ahrefs,active
+scripts/fase7b-corregir-titles.ts,0,,unreferenced-candidate
+scripts/fase7b-inventario-definitivo.ts,0,,unreferenced-candidate
+scripts/ahrefs-analyze.mjs,1,auditoria_seo/ahrefs_2026_07_10/ahrefs-correcciones-aplicadas.md,active
+scripts/update-allanamiento-db.ts,0,,unreferenced-candidate
+scripts/screenshot-audit.cjs,1,scripts/visual-regression.cjs,active
+scripts/update-prescripcion-db.ts,0,,unreferenced-candidate
+scripts/fase3e-validar-produccion.mjs,2,docs/audits/fase3e-rollback.md | docs/audits/fase3e-validacion-final.md,active
+scripts/prestaciones_original.html,2,scripts/edit-prestaciones.js | scripts/extract-prestaciones.js,active
+scripts/cleanup-e2e-users.mjs,1,scripts/README.md,active
+scripts/allanamiento_original.html,2,scripts/edit-allanamiento.js | scripts/extract-allanamiento.js,active
+scripts/seo-update-ctas-tracking.ts,0,,unreferenced-candidate
+scripts/inspect-urls.mjs,0,,unreferenced-candidate
+scripts/check-delitos-articulos.mjs,0,,unreferenced-candidate
+scripts/submit-indexnow.mjs,26,SEO_AUDIT_CHECKLIST.md | app/sitemap.ts | auditoria-seo/audit-2026-06-23.md | auditoria-seo/audit-2026-07-02.md | auditoria-seo/followup-2026-06-23.md | auditoria-seo/seguimiento-2026-06-25-implementacion.md | auditoria_seo/README_AUDITORIA_BING.md | auditoria_seo/ahrefs_2026_07_10/pendientes-ahrefs.md | data/seo/canonical-paths.json | docs/audits/transformacion-web-publica.md | docs/changelog/archive-2026-H1.md | docs/ops/environment-variables.md | docs/seo/estrategia-derecho-penal.md | package.json | package:indexnow | package:indexnow:audit | package:indexnow:core | package:indexnow:dry | package:indexnow:full | package:indexnow:incremental | package:indexnow:sample | package:postbuild | scripts/README.md | scripts/seo-collect-authenticated.mjs | scripts/seo-indexability-audit.mjs | scripts/seo-live-collect.mjs,active
+scripts/analytics-validate.mjs,4,package.json | package:analytics:audit | package:analytics:clarity | package:analytics:validate,active
+scripts/fase6c-inventory.ts,0,,unreferenced-candidate
+scripts/fase5a-extraer-claims.ts,1,scripts/fase5a-enriquecer-claims-manuales.ts,active
+scripts/fase7c-revalidacion-global.ts,0,,unreferenced-candidate
+scripts/playwright-audit.mjs,1,scripts/README.md,active
+scripts/auth-google-cli.mjs,6,AUDIT_REPOSITORY_REPORT.md | docs/ops/environment-variables.md | docs/seo/live-data-access.md | package.json | package:auth:google | package:auth:google:status,active
+scripts/seo-content-audit.ts,6,.zcode/plans/plan-sess_06a1d921-7917-4285-afa3-56626fa00cd6.md | package.json | package:blog:seo-audit | package:blog:seo-audit:json | scripts/fix-internal-redirects.ts | tests/seo-content-audit.test.ts,active
+scripts/audit-internal-links.ts,2,package.json | package:audit:internal-links,active
+scripts/fase3-migrate.ts,0,,unreferenced-candidate
+scripts/fix-long-metas.ts,6,.zcode/plans/plan-sess_06a1d921-7917-4285-afa3-56626fa00cd6.md | CHANGELOG.md | docs/changelog/archive-2026-H1.md | package.json | package:blog:fix-metas | package:blog:fix-metas:aplicar,active
+scripts/dump-target-posts.ts,0,,unreferenced-candidate
+scripts/fase4b-validacion-produccion.ts,2,docs/audits/fase4b-validacion-visual.md | docs/audits/fase4c-cierre-trazabilidad-lote2.md,active
+scripts/prescripcion_modified.html,2,scripts/edit-prescripcion.js | scripts/update-prescripcion-db.ts,active
+scripts/edit-prescripcion.js,0,,unreferenced-candidate
+scripts/seo-collect-authenticated.mjs,0,,unreferenced-candidate
+scripts/edit-domesticas.js,0,,unreferenced-candidate
+scripts/check-db-state.ts,3,package.json | package:db:check | scripts/README.md,active
+scripts/fase3c-art71-bodies.ts,0,,unreferenced-candidate
+scripts/debug-body-text.ts,0,,unreferenced-candidate
+scripts/list-tables.mjs,0,,unreferenced-candidate
+scripts/debug-auto-linker.ts,0,,unreferenced-candidate
+scripts/edit-allanamiento.js,0,,unreferenced-candidate
+scripts/fase5a-aplicar-correcciones.ts,0,,unreferenced-candidate
+scripts/migrate-links-direct.ts,1,docs/analytics/fase-3b-validacion-enlazado-conversion.md,active
+scripts/optimizar-seo-articulos-criticos.ts,3,package.json | package:blog:optimize-critical-seo | package:blog:optimize-critical-seo:aplicar,active
+scripts/fase3c-desbloquear.ts,2,docs/audits/fase3c-articulos-desbloqueados.md | docs/audits/fase3c-validacion.md,active
+scripts/fase4a-auditar-seo.ts,1,docs/audits/fase4a-lote2-validacion-local.md,active
+scripts/fase6-lote-aplicar-correcciones.ts,0,,unreferenced-candidate
+scripts/rag-indexar.ts,4,package.json | package:rag:indexar | package:rag:indexar:aplicar | scripts/README.md,active
+scripts/fase6-lote-setup.ts,0,,unreferenced-candidate
+scripts/fase6-calculate-inventory.ts,0,,unreferenced-candidate
+scripts/gen-favicon.mjs,0,,unreferenced-candidate
+scripts/seo-health-check.mjs,6,package.json | package:seo:health | package:seo:health:json | scripts/README.md | scripts/seo-collect-authenticated.mjs | scripts/seo-live-collect.mjs,active
+scripts/auth-generate-links.mjs,1,docs/ops/environment-variables.md,active
+scripts/submit-sitemap-gsc.mjs,4,auditoria-seo/followup-2026-06-23.md | package.json | package:seo:submit-sitemap | scripts/gsc-analytics.mjs,active
+scripts/fase6-lote-db.ts,0,,unreferenced-candidate
+scripts/fase6-extract-bodies.ts,0,,unreferenced-candidate
+scripts/verify-chunks.mjs,7,CHANGELOG.md | auditoria-acciones.md | docs/audits/lighthouse-treemap-performance-2026-07-08.md | docs/changelog/archive-2026-H1.md | package.json | package:postbuild | package:verify:chunks,active
+scripts/fase7c-corregir-servicios-legales.ts,0,,unreferenced-candidate
+scripts/fase3-reclasificar-lote1.ts,6,docs/audits/fase3-lote1-build.md | docs/audits/fase3-lote1-cierre-correctivo.md | docs/audits/fase3-lote1-rollback-actualizado.md | docs/audits/fase3b-lote1-rollback.md | scripts/fase3b-aplicar-correcciones.ts | scripts/fase3b-reclasificar-lote.ts,active
+scripts/fase7-extraer-inventario.ts,0,,unreferenced-candidate
+scripts/fase6-inventario.ts,0,,unreferenced-candidate
+scripts/seo-indexability.ts,5,docs/changelog/archive-2026-H1.md | package.json | package:audit:seo | package:audit:seo:stdout | package:seo:indexability,active
+scripts/edit-pension-surgical.js,0,,unreferenced-candidate
+scripts/fix-long-titles.ts,6,.zcode/plans/plan-sess_06a1d921-7917-4285-afa3-56626fa00cd6.md | CHANGELOG.md | docs/changelog/archive-2026-H1.md | package.json | package:blog:fix-titles | package:blog:fix-titles:aplicar,active
+scripts/optimizar-ctr-articulos-prioritarios.mjs,0,,unreferenced-candidate
+scripts/bing-site-explorer.mjs,3,auditoria-acciones.md | docs/audits/analisis-bing-warnings-excluded-2026-07-08.md | docs/audits/clasificacion-bing-site-explorer-url-por-url-2026-07-08.md,active
+scripts/generate-indexability.mjs,0,,unreferenced-candidate
+scripts/mcp-diag.cjs,2,auditoria-seo/mcp-validation-2026-06-23.md | scripts/README.md,active
+scripts/fase3b-auditar-seo.ts,1,docs/audits/fase3b-lote1-seo-geo.md,active
+scripts/normalizar-blog.ts,9,CHANGELOG.md | auditoria_seo/ahrefs_2026_07_10/ahrefs-correcciones-aplicadas.md | docs/changelog/archive-2026-H1.md | package.json | package:blog:normalizar | package:blog:normalizar:aplicar | scripts/blog-ai-review.ts | scripts/blog-verify-fix.ts | scripts/seo-content-audit.ts,active
+scripts/corregir-p0-db.ts,0,,unreferenced-candidate
+scripts/pension_modified.html,2,scripts/edit-pension-surgical.js | scripts/update-pension-db.ts,active
+scripts/seo-upgrade-meta-fase2.ts,0,,unreferenced-candidate
+scripts/domesticas_original.html,2,scripts/edit-domesticas.js | scripts/extract-domesticas.js,active
+scripts/fase6-snapshot-neon.ts,0,,unreferenced-candidate
+scripts/audit-canibalizacion.ts,2,package.json | package:audit:canibalizacion,active
+scripts/fase4b-aplicar-estados-db.ts,1,docs/audits/fase4b-validacion-visual.md,active
+scripts/ajustar-seo-residual-blog.ts,3,package.json | package:blog:adjust-residual-seo | package:blog:adjust-residual-seo:aplicar,active
+scripts/oauth-url.mjs,1,app/api/oauth/callback/route.ts,active
+scripts/fase4a-paquetes-revision-humana.ts,1,docs/audits/fase4a-lote2-validacion-local.md,active
+scripts/debug-linker-final.ts,0,,unreferenced-candidate
+scripts/google-analytics-config.mjs,2,package.json | package:analytics:ga4:config,active
+scripts/fase3b-aplicar-correcciones.ts,2,docs/audits/fase3b-lote1-correcciones-aplicadas.md | scripts/fase3c-desbloquear.ts,active
+scripts/corregir-citas-criticas-blog.ts,3,package.json | package:blog:fix-critical-citations | package:blog:fix-critical-citations:aplicar,active
+scripts/backup-blog.ts,10,docs/audits/cierre-ejecucion-seo-2026-07-08.md | docs/audits/clasificacion-bing-site-explorer-url-por-url-2026-07-08.md | docs/audits/revision-gsc-ga4-mejoras-2026-07-08.md | package.json | package:blog:backup | scripts/fix-editorial-placeholders.ts | scripts/fix-internal-redirects.ts | scripts/fix-long-metas.ts | scripts/fix-long-titles.ts | scripts/seo-unpublish-consolidated-posts.ts,active
+scripts/fase7-generar-artefactos-rapidos.ts,0,,unreferenced-candidate
+scripts/oauth-get-refresh-token.mjs,5,.env.example | app/api/oauth/callback/route.ts | docs/seo/fase-1/decisiones-implementacion.md | package.json | package:auth:google:oauth,active
+scripts/fase3b-fix-meta-fianza.ts,1,docs/audits/fase3b-lote1-seo-geo.md,active
+scripts/seo-indexability-audit.mjs,5,auditoria-acciones.md | auditoria-seo/audit-2026-06-23.md | auditoria-seo/audit-2026-07-02.md | docs/audits/transformacion-web-publica.md | scripts/README.md,active
+scripts/bing-auth-link.mjs,10,AUDIT_REPOSITORY_REPORT.md | auditoria-acciones.md | docs/audits/cierre-ejecucion-seo-2026-07-08.md | docs/audits/fix-bing-oauth-2026-07-08.md | docs/audits/plan-accion-seo-post-auditoria-2026-07-08.md | docs/ops/environment-variables.md | package.json | package:auth:bing | package:bing:auth | scripts/README.md,active
+scripts/fase4b-recalcular-estados.ts,1,docs/audits/fase4b-rollback.md,active
+scripts/prestaciones_modified.html,2,scripts/edit-prestaciones.js | scripts/update-prestaciones-db.ts,active
+scripts/bing-oauth-device.mjs,2,docs/ops/environment-variables.md | scripts/README.md,active
+scripts/fase3c-claims-finales.ts,1,docs/audits/fase3c-validacion.md,active
+scripts/seo-update-blog-ctas.ts,1,docs/changelog/archive-2026-H1.md,active
+scripts/bing-webmaster-live.mjs,7,docs/audits/analisis-bing-warnings-excluded-2026-07-08.md | docs/audits/auditoria-bing-webmaster-2026-07-08.md | package.json | package:analytics:bing | package:seo:bing:live | scripts/README.md | scripts/seo-live-collect.mjs,active
+scripts/blog_posts_dump.json,3,scripts/analyze-topics-noaccents.js | scripts/analyze-topics.js | scripts/dump-blog-posts.ts,active
+scripts/fase6d-auth-inv.ts,0,,unreferenced-candidate
+scripts/seo-validate-recrawl.mjs,3,auditoria_seo/README_AUDITORIA_BING.md | docs/changelog/archive-2026-H1.md | scripts/seo-submit-indexnow.mjs,active
+scripts/fase3c-reclasificar.ts,5,docs/audits/fase3c-articulos-desbloqueados.md | docs/audits/fase3c-validacion.md | docs/audits/fase3d-rollback.md | scripts/fase3c-desbloquear.ts | scripts/fase3d-recalcular-estados.ts,active
+scripts/fase5a-enriquecer-claims-manuales.ts,1,docs/audits/fase5a-lote3-claims-finales.json,active
+scripts/build-sw.mjs,6,.gitignore | docs/audits/fase3e-rollback.md | docs/audits/fase3e-service-worker-final.md | docs/audits/fase3e-validacion-final.md | public/sw.template.js | tests/fase3e-sw-build-determinism.test.ts,active
+scripts/validar-meta-seo.ts,4,docs/audits/transformacion-web-publica.md | package.json | package:validar:meta-seo | tests/meta-seo-auditor.test.ts,active
+scripts/import-bing-crawl-errors.ts,2,package.json | package:seo:bing-errors,active
+scripts/target_posts.json,7,scripts/dump-target-posts.ts | scripts/extract-allanamiento.js | scripts/extract-domesticas.js | scripts/extract-pension.js | scripts/extract-prescripcion.js | scripts/extract-prestaciones.js | scripts/restore-target-posts.ts,active
+scripts/fase5-capturas.mjs,2,.gitignore | docs/design/fase-5/validacion-visual.md,active
+scripts/fase3d-aplicar-correcciones-bodies.ts,3,docs/audits/fase3d-integridad-claims.md | docs/audits/fase3e-correcciones-canon.json | tests/fase3d-integridad.test.ts,active
+scripts/seo-unpublish-consolidated-posts.ts,2,auditoria_seo/ahrefs_2026_07_10/ahrefs-correcciones-aplicadas.md | docs/changelog/archive-2026-H1.md,active
+scripts/fase4a-extraer-claims.ts,2,docs/audits/fase4a-lote2-validacion-local.md | scripts/fase5a-extraer-claims.ts,active
+scripts/fase3c-backup.ts,2,docs/audits/fase3c-articulos-desbloqueados.md | docs/audits/fase3c-validacion.md,active
+scripts/fase6-lote-seo.ts,0,,unreferenced-candidate
+scripts/fase4a-recalcular-estados.ts,1,docs/audits/fase4a-lote2-validacion-local.md,active
+scripts/debug-auto-linker-2.ts,0,,unreferenced-candidate
+scripts/fix-internal-redirects.ts,8,.zcode/plans/plan-sess_06a1d921-7917-4285-afa3-56626fa00cd6.md | docs/audits/plan-accion-seo-post-auditoria-2026-07-08.md | docs/changelog/archive-2026-H1.md | next.config.ts | package.json | package:blog:fix-redirects | package:blog:fix-redirects:aplicar | scripts/seo-ahrefs-audit.mjs,active
+scripts/fase5a-aplicar-enlazado-interno.ts,0,,unreferenced-candidate
+scripts/qa-visual-cierre.mjs,2,docs/audits/transformacion-web-publica.md | scripts/README.md,active
+scripts/restaurar-blog-backup.ts,3,docs/audits/auditoria-blog-juridica-seo-geo-verificacion.md | docs/audits/blog-rollback-validacion.md | docs/audits/fase3b-lote1-rollback.md,active
+scripts/fase5a-recalcular-estados.ts,1,scripts/fase5a-aplicar-estados-db.ts,active
+scripts/e2e-start.mjs,5,docs/auditoria/HALLAZGOS.md | docs/ops/environment-variables.md | lib/rate-limit.ts | playwright.config.ts | scripts/README.md,active
+scripts/test-service-account.mjs,0,,unreferenced-candidate
+scripts/load-env.cjs,2,scripts/README.md | scripts/mcp-postgres.cjs,active
+scripts/seo-live-collect.mjs,3,package.json | package:analytics:export-all | package:seo:collect,active
+scripts/fase3d-verificar-consistencia.ts,2,docs/audits/fase3d-integridad-claims.md | scripts/fase3d-aplicar-correcciones-bodies.ts,active
+scripts/rag-extraer-pdfs.ts,4,package.json | package:rag:extraer-pdfs | package:rag:extraer-pdfs:aplicar | scripts/README.md,active
+scripts/validate-jsonld.mjs,10,.zcode/plans/plan-sess_06a1d921-7917-4285-afa3-56626fa00cd6.md | AGENTS.md | auditoria-acciones.md | docs/audits/fase4a-lote2-validacion-final.md | docs/audits/fase4a-lote2-validacion-local.md | docs/audits/fase4b-incidencia-commit-3769416d.md | docs/audits/fase4b-rollback.md | docs/audits/transformacion-web-publica.md | docs/changelog/archive-2026-H1.md | scripts/seo-ahrefs-audit.mjs,active
+scripts/seo-audit-gsc-ga4.mjs,3,.gitignore | package.json | package:seo:audit:gsc-ga4,active
+scripts/phase1-optimize-posts.ts,0,,unreferenced-candidate
+scripts/fase4a-inventario-y-seleccion.ts,2,docs/audits/fase4a-lote2-priorizacion.md | docs/audits/fase4a-lote2-validacion-local.md,active
+scripts/fase6-apply-lote-db.ts,0,,unreferenced-candidate
+scripts/extract-domesticas.js,0,,unreferenced-candidate
+scripts/audit-blog-seo.ts,3,package.json | package:audit:blog-seo | scripts/README.md,active
+scripts/fase6-planificacion.ts,0,,unreferenced-candidate
+scripts/fase4a-generar-fuentes-correcciones.ts,1,docs/audits/fase4a-lote2-validacion-local.md,active
+scripts/fase6d-prepare-lote.ts,0,,unreferenced-candidate
+scripts/edit-prestaciones.js,0,,unreferenced-candidate
+scripts/fase5a-validacion-visual.mjs,1,docs/audits/fase5a-lote3-validacion-visual.md,active
+scripts/fase6-db-rollback-selectivo.ts,0,,unreferenced-candidate
+scripts/validar-blog.ts,5,package.json | package:validar:blog | package:validar:blog:blocking | package:validar:blog:json | scripts/README.md,active
+scripts/analyze-topics-noaccents.js,0,,unreferenced-candidate
+scripts/fase3-exportar-lote.ts,1,scripts/fase3-ejecutor-deepseek.ts,active
+scripts/fase4a-exportar-lote2.ts,3,.gitignore | docs/audits/fase4a-lote2-validacion-local.md | scripts/fase4a-extraer-claims.ts,active
+scripts/fase6-lote-backup.ts,0,,unreferenced-candidate
+scripts/extract-prescripcion.js,0,,unreferenced-candidate
+scripts/fase3-aplicar.ts,2,lib/ai/review-status.ts | tests/fase3b-review-status.test.ts,active
+scripts/extract-allanamiento.js,0,,unreferenced-candidate
+scripts/fase7-diagnostico-db.ts,0,,unreferenced-candidate
+scripts/blog-ai-review.ts,5,AUDIT_REPOSITORY_REPORT.md | package.json | package:blog:review | package:blog:review:aplicar | scripts/seo-content-audit.ts,active
+scripts/auth-vercel-cli.mjs,3,package.json | package:auth:vercel | package:auth:vercel:status,active
+scripts/fase3d-recalcular-estados.ts,1,scripts/fase3d-reconstruir-claims-ausentes.ts,active
+scripts/fase3-invalidar-lote1.ts,1,docs/audits/fase3-lote1-invalidacion.md,active
+scripts/generate-llms-txt.mjs,8,AUDITORIA_SEO_GEO_LEGAL_PINEDA.md | docs/changelog/archive-2026-H1.md | package.json | package:llms:dry | package:llms:generate | package:postbuild | scripts/README.md | tests/llms-txt.test.ts,active
+scripts/fase7-consolidar-lote.ts,0,,unreferenced-candidate
+scripts/validar-fechas-blog.ts,3,package.json | package:validate:dates | scripts/seo-content-audit.ts,active
+scripts/fase5a-aplicar-estados-db.ts,2,docs/audits/fase5a-lote3-matriz.json | scripts/fase5a-recalcular-estados.ts,active
+scripts/gcloud-cli.mjs,5,scripts/auth-google-cli.mjs | scripts/google-analytics-live.mjs | scripts/google-search-console-live.mjs | scripts/seo-auth-doctor.mjs | scripts/seo-live-doctor.mjs,active
+scripts/mcp-postgres.cjs,2,auditoria-seo/mcp-validation-2026-06-23.md | scripts/README.md,active
+scripts/e2e-staging-sgie.ts,1,docs/implementation/staging-validacion-e2e-mvp-sgie.md,active
+scripts/fase3-ejecutor-deepseek.ts,1,scripts/fase3-aplicar.ts,active
+scripts/update-domesticas-db.ts,0,,unreferenced-candidate
+scripts/fase6d-sync-bulk.ts,0,,unreferenced-candidate
+scripts/bing-wmt-audit.mjs,7,.gitignore | auditoria-seo/followup-2026-06-23.md | auditoria-seo/seguimiento-2026-06-25-d0-postdeploy.md | auditoria-seo/seguimiento-2026-06-25-implementacion.md | package.json | package:seo:bing | scripts/seo-collect-authenticated.mjs,active
+scripts/content-audit.ts,6,.zcode/plans/plan-sess_06a1d921-7917-4285-afa3-56626fa00cd6.md | package.json | package:content:audit | scripts/fix-internal-redirects.ts | scripts/seo-content-audit.ts | tests/seo-content-audit.test.ts,active
+scripts/fase6-consolidar-lote.ts,0,,unreferenced-candidate
+scripts/dump-blog-posts.ts,1,docs/audits/fase3d-rollback.md,active
+scripts/audit-internal-links-db.ts,0,,unreferenced-candidate
+scripts/blog-verify-fix.ts,10,AUDIT_REPOSITORY_REPORT.md | docs/changelog/archive-2026-H1.md | lib/rag/config.ts | package.json | package:blog:verify-fix | package:blog:verify-fix:aplicar | scripts/README.md | scripts/archive/run-blog-lotes.cmd | scripts/archive/run-blog-lotes.sh | scripts/validar-blog.ts,active
+scripts/fase4a-aplicar-correcciones.ts,5,docs/audits/fase4a-lote2-correcciones-propuestas.md | docs/audits/fase4a-lote2-validacion-local.md | docs/audits/fase4b-rollback.md | scripts/fase4a-generar-fuentes-correcciones.ts | scripts/fase4b-integridad-correcciones.ts,active
+scripts/extract-pension.js,0,,unreferenced-candidate
+scripts/allanamiento_modified.html,2,scripts/edit-allanamiento.js | scripts/update-allanamiento-db.ts,active
+scripts/seo-snapshot.ts,3,docs/changelog/archive-2026-H1.md | package.json | package:seo:snapshot,active
+scripts/security/validate-staging-security.ps1,5,auditoria-acciones.md | docs/security/security-stabilization-pr.md | docs/security/staging-security-validation.md | package.json | package:security:validate-staging,active
+scripts/analytics/funnel-report.mjs,0,,unreferenced-candidate
+scripts/analytics/export-utils.mjs,4,scripts/analytics/funnel-report.mjs | scripts/bing-webmaster-live.mjs | scripts/google-analytics-live.mjs | scripts/google-search-console-live.mjs,active
+scripts/e2e/fase5c-daily-brief-e2e.mjs,0,,unreferenced-candidate
+scripts/e2e/verify-transaction-rollback.mjs,1,docs/ops/fase-1-staging-validation.md,active
+scripts/e2e/fase5b-document-intelligence-e2e.mjs,0,,unreferenced-candidate
+scripts/e2e/fase2-e2e.mjs,7,AUDITORIA_COMPLETA_RECONSTRUCCION_INTRANET_SGIE_V2.md | CHANGELOG.md | docs/handoffs/fase-2-a-fase-3.md | docs/handoffs/fase-3-a-fase-4.md | docs/ops/fase-2-staging-validation.md | docs/roadmap/SGIE_IMPLEMENTATION_CHECKLIST.md | scripts/e2e/run-fase3-isolated.mjs,active
+scripts/e2e/setup.mjs,5,docs/auditoria/RESULTADOS-PRUEBAS.md | package.json | package:e2e:setup | playwright.e2e.config.ts | scripts/e2e/run.mjs,active
+scripts/e2e/fase4b6-knowledge-e2e.mjs,0,,unreferenced-candidate
+scripts/e2e/fase4b3-e2e.mjs,0,,unreferenced-candidate
+scripts/e2e/fase3-e2e.mjs,4,CHANGELOG.md | docs/handoffs/fase-3-a-fase-4.md | docs/roadmap/SGIE_IMPLEMENTATION_CHECKLIST.md | scripts/e2e/run-fase3-isolated.mjs,active
+scripts/e2e/fase4b5-e2e.mjs,0,,unreferenced-candidate
+scripts/e2e/dropbox-sign-completion-e2e.mjs,0,,unreferenced-candidate
+scripts/e2e/fase5a-risk-workload-e2e.mjs,0,,unreferenced-candidate
+scripts/e2e/guard.mjs,14,CHANGELOG.md | docs/auditoria/RESULTADOS-PRUEBAS.md | docs/handoffs/fase-1-a-fase-2.md | docs/ops/fase-1-staging-validation.md | docs/ops/fase-2-staging-validation.md | docs/ops/staging-environment.md | docs/roadmap/SGIE_IMPLEMENTATION_CHECKLIST.md | package.json | package:e2e:fase1 | package:e2e:guard | scripts/e2e/fase2-e2e.mjs | scripts/e2e/run-fase3-isolated.mjs | scripts/e2e/run.mjs | scripts/e2e/setup.mjs,active
+scripts/e2e/fase4b1-e2e.mjs,1,docs/ops/fase-4b1-staging-validation.md,active
+scripts/e2e/seed.mjs,4,docs/auditoria/RESULTADOS-PRUEBAS.md | package.json | package:e2e:seed | scripts/e2e/setup.mjs,active
+scripts/e2e/run-fase3-isolated.mjs,5,CHANGELOG.md | docs/handoffs/fase-3-a-fase-4.md | docs/handoffs/fase-4a-hardening-and-validation.md | docs/ops/fase-3-staging-validation.md | docs/ops/fase-4a-staging-validation.md,active
+scripts/e2e/guard-fase3.mjs,13,CHANGELOG.md | docs/ops/fase-3-staging-validation.md | docs/ops/fase-4a-staging-validation.md | docs/roadmap/SGIE_IMPLEMENTATION_CHECKLIST.md | scripts/e2e/fase3-e2e.mjs | scripts/e2e/fase4a-e2e.mjs | scripts/e2e/fase4b1-e2e.mjs | scripts/e2e/fase4b2-e2e.mjs | scripts/e2e/fase4b3-e2e.mjs | scripts/e2e/fase4b4-e2e.mjs | scripts/e2e/fase4b5-e2e.mjs | scripts/e2e/fase4b6-knowledge-e2e.mjs | scripts/e2e/run-fase3-isolated.mjs,active
+scripts/e2e/fase4b2-e2e.mjs,0,,unreferenced-candidate
+scripts/e2e/verify-neon-branch.mjs,4,docs/handoffs/fase-1-a-fase-2.md | docs/ops/fase-1-staging-validation.md | package.json | package:e2e:fase1,active
+scripts/e2e/apply-phase1-migration.mjs,2,docs/handoffs/fase-1-a-fase-2.md | docs/ops/fase-1-staging-validation.md,active
+scripts/e2e/run.mjs,6,docs/auditoria/RESULTADOS-PRUEBAS.md | package.json | package:e2e:critical | package:e2e:navigation | package:e2e:run | playwright.e2e.config.ts,active
+scripts/e2e/cleanup.mjs,4,docs/auditoria/RESULTADOS-PRUEBAS.md | package.json | package:e2e:cleanup | scripts/e2e/run.mjs,active
+scripts/e2e/fase5d-autonomy-portal-e2e.mjs,0,,unreferenced-candidate
+scripts/e2e/dropbox-sign-provider-e2e.mjs,0,,unreferenced-candidate
+scripts/e2e/apply-fase4-migrations.mjs,5,docs/architecture/fase-4a-automatizacion-documental-core.md | docs/audits/fase3-lote1-migracion.md | docs/handoffs/fase-4a-hardening-and-validation.md | docs/ops/fase-4a-staging-validation.md | docs/ops/fase-4b1-staging-validation.md,active
+scripts/e2e/fase1-integration.ts,4,AUDITORIA_COMPLETA_RECONSTRUCCION_INTRANET_SGIE_V2.md | docs/handoffs/fase-1-a-fase-2.md | package.json | package:e2e:fase1,active
+scripts/e2e/fase4b4-e2e.mjs,0,,unreferenced-candidate
+scripts/e2e/fase4a-e2e.mjs,3,docs/architecture/fase-4a-automatizacion-documental-core.md | docs/handoffs/fase-4a-hardening-and-validation.md | docs/ops/fase-4a-staging-validation.md,active
+scripts/e2e/inspect-phase1-db.mjs,2,docs/architecture/fase-1-nucleo-admin-identidad-calendario.md | docs/ops/fase-1-staging-validation.md,active
+scripts/e2e/fase4b7-copilot-e2e.mjs,0,,unreferenced-candidate
