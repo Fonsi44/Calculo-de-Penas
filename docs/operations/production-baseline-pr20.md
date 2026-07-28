@@ -14,10 +14,10 @@ superseded_by: null
 - Proyecto Neon: `spring-frog-35352705` (justicia-verdadera)
 - Branch productivo: `production`
 - Base seleccionada: `neondb` (210 usuarios, 175 blog posts, 134 publicados, 25 clientes, 29 expedientes)
-- Clon de ensayo: `preflight-cutover-pr20`
+- Clon de ensayo: `preflight-cutover-pr20` (tracking 39+21 ya aplicado)
 - Algoritmo Drizzle: SHA-256 hex del SQL completo (compatible con drizzle-orm/migrator.js)
 
-## Verificación estructural (58/58)
+## Verificación estructural (60/60)
 
 Se verificaron contra el clon:
 
@@ -25,7 +25,9 @@ Se verificaron contra el clon:
 - **ALTER TABLE ADD COLUMN**: todas las columnas existen (100%)
 - **CREATE INDEX**: 56/58 índices existen (2 difieren en nombre: `enlaces_magicos_token_idx`, `embeddings_vector_idx`)
 - **CREATE TYPE (enum)**: todos los tipos existen con valores correctos
-- **Tracking**: pendiente de aplicar
+- **Tracking en Production**: 0 Drizzle + 0 manuales; no aplicado
+- **Plan firmado**: `EQUIVALENTE`, `publicDrift=0`, HEAD
+  `fccc1614e11777d9b0e54d1d5969dd1d00fb30a6`
 
 ## Procedimiento de baseline
 
@@ -42,16 +44,20 @@ export NEON_PRODUCTION_BRANCH_ID=<branch_id>
 npm run db:migrations:baseline:plan
 ```
 
-Debe mostrar 58 migraciones verificadas.
+Debe mostrar 39 migraciones Drizzle y 21 manuales verificadas.
 
-### 3. Apply (solo en clon)
+### 3. Apply
 
 ```bash
-MIGRATION_BASELINE_CONFIRMATION=BASELINE_PREFLIGHT_CLONE \
+# No ejecutar sin la autorización productiva única.
+BASELINE_PLAN=.local/production-baseline-pr20.json \
+MIGRATION_BASELINE_CONFIRMATION=<confirmación autorizada> \
 npm run db:migrations:baseline:apply
 ```
 
-Esto registra las 58 entradas en `drizzle.__drizzle_migrations` + `sgie_schema_migrations` usando advisory lock y transacción.
+Esto registraría 39 entradas en `drizzle.__drizzle_migrations` y 21 en
+`sgie_schema_migrations` usando advisory lock y transacción. A fecha de este
+documento no se ha ejecutado contra Production.
 
 ### 4. Verificar
 
@@ -60,7 +66,7 @@ npm run db:migrations:status
 npm run db:migrations:validate
 ```
 
-Resultado esperado: 58 registradas, 0 pendientes, 0 drift.
+Resultado esperado: 60 registradas, 0 pendientes, 0 drift.
 
 ## Cuentas sintéticas
 
