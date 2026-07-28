@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { config } from 'dotenv';
 import {
   getEditorialResponsibility,
@@ -50,10 +51,10 @@ async function main() {
     'id', 'slug', 'url', 'title_db', 'title_rendered', 'meta_title',
     'meta_description', 'h1', 'category', 'primary_intent', 'primary_query',
     'author_current', 'author_proposed', 'reviewer_current', 'reviewer_proposed',
-    'legal_review_status_raw', 'legal_review_status_normalized', 'published',
+    'legal_review_status_raw', 'legal_review_status_normalized', 'date_modified', 'published',
     'indexable', 'sitemap', 'word_count', 'source_count',
     'official_source_count', 'internal_links', 'service_link',
-    'canonical_target', 'clicks', 'impressions', 'ctr', 'position', 'action',
+    'canonical_target', 'body_hash', 'clicks', 'impressions', 'ctr', 'position', 'action',
   ];
   const lines = [headers.join(',')];
 
@@ -88,8 +89,9 @@ async function main() {
       'informational', topQuery, post.author ?? '', authorProposed,
       post.reviewedBy ?? '', reviewerProposed, post.reviewStatus ?? '',
       normalized === 'verified' ? 'lawyer_verified' : 'lawyer_review_pending',
-      post.published === true, indexable, indexable, wordCount(post.body),
+      post.updatedAt?.toISOString() ?? '', post.published === true, indexable, indexable, wordCount(post.body),
       sourceLinks.length, officialSources, links, '', post.canonicalUrl ?? url,
+      createHash('sha256').update(post.body).digest('hex'),
       clicks, impressions, impressions ? (clicks / impressions).toFixed(4) : '0.0000',
       weightedPosition.toFixed(2), action,
     ].map(csv).join(','));

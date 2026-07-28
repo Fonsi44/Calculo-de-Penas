@@ -1,0 +1,1239 @@
+{
+  "generatedAt": "2026-07-28",
+  "status": "documentary_review",
+  "lawyerVerified": false,
+  "overrides": {
+    "que-hacer-si-me-detienen-en-honduras": {
+      "title": "¿Qué Hacer Si Me Detienen en Honduras? Guía",
+      "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "author": "Danilo Pineda Maradiaga",
+      "sourceIds": [
+        "HN-CONST-131-1982",
+        "HN-CPP-9-99-E",
+        "HN-CP-130-2017"
+      ],
+      "sources": [
+        {
+          "title": "Constitución de la República de Honduras",
+          "url": "https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf",
+          "sections": "artículos 68, 71, 82, 84, 89 y 99"
+        },
+        {
+          "title": "Código Procesal Penal",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf",
+          "sections": "artículos 101, 112–115, 282 y 285–294"
+        },
+        {
+          "title": "Código Penal",
+          "url": "https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf",
+          "sections": "artículos 104–110, 263–271 y tipos específicos aplicables"
+        }
+      ],
+      "related": [
+        {
+          "title": "Prescripción Penal en Honduras: Plazos y Cálculo",
+          "href": "/blog/derecho-penal/cuando-prescribe-delito-en-honduras"
+        },
+        {
+          "title": "Fianzas y Medidas Cautelares en el Proceso Penal",
+          "href": "/blog/derecho-penal/fianza-medidas-cautelares-proceso-penal-honduras"
+        }
+      ]
+    },
+    "cuando-prescribe-delito-en-honduras": {
+      "title": "Prescripción Penal en Honduras: Plazos y Cálculo",
+      "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "author": "Danilo Pineda Maradiaga",
+      "sourceIds": [
+        "HN-CONST-131-1982",
+        "HN-CPP-9-99-E",
+        "HN-CP-130-2017"
+      ],
+      "sources": [
+        {
+          "title": "Constitución de la República de Honduras",
+          "url": "https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf",
+          "sections": "artículos 68, 71, 82, 84, 89 y 99"
+        },
+        {
+          "title": "Código Procesal Penal",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf",
+          "sections": "artículos 101, 112–115, 282 y 285–294"
+        },
+        {
+          "title": "Código Penal",
+          "url": "https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf",
+          "sections": "artículos 104–110, 263–271 y tipos específicos aplicables"
+        }
+      ],
+      "related": [
+        {
+          "title": "Fianzas y Medidas Cautelares en el Proceso Penal",
+          "href": "/blog/derecho-penal/fianza-medidas-cautelares-proceso-penal-honduras"
+        },
+        {
+          "title": "Audiencia inicial en Honduras: proceso y decisiones",
+          "href": "/blog/derecho-penal/audiencia-inicial-proceso-penal-honduras"
+        }
+      ]
+    },
+    "fianza-medidas-cautelares-proceso-penal-honduras": {
+      "title": "Fianzas y Medidas Cautelares en el Proceso Penal",
+      "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "author": "Danilo Pineda Maradiaga",
+      "sourceIds": [
+        "HN-CONST-131-1982",
+        "HN-CPP-9-99-E",
+        "HN-CP-130-2017"
+      ],
+      "sources": [
+        {
+          "title": "Constitución de la República de Honduras",
+          "url": "https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf",
+          "sections": "artículos 68, 71, 82, 84, 89 y 99"
+        },
+        {
+          "title": "Código Procesal Penal",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf",
+          "sections": "artículos 101, 112–115, 282 y 285–294"
+        },
+        {
+          "title": "Código Penal",
+          "url": "https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf",
+          "sections": "artículos 104–110, 263–271 y tipos específicos aplicables"
+        }
+      ],
+      "related": [
+        {
+          "title": "Audiencia inicial en Honduras: proceso y decisiones",
+          "href": "/blog/derecho-penal/audiencia-inicial-proceso-penal-honduras"
+        },
+        {
+          "title": "Estafa en Honduras: Tipos, Denuncia y Defensa",
+          "href": "/blog/derecho-penal/estafas-fraudes-tipos-penales-honduras"
+        }
+      ]
+    },
+    "audiencia-inicial-proceso-penal-honduras": {
+      "title": "Audiencia inicial en Honduras: proceso y decisiones",
+      "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "author": "Danilo Pineda Maradiaga",
+      "sourceIds": [
+        "HN-CONST-131-1982",
+        "HN-CPP-9-99-E",
+        "HN-CP-130-2017"
+      ],
+      "sources": [
+        {
+          "title": "Constitución de la República de Honduras",
+          "url": "https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf",
+          "sections": "artículos 68, 71, 82, 84, 89 y 99"
+        },
+        {
+          "title": "Código Procesal Penal",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf",
+          "sections": "artículos 101, 112–115, 282 y 285–294"
+        },
+        {
+          "title": "Código Penal",
+          "url": "https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf",
+          "sections": "artículos 104–110, 263–271 y tipos específicos aplicables"
+        }
+      ],
+      "related": [
+        {
+          "title": "Estafa en Honduras: Tipos, Denuncia y Defensa",
+          "href": "/blog/derecho-penal/estafas-fraudes-tipos-penales-honduras"
+        },
+        {
+          "title": "Allanamiento en Honduras: Derechos y Qué Hacer",
+          "href": "/blog/derecho-penal/allanamiento-ilegal-violacion-domicilio-honduras"
+        }
+      ]
+    },
+    "estafas-fraudes-tipos-penales-honduras": {
+      "title": "Estafa en Honduras: Tipos, Denuncia y Defensa",
+      "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "author": "Danilo Pineda Maradiaga",
+      "sourceIds": [
+        "HN-CONST-131-1982",
+        "HN-CPP-9-99-E",
+        "HN-CP-130-2017"
+      ],
+      "sources": [
+        {
+          "title": "Constitución de la República de Honduras",
+          "url": "https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf",
+          "sections": "artículos 68, 71, 82, 84, 89 y 99"
+        },
+        {
+          "title": "Código Procesal Penal",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf",
+          "sections": "artículos 101, 112–115, 282 y 285–294"
+        },
+        {
+          "title": "Código Penal",
+          "url": "https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf",
+          "sections": "artículos 104–110, 263–271 y tipos específicos aplicables"
+        }
+      ],
+      "related": [
+        {
+          "title": "Allanamiento en Honduras: Derechos y Qué Hacer",
+          "href": "/blog/derecho-penal/allanamiento-ilegal-violacion-domicilio-honduras"
+        },
+        {
+          "title": "Derechos del detenido en Honduras: explicación práctica",
+          "href": "/blog/derecho-penal/derechos-detenido-honduras-guia-constitucional"
+        }
+      ]
+    },
+    "allanamiento-ilegal-violacion-domicilio-honduras": {
+      "title": "Allanamiento en Honduras: Derechos y Qué Hacer",
+      "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "author": "Danilo Pineda Maradiaga",
+      "sourceIds": [
+        "HN-CONST-131-1982",
+        "HN-CPP-9-99-E",
+        "HN-CP-130-2017"
+      ],
+      "sources": [
+        {
+          "title": "Constitución de la República de Honduras",
+          "url": "https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf",
+          "sections": "artículos 68, 71, 82, 84, 89 y 99"
+        },
+        {
+          "title": "Código Procesal Penal",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf",
+          "sections": "artículos 101, 112–115, 282 y 285–294"
+        },
+        {
+          "title": "Código Penal",
+          "url": "https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf",
+          "sections": "artículos 104–110, 263–271 y tipos específicos aplicables"
+        }
+      ],
+      "related": [
+        {
+          "title": "¿Qué Hacer Si Me Detienen en Honduras? Guía",
+          "href": "/blog/derecho-penal/que-hacer-si-me-detienen-en-honduras"
+        },
+        {
+          "title": "Prescripción Penal en Honduras: Plazos y Cálculo",
+          "href": "/blog/derecho-penal/cuando-prescribe-delito-en-honduras"
+        }
+      ]
+    },
+    "derechos-detenido-honduras-guia-constitucional": {
+      "title": "Derechos del detenido en Honduras: explicación práctica",
+      "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "author": "Danilo Pineda Maradiaga",
+      "sourceIds": [
+        "HN-CONST-131-1982",
+        "HN-CPP-9-99-E",
+        "HN-CP-130-2017"
+      ],
+      "sources": [
+        {
+          "title": "Constitución de la República de Honduras",
+          "url": "https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf",
+          "sections": "artículos 68, 71, 82, 84, 89 y 99"
+        },
+        {
+          "title": "Código Procesal Penal",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf",
+          "sections": "artículos 101, 112–115, 282 y 285–294"
+        },
+        {
+          "title": "Código Penal",
+          "url": "https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf",
+          "sections": "artículos 104–110, 263–271 y tipos específicos aplicables"
+        }
+      ],
+      "related": [
+        {
+          "title": "Prescripción Penal en Honduras: Plazos y Cálculo",
+          "href": "/blog/derecho-penal/cuando-prescribe-delito-en-honduras"
+        },
+        {
+          "title": "Fianzas y Medidas Cautelares en el Proceso Penal",
+          "href": "/blog/derecho-penal/fianza-medidas-cautelares-proceso-penal-honduras"
+        }
+      ]
+    },
+    "diferencia-denuncia-querella-acusacion-honduras": {
+      "title": "Denuncia vs querella y acusación en Honduras",
+      "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+      "author": "Danilo Pineda Maradiaga",
+      "sourceIds": [
+        "HN-CONST-131-1982",
+        "HN-CPP-9-99-E",
+        "HN-CP-130-2017"
+      ],
+      "sources": [
+        {
+          "title": "Constitución de la República de Honduras",
+          "url": "https://tsc.gob.hn/web/leyes/Constitucion_de_la_republica.pdf",
+          "sections": "artículos 68, 71, 82, 84, 89 y 99"
+        },
+        {
+          "title": "Código Procesal Penal",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal_Penal_2016.pdf",
+          "sections": "artículos 101, 112–115, 282 y 285–294"
+        },
+        {
+          "title": "Código Penal",
+          "url": "https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf",
+          "sections": "artículos 104–110, 263–271 y tipos específicos aplicables"
+        }
+      ],
+      "related": [
+        {
+          "title": "Fianzas y Medidas Cautelares en el Proceso Penal",
+          "href": "/blog/derecho-penal/fianza-medidas-cautelares-proceso-penal-honduras"
+        },
+        {
+          "title": "Audiencia inicial en Honduras: proceso y decisiones",
+          "href": "/blog/derecho-penal/audiencia-inicial-proceso-penal-honduras"
+        }
+      ]
+    },
+    "despido-laboral-honduras-guia-completa": {
+      "title": "Despido Injustificado en Honduras: Prestaciones y Plazos",
+      "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "author": "Emil Barahona",
+      "sourceIds": [
+        "HN-CT-189-59"
+      ],
+      "sources": [
+        {
+          "title": "Código del Trabajo",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf",
+          "sections": "artículos 112–126, 321–346 y 664–669"
+        }
+      ],
+      "related": [
+        {
+          "title": "Despido Injustificado en Honduras",
+          "href": "/blog/derecho-laboral/despido-injustificado-honduras-derechos-trabajador"
+        },
+        {
+          "title": "Calcula tus prestaciones laborales en Honduras",
+          "href": "/blog/derecho-laboral/calcular-prestaciones-laborales-honduras"
+        }
+      ]
+    },
+    "despido-injustificado-honduras-derechos-trabajador": {
+      "title": "Despido Injustificado en Honduras",
+      "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "author": "Emil Barahona",
+      "sourceIds": [
+        "HN-CT-189-59"
+      ],
+      "sources": [
+        {
+          "title": "Código del Trabajo",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf",
+          "sections": "artículos 112–126, 321–346 y 664–669"
+        }
+      ],
+      "related": [
+        {
+          "title": "Calcula tus prestaciones laborales en Honduras",
+          "href": "/blog/derecho-laboral/calcular-prestaciones-laborales-honduras"
+        },
+        {
+          "title": "Liquidación Laboral en Honduras",
+          "href": "/blog/derecho-laboral/calcular-liquidacion-laboral-honduras"
+        }
+      ]
+    },
+    "calcular-prestaciones-laborales-honduras": {
+      "title": "Calcula tus prestaciones laborales en Honduras",
+      "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "author": "Emil Barahona",
+      "sourceIds": [
+        "HN-CT-189-59"
+      ],
+      "sources": [
+        {
+          "title": "Código del Trabajo",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf",
+          "sections": "artículos 112–126, 321–346 y 664–669"
+        }
+      ],
+      "related": [
+        {
+          "title": "Liquidación Laboral en Honduras",
+          "href": "/blog/derecho-laboral/calcular-liquidacion-laboral-honduras"
+        },
+        {
+          "title": "¿Qué hacer si mi empleador no me paga en",
+          "href": "/blog/derecho-laboral/empleador-no-paga-salario-honduras"
+        }
+      ]
+    },
+    "calcular-liquidacion-laboral-honduras": {
+      "title": "Liquidación Laboral en Honduras",
+      "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "author": "Emil Barahona",
+      "sourceIds": [
+        "HN-CT-189-59"
+      ],
+      "sources": [
+        {
+          "title": "Código del Trabajo",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf",
+          "sections": "artículos 112–126, 321–346 y 664–669"
+        }
+      ],
+      "related": [
+        {
+          "title": "¿Qué hacer si mi empleador no me paga en",
+          "href": "/blog/derecho-laboral/empleador-no-paga-salario-honduras"
+        },
+        {
+          "title": "Jornada Laboral en Honduras: Horas Extra y Recargos",
+          "href": "/blog/derecho-laboral/jornada-laboral-horas-extra-descansos-honduras"
+        }
+      ]
+    },
+    "empleador-no-paga-salario-honduras": {
+      "title": "¿Qué hacer si mi empleador no me paga en",
+      "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "author": "Emil Barahona",
+      "sourceIds": [
+        "HN-CT-189-59"
+      ],
+      "sources": [
+        {
+          "title": "Código del Trabajo",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf",
+          "sections": "artículos 112–126, 321–346 y 664–669"
+        }
+      ],
+      "related": [
+        {
+          "title": "Jornada Laboral en Honduras: Horas Extra y Recargos",
+          "href": "/blog/derecho-laboral/jornada-laboral-horas-extra-descansos-honduras"
+        },
+        {
+          "title": "Despido por Embarazo en Honduras",
+          "href": "/blog/derecho-laboral/derechos-trabajadora-embarazada-honduras"
+        }
+      ]
+    },
+    "jornada-laboral-horas-extra-descansos-honduras": {
+      "title": "Jornada Laboral en Honduras: Horas Extra y Recargos",
+      "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "author": "Emil Barahona",
+      "sourceIds": [
+        "HN-CT-189-59"
+      ],
+      "sources": [
+        {
+          "title": "Código del Trabajo",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf",
+          "sections": "artículos 112–126, 321–346 y 664–669"
+        }
+      ],
+      "related": [
+        {
+          "title": "Despido Injustificado en Honduras: Prestaciones y Plazos",
+          "href": "/blog/derecho-laboral/despido-laboral-honduras-guia-completa"
+        },
+        {
+          "title": "Despido Injustificado en Honduras",
+          "href": "/blog/derecho-laboral/despido-injustificado-honduras-derechos-trabajador"
+        }
+      ]
+    },
+    "derechos-trabajadora-embarazada-honduras": {
+      "title": "Despido por Embarazo en Honduras",
+      "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "author": "Emil Barahona",
+      "sourceIds": [
+        "HN-CT-189-59"
+      ],
+      "sources": [
+        {
+          "title": "Código del Trabajo",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf",
+          "sections": "artículos 112–126, 321–346 y 664–669"
+        }
+      ],
+      "related": [
+        {
+          "title": "Despido Injustificado en Honduras",
+          "href": "/blog/derecho-laboral/despido-injustificado-honduras-derechos-trabajador"
+        },
+        {
+          "title": "Calcula tus prestaciones laborales en Honduras",
+          "href": "/blog/derecho-laboral/calcular-prestaciones-laborales-honduras"
+        }
+      ]
+    },
+    "acoso-laboral-mobbing-honduras": {
+      "title": "Acoso Laboral en Honduras: Cómo Identificarlo y Denunciarlo Legalmente",
+      "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+      "author": "Emil Barahona",
+      "sourceIds": [
+        "HN-CT-189-59"
+      ],
+      "sources": [
+        {
+          "title": "Código del Trabajo",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_trabajo.pdf",
+          "sections": "artículos 112–126, 321–346 y 664–669"
+        }
+      ],
+      "related": [
+        {
+          "title": "Calcula tus prestaciones laborales en Honduras",
+          "href": "/blog/derecho-laboral/calcular-prestaciones-laborales-honduras"
+        },
+        {
+          "title": "Liquidación Laboral en Honduras",
+          "href": "/blog/derecho-laboral/calcular-liquidacion-laboral-honduras"
+        }
+      ]
+    },
+    "custodia-hijos-honduras-juez": {
+      "title": "Custodia de Hijos en Honduras: Criterios del Juez",
+      "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-FAM-76-84",
+        "HN-NNA-35-2013"
+      ],
+      "sources": [
+        {
+          "title": "Código de Familia",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_familia.pdf",
+          "sections": "artículos 59–75, 109–125, 211–226 y 238–255"
+        },
+        {
+          "title": "Código de la Niñez y de la Adolescencia",
+          "url": "https://www.tsc.gob.hn/web/leyes/Codigo_ni%C3%B1ezyadolescencia_2013.pdf",
+          "sections": "principio de interés superior y disposiciones reformadas sobre familia y niñez"
+        }
+      ],
+      "related": [
+        {
+          "title": "Pensión Alimenticia en Honduras: Requisitos y Pasos",
+          "href": "/blog/derecho-de-familia/pension-alimenticia-honduras-guia-completa"
+        },
+        {
+          "title": "Pensión Alimenticia en Honduras 2026: Proporcionalidad y Cálculo",
+          "href": "/blog/derecho-de-familia/pension-alimenticia-porcentaje-honduras-2026"
+        }
+      ]
+    },
+    "pension-alimenticia-honduras-guia-completa": {
+      "title": "Pensión Alimenticia en Honduras: Requisitos y Pasos",
+      "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-FAM-76-84",
+        "HN-NNA-35-2013"
+      ],
+      "sources": [
+        {
+          "title": "Código de Familia",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_familia.pdf",
+          "sections": "artículos 59–75, 109–125, 211–226 y 238–255"
+        },
+        {
+          "title": "Código de la Niñez y de la Adolescencia",
+          "url": "https://www.tsc.gob.hn/web/leyes/Codigo_ni%C3%B1ezyadolescencia_2013.pdf",
+          "sections": "principio de interés superior y disposiciones reformadas sobre familia y niñez"
+        }
+      ],
+      "related": [
+        {
+          "title": "Pensión Alimenticia en Honduras 2026: Proporcionalidad y Cálculo",
+          "href": "/blog/derecho-de-familia/pension-alimenticia-porcentaje-honduras-2026"
+        },
+        {
+          "title": "Divorcio en Honduras: 3 vías, requisitos y plazos",
+          "href": "/blog/derecho-de-familia/divorcio-honduras-guia-completa"
+        }
+      ]
+    },
+    "pension-alimenticia-porcentaje-honduras-2026": {
+      "title": "Pensión Alimenticia en Honduras : Proporcionalidad y Cálculo",
+      "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-FAM-76-84",
+        "HN-NNA-35-2013"
+      ],
+      "sources": [
+        {
+          "title": "Código de Familia",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_familia.pdf",
+          "sections": "artículos 59–75, 109–125, 211–226 y 238–255"
+        },
+        {
+          "title": "Código de la Niñez y de la Adolescencia",
+          "url": "https://www.tsc.gob.hn/web/leyes/Codigo_ni%C3%B1ezyadolescencia_2013.pdf",
+          "sections": "principio de interés superior y disposiciones reformadas sobre familia y niñez"
+        }
+      ],
+      "related": [
+        {
+          "title": "Divorcio en Honduras: 3 vías, requisitos y plazos",
+          "href": "/blog/derecho-de-familia/divorcio-honduras-guia-completa"
+        },
+        {
+          "title": "Unión de Hecho en Honduras: Requisitos y Derechos",
+          "href": "/blog/derecho-de-familia/union-de-hecho-requisitos-derechos-honduras"
+        }
+      ]
+    },
+    "divorcio-honduras-guia-completa": {
+      "title": "Divorcio en Honduras: 3 vías, requisitos y plazos",
+      "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-FAM-76-84",
+        "HN-NNA-35-2013"
+      ],
+      "sources": [
+        {
+          "title": "Código de Familia",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_familia.pdf",
+          "sections": "artículos 59–75, 109–125, 211–226 y 238–255"
+        },
+        {
+          "title": "Código de la Niñez y de la Adolescencia",
+          "url": "https://www.tsc.gob.hn/web/leyes/Codigo_ni%C3%B1ezyadolescencia_2013.pdf",
+          "sections": "principio de interés superior y disposiciones reformadas sobre familia y niñez"
+        }
+      ],
+      "related": [
+        {
+          "title": "Unión de Hecho en Honduras: Requisitos y Derechos",
+          "href": "/blog/derecho-de-familia/union-de-hecho-requisitos-derechos-honduras"
+        },
+        {
+          "title": "Violencia intrafamiliar: cómo denunciar y obtener protección legal",
+          "href": "/blog/derecho-de-familia/violencia-intrafamiliar-denuncia-proteccion-honduras"
+        }
+      ]
+    },
+    "union-de-hecho-requisitos-derechos-honduras": {
+      "title": "Unión de Hecho en Honduras: Requisitos y Derechos",
+      "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-FAM-76-84",
+        "HN-NNA-35-2013"
+      ],
+      "sources": [
+        {
+          "title": "Código de Familia",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_familia.pdf",
+          "sections": "artículos 59–75, 109–125, 211–226 y 238–255"
+        },
+        {
+          "title": "Código de la Niñez y de la Adolescencia",
+          "url": "https://www.tsc.gob.hn/web/leyes/Codigo_ni%C3%B1ezyadolescencia_2013.pdf",
+          "sections": "principio de interés superior y disposiciones reformadas sobre familia y niñez"
+        }
+      ],
+      "related": [
+        {
+          "title": "Violencia intrafamiliar: cómo denunciar y obtener protección legal",
+          "href": "/blog/derecho-de-familia/violencia-intrafamiliar-denuncia-proteccion-honduras"
+        },
+        {
+          "title": "Pensión Alimenticia en Honduras: Cómo Solicitarla,...",
+          "href": "/blog/derecho-de-familia/pension-alimenticia-honduras-como-solicitarla"
+        }
+      ]
+    },
+    "violencia-intrafamiliar-denuncia-proteccion-honduras": {
+      "title": "Violencia intrafamiliar: cómo denunciar y obtener protección legal",
+      "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-FAM-76-84",
+        "HN-NNA-35-2013"
+      ],
+      "sources": [
+        {
+          "title": "Código de Familia",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_familia.pdf",
+          "sections": "artículos 59–75, 109–125, 211–226 y 238–255"
+        },
+        {
+          "title": "Código de la Niñez y de la Adolescencia",
+          "url": "https://www.tsc.gob.hn/web/leyes/Codigo_ni%C3%B1ezyadolescencia_2013.pdf",
+          "sections": "principio de interés superior y disposiciones reformadas sobre familia y niñez"
+        }
+      ],
+      "related": [
+        {
+          "title": "Custodia de Hijos en Honduras: Criterios del Juez",
+          "href": "/blog/derecho-de-familia/custodia-hijos-honduras-juez"
+        },
+        {
+          "title": "Pensión Alimenticia en Honduras: Requisitos y Pasos",
+          "href": "/blog/derecho-de-familia/pension-alimenticia-honduras-guia-completa"
+        }
+      ]
+    },
+    "pension-alimenticia-honduras-como-solicitarla": {
+      "title": "Pensión Alimenticia en Honduras: Cómo Solicitarla,...",
+      "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-FAM-76-84",
+        "HN-NNA-35-2013"
+      ],
+      "sources": [
+        {
+          "title": "Código de Familia",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_familia.pdf",
+          "sections": "artículos 59–75, 109–125, 211–226 y 238–255"
+        },
+        {
+          "title": "Código de la Niñez y de la Adolescencia",
+          "url": "https://www.tsc.gob.hn/web/leyes/Codigo_ni%C3%B1ezyadolescencia_2013.pdf",
+          "sections": "principio de interés superior y disposiciones reformadas sobre familia y niñez"
+        }
+      ],
+      "related": [
+        {
+          "title": "Pensión Alimenticia en Honduras: Requisitos y Pasos",
+          "href": "/blog/derecho-de-familia/pension-alimenticia-honduras-guia-completa"
+        },
+        {
+          "title": "Pensión Alimenticia en Honduras 2026: Proporcionalidad y Cálculo",
+          "href": "/blog/derecho-de-familia/pension-alimenticia-porcentaje-honduras-2026"
+        }
+      ]
+    },
+    "guarda-custodia-menores-tipos-honduras": {
+      "title": "Guarda y Custodia de Menores en Honduras: Tipos y Qué...",
+      "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-FAM-76-84",
+        "HN-NNA-35-2013"
+      ],
+      "sources": [
+        {
+          "title": "Código de Familia",
+          "url": "https://www.tsc.gob.hn/web/leyes/codigo_de_familia.pdf",
+          "sections": "artículos 59–75, 109–125, 211–226 y 238–255"
+        },
+        {
+          "title": "Código de la Niñez y de la Adolescencia",
+          "url": "https://www.tsc.gob.hn/web/leyes/Codigo_ni%C3%B1ezyadolescencia_2013.pdf",
+          "sections": "principio de interés superior y disposiciones reformadas sobre familia y niñez"
+        }
+      ],
+      "related": [
+        {
+          "title": "Pensión Alimenticia en Honduras 2026: Proporcionalidad y Cálculo",
+          "href": "/blog/derecho-de-familia/pension-alimenticia-porcentaje-honduras-2026"
+        },
+        {
+          "title": "Divorcio en Honduras: 3 vías, requisitos y plazos",
+          "href": "/blog/derecho-de-familia/divorcio-honduras-guia-completa"
+        }
+      ]
+    },
+    "contratos-arrendamiento-derechos-obligaciones-honduras": {
+      "title": "Contratos de Arrendamiento en Honduras",
+      "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Daños y Perjuicios en Honduras: Cómo Reclamar",
+          "href": "/blog/derecho-civil/danos-perjuicios-indemnizacion-honduras"
+        },
+        {
+          "title": "Herencias en Honduras: Testamento y Sucesión",
+          "href": "/blog/derecho-civil/testamentos-sucesiones-herencia-honduras"
+        }
+      ]
+    },
+    "danos-perjuicios-indemnizacion-honduras": {
+      "title": "Daños y Perjuicios en Honduras: Cómo Reclamar",
+      "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Herencias en Honduras: Testamento y Sucesión",
+          "href": "/blog/derecho-civil/testamentos-sucesiones-herencia-honduras"
+        },
+        {
+          "title": "Herencias en Honduras: ¿qué hacer cuando fallece un...",
+          "href": "/blog/derecho-civil/herencias-honduras-fallece-familiar"
+        }
+      ]
+    },
+    "testamentos-sucesiones-herencia-honduras": {
+      "title": "Herencias en Honduras: Testamento y Sucesión",
+      "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Herencias en Honduras: ¿qué hacer cuando fallece un...",
+          "href": "/blog/derecho-civil/herencias-honduras-fallece-familiar"
+        },
+        {
+          "title": "Poder Notarial en Honduras: Tipos",
+          "href": "/blog/derecho-notarial/poder-legal-honduras-cuando-se-necesita"
+        }
+      ]
+    },
+    "herencias-honduras-fallece-familiar": {
+      "title": "Herencias en Honduras: ¿qué hacer cuando fallece un...",
+      "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Poder Notarial en Honduras: Tipos",
+          "href": "/blog/derecho-notarial/poder-legal-honduras-cuando-se-necesita"
+        },
+        {
+          "title": "Compraventa de Inmuebles en Honduras",
+          "href": "/blog/derecho-civil/compraventa-inmuebles-aspectos-legales-honduras"
+        }
+      ]
+    },
+    "poder-legal-honduras-cuando-se-necesita": {
+      "title": "Poder Notarial en Honduras: Tipos",
+      "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "author": null,
+      "sourceIds": [
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Compraventa de Inmuebles en Honduras",
+          "href": "/blog/derecho-civil/compraventa-inmuebles-aspectos-legales-honduras"
+        },
+        {
+          "title": "Prescripción de Deudas en Honduras: Plazos y Requisitos",
+          "href": "/blog/derecho-civil/prescripcion-deudas-plazos-honduras"
+        }
+      ]
+    },
+    "compraventa-inmuebles-aspectos-legales-honduras": {
+      "title": "Compraventa de Inmuebles en Honduras",
+      "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Contratos de Arrendamiento en Honduras",
+          "href": "/blog/derecho-civil/contratos-arrendamiento-derechos-obligaciones-honduras"
+        },
+        {
+          "title": "Daños y Perjuicios en Honduras: Cómo Reclamar",
+          "href": "/blog/derecho-civil/danos-perjuicios-indemnizacion-honduras"
+        }
+      ]
+    },
+    "prescripcion-deudas-plazos-honduras": {
+      "title": "Prescripción de Deudas en Honduras: Plazos y Requisitos",
+      "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Daños y Perjuicios en Honduras: Cómo Reclamar",
+          "href": "/blog/derecho-civil/danos-perjuicios-indemnizacion-honduras"
+        },
+        {
+          "title": "Herencias en Honduras: Testamento y Sucesión",
+          "href": "/blog/derecho-civil/testamentos-sucesiones-herencia-honduras"
+        }
+      ]
+    },
+    "reclamar-deuda-legalmente-honduras": {
+      "title": "Cómo reclamar una deuda legalmente en Honduras",
+      "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Herencias en Honduras: Testamento y Sucesión",
+          "href": "/blog/derecho-civil/testamentos-sucesiones-herencia-honduras"
+        },
+        {
+          "title": "Herencias en Honduras: ¿qué hacer cuando fallece un...",
+          "href": "/blog/derecho-civil/herencias-honduras-fallece-familiar"
+        }
+      ]
+    },
+    "contratos-franquicia-aspectos": {
+      "title": "Contrato de Franquicia en Honduras: Cláusulas y Riesgos",
+      "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-COM-CODE",
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código de Comercio de Honduras",
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "sections": "sociedades, obligaciones y contratos mercantiles según negocio"
+        },
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Contratos Mercantiles en Honduras: 5 Esenciales",
+          "href": "/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras"
+        },
+        {
+          "title": "Competencia Desleal en Honduras",
+          "href": "/blog/derecho-mercantil/competencia-desleal-como-denunciar-honduras"
+        }
+      ]
+    },
+    "contratos-mercantiles-esenciales-empresas-honduras": {
+      "title": "Contratos Mercantiles en Honduras: 5 Esenciales",
+      "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-COM-CODE",
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código de Comercio de Honduras",
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "sections": "sociedades, obligaciones y contratos mercantiles según negocio"
+        },
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Competencia Desleal en Honduras",
+          "href": "/blog/derecho-mercantil/competencia-desleal-como-denunciar-honduras"
+        },
+        {
+          "title": "Incumplimiento de contrato en Honduras",
+          "href": "/blog/derecho-mercantil/incumplimiento-contrato-comercial-honduras"
+        }
+      ]
+    },
+    "competencia-desleal-como-denunciar-honduras": {
+      "title": "Competencia Desleal en Honduras",
+      "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-COM-CODE",
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código de Comercio de Honduras",
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "sections": "sociedades, obligaciones y contratos mercantiles según negocio"
+        },
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Incumplimiento de contrato en Honduras",
+          "href": "/blog/derecho-mercantil/incumplimiento-contrato-comercial-honduras"
+        },
+        {
+          "title": "Constitución de empresas en Honduras: pasos legales básicos",
+          "href": "/blog/derecho-mercantil/constitucion-empresas-honduras-pasos-legales"
+        }
+      ]
+    },
+    "incumplimiento-contrato-comercial-honduras": {
+      "title": "Incumplimiento de contrato en Honduras",
+      "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-COM-CODE",
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código de Comercio de Honduras",
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "sections": "sociedades, obligaciones y contratos mercantiles según negocio"
+        },
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Constitución de empresas en Honduras: pasos legales básicos",
+          "href": "/blog/derecho-mercantil/constitucion-empresas-honduras-pasos-legales"
+        },
+        {
+          "title": "Cheques sin Fondo en Honduras: Protesto Notarial",
+          "href": "/blog/derecho-mercantil/titulos-valores-cheques-sin-fondo-honduras"
+        }
+      ]
+    },
+    "constitucion-empresas-honduras-pasos-legales": {
+      "title": "Constitución de empresas en Honduras: pasos legales básicos",
+      "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-COM-CODE",
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código de Comercio de Honduras",
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "sections": "sociedades, obligaciones y contratos mercantiles según negocio"
+        },
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Cheques sin Fondo en Honduras: Protesto Notarial",
+          "href": "/blog/derecho-mercantil/titulos-valores-cheques-sin-fondo-honduras"
+        },
+        {
+          "title": "Cómo elegir el tipo de sociedad para su empresa en Honduras",
+          "href": "/blog/derecho-mercantil/elegir-tipo-sociedad-empresa-honduras"
+        }
+      ]
+    },
+    "titulos-valores-cheques-sin-fondo-honduras": {
+      "title": "Cheques sin Fondo en Honduras: Protesto Notarial",
+      "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-COM-CODE",
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código de Comercio de Honduras",
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "sections": "sociedades, obligaciones y contratos mercantiles según negocio"
+        },
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Contrato de Franquicia en Honduras: Cláusulas y Riesgos",
+          "href": "/blog/derecho-mercantil/contratos-franquicia-aspectos"
+        },
+        {
+          "title": "Contratos Mercantiles en Honduras: 5 Esenciales",
+          "href": "/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras"
+        }
+      ]
+    },
+    "elegir-tipo-sociedad-empresa-honduras": {
+      "title": "Cómo elegir el tipo de sociedad para su empresa en Honduras",
+      "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-COM-CODE",
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código de Comercio de Honduras",
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "sections": "sociedades, obligaciones y contratos mercantiles según negocio"
+        },
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Contratos Mercantiles en Honduras: 5 Esenciales",
+          "href": "/blog/derecho-mercantil/contratos-mercantiles-esenciales-empresas-honduras"
+        },
+        {
+          "title": "Competencia Desleal en Honduras",
+          "href": "/blog/derecho-mercantil/competencia-desleal-como-denunciar-honduras"
+        }
+      ]
+    },
+    "tipos-sociedad-mercantil-honduras": {
+      "title": "Tipos de Sociedad Mercantil en Honduras",
+      "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+      "author": "Thania Marlene Paz",
+      "sourceIds": [
+        "HN-COM-CODE",
+        "HN-CPC-211-2006"
+      ],
+      "sources": [
+        {
+          "title": "Código de Comercio de Honduras",
+          "url": "https://www.tsc.gob.hn/biblioteca/index.php/codigos",
+          "sections": "sociedades, obligaciones y contratos mercantiles según negocio"
+        },
+        {
+          "title": "Código Procesal Civil",
+          "url": "https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf",
+          "sections": "procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión"
+        }
+      ],
+      "related": [
+        {
+          "title": "Competencia Desleal en Honduras",
+          "href": "/blog/derecho-mercantil/competencia-desleal-como-denunciar-honduras"
+        },
+        {
+          "title": "Incumplimiento de contrato en Honduras",
+          "href": "/blog/derecho-mercantil/incumplimiento-contrato-comercial-honduras"
+        }
+      ]
+    }
+  }
+}

@@ -2,10 +2,11 @@ import type { Post } from '@/data/blog/types';
 import { blogCategories } from '@/data/blog/categories';
 import { formatHondurasDate } from '@/lib/datetime';
 import { getPublishedPosts, getPostBySlug as getPostBySlugDb, getBlogCategories } from '@/lib/blog-db';
+import phase3Editorial from '@/data/seo/phase3-editorial-overrides.json';
 
 const EDITORIAL_OVERRIDES: Record<string, { title: string; description: string }> = {
   'allanamiento-ilegal-violacion-domicilio-honduras': {
-    title: 'Allanamiento en Honduras: orden judicial y derechos',
+    title: 'Allanamiento en Honduras: Derechos y Qué Hacer',
     description: 'Cuándo puede realizarse un allanamiento en Honduras, qué debe contener la orden judicial y cómo actuar sin obstaculizar a la autoridad.',
   },
   'contratos-franquicia-aspectos': {
@@ -13,7 +14,7 @@ const EDITORIAL_OVERRIDES: Record<string, { title: string; description: string }
     description: 'Cláusulas que conviene revisar en un contrato de franquicia en Honduras: territorio, regalías, uso de marca, terminación y solución de conflictos.',
   },
   'guia-aduanera-importaciones-honduras': {
-    title: 'Importaciones en Honduras: requisitos y proceso aduanero',
+    title: 'Cómo Importar a Honduras: Requisitos y Documentos',
     description: 'Documentos, clasificación arancelaria, tributos y etapas generales del despacho para importar mercancías legalmente en Honduras.',
   },
   'usucapion-prescripcion-adquisitiva-honduras': {
@@ -35,6 +36,10 @@ const EDITORIAL_OVERRIDES: Record<string, { title: string; description: string }
   'cuando-necesito-abogado-penalista-honduras': {
     title: '¿Cuándo necesita un abogado penalista en Honduras?',
     description: 'Situaciones en las que conviene buscar defensa penal temprana, qué información preparar y cómo se desarrolla una primera consulta.',
+  },
+  'cuando-prescribe-delito-en-honduras': {
+    title: 'Prescripción Penal en Honduras: Plazos y Cálculo',
+    description: 'Cómo se determina la prescripción penal en Honduras según la pena, el delito y los actos que pueden interrumpir o suspender el cómputo.',
   },
   'custodia-hijos-honduras-juez': {
     title: 'Custodia de Hijos en Honduras: Criterios del Juez',
@@ -59,6 +64,10 @@ const EDITORIAL_OVERRIDES: Record<string, { title: string; description: string }
   'herencias-honduras-fallece-familiar': {
     title: 'Herencias en Honduras: Testamento y Sucesión',
     description: 'Pasos para ordenar una herencia en Honduras: testamentos, sucesión intestada, documentos necesarios y diferencias entre vía notarial y judicial.',
+  },
+  'testamentos-sucesiones-herencia-honduras': {
+    title: 'Herencias en Honduras: Testamento y Sucesión',
+    description: 'Cómo se tramita una herencia en Honduras, qué cambia si existe testamento y qué documentos conviene reunir antes de iniciar la sucesión.',
   },
   'jornada-laboral-horas-extra-descansos-honduras': {
     title: 'Jornada Laboral en Honduras: Horas Extra y Recargos',
@@ -98,6 +107,38 @@ function cleanPlaceholderLinks(html: string): string {
     /<a\b[^>]*href=["']https?:\/\/(?:www\.)?(?:ejemplo\.com|tuabogado\.com)[^"']*["'][^>]*>([\s\S]*?)<\/a>/gi,
     '$1',
   );
+}
+
+type Phase3Override = {
+  title: string;
+  metaDescription: string;
+  directAnswer: string;
+  author: string | null;
+  sources: Array<{ title: string; url: string; sections: string }>;
+  related: Array<{ title: string; href: string }>;
+};
+
+function applyDocumentaryReview(html: string, editorial?: Phase3Override): string {
+  if (!editorial || html.includes('data-phase3-documentary-review')) return html;
+  const sources = editorial.sources.map((source) =>
+    `<li><a href="${source.url}" rel="noopener noreferrer">${source.title}</a> — ${source.sections}</li>`,
+  ).join('');
+  const related = editorial.related.map((item) =>
+    `<li><a href="${item.href}">${item.title}</a></li>`,
+  ).join('');
+  return [
+    '<section data-phase3-documentary-review="true">',
+    '<h2>Respuesta breve</h2>',
+    `<p>${editorial.directAnswer}</p>`,
+    '</section>',
+    html,
+    '<section data-phase3-documentary-review="true">',
+    '<h2>Fuentes jurídicas consultadas</h2>',
+    `<ul>${sources}</ul>`,
+    '<h2>Artículos relacionados</h2>',
+    `<ul>${related}</ul>`,
+    '</section>',
+  ].join('');
 }
 
 function polishedExcerpt(value: string): string {
@@ -196,18 +237,19 @@ type PublicBlogPost = Awaited<ReturnType<typeof getPublishedPosts>>[number];
 
 function mapToPost(p: PublicBlogPost): Post {
   const editorial = EDITORIAL_OVERRIDES[p.slug];
-  const title = editorial?.title ?? polishedTitle(p.title);
-  const description = editorial?.description ?? polishedExcerpt(p.description);
+  const documentary = phase3Editorial.overrides[p.slug as keyof typeof phase3Editorial.overrides] as Phase3Override | undefined;
+  const title = documentary?.title ?? editorial?.title ?? polishedTitle(p.title);
+  const description = documentary?.metaDescription ?? editorial?.description ?? polishedExcerpt(p.description);
   return {
-    slug: p.slug, title, description, body: cleanPlaceholderLinks(p.body),
+    slug: p.slug, title, description, body: applyDocumentaryReview(cleanPlaceholderLinks(p.body), documentary),
     publishedAt: p.publishedAt.toISOString(), category: p.category,
-    tags: p.tags ?? [], author: p.author ?? '', readingTime: p.readingTime ?? '',
+    tags: p.tags ?? [], author: documentary?.author ?? p.author ?? '', readingTime: p.readingTime ?? '',
     coverImage: COVERS_PENDING_LOCAL_REPLACEMENT.has(p.slug) ? undefined : p.coverImage ?? undefined,
     featured: p.featured ?? false,
     updatedAt: p.updatedAt?.toISOString(),
 
-    metaTitle: editorial?.title ?? p.metaTitle ?? undefined,
-    metaDescription: editorial?.description ?? p.metaDescription ?? undefined,
+    metaTitle: documentary?.title ?? editorial?.title ?? p.metaTitle ?? undefined,
+    metaDescription: documentary?.metaDescription ?? editorial?.description ?? p.metaDescription ?? undefined,
     ogImage: p.ogImage ?? undefined,
     noindex: p.noindex ?? undefined,
     canonicalUrl: p.slug === 'abogados-en-nacaome'

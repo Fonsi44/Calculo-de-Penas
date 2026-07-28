@@ -1,0 +1,303 @@
+{
+  "batch": "penal",
+  "generatedAt": "2026-07-28",
+  "mode": "DRY_RUN_ONLY",
+  "patches": [
+    {
+      "slug": "que-hacer-si-me-detienen-en-honduras",
+      "expected": {
+        "updatedAt": "2026-07-27T07:55:47.127Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "078520c370cbf2ba1d044542537b4b1ddb22c775aa0004b43e17acb161cb2fa1"
+      },
+      "proposed": {
+        "title": "¿Qué Hacer Si Me Detienen en Honduras? Guía",
+        "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "author": "Danilo Pineda Maradiaga",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CONST-131-1982",
+          "HN-CPP-9-99-E",
+          "HN-CP-130-2017"
+        ],
+        "relatedSlugs": [
+          "cuando-prescribe-delito-en-honduras",
+          "fianza-medidas-cautelares-proceso-penal-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "¿Qué Hacer Si Me Detienen en Honduras? Guía",
+        "metaDescription": "Si es detenido en Honduras, conozca sus derechos constitucionales y el procedimiento legal. Asesoría legal inmediata es crucial. ¡Actúe ahora!",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "expected": {
+        "updatedAt": "2026-07-26T16:08:51.166Z",
+        "reviewStatus": "needs_human_review",
+        "contentHash": "60988525da867d7abc4ab35f29c0cd08397957a7c5c8e6a2c5f08ae8fe330cba"
+      },
+      "proposed": {
+        "title": "Prescripción Penal en Honduras: Plazos y Cálculo",
+        "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "author": "Danilo Pineda Maradiaga",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CONST-131-1982",
+          "HN-CPP-9-99-E",
+          "HN-CP-130-2017"
+        ],
+        "relatedSlugs": [
+          "fianza-medidas-cautelares-proceso-penal-honduras",
+          "audiencia-inicial-proceso-penal-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "¿Cuándo Prescribe un Delito en Honduras? Plazos",
+        "metaDescription": "Entienda cuándo prescribe un delito en Honduras. Conozca los plazos, interrupciones y consecuencias según el Código Penal hondureño.",
+        "reviewStatus": "needs_human_review"
+      }
+    },
+    {
+      "slug": "fianza-medidas-cautelares-proceso-penal-honduras",
+      "expected": {
+        "updatedAt": "2026-07-27T07:55:46.459Z",
+        "reviewStatus": "needs_human_review",
+        "contentHash": "cbff62f7b004390ec1a49f5ca8f8cbfc557881910c47f5dc49fb408691e2ecfb"
+      },
+      "proposed": {
+        "title": "Fianzas y Medidas Cautelares en el Proceso Penal",
+        "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "author": "Danilo Pineda Maradiaga",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CONST-131-1982",
+          "HN-CPP-9-99-E",
+          "HN-CP-130-2017"
+        ],
+        "relatedSlugs": [
+          "audiencia-inicial-proceso-penal-honduras",
+          "estafas-fraudes-tipos-penales-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Fianzas y Medidas Cautelares en el Proceso Penal",
+        "metaDescription": "Conozca las fianzas y medidas cautelares en Honduras según el Código Procesal Penal (Decreto 9-99-E). Asegure su defensa y libertad durante el proceso.",
+        "reviewStatus": "needs_human_review"
+      }
+    },
+    {
+      "slug": "audiencia-inicial-proceso-penal-honduras",
+      "expected": {
+        "updatedAt": "2026-07-27T07:45:07.867Z",
+        "reviewStatus": "needs_human_review",
+        "contentHash": "88865dd442259b095ab267227531b7790d83ca24a90f71f31e9cb1bb2678addf"
+      },
+      "proposed": {
+        "title": "Audiencia inicial en Honduras: proceso y decisiones",
+        "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "author": "Danilo Pineda Maradiaga",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CONST-131-1982",
+          "HN-CPP-9-99-E",
+          "HN-CP-130-2017"
+        ],
+        "relatedSlugs": [
+          "estafas-fraudes-tipos-penales-honduras",
+          "allanamiento-ilegal-violacion-domicilio-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Audiencia inicial en Honduras: proceso y decisiones",
+        "metaDescription": "Qué ocurre en la audiencia inicial penal, quiénes participan y qué resoluciones puede adoptar el juez después de examinar el caso.",
+        "reviewStatus": "needs_human_review"
+      }
+    },
+    {
+      "slug": "estafas-fraudes-tipos-penales-honduras",
+      "expected": {
+        "updatedAt": "2026-07-26T16:23:55.931Z",
+        "reviewStatus": "needs_human_review",
+        "contentHash": "3830925c724c34e3c83ff9914743f0fae780383e6a2809507af536186aaf4fd5"
+      },
+      "proposed": {
+        "title": "Estafa en Honduras: Tipos, Denuncia y Defensa",
+        "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "author": "Danilo Pineda Maradiaga",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CONST-131-1982",
+          "HN-CPP-9-99-E",
+          "HN-CP-130-2017"
+        ],
+        "relatedSlugs": [
+          "allanamiento-ilegal-violacion-domicilio-honduras",
+          "derechos-detenido-honduras-guia-constitucional"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Estafas en Honduras: Tipos Penales",
+        "metaDescription": "Conozca los principales tipos de estafa y fraude en Honduras, sus posibles consecuencias y qué considerar al denunciar o preparar una defensa.",
+        "reviewStatus": "needs_human_review"
+      }
+    },
+    {
+      "slug": "allanamiento-ilegal-violacion-domicilio-honduras",
+      "expected": {
+        "updatedAt": "2026-07-27T07:45:07.616Z",
+        "reviewStatus": "needs_human_review",
+        "contentHash": "458cad4fdafe0a53d34d096a21700f66b46abff93efcec7ce5aa88a3039cc3a5"
+      },
+      "proposed": {
+        "title": "Allanamiento en Honduras: Derechos y Qué Hacer",
+        "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "author": "Danilo Pineda Maradiaga",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CONST-131-1982",
+          "HN-CPP-9-99-E",
+          "HN-CP-130-2017"
+        ],
+        "relatedSlugs": [
+          "que-hacer-si-me-detienen-en-honduras",
+          "cuando-prescribe-delito-en-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Allanamiento Ilegal en Honduras - ¿Qué Hacer?",
+        "metaDescription": "Horario, orden judicial, urgencia y derechos ante un registro o allanamiento ilegal de una vivienda en Honduras.",
+        "reviewStatus": "needs_human_review"
+      }
+    },
+    {
+      "slug": "derechos-detenido-honduras-guia-constitucional",
+      "expected": {
+        "updatedAt": "2026-07-27T07:45:07.100Z",
+        "reviewStatus": "needs_human_review",
+        "contentHash": "3f91757e7b5c393d62850087af82beef841bb0701d5ddb6edcfd9e12e03897c1"
+      },
+      "proposed": {
+        "title": "Derechos del detenido en Honduras: explicación práctica",
+        "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "author": "Danilo Pineda Maradiaga",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CONST-131-1982",
+          "HN-CPP-9-99-E",
+          "HN-CP-130-2017"
+        ],
+        "relatedSlugs": [
+          "cuando-prescribe-delito-en-honduras",
+          "fianza-medidas-cautelares-proceso-penal-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Derechos del detenido en Honduras: explicación práctica",
+        "metaDescription": "Abogado defensor, derecho al silencio, información sobre la detención, plazos y hábeas corpus explicados de forma práctica.",
+        "reviewStatus": "needs_human_review"
+      }
+    },
+    {
+      "slug": "diferencia-denuncia-querella-acusacion-honduras",
+      "expected": {
+        "updatedAt": "2026-07-26T16:08:52.200Z",
+        "reviewStatus": "needs_human_review",
+        "contentHash": "0102707b9d88b5d107744281d6dfff7152831a9592c4d280a8dc4111a15027a2"
+      },
+      "proposed": {
+        "title": "Denuncia vs querella y acusación en Honduras",
+        "metaDescription": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "directAnswer": "La respuesta depende de la etapa procesal, la resolución vigente y los hechos documentados. Antes de declarar, firmar o dejar vencer una audiencia, conviene identificar la autoridad actuante, conservar la documentación y solicitar defensa técnica.",
+        "author": "Danilo Pineda Maradiaga",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CONST-131-1982",
+          "HN-CPP-9-99-E",
+          "HN-CP-130-2017"
+        ],
+        "relatedSlugs": [
+          "fianza-medidas-cautelares-proceso-penal-honduras",
+          "audiencia-inicial-proceso-penal-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Denuncia vs querella y acusación en Honduras",
+        "metaDescription": "Quién puede informar un delito, cómo participa la víctima y cuándo formaliza la acusación el Ministerio Público en Honduras.",
+        "reviewStatus": "needs_human_review"
+      }
+    }
+  ]
+}

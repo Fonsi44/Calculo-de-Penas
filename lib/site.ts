@@ -140,7 +140,7 @@ export const site = {
     process.env.NEXT_PUBLIC_SITE_TAGLINE ??
     'Abogados en Nacaome, Valle | Pineda y Asociados',
   description:
-    'Abogados colegiados en Nacaome para defensa penal, familia, asuntos laborales, civiles y mercantiles. Atención directa, consulta confidencial y presupuesto por escrito.',
+    'Abogados en Nacaome para defensa penal y asuntos de familia, laborales, civiles y mercantiles. Atención directa y presupuesto por escrito.',
   keywords:
     (process.env.NEXT_PUBLIC_SITE_KEYWORDS ??
       'abogados Nacaome, bufete jurídico Valle Honduras, abogado penalista Nacaome, defensa penal sur Honduras, abogados San Lorenzo, abogados Choluteca, abogados Goascorán, abogados Amapala, abogados Pespire, abogados San Marcos de Colón, abogados Marcovia, abogado de familia Valle, abogado laboral Nacaome, derecho civil sur Honduras, abogado mercantil Nacaome, consulta legal gratuita Nacaome, bufete jurídico sur Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),

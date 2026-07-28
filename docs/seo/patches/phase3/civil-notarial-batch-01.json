@@ -1,0 +1,287 @@
+{
+  "batch": "civil-notarial",
+  "generatedAt": "2026-07-28",
+  "mode": "DRY_RUN_ONLY",
+  "patches": [
+    {
+      "slug": "contratos-arrendamiento-derechos-obligaciones-honduras",
+      "expected": {
+        "updatedAt": "2026-07-26T07:43:27.540Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "c045ac534bc21269ae1c1f511a28acbfe3885839ce63f64ea36a7a8561a9b26d"
+      },
+      "proposed": {
+        "title": "Contratos de Arrendamiento en Honduras",
+        "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "danos-perjuicios-indemnizacion-honduras",
+          "testamentos-sucesiones-herencia-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Contratos de Arrendamiento en Honduras",
+        "metaDescription": "Conozca los derechos y obligaciones de inquilinos y propietarios en Honduras: contrato, depósito, reparaciones, mora y desalojo.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "danos-perjuicios-indemnizacion-honduras",
+      "expected": {
+        "updatedAt": "2026-07-25T06:31:08.128Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "d278f3eb2cfad38935a5cfddd3471952838bceb837f90d143565e4c822695469"
+      },
+      "proposed": {
+        "title": "Daños y Perjuicios en Honduras: Cómo Reclamar",
+        "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "testamentos-sucesiones-herencia-honduras",
+          "herencias-honduras-fallece-familiar"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Daños y Perjuicios en Honduras: Demanda e Indemnización",
+        "metaDescription": "¿Cuándo procede una demanda por daños y perjuicios en Honduras? Daño material y moral, plazos para demandar y cómo se calcula la indemnización.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "testamentos-sucesiones-herencia-honduras",
+      "expected": {
+        "updatedAt": "2026-07-07T18:39:28.476Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "263e0827683bf5c76be349ae0fd4d1c1cb12f0c5d8bf13f21cff4577aebe9187"
+      },
+      "proposed": {
+        "title": "Herencias en Honduras: Testamento y Sucesión",
+        "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "herencias-honduras-fallece-familiar",
+          "poder-legal-honduras-cuando-se-necesita"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Herencias en Honduras: Guía Paso a Paso de",
+        "metaDescription": "Descubra cómo funcionan las herencias y sucesiones en Honduras. Conozca los tipos de testamento, la sucesión intestada y el proceso legal.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "herencias-honduras-fallece-familiar",
+      "expected": {
+        "updatedAt": "2026-06-20T10:00:50.739Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "c50434fa451cd57fd8fac97627bab0d00255042f86dcb16980dcc534248d70a5"
+      },
+      "proposed": {
+        "title": "Herencias en Honduras: ¿qué hacer cuando fallece un...",
+        "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "poder-legal-honduras-cuando-se-necesita",
+          "compraventa-inmuebles-aspectos-legales-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Herencias en Honduras: ¿qué hacer cuando fallece un...",
+        "metaDescription": "Pasos legales tras el fallecimiento de un familiar en Honduras. Sucesión testada e intestada, plazos, documentación necesaria y asesoría legal.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "poder-legal-honduras-cuando-se-necesita",
+      "expected": {
+        "updatedAt": "2026-07-27T00:20:33.523Z",
+        "reviewStatus": "needs_human_review",
+        "contentHash": "160edca4e27b0b924d62aea3e7ea6c53d2a5b35cfcc09f9fd91d84b69a034699"
+      },
+      "proposed": {
+        "title": "Poder Notarial en Honduras: Tipos",
+        "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "author": null,
+        "reviewerProposed": null,
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "compraventa-inmuebles-aspectos-legales-honduras",
+          "prescripcion-deudas-plazos-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Poder Notarial en Honduras: Tipos",
+        "metaDescription": "Conozca cuándo necesita un poder notarial en Honduras, qué tipos existen, cómo se otorgan y qué debe revisar antes de firmar.",
+        "reviewStatus": "needs_human_review"
+      }
+    },
+    {
+      "slug": "compraventa-inmuebles-aspectos-legales-honduras",
+      "expected": {
+        "updatedAt": "2026-07-07T18:39:04.092Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "f0a92b563b22d021cdbe2f01556c0dfff985a1a51623f6395dfa1c55785ab1eb"
+      },
+      "proposed": {
+        "title": "Compraventa de Inmuebles en Honduras",
+        "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "contratos-arrendamiento-derechos-obligaciones-honduras",
+          "danos-perjuicios-indemnizacion-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Compraventa de Inmuebles en Honduras",
+        "metaDescription": "Guía completa sobre la compraventa de inmuebles en Honduras. Conozca el marco legal, pasos, impuestos y errores comunes.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "prescripcion-deudas-plazos-honduras",
+      "expected": {
+        "updatedAt": "2026-07-25T06:31:08.386Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "0938d74f5abd5ae4fd9cc4fcebb0f6ce1e9e3d767a9ec0be53d19b67889b75a7"
+      },
+      "proposed": {
+        "title": "Prescripción de Deudas en Honduras: Plazos y Requisitos",
+        "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "danos-perjuicios-indemnizacion-honduras",
+          "testamentos-sucesiones-herencia-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Prescripción de Deudas en Honduras: Plazos y Requisitos",
+        "metaDescription": "¿En cuánto tiempo prescribe una deuda en Honduras? Plazos para deudas civiles, mercantiles y bancarias. Cómo interrumpir la prescripción y conservar tu derecho ",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "reclamar-deuda-legalmente-honduras",
+      "expected": {
+        "updatedAt": "2026-07-27T00:20:33.924Z",
+        "reviewStatus": "needs_human_review",
+        "contentHash": "8f4fe78855ae0f8ce2499c5c46a3f08653cb2ae3f4cb4572320486a636bf09e3"
+      },
+      "proposed": {
+        "title": "Cómo reclamar una deuda legalmente en Honduras",
+        "metaDescription": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "directAnswer": "La vía adecuada depende del documento, la obligación, la prueba y el plazo aplicable. Antes de firmar, reclamar o disponer de bienes conviene verificar titularidad, cargas, representación y consecuencias del acto.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "testamentos-sucesiones-herencia-honduras",
+          "herencias-honduras-fallece-familiar"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Cómo reclamar una deuda legalmente en Honduras",
+        "metaDescription": "Descubra cómo reclamar una deuda legalmente en Honduras. Conozca el proceso monitorio, juicio ejecutivo, requisitos y plazos de prescripción según la ley.",
+        "reviewStatus": "needs_human_review"
+      }
+    }
+  ]
+}

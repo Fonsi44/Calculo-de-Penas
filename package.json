@@ -127,6 +127,7 @@
     "seo:production-readiness": "npx tsx scripts/seo-production-readiness.ts",
     "seo:preview-fixtures": "npx tsx scripts/export-preview-blog-fixtures.ts",
     "seo:closure-artifacts": "npx tsx scripts/generate-seo-closure-artifacts.ts",
+    "seo:phase3": "npx tsx scripts/generate-phase3-editorial.ts",
     "seo:gsc:live": "node scripts/google-search-console-live.mjs",
     "seo:ga4:live": "node scripts/google-analytics-live.mjs",
     "seo:bing:live": "node scripts/bing-webmaster-live.mjs",

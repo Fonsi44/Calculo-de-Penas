@@ -1,0 +1,295 @@
+{
+  "batch": "familia",
+  "generatedAt": "2026-07-28",
+  "mode": "DRY_RUN_ONLY",
+  "patches": [
+    {
+      "slug": "custodia-hijos-honduras-juez",
+      "expected": {
+        "updatedAt": "2026-07-26T07:43:27.644Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "4be33fee9d83d4fac96c92656bd5f2460ebb6325fd9e16bafa9c4b3a5da0ca46"
+      },
+      "proposed": {
+        "title": "Custodia de Hijos en Honduras: Criterios del Juez",
+        "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-FAM-76-84",
+          "HN-NNA-35-2013"
+        ],
+        "relatedSlugs": [
+          "pension-alimenticia-honduras-guia-completa",
+          "pension-alimenticia-porcentaje-honduras-2026"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Custodia de Hijos en Honduras 2026",
+        "metaDescription": "Conozca los tipos de custodia y los criterios que evalúa un juez en Honduras para proteger el interés superior de niñas, niños y adolescentes.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "pension-alimenticia-honduras-guia-completa",
+      "expected": {
+        "updatedAt": "2026-07-26T07:43:28.495Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "554b65d2b762c393b94a0ccef55010ae6e999f5b13ace390b24145ecd1d670b8"
+      },
+      "proposed": {
+        "title": "Pensión Alimenticia en Honduras: Requisitos y Pasos",
+        "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-FAM-76-84",
+          "HN-NNA-35-2013"
+        ],
+        "relatedSlugs": [
+          "pension-alimenticia-porcentaje-honduras-2026",
+          "divorcio-honduras-guia-completa"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Pensión alimenticia en Honduras: requisitos y pasos",
+        "metaDescription": "Conozca los documentos, pasos y criterios para solicitar, modificar o exigir el cumplimiento de una pensión alimenticia en Honduras.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "pension-alimenticia-porcentaje-honduras-2026",
+      "expected": {
+        "updatedAt": "2026-07-26T18:50:50.092Z",
+        "reviewStatus": "needs_human_review",
+        "contentHash": "e0b2fbd4bc37e37595b6593262a215fd79409075818baa1c32152f7f73d501dd"
+      },
+      "proposed": {
+        "title": "Pensión Alimenticia en Honduras : Proporcionalidad y Cálculo",
+        "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-FAM-76-84",
+          "HN-NNA-35-2013"
+        ],
+        "relatedSlugs": [
+          "divorcio-honduras-guia-completa",
+          "union-de-hecho-requisitos-derechos-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Pensión Alimenticia en Honduras 2026: Proporcionalidad y Cálculo",
+        "metaDescription": "Guía sobre la pensión alimenticia en Honduras para 2026: aprenda cómo el juez calcula la cuota según las necesidades del menor y los ingresos del progenitor sin",
+        "reviewStatus": "needs_human_review"
+      }
+    },
+    {
+      "slug": "divorcio-honduras-guia-completa",
+      "expected": {
+        "updatedAt": "2026-07-26T07:43:27.760Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "3c2dbf4a9c86adf441dda0589763b1d6f0414f392ee6b07ff64174b2c7fa4c5c"
+      },
+      "proposed": {
+        "title": "Divorcio en Honduras: 3 vías, requisitos y plazos",
+        "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-FAM-76-84",
+          "HN-NNA-35-2013"
+        ],
+        "relatedSlugs": [
+          "union-de-hecho-requisitos-derechos-honduras",
+          "violencia-intrafamiliar-denuncia-proteccion-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Divorcio en Honduras: 3 vías, requisitos y plazos",
+        "metaDescription": "Compare las vías de divorcio en Honduras, sus requisitos, documentos, plazos y las decisiones sobre hijos, alimentos y patrimonio.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "union-de-hecho-requisitos-derechos-honduras",
+      "expected": {
+        "updatedAt": "2026-07-27T00:20:35.635Z",
+        "reviewStatus": "needs_human_review",
+        "contentHash": "63dba72fafa9700f2c6e9ef4e659ee2e0aae6f7664dc76da66a9c3a123edf44d"
+      },
+      "proposed": {
+        "title": "Unión de Hecho en Honduras: Requisitos y Derechos",
+        "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-FAM-76-84",
+          "HN-NNA-35-2013"
+        ],
+        "relatedSlugs": [
+          "violencia-intrafamiliar-denuncia-proteccion-honduras",
+          "pension-alimenticia-honduras-como-solicitarla"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Unión de Hecho en Honduras: Requisitos, Derechos",
+        "metaDescription": "Descubre los requisitos, derechos y procedimientos para la Unión de Hecho en Honduras. Asesoría legal sobre convivencia estable y notoria.",
+        "reviewStatus": "needs_human_review"
+      }
+    },
+    {
+      "slug": "violencia-intrafamiliar-denuncia-proteccion-honduras",
+      "expected": {
+        "updatedAt": "2026-06-12T21:48:03.520Z",
+        "reviewStatus": "published",
+        "contentHash": "af77a8f605ca1fb40a0a77457fb8a25930096391147a4e53ed03d5383719d3c7"
+      },
+      "proposed": {
+        "title": "Violencia intrafamiliar: cómo denunciar y obtener protección legal",
+        "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Danilo Pineda Maradiaga",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-FAM-76-84",
+          "HN-NNA-35-2013"
+        ],
+        "relatedSlugs": [
+          "custodia-hijos-honduras-juez",
+          "pension-alimenticia-honduras-guia-completa"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Violencia intrafamiliar: cómo denunciar y obtener protección legal",
+        "metaDescription": "Explica los tipos de violencia intrafamiliar, dónde y cómo denunciar, medidas de protección disponibles y acompañamiento legal.",
+        "reviewStatus": "published"
+      }
+    },
+    {
+      "slug": "pension-alimenticia-honduras-como-solicitarla",
+      "expected": {
+        "updatedAt": "2026-06-23T16:34:41.355Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "e24e0b6b000fb9b8dbcd2d0596e0963c13c0af0aa74768656bca9d34c73d0bc4"
+      },
+      "proposed": {
+        "title": "Pensión Alimenticia en Honduras: Cómo Solicitarla,...",
+        "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-FAM-76-84",
+          "HN-NNA-35-2013"
+        ],
+        "relatedSlugs": [
+          "pension-alimenticia-honduras-guia-completa",
+          "pension-alimenticia-porcentaje-honduras-2026"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Pensión Alimenticia en Honduras: Cómo Solicitarla,...",
+        "metaDescription": "Guía paso a paso para solicitar la pensión alimenticia en Honduras: requisitos, documentos, juzgado competente y qué hacer si el obligado no paga.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "guarda-custodia-menores-tipos-honduras",
+      "expected": {
+        "updatedAt": "2026-06-20T10:00:50.739Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "eb23a692c9b4cff23b6c59b14c9be867671f6353b0a943fc0dce168370b1d932"
+      },
+      "proposed": {
+        "title": "Guarda y Custodia de Menores en Honduras: Tipos y Qué...",
+        "metaDescription": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "directAnswer": "La decisión depende del interés de las personas menores, las necesidades acreditadas, la capacidad económica y la prueba disponible. Las medidas urgentes y el procedimiento deben ajustarse al caso concreto.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-FAM-76-84",
+          "HN-NNA-35-2013"
+        ],
+        "relatedSlugs": [
+          "pension-alimenticia-porcentaje-honduras-2026",
+          "divorcio-honduras-guia-completa"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Guarda y Custodia de Menores en Honduras: Tipos y Qué...",
+        "metaDescription": "Custodia exclusiva, compartida y a terceros. Factores que el juez considera: edad del menor, estabilidad, disponibilidad real, vínculo afectivo y conducta.",
+        "reviewStatus": "reviewed"
+      }
+    }
+  ]
+}

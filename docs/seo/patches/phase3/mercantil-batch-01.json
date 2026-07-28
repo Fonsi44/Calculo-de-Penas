@@ -1,0 +1,295 @@
+{
+  "batch": "mercantil",
+  "generatedAt": "2026-07-28",
+  "mode": "DRY_RUN_ONLY",
+  "patches": [
+    {
+      "slug": "contratos-franquicia-aspectos",
+      "expected": {
+        "updatedAt": "2026-07-07T18:39:05.952Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "155d76544c53a84c55cf9241322f60b3f610d45146ab4f47c274a862bf659441"
+      },
+      "proposed": {
+        "title": "Contrato de Franquicia en Honduras: Cláusulas y Riesgos",
+        "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-COM-CODE",
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "contratos-mercantiles-esenciales-empresas-honduras",
+          "competencia-desleal-como-denunciar-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Contratos de Franquicia en Honduras: Guia Legal",
+        "metaDescription": "Entienda los contratos de franquicia en Honduras: cláusulas esenciales, riesgos y protección legal. Asesoría experta en derecho mercantil.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "contratos-mercantiles-esenciales-empresas-honduras",
+      "expected": {
+        "updatedAt": "2026-07-07T18:36:53.470Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "7aec743208b47dc08649164d81edfa6ca072bc5465ce5d1ff8d4bf330750728d"
+      },
+      "proposed": {
+        "title": "Contratos Mercantiles en Honduras: 5 Esenciales",
+        "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-COM-CODE",
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "competencia-desleal-como-denunciar-honduras",
+          "incumplimiento-contrato-comercial-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Contratos Mercantiles en Honduras: 5 Esenciales",
+        "metaDescription": "Conozca los 5 contratos mercantiles esenciales en Honduras: compraventa, distribución, agencia, franquicia y suministro. Proteja su empresa con",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "competencia-desleal-como-denunciar-honduras",
+      "expected": {
+        "updatedAt": "2026-07-07T18:39:03.848Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "e49e658c3a01c355885390fc6167ac333ca7123abb6ab0e948e1e228bce438b1"
+      },
+      "proposed": {
+        "title": "Competencia Desleal en Honduras",
+        "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-COM-CODE",
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "incumplimiento-contrato-comercial-honduras",
+          "constitucion-empresas-honduras-pasos-legales"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Competencia Desleal en Honduras",
+        "metaDescription": "Descubra qué es la competencia desleal en Honduras, las conductas sancionables y las vías legales para denunciar.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "incumplimiento-contrato-comercial-honduras",
+      "expected": {
+        "updatedAt": "2026-07-07T18:39:16.878Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "7e9bafaa77ac4286600a9bcba1c25737b0e6983d4c6dc7b0d0a9f3cb63e28dc0"
+      },
+      "proposed": {
+        "title": "Incumplimiento de contrato en Honduras",
+        "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-COM-CODE",
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "constitucion-empresas-honduras-pasos-legales",
+          "titulos-valores-cheques-sin-fondo-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Incumplimiento de contrato en Honduras",
+        "metaDescription": "Sepa qué hacer ante un incumplimiento de contrato en Honduras. Conozca sus derechos, plazos y acciones legales según el Código de Comercio.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "constitucion-empresas-honduras-pasos-legales",
+      "expected": {
+        "updatedAt": "2026-06-20T10:00:50.739Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "4657cf87706ceb87ba6cc4f44cae0b9e7a38517a1cc53a2847a1926c1f3c9e0d"
+      },
+      "proposed": {
+        "title": "Constitución de empresas en Honduras: pasos legales básicos",
+        "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-COM-CODE",
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "titulos-valores-cheques-sin-fondo-honduras",
+          "elegir-tipo-sociedad-empresa-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Constitución de empresas en Honduras: pasos legales básicos",
+        "metaDescription": "Guía paso a paso para constituir una empresa en Honduras: tipo de sociedad, escritura, RTN, permisos y obligaciones legales iniciales.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "titulos-valores-cheques-sin-fondo-honduras",
+      "expected": {
+        "updatedAt": "2026-07-07T18:39:29.153Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "8ca172f36f753dede183d08de774281eeed8b87856aff3362fd30fc58a81cfc9"
+      },
+      "proposed": {
+        "title": "Cheques sin Fondo en Honduras: Protesto Notarial",
+        "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-COM-CODE",
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "contratos-franquicia-aspectos",
+          "contratos-mercantiles-esenciales-empresas-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Cheques sin Fondo en Honduras: Protesto Notarial",
+        "metaDescription": "Descubra c&oacute;mo actuar ante un cheque sin fondos en Honduras. Plazos, protesto notarial, acci&oacute;n cambiaria y denuncia penal. Proteja sus",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "elegir-tipo-sociedad-empresa-honduras",
+      "expected": {
+        "updatedAt": "2026-06-12T21:48:02.337Z",
+        "reviewStatus": "published",
+        "contentHash": "3b6bb08bfc1631e5c617fca7da0fe12134a2adc8918d19389e18ce0d26ec2a54"
+      },
+      "proposed": {
+        "title": "Cómo elegir el tipo de sociedad para su empresa en Honduras",
+        "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-COM-CODE",
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "contratos-mercantiles-esenciales-empresas-honduras",
+          "competencia-desleal-como-denunciar-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Cómo elegir el tipo de sociedad para su empresa en Honduras",
+        "metaDescription": "Explica las diferencias entre SA, SRL, EHI y otros tipos societarios en Honduras, capital mínimo, responsabilidad fiscal y recomendaciones según el negocio.",
+        "reviewStatus": "published"
+      }
+    },
+    {
+      "slug": "tipos-sociedad-mercantil-honduras",
+      "expected": {
+        "updatedAt": "2026-07-07T18:39:28.915Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "020edfd75fc8bc48a6fa8e1c06aa59f4044df8c626a9bd461deade5e884014c4"
+      },
+      "proposed": {
+        "title": "Tipos de Sociedad Mercantil en Honduras",
+        "metaDescription": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "directAnswer": "El riesgo contractual depende del tipo de negocio, las obligaciones, las garantías y la terminación pactada. Conviene revisar representación, pagos, propiedad intelectual, solución de conflictos y efectos del incumplimiento.",
+        "author": "Thania Marlene Paz",
+        "reviewerProposed": "Emil Barahona",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-COM-CODE",
+          "HN-CPC-211-2006"
+        ],
+        "relatedSlugs": [
+          "competencia-desleal-como-denunciar-honduras",
+          "incumplimiento-contrato-comercial-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Tipos de Sociedad Mercantil en Honduras",
+        "metaDescription": "Descubra los tipos de sociedades mercantiles en Honduras (S.A., S. de R.L., E.I.R.L.) y elija la más adecuada para su negocio.",
+        "reviewStatus": "reviewed"
+      }
+    }
+  ]
+}

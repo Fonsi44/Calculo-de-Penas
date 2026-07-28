@@ -1,0 +1,287 @@
+{
+  "batch": "laboral",
+  "generatedAt": "2026-07-28",
+  "mode": "DRY_RUN_ONLY",
+  "patches": [
+    {
+      "slug": "despido-laboral-honduras-guia-completa",
+      "expected": {
+        "updatedAt": "2026-07-07T18:39:11.476Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "0420e76a41f2488241f5e15a5c22876f657ff8656cb5078a1ccb952a7083b337"
+      },
+      "proposed": {
+        "title": "Despido Injustificado en Honduras: Prestaciones y Plazos",
+        "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "author": "Emil Barahona",
+        "reviewerProposed": "Thania Marlene Paz",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CT-189-59"
+        ],
+        "relatedSlugs": [
+          "despido-injustificado-honduras-derechos-trabajador",
+          "calcular-prestaciones-laborales-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Despido Laboral en Honduras: Guia de",
+        "metaDescription": "Conozca sus derechos ante un despido injustificado en Honduras. Aprenda qué indemnización le corresponde y cómo reclamarla ante la Secretaría de Trabajo.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "despido-injustificado-honduras-derechos-trabajador",
+      "expected": {
+        "updatedAt": "2026-07-07T18:39:11.120Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "c442bbf1368afdc1745889359b279e97eddff5dbee0f24d458786d805cd54b3e"
+      },
+      "proposed": {
+        "title": "Despido Injustificado en Honduras",
+        "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "author": "Emil Barahona",
+        "reviewerProposed": "Thania Marlene Paz",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CT-189-59"
+        ],
+        "relatedSlugs": [
+          "calcular-prestaciones-laborales-honduras",
+          "calcular-liquidacion-laboral-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Despido Injustificado en Honduras",
+        "metaDescription": "Descubre tus derechos ante un despido injustificado en Honduras. Conoce la indemnización, preaviso y plazos para reclamar según el Código del Trabajo.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "calcular-prestaciones-laborales-honduras",
+      "expected": {
+        "updatedAt": "2026-07-07T18:39:01.992Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "8dd6ed3850e0d35c17052e5056c22be5556f97d0266d7c526b113b14020d6dc6"
+      },
+      "proposed": {
+        "title": "Calcula tus prestaciones laborales en Honduras",
+        "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "author": "Emil Barahona",
+        "reviewerProposed": "Thania Marlene Paz",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CT-189-59"
+        ],
+        "relatedSlugs": [
+          "calcular-liquidacion-laboral-honduras",
+          "empleador-no-paga-salario-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Calcula tus prestaciones laborales en Honduras",
+        "metaDescription": "Guía práctica sobre el cálculo orientativo de prestaciones en Honduras. Diferencia entre Derechos Adquiridos por renuncia e Indemnizaciones por despido.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "calcular-liquidacion-laboral-honduras",
+      "expected": {
+        "updatedAt": "2026-07-07T18:39:01.753Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "04cc41ef0cb2c28142a8237afcd7b6666b26d0f9657d91739318dce0ab2ed281"
+      },
+      "proposed": {
+        "title": "Liquidación Laboral en Honduras",
+        "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "author": "Emil Barahona",
+        "reviewerProposed": "Thania Marlene Paz",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CT-189-59"
+        ],
+        "relatedSlugs": [
+          "empleador-no-paga-salario-honduras",
+          "jornada-laboral-horas-extra-descansos-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Liquidación Laboral en Honduras",
+        "metaDescription": "Guía completa sobre cómo calcular tu liquidación laboral en Honduras. Conoce tus derechos sobre cesantía, vacaciones y despido injustificado.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "empleador-no-paga-salario-honduras",
+      "expected": {
+        "updatedAt": "2026-07-07T18:39:12.905Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "39969bf23b321fcf023ec996c6379a3cbee02ed15e45276f27b8d5afc2f08e77"
+      },
+      "proposed": {
+        "title": "¿Qué hacer si mi empleador no me paga en",
+        "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "author": "Emil Barahona",
+        "reviewerProposed": "Thania Marlene Paz",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CT-189-59"
+        ],
+        "relatedSlugs": [
+          "jornada-laboral-horas-extra-descansos-honduras",
+          "derechos-trabajadora-embarazada-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "¿Qué hacer si mi empleador no me paga en",
+        "metaDescription": "Tu empleador no te paga en Honduras? Conoce tus derechos laborales, pasos a seguir y plazos. Asesoría legal para reclamar salarios impagos.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "jornada-laboral-horas-extra-descansos-honduras",
+      "expected": {
+        "updatedAt": "2026-07-26T07:43:28.389Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "a51a669450a0a6efbff2f9b1f766298298a47ca4194717846da817d40a5884a3"
+      },
+      "proposed": {
+        "title": "Jornada Laboral en Honduras: Horas Extra y Recargos",
+        "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "author": "Emil Barahona",
+        "reviewerProposed": "Thania Marlene Paz",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CT-189-59"
+        ],
+        "relatedSlugs": [
+          "despido-laboral-honduras-guia-completa",
+          "despido-injustificado-honduras-derechos-trabajador"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Jornada Laboral en Honduras: Horas Extra",
+        "metaDescription": "Revise los límites de jornada, descansos y recargos por horas extra en Honduras, además de la documentación útil para un reclamo laboral.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "derechos-trabajadora-embarazada-honduras",
+      "expected": {
+        "updatedAt": "2026-07-07T18:39:10.576Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "002e65b1654391e109f189de37b832464b6b2e25d121c53e0d38ef5ddd4aed8c"
+      },
+      "proposed": {
+        "title": "Despido por Embarazo en Honduras",
+        "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "author": "Emil Barahona",
+        "reviewerProposed": "Thania Marlene Paz",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CT-189-59"
+        ],
+        "relatedSlugs": [
+          "despido-injustificado-honduras-derechos-trabajador",
+          "calcular-prestaciones-laborales-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Despido por Embarazo en Honduras",
+        "metaDescription": "Conozca sus derechos laborales en Honduras ante un despido por embarazo. Fuero maternal, licencia y protección legal.",
+        "reviewStatus": "reviewed"
+      }
+    },
+    {
+      "slug": "acoso-laboral-mobbing-honduras",
+      "expected": {
+        "updatedAt": "2026-07-27T07:57:51.889Z",
+        "reviewStatus": "reviewed",
+        "contentHash": "038c7736619ea8e95628a3dbbf5d07f3d938862df13f2c7315d2b04ed87d348e"
+      },
+      "proposed": {
+        "title": "Acoso Laboral en Honduras: Cómo Identificarlo y Denunciarlo Legalmente",
+        "metaDescription": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "directAnswer": "La reclamación depende de la forma de terminación, los pagos pendientes, la documentación y el plazo de la acción. Antes de firmar una renuncia o finiquito conviene revisar contrato, comunicaciones y comprobantes de pago.",
+        "author": "Emil Barahona",
+        "reviewerProposed": "Thania Marlene Paz",
+        "legalReviewStatus": "documentary_review",
+        "sourceIds": [
+          "HN-CT-189-59"
+        ],
+        "relatedSlugs": [
+          "calcular-prestaciones-laborales-honduras",
+          "calcular-liquidacion-laboral-honduras"
+        ]
+      },
+      "safeguards": {
+        "dryRunDefault": true,
+        "transactionRequired": true,
+        "driftCheckRequired": true,
+        "productionWriteAllowed": false,
+        "doesNotSetLawyerVerified": true
+      },
+      "rollback": {
+        "title": "Acoso Laboral en Honduras: Cómo Identificarlo y Denunciarlo Legalmente",
+        "metaDescription": "Conozca cómo identificar y denunciar el acoso laboral en Honduras. Explicación del despido indirecto (Art. 114) y el acoso vertical (Art. 294 CP).",
+        "reviewStatus": "reviewed"
+      }
+    }
+  ]
+}
