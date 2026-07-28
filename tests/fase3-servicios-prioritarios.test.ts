@@ -417,7 +417,8 @@ describe('FASE 3 — Subsistemas intactos', () => {
     const article = readRoot('app/(public)/blog/[categoria]/[slug]/page.tsx');
     const adapter = readRoot('lib/blog.ts');
     expect(article).toContain('No se garantizan resultados');
-    expect(article).toContain('post.reviewedBy &&');
+    expect(article).toContain('validSignature &&');
+    expect(article).toContain('Revisión jurídica institucional:');
     expect(adapter).toContain('cleanPlaceholderLinks');
   });
 

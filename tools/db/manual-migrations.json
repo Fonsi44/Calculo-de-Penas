@@ -232,6 +232,17 @@
       "checksum": "5d3a4c73599a55c094f980c15ee2aab5a58659cacb5d3e4a0f89833e0fe4a272",
       "transactional": true,
       "applied": false
+    },
+    {
+      "id": "manual-0059",
+      "file": "drizzle/migrations/0059_blog_editorial_signatures.sql",
+      "description": "Add version-bound institutional and individual editorial signatures",
+      "dependsOn": [
+        "manual-0058"
+      ],
+      "checksum": "e7e8aaeb665d57d0757771f9e48dd1077a8198fe2ead2a0f072b429e41c35c4b",
+      "transactional": true,
+      "applied": false
     }
   ]
 }

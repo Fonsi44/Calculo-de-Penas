@@ -28,6 +28,7 @@ export type Post = {
   reviewStatus?: string;
   reviewedBy?: string;
   reviewedAt?: string;
+  reviewedContentHash?: string;
   legalReviewNotes?: string;
 
   // AI document review (Fase 3B)

@@ -1,7 +1,7 @@
 import { site, absoluteUrl } from '../site';
 import { stripHtml } from '../strip-html';
 import type { Post } from '@/data/blog/types';
-import { CANONICAL_REVIEWERS } from '../legal-review';
+import { resolveArticleEditorialState } from '../editorial-signature';
 
 const validLawyersMap: Record<string, string> = {
   'Danilo Pineda Maradiaga': `${site.url}/#danilo-pineda-maradiaga`,
@@ -26,18 +26,15 @@ export function blogPostSchema(post: Post) {
       };
 
   // E-E-A-T: Añadimos reviewedBy si el post ha sido revisado jurídicamente por un humano canónico.
-  const isReviewed =
-    post.reviewStatus === 'verified' &&
-    post.reviewedBy &&
-    CANONICAL_REVIEWERS.includes(post.reviewedBy) &&
-    post.reviewedAt;
-
-  const reviewerSchema = isReviewed
+  const editorial = resolveArticleEditorialState(post);
+  const reviewerSchema = editorial.signatureValid && editorial.signature
     ? {
         reviewedBy: {
-          '@type': 'Person',
-          '@id': validLawyersMap[post.reviewedBy!],
-          name: post.reviewedBy,
+          '@type': editorial.signature.type === 'lawyer' ? 'Person' : 'Organization',
+          '@id': editorial.signature.type === 'lawyer'
+            ? `${site.url}${editorial.signature.profileUrl}#person`
+            : `${site.url}/#organization`,
+          name: editorial.signature.name,
         },
       }
     : {};

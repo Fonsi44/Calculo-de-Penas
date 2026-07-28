@@ -26,39 +26,43 @@ describe('editorial production cutover', () => {
     expect(resolveEditorialIndexingMode({ VERCEL_ENV: 'preview' })).toBe('strict-review');
   });
 
-  it('bloquea cero verificados, autor genérico y reducción masiva', () => {
+  it('reconoce la revisión institucional histórica sin exigir abogado individual', () => {
     const { summary, failures } = calculateReadiness([{
-      slug: 'pendiente',
+      slug: 'institucional',
       category: 'derecho-penal',
       author: 'Pineda y Asociados',
+      body: '<p>Versión histórica revisada.</p>',
       review_status: 'pending',
       published: true,
       noindex: false,
       canonical_url: null,
-    }], 134);
-    expect(summary.verified).toBe(0);
-    expect(summary.urls_removed).toBe(134);
-    expect(failures.join(' ')).toMatch(/cero artículos lawyer_verified/i);
-    expect(failures.join(' ')).toMatch(/autor genérico/i);
-    expect(failures.join(' ')).toMatch(/retiraría 134 URLs/i);
+    }], 1);
+    expect(summary.firm_reviewed).toBe(1);
+    expect(summary.indexable_after_cutover).toBe(1);
+    expect(summary.urls_removed).toBe(0);
+    expect(failures).toEqual([]);
   });
 
-  it('excluye pending del inventario posterior al cutover', () => {
+  it('excluye una propuesta pending_resignature sin retirar la versión histórica', () => {
     const { summary } = calculateReadiness([
       {
         slug: 'verificado',
         category: 'derecho-penal',
         author: 'Danilo Pineda Maradiaga',
+        body: '<p>Versión firmada.</p>',
         review_status: 'verified',
+        reviewed_by: 'Danilo Pineda Maradiaga',
+        reviewed_at: '2026-07-01',
         published: true,
         noindex: false,
         canonical_url: null,
       },
       {
-        slug: 'pendiente',
+        slug: 'propuesta',
         category: 'derecho-penal',
         author: 'Danilo Pineda Maradiaga',
-        review_status: 'pending',
+        body: '<p>Versión nueva.</p>',
+        review_status: 'pending_resignature',
         published: true,
         noindex: false,
         canonical_url: null,

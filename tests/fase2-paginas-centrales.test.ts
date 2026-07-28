@@ -252,7 +252,8 @@ describe('FASE 2 — Salvaguardas editoriales del blog', () => {
     const article = readPublic('blog/[categoria]/[slug]/page.tsx');
     expect(adapter).toContain('cleanPlaceholderLinks');
     expect(adapter).toContain('ejemplo\\.com|tuabogado\\.com');
-    expect(article).toContain('post.reviewedBy &&');
+    expect(article).toContain('validSignature &&');
+    expect(article).toContain('Revisión jurídica institucional:');
   });
 });
 

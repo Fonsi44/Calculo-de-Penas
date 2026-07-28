@@ -5,8 +5,7 @@ import { blogPosts } from '@/lib/schema';
 import { eq, and, desc } from 'drizzle-orm';
 import { blogCategories } from '@/data/blog/categories';
 import canonicalPathsData from '@/data/seo/canonical-paths.json';
-import { normalizeReviewStatus } from '@/lib/legal-review';
-import { requiresVerifiedEditorialStatus } from '@/lib/editorial-cutover';
+import { isEditoriallyIndexable } from '@/lib/editorial-signature';
 
 function daysAgo(days: number): Date {
   const d = new Date();
@@ -143,9 +142,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       category: blogPosts.category,
       publishedAt: blogPosts.publishedAt,
       updatedAt: blogPosts.updatedAt,
+      body: blogPosts.body,
+      author: blogPosts.author,
+      published: blogPosts.published,
       noindex: blogPosts.noindex,
       canonicalUrl: blogPosts.canonicalUrl,
       reviewStatus: blogPosts.reviewStatus,
+      reviewedBy: blogPosts.reviewedBy,
+      reviewedAt: blogPosts.reviewedAt,
     })
     .from(blogPosts)
     .where(and(eq(blogPosts.published, true), eq(blogPosts.noindex, false)))
@@ -166,15 +170,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const isSelfPost = c === `/blog/${p.category}/${p.slug}`;
       return isSelfPost;
     })
-    // Plan maestro SEO/GEO §8.1, §9.6 y §19.2: el sitemap solo debe incluir
-    // URLs indexables. Los artículos pendientes de revisión jurídica humana
-    // se sirven con `noindex, follow` (ver generateMetadata del post) y por
-    // tanto no deben declararse en el sitemap. Solo `lawyer_verified`
-    // (≈ `verified` en el modelo vigente) entra.
-    .filter((p) => (
-      !requiresVerifiedEditorialStatus()
-      || normalizeReviewStatus(p.reviewStatus) === 'verified'
-    ));
+    // Una firma institucional histórica válida permite indexar. La firma
+    // individual es opcional y nunca se infiere de la categoría.
+    .filter((p) => isEditoriallyIndexable(p));
 
   // Mapa categoría → fecha del post más reciente. Se usa dbPostsRaw (TODOS los
   // posts publicados/no-noindex, incluyendo los canonicalizados) para que el

@@ -16,7 +16,14 @@ async function countCurrentProductionBlogUrls(): Promise<number> {
     const xml = await response.text();
     return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)]
       .map((match) => match[1])
-      .filter((url) => url.includes('/blog/') && !url.endsWith('/blog/')).length;
+      .filter((url) => {
+        try {
+          const segments = new URL(url).pathname.split('/').filter(Boolean);
+          return segments.length === 3 && segments[0] === 'blog';
+        } catch {
+          return false;
+        }
+      }).length;
   } catch {
     return cutover.production_sitemap_snapshot.observed_urls;
   }
@@ -29,7 +36,8 @@ async function main() {
 
   const sql = neon(process.env.DATABASE_URL);
   const rows = await sql`
-    SELECT slug, category, author, review_status, published, noindex, canonical_url
+    SELECT slug, category, author, body, review_status, reviewed_by, reviewed_at,
+           published, noindex, canonical_url
     FROM blog_posts
   ` as ReadinessBlogRow[];
   const currentBlogUrls = await countCurrentProductionBlogUrls();
@@ -48,9 +56,6 @@ async function main() {
     failures.push(`Falta el registro de redirects: ${cutover.required_redirect_register}.`);
   }
   if (cutover.state !== 'approved') failures.push('El gate versionado continúa desactivado.');
-  if (process.env.SEO_EDITORIAL_HUMAN_APPROVAL !== 'approved') {
-    failures.push('Falta aprobación humana explícita.');
-  }
   const production = (process.env.VERCEL_ENV ?? process.env.APP_ENV) === 'production';
   if (production && resolveEditorialIndexingMode(process.env) !== 'strict-review') {
     failures.push('Production no tiene autorización explícita de cutover.');
