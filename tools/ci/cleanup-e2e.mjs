@@ -69,6 +69,13 @@ function guard() {
 
 guard();
 
+// ── Verificación de branch Neon (fail-closed) ─────────────────────────
+const prodBranchId = process.env.NEON_PRODUCTION_BRANCH_ID;
+if (!prodBranchId) {
+  console.error('⛔ NEON_PRODUCTION_BRANCH_ID no definido. Abortando.');
+  process.exit(1);
+}
+
 const FIXTURE = JSON.parse(readFileSync(FIXTURE_PATH, 'utf8'));
 const { users, client, clientB, expedient, expedientB, case: caseRow } = FIXTURE;
 const userIds = Object.values(users).map(u => u.id);
@@ -78,6 +85,18 @@ const clientIds = [client.id, clientB.id];
 const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
 const c = await pool.connect();
 let tx = false;
+
+// Verificar branch Neon (no producción)
+try {
+  const r = await c.query("SELECT current_setting('neon.branch_id', true) AS id");
+  const current = r.rows[0]?.id;
+  if (!current) { console.error('⛔ No se pudo obtener branch_id.'); process.exit(1); }
+  if (current === prodBranchId) { console.error('⛔ BLOCKED: branch_id es producción.'); process.exit(1); }
+  console.log('✓ Neon branch_id verificado (≠ producción).');
+} catch (e) {
+  console.error(`⛔ Error al verificar branch Neon: ${e.message}`);
+  process.exit(1);
+}
 
 console.log('\n🧹 Cleanup namespace E2E sintético\n');
 

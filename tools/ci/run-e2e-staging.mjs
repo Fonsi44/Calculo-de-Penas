@@ -27,6 +27,7 @@ import { execSync, spawn } from 'node:child_process';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { E2E_PASSWORDS } from './e2e-credentials.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..', '..');
@@ -104,21 +105,31 @@ function guard() {
 }
 
 async function assertNotProductionBranch() {
+  const prodBranchId = process.env.NEON_PRODUCTION_BRANCH_ID;
+  if (!prodBranchId) {
+    console.error('⛔ NEON_PRODUCTION_BRANCH_ID no definido. Abortando.');
+    process.exit(1);
+  }
   const { Pool } = await import('@neondatabase/serverless');
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
+  let pool;
   try {
+    pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
     const r = await pool.query("SELECT current_setting('neon.branch_id', true) AS id");
     const current = r.rows[0]?.id;
-    const prod = process.env.NEON_PRODUCTION_BRANCH_ID;
-    if (current && prod && current === prod) {
+    if (!current) {
+      console.error('⛔ No se pudo obtener el branch_id de Neon. Abortando.');
+      process.exit(1);
+    }
+    if (current === prodBranchId) {
       console.error('⛔ BLOCKED: branch_id coincide con NEON_PRODUCTION_BRANCH_ID.');
       process.exit(1);
     }
-    console.log(`✓ Neon branch_id: ${current || '(no expuesto)'} (≠ producción).`);
+    console.log(`✓ Neon branch_id verificado (≠ producción).`);
   } catch (e) {
-    console.log(`⚠  No se pudo verificar branch_id (${e.message}).`);
+    console.error(`⛔ Error al verificar branch Neon: ${e.message}`);
+    process.exit(1);
   } finally {
-    await pool.end();
+    if (pool) await pool.end();
   }
 }
 
@@ -180,23 +191,25 @@ function recordStep(name, ok, detail = '') {
 // ── Derivar variables E2E_* desde el fixture canónico ────────────────────
 // Esto evita que los specs dependan de un .env.e2e manual: cualquier spec que
 // lea process.env.E2E_* recibirá el valor del fixture automáticamente.
+// Las contraseñas se importan del módulo compartido tools/ci/e2e-credentials.mjs
+// (única fuente de credenciales sintéticas para seed, runner y tests).
 function exportE2EVarsFromFixture() {
   const fixturePath = resolve(ROOT, 'tests/e2e/fixtures/identities.json');
   try {
     const f = JSON.parse(readFileSync(fixturePath, 'utf8'));
     const map = {
       E2E_ADMIN_EMAIL: f.users.admin.email,
-      E2E_ADMIN_PASSWORD: f.users.admin.password,
+      E2E_ADMIN_PASSWORD: E2E_PASSWORDS.admin,
       E2E_ABOGADO_A_EMAIL: f.users.lawyerA.email,
-      E2E_ABOGADO_A_PASSWORD: f.users.lawyerA.password,
+      E2E_ABOGADO_A_PASSWORD: E2E_PASSWORDS.lawyerA,
       E2E_ABOGADO_B_EMAIL: f.users.lawyerB.email,
-      E2E_ABOGADO_B_PASSWORD: f.users.lawyerB.password,
+      E2E_ABOGADO_B_PASSWORD: E2E_PASSWORDS.lawyerB,
       E2E_USER_2FA_EMAIL: f.users.twoFactorUser.email,
-      E2E_USER_2FA_PASSWORD: f.users.twoFactorUser.password,
+      E2E_USER_2FA_PASSWORD: E2E_PASSWORDS.twoFactorUser,
       E2E_AUTH_USER_EMAIL: f.users.authUser.email,
-      E2E_AUTH_USER_PASSWORD: f.users.authUser.password,
+      E2E_AUTH_USER_PASSWORD: E2E_PASSWORDS.authUser,
       E2E_SIDEBAR_USER_EMAIL: f.users.sidebarUser.email,
-      E2E_SIDEBAR_USER_PASSWORD: f.users.sidebarUser.password,
+      E2E_SIDEBAR_USER_PASSWORD: E2E_PASSWORDS.sidebarUser,
     };
     for (const [k, v] of Object.entries(map)) {
       if (!process.env[k]) process.env[k] = v;
@@ -212,7 +225,7 @@ exportE2EVarsFromFixture();
 const handleSignal = async (signal) => {
   console.error(`\n⛔ Recibida señal ${signal}. Deteniendo server...`);
   await killServer(server);
-  writeResults(130, `signal ${sig}`);
+  writeResults(130, `signal ${signal}`);
   process.exit(130);
 };
 process.once('SIGINT', () => handleSignal('SIGINT'));
@@ -264,15 +277,15 @@ try {
   recordStep('build', true);
 
   // 8. Iniciar next start (build real, NODE_ENV=production).
-  // NEXT_PUBLIC_E2E_LOCAL_HTTP=true: el server corre sobre HTTP (no HTTPS), por
+  // E2E_LOCAL_HTTP=true: el server corre sobre HTTP (no HTTPS), por
   // lo que las cookies __Host-token (que requieren Secure) no funcionarían.
   // Esta variable hace que lib/auth.ts use cookies 'token' sin Secure.
-  // Debe ser NEXT_PUBLIC_* porque Next.js inlinea las process.env no públicas.
+  // Variable server-side (NUNCA NEXT_PUBLIC_*) para evitar constant-folding.
   console.log(`\n▶ Starting next start on port ${PORT}...`);
   server = spawn('npx', ['next', 'start', '-p', String(PORT)], {
     cwd: ROOT,
     stdio: ['ignore', 'pipe', 'pipe'],
-    env: { ...process.env, NODE_ENV: 'production', NEXT_PUBLIC_E2E_LOCAL_HTTP: 'true' },
+    env: { ...process.env, NODE_ENV: 'production', E2E_LOCAL_HTTP: 'true', E2E_ENVIRONMENT: 'staging' },
     detached: true, // grupo propio para matar huérfanos
   });
   const serverLog = [];

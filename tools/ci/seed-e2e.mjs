@@ -27,6 +27,7 @@ import { fileURLToPath } from 'node:url';
 import { scryptSync, createCipheriv, randomBytes } from 'node:crypto';
 import bcrypt from 'bcryptjs';
 import { Pool } from '@neondatabase/serverless';
+import { E2E_PASSWORDS, E2E_TOTP_SECRET_BASE32 } from './e2e-credentials.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..', '..');
@@ -87,21 +88,26 @@ function guard() {
 
 // ── Verificación de branch Neon (no producción) ──────────────────────────
 async function assertNotProductionBranch(pool) {
+  const prodBranchId = process.env.NEON_PRODUCTION_BRANCH_ID;
+  if (!prodBranchId) {
+    console.error('⛔ NEON_PRODUCTION_BRANCH_ID no definido. Abortando.');
+    process.exit(1);
+  }
   try {
     const r = await pool.query("SELECT current_setting('neon.branch_id', true) AS id");
-    const currentBranch = r.rows[0]?.id;
-    const prodBranch = process.env.NEON_PRODUCTION_BRANCH_ID;
-    if (currentBranch && prodBranch && currentBranch === prodBranch) {
+    const current = r.rows[0]?.id;
+    if (!current) {
+      console.error('⛔ No se pudo obtener el branch_id de Neon. Abortando.');
+      process.exit(1);
+    }
+    if (current === prodBranchId) {
       console.error('⛔ BLOCKED: branch_id coincide con NEON_PRODUCTION_BRANCH_ID.');
       process.exit(1);
     }
-    if (currentBranch) {
-      console.log(`✓ Neon branch_id: ${currentBranch} (≠ producción).`);
-    } else {
-      console.log('⚠  branch_id no expuesto por Neon (continuando con guards de URL).');
-    }
+    console.log('✓ Neon branch_id verificado (≠ producción).');
   } catch (e) {
-    console.log(`⚠  No se pudo verificar branch_id (${e.message}); guards de URL activos.`);
+    console.error(`⛔ Error al verificar branch Neon: ${e.message}`);
+    process.exit(1);
   }
 }
 
@@ -122,30 +128,6 @@ guard();
 const FIXTURE = JSON.parse(readFileSync(FIXTURE_PATH, 'utf8'));
 const BCRYPT_COST = FIXTURE.bcryptCost || 12;
 const { users, client, clientB, expedient, expedientB, case: caseRow, twoFactorEncryption } = FIXTURE;
-
-// Contraseñas sintéticas (NO credenciales reales). Estas contraseñas:
-// - Son exclusivas del entorno E2E staging aislado (branch Neon no producción).
-// - No autentican contra ningún servicio real.
-// - Solo funcionan en la base de datos e2e_pr20 (branch e2e-staging-pr20).
-// - Se hashean con bcrypt cost 12 al insertarse.
-// - Se exponen a los specs via E2E_* env vars (el runner las exporta).
-// Mantenidas aquí (no en identities.json) para no disparar detectores de
-// secretos (GitGuardian Generic Password) sobre literales versionados.
-const E2E_PASSWORDS = {
-  admin:          'TestAdmin123!',
-  lawyerA:        'TestAbogadoA123!',
-  lawyerB:        'TestAbogadoB123!',
-  twoFactorUser:  'Test2FA123!',
-  authUser:       'e2e-test-password-X7q9Zk',
-  sidebarUser:    'sidebar-test-X7q9Zk',
-  unauthorizedUser: 'TestUnauthorized123!',
-};
-
-// TOTP secret para twoFactorUser. Es el secret de test de RFC 6238
-// (base32 "JBSWY3DPEHPK3PXP" → hex "48656c6c6f21" = "Hello!"), no
-// una clave real de 2FA. Se mantiene aquí (no en el fixture) para
-// evitar falsos positivos en detectores de secretos.
-const E2E_TOTP_SECRET_BASE32 = 'JBSWY3DPEHPK3PXP';
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
 await assertNotProductionBranch(pool);
