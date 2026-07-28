@@ -4,8 +4,11 @@ Fecha de corte: 2026-07-28
 
 ## Veredicto
 
-`PARTIAL`. La implementación sigue abierta. No cumple todavía la Definition of
-Done ni está autorizada para producción.
+`FASE 2 IMPLEMENTADA EN PREVIEW`. La arquitectura pública, los perfiles,
+las seis áreas prioritarias, la FAQ corporativa, los inventarios locales,
+la intención Nacaome, la conversión prudente y los sitemaps segmentados están
+implementados. La publicación en Production sigue bloqueada por la puerta
+editorial y la Fase 3 de revisión jurídica de artículos.
 
 ## Base y trazabilidad
 
@@ -36,7 +39,7 @@ Done ni está autorizada para producción.
 - Por contrato de seguridad editorial, ninguno es indexable/sitemap hasta una
   revisión jurídica humana real y una migración editorial autorizada.
 
-## Bloqueos no globales
+## Bloqueos posteriores a la Fase 2
 
 - Revisión jurídica humana específica para convertir artículos concretos a
   `lawyer_verified`.
@@ -44,7 +47,8 @@ Done ni está autorizada para producción.
 - La DB exclusiva de Vercel Preview no contiene artículos publicados. El
   frontend ya no falla si faltan columnas operativas de revisión IA: `/blog`
   responde 200 sin resultados y las rutas de posts ausentes responden 404.
-- El resto de trabajo técnico debe continuar antes de solicitar publicación.
+- La Fase 3 debe completar investigación, fuentes y revisión jurídica real de
+  los 175 artículos. La Fase 2 no atribuye esas revisiones.
 
 ## Verificación de Preview
 
