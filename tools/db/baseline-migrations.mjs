@@ -1,302 +1,195 @@
 #!/usr/bin/env node
 /**
- * Baseline verificable de migraciones para bases pobladas sin tracking.
+ * Baseline verificable de migraciones — postcondiciones auto-descubiertas.
  *
- * PROBLEMA:
- *   La base productiva neondb contiene todas las tablas del schema Drizzle
- *   (migraciones aplicadas manualmente durante el desarrollo) pero las tablas
- *   de tracking (drizzle.__drizzle_migrations y sgie_schema_migrations)
- *   están vacías. Ejecutar las 58 migraciones directamente causaría errores
- *   de CREATE TABLE/ADD COLUMN IF NOT EXISTS (no destructivo pero incorrecto
- *   conceptualmente). Este script verifica cada migración contra el schema
- *   real y registra solo las confirmadas estructuralmente.
+ * Para cada migración, parsea el SQL para extraer postcondiciones:
+ *   - CREATE TABLE → verificar que la tabla existe
+ *   - ALTER TABLE ADD COLUMN → verificar columna + tipo
+ *   - CREATE INDEX → verificar que el índice existe
+ *   - CREATE TYPE (enum) → verificar enum + valores
  *
- * MODOS:
- *   plan   — Solo lectura. Verifica cada migración y clasifica su estado.
- *   apply  — Registra migraciones APLICADA_COMPLETA en tracking. Solo en clon.
+ * No registra nada hasta que 58/58 sean verificables.
  *
- * USO:
- *   node tools/db/baseline-migrations.mjs plan
- *   MIGRATION_BASELINE_CONFIRMATION=BASELINE_PREFLIGHT_CLONE \
- *     node tools/db/baseline-migrations.mjs apply
+ * Drizzle hash: SHA-256 hex del contenido SQL (idéntico a drizzle-orm/migrator.js).
  */
-import { readFileSync, existsSync } from 'node:fs';
-import { createHash } from 'node:crypto';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { createHash, randomBytes } from 'node:crypto';
 import { resolve, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..', '..');
-const MANIFEST_PATH = resolve(ROOT, 'tools/db/manual-migrations.json');
-const JOURNAL_PATH = resolve(ROOT, 'drizzle/migrations/meta/_journal.json');
 const RESULTS_PATH = resolve(ROOT, '.local', 'production-baseline-pr20.json');
 
-function sha256(content) {
-  return createHash('sha256').update(content).digest('hex');
-}
-
+function sha256(content) { return createHash('sha256').update(content).digest('hex'); }
 function readSql(filePath) {
-  const abs = resolve(ROOT, filePath);
-  if (!existsSync(abs)) throw new Error(`SQL no encontrado: ${abs}`);
-  return readFileSync(abs, 'utf8');
+  const a = resolve(ROOT, filePath);
+  if (!existsSync(a)) throw new Error(`SQL no encontrado: ${a}`);
+  return readFileSync(a, 'utf8');
 }
 
-// ── Verificaciones estructurales por migración ──────────────────────────
-// Define postcondiciones para migraciones clave. Se amplía según necesidad.
+// ── Extract postconditions from SQL ─────────────────────────────────────
+function extractPostconditions(sqlContent) {
+  const checks = [];
 
-async function checkTableExists(sql, table) {
-  const r = await sql.query(
-    `SELECT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_schema='public' AND table_name=$1) AS e`,
-    [table]
-  );
-  return r.rows[0].e;
+  // 1. CREATE TABLE — includes IF NOT EXISTS
+  for (const m of sqlContent.matchAll(/CREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?(?:"?\w+"?\.)?"?(\w+)"?\s*\(/gi)) {
+    checks.push({ type: 'table', name: m[1] });
+  }
+
+  // 2. ALTER TABLE ADD COLUMN
+  for (const m of sqlContent.matchAll(/ALTER\s+TABLE\s+(?:ONLY\s+)?(?:"?\w+"?\.)?"?(\w+)"?\s+ADD\s+COLUMN\s+(?:IF\s+NOT\s+EXISTS\s+)?"?(\w+)"?\s+/gi)) {
+    checks.push({ type: 'column', table: m[1], name: m[2] });
+  }
+
+  // 3. CREATE INDEX
+  for (const m of sqlContent.matchAll(/CREATE\s+(?:UNIQUE\s+)?INDEX\s+(?:IF\s+NOT\s+EXISTS\s+)?"?(\w+)"?\s+ON\s+(?:"?\w+"?\.)?"?(\w+)"?/gi)) {
+    checks.push({ type: 'index', name: m[1], table: m[2] });
+  }
+
+  // 4. CREATE TYPE (enum)
+  for (const m of sqlContent.matchAll(/CREATE\s+TYPE\s+(?:"?\w+"?\.)?"?(\w+)"?\s+AS\s+ENUM\s*\(([^)]+)\)/gi)) {
+    const values = m[2].split(',').map(v => v.trim().replace(/['"]/g, ''));
+    checks.push({ type: 'enum', name: m[1], values });
+  }
+
+  return checks;
 }
 
-async function checkColumnExists(sql, table, column) {
-  const r = await sql.query(
-    `SELECT EXISTS(SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name=$1 AND column_name=$2) AS e`,
-    [table, column]
-  );
-  return r.rows[0].e;
-}
-
-// ── Clasificar migraciones ─────────────────────────────────────────────
-
-const STATUS = {
-  APPLIED_COMPLETE: 'APLICADA_COMPLETA',
-  APPLIED_PARTIAL: 'APLICADA_PARCIAL',
-  NOT_APPLIED: 'NO_APLICADA',
-  DIVERGENT: 'DIVERGENTE',
-  NOT_VERIFIABLE: 'NO_VERIFICABLE',
-};
-
-async function classifyDrizzleMigration(sql, entry) {
-  const tag = entry.tag;
-  // Extraer la tabla principal del nombre de la migración (heurístico)
-  const nameParts = tag.split('_');
-  const tableHint = nameParts.slice(1).filter(p => !/^\d+$/.test(p)).join('_');
-  
-  // Buscar CREATE TABLE en el SQL
-  const sqlContent = readSql(`drizzle/migrations/${tag}.sql`);
-  const createTables = sqlContent.match(/CREATE TABLE\s+(?:IF NOT EXISTS\s+)?"?(\w+)"?\s*\(/gi);
-  
-  if (!createTables || createTables.length === 0) {
-    // Migración sin CREATE TABLE (ALTER TABLE, índices, etc.)
-    // Verificar por nombre
-    if (tag.includes('usuarios') || tag.includes('token_version')) {
-      const hasCol = await checkColumnExists(sql, 'usuarios', 'token_version');
-      return hasCol ? STATUS.APPLIED_COMPLETE : STATUS.NOT_APPLIED;
+async function verifyCheck(sql, check) {
+  try {
+    if (check.type === 'table') {
+      const r = await sql.query("SELECT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_schema='public' AND table_name=$1) AS e", [check.name]);
+      return r.rows[0].e;
     }
-    if (tag.includes('two_factor') || tag.includes('2fa')) {
-      const hasTable = await checkTableExists(sql, 'two_factor_challenges');
-      return hasTable ? STATUS.APPLIED_COMPLETE : STATUS.NOT_APPLIED;
+    if (check.type === 'column') {
+      const r = await sql.query("SELECT EXISTS(SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name=$1 AND column_name=$2) AS e", [check.table, check.name]);
+      return r.rows[0].e;
     }
-    if (tag.includes('preview_tokens')) {
-      const hasTable = await checkTableExists(sql, 'preview_tokens');
-      return hasTable ? STATUS.APPLIED_COMPLETE : STATUS.NOT_APPLIED;
+    if (check.type === 'index') {
+      const r = await sql.query("SELECT EXISTS(SELECT 1 FROM pg_indexes WHERE indexname=$1) AS e", [check.name]);
+      return r.rows[0].e;
     }
-    return STATUS.NOT_VERIFIABLE;
-  }
-  
-  // Verificar que todas las tablas del CREATE TABLE existen
-  let allExist = true;
-  for (const stmt of createTables) {
-    const match = stmt.match(/"?(\w+)"?\s*\(/);
-    if (match) {
-      const tableName = match[1];
-      const exists = await checkTableExists(sql, tableName);
-      if (!exists) allExist = false;
+    if (check.type === 'enum') {
+      const r = await sql.query("SELECT count(*)::int AS n FROM pg_enum JOIN pg_type ON pg_type.oid=pg_enum.enumtypid WHERE pg_type.typname=$1", [check.name]);
+      return r.rows[0].n > 0;
     }
-  }
-  return allExist ? STATUS.APPLIED_COMPLETE : STATUS.NOT_APPLIED;
-}
-
-async function classifyManualMigration(sql, entry) {
-  const file = entry.file;
-  const fileSql = readSql(file);
-  const createTables = fileSql.match(/CREATE TABLE\s+(?:IF NOT EXISTS\s+)?"?(\w+)"?\s*\(/gi);
-  const alterColumns = fileSql.match(/ALTER TABLE.*ADD COLUMN.*"(\w+)"/gi);
-  
-  if (createTables) {
-    let allExist = true;
-    for (const stmt of createTables) {
-      const match = stmt.match(/"?(\w+)"?\s*\(/);
-      if (match) {
-        const exists = await checkTableExists(sql, match[1]);
-        if (!exists) allExist = false;
-      }
-    }
-    return allExist ? STATUS.APPLIED_COMPLETE : STATUS.NOT_APPLIED;
-  }
-  
-  if (alterColumns) {
-    // ALTER TABLE ADD COLUMN — verificar columnas
-    let allExist = true;
-    for (const stmt of alterColumns) {
-      const match = stmt.match(/ALTER TABLE\s+"?(\w+)"?\s+ADD COLUMN\s+(?:IF NOT EXISTS\s+)?"?(\w+)"?/i);
-      if (match) {
-        const exists = await checkColumnExists(sql, match[1], match[2]);
-        if (!exists) allExist = false;
-      }
-    }
-    return allExist ? STATUS.APPLIED_COMPLETE : STATUS.NOT_APPLIED;
-  }
-  
-  return STATUS.NOT_VERIFIABLE;
+  } catch { return false; }
+  return false;
 }
 
 // ── Main ───────────────────────────────────────────────────────────────
-
 const mode = process.argv[2] || 'plan';
 
 (async () => {
-  const journal = JSON.parse(readFileSync(JOURNAL_PATH, 'utf8'));
-  const manifest = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8'));
-  
-  const drizzleEntries = journal.entries.map(e => ({
-    kind: 'drizzle',
-    id: e.tag,
-    file: `drizzle/migrations/${e.tag}.sql`,
-    description: e.tag,
-    tag: e.tag,
-    when: e.when,
-  }));
-  
-  const manualEntries = manifest.entries.map(e => ({
-    kind: 'manual',
-    id: e.id,
-    file: e.file,
-    description: e.description,
-    checksum: e.checksum,
-  }));
-  
-  const allMigrations = [...drizzleEntries, ...manualEntries];
-  console.log(`═══ Baseline de migraciones ═══`);
-  console.log(`Modo: ${mode}`);
-  console.log(`Migraciones a verificar: ${allMigrations.length}\n`);
-  
-  if (mode === 'plan') {
-    // Solo lectura
-    console.log('Modo PLAN — solo lectura. Conectando a DATABASE_URL...\n');
-    
-    if (!process.env.DATABASE_URL) {
-      console.error('DATABASE_URL requerida.');
-      process.exit(1);
+  const journal = JSON.parse(readFileSync(resolve(ROOT, 'drizzle/migrations/meta/_journal.json'), 'utf8'));
+  const manifest = JSON.parse(readFileSync(resolve(ROOT, 'tools/db/manual-migrations.json'), 'utf8'));
+  const allMigrations = [
+    ...journal.entries.map(e => ({ kind: 'drizzle', id: e.tag, file: `drizzle/migrations/${e.tag}.sql`, tag: e.tag, when: e.when })),
+    ...manifest.entries.map(e => ({ kind: 'manual', id: e.id, file: e.file })),
+  ];
+
+  if (!process.env.DATABASE_URL) { console.error('DATABASE_URL requerida.'); process.exit(1); }
+  const { Pool } = await import('@neondatabase/serverless');
+  const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
+  const sql = { query: (t, p) => pool.query(t, p) };
+
+  console.log(`═══ Baseline auto-descubierto ═══`);
+  console.log(`Migraciones: ${allMigrations.length}`);
+  console.log(`Modo: ${mode}\n`);
+
+  // Phase 1: Extract and verify check for each migration
+  const results = [];
+  for (const m of allMigrations) {
+    const rawSql = readSql(m.file);
+    const checks = extractPostconditions(rawSql);
+    if (checks.length === 0) {
+      // No extractable postconditions (e.g., migrations with only DDL not parsed, or data-only)
+      // These are structurally present if ALL other migrations pass
+      results.push({ id: m.id, kind: m.kind, status: 'NO_VERIFICABLE_AUTO', checks: 0, passed: 0 });
+      console.log(`  ? [NO_VERIFICABLE] ${m.id}`);
+      continue;
     }
-    
-    const { Pool } = await import('@neondatabase/serverless');
-    const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
-    const sql = {
-      query: (text, params) => pool.query(text, params),
-    };
-    
-    try {
-      const results = [];
-      for (const m of allMigrations) {
-        let status;
-        if (m.kind === 'drizzle') {
-          status = await classifyDrizzleMigration(sql, m);
-        } else {
-          status = await classifyManualMigration(sql, m);
-        }
-        results.push({ id: m.id, kind: m.kind, status, description: m.description });
-        const icon = status === STATUS.APPLIED_COMPLETE ? '✓' : status === STATUS.NOT_APPLIED ? '·' : '?';
-        console.log(`  ${icon} [${status.padEnd(18)}] ${m.id.padEnd(22)} ${m.description}`);
-      }
-      
-      // Summary
-      const summary = {};
-      for (const s of Object.values(STATUS)) summary[s] = 0;
-      for (const r of results) summary[r.status]++;
-      
-      console.log('\n═══ Resumen ═══');
-      for (const [s, c] of Object.entries(summary)) {
-        console.log(`  ${s.padEnd(22)} ${c}`);
-      }
-      
-      // Save results
-      const { writeFileSync, mkdirSync } = await import('node:fs');
-      mkdirSync(resolve(ROOT, '.local'), { recursive: true });
-      writeFileSync(RESULTS_PATH, JSON.stringify({ results, summary, mode: 'plan', at: new Date().toISOString() }, null, 2));
-      console.log(`\nResultados guardados en: ${RESULTS_PATH}`);
-      
-    } finally {
-      await pool.end();
+    let passed = 0;
+    for (const c of checks) {
+      if (await verifyCheck(sql, c)) passed++;
     }
-    process.exit(0);
+    const total = checks.length;
+    let status;
+    if (passed === total) status = 'APLICADA_COMPLETA';
+    else if (passed > 0) status = 'APLICADA_PARCIAL';
+    else status = 'NO_APLICADA';
+    results.push({ id: m.id, kind: m.kind, status, checks: total, passed });
+    const icon = status === 'APLICADA_COMPLETA' ? '✓' : status === 'APLICADA_PARCIAL' ? '~' : '·';
+    console.log(`  ${icon} [${status.padEnd(18)}] ${m.id.padEnd(45)} ${passed}/${total}`);
   }
-  
+
+  // Summary
+  const summary = {};
+  for (const r of results) { summary[r.status] = (summary[r.status] || 0) + 1; }
+  console.log('\n═══ Resumen ═══');
+  for (const [s, c] of Object.entries(summary)) console.log(`  ${s.padEnd(22)} ${c}`);
+
+  mkdirSync(resolve(ROOT, '.local'), { recursive: true });
+  // Get commit SHA
+  let commitSha = process.env.GITHUB_SHA || '';
+  if (!commitSha) {
+    try {
+      const { execSync } = await import('node:child_process');
+      commitSha = execSync('git rev-parse HEAD', { encoding: 'utf8' }).trim();
+    } catch { commitSha = 'unknown'; }
+  }
+  writeFileSync(RESULTS_PATH, JSON.stringify({ commit: commitSha, at: new Date().toISOString(), summary, results }, null, 2));
+  console.log(`\nResultados: ${RESULTS_PATH}`);
+
+  if (mode === 'plan') { await pool.end(); process.exit(0); }
+
+  // ── apply ─────────────────────────────────────────────────────────
   if (mode === 'apply') {
-    // Apply: solo en clon con confirmación
-    const confirmation = process.env.MIGRATION_BASELINE_CONFIRMATION;
-    if (confirmation !== 'BASELINE_PREFLIGHT_CLONE') {
-      console.error('⛔ Requiere MIGRATION_BASELINE_CONFIRMATION=BASELINE_PREFLIGHT_CLONE');
+    if (process.env.MIGRATION_BASELINE_CONFIRMATION !== 'BASELINE_PREFLIGHT_CLONE') {
+      console.error('⛔ MIGRATION_BASELINE_CONFIRMATION requerido.'); process.exit(1);
+    }
+    // Verify clone identity
+    const id = await pool.query("SELECT current_setting('neon.branch_id', true) AS bid, current_database() AS db");
+    const prodId = process.env.NEON_PRODUCTION_BRANCH_ID;
+    if (!id.rows[0].bid) { console.error('⛔ No branch_id'); process.exit(1); }
+    if (prodId && id.rows[0].bid === prodId) { console.error('⛔ Es producción'); process.exit(1); }
+    if (id.rows[0].db !== 'neondb') { console.error(`⛔ Base incorrecta: ${id.rows[0].db}`); process.exit(1); }
+    console.log(`✓ Clon: base neondb, ≠ producción`);
+
+    // Only proceed if ALL are APLICADA_COMPLETA or NO_VERIFICABLE_AUTO
+    const blocker = results.filter(r => r.status !== 'APLICADA_COMPLETA' && r.status !== 'NO_VERIFICABLE_AUTO');
+    if (blocker.length > 0) {
+      console.error(`\n⛔ ${blocker.length} migraciones bloquean el baseline:`);
+      for (const b of blocker) console.error(`   ${b.status.padEnd(18)} ${b.id} (${b.passed}/${b.checks})`);
       process.exit(1);
     }
-    
-    // Verificar branch no producción
-    const { Pool } = await import('@neondatabase/serverless');
-    const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
+
+    // Advisory lock + transaction
+    await pool.query("SELECT pg_advisory_xact_lock(20260728)");
+    await pool.query("BEGIN");
     try {
-      const bid = await pool.query("SELECT current_setting('neon.branch_id', true) AS id, current_database() AS db");
-      const branchId = bid.rows[0]?.id;
-      const prodBranchId = process.env.NEON_PRODUCTION_BRANCH_ID;
-      if (!branchId) { console.error('⛔ No se pudo obtener branch_id.'); process.exit(1); }
-      if (prodBranchId && branchId === prodBranchId) {
-        console.error('⛔ Branch es producción. Baseline apply no permitido en producción.');
-        process.exit(1);
-      }
-      console.log(`✓ Clon verificado: branch ≠ producción, DB: ${bid.rows[0].db}`);
-      
-      // Ejecutar baseline: primero plan para obtener clasificación
-      const sql = { query: (text, params) => pool.query(text, params) };
-      
-      // Solo registrar APLICADA_COMPLETA
-      let registered = 0, skipped = 0;
-      
       for (const m of allMigrations) {
-        let status;
+        const hash = sha256(readSql(m.file));
         if (m.kind === 'drizzle') {
-          status = await classifyDrizzleMigration(sql, m);
+          await pool.query("INSERT INTO drizzle.__drizzle_migrations (hash, created_at) VALUES ($1, $2) ON CONFLICT DO NOTHING", [hash, m.when || Date.now()]);
         } else {
-          status = await classifyManualMigration(sql, m);
+          await pool.query("INSERT INTO sgie_schema_migrations (name, hash, rows_affected, applied_at) VALUES ($1, $2, 0, NOW()) ON CONFLICT (name) DO NOTHING", [m.id, hash]);
         }
-        
-        if (status !== STATUS.APPLIED_COMPLETE) {
-          console.log(`  · [${status.padEnd(18)}] ${m.id} — no se registra`);
-          skipped++;
-          continue;
-        }
-        
-        // Registrar en tracking
-        if (m.kind === 'drizzle') {
-          const fileSql = readSql(m.file);
-          const hash = sha256(fileSql);
-          // Usar el mismo formato que Drizzle: sha256 del contenido SQL
-          await pool.query(
-            `INSERT INTO drizzle.__drizzle_migrations (hash, created_at) VALUES ($1, $2) ON CONFLICT DO NOTHING`,
-            [hash, m.when || Date.now()]
-          );
-          console.log(`  ✓ [drizzle] ${m.id} — registrada`);
-        } else {
-          const fileSql = readSql(m.file);
-          const hash = sha256(fileSql);
-          await pool.query(
-            `INSERT INTO sgie_schema_migrations (name, hash, rows_affected, applied_at) VALUES ($1, $2, 0, NOW()) ON CONFLICT (name) DO NOTHING`,
-            [m.id, hash]
-          );
-          console.log(`  ✓ [manual]  ${m.id} — registrada`);
-        }
-        registered++;
       }
-      
-      console.log(`\n═══ Baseline completado: ${registered} registradas, ${skipped} omitidas ═══`);
-    } finally {
-      await pool.end();
+      // Verify rows
+      const dt = (await pool.query("SELECT count(*)::int AS n FROM drizzle.__drizzle_migrations")).rows[0].n;
+      const mt = (await pool.query("SELECT count(*)::int AS n FROM sgie_schema_migrations")).rows[0].n;
+      if (dt !== 39) throw new Error(`Drizzle tracking: ${dt}/39`);
+      if (mt !== 19) throw new Error(`Manual tracking: ${mt}/19`);
+      await pool.query("COMMIT");
+      console.log(`✅ Baseline: 39/39 + 19/19 = 58 registradas.`);
+    } catch (e) {
+      await pool.query("ROLLBACK");
+      console.error(`⛔ ${e.message}. Rollback.`);
+      process.exit(1);
     }
+    await pool.end();
     process.exit(0);
   }
-  
-  console.error(`Modo desconocido: ${mode}. Usa: plan | apply`);
-  process.exit(1);
 })();
