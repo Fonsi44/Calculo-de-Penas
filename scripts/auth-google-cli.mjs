@@ -58,7 +58,9 @@ async function main() {
   }
 
   if (mode === 'status' || mode === 'check') {
-    const account = gcloud('auth application-default print-access-token 2>nul');
+    // runGcloud ya captura stderr. No pasar redirecciones de shell como
+    // argumentos literales: `2>nul` hacía fallar el status en macOS/Linux.
+    const account = gcloud('auth application-default print-access-token');
     if (account === null) {
       console.log('❌ No autenticado. Ejecuta: npm run auth:google');
       process.exit(1);

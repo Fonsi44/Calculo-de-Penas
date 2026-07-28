@@ -68,8 +68,12 @@ async function main() {
 
   if (gcloudOk) {
     try {
-      const who = runGcloud(['auth', 'list', '--filter=status:ACTIVE', '--format=value(account)']).stdout;
-      add('Google ADC', who ? 'ok' : 'error', who ? `autenticado: ${who}` : 'no autenticado');
+      // ADC y la cuenta activa de `gcloud auth login` son credenciales
+      // distintas. El flujo del proyecto usa application-default login, por
+      // lo que la comprobación correcta es solicitar un token ADC sin
+      // imprimirlo.
+      const adc = runGcloud(['auth', 'application-default', 'print-access-token']);
+      add('Google ADC', adc.ok && adc.stdout ? 'ok' : 'error', adc.ok ? 'autenticado' : 'no autenticado');
     } catch { add('Google ADC', 'error', 'error verificando'); }
   } else {
     add('Google ADC', 'pending', 'ejecuta npm run auth:google');
