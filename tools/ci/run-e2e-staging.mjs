@@ -366,6 +366,15 @@ try {
     await killServer(server);
     console.log('✓ Server stopped.');
   }
+  // 12. Retirar SIEMPRE el namespace sintético. El cleanup inicial garantiza
+  // un punto de partida limpio; este cleanup final evita dejar fixtures tras
+  // una ejecución verde o fallida.
+  const finalCleanupCode = sh('node tools/ci/cleanup-e2e.mjs');
+  recordStep('final-cleanup', finalCleanupCode === 0);
+  if (finalCleanupCode !== 0 && exitCode === 0) {
+    exitCode = finalCleanupCode;
+    failureReason = 'final cleanup failed';
+  }
 }
 
 console.log(`\n═══ Pipeline complete (exit ${exitCode}) — ${failureReason || 'success'} ═══`);
