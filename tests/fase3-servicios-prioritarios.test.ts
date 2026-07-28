@@ -470,6 +470,9 @@ describe('FASE 3 — Subsistemas intactos', () => {
       'lib/sgie/calendar-sync.ts',
       'lib/calendar/provider.ts',
       'lib/calendar/sandbox-provider.ts',
+      'lib/sgie/brief-jobs.ts',
+      'lib/sgie/risk-workload-jobs.ts',
+      'lib/sgie/search-indexer.ts',
     ];
     // Fase 3: corrección de referencias documentales (pinedayasociados.md → docs/architecture/)
     const fase3DocsFix = [

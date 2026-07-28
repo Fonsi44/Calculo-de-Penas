@@ -436,6 +436,9 @@ describe('FASE 4 §18-20 — Subsistemas intactos', () => {
     // Fase 4B cleanup: eliminación de CalendarExternalSection y subsistema sandbox abandonado.
     const fase4bCleanup = [
       'lib/sgie/calendar-sync.ts',
+      'lib/sgie/brief-jobs.ts',
+      'lib/sgie/risk-workload-jobs.ts',
+      'lib/sgie/search-indexer.ts',
     ];
     // Fase 3: corrección de referencias documentales (pinedayasociados.md → docs/architecture/)
     const fase3DocsFix = [
