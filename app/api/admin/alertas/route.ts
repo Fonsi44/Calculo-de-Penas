@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { accessService } from '@/lib/access-service';
 import { httpErrorResponse, correlationIdFrom } from '@/lib/http-errors';
 import { listarAlertas, cambiarEstadoAlerta } from '@/lib/sgie/alertas-sla-service';
+import { validateCsrf } from '@/lib/csrf';
 
 const getQuerySchema = z.object({
   severidad: z.enum(['info', 'advertencia', 'error', 'critico']).optional(),
@@ -55,6 +56,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const auth = await requireAdmin(request);
+    validateCsrf(request);
     const correlationId = correlationIdFrom(request);
     const body = await request.json();
     const parsed = postSchema.parse(body);

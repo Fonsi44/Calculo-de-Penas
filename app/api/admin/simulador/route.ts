@@ -3,6 +3,7 @@ import { db } from '@/lib/db';
 import { tiposProcedimiento } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
+import { validateCsrf } from '@/lib/csrf';
 
 const simSchema = z.object({
   procedimientoId: z.string().uuid(),
@@ -11,6 +12,7 @@ const simSchema = z.object({
 export async function POST(request: Request) {
   try {
     await requireAdmin(request);
+    validateCsrf(request);
     const body = simSchema.parse(await request.json());
 
     const [proc] = await db
@@ -32,7 +34,7 @@ export async function POST(request: Request) {
       nombre: i === 0 ? 'Inicio' : i === numFases - 1 ? 'Cierre' : `Fase ${i + 1}`,
       orden: i + 1,
       requisitos: requisitos.slice(i * 2, i * 2 + 2).map((r: Record<string, unknown>) => String(r.nombre ?? `Requisito ${i * 2 + 1}`)),
-      duracionEstimada: `${Math.round(5 + Math.random() * 20)} min`,
+      duracionEstimada: `${5 + ((i + 1) * 7 + requisitos.length * 3) % 20} min`,
     }));
 
     const tareasSimuladas = fases.flatMap((f) => [
@@ -59,6 +61,7 @@ export async function POST(request: Request) {
     ];
 
     return Response.json({
+      mode: 'deterministic-preview',
       procedimiento: proc.nombre,
       version: `v${proc.version}`,
       duracionTotal: `${Math.round(20 + requisitos.length * 10)} min estimados`,
