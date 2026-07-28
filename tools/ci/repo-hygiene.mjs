@@ -14,7 +14,7 @@
  */
 
 import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
+import { resolve, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 
@@ -110,6 +110,36 @@ if (!quickMode) {
     }
   }
   if (missingScripts === 0) ok('Todos los scripts existen');
+
+  console.log('\n═══ 5. Manifiesto de tooling ═══');
+  const manifest = JSON.parse(readFileSync(resolve(ROOT, 'tools/manifest.json'), 'utf8'));
+  const requiredFields = [
+    'id', 'path', 'owner', 'status', 'purpose', 'command', 'mutates', 'dryRun',
+    'requiredEnv', 'rollback', 'lastValidated', 'expiresAt',
+  ];
+  const entriesByPath = new Map();
+  for (const entry of manifest.tools ?? []) {
+    for (const field of requiredFields) {
+      if (!(field in entry)) error(`Tool ${entry.id ?? '(sin id)'} sin campo ${field}`);
+    }
+    if (entry.status !== 'active') error(`Tool ${entry.id}: status debe ser active`);
+    if (!existsSync(resolve(ROOT, entry.path))) error(`Tool no encontrado: ${entry.path}`);
+    if (entriesByPath.has(entry.path)) error(`Tool duplicado en manifiesto: ${entry.path}`);
+    entriesByPath.set(entry.path, entry);
+  }
+  const toolFiles = [];
+  function collectTools(directory) {
+    for (const item of readdirSync(directory, { withFileTypes: true })) {
+      const path = resolve(directory, item.name);
+      if (item.isDirectory()) collectTools(path);
+      else if (item.name.endsWith('.mjs')) toolFiles.push(relative(ROOT, path));
+    }
+  }
+  collectTools(resolve(ROOT, 'tools'));
+  for (const path of toolFiles) {
+    if (!entriesByPath.has(path)) error(`Tool activo sin manifiesto: ${path}`);
+  }
+  if (toolFiles.length === entriesByPath.size) ok(`${toolFiles.length} tools activos manifestados`);
 }
 
 // ── Resultado ─────────────────────────────────────────────────────────
