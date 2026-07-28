@@ -1,3 +1,12 @@
+---
+status: current
+owner: engineering
+created: 2026-07-28
+last_reviewed: 2026-07-28
+review_due: 2026-10-28
+supersedes: null
+superseded_by: null
+---
 # Desarrollo en macOS Apple Silicon
 
 Guía para configurar y trabajar con el proyecto en MacBook Pro con chip M1/M2/M3/M4.

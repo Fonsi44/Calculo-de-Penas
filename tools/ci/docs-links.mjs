@@ -25,9 +25,24 @@ function markdownFiles(directory) {
 const files = [...LIVE_ROOT_FILES, ...LIVE_DOC_DIRS.flatMap(markdownFiles)].sort();
 const failures = [];
 const linkPattern = /\[[^\]]*]\(([^)]+)\)/g;
+const REQUIRED_FRONTMATTER = [
+  'status', 'owner', 'created', 'last_reviewed', 'review_due', 'supersedes', 'superseded_by',
+];
 
 for (const file of files) {
   const source = readFileSync(resolve(ROOT, file), 'utf8');
+  if (file.startsWith('docs/')) {
+    const frontmatter = source.match(/^---\n([\s\S]*?)\n---\n/);
+    if (!frontmatter) {
+      failures.push(`${file}: falta frontmatter`);
+    } else {
+      for (const field of REQUIRED_FRONTMATTER) {
+        if (!new RegExp(`^${field}:`, 'm').test(frontmatter[1])) {
+          failures.push(`${file}: falta campo de frontmatter ${field}`);
+        }
+      }
+    }
+  }
   for (const match of source.matchAll(linkPattern)) {
     let target = match[1].trim().replace(/^<|>$/g, '').split('#')[0];
     if (!target || /^(?:https?:|mailto:|tel:|#|\/)/.test(target)) continue;

@@ -1,3 +1,12 @@
+---
+status: current
+owner: engineering
+created: 2026-07-28
+last_reviewed: 2026-07-28
+review_due: 2026-10-28
+supersedes: null
+superseded_by: null
+---
 # Arquitectura — Fase 4B-1: Aprobación documental en bloque (P2-07)
 
 **Fecha:** 2026-07-20. **Estado:** Implementado y validado (suite 1113/1113 serial + paralela 3×, E2E Neon 16/16, build verde, lint/tsc/drizzle limpios).

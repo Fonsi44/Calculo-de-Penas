@@ -1,3 +1,12 @@
+---
+status: current
+owner: engineering
+created: 2026-07-28
+last_reviewed: 2026-07-28
+review_due: 2026-10-28
+supersedes: null
+superseded_by: null
+---
 # Política de scripts y tooling
 
 Reglas para mantener los scripts del repositorio organizados, con propósito claro y sin duplicación.

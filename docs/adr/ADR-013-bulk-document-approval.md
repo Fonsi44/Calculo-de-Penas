@@ -1,3 +1,12 @@
+---
+status: current
+owner: engineering
+created: 2026-07-28
+last_reviewed: 2026-07-28
+review_due: 2026-10-28
+supersedes: null
+superseded_by: null
+---
 # ADR-013: Aprobación documental en bloque (P2-07)
 
 **Fecha:** 2026-07-20. **Estado:** Aceptado.
