@@ -139,7 +139,7 @@ async function checkArticulo(page: Page, art: ArticuloCheck, viewport: 'desktop'
 }
 
 // ─── Desktop ───────────────────────────────────────────────────────────────
-test.describe('Fase 3E — Validación visual Lote 1 Penal (Desktop)', () => {
+test.describe('@production-only Fase 3E — Validación visual Lote 1 Penal (Desktop)', () => {
   test.use({ viewport: { width: 1280, height: 800 } });
 
   for (const art of ARTICULOS) {
@@ -150,7 +150,7 @@ test.describe('Fase 3E — Validación visual Lote 1 Penal (Desktop)', () => {
 });
 
 // ─── Mobile (iPhone 13) ────────────────────────────────────────────────────
-test.describe('Fase 3E — Validación visual Lote 1 Penal (Mobile)', () => {
+test.describe('@production-only Fase 3E — Validación visual Lote 1 Penal (Mobile)', () => {
   test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
 
   for (const art of ARTICULOS) {
@@ -161,7 +161,7 @@ test.describe('Fase 3E — Validación visual Lote 1 Penal (Mobile)', () => {
 });
 
 // ─── Service worker ─────────────────────────────────────────────────────────
-test.describe('Fase 3E — Service worker en producción', () => {
+test.describe('@production-only Fase 3E — Service worker en producción', () => {
   test.use({ viewport: { width: 1280, height: 800 } });
 
   test('/sw.js sirve un SW con BUILD_ID real (no dev ni placeholder)', async ({ request }) => {

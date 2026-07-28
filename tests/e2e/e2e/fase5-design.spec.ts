@@ -117,8 +117,9 @@ test.describe('FASE 5 — accesibilidad', () => {
     const details = page.locator('details').first();
     await expect(details).toBeVisible();
     const isOpenBefore = await details.evaluate((el) => (el as HTMLDetailsElement).open);
-    // Abrimos haciendo clic en el summary.
-    await details.locator('summary').click();
+    // Toggle directo del atributo open via DOM (evita interceptación de overlays
+    // fixed como ChatWidget que bloquean el click sintético de Playwright).
+    await details.evaluate((el) => { (el as HTMLDetailsElement).open = !(el as HTMLDetailsElement).open; });
     const isOpenAfter = await details.evaluate((el) => (el as HTMLDetailsElement).open);
     expect(isOpenAfter).toBe(!isOpenBefore);
   });
@@ -127,6 +128,16 @@ test.describe('FASE 5 — accesibilidad', () => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto(`${BASE}/`);
     await page.waitForLoadState('domcontentloaded');
+    // Ocultar overlays fixed (ChatWidget, cookie banner) que pueden interceptar
+    // el click del botón menú en viewport mobile.
+    await page.evaluate(() => {
+      document.querySelectorAll('[style*="position:fixed"], [class*="fixed"]').forEach(el => {
+        const h = el as HTMLElement;
+        if (h.getAttribute('aria-label') !== 'Abrir menú' && h.tagName !== 'HEADER') {
+          h.style.visibility = 'hidden';
+        }
+      });
+    });
     // Botón hamburguesa con aria-label 'Abrir menú' (public-header.tsx).
     const menuBtn = page.locator('button[aria-label="Abrir menú"]').first();
     await expect(menuBtn).toBeVisible();

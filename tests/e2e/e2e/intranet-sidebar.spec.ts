@@ -12,34 +12,34 @@ interface SidebarLink {
 
 const SIDEBAR_LINKS: SidebarLink[] = [
   {
-    label: 'Calculadora',
-    href: '/intranet/calculadora',
-    expectedPathStarts: '/intranet/calculadora',
-    expectedContent: /Calculadora de Penas|Paso 1 de 8/i,
+    label: 'Dashboard SGIE',
+    href: '/intranet/sgie/dashboard',
+    expectedPathStarts: '/intranet/sgie/dashboard',
+    expectedContent: /Dashboard|SGIE|Resumen/i,
   },
   {
-    label: 'Mis casos',
-    href: '/intranet/casos',
-    expectedPathStarts: '/intranet/casos',
-    expectedContent: /Mis casos|Crear.*caso|Sin casos todav/i,
+    label: 'Expedientes',
+    href: '/intranet/sgie/expedientes',
+    expectedPathStarts: '/intranet/sgie/expedientes',
+    expectedContent: /Expedientes|Casos|Sin expedientes/i,
   },
   {
-    label: 'Biblioteca CP',
-    href: '/intranet/cp',
-    expectedPathStarts: '/intranet/cp',
-    expectedContent: /Biblioteca|C[oó]digo Penal|Art[ií]culo/i,
+    label: 'Clientes',
+    href: '/intranet/sgie/clientes',
+    expectedPathStarts: '/intranet/sgie/clientes',
+    expectedContent: /Clientes|Sin clientes/i,
   },
   {
-    label: 'Catálogo de delitos',
-    href: '/intranet/delitos',
-    expectedPathStarts: '/intranet/delitos',
-    expectedContent: /Cat[aá]logo|delitos/i,
+    label: 'Documentos',
+    href: '/intranet/sgie/documentos',
+    expectedPathStarts: '/intranet/sgie/documentos',
+    expectedContent: /Documentos|Sin documentos/i,
   },
   {
-    label: 'Atajos de teclado',
-    href: '/intranet/atajos',
-    expectedPathStarts: '/intranet/atajos',
-    expectedContent: /Atajos|teclado|Calculadora de penas/i,
+    label: 'Agenda',
+    href: '/intranet/sgie/agenda',
+    expectedPathStarts: '/intranet/sgie/agenda',
+    expectedContent: /Agenda|Evento|Calendario/i,
   },
 ];
 
@@ -51,7 +51,8 @@ test.describe('Intranet — rutas protegidas accesibles tras autenticación', ()
     await page.locator('#email').fill(TEST_EMAIL);
     await page.locator('#password').fill(TEST_PASSWORD);
     await page.locator('button[type="submit"]').click();
-    await expect(page).toHaveURL(/\/intranet\/(sgie|admin|login)$/, { timeout: 10_000 });
+    // Login exitoso: debe salir del login hacia sgie o admin.
+    await expect(page).toHaveURL(/\/intranet\/(sgie|admin)$/, { timeout: 10_000 });
   });
 
   for (const link of SIDEBAR_LINKS) {
@@ -60,9 +61,10 @@ test.describe('Intranet — rutas protegidas accesibles tras autenticación', ()
       await page.locator('#email').fill(TEST_EMAIL);
       await page.locator('#password').fill(TEST_PASSWORD);
       await page.locator('button[type="submit"]').click();
-      await expect(page).toHaveURL(/\/intranet\/(sgie|admin|login)$/, { timeout: 10_000 });
+      // Login exitoso: debe salir del login hacia sgie o admin.
+      await expect(page).toHaveURL(/\/intranet\/(sgie|admin)$/, { timeout: 10_000 });
 
-      await page.goto(link.href, { waitUntil: 'networkidle' });
+      await page.goto(link.href, { waitUntil: 'domcontentloaded' });
       await expect(page).toHaveURL(new RegExp(link.expectedPathStarts.replace(/\//g, '\\/')), { timeout: 15_000 });
       await expect(page.locator('body')).toContainText(link.expectedContent, { timeout: 15_000 });
     });

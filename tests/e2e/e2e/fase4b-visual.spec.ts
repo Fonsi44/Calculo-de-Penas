@@ -229,7 +229,7 @@ async function checkArticulo(
 }
 
 // ─── Desktop ───────────────────────────────────────────────────────────────
-test.describe('Fase 4B — Validación visual Lote 2 (Desktop)', () => {
+test.describe('@production-only Fase 4B — Validación visual Lote 2 (Desktop)', () => {
   test.use({ viewport: { width: 1280, height: 800 } });
 
   for (const art of ARTICULOS) {
@@ -240,7 +240,7 @@ test.describe('Fase 4B — Validación visual Lote 2 (Desktop)', () => {
 });
 
 // ─── Mobile (iPhone 13) ────────────────────────────────────────────────────
-test.describe('Fase 4B — Validación visual Lote 2 (Mobile)', () => {
+test.describe('@production-only Fase 4B — Validación visual Lote 2 (Mobile)', () => {
   test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
 
   for (const art of ARTICULOS) {
@@ -251,7 +251,7 @@ test.describe('Fase 4B — Validación visual Lote 2 (Mobile)', () => {
 });
 
 // ─── Service worker sigue sirviéndose en este deployment ───────────────────
-test.describe('Fase 4B — Service worker en producción', () => {
+test.describe('@production-only Fase 4B — Service worker en producción', () => {
   test.use({ viewport: { width: 1280, height: 800 } });
 
   test('/sw.js sirve SW con BUILD_ID real', async ({ request }) => {

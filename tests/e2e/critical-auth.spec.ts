@@ -8,6 +8,8 @@
  */
 import { test, expect } from '@playwright/test';
 
+const BASE_URL = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3100';
+
 const ADMIN = {
   email: process.env.E2E_ADMIN_EMAIL || 'admin@test.local',
   password: process.env.E2E_ADMIN_PASSWORD || 'TestAdmin123!',
@@ -22,6 +24,20 @@ const USER_2FA = {
 };
 
 test.describe('@critical Auth — Login', () => {
+  // Serial: varios tests mutan estado compartido (bloqueo de cuenta, logout,
+  // cambio de contraseña que incrementa token_version). Si corren en paralelo
+  // con critical-authorization (que usa el mismo abogado-a), se interfieren.
+  test.describe.configure({ mode: 'serial' });
+
+  /**
+   * Extrae solo el par name=value del header Set-Cookie para usarlo como
+   * header Cookie en requests subsiguientes. Los atributos (HttpOnly, Path,
+   * SameSite, Max-Age) son inválidos en un header Cookie de request.
+   */
+  function extractCookie(res: { headers: () => Record<string, string> }): string {
+    return (res.headers()['set-cookie'] || '').split(';')[0];
+  }
+
   test('1. Login correcto redirige a SGIE (abogado)', async ({ page }) => {
     await page.goto('/intranet/login');
     await page.fill('input[name="email"]', ABOGADO_A.email);
@@ -59,12 +75,12 @@ test.describe('@critical Auth — Login', () => {
       data: { email: ADMIN.email, password: ADMIN.password },
     });
     expect(loginRes.ok()).toBeTruthy();
-    const cookies = loginRes.headers()['set-cookie'] || '';
+    const cookies = extractCookie(loginRes);
 
-    // Bloquear usuario
+    // Bloquear usuario. Origin requerido por la política CSRF en mutaciones.
     const blockRes = await request.patch('/api/admin/usuarios/aaaaaaaa-0000-4000-a000-000000000002/bloqueo', {
       data: { bloqueado: true, motivo: 'E2E test' },
-      headers: { cookie: cookies },
+      headers: { cookie: cookies, Origin: BASE_URL },
     });
     expect(blockRes.ok()).toBeTruthy();
 
@@ -77,7 +93,7 @@ test.describe('@critical Auth — Login', () => {
     // Desbloquear (cleanup)
     await request.patch('/api/admin/usuarios/aaaaaaaa-0000-4000-a000-000000000002/bloqueo', {
       data: { bloqueado: false },
-      headers: { cookie: cookies },
+      headers: { cookie: cookies, Origin: BASE_URL },
     });
   });
 
@@ -88,7 +104,8 @@ test.describe('@critical Auth — Login', () => {
     });
     expect(loginRes.ok()).toBeTruthy();
     const body = await loginRes.json();
-    expect(body.requires2fa).toBe(true);
+    // El API devuelve el campo en español: requiere2fa (no requires2fa).
+    expect(body.requiere2fa).toBe(true);
     expect(body.challenge).toBeTruthy();
 
     // Intentar usar el challenge como token de sesión
@@ -131,7 +148,7 @@ test.describe('@critical Auth — Login', () => {
     const loginRes = await request.post('/api/auth/login', {
       data: { email: ABOGADO_A.email, password: ABOGADO_A.password },
     });
-    const cookies = loginRes.headers()['set-cookie'] || '';
+    const cookies = extractCookie(loginRes);
 
     // Verificar que la sesión funciona
     const meRes = await request.get('/api/auth/me', { headers: { cookie: cookies } });
@@ -151,7 +168,7 @@ test.describe('@critical Auth — Login', () => {
       expect(meRes2.status()).toBe(401);
 
       // Restaurar contraseña original para no romper otros tests
-      const newCookies = changeRes.headers()['set-cookie'] || '';
+      const newCookies = extractCookie(changeRes);
       if (newCookies) {
         await request.post('/api/auth/change-password', {
           data: { currentPassword: 'NewTestPassword456!', newPassword: ABOGADO_A.password },
@@ -165,7 +182,7 @@ test.describe('@critical Auth — Login', () => {
     const loginRes = await request.post('/api/auth/login', {
       data: { email: ABOGADO_A.email, password: ABOGADO_A.password },
     });
-    const cookies = loginRes.headers()['set-cookie'] || '';
+    const cookies = extractCookie(loginRes);
 
     // Logout
     const logoutRes = await request.post('/api/auth/logout', {
@@ -173,9 +190,12 @@ test.describe('@critical Auth — Login', () => {
     });
     expect(logoutRes.ok()).toBeTruthy();
 
-    // Verificar que ya no hay acceso
+    // Verificar que ya no hay acceso: /api/auth/me devuelve user: null cuando
+    // la sesión fue revocada (token_version incrementado por el logout).
     const meRes = await request.get('/api/auth/me', { headers: { cookie: cookies } });
-    expect(meRes.status()).toBe(401);
+    expect(meRes.ok()).toBeTruthy();
+    const body = await meRes.json();
+    expect(body.user).toBeNull();
   });
 
   test('8. Abogado redirigido fuera de Admin', async ({ page }) => {
