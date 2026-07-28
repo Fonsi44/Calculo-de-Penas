@@ -1,7 +1,6 @@
 import type { Post } from '@/data/blog/types';
 import { blogCategories } from '@/data/blog/categories';
 import { formatHondurasDate } from '@/lib/datetime';
-import type { BlogPost } from '@/lib/schema';
 import { getPublishedPosts, getPostBySlug as getPostBySlugDb, getBlogCategories } from '@/lib/blog-db';
 
 const EDITORIAL_OVERRIDES: Record<string, { title: string; description: string }> = {
@@ -177,7 +176,9 @@ export function getTotalPages(posts: Post[], perPage: number): number {
   return Math.max(1, Math.ceil(posts.length / perPage));
 }
 
-function mapToPost(p: BlogPost): Post {
+type PublicBlogPost = Awaited<ReturnType<typeof getPublishedPosts>>[number];
+
+function mapToPost(p: PublicBlogPost): Post {
   const editorial = EDITORIAL_OVERRIDES[p.slug];
   const title = editorial?.title ?? polishedTitle(p.title);
   const description = editorial?.description ?? polishedExcerpt(p.description);
@@ -199,8 +200,11 @@ function mapToPost(p: BlogPost): Post {
     reviewedBy: p.reviewedBy ?? undefined,
     reviewedAt: p.reviewedAt?.toISOString() ?? undefined,
     legalReviewNotes: p.legalReviewNotes ?? undefined,
-    aiReviewStatus: p.aiReviewStatus ?? undefined,
-    aiReviewedAt: p.aiReviewedAt,
+    // El workflow IA es operativo y no forma parte del contrato de lectura
+    // público. Los avisos verificables se habilitan cuando esos datos se
+    // incorporen a una vista estable, no mediante SELECT * sobre la tabla.
+    aiReviewStatus: undefined,
+    aiReviewedAt: undefined,
     lastReviewedAt: p.lastReviewedAt?.toISOString() ?? undefined,
     nextReviewDueAt: p.nextReviewDueAt?.toISOString() ?? undefined,
   };

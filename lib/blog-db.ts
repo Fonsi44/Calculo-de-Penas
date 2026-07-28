@@ -2,6 +2,44 @@ import { db } from '@/lib/db';
 import { blogPosts } from '@/lib/schema';
 import { eq, and, desc, sql } from 'drizzle-orm';
 
+/**
+ * Contrato de lectura del blog público.
+ *
+ * El frontend no debe depender de columnas operativas del pipeline interno de
+ * revisión IA. Mantener una proyección explícita evita que una rama Preview
+ * con ese workflow pendiente de migración rompa todas las páginas públicas.
+ * Las columnas legales/editoriales sí forman parte del contrato de publicación.
+ */
+const publicBlogPostSelection = {
+  id: blogPosts.id,
+  slug: blogPosts.slug,
+  title: blogPosts.title,
+  description: blogPosts.description,
+  body: blogPosts.body,
+  publishedAt: blogPosts.publishedAt,
+  updatedAt: blogPosts.updatedAt,
+  category: blogPosts.category,
+  tags: blogPosts.tags,
+  author: blogPosts.author,
+  readingTime: blogPosts.readingTime,
+  coverImage: blogPosts.coverImage,
+  featured: blogPosts.featured,
+  published: blogPosts.published,
+  creadoEn: blogPosts.creadoEn,
+  metaTitle: blogPosts.metaTitle,
+  metaDescription: blogPosts.metaDescription,
+  ogImage: blogPosts.ogImage,
+  noindex: blogPosts.noindex,
+  canonicalUrl: blogPosts.canonicalUrl,
+  authorId: blogPosts.authorId,
+  reviewStatus: blogPosts.reviewStatus,
+  reviewedBy: blogPosts.reviewedBy,
+  reviewedAt: blogPosts.reviewedAt,
+  legalReviewNotes: blogPosts.legalReviewNotes,
+  lastReviewedAt: blogPosts.lastReviewedAt,
+  nextReviewDueAt: blogPosts.nextReviewDueAt,
+} as const;
+
 function isBuildPhase(): boolean {
   return process.env.NEXT_PHASE === 'phase-production-build';
 }
@@ -52,7 +90,7 @@ export async function getPublishedPosts(opts?: { limit?: number; category?: stri
     if (opts?.category) conditions.push(eq(blogPosts.category, opts.category));
     if (opts?.featured) conditions.push(eq(blogPosts.featured, true));
 
-    const query = db.select().from(blogPosts)
+    const query = db.select(publicBlogPostSelection).from(blogPosts)
       .where(and(...conditions))
       .orderBy(desc(blogPosts.publishedAt));
 
@@ -76,7 +114,7 @@ export async function getPostBySlug(slug: string) {
     return null;
   }
   try {
-    const [post] = await db.select().from(blogPosts)
+    const [post] = await db.select(publicBlogPostSelection).from(blogPosts)
       .where(and(eq(blogPosts.slug, slug), eq(blogPosts.published, true)));
     return post ?? null;
   } catch (err) {
@@ -118,7 +156,7 @@ export async function getRelatedPosts(slug: string, category: string, limit = 3)
     return [];
   }
   try {
-    return await db.select().from(blogPosts)
+    return await db.select(publicBlogPostSelection).from(blogPosts)
       .where(and(
         eq(blogPosts.published, true),
         eq(blogPosts.category, category),
