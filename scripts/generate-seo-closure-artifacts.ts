@@ -142,9 +142,9 @@ writeCsv(
   nacaomePaths.map((path) => {
     const metrics = gscByPage.get(path);
     if (path.endsWith('/blog/practica-legal/abogados-en-nacaome')) {
-      return [path, '/abogados-en-nacaome', 'REDIRECT_CANDIDATE', `${metrics?.impressions ?? 0} impresiones GSC; intención local solapada`, 'PREPARE_ONLY', 'retirar regla antes de deploy'];
+      return [path, '', 'KEEP_INFORMATIONAL_REORIENTED', `${metrics?.impressions ?? 0} impresiones GSC; título informativo y enlace a home`, 'REMOVE_EXISTING_REDIRECT_IN_PREVIEW', 'restaurar regla si la validación SERP demuestra solapamiento'];
     }
-    return [path, '', path.endsWith('/abogados-en-nacaome') ? 'KEEP_INFORMATIONAL_LOCAL' : 'KEEP_COMMERCIAL_BRAND', `${metrics?.impressions ?? 0} impresiones GSC`, 'NONE', 'n/a'];
+    return [path, '', path.endsWith('/abogados-en-nacaome') ? 'HUMAN_REVIEW_LOCAL_LANDING' : 'KEEP_COMMERCIAL_BRAND', `${metrics?.impressions ?? 0} impresiones GSC`, path.endsWith('/abogados-en-nacaome') ? 'PREPARE_DECISION_NO_PRODUCTION_CHANGE' : 'NONE', 'n/a'];
   }),
 );
 

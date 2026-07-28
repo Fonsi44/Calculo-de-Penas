@@ -220,6 +220,16 @@ const MID_POST_CTA_COPY: Record<string, { title: string; body: string; anchor: s
 };
 
 function injectMidArticleCta(body: string, slug: string): string {
+  if (slug === 'abogados-en-nacaome') {
+    const informationalLink = `
+<aside class="my-7 rounded-lg border border-accent/30 bg-surface-alt p-4">
+  <p class="text-sm text-text-secondary leading-relaxed">Si después de comparar especialidad, comunicación y presupuesto necesita valorar su situación concreta, puede <a href="/" class="font-semibold text-primary hover:text-accent-dark">consultar con un abogado en Nacaome</a> y conocer el despacho, sus áreas y sus profesionales responsables.</p>
+</aside>`;
+    return body.includes('consultar con un abogado en Nacaome')
+      ? body
+      : `${body}${informationalLink}`;
+  }
+
   const hasContextualTopic = Boolean(MID_POST_CTA_COPY[slug]);
   if (!hasContextualTopic) return body;
   if (body.includes('/solicitar-consulta')) return body;

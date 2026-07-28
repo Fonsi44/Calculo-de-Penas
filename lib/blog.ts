@@ -210,7 +210,9 @@ function mapToPost(p: PublicBlogPost): Post {
     metaDescription: editorial?.description ?? p.metaDescription ?? undefined,
     ogImage: p.ogImage ?? undefined,
     noindex: p.noindex ?? undefined,
-    canonicalUrl: p.canonicalUrl ?? undefined,
+    canonicalUrl: p.slug === 'abogados-en-nacaome'
+      ? `/blog/${p.category}/${p.slug}`
+      : p.canonicalUrl ?? undefined,
     authorId: p.authorId ?? undefined,
     reviewStatus: p.reviewStatus ?? undefined,
     reviewedBy: p.reviewedBy ?? undefined,

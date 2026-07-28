@@ -115,7 +115,6 @@ const REDIRECT_SOURCE_PATHS = new Set<string>([
   // serviría un 308. Auditoría Ahrefs 2026-07-10: 1 enlace "Sitemap URL → 308".
   '/blog/derecho-penal/abogado-penalista-choluteca',
   // Posts locales consolidados en landings comerciales
-  '/blog/practica-legal/abogados-en-nacaome',
   '/blog/practica-legal/abogados-en-choluteca',
   '/blog/practica-legal/abogados-en-san-lorenzo',
   '/blog/practica-legal/abogados-en-pespire-choluteca',
