@@ -41,4 +41,15 @@ Done ni está autorizada para producción.
 - Revisión jurídica humana específica para convertir artículos concretos a
   `lawyer_verified`.
 - Autorización productiva para escrituras de DB, redirects, deployment y merge.
+- La DB exclusiva de Vercel Preview no contiene artículos publicados. El
+  frontend ya no falla si faltan columnas operativas de revisión IA: `/blog`
+  responde 200 sin resultados y las rutas de posts ausentes responden 404.
 - El resto de trabajo técnico debe continuar antes de solicitar publicación.
+
+## Verificación de Preview
+
+- Deployment `dpl_J9JbPDDwo4k7Lxo9WmFszmMMyqhU`: `Ready`.
+- Portada, despacho, servicios y tres perfiles: respuesta correcta.
+- Perfil de Danilo: un H1 y tres bloques JSON-LD observados.
+- Checks del Draft PR #25: CI completa, Lighthouse, GitGuardian y Vercel en
+  verde.
