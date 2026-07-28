@@ -5,6 +5,7 @@ import { blogPosts } from '@/lib/schema';
 import { eq, and, desc } from 'drizzle-orm';
 import { blogCategories } from '@/data/blog/categories';
 import canonicalPathsData from '@/data/seo/canonical-paths.json';
+import { normalizeReviewStatus } from '@/lib/legal-review';
 
 function daysAgo(days: number): Date {
   const d = new Date();
@@ -144,6 +145,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       updatedAt: blogPosts.updatedAt,
       noindex: blogPosts.noindex,
       canonicalUrl: blogPosts.canonicalUrl,
+      reviewStatus: blogPosts.reviewStatus,
     })
     .from(blogPosts)
     .where(and(eq(blogPosts.published, true), eq(blogPosts.noindex, false)))
@@ -155,14 +157,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // está declarada (la landing). Así evitamos enviar a Google URLs que él
   // consolidaría igualmente y reducimos ruido/duplicidad en el sitemap.
   // Ver docs/indexacion-plan-decision.md §7 (Fase 1).
-  const dbPosts = dbPostsRaw.filter((p) => {
-    const c = p.canonicalUrl;
-    if (!c) return true; // sin override → queda
-    // Si el canonical apunta a otra URL del propio sitio (path absoluto o
-    // URL completa del mismo host) y NO es la propia ruta del post, se excluye.
-    const isSelfPost = c === `/blog/${p.category}/${p.slug}`;
-    return isSelfPost;
-  });
+  const dbPosts = dbPostsRaw
+    .filter((p) => {
+      const c = p.canonicalUrl;
+      if (!c) return true; // sin override → queda
+      // Si el canonical apunta a otra URL del propio sitio (path absoluto o
+      // URL completa del mismo host) y NO es la propia ruta del post, se excluye.
+      const isSelfPost = c === `/blog/${p.category}/${p.slug}`;
+      return isSelfPost;
+    })
+    // Plan maestro SEO/GEO §8.1, §9.6 y §19.2: el sitemap solo debe incluir
+    // URLs indexables. Los artículos pendientes de revisión jurídica humana
+    // se sirven con `noindex, follow` (ver generateMetadata del post) y por
+    // tanto no deben declararse en el sitemap. Solo `lawyer_verified`
+    // (≈ `verified` en el modelo vigente) entra.
+    .filter((p) => normalizeReviewStatus(p.reviewStatus) === 'verified');
 
   // Mapa categoría → fecha del post más reciente. Se usa dbPostsRaw (TODOS los
   // posts publicados/no-noindex, incluyendo los canonicalizados) para que el
