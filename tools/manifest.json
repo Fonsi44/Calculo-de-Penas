@@ -16,6 +16,20 @@
       "expiresAt": null
     },
     {
+      "id": "ci.docs-links",
+      "path": "tools/ci/docs-links.mjs",
+      "owner": "engineering",
+      "status": "active",
+      "purpose": "Validar enlaces locales de la documentación viva sin mezclar evidencia histórica.",
+      "command": "node tools/ci/docs-links.mjs",
+      "mutates": false,
+      "dryRun": true,
+      "requiredEnv": [],
+      "rollback": null,
+      "lastValidated": "2026-07-28",
+      "expiresAt": null
+    },
+    {
       "id": "ci.e2e-credentials",
       "path": "tools/ci/e2e-credentials.mjs",
       "owner": "engineering",

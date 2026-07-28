@@ -1,11 +1,17 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { createHmac } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
-import { globSync } from 'glob';
 import { verifyWhatsAppSignature } from '@/app/api/whatsapp/route';
 
 const ROOT = resolve(import.meta.dirname, '..');
+
+function routeFiles(directory: string): string[] {
+  return readdirSync(resolve(ROOT, directory), { withFileTypes: true }).flatMap((entry) => {
+    const path = `${directory}/${entry.name}`;
+    return entry.isDirectory() ? routeFiles(path) : entry.name === 'route.ts' ? [path] : [];
+  });
+}
 
 const ADMIN_MUTATIONS = [
   'app/api/admin/alertas/route.ts',
@@ -49,7 +55,7 @@ describe('contratos de mutaciones administrativas', () => {
 
   it('toda ruta mutable sin CSRF pertenece a una excepción contractual verificable', () => {
     const mutationPattern = /export async function (?:POST|PUT|PATCH|DELETE)\b/;
-    const routesWithoutCsrf = globSync('app/api/**/route.ts', { cwd: ROOT })
+    const routesWithoutCsrf = routeFiles('app/api')
       .filter((file) => {
         const source = readFileSync(resolve(ROOT, file), 'utf8');
         return mutationPattern.test(source) && !source.includes('validateCsrf');
