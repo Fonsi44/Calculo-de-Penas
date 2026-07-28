@@ -25,9 +25,11 @@ Se verificaron contra el clon:
 - **ALTER TABLE ADD COLUMN**: todas las columnas existen (100%)
 - **CREATE INDEX**: 56/58 índices existen (2 difieren en nombre: `enlaces_magicos_token_idx`, `embeddings_vector_idx`)
 - **CREATE TYPE (enum)**: todos los tipos existen con valores correctos
-- **Tracking en Production**: 0 Drizzle + 0 manuales; no aplicado
-- **Plan firmado**: debe ser `EQUIVALENTE`, `publicDrift=0` y estar ligado al
-  HEAD exacto que se vaya a desplegar.
+- **Tracking en Production**: 39 Drizzle + 21 manuales, aplicado
+  transaccionalmente el 2026-07-28.
+- **Plan aplicado**: `EQUIVALENTE`, `publicDrift=0`, firmado para
+  `7275cb5ed602a37de86fb1589f11908e52984357`.
+- **Snapshot pre-cutover**: `snap-muddy-poetry-ap44ccpa`.
 
 ## Procedimiento de baseline
 
@@ -80,6 +82,14 @@ La base `neondb` contiene ~203 usuarios con email `@test.local`, `auth-test@`, `
 node tools/ops/disable-synthetic-production-users.mjs
 ```
 
+### Resultado productivo
+
+- Dry-run: 208 emparejadas, 0 modificadas.
+- Apply transaccional: 208 emparejadas, 208 neutralizadas.
+- Postcondiciones: 210 usuarios totales, 208 allowlisted inactivas y
+  bloqueadas, 2 identidades fuera de allowlist intactas y 208 eventos de
+  auditoría.
+
 ### Aplicar
 
 ```bash
@@ -90,11 +100,21 @@ node tools/ops/disable-synthetic-production-users.mjs
 
 ## Vercel Production
 
-Actualmente apunta a una base Prisma legacy. Después del baseline y neutralización, cambiar:
+Variables aplicadas:
 
 - `DATABASE_URL` → proyecto `spring-frog-35352705`, branch `production`, base `neondb`
 - `DATABASE_URL_UNPOOLED` → misma conexión (sin pool)
-- Verificar `POSTGRES_URL`, `POSTGRES_PRISMA_URL` legacy
+- `POSTGRES_URL` y `POSTGRES_PRISMA_URL` permanecen ausentes.
+
+Deployment productivo:
+
+- Commit de aplicación: `dcd0cadefe65e41fc35a94df83ef9b8dbc42940a`
+- Vercel: `dpl_4YwZyKkmEcoMoTt7ivyv7vAb7hEp`
+- Dominio: `https://www.pinedayasociadoshn.com`
+- Readiness: `healthy`; DB, 39/39 Drizzle, 21/21 manuales, Blob, cron,
+  email e IA verdes.
+- Smoke: home, health, readiness, blog, artículo DB, login, robots, sitemap y
+  sesión anónima respondieron HTTP 200.
 
 ## Rollback
 
