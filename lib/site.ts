@@ -138,10 +138,10 @@ export const site = {
   shortName: process.env.NEXT_PUBLIC_SITE_SHORT ?? 'Pineda y Asociados',
   tagline:
     process.env.NEXT_PUBLIC_SITE_TAGLINE ??
-    'Abogados en Nacaome, Valle | Bufete Pineda y Asociados',
+    'Abogados en Nacaome, Valle | Pineda y Asociados',
   description:
     process.env.NEXT_PUBLIC_SITE_DESCRIPTION ??
-    'Bufete en Nacaome, Valle. Defensa penal, familia, laboral, civil y mercantil. Atención directa y presupuesto por escrito. WhatsApp +504 9536-3724.',
+    'Abogados colegiados en Nacaome para defensa penal, familia, asuntos laborales, civiles y mercantiles. Atención directa, consulta confidencial y presupuesto por escrito.',
   keywords:
     (process.env.NEXT_PUBLIC_SITE_KEYWORDS ??
       'abogados Nacaome, bufete jurídico Valle Honduras, abogado penalista Nacaome, defensa penal sur Honduras, abogados San Lorenzo, abogados Choluteca, abogados Goascorán, abogados Amapala, abogados Pespire, abogados San Marcos de Colón, abogados Marcovia, abogado de familia Valle, abogado laboral Nacaome, derecho civil sur Honduras, abogado mercantil Nacaome, consulta legal gratuita Nacaome, bufete jurídico sur Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),
@@ -530,6 +530,8 @@ export function organizationSchema() {
 export const FOUNDER_PROFILE = {
   name: 'Danilo Pineda Maradiaga',
   jobTitle: 'Abogado penalista · Socio director',
+  /** Slug canónico de la página de perfil (plan maestro §4): /equipo/danilo-pineda-maradiaga. */
+  slug: 'danilo-pineda-maradiaga',
   /** Retrato principal (Foto1) — home + /despacho + schema Person.image. */
   image: '/images/equipo/danilo-pineda-maradiaga.webp',
   /** Retrato alternativo (Foto2) — /derecho-penal + sidebar /solicitar-consulta. */
@@ -625,6 +627,8 @@ export function founderSchema() {
 export const THANIA_PROFILE = {
   name: 'Thania Marlene Paz',
   jobTitle: 'Abogada · Socia fundadora',
+  /** Slug canónico de la página de perfil (plan maestro §4): /equipo/thania-marlene-paz. */
+  slug: 'thania-marlene-paz',
   image: '/images/equipo/thania-marlene-paz.webp',
   imageAltText: 'Thania Marlene Paz, abogada socia fundadora de Pineda y Asociados en Nacaome, Valle (Honduras)',
   description:
@@ -697,6 +701,8 @@ export function thaniaSchema() {
 export const EMIL_PROFILE = {
   name: 'Emil Barahona',
   jobTitle: 'Abogado · Socio del bufete',
+  /** Slug canónico de la página de perfil (plan maestro §4): /equipo/emil-barahona. */
+  slug: 'emil-barahona',
   image: '/images/equipo/emil-barahona.webp',
   imageAltText: 'Emil Barahona, abogado socio de Pineda y Asociados en Nacaome, Valle (Honduras)',
   description:
@@ -753,4 +759,105 @@ export function emilSchema() {
       ? { sameAs: validUrlsOnly([EMIL_PROFILE.linkedin, EMIL_PROFILE.directorio]) }
       : {}),
   };
+}
+
+/**
+ * Registro canónico de los perfiles públicos del equipo (plan maestro §4).
+ *
+ * SLUG: nombre estable en la URL pública (`/equipo/[slug]`). No reutiliza
+ * los anchors cortos del `/despacho` (`thania`, `emil`): el plan exige slugs
+ * legibles con el nombre completo o apellido completo. La correspondencia
+ * con el `@id` del nodo `Person` del @graph global se expone vía `personId`,
+ * para que el `ProfilePage.mainEntity` enlace siempre al mismo `Person`.
+ *
+ * IDEMPOTENCIA: ninguna de estas rutas requiere datos productivos para
+ * construirse (todo viene de `lib/site.ts`). Esto cumple R4: no se inventan
+ * credenciales, CAH, universidad, casos ganados ni años de colegiación.
+ */
+export interface LawyerProfileMeta {
+  slug: string;
+  personId: string;
+  name: string;
+  jobTitle: string;
+  /** SEO title absoluto (sin sufijo de marca). Plan maestro §4.2. */
+  metaTitle: string;
+  /** Meta description (plan maestro §4.2). */
+  metaDescription: string;
+  /** H1 visible (plan maestro §4.2). */
+  h1: string;
+  /** Texto profesional canónico (plan §2.1). */
+  description: string;
+  /** Áreas verificadas. */
+  areas: readonly string[];
+  /** Path de imagen relativo (puede no existir todavía). */
+  image: string;
+  imageAlt: string;
+}
+
+export const LAWYER_PROFILES: readonly LawyerProfileMeta[] = [
+  {
+    slug: 'danilo-pineda-maradiaga',
+    personId: `${site.url}/#danilo-pineda-maradiaga`,
+    name: FOUNDER_PROFILE.name,
+    jobTitle: FOUNDER_PROFILE.jobTitle,
+    metaTitle: 'Danilo Pineda Maradiaga | Abogado Penalista en Honduras',
+    metaDescription:
+      'Perfil de Danilo Pineda Maradiaga, abogado penalista, socio director de Pineda y Asociados y abogado colegiado en Honduras. Defensa penal en Nacaome y la zona sur.',
+    h1: 'Danilo Pineda Maradiaga, abogado penalista',
+    description:
+      'Danilo Pineda Maradiaga es abogado penalista, socio director de Pineda y Asociados y abogado colegiado en Honduras. Su práctica se concentra en la defensa penal, la asistencia desde las primeras diligencias, las audiencias, los recursos y la ejecución de la pena. Atiende asuntos en Nacaome y en la zona sur de Honduras con un enfoque técnico, prudente y basado en el análisis individual de cada expediente.',
+    areas: [
+      'Derecho penal',
+      'Proceso penal',
+      'Defensa de personas detenidas, investigadas o acusadas',
+      'Ejecución penal',
+      'Recursos penales',
+    ],
+    image: FOUNDER_PROFILE.image,
+    imageAlt: FOUNDER_PROFILE.imageAltText,
+  },
+  {
+    slug: 'thania-marlene-paz',
+    personId: `${site.url}/#thania`,
+    name: THANIA_PROFILE.name,
+    jobTitle: THANIA_PROFILE.jobTitle,
+    metaTitle: 'Thania Marlene Paz | Abogada de Familia, Civil y Mercantil',
+    metaDescription:
+      'Perfil de Thania Marlene Paz, socia fundadora y abogada colegiada en Honduras. Derecho de familia, administrativo, civil, notarial y mercantil.',
+    h1: 'Thania Marlene Paz, abogada de familia, civil y mercantil',
+    description:
+      'Thania Marlene Paz es abogada, socia fundadora de Pineda y Asociados y abogada colegiada en Honduras. Su práctica comprende derecho de familia, derecho administrativo, asuntos civiles y notariales y asesoría mercantil. Interviene en procedimientos que requieren coordinación documental, negociación, prevención de riesgos y representación ante autoridades administrativas o judiciales.',
+    areas: [
+      'Derecho de familia',
+      'Derecho administrativo',
+      'Derecho civil y notarial',
+      'Derecho mercantil y empresarial',
+    ],
+    image: THANIA_PROFILE.image,
+    imageAlt: THANIA_PROFILE.imageAltText,
+  },
+  {
+    slug: 'emil-barahona',
+    personId: `${site.url}/#emil`,
+    name: EMIL_PROFILE.name,
+    jobTitle: EMIL_PROFILE.jobTitle,
+    metaTitle: 'Emil Barahona | Abogado Laboral, Civil y Penal',
+    metaDescription:
+      'Perfil de Emil Barahona, socio de Pineda y Asociados y abogado colegiado en Honduras. Derecho laboral, civil, notarial y apoyo en materia penal.',
+    h1: 'Emil Barahona, abogado laboral, civil y penal',
+    description:
+      'Emil Barahona es abogado, socio de Pineda y Asociados y abogado colegiado en Honduras. Su práctica se centra en derecho laboral, asuntos civiles y notariales y apoyo en materia penal. Asesora a trabajadores, particulares y empresas mediante el análisis de documentos, la preparación de reclamaciones y la representación en procedimientos de negociación o litigio.',
+    areas: [
+      'Derecho laboral',
+      'Derecho civil y notarial',
+      'Apoyo en derecho penal',
+    ],
+    image: EMIL_PROFILE.image,
+    imageAlt: EMIL_PROFILE.imageAltText,
+  },
+] as const;
+
+/** Resuelve un profile por slug, o undefined si no existe (R4: no inventa). */
+export function getLawyerProfileBySlug(slug: string): LawyerProfileMeta | undefined {
+  return LAWYER_PROFILES.find((p) => p.slug === slug);
 }
