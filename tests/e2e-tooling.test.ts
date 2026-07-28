@@ -80,10 +80,8 @@ const fixture = JSON.parse(readFileSync(FIXTURE, 'utf8')) as {
 interface FixtureUser {
   id: string;
   email: string;
-  password: string;
   nombre: string;
   rol: string;
-  totpSecretBase32?: string;
 }
 interface FixtureEntity {
   id: string;
@@ -228,9 +226,7 @@ describe('E2E Tooling — Fixture canónico', () => {
 
   it('emails de auth y sidebar coinciden con los specs', () => {
     expect(fixture.users.authUser.email).toBe('auth-test@pinedayasociadoshn.com');
-    expect(fixture.users.authUser.password).toBe('e2e-test-password-X7q9Zk');
     expect(fixture.users.sidebarUser.email).toBe('sidebar-test@pinedayasociadoshn.com');
-    expect(fixture.users.sidebarUser.password).toBe('sidebar-test-X7q9Zk');
   });
 
   it('IDs esperados por critical-authorization.spec.ts presentes', () => {
@@ -264,13 +260,9 @@ describe('E2E Tooling — Fixture canónico', () => {
 describe('E2E Tooling — Coherencia spec ↔ fixture', () => {
   it('emails de admin/abogado/twofactor coinciden con fallbacks de critical-auth', () => {
     expect(fixture.users.admin.email).toBe('admin@test.local');
-    expect(fixture.users.admin.password).toBe('TestAdmin123!');
     expect(fixture.users.lawyerA.email).toBe('abogado-a@test.local');
-    expect(fixture.users.lawyerA.password).toBe('TestAbogadoA123!');
     expect(fixture.users.lawyerB.email).toBe('abogado-b@test.local');
-    expect(fixture.users.lawyerB.password).toBe('TestAbogadoB123!');
     expect(fixture.users.twoFactorUser.email).toBe('twofactor@test.local');
-    expect(fixture.users.twoFactorUser.password).toBe('Test2FA123!');
   });
 
   it('emails de abogadoB y admin coinciden con critical-authorization', () => {
