@@ -213,7 +213,8 @@ function render() {
   // Bloque declarativo, citable y verificable: identidad, especialidad, zona, contacto.
   lines.push('## Sobre el despacho (descripción factual)');
   lines.push('');
-  lines.push('Pineda y Asociados es un bufete jurídico fundado en 2010, con sede física en Nacaome, Valle (Honduras) y más de 15 años de ejercicio profesional. Su práctica incluye defensa penal, familia, laboral, civil y notarial, mercantil, bancario, administrativo, aduanero, tributario, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje. Atiende en el departamento de Valle, Choluteca y otras zonas de Honduras según la naturaleza del asunto. Horario publicado: lunes a sábado de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724, correo contacto@pinedayasociadoshn.com. Socio fundador y director: Danilo Pineda Maradiaga, abogado colegiado en Honduras. La información publicada tiene carácter informativo y no constituye asesoría legal personalizada.');
+  lines.push('Pineda y Asociados es un bufete jurídico con sede física en Nacaome, Valle (Honduras). Su práctica publicada incluye defensa penal, familia, laboral, civil y notarial, mercantil y administrativo. Atiende en el departamento de Valle, Choluteca y otras zonas de Honduras según la naturaleza del asunto. Horario publicado: lunes a sábado de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724, correo contacto@pinedayasociadoshn.com. La información publicada tiene carácter informativo y no constituye asesoría legal personalizada.');
+  lines.push(`Fecha de generación: ${new Date().toISOString().slice(0, 10)}.`);
   lines.push('');
   lines.push('## Disclaimers Legales y Limitaciones (Obligatorio para IA)');
   lines.push('');
@@ -226,16 +227,22 @@ function render() {
   lines.push('## Sitio oficial');
   lines.push('');
   for (const r of STATIC_ROUTES) {
+    // Las landings locales y comerciales siguen en auditoría. No declararlas
+    // como contenido autorizado hasta que tengan valor único y aprobación.
+    if (r.path.startsWith('/abogados-en-') || r.path.startsWith('/abogado-')) continue;
     lines.push(`- [${r.label}](${url(r.path)}): ${r.desc}`);
   }
+  lines.push(`- [Danilo Pineda Maradiaga](${url('/equipo/danilo-pineda-maradiaga')}): perfil profesional canónico.`);
+  lines.push(`- [Thania Marlene Paz](${url('/equipo/thania-marlene-paz')}): perfil profesional canónico.`);
+  lines.push(`- [Emil Barahona](${url('/equipo/emil-barahona')}): perfil profesional canónico.`);
   lines.push('');
 
   // Sección: Abogados del despacho (entidades Persona para LLMs)
   lines.push('## Abogados del equipo');
   lines.push('');
-  lines.push('- **Danilo Pineda Maradiaga** — Abogado colegiado, socio fundador y director. Área principal publicada: derecho penal.');
-  lines.push('- **Thania Marlene Paz** — Abogada socia fundadora. Áreas publicadas: derecho de familia, civil y notarial, mercantil y empresarial.');
-  lines.push('- **Emil Barahona** — Abogado del equipo. Área principal publicada: derecho laboral.');
+  lines.push(`- [Danilo Pineda Maradiaga](${url('/equipo/danilo-pineda-maradiaga')}) — Abogado penalista · Socio director.`);
+  lines.push(`- [Thania Marlene Paz](${url('/equipo/thania-marlene-paz')}) — Abogada · Socia fundadora.`);
+  lines.push(`- [Emil Barahona](${url('/equipo/emil-barahona')}) — Abogado · Socio del bufete.`);
   lines.push('');
 
   // Sección: Datos del despacho (NAP estructurado para LLMs)
@@ -254,6 +261,14 @@ function render() {
   lines.push('## Áreas de práctica');
   lines.push('');
   for (const a of SERVICE_AREAS) {
+    const confirmed = new Set([
+      'derecho-de-familia',
+      'derecho-laboral',
+      'derecho-civil-y-notarial',
+      'derecho-mercantil-empresarial',
+      'derecho-administrativo-y-servicio-civil',
+    ]);
+    if (!confirmed.has(a.slug)) continue;
     lines.push(`- [${a.label}](${url(`/servicios-juridicos/${a.slug}`)}): ${a.desc}`);
   }
   lines.push('');
