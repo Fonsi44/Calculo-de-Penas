@@ -70,7 +70,10 @@ yarn-error.log*
 /data/backups/
 /data/google/
 /data/bing/
-/data/seo/
+/data/seo/*
+!/data/seo/canonical-paths.json
+!/data/seo/editorial-cutover.json
+!/data/seo/preview-blog-fixtures.json
 *.tmp
 *.dump
 *.sql.gz

@@ -6,6 +6,7 @@ import { eq, and, desc } from 'drizzle-orm';
 import { blogCategories } from '@/data/blog/categories';
 import canonicalPathsData from '@/data/seo/canonical-paths.json';
 import { normalizeReviewStatus } from '@/lib/legal-review';
+import { requiresVerifiedEditorialStatus } from '@/lib/editorial-cutover';
 
 function daysAgo(days: number): Date {
   const d = new Date();
@@ -171,7 +172,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // se sirven con `noindex, follow` (ver generateMetadata del post) y por
     // tanto no deben declararse en el sitemap. Solo `lawyer_verified`
     // (≈ `verified` en el modelo vigente) entra.
-    .filter((p) => normalizeReviewStatus(p.reviewStatus) === 'verified');
+    .filter((p) => (
+      !requiresVerifiedEditorialStatus()
+      || normalizeReviewStatus(p.reviewStatus) === 'verified'
+    ));
 
   // Mapa categoría → fecha del post más reciente. Se usa dbPostsRaw (TODOS los
   // posts publicados/no-noindex, incluyendo los canonicalizados) para que el

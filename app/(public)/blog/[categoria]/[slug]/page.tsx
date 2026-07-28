@@ -19,6 +19,7 @@ import { BlogCtaBar } from '@/components/blog/blog-cta-bar';
 import { LegalDisclaimer } from '@/components/marketing/legal-disclaimer';
 import { AiReviewNotice } from '@/components/blog/ai-review-notice';
 import { CANONICAL_REVIEWERS, normalizeReviewStatus } from '@/lib/legal-review';
+import { requiresVerifiedEditorialStatus } from '@/lib/editorial-cutover';
 import { extractFAQSchema, faqPageSchema } from '@/lib/faq-schema';
 import { BlogSidebar } from '@/components/blog/blog-sidebar';
 import {
@@ -276,7 +277,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // criterio independientemente del flag `noindex` de la DB: la ausencia de
   // revisión jurídica humana es por sí sola motivo de noindex (gate de Fase 0).
   const reviewedVerified = normalizeReviewStatus(post.reviewStatus) === 'verified';
-  const noindex = post.noindex === true || !reviewedVerified;
+  const noindex = post.noindex === true
+    || (requiresVerifiedEditorialStatus() && !reviewedVerified);
 
   return {
     title: { absolute: metaTitle },
