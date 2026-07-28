@@ -1,3 +1,13 @@
+---
+status: current
+owner: engineering
+created: 2026-07-28
+last_reviewed: 2026-07-28
+review_due: 2026-08-04
+supersedes: null
+superseded_by: null
+---
+
 # Incidente de Seguridad: Exposición de Credencial Neon (2026-07-28)
 
 ## 1. Origen
