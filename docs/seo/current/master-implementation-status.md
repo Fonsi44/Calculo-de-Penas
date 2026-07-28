@@ -4,12 +4,14 @@ Fecha de corte: 2026-07-28
 
 ## Veredicto
 
-`FASE 3 IMPLEMENTADA EN PREVIEW`. La home es la única URL comercial primaria
-para Nacaome; la landing de oficina tiene intención operativa secundaria y el
-artículo conserva intención informativa. Los 175 artículos están clasificados,
-40 prioridades tienen mejora documental aplicada en la capa pending, patches
-seguros y paquetes concretos para revisión. La publicación en Production sigue
-bloqueada por la puerta editorial y la revisión jurídica humana.
+`FASE 3 PARCIAL — INFRAESTRUCTURA COMPLETA; CONTENIDO ESPECÍFICO EN
+RECONSTRUCCIÓN`. La home es la única URL comercial primaria para Nacaome; la
+landing de oficina tiene intención operativa secundaria y el artículo conserva
+intención informativa. Los 175 artículos están clasificados, pero la capa
+editorial anterior de 40 prioridades fue invalidada por reutilizar plantillas
+por área. No se considera reescritura ni puede aplicarse. La publicación en
+Production sigue bloqueada por la puerta editorial y la revisión jurídica
+humana.
 
 ## Base y trazabilidad
 
@@ -40,17 +42,18 @@ bloqueada por la puerta editorial y la revisión jurídica humana.
 - Por contrato de seguridad editorial, ninguno es indexable/sitemap hasta una
   revisión jurídica humana real y una migración editorial autorizada.
 
-## Implementación documental de Fase 3
+## Infraestructura conservada y corrección editorial de Fase 3
 
 - 40 artículos agrupados en cinco lotes: penal, laboral, familia,
   civil-notarial y mercantil.
-- 14 remediaciones prioritarias de title y meta registradas.
-- 72 relaciones claim-documento en el registro jurídico: documentos
-  verificados y fuentes oficiales que requieren concreción adicional separadas.
+- La capa anterior de títulos, metas, respuestas, fuentes, paquetes y patches
+  está marcada `INVALID_GENERIC_SCAFFOLD_DO_NOT_APPLY`.
+- Las 72 relaciones claim-documento anteriores no se presumen válidas; deben
+  reconstruirse y verificarse individualmente.
 - 53 clusters sin objetivo público seguro documentados; no se enlazan artículos
   `lawyer_review_pending` solo para satisfacer una métrica.
-- 40 patches dry-run con hash de body, `updatedAt`, estado esperado,
-  transacción, drift check y rollback. Production está explícitamente prohibida.
+- Se conservan hashes y datos de deriva como evidencia de reconstrucción.
+  Production está explícitamente prohibida.
 
 ## Bloqueos posteriores a la Fase 3
 

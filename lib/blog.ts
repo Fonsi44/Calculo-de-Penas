@@ -237,7 +237,9 @@ type PublicBlogPost = Awaited<ReturnType<typeof getPublishedPosts>>[number];
 
 function mapToPost(p: PublicBlogPost): Post {
   const editorial = EDITORIAL_OVERRIDES[p.slug];
-  const documentary = phase3Editorial.overrides[p.slug as keyof typeof phase3Editorial.overrides] as Phase3Override | undefined;
+  const documentary = phase3Editorial.status === 'INVALID_GENERIC_SCAFFOLD_DO_NOT_APPLY'
+    ? undefined
+    : phase3Editorial.overrides[p.slug as keyof typeof phase3Editorial.overrides] as Phase3Override | undefined;
   const title = documentary?.title ?? editorial?.title ?? polishedTitle(p.title);
   const description = documentary?.metaDescription ?? editorial?.description ?? polishedExcerpt(p.description);
   return {

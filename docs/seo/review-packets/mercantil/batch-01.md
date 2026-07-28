@@ -1,5 +1,8 @@
 # Paquete de revisión jurídica — mercantil — lote 01
 
+> `INVALID_GENERIC_SCAFFOLD_DO_NOT_APPLY`: paquete invalidado; conserva datos
+> de trazabilidad, pero no constituye contenido revisable ni puede aplicarse.
+
 > Estado: `documentary_review` → `lawyer_review_pending`. Autor y revisor son propuestas internas, no una firma pública.
 
 ## 1. Contrato de Franquicia en Honduras: Cláusulas y Riesgos
@@ -169,4 +172,3 @@
 - Estado: lawyer_review_pending; noindex, follow; fuera de sitemap y llms.txt.
 - Preguntas: ¿Confirma la selección de artículos y reformas? ¿Existe una excepción práctica no reflejada? ¿Debe matizarse algún plazo o autoridad? ¿Puede publicarse la respuesta inicial propuesta?
 - Decisión solicitada: aprobar cada claim, corregirlo con cita exacta o devolverlo para reescritura.
-

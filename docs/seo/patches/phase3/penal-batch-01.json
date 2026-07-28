@@ -1,5 +1,6 @@
 {
   "batch": "penal",
+  "status": "INVALID_GENERIC_SCAFFOLD_DO_NOT_APPLY",
   "generatedAt": "2026-07-28",
   "mode": "DRY_RUN_ONLY",
   "patches": [

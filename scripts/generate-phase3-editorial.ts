@@ -19,6 +19,10 @@ type Source = {
 const SITE = 'https://www.pinedayasociadoshn.com';
 const ACCESSED_AT = '2026-07-28';
 
+throw new Error(
+  'INVALID_GENERIC_SCAFFOLD_DO_NOT_APPLY: este generador por área está deshabilitado; use propuestas editoriales individuales por slug.',
+);
+
 function records(path: string): Row[] {
   const parsed = parseCsv(
     readFileSync(path, 'utf8').split('\n').filter((line) => !line.startsWith('#')).join('\n'),
