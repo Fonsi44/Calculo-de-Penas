@@ -1,157 +1,111 @@
 #!/usr/bin/env node
 /**
- * Neutralización segura de cuentas sintéticas E2E en bases productivas.
+ * Neutraliza exclusivamente identidades incluidas en una allowlist revisada.
+ * La allowlist no se versiona: SYNTHETIC_USER_ALLOWLIST apunta a un JSON local
+ * con [{ "id": "<uuid>", "email": "<email exacto>" }].
  *
- * PROBLEMA:
- *   La base productiva neondb contiene ~196 usuarios con emails @test.local,
- *   auth-test@, sidebar-test@, creados durante desarrollo/E2E. No deben poder
- *   autenticarse en producción.
- *
- * MODO DRY-RUN (por defecto): solo informa.
- * MODO APPLY: bloquea cuentas sintéticas, incrementa token_version, revoca tokens.
- *
- * SEGURIDAD:
- *   - Opera solo con una lista explícita de patrones de email sintéticos.
- *   - No borra expedientes, documentos ni datos relacionados.
- *   - Conserva auditoría completa.
- *   - Aborta si una cuenta coincide con patrones E2E pero tiene actividad
- *     reciente o datos no sintéticos asociados.
- *
- * USO:
- *   node tools/ops/disable-synthetic-production-users.mjs        # dry-run
- *   DISABLE_SYNTHETIC_USERS=true node tools/ops/disable-synthetic-production-users.mjs  # apply
+ * Dry-run por defecto. Apply requiere DISABLE_SYNTHETIC_USERS=true.
  */
 import { readFileSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { pathToFileURL } from 'node:url';
 import { Pool } from '@neondatabase/serverless';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(__dirname, '..', '..');
-const FIXTURE_PATH = resolve(ROOT, 'tests/e2e/fixtures/identities.json');
+export function validateAllowlist(value) {
+  if (!Array.isArray(value) || value.length === 0) throw new Error('allowlist vacía');
+  const ids = new Set();
+  return value.map((entry) => {
+    if (!entry || typeof entry.id !== 'string' || typeof entry.email !== 'string') {
+      throw new Error('entrada de allowlist inválida');
+    }
+    if (ids.has(entry.id)) throw new Error('ID duplicado en allowlist');
+    ids.add(entry.id);
+    return { id: entry.id, email: entry.email.toLowerCase() };
+  });
+}
 
-// Patrones de email sintéticos — lista explícita y verificable.
-// Cualquier adición debe pasar por revisión de seguridad.
-const SYNTHETIC_PATTERNS = [
-  '%@test.local',
-  'auth-test@%',
-  'sidebar-test@%',
-  'e2e-test@%',
-  '%@example.com',
-];
+export async function neutralizeAccounts(sql, allowlist, { apply = false } = {}) {
+  const expected = validateAllowlist(allowlist);
+  const ids = expected.map(({ id }) => id);
+  if (apply) await sql.query('BEGIN');
+  try {
+    if (apply) await sql.query('SELECT pg_advisory_xact_lock($1)', [2026072802]);
+    const actual = (await sql.query(
+      `SELECT id,email,active,bloqueado,token_version
+       FROM usuarios WHERE id=ANY($1::uuid[]) ORDER BY id${apply ? ' FOR UPDATE' : ''}`,
+      [ids],
+    )).rows;
+    if (actual.length !== expected.length) throw new Error('identidad allowlisted ausente');
+    for (const item of expected) {
+      const row = actual.find(({ id }) => id === item.id);
+      if (!row || row.email.toLowerCase() !== item.email) {
+        throw new Error('identidad allowlisted ambigua');
+      }
+    }
+    if (!apply) return { matched: actual.length, changed: 0 };
+    await sql.query(
+      `UPDATE usuarios SET active=false,bloqueado=true,
+        bloqueado_motivo='Cuenta sintética autorizada — PR20',
+        bloqueado_en=now(),token_version=token_version+1
+       WHERE id=ANY($1::uuid[])`,
+      [ids],
+    );
+    await sql.query('DELETE FROM two_factor_challenges WHERE usuario_id=ANY($1::uuid[])', [ids]);
+    await sql.query('DELETE FROM two_factor_recovery_codes WHERE usuario_id=ANY($1::uuid[])', [ids]);
+    await sql.query('DELETE FROM password_reset_tokens WHERE usuario_id=ANY($1::uuid[])', [ids]);
+    await sql.query('UPDATE two_factor_secrets SET habilitado=false WHERE usuario_id=ANY($1::uuid[])', [ids]);
+    await sql.query(
+      `UPDATE enlaces_magicos SET revocado_en=now(),
+        revocado_motivo='Cuenta creadora neutralizada — PR20'
+       WHERE creado_por=ANY($1::uuid[]) AND revocado_en IS NULL`,
+      [ids],
+    );
+    await sql.query(
+      `INSERT INTO auditoria_eventos(usuario_id,accion,recurso,recurso_id,metadata,exito,mensaje)
+       SELECT id,'usuario_updated','usuarios',id::text,
+         '{"operation":"pr20_synthetic_neutralization"}'::jsonb,true,
+         'Cuenta sintética autorizada neutralizada'
+       FROM unnest($1::uuid[]) AS ids(id)`,
+      [ids],
+    );
+    await sql.query('COMMIT');
+    return { matched: actual.length, changed: actual.length };
+  } catch (error) {
+    if (apply) await sql.query('ROLLBACK');
+    throw error;
+  }
+}
 
 async function main() {
-  const dryRun = process.env.DISABLE_SYNTHETIC_USERS !== 'true';
-  const mode = dryRun ? 'DRY-RUN' : 'APPLY';
-
-  if (!process.env.DATABASE_URL) {
-    console.error('DATABASE_URL requerida.');
-    process.exit(1);
-  }
-
-  // Verificar que no es producción (por el nombre del branch)
-  console.log(`═══ Neutralización de cuentas sintéticas (${mode}) ═══\n`);
-
+  if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL requerida');
+  if (!process.env.SYNTHETIC_USER_ALLOWLIST) throw new Error('SYNTHETIC_USER_ALLOWLIST requerida');
+  const allowlist = JSON.parse(readFileSync(process.env.SYNTHETIC_USER_ALLOWLIST, 'utf8'));
   const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
-
   try {
-    // 1. Identificar cuentas sintéticas por patrón
-    const syntheticAccounts = [];
-    for (const pattern of SYNTHETIC_PATTERNS) {
-      const r = await pool.query(
-        `SELECT id, email, nombre, rol, active, bloqueado, token_version
-         FROM usuarios WHERE email ILIKE $1
-         ORDER BY email`,
-        [pattern]
-      );
-      for (const row of r.rows) syntheticAccounts.push(row);
+    const identity = (await pool.query(
+      `SELECT current_database() database,current_setting('neon.branch_id',true) branch_id`,
+    )).rows[0];
+    const productionBranch = process.env.NEON_PRODUCTION_BRANCH_ID;
+    if (!productionBranch || !identity.branch_id) throw new Error('branch_id no verificable');
+    const apply = process.env.DISABLE_SYNTHETIC_USERS === 'true';
+    if (apply && identity.branch_id === productionBranch &&
+        process.env.PRODUCTION_NEUTRALIZATION_CONFIRMATION !== 'PR20_AUTHORIZED_ALLOWLIST') {
+      throw new Error('confirmación productiva ausente');
     }
-
-    console.log(`Cuentas sintéticas encontradas: ${syntheticAccounts.length}`);
-    if (syntheticAccounts.length === 0) {
-      console.log('No hay cuentas sintéticas. Nada que hacer.');
-      await pool.end();
-      return;
-    }
-
-    // 2. Verificar que ninguna cuenta sintética tenga actividad reciente no sintética
-    const now = new Date();
-    const thirtyDaysAgo = new Date(now.getTime() - 30 * 86400000);
-    let hasRecentActivity = false;
-
-    for (const acct of syntheticAccounts) {
-      // Verificar actividad reciente
-      const activity = await pool.query(
-        `SELECT count(*)::int AS n FROM auditoria_eventos
-         WHERE usuario_id = $1 AND creado_en >= $2`,
-        [acct.id, thirtyDaysAgo]
-      );
-      if (activity.rows[0].n > 0) {
-        console.warn(`  ⚠  Cuenta ${acct.email.slice(0, 20)}... tiene actividad reciente (${activity.rows[0].n} eventos).`);
-        hasRecentActivity = true;
-      }
-
-      // Verificar expedientes no sintéticos
-      const cases = await pool.query(
-        `SELECT count(*)::int AS n FROM expedientes WHERE responsable_id = $1`,
-        [acct.id]
-      );
-      if (cases.rows[0].n > 0) {
-        console.warn(`  ⚠  Cuenta ${acct.email.slice(0, 20)}... tiene ${cases.rows[0].n} expedientes asignados.`);
-      }
-    }
-
-    if (hasRecentActivity && !dryRun) {
-      console.error('\n⛔ Cuentas con actividad reciente detectadas. Abortando.');
-      console.error('   Revisa manualmente antes de neutralizar.');
-      process.exit(1);
-    }
-
-    // 3. Mostrar detalle
-    console.log('\nDetalle:');
-    for (const acct of syntheticAccounts) {
-      const safeEmail = acct.email.slice(0, 25).padEnd(27);
-      console.log(`  ${safeEmail} rol=${acct.rol.padEnd(10)} active=${acct.active} bloqueado=${acct.bloqueado} token_v=${acct.token_version}`);
-    }
-
-    if (dryRun) {
-      console.log('\n✅ Dry-run completado. Para aplicar: DISABLE_SYNTHETIC_USERS=true');
-      return;
-    }
-
-    // 4. APPLY: bloquear cuentas
-    console.log('\nAplicando neutralización...');
-    let blocked = 0;
-    for (const acct of syntheticAccounts) {
-      // Bloquear cuenta + incrementar token_version + registrar auditoría
-      await pool.query(
-        `UPDATE usuarios SET
-           active = false,
-           bloqueado = true,
-           bloqueado_motivo = 'Cuenta sintética E2E — neutralizada automáticamente',
-           bloqueado_en = NOW(),
-           token_version = token_version + 1
-         WHERE id = $1`,
-        [acct.id]
-      );
-
-      // Revocar tokens/challenges
-      await pool.query(`DELETE FROM two_factor_challenges WHERE usuario_id = $1`, [acct.id]).catch(() => {});
-      await pool.query(`DELETE FROM password_reset_tokens WHERE usuario_id = $1`, [acct.id]).catch(() => {});
-      await pool.query(`DELETE FROM enlaces_magicos WHERE creado_por = $1`, [acct.id]).catch(() => {});
-      await pool.query(`UPDATE two_factor_secrets SET habilitado = false WHERE usuario_id = $1`, [acct.id]).catch(() => {});
-
-      console.log(`  ✓ ${acct.email.slice(0, 25).padEnd(27)} bloqueada (token_version ${acct.token_version} → ${acct.token_version + 1})`);
-      blocked++;
-    }
-
-    console.log(`\n✅ Neutralización completada: ${blocked} cuentas bloqueadas.`);
-  } catch (err) {
-    console.error('\n⛔ Error:', err.message);
-    process.exit(1);
+    const result = await neutralizeAccounts(pool, allowlist, { apply });
+    console.log(JSON.stringify({
+      mode: apply ? 'APPLY' : 'DRY_RUN',
+      database: identity.database,
+      matched: result.matched,
+      changed: result.changed,
+    }));
   } finally {
     await pool.end();
   }
 }
 
-main();
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((error) => {
+    console.error(`Neutralización abortada: ${error.message}`);
+    process.exitCode = 1;
+  });
+}
