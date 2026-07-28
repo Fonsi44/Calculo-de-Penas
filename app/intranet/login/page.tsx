@@ -168,6 +168,8 @@ export default function IntranetLoginPage() {
               <Field label="Email" htmlFor="email" required hint="Use su correo corporativo @pinedayasociadoshn.com">
                 <Input
                   id="email"
+                  name="email"
+                  autoComplete="email"
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
@@ -184,6 +186,8 @@ export default function IntranetLoginPage() {
               >
                 <Input
                   id="password"
+                  name="password"
+                  autoComplete="current-password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={e => setPassword(e.target.value)}

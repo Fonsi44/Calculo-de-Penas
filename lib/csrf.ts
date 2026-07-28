@@ -5,6 +5,7 @@ const ALLOWED_ORIGINS = [
   'http://localhost:3003',
   'http://localhost:3004',
   'http://localhost:3005',
+  'http://localhost:3100',
   'https://www.pinedayasociadoshn.com',
   'https://pinedayasociadoshn.com',
   'https://calculo-de-penas-nextjs.vercel.app',

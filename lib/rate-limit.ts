@@ -36,8 +36,10 @@ function shouldFailClosed(keyPrefix: string): boolean {
 
 export async function rateLimit(identifier: string, opts: RateLimitOpts = {}): Promise<RateLimitResult> {
   // Bypass en tests E2E para no bloquear flujos que hacen múltiples logins.
-  // Activado por scripts/e2e-start.mjs vía env var.
-  if (process.env.DISABLE_RATE_LIMIT === 'true') {
+  // Usamos globalThis para evitar constant-folding de process.env por el
+  // bundler de Next.js/Turbopack, que inlinea las variables en build time.
+  const g = globalThis as { __E2E_DISABLE_RATE_LIMIT?: boolean };
+  if (g.__E2E_DISABLE_RATE_LIMIT === true || process.env.NEXT_PUBLIC_DISABLE_RATE_LIMIT === 'true') {
     return { ok: true, remaining: DEFAULTS.max, resetAt: Date.now() + DEFAULTS.windowMs, retryAfterSec: 0 };
   }
 

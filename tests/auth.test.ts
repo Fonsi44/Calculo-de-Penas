@@ -14,6 +14,7 @@ import {
   verifyPassword,
   AuthError,
   COOKIE_NAME,
+  getCookieName,
 } from '../lib/auth';
 import jwt from 'jsonwebtoken';
 
@@ -164,7 +165,9 @@ describe('lib/auth — createAuthResponse / createLogoutResponse', () => {
     const r = createAuthResponse({ ok: true }, 'jwt.token.here');
     const set = r.headers.get('set-cookie');
     expect(set).not.toBeNull();
-    expect(set).toContain(`${COOKIE_NAME}=jwt.token.here`);
+    // El nombre de la cookie depende del entorno (getCookieName). En test
+    // (NODE_ENV=test) se usa 'token'.
+    expect(set).toContain(`${getCookieName()}=jwt.token.here`);
     expect(set).toContain('HttpOnly');
     expect(set).toContain('SameSite=Lax');
   });

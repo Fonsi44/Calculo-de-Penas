@@ -107,7 +107,31 @@ function getSecretPrevious(): string | null {
   return _secretPrevious;
 }
 
-export const COOKIE_NAME = IS_PROD ? '__Host-token' : 'token';
+/**
+ * En producción real la cookie se llama `__Host-token` (requiere Secure + HTTPS).
+ * En staging local sobre HTTP se usa `token` simple porque las cookies __Host-
+ * requieren HTTPS y el navegador las rechazaría.
+ *
+ * La detección se basa en el Host de la request (localhost), que es dinámico
+ * y no puede ser plegado por el bundler en build time. Esto evita el problema
+ * de constant-folding de process.env en Next.js/Turbopack.
+ */
+function isLocalhostRequest(request?: Request | null): boolean {
+  if (!request) return false;
+  const host = request.headers.get('host') || '';
+  const origin = request.headers.get('origin') || '';
+  return /^localhost(:\d+)?$/.test(host) || /\/\/localhost(:\d+)?\//.test(origin);
+}
+
+function shouldUseHostCookie(request?: Request | null): boolean {
+  return process.env.NODE_ENV === 'production' && !isLocalhostRequest(request);
+}
+
+export function getCookieName(request?: Request | null): string {
+  return shouldUseHostCookie(request) ? '__Host-token' : 'token';
+}
+
+export const COOKIE_NAME = '__Host-token';
 export const COOKIE_NAME_FALLBACK = 'token';
 
 export const ALLOWED_EMAIL_DOMAIN = '@pinedayasociadoshn.com';
@@ -126,9 +150,11 @@ export function isAllowedAuthEmail(email: string): boolean {
   return normalized.endsWith(ALLOWED_EMAIL_DOMAIN);
 }
 
-function cookieAttrs(): string {
+function cookieAttrs(request?: Request | null): string {
   const parts = ['HttpOnly', 'Path=/', 'SameSite=Lax', `Max-Age=${TOKEN_TTL_SECONDS}`];
-  if (IS_PROD) {
+  // En producción real se requiere Secure. En staging local sobre HTTP
+  // (localhost) no se añade Secure porque el navegador lo rechazaría.
+  if (shouldUseHostCookie(request)) {
     parts.unshift('Secure');
   }
   return parts.join('; ');
@@ -241,12 +267,10 @@ function readCookie(cookieHeader: string | null, name: string): string | null {
 
 export function getTokenFromCookies(request: Request): string | null {
   const cookieHeader = request.headers.get('cookie');
-  const primary = readCookie(cookieHeader, COOKIE_NAME);
+  // Probar el nombre canónico y el fallback. En staging local (E2E_LOCAL_HTTP)
+  // la cookie se setea como 'token'; en producción como '__Host-token'.
+  const primary = readCookie(cookieHeader, COOKIE_NAME) ?? readCookie(cookieHeader, COOKIE_NAME_FALLBACK);
   if (primary) return primary;
-  if (IS_PROD) {
-    const fallback = readCookie(cookieHeader, COOKIE_NAME_FALLBACK);
-    return fallback;
-  }
   return null;
 }
 
@@ -386,22 +410,21 @@ export function authFailureResponse(err: unknown): Response {
   return httpErrorResponse(err);
 }
 
-export function createAuthResponse(data: unknown, token?: string) {
+export function createAuthResponse(data: unknown, token?: string, request?: Request | null) {
   const headers = new Headers({ 'Content-Type': 'application/json' });
   if (token) {
-    headers.append('Set-Cookie', `${COOKIE_NAME}=${token}; ${cookieAttrs()}`);
-    if (IS_PROD) {
+    headers.append('Set-Cookie', `${getCookieName(request)}=${token}; ${cookieAttrs(request)}`);
+    if (IS_PROD && shouldUseHostCookie(request)) {
       headers.append('Set-Cookie', `${COOKIE_NAME_FALLBACK}=; Path=/; Max-Age=0; SameSite=Lax; Secure`);
     }
   }
   return new Response(JSON.stringify(data), { headers });
 }
 
-export function createLogoutResponse() {
-  const clearPrimary = IS_PROD
-    ? `${COOKIE_NAME}=; Path=/; Max-Age=0; Secure; SameSite=Lax`
-    : `${COOKIE_NAME}=; Path=/; Max-Age=0; SameSite=Lax`;
-  const clearFallback = `${COOKIE_NAME_FALLBACK}=; Path=/; Max-Age=0; SameSite=Lax${IS_PROD ? '; Secure' : ''}`;
+export function createLogoutResponse(request?: Request | null) {
+  const secureAttr = shouldUseHostCookie(request) ? '; Secure' : '';
+  const clearPrimary = `${COOKIE_NAME}=; Path=/; Max-Age=0${secureAttr}; SameSite=Lax`;
+  const clearFallback = `${COOKIE_NAME_FALLBACK}=; Path=/; Max-Age=0; SameSite=Lax${secureAttr}`;
   const headers = new Headers({ 'Content-Type': 'application/json' });
   headers.append('Set-Cookie', clearPrimary);
   headers.append('Set-Cookie', clearFallback);
