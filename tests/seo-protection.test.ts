@@ -184,7 +184,14 @@ describe('app/robots.ts — bloquea rutas privadas con reglas granulares por bot
   });
 
   it('declara el sitemap', () => {
-    expect(robots.sitemap).toBe(`${site.url}/sitemap.xml`);
+    expect(robots.sitemap).toEqual([
+      `${site.url}/sitemap.xml`,
+      `${site.url}/sitemap-pages.xml`,
+      `${site.url}/sitemap-services.xml`,
+      `${site.url}/sitemap-blog.xml`,
+      `${site.url}/sitemap-authors.xml`,
+      `${site.url}/sitemap-local.xml`,
+    ]);
   });
 });
 

@@ -4,6 +4,7 @@ import { categoriasFaq, totalPreguntas } from '@/data/faq';
 import { landingsLocales } from '@/data/landings-locales';
 import { parseCsv } from '@/lib/csv';
 import { LAWYER_PROFILES, site } from '@/lib/site';
+import { sitemapXml } from '@/lib/sitemap-xml';
 
 const read = (path: string) => readFileSync(path, 'utf8');
 
@@ -15,6 +16,20 @@ describe('Fase 2 — contratos de arquitectura pública', () => {
       'Abogados colegiados en Nacaome para defensa penal, familia, asuntos laborales, civiles y mercantiles. Atención directa, consulta confidencial y presupuesto por escrito.',
     );
     expect(home).toContain('Abogados en Nacaome para defensa penal y asesoría jurídica');
+  });
+
+  it('separa la intención comercial de la guía informativa sobre elegir abogado', () => {
+    const blogAdapter = read('lib/blog.ts');
+    const article = read('app/(public)/blog/[categoria]/[slug]/page.tsx');
+    const redirects = read('next.config.ts');
+    expect(blogAdapter).toContain(
+      'Cómo Elegir Abogado en Nacaome: 10 Criterios antes de Contratar',
+    );
+    expect(article).toContain('consultar con un abogado en Nacaome');
+    expect(article).toContain('href="/"');
+    expect(redirects).not.toMatch(
+      /source:\s*'\/blog\/practica-legal\/abogados-en-nacaome'/,
+    );
   });
 
   it('enlaza los tres perfiles desde home, despacho y áreas', () => {
@@ -62,5 +77,20 @@ describe('Fase 2 — contratos de arquitectura pública', () => {
     );
     expect(contact).toContain('contraseñas ni documentos sensibles');
     expect(contact).not.toMatch(/Legal Gratuita|Confidencial · Sin costo/);
+  });
+
+  it('publica sitemaps segmentados y los declara en robots', () => {
+    const robots = read('app/robots.ts');
+    for (const name of ['pages', 'services', 'blog', 'authors', 'local']) {
+      expect(robots).toContain(`/sitemap-${name}.xml`);
+      expect(read(`app/sitemap-${name}.xml/route.ts`)).toContain('sitemapResponse');
+    }
+    const xml = sitemapXml([{
+      url: `${site.url}/equipo/danilo-pineda-maradiaga?x=1&y=2`,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    }]);
+    expect(xml).toContain('&amp;');
+    expect(xml).toContain('<priority>0.8</priority>');
   });
 });

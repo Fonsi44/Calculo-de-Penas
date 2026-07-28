@@ -772,7 +772,7 @@ export function emilSchema() {
  * construirse (todo viene de `lib/site.ts`). Esto cumple R4: no se inventan
  * credenciales, CAH, universidad, casos ganados ni años de colegiación.
  */
-export interface LawyerProfileMeta {
+interface LawyerProfileMeta {
   slug: string;
   personId: string;
   name: string;
