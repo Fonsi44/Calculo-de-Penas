@@ -84,31 +84,6 @@ writeCsv(
   ]),
 );
 
-for (const area of ['penal', 'laboral', 'familia', 'civil']) {
-  const selected = reviewRows.filter((row) => row.packet.includes(`/${area}/`)).slice(0, 10);
-  const lines = [
-    `# Paquete de revisión jurídica — ${area} — lote 01`,
-    '',
-    '> Estado: `lawyer_review_pending`. Ninguna entrada de este paquete declara firma o revisión jurídica real.',
-    '',
-    ...selected.flatMap((row, index) => [
-      `## ${index + 1}. ${row.title}`,
-      '',
-      `- URL: ${row.article}`,
-      `- Autor propuesto: ${row.author}`,
-      `- Revisor propuesto: ${row.reviewer}`,
-      `- GSC: ${row.impressions} impresiones; ${row.clicks} clics.`,
-      `- Fuentes detectadas: ${row.sources}.`,
-      `- Pregunta al abogado: ¿son correctas, vigentes y suficientemente matizadas todas las normas, plazos, excepciones y consecuencias jurídicas afirmadas en este artículo?`,
-      `- Decisión requerida: aprobar, corregir con cita exacta o devolver para reescritura.`,
-      '',
-    ]),
-  ];
-  const path = `docs/seo/review-packets/${area}/batch-01.md`;
-  mkdirSync(dirname(path), { recursive: true });
-  writeFileSync(path, `${lines.join('\n')}\n`);
-}
-
 const remediation = new Map([
   ['allanamiento-ilegal-violacion-domicilio-honduras', ['Allanamiento en Honduras: orden judicial y derechos', 'Cuándo puede realizarse un allanamiento en Honduras, qué debe contener la orden judicial y cómo actuar sin obstaculizar a la autoridad.']],
   ['contratos-franquicia-aspectos', ['Contrato de franquicia en Honduras: cláusulas y riesgos', 'Cláusulas que conviene revisar en un contrato de franquicia en Honduras: territorio, regalías, uso de marca, terminación y solución de conflictos.']],
