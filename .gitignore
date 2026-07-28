@@ -64,11 +64,15 @@ yarn-error.log*
 # ── Generated Data & Outputs ────────────────────────────────
 /output/
 /exports/
+/reports/
+/generated/
 /.backups/
 /data/google/
 /data/bing/
 /data/seo/
 *.tmp
+*.dump
+*.sql.gz
 deps-audit.json
 deps-outdated.json
 
