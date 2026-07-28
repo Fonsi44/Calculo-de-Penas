@@ -55,7 +55,8 @@ Auditoria basada en referencias de codigo. No contiene valores reales ni debe us
 | `IA_DOCUMENTAL_TIMEOUT_MS` | No | preview, production | No | `lib/sgie/ia-documental.ts` | Usa 60000 | Bajo |
 | `IA_DOCUMENTAL_MAX_RETRIES` | No | preview, production | No | `lib/sgie/ia-documental.ts` | Usa 2 | Bajo |
 | `CRON_SECRET` | Si si cron activo | preview, production | Si | `app/api/cron/sgie/procesar/route.ts` | Cron no autorizado o mal protegido | Alto |
-| `WHATSAPP_VERIFY_TOKEN` | Condicional WhatsApp | preview, production | Si | `app/api/whatsapp/route.ts` | Webhook WhatsApp no verifica | Medio |
+| `WHATSAPP_VERIFY_TOKEN` | Condicional WhatsApp | preview, production | Si | `app/api/whatsapp/route.ts` | Verificación GET del webhook no disponible | Medio |
+| `WHATSAPP_APP_SECRET` | Condicional WhatsApp | preview, production | Si | `app/api/whatsapp/route.ts` | POST del webhook rechazado por firma inválida | Alto |
 | `REDIS_URL` | Condicional MCP/transporte | preview, production | Si | `app/api/[transport]/route.ts` | Transporte Redis no disponible | Medio |
 | `DISABLE_RATE_LIMIT` | No en produccion | development, test | No | `lib/rate-limit.ts` | Si se activa en produccion, deshabilita limites | Critico si se configura mal |
 | `ALLOW_TEST_EMAILS` | No en produccion | development, test | No | `lib/auth.ts` | Permite emails de prueba | Alto si se activa en produccion |
