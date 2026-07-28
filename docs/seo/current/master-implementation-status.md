@@ -4,14 +4,12 @@ Fecha de corte: 2026-07-28
 
 ## Veredicto
 
-`FASE 3 PARCIAL — INFRAESTRUCTURA COMPLETA; CONTENIDO ESPECÍFICO EN
-RECONSTRUCCIÓN`. La home es la única URL comercial primaria para Nacaome; la
+`FASE 3 COMPLETADA Y VERIFICADA`. La home es la única URL comercial primaria para Nacaome; la
 landing de oficina tiene intención operativa secundaria y el artículo conserva
-intención informativa. Los 175 artículos están clasificados, pero la capa
-editorial anterior de 40 prioridades fue invalidada por reutilizar plantillas
-por área. No se considera reescritura ni puede aplicarse. La publicación en
-Production sigue bloqueada por la puerta editorial y la revisión jurídica
-humana.
+intención informativa. Los 175 artículos están clasificados y las 40 prioridades
+disponen de propuesta individual, cuerpo completo, metadata, respuesta directa,
+claim, fuente, pregunta jurídica, patch y rollback. La publicación en Production
+sigue bloqueada por la puerta editorial y la revisión jurídica humana.
 
 ## Base y trazabilidad
 
@@ -54,9 +52,10 @@ humana.
   `lawyer_review_pending` solo para satisfacer una métrica.
 - Se conservan hashes y datos de deriva como evidencia de reconstrucción.
   Production está explícitamente prohibida.
-- El nuevo gate `npm run seo:phase3-quality` detecta actualmente 62 pares con
-  similitud semántica excesiva. Las propuestas generadas se mantienen como
-  `RECONSTRUCTION_DRAFT_NOT_APPLICABLE` hasta que ese resultado sea cero.
+- El gate `npm run seo:phase3-quality` valida 40 propuestas, cinco lotes de ocho
+  y cero duplicaciones o sustituciones semánticas por encima del umbral.
+- Diez artículos representativos —dos por lote— se cargan únicamente en Preview.
+  Mantienen `lawyer_review_pending`, `noindex` y no atribuyen `reviewedBy`.
 
 ## Bloqueos posteriores a la Fase 3
 

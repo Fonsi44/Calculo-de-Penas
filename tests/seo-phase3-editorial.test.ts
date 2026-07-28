@@ -53,7 +53,9 @@ describe('Fase 3 — contratos editoriales y documentales', () => {
       expect(patch.proposed.metaDescription).toBeTruthy();
       expect(patch.proposed.directAnswer).toBeTruthy();
       expect(patch.proposed.sourceIds.length).toBeGreaterThan(0);
-      expect(patch.proposed.legalReviewStatus).toBe('documentary_review');
+      expect(patch.proposed.legalReviewStatus).toBe('lawyer_review_pending');
+      expect(patch.proposed.body).toBeTruthy();
+      expect(patch.rollback.body).toBeTruthy();
       expect(patch.safeguards).toEqual(expect.objectContaining({
         dryRunDefault: true,
         transactionRequired: true,
@@ -64,13 +66,14 @@ describe('Fase 3 — contratos editoriales y documentales', () => {
     }
   });
 
-  it('registra documentos oficiales abiertos y separa ambigüedad de verificación', () => {
+  it('registra una relación claim–fuente por artículo sin inflar el inventario', () => {
     const rows = csv('docs/seo/current/legal-source-registry.csv');
-    expect(rows.length).toBeGreaterThanOrEqual(70);
-    expect(rows.some((row) => row.status === 'OFFICIAL_DOCUMENT_VERIFIED')).toBe(true);
-    expect(rows.some((row) => row.status === 'OFFICIAL_DOCUMENT_AMBIGUOUS')).toBe(true);
+    expect(rows).toHaveLength(40);
+    expect(new Set(rows.map((row) => row.article_slug)).size).toBe(40);
+    expect(rows.some((row) => row.verification_status === 'VERIFIED')).toBe(true);
+    expect(rows.some((row) => row.verification_status === 'HUMAN_REVIEW_REQUIRED')).toBe(true);
     expect(rows.every((row) => row.exact_url.startsWith('https://'))).toBe(true);
-    expect(rows.every((row) => row.article_or_section && row.verification_notes)).toBe(true);
+    expect(rows.every((row) => row.article_or_section && row.interpretation)).toBe(true);
   });
 
   it('documenta exactamente los 53 clusters sin objetivo público seguro', () => {

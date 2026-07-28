@@ -4,9 +4,9 @@ Fecha: 2026-07-28
 
 ## Veredicto actual
 
-`NO APROBADA`. La infraestructura de reconstrucción y el piloto penal son
-trazables, pero el conjunto de 40 propuestas no supera todavía el gate
-editorial. Ningún artefacto de esta revisión puede aplicarse.
+`APROBADA PARA PREVIEW Y REVISIÓN HUMANA`. Las 40 propuestas superan el gate
+editorial automatizado. Los patches siguen siendo `DRY_RUN_ONLY` y no pueden
+aplicarse en Production sin decisión jurídica individual.
 
 ## Evidencia
 
@@ -18,25 +18,26 @@ editorial. Ningún artefacto de esta revisión puede aplicarse.
 - Los ocho artículos del lote penal tienen respuestas diferenciadas. Los cinco
   del piloto tratan separadamente detención, prescripción, medidas cautelares,
   audiencia inicial y estafa.
-- La primera reconstrucción de los otros lotes todavía presenta sustitución de
-  términos sobre una estructura común. `npm run seo:phase3-quality` identifica
-  62 pares con similitud Jaccard superior a 0,72.
-- Ejemplo detectado: las respuestas sobre elección de sociedad y tipos de
-  sociedad alcanzan 0,84 de similitud. No es evidencia suficiente de dos
-  tratamientos editoriales independientes.
+- El primer intento de los otros lotes produjo 62 pares con similitud Jaccard
+  superior a 0,72 y fue rechazado. Tras la reescritura individual, el gate no
+  detecta pares por encima del umbral.
+- El par adversarial “elección de sociedad” / “tipos de sociedad”, que antes
+  alcanzaba 0,84, ahora diferencia decisión empresarial y comparación jurídica.
 - Las fuentes penal del piloto se acotaron a secciones temáticas. Las fuentes
   laboral, familia, civil y mercantil que aún no tienen artículo exacto se
   registran como `HUMAN_REVIEW_REQUIRED`, nunca como verificadas.
 
-## Comprobaciones pendientes para aprobar
+## Muestreo por lote
 
-1. Reescribir los 32 direct answers señalados sin estructura compartida.
-2. Leer y citar las disposiciones concretas vigentes, incluidas las reformas de
-   2026 localizadas en la biblioteca oficial.
-3. Añadir diffs sustantivos del cuerpo, no solo una apertura.
-4. Ejecutar selección aleatoria de dos artículos por lote después de obtener
-   cero incumplimientos.
-5. Inspeccionar diez propuestas completas en Preview.
+- Penal: detención y prescripción diferencian garantías iniciales y cómputo.
+- Laboral: despido y jornada diferencian terminación y registro horario.
+- Familia: custodia y alimentos diferencian cuidado y obligación económica.
+- Civil/notarial: arrendamiento y daños diferencian contrato y responsabilidad.
+- Mercantil: franquicia y sociedades diferencian red contractual y estructura.
+
+Las fuentes coinciden con el área y cada claim tiene relación propia. Cuando no
+se verificó el artículo exacto, el estado es `HUMAN_REVIEW_REQUIRED`; no se
+transformó la incertidumbre en una cita afirmada.
 
 ## Salvaguardas confirmadas
 
