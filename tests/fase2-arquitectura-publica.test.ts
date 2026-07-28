@@ -1,0 +1,66 @@
+import { readFileSync } from 'node:fs';
+import { describe, expect, it } from 'vitest';
+import { categoriasFaq, totalPreguntas } from '@/data/faq';
+import { landingsLocales } from '@/data/landings-locales';
+import { parseCsv } from '@/lib/csv';
+import { LAWYER_PROFILES, site } from '@/lib/site';
+
+const read = (path: string) => readFileSync(path, 'utf8');
+
+describe('Fase 2 — contratos de arquitectura pública', () => {
+  it('mantiene la home como URL dominante para la intención comercial de Nacaome', () => {
+    const home = read('app/(public)/page.tsx');
+    expect(site.tagline).toBe('Abogados en Nacaome, Valle | Pineda y Asociados');
+    expect(site.description).toBe(
+      'Abogados colegiados en Nacaome para defensa penal, familia, asuntos laborales, civiles y mercantiles. Atención directa, consulta confidencial y presupuesto por escrito.',
+    );
+    expect(home).toContain('Abogados en Nacaome para defensa penal y asesoría jurídica');
+  });
+
+  it('enlaza los tres perfiles desde home, despacho y áreas', () => {
+    const home = read('app/(public)/page.tsx');
+    const despacho = read('app/(public)/despacho/page.tsx');
+    const areas = read('app/(public)/servicios-juridicos/[slug]/page.tsx');
+    expect(home).toContain('LAWYER_PROFILES.map');
+    expect(home).toContain('href={`/equipo/${profile.slug}`}');
+    for (const profile of LAWYER_PROFILES) {
+      expect(despacho).toContain(`/equipo/${profile.slug}`);
+      expect(areas).toContain(`/equipo/${profile.slug}`);
+    }
+  });
+
+  it('la FAQ conserva todas las preguntas actuales y asigna destino a cada una', () => {
+    expect(totalPreguntas).toBeGreaterThanOrEqual(73);
+    const inventory = parseCsv(read('docs/seo/current/faq-inventory.csv'));
+    const [header, ...rows] = inventory;
+    const targetIndex = header.indexOf('target_url');
+    expect(rows).toHaveLength(totalPreguntas);
+    expect(rows.every((row) => row[targetIndex] && row[targetIndex] !== 'HUMAN_REVIEW')).toBe(true);
+  });
+
+  it('la FAQ general contiene entre 10 y 15 preguntas corporativas sin duplicados', () => {
+    const general = categoriasFaq.find((category) => category.slug === 'bufete-honorarios');
+    expect(general).toBeDefined();
+    expect(general!.preguntas.length).toBeGreaterThanOrEqual(10);
+    expect(general!.preguntas.length).toBeLessThanOrEqual(15);
+    const normalized = general!.preguntas.map((faq) => faq.pregunta.trim().toLowerCase());
+    expect(new Set(normalized).size).toBe(normalized.length);
+  });
+
+  it('ninguna landing distinta de Nacaome declara sede física', () => {
+    expect(landingsLocales.filter((landing) => landing.sedeFisica)).toHaveLength(1);
+    expect(landingsLocales.find((landing) => landing.sedeFisica)?.ciudad).toBe('Nacaome');
+    for (const landing of landingsLocales.filter((item) => !item.sedeFisica)) {
+      expect(landing.servedFrom).toMatch(/Nacaome/i);
+    }
+  });
+
+  it('el formulario advierte contra el envío de información sensible', () => {
+    const contact = read('app/(public)/solicitar-consulta/page.tsx');
+    expect(contact).toContain(
+      'No envíe confesiones,',
+    );
+    expect(contact).toContain('contraseñas ni documentos sensibles');
+    expect(contact).not.toMatch(/Legal Gratuita|Confidencial · Sin costo/);
+  });
+});

@@ -3,6 +3,7 @@ import { dirname } from 'node:path';
 import { parseCsv, stringifyCsv } from '../lib/csv';
 import { getEditorialResponsibility } from '../lib/legal-review';
 import { landingsLocales } from '../data/landings-locales';
+import { categoriasFaq } from '../data/faq';
 
 type RecordRow = Record<string, string>;
 
@@ -157,6 +158,66 @@ writeCsv(
     const decision = landing.sedeFisica ? 'KEEP_AND_IMPROVE' : unique ? 'KEEP_AND_IMPROVE' : 'NOINDEX_UNTIL_UNIQUE';
     return [url, landing.ciudad, landing.sedeFisica ? 'yes' : 'no', landing.servedFrom ?? 'oficina de Nacaome', metrics?.clicks ?? 0, metrics?.impressions ?? 0, metrics ? (metrics.impressions ? metrics.clicks / metrics.impressions : 0) : 0, metrics?.position ?? 0, 'PENDING_SEMANTIC_SCORE', unique ? 'yes' : 'no', landing.institutions?.length ?? 0, decision, '', unique ? 'contexto e instituciones registrados' : 'falta valor local único demostrable', 'PREVIEW_ONLY'];
   }),
+);
+
+writeCsv(
+  'docs/seo/current/landings-inventory.csv',
+  ['url', 'municipality', 'department', 'office_exists', 'service_origin', 'clicks', 'impressions', 'ctr', 'position', 'content_similarity', 'unique_content', 'institutions_verified', 'responsible_lawyer', 'current_indexability', 'decision', 'target', 'reason', 'production_action'],
+  landingsLocales.map((landing) => {
+    const url = `https://www.pinedayasociadoshn.com${landing.path ?? `/abogados-en-${landing.slug}`}`;
+    const metrics = gscByPage.get(url);
+    const unique = (landing.localContext?.length ?? 0) > 0 && (landing.institutions?.length ?? 0) > 0;
+    const decision = landing.sedeFisica ? 'KEEP_AND_IMPROVE' : unique ? 'KEEP_AND_IMPROVE' : 'NOINDEX_UNTIL_UNIQUE';
+    return [
+      url,
+      landing.ciudad,
+      landing.departamento,
+      landing.sedeFisica ? 'yes' : 'no',
+      landing.servedFrom ?? 'nuestra oficina en Nacaome',
+      metrics?.clicks ?? 0,
+      metrics?.impressions ?? 0,
+      metrics ? (metrics.impressions ? metrics.clicks / metrics.impressions : 0) : 0,
+      metrics?.position ?? 0,
+      'PENDING_SEMANTIC_SCORE',
+      unique ? 'yes' : 'no',
+      landing.institutions?.length ?? 0,
+      'Asignación por área de práctica',
+      decision === 'NOINDEX_UNTIL_UNIQUE' ? 'noindex_pending_unique_content' : 'indexable',
+      decision,
+      '',
+      unique ? 'contexto e instituciones registrados' : 'falta valor local único demostrable',
+      'PREVIEW_ONLY',
+    ];
+  }),
+);
+
+const faqTargetByCategory: Record<string, string> = {
+  'derecho-penal-general': '/derecho-penal',
+  'asistencia-detenidos': '/derecho-penal',
+  'proceso-penal': '/derecho-penal',
+  'derecho-de-familia': '/servicios-juridicos/derecho-de-familia',
+  'derecho-laboral': '/servicios-juridicos/derecho-laboral',
+  'derecho-civil': '/servicios-juridicos/derecho-civil-y-notarial',
+  'derecho-mercantil': '/servicios-juridicos/derecho-mercantil-empresarial',
+  'extranjeria-migracion': '/servicios-juridicos/extranjeria-en-honduras',
+  'tributario-sar': '/servicios-juridicos/tributario-fiscal',
+  'bufete-honorarios': '/preguntas-frecuentes',
+  'otras-areas': '/servicios-juridicos',
+};
+
+writeCsv(
+  'docs/seo/current/faq-inventory.csv',
+  ['question', 'current_url', 'category', 'target_url', 'duplicate_of', 'legal_risk', 'review_status', 'action'],
+  categoriasFaq.flatMap((category) => category.preguntas.map((faq) => [
+    faq.pregunta,
+    '/preguntas-frecuentes',
+    category.slug,
+    faqTargetByCategory[category.slug] ?? 'HUMAN_REVIEW',
+    '',
+    category.slug === 'bufete-honorarios' ? 'LOW' : 'YMYL_REVIEW_REQUIRED',
+    category.slug === 'bufete-honorarios' ? 'corporate_reviewed' : 'lawyer_review_pending',
+    category.slug === 'bufete-honorarios' ? 'KEEP_GENERAL' : 'MOVE_TO_AREA_WITHOUT_DELETION',
+  ])),
 );
 
 console.log(`Cola jurídica: ${reviewRows.length}; landings: ${landingsLocales.length}; pares GSC: ${gsc.length}.`);

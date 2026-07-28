@@ -188,7 +188,8 @@ function SectionChip({ cat }: { cat: FaqCategoryPublic }) {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const categoriasFaq = await getFaqsForPublicPage();
+  const categoriasFaq = (await getFaqsForPublicPage())
+    .filter((category) => category.slug === 'bufete-honorarios');
   const total = categoriasFaq.reduce((acc, c) => acc + c.preguntas.length, 0);
   return {
     title: `Preguntas Frecuentes en Honduras`,
@@ -214,16 +215,19 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function FaqPage() {
-  const categoriasFaq = await getFaqsForPublicPage();
+  const todasCategoriasFaq = await getFaqsForPublicPage();
+  const categoriasFaq = todasCategoriasFaq
+    .filter((category) => category.slug === 'bufete-honorarios');
   const totalPreguntas = categoriasFaq.reduce((acc, cat) => acc + cat.preguntas.length, 0);
   const categoriesBySlug = new Map(categoriasFaq.map((c) => [c.slug, c]));
 
   const clusters = FAQ_CLUSTERS.map((cluster) => ({
-    ...cluster,
-    categories: cluster.categorySlugs
-      .map((slug) => categoriesBySlug.get(slug))
-      .filter((cat): cat is FaqCategoryPublic => Boolean(cat)),
-  }));
+      ...cluster,
+      categories: cluster.categorySlugs
+        .map((slug) => categoriesBySlug.get(slug))
+        .filter((cat): cat is FaqCategoryPublic => Boolean(cat)),
+    }))
+    .filter((cluster) => cluster.categories.length > 0);
 
   const flatFaqs = categoriasFaq.flatMap((c) =>
     c.preguntas.map((p) => ({
@@ -247,12 +251,10 @@ export default async function FaqPage() {
         title="Resuelva sus dudas legales"
         subtitle={
           <>
-            {totalPreguntas} preguntas organizadas en {categoriasFaq.length} categorías.
-            Respuestas claras y prácticas sobre el sistema legal hondureño para
-            <strong className="font-bold text-accent"> defensa penal</strong>,
-            familia, laboral, civil, mercantil, tributario, bancario, administrativo,
-            aduanero, sanitario, extranjería, propiedad intelectual, ambiental y
-            conciliación/arbitraje.
+            {totalPreguntas} respuestas corporativas sobre ubicación, cobertura,
+            evaluación inicial, honorarios, presupuesto, confidencialidad, urgencias
+            y documentación. Las dudas jurídicas específicas se responden en la
+            página de cada área de práctica.
           </>
         }
         cta={<CTAGroup variant="inverse" />}
@@ -374,6 +376,32 @@ export default async function FaqPage() {
           )}
         </Section>
       ))}
+
+      <Section spacing="md" background="muted">
+        <SectionHeader
+          eyebrow="Preguntas por materia"
+          title="Consulte la respuesta en el área jurídica correspondiente"
+          subtitle="Las preguntas jurídicas se mantienen en su contexto profesional, sin duplicar respuestas en la FAQ general."
+        />
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            ['Derecho penal', '/derecho-penal'],
+            ['Derecho de familia', '/servicios-juridicos/derecho-de-familia'],
+            ['Derecho laboral', '/servicios-juridicos/derecho-laboral'],
+            ['Derecho civil y notarial', '/servicios-juridicos/derecho-civil-y-notarial'],
+            ['Derecho mercantil', '/servicios-juridicos/derecho-mercantil-empresarial'],
+            ['Derecho administrativo', '/servicios-juridicos/derecho-administrativo-y-servicio-civil'],
+          ].map(([label, href]) => (
+            <Link
+              key={href}
+              href={href}
+              className="rounded-lg border border-border-light bg-surface p-4 text-sm font-semibold text-primary hover:border-accent/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"
+            >
+              Preguntas sobre {label}
+            </Link>
+          ))}
+        </div>
+      </Section>
 
       <BlogHighlights
         slugs={[
