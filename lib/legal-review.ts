@@ -315,6 +315,7 @@ export function getEditorialResponsibility(
     case 'union-de-hecho':
       return { author: THANIA_PROFILE.name, defaultReviewer: EMIL_PROFILE.name, requiresHumanAssignment: false };
     case 'derecho-civil':
+    case 'derecho-notarial':
     case 'civil':
     case 'civil-y-notarial':
     case 'notarial':

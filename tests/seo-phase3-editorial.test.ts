@@ -85,6 +85,7 @@ describe('Fase 3 — contratos editoriales y documentales', () => {
     expect(queue).toHaveLength(40);
     expect(queue.every((row) => row.status === 'lawyer_review_pending')).toBe(true);
     expect(queue.every((row) => row.review_packet && row.author_proposed)).toBe(true);
+    expect(queue.some((row) => row.author_proposed === 'HUMAN_ASSIGNMENT_REQUIRED')).toBe(false);
     expect(readFileSync('scripts/generate-phase3-editorial.ts', 'utf8')).not.toContain(
       "legalReviewStatus: 'lawyer_verified'",
     );

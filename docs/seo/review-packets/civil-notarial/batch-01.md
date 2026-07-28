@@ -98,8 +98,8 @@
 - Resumen de cambios: respuesta inicial prudente, marco normativo, documentos, procedimiento, excepciones, errores, fuentes y enlaces contextuales.
 - Claims sensibles: plazos, requisitos, autoridad competente, efectos y excepciones; validar contra HN-CPC-211-2006.
 - Fuentes exactas: HN-CPC-211-2006 (https://tsc.gob.hn/web/leyes/Codigo_Procesal%20Civil_.pdf; procedimiento declarativo, monitorio, ejecución y medidas cautelares según pretensión)
-- Autor propuesto: HUMAN_ASSIGNMENT_REQUIRED
-- Revisor propuesto: HUMAN_ASSIGNMENT_REQUIRED
+- Autor propuesto: Thania Marlene Paz
+- Revisor propuesto: Emil Barahona
 - Enlaces internos propuestos: https://www.pinedayasociadoshn.com/blog/derecho-civil/compraventa-inmuebles-aspectos-legales-honduras; https://www.pinedayasociadoshn.com/blog/derecho-civil/prescripcion-deudas-plazos-honduras
 - Servicio relacionado: /servicios-juridicos/derecho-notarial
 - CTA: solicitar una evaluación confidencial del caso y la documentación.
