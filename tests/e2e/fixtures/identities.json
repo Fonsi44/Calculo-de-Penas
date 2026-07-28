@@ -1,0 +1,100 @@
+{
+  "$schema": "Fuente canónica de identidades sintéticas para E2E staging (PR #20).",
+  "$comment": "Todos los valores son fixtures sintéticos, NO credenciales reales. Las contraseñas se generan en tools/ci/seed-e2e.mjs y se exponen a los specs vía variables E2E_* (el runner las exporta automáticamente). Los valores hardcodeados en los specs como fallback (TestAdmin123!, etc.) se mantienen solo como fallback de respaldo, no como fuente primaria.",
+  "version": 2,
+  "environment": "staging",
+  "domain": "test.local",
+
+  "users": {
+    "admin": {
+      "id": "aaaaaaaa-0000-4000-a000-000000000001",
+      "email": "admin@test.local",
+      "nombre": "Admin Test",
+      "rol": "admin"
+    },
+    "lawyerA": {
+      "id": "aaaaaaaa-0000-4000-a000-000000000002",
+      "email": "abogado-a@test.local",
+      "nombre": "Abogado A",
+      "rol": "abogado"
+    },
+    "lawyerB": {
+      "id": "aaaaaaaa-0000-4000-a000-000000000003",
+      "email": "abogado-b@test.local",
+      "nombre": "Abogado B",
+      "rol": "abogado"
+    },
+    "twoFactorUser": {
+      "id": "aaaaaaaa-0000-4000-a000-000000000004",
+      "email": "twofactor@test.local",
+      "nombre": "Usuario 2FA",
+      "rol": "abogado"
+    },
+    "authUser": {
+      "id": "aaaaaaaa-0000-4000-a000-000000000005",
+      "email": "auth-test@pinedayasociadoshn.com",
+      "nombre": "Auth Test",
+      "rol": "abogado"
+    },
+    "sidebarUser": {
+      "id": "aaaaaaaa-0000-4000-a000-000000000006",
+      "email": "sidebar-test@pinedayasociadoshn.com",
+      "nombre": "Sidebar Test",
+      "rol": "abogado"
+    },
+    "unauthorizedUser": {
+      "id": "aaaaaaaa-0000-4000-a000-000000000007",
+      "email": "unauthorized@test.local",
+      "nombre": "Sin Permisos",
+      "rol": "pendiente"
+    }
+  },
+
+  "client": {
+    "id": "bbbbbbbb-0000-4000-a000-000000000001",
+    "nombre": "Cliente E2E A",
+    "email": "cliente-a@test.local",
+    "telefono": "+504 2222-1111",
+    "responsableId": "aaaaaaaa-0000-4000-a000-000000000002"
+  },
+
+  "case": {
+    "id": "cccccccc-0000-4000-a000-000000000002",
+    "titulo": "Caso E2E Auth-Flow",
+    "estado": "borrador",
+    "usuarioId": "aaaaaaaa-0000-4000-a000-000000000005"
+  },
+
+  "expedient": {
+    "id": "cccccccc-0000-4000-a000-000000000001",
+    "numeroInterno": "E2E-001",
+    "clienteId": "bbbbbbbb-0000-4000-a000-000000000001",
+    "responsableId": "aaaaaaaa-0000-4000-a000-000000000002",
+    "estado": "creado",
+    "prioridad": "media"
+  },
+
+  "expedientB": {
+    "id": "cccccccc-0000-4000-a000-000000000003",
+    "numeroInterno": "E2E-002",
+    "clienteId": "bbbbbbbb-0000-4000-a000-000000000002",
+    "responsableId": "aaaaaaaa-0000-4000-a000-000000000003",
+    "estado": "creado",
+    "prioridad": "media"
+  },
+
+  "clientB": {
+    "id": "bbbbbbbb-0000-4000-a000-000000000002",
+    "nombre": "Cliente E2E B",
+    "email": "cliente-b@test.local",
+    "telefono": "+504 2222-2222",
+    "responsableId": "aaaaaaaa-0000-4000-a000-000000000003"
+  },
+
+  "twoFactorEncryption": {
+    "fallbackKey": "dev-only-2fa-encryption-key-not-for-production",
+    "salt": "sgie-2fa-v2"
+  },
+
+  "bcryptCost": 12
+}
