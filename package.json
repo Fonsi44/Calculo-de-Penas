@@ -122,6 +122,8 @@
     "auth:vercel:status": "node scripts/auth-vercel-cli.mjs status",
     "seo:doctor": "node scripts/seo-live-doctor.mjs",
     "seo:collect": "node scripts/seo-live-collect.mjs",
+    "seo:gsc:reports": "npx tsx scripts/generate-gsc-reports.ts",
+    "seo:inventory": "npx tsx scripts/generate-inventory.ts",
     "seo:gsc:live": "node scripts/google-search-console-live.mjs",
     "seo:ga4:live": "node scripts/google-analytics-live.mjs",
     "seo:bing:live": "node scripts/bing-webmaster-live.mjs",

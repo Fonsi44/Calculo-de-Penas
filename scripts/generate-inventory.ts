@@ -1,7 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { config } from 'dotenv';
-import { normalizeReviewStatus } from '../lib/legal-review';
+import {
+  getEditorialResponsibility,
+  normalizeReviewStatus,
+} from '../lib/legal-review';
 
 type QueryPage = {
   query: string;
@@ -13,26 +16,6 @@ type QueryPage = {
 };
 
 const SITE = 'https://www.pinedayasociadoshn.com';
-const HUMAN_ASSIGNMENT = new Set([
-  'derecho-bancario',
-  'tributario',
-  'derecho-aduanero',
-  'regulacion-sanitaria',
-  'derecho-ambiental',
-]);
-
-const responsibility: Record<string, [string, string]> = {
-  'derecho-penal': ['Danilo Pineda Maradiaga', 'Emil Barahona'],
-  'proceso-penal': ['Danilo Pineda Maradiaga', 'Emil Barahona'],
-  'derecho-laboral': ['Emil Barahona', 'Thania Marlene Paz'],
-  'derecho-de-familia': ['Thania Marlene Paz', ''],
-  'derecho-civil': ['Thania Marlene Paz', 'Emil Barahona'],
-  'derecho-notarial': ['Thania Marlene Paz', 'Emil Barahona'],
-  'derecho-mercantil': ['Thania Marlene Paz', 'Emil Barahona'],
-  'derecho-administrativo': ['Thania Marlene Paz', ''],
-  'hondurenos-en-espana': ['Thania Marlene Paz', ''],
-};
-
 function csv(value: unknown): string {
   const raw = value == null ? '' : String(value);
   return /[",\n\r]/.test(raw) ? `"${raw.replaceAll('"', '""')}"` : raw;
@@ -85,11 +68,11 @@ async function main() {
     const topQuery = [...rows].sort((a, b) => b.impressions - a.impressions)[0]?.query ?? '';
     const normalized = normalizeReviewStatus(post.reviewStatus);
     const indexable = post.published === true && post.noindex !== true && normalized === 'verified';
-    const assignment = responsibility[post.category];
-    const authorProposed = HUMAN_ASSIGNMENT.has(post.category)
+    const assignment = getEditorialResponsibility(post.category, post.title);
+    const authorProposed = assignment.requiresHumanAssignment
       ? 'HUMAN_ASSIGNMENT_REQUIRED'
-      : assignment?.[0] ?? 'HUMAN_ASSIGNMENT_REQUIRED';
-    const reviewerProposed = HUMAN_ASSIGNMENT.has(post.category) ? '' : assignment?.[1] ?? '';
+      : assignment.author;
+    const reviewerProposed = assignment.defaultReviewer ?? '';
     const links = post.body.match(/<a\b[^>]*href=/gi)?.length ?? 0;
     const sourceLinks = post.body.match(/https?:\/\/[^"' <]+/gi) ?? [];
     const officialSources = sourceLinks.filter((link) =>

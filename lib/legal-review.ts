@@ -38,7 +38,7 @@ export type LegalReviewStatus = 'pending' | 'verified' | 'needs_update';
  * como `pending` (no indexable por defecto), cumpliendo el gate de Fase 0
  * del propio plan: "ningún artículo indexable declara revisión pendiente".
  */
-export const PLAN_REVIEW_STATUS_MAP: Record<
+const PLAN_REVIEW_STATUS_MAP: Record<
   'draft' | 'documentary_review' | 'lawyer_review_pending' | 'lawyer_verified' | 'outdated' | 'withdrawn',
   LegalReviewStatus
 > = {
@@ -50,7 +50,7 @@ export const PLAN_REVIEW_STATUS_MAP: Record<
   withdrawn: 'needs_update',
 } as const;
 
-export type PlanLegalReviewStatus = keyof typeof PLAN_REVIEW_STATUS_MAP;
+type PlanLegalReviewStatus = keyof typeof PLAN_REVIEW_STATUS_MAP;
 
 export type LegalJurisdiction = 'HN' | 'ES' | 'HN_ES' | 'general';
 
@@ -231,7 +231,7 @@ export function getLegalReview(path: string): LegalReview {
  * `lawyer_review_pending` (noindex) hasta que el despacho firme la
  * asignación. No se inventa ningún abogado.
  */
-export const REQUIRES_HUMAN_ASSIGNMENT_AREAS: ReadonlySet<string> = new Set([
+const REQUIRES_HUMAN_ASSIGNMENT_AREAS: ReadonlySet<string> = new Set([
   'derecho-tributario',
   'derecho-bancario',
   'derecho-aduanero',
@@ -241,7 +241,7 @@ export const REQUIRES_HUMAN_ASSIGNMENT_AREAS: ReadonlySet<string> = new Set([
   'extranjeria',
 ]);
 
-export interface EditorialResponsibility {
+interface EditorialResponsibility {
   /** Abogado autor principal (nombre canónico de `lib/site.ts`). */
   author: string;
   /** Revisor secundario recomendado cuando el tema es sensible/transversal. */

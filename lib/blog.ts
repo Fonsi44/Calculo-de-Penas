@@ -91,7 +91,7 @@ function polishedExcerpt(value: string): string {
   return `${text}…`;
 }
 
-export function polishedTitle(value: string): string {
+function polishedTitle(value: string): string {
   // Plan maestro SEO/GEO §8.2 y §10: prohibido publicar titles incompletos,
   // cortados artificialmente o terminados en preposición con elipsis. Antes
   // este helper añadía "…" a títulos terminados en preposición, generando
