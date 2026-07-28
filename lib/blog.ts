@@ -113,6 +113,7 @@ type Phase3Override = {
   title: string;
   metaDescription: string;
   directAnswer: string;
+  body?: string;
   author: string | null;
   sources: Array<{ title: string; url: string; sections: string }>;
   related: Array<{ title: string; href: string }>;
@@ -127,10 +128,12 @@ function applyDocumentaryReview(html: string, editorial?: Phase3Override): strin
     `<li><a href="${item.href}">${item.title}</a></li>`,
   ).join('');
   return [
-    '<section data-phase3-documentary-review="true">',
-    '<h2>Respuesta breve</h2>',
-    `<p>${editorial.directAnswer}</p>`,
-    '</section>',
+    html.includes('data-phase3-article-specific') ? '' : [
+      '<section data-phase3-documentary-review="true">',
+      '<h2>Respuesta breve</h2>',
+      `<p>${editorial.directAnswer}</p>`,
+      '</section>',
+    ].join(''),
     html,
     '<section data-phase3-documentary-review="true">',
     '<h2>Fuentes jurídicas consultadas</h2>',
@@ -243,7 +246,10 @@ function mapToPost(p: PublicBlogPost): Post {
   const title = documentary?.title ?? editorial?.title ?? polishedTitle(p.title);
   const description = documentary?.metaDescription ?? editorial?.description ?? polishedExcerpt(p.description);
   return {
-    slug: p.slug, title, description, body: applyDocumentaryReview(cleanPlaceholderLinks(p.body), documentary),
+    slug: p.slug, title, description, body: applyDocumentaryReview(
+      cleanPlaceholderLinks(documentary?.body ?? p.body),
+      documentary,
+    ),
     publishedAt: p.publishedAt.toISOString(), category: p.category,
     tags: p.tags ?? [], author: documentary?.author ?? p.author ?? '', readingTime: p.readingTime ?? '',
     coverImage: COVERS_PENDING_LOCAL_REPLACEMENT.has(p.slug) ? undefined : p.coverImage ?? undefined,

@@ -128,6 +128,7 @@
     "seo:preview-fixtures": "npx tsx scripts/export-preview-blog-fixtures.ts",
     "seo:closure-artifacts": "npx tsx scripts/generate-seo-closure-artifacts.ts",
     "seo:phase3": "npx tsx scripts/generate-phase3-proposals.ts",
+    "seo:phase3:invalid-scaffold": "npx tsx scripts/generate-phase3-editorial.ts",
     "seo:phase3-quality": "npx tsx scripts/validate-phase3-quality.ts",
     "seo:gsc:live": "node scripts/google-search-console-live.mjs",
     "seo:ga4:live": "node scripts/google-analytics-live.mjs",

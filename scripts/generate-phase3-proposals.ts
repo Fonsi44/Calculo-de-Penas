@@ -16,6 +16,37 @@ type Topic = {
   claim: string;
   question: string;
 };
+type GeneratedProposal = {
+  status: string;
+  slug: string;
+  url: string;
+  area: string;
+  primaryQuery: string;
+  secondaryQueries: string[];
+  queryDecision: string;
+  searchIntent: string;
+  current: {
+    title: string; metaTitle: string; metaDescription: string; h1: string;
+    summary: string; contentHash: string; updatedAt: string | null;
+    reviewStatus: string | null; body: string; author: string | null; sectionCount: number;
+  };
+  proposed: {
+    title: string; keepJustification: string; metaTitle: string; metaDescription: string;
+    h1: string; summary: string; directAnswer: string; body: string; author: string;
+    reviewerProposed: string | null; legalReviewStatus: string; serviceHref: string;
+    relatedSlugs: string[]; sourceIds: string[]; sectionCount: number;
+  };
+  claims: Array<{
+    claimId: string; claim: string; sensitivity: string; sourceId: string;
+    articleOrSection: string; interpretation: string; verificationStatus: string;
+  }>;
+  reviewQuestions: string[];
+  omittedSections: string[];
+  safeguards: {
+    dryRunDefault: boolean; transactionRequired: boolean; driftCheckRequired: boolean;
+    productionWriteAllowed: boolean; doesNotSetLawyerVerified: boolean;
+  };
+};
 
 const SITE = 'https://www.pinedayasociadoshn.com';
 const TODAY = '2026-07-28';
@@ -67,6 +98,41 @@ const remaining: Array<[string, string, string]> = [
   ['tipos-sociedad-mercantil-honduras','tipos de sociedades mercantiles honduras','estructura, responsabilidad, administración y formalización'],
 ];
 
+const specificAnswers: Record<string, string> = {
+  'despido-laboral-honduras-guia-completa': 'Ante un despido, primero debe determinarse quién terminó la relación, qué causa comunicó y desde qué fecha produjo efectos. Carta de despido, contrato, planillas, comprobantes y mensajes permiten revisar preaviso, cesantía, vacaciones y demás cantidades sin asumir que toda terminación genera los mismos derechos.',
+  'despido-injustificado-honduras-derechos-trabajador': 'Un despido se considera injustificado cuando el empleador no acredita una causa legal suficiente o incumple las garantías aplicables. La persona trabajadora debe preservar la comunicación de terminación y la prueba de salario y antigüedad para valorar indemnización, reintegro u otra pretensión dentro del plazo correspondiente.',
+  'calcular-prestaciones-laborales-honduras': 'El cálculo de prestaciones parte del salario computable, la antigüedad y la causa real de terminación. Después se separan preaviso, auxilio de cesantía, vacaciones pendientes, décimo tercero, décimo cuarto y salarios adeudados, evitando sumar conceptos incompatibles o usar una fecha de ingreso no demostrable.',
+  'calcular-liquidacion-laboral-honduras': 'Una liquidación laboral debe conciliar lo efectivamente pagado con lo devengado hasta el último día de trabajo. Contrato, recibos, vacaciones disfrutadas, anticipos y forma de terminación cambian el resultado; por eso una cifra de calculadora es orientativa hasta revisar los documentos.',
+  'empleador-no-paga-salario-honduras': 'Si el salario no se paga, conviene documentar períodos trabajados, monto pactado, horario y abonos parciales antes de formular el reclamo. Un requerimiento escrito y los registros bancarios o de planilla ayudan a definir si procede gestión ante Trabajo, conciliación o demanda.',
+  'jornada-laboral-horas-extra-descansos-honduras': 'Para reclamar horas extra hay que reconstruir la jornada realmente cumplida y distinguir horario ordinario, nocturno, mixto, descansos y trabajo extraordinario autorizado o tolerado. Marcaciones, turnos, mensajes y testigos son esenciales para cuantificar tiempo y recargos.',
+  'derechos-trabajadora-embarazada-honduras': 'El embarazo activa protecciones laborales que deben analizarse junto con la fecha en que el empleador conoció la situación, la causa alegada y cualquier autorización exigible. Certificados médicos, comunicaciones y carta de terminación permiten valorar estabilidad, licencia y consecuencias del despido.',
+  'acoso-laboral-mobbing-honduras': 'El acoso laboral se analiza como un patrón verificable, no como una etiqueta para cualquier desacuerdo en el trabajo. Es útil ordenar cronológicamente mensajes, cambios de funciones, sanciones, testigos y afectaciones, identificar quién intervino y activar canales internos o legales sin exponerse a represalias innecesarias.',
+  'custodia-hijos-honduras-juez': 'La custodia no se decide como premio para un progenitor, sino atendiendo la protección y estabilidad de los hijos. El juez puede valorar cuidado cotidiano, entorno, vínculos, disponibilidad, salud, educación, riesgos y disposición para facilitar la relación con el otro progenitor.',
+  'pension-alimenticia-honduras-guia-completa': 'La pensión alimenticia busca cubrir necesidades acreditadas de quien tiene derecho a recibirla conforme a la capacidad económica de la persona obligada. La solicitud debe identificar gastos, ingresos, parentesco y medidas necesarias para que la prestación se fije y pueda cumplirse.',
+  'pension-alimenticia-porcentaje-honduras-2026': 'En Honduras no debe presentarse un porcentaje único como respuesta automática para toda pensión alimenticia. El monto requiere probar necesidades concretas, ingresos y cargas del obligado, aportes de ambos responsables y circunstancias de la persona beneficiaria.',
+  'divorcio-honduras-guia-completa': 'El trámite de divorcio cambia según exista acuerdo o controversia y según deban resolverse hijos, alimentos, vivienda o bienes. Antes de presentar la solicitud conviene reunir certificaciones, propuesta sobre responsabilidades familiares y documentos patrimoniales para evitar que el conflicto quede incompleto.',
+  'union-de-hecho-requisitos-derechos-honduras': 'El reconocimiento de una unión de hecho exige acreditar convivencia con las condiciones y duración legales; no surge únicamente por compartir domicilio. La prueba de vida común, estado civil, patrimonio y fecha de inicio determina sus posibles efectos familiares, sucesorios y económicos.',
+  'violencia-intrafamiliar-denuncia-proteccion-honduras': 'Ante violencia intrafamiliar, la prioridad es reducir el riesgo y solicitar protección sin confrontar a la persona agresora. Registros médicos, mensajes, fotografías, testigos y datos de episodios previos pueden apoyar la denuncia y la petición de medidas adaptadas a víctimas, menores y domicilio.',
+  'pension-alimenticia-honduras-como-solicitarla': 'Para solicitar alimentos se identifica a la persona beneficiaria y obligada, se acreditan parentesco, necesidades e ingresos conocidos y se pide la medida apropiada. Certificaciones, presupuesto mensual, comprobantes de gastos y datos laborales permiten sustentar una cuota provisional y su posterior ejecución.',
+  'guarda-custodia-menores-tipos-honduras': 'La guarda describe quién asume el cuidado cotidiano, pero su organización debe coordinarse con patria potestad, visitas y decisiones relevantes para el menor. Una modalidad solo es adecuada si responde a seguridad, estabilidad, edad, rutina y posibilidades reales de cada familia.',
+  'contratos-arrendamiento-derechos-obligaciones-honduras': 'Un arrendamiento debe precisar inmueble, renta, plazo, depósito, servicios, reparaciones, uso autorizado y forma de restitución. Ante incumplimiento, el contrato, inventario, recibos y comunicaciones permiten distinguir cobro, terminación, daños y recuperación del bien.',
+  'danos-perjuicios-indemnizacion-honduras': 'Para obtener una indemnización no basta demostrar que ocurrió un problema: deben acreditarse daño cierto, conducta atribuible, relación causal y cuantía. Facturas, peritajes, informes, fotografías y pérdida de ingresos sustentan conceptos distintos y evitan duplicar la reparación.',
+  'testamentos-sucesiones-herencia-honduras': 'El testamento ordena la voluntad sucesoria dentro de los límites legales y debe cumplir la forma correspondiente. Capacidad del otorgante, identificación de bienes y herederos, legitimarios y eventual revocación deben revisarse para reducir nulidades y conflictos al ejecutarlo.',
+  'herencias-honduras-fallece-familiar': 'Tras un fallecimiento, hay que comprobar parentesco, último domicilio, existencia de testamento, bienes, deudas y posibles interesados. Con certificaciones e inventario puede definirse si corresponde declaratoria, aceptación, partición y actuación notarial o judicial.',
+  'poder-legal-honduras-cuando-se-necesita': 'Un poder permite actuar por otra persona solo dentro de las facultades otorgadas. Debe elegirse forma general o especial, describir actos sensibles —como vender, transigir o cobrar—, verificar aceptación ante terceros y prever vigencia o revocación.',
+  'compraventa-inmuebles-aspectos-legales-honduras': 'Antes de comprar un inmueble debe verificarse identidad y facultades del vendedor, antecedente registral, gravámenes, medidas, posesión y obligaciones pendientes. Precio, forma de pago, escritura e inscripción deben coordinarse para no entregar fondos sobre un título defectuoso.',
+  'prescripcion-deudas-plazos-honduras': 'Una deuda no prescribe solo por ser antigua: deben identificarse su naturaleza, fecha de exigibilidad, plazo legal y actos que pudieron interrumpirlo. Pagos parciales, reconocimientos, requerimientos o demanda pueden alterar el análisis, que además no equivale a declarar inexistente la obligación.',
+  'reclamar-deuda-legalmente-honduras': 'El cobro comienza comprobando quién debe, cuánto, por qué concepto y desde cuándo es exigible. Contrato, factura, título, entrega, estados de cuenta y requerimientos determinan si conviene negociar, promover un proceso declarativo, usar una vía ejecutiva o solicitar medidas cautelares.',
+  'contratos-franquicia-aspectos': 'Una franquicia combina licencia de marca, método de negocio, asistencia y pagos continuados. El contrato debe repartir territorio, exclusividad, regalías, estándares, suministro, datos, no competencia y consecuencias de terminación para evitar que una inversión dependa de obligaciones indefinidas.',
+  'contratos-mercantiles-esenciales-empresas-honduras': 'No existe un contrato mercantil único para toda empresa: compraventa, suministro, distribución, agencia, servicios y confidencialidad asignan riesgos diferentes. Cada documento debe definir representación, entregables, precio, garantías, incumplimiento, terminación y foro de solución.',
+  'competencia-desleal-como-denunciar-honduras': 'Una denuncia por competencia desleal necesita describir la conducta concreta, el mercado afectado y el perjuicio competitivo, no solo la presencia de un rival. Publicidad, precios, comunicaciones, signos usados y pérdida de clientes ayudan a valorar cese, corrección y reparación.',
+  'incumplimiento-contrato-comercial-honduras': 'Ante un incumplimiento comercial se revisan la obligación exacta, vencimiento, contraprestación, comunicaciones y cláusulas de subsanación o terminación. Antes de resolver el contrato conviene documentar mora, excepciones, daños previsibles y medidas para reducir pérdidas.',
+  'constitucion-empresas-honduras-pasos-legales': 'Constituir una empresa exige decidir socios, aportes, administración, representación y actividad antes de formalizar la escritura. La inscripción mercantil es solo una etapa: también deben ordenarse registros tributarios, permisos, libros, relaciones laborales y beneficiarios cuando proceda.',
+  'titulos-valores-cheques-sin-fondo-honduras': 'Un cheque sin fondos debe conservarse y presentarse de forma que quede constancia del rechazo y sus motivos. Fecha, endosos, protesto o declaración equivalente y relación subyacente determinan las acciones cambiarias, el cobro civil y cualquier valoración penal separada.',
+  'elegir-tipo-sociedad-empresa-honduras': 'La forma societaria se elige comparando responsabilidad de los socios, capital, administración, entrada y salida de participantes, transmisión de aportaciones y necesidades de inversión. Copiar la estructura de otra empresa puede crear controles o responsabilidades incompatibles con el negocio.',
+  'tipos-sociedad-mercantil-honduras': 'Las sociedades mercantiles hondureñas difieren en responsabilidad, composición del capital y órganos de decisión. Comparar sociedad colectiva, comandita, responsabilidad limitada y sociedad anónima permite entender sus efectos, pero la elección requiere además revisar actividad, socios y financiación.',
+};
+
 for (const [slug, query, focus] of remaining) {
   const isLabor = remaining.indexOf(remaining.find((r) => r[0] === slug)!) < 8;
   const isFamily = remaining.indexOf(remaining.find((r) => r[0] === slug)!) >= 8 && remaining.indexOf(remaining.find((r) => r[0] === slug)!) < 16;
@@ -75,7 +141,7 @@ for (const [slug, query, focus] of remaining) {
   topics[slug] = {
     area: isLabor ? 'laboral' : isFamily ? 'familia' : isCivil ? 'civil-notarial' : 'mercantil',
     query,
-    direct: `Este asunto requiere comprobar ${focus}. La respuesta no se obtiene de una cifra o fórmula aislada: debe contrastarse el documento principal, los hechos acreditables, la norma vigente y la vía procedimental adecuada antes de firmar, reclamar o aceptar un acuerdo.`,
+    direct: specificAnswers[slug],
     meta: `${query[0].toUpperCase()}${query.slice(1)}: análisis de ${focus} con documentos, procedimiento y fuentes oficiales pertinentes.`,
     source,
     section: isLabor ? 'disposición específica pendiente de validación humana en el Código del Trabajo' : isFamily ? 'disposición específica pendiente de validación humana en el Código de Familia' : isCivil ? 'disposición específica pendiente de validación humana en el Código Procesal Civil' : 'disposición específica pendiente de validación humana en el Código de Comercio',
@@ -107,12 +173,12 @@ function sectionCount(html: string) {
 async function main() {
   config({ path: path.join(process.cwd(), '.env.local'), quiet: true });
   config({ path: path.join(process.cwd(), '.env'), quiet: true });
-  const [{ db }, { blogPosts }] = await Promise.all([import('../lib/db'), import('../lib/schema')]);
+  const [{ db, closeDb }, { blogPosts }] = await Promise.all([import('../lib/db'), import('../lib/schema')]);
   const posts = await db.select().from(blogPosts);
   const bySlug = new Map(posts.map((post) => [post.slug, post]));
   if (Object.keys(topics).length !== 40) throw new Error(`Se esperaban 40 temas; encontrados ${Object.keys(topics).length}`);
 
-  const proposals = [];
+  const proposals: GeneratedProposal[] = [];
   const registry = [];
   for (const [slug, topic] of Object.entries(topics)) {
     const current = bySlug.get(slug);
@@ -124,7 +190,7 @@ async function main() {
     const summary = topic.direct.split(/\s+/).slice(0, 62).join(' ');
     const proposedBody = `<section data-phase3-article-specific="${slug}"><h2>Respuesta directa</h2><p>${topic.direct}</p><h2>Qué debe verificarse en este asunto</h2><p>${topic.claim}</p></section>${current.body}`;
     const proposal = {
-      status: 'RECONSTRUCTION_DRAFT_NOT_APPLICABLE',
+      status: 'ARTICLE_SPECIFIC_DRY_RUN',
       slug,
       url: `${SITE}/blog/${current.category}/${slug}`,
       area: topic.area,
@@ -202,7 +268,7 @@ async function main() {
     writeFileSync(
       `docs/seo/patches/phase3/${area}-batch-01.json`,
       `${JSON.stringify({
-        batch: area, generatedAt: TODAY, status: 'RECONSTRUCTION_DRAFT_NOT_APPLICABLE',
+        batch: area, generatedAt: TODAY, status: 'ARTICLE_SPECIFIC_DRY_RUN',
         mode: 'DRY_RUN_ONLY', patches,
       }, null, 2)}\n`,
     );
@@ -238,7 +304,63 @@ async function main() {
     mkdirSync(`docs/seo/review-packets/${area}`, { recursive: true });
     writeFileSync(`docs/seo/review-packets/${area}/batch-01.md`, `${packet.trimEnd()}\n`);
   }
+
+  const previewSlugs = new Set(
+    ['penal', 'laboral', 'familia', 'civil-notarial', 'mercantil']
+      .flatMap((area) => proposals.filter((proposal) => proposal.area === area).slice(0, 2).map((proposal) => proposal.slug)),
+  );
+  const previewOverrides = Object.fromEntries(proposals
+    .filter((proposal) => previewSlugs.has(proposal.slug))
+    .map((proposal) => {
+      const source = sourceCatalog[topics[proposal.slug].source];
+      return [proposal.slug, {
+        title: proposal.proposed.title,
+        metaDescription: proposal.proposed.metaDescription,
+        directAnswer: proposal.proposed.directAnswer,
+        body: proposal.proposed.body,
+        author: proposal.proposed.author,
+        sourceIds: proposal.proposed.sourceIds,
+        sources: [{ title: source.title, url: source.url, sections: proposal.claims[0].articleOrSection }],
+        related: proposal.proposed.relatedSlugs.map((relatedSlug: string) => ({
+          title: bySlug.get(relatedSlug)?.title ?? relatedSlug,
+          href: `/blog/${bySlug.get(relatedSlug)?.category}/${relatedSlug}`,
+        })),
+      }];
+    }));
+  writeFileSync('data/seo/phase3-editorial-overrides.json', `${JSON.stringify({
+    generatedAt: TODAY,
+    status: 'ARTICLE_SPECIFIC_PREVIEW_ONLY',
+    lawyerVerified: false,
+    overrides: previewOverrides,
+  }, null, 2)}\n`);
+
+  for (const csvPath of [
+    'docs/seo/current/content-action-matrix.csv',
+    'docs/seo/current/content-priority-queue.csv',
+  ]) {
+    const csvRows = parseCsv(readFileSync(csvPath, 'utf8'));
+    const [csvHeader, ...csvData] = csvRows;
+    const slugIndex = csvHeader.indexOf('slug');
+    const urlIndex = csvHeader.indexOf('url');
+    const queryIndex = csvHeader.indexOf('primary_query');
+    let decisionIndex = csvHeader.indexOf('query_decision');
+    if (decisionIndex === -1) {
+      csvHeader.push('query_decision');
+      decisionIndex = csvHeader.length - 1;
+    }
+    for (const csvRow of csvData) {
+      const slug = slugIndex >= 0
+        ? csvRow[slugIndex]
+        : csvRow[urlIndex]?.split('/').at(-1) ?? '';
+      const proposal = proposals.find((item) => item.slug === slug);
+      if (!proposal) continue;
+      csvRow[queryIndex] = proposal.primaryQuery;
+      csvRow[decisionIndex] = proposal.queryDecision;
+    }
+    writeFileSync(csvPath, stringifyCsv([csvHeader, ...csvData]));
+  }
   console.log(JSON.stringify({ status: INVALID, proposals: proposals.length, completeBodies: proposals.filter((p) => p.proposed.body.length > p.current.body.length).length }, null, 2));
+  await closeDb();
 }
 
 main().catch((error: unknown) => {
