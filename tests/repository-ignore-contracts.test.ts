@@ -14,6 +14,7 @@ describe('contratos de artefactos locales', () => {
     '.env.local',
     '.local/evidence.json',
     '.backups/snapshot.sql',
+    'data/backups/snapshot.html',
     '.zcode/session.json',
     'output/report.json',
     'reports/audit.json',

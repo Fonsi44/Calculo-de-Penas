@@ -68,7 +68,19 @@ commit o justificación de no cambio y prueba reproducible.
 
 ## Cierre
 
-1. Mantener el PR en Draft hasta revisión CODEOWNERS.
-2. Conservar el snapshot y el deployment anterior durante la ventana de
+1. PR #20 fusionado mediante autorización administrativa explícita.
+2. Snapshot y deployments anteriores conservados durante la ventana de
    observación.
-3. El merge queda fuera de este programa y requiere autorización separada.
+3. `main`, CI y Production verificados después del merge.
+
+## Continuación posterior al PR #20
+
+- PR #20 fusionado por autorización administrativa en `main` como
+  `65aaba2261b2e7c9cab8ff83e7de265ea2912e35`.
+- CI de `main`, deployment automático y readiness productivo verificados.
+- Las 10.931 filas del ledger se reconciliaron con decisión individual:
+  0 estados abiertos, 0 filas sin decisión, 0 P0 y 0 P1 en backlog.
+- El backlog gobernado contiene únicamente observaciones P2 no bloqueantes,
+  con owner, criterio de aceptación y riesgo explícitos.
+- La evidencia reproducible está en
+  `docs/audits/current/repository-ledger-reconciliation.md`.
