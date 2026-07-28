@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, MessageCircle, Mail, MapPin, Clock } from 'lucide-react';
 import { site, telHref, whatsappHref, mailtoHref } from '@/lib/site';
-import { LEGAL_DISCLAIMER_SHORT, LEGAL_FRAME_BADGE } from '@/lib/legal-disclaimer';
+import { LEGAL_FRAME_BADGE } from '@/lib/legal-disclaimer';
 import { CookiePreferencesButton } from '@/components/cookie-consent';
 
 const AREAS = [
@@ -290,7 +290,6 @@ export function PublicFooter() {
         <div className="mt-4 pt-4 border-t border-accent/10 text-xs text-text-inverse/75">
           <p className="text-pretty">
             Contenido elaborado por el <strong className="text-text-inverse/70">Equipo legal de Pineda y Asociados</strong> — abogados en Nacaome, Valle, Honduras.{' '}
-            {LEGAL_DISCLAIMER_SHORT}
           </p>
         </div>
       </div>

@@ -17,9 +17,10 @@ import { ShareButtons } from '@/components/blog/share-buttons';
 import { RelatedService } from '@/components/blog/related-service';
 import { BlogCtaBar } from '@/components/blog/blog-cta-bar';
 import { LegalDisclaimer } from '@/components/marketing/legal-disclaimer';
-import { AiReviewNotice } from '@/components/blog/ai-review-notice';
-import { CANONICAL_REVIEWERS, normalizeReviewStatus } from '@/lib/legal-review';
-import { requiresVerifiedEditorialStatus } from '@/lib/editorial-cutover';
+import {
+  isEditoriallyIndexable,
+  resolveArticleEditorialState,
+} from '@/lib/editorial-signature';
 import { extractFAQSchema, faqPageSchema } from '@/lib/faq-schema';
 import { BlogSidebar } from '@/components/blog/blog-sidebar';
 import {
@@ -280,15 +281,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   );
   const ogImg = post.ogImage || post.coverImage || '/og-image.webp';
   const canonical = post.canonicalUrl || `/blog/${post.category}/${post.slug}`;
-  // Plan maestro SEO/GEO §6, §8.1 y §9.6: una página YMYL jurídica que declara
-  // revisión pendiente no debe competir en Google afirmando que aún no está
-  // validada. Solo los artículos `lawyer_verified` (≈ `verified` en el modelo
-  // vigente) son indexables. El resto recibe `noindex, follow` con el mismo
-  // criterio independientemente del flag `noindex` de la DB: la ausencia de
-  // revisión jurídica humana es por sí sola motivo de noindex (gate de Fase 0).
-  const reviewedVerified = normalizeReviewStatus(post.reviewStatus) === 'verified';
+  // Una versión publicada con firma institucional o individual válida es
+  // indexable. Drafts, versiones desactualizadas y propuestas aún sin nueva
+  // firma reciben noindex sin afectar a la versión histórica publicada.
   const noindex = post.noindex === true
-    || (requiresVerifiedEditorialStatus() && !reviewedVerified);
+    || !isEditoriallyIndexable(post);
 
   return {
     title: { absolute: metaTitle },
@@ -355,11 +352,12 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
     'Emil Barahona': 'emil-barahona',
   };
 
-  const isReviewed =
-    post.reviewStatus === 'verified' &&
-    post.reviewedBy &&
-    CANONICAL_REVIEWERS.includes(post.reviewedBy) &&
-    post.reviewedAt;
+  const editorial = resolveArticleEditorialState(post);
+  const validSignature = editorial.signatureValid ? editorial.signature : null;
+  const individualSignature = validSignature?.type === 'lawyer';
+  const showPreviewResignatureNotice =
+    (process.env.VERCEL_ENV === 'preview' || process.env.APP_ENV === 'staging')
+    && editorial.publicationState === 'pending_resignature';
 
   const authorSlug = post.author ? LAWYER_SLUGS[post.author] : null;
   const authorHref = authorSlug ? `/equipo/${authorSlug}` : '/despacho';
@@ -435,15 +433,17 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                 <User size={15} className="text-accent-dark" />
                 <span>Autor: <Link href={authorHref} className="hover:text-primary hover:underline transition-colors font-medium text-text-secondary">{post.author}</Link></span>
               </span>
-              {isReviewed && (
+              {validSignature && (
                 <span className="flex items-center gap-1.5">
                   <BadgeCheck size={15} className="text-accent-dark" />
-                  <span>Revisión jurídica:{' '}
-                  <Link href={`/equipo/${LAWYER_SLUGS[post.reviewedBy!]}`} className="hover:text-primary hover:underline transition-colors font-medium text-text-secondary font-semibold">
-                    {post.reviewedBy}
+                  <span>{individualSignature ? 'Revisión jurídica:' : 'Revisión jurídica institucional:'}{' '}
+                  <Link href={validSignature.profileUrl ?? '/despacho'} className="hover:text-primary hover:underline transition-colors font-medium text-text-secondary font-semibold">
+                    {validSignature.name}
                   </Link>
-                  {post.reviewedAt && (
-                    <time dateTime={post.reviewedAt}> · {formatDate(post.reviewedAt)}</time>
+                  {validSignature.signedAt && (
+                    <time dateTime={new Date(validSignature.signedAt).toISOString()}>
+                      {' · '}{formatDate(new Date(validSignature.signedAt).toISOString())}
+                    </time>
                   )}
                   </span>
                 </span>
@@ -483,12 +483,12 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
           <div className="grid lg:grid-cols-[1fr_20rem] gap-8 lg:gap-10">
             <div className="min-w-0">
               <article>
-                {!isReviewed && (
-                  <div className="p-4 mb-6 rounded-lg bg-surface-alt border border-yellow-500/20 text-xs text-text-secondary leading-relaxed flex items-start gap-2.5 shadow-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-yellow-500 flex-shrink-0 mt-1.5" />
-                    <div>
-                      <span className="font-bold text-text">Aviso informativo:</span> Este contenido tiene fines exclusivamente de divulgación general. Está pendiente de revisión jurídica individual por un abogado colegiado. Para un análisis detallado de su caso, consulte directamente a nuestro despacho.
-                    </div>
+                {showPreviewResignatureNotice && (
+                  <div
+                    className="mb-6 rounded-lg border border-accent/40 bg-accent/10 p-4 text-sm font-semibold text-text"
+                    data-preview-editorial-status="pending_resignature"
+                  >
+                    Versión editorial en preparación para nueva firma
                   </div>
                 )}
                 <BlogTOC headings={headings} />
@@ -515,15 +515,12 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
 
                 {/* Disclaimer legal único con fecha de revisión real del post (E-E-A-T).
                     El footer global NO repite este concepto (ver public-footer.tsx). */}
-                <LegalDisclaimer lastReviewedIso={post.updatedAt ?? post.publishedAt} />
-
-                {/* Aviso de revisión documental IA (Fase 3B).
-                    Semántica por estado: completed/source_checked/needs_human_review muestran
-                    mensaje; blocked/not_started/in_progress no renderizan (evita falsa confianza).
-                    No menciona proveedor ni modelo. */}
-                <AiReviewNotice
-                  aiReviewStatus={post.aiReviewStatus ?? null}
-                  aiReviewedAt={post.aiReviewedAt ?? null}
+                <LegalDisclaimer
+                  documentaryReviewedAt={
+                    post.aiReviewStatus === 'completed' || post.aiReviewStatus === 'source_checked'
+                      ? post.aiReviewedAt
+                      : null
+                  }
                 />
 
                 <RelatedService category={post.category} />
@@ -546,15 +543,17 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                         Bufete jurídico con sede en Nacaome y más de 15 años de experiencia. Abogados
                         colegiados en Honduras, con presencia activa en juzgados de la zona sur.
                       </p>
-                      {isReviewed && (
+                      {validSignature && (
                         <p className="mt-2 flex items-center gap-1.5 text-xs font-medium text-text-secondary">
                           <BadgeCheck size={14} className="text-accent-dark" />
-                          Revisión jurídica:{' '}
-                          <Link href={`/equipo/${LAWYER_SLUGS[post.reviewedBy!]}`} className="hover:text-primary hover:underline transition-colors font-semibold">
-                            {post.reviewedBy}
+                          {individualSignature ? 'Revisión jurídica:' : 'Revisión jurídica institucional:'}{' '}
+                          <Link href={validSignature.profileUrl ?? '/despacho'} className="hover:text-primary hover:underline transition-colors font-semibold">
+                            {validSignature.name}
                           </Link>
-                          {post.reviewedAt && (
-                            <time dateTime={post.reviewedAt}> · {formatDate(post.reviewedAt)}</time>
+                          {validSignature.signedAt && (
+                            <time dateTime={new Date(validSignature.signedAt).toISOString()}>
+                              {' · '}{formatDate(new Date(validSignature.signedAt).toISOString())}
+                            </time>
                           )}
                         </p>
                       )}
