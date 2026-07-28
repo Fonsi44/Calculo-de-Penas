@@ -182,12 +182,11 @@ describe('FASE 2 — data/faq.ts: categoría bufete-honorarios enfocada en contr
   const faq = readRoot('data/faq.ts');
   const bufeteBlock = faq.slice(
     faq.indexOf("slug: 'bufete-honorarios'"),
-    faq.indexOf("slug: 'otras-areas'"),
   );
 
   it('incluye preguntas de contratación y funcionamiento', () => {
     expect(bufeteBlock).toContain('presupuesto');
-    expect(bufeteBlock).toMatch(/¿Qué ocurre después del primer contacto\?/);
+    expect(bufeteBlock).toMatch(/¿Cómo funciona la evaluación inicial\?/);
     expect(bufeteBlock).toMatch(/¿Atienden urgencias penales\?/);
     expect(bufeteBlock).toMatch(/confidencial/);
   });

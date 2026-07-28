@@ -1,0 +1,3 @@
+source,target,priority,status,data_required,notes
+/abogados-en-nacaome,/,medium,EVALUATE,Search Console (impressions, clicks, position, backlinks),"Evaluar si se conserva como página local o redirige a home. Home ya domina con tagline correcto."
+/blog/practica-legal/abogados-en-nacaome,/,low,PREPARED,none,"Post es draft (no publicado). Si se publica, reorientar a 'Cómo elegir abogado en Nacaome'."

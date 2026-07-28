@@ -1,0 +1,11 @@
+query_cluster,intent,primary_url,secondary_urls,action,canonical,redirect,status,notes
+"abogados en Nacaome",commercial,/,"/abogados-en-nacaome,/blog/practica-legal/abogados-en-nacaome (draft)",HOME_DOMINANT,/,,"Home debe dominar. /abogados-en-nacaome puede conservarse si tiene contenido local único (dirección, mapa, tribunales). Post es draft."
+"bufete de abogados en Nacaome",commercial,/,,HOME_DOMINANT,/,,"Home es la URL canónica para la marca."
+"Pineda y Asociados",brand,/,,HOME_DOMINANT,/,,"Home representa la marca."
+"abogados en Valle",commercial,/,,HOME_DOMINANT,/,,"Home como landing regional."
+"despido laboral Honduras",informational,/blog/derecho-laboral/despido-laboral-honduras-guia-completa,,KEEP,self,,Título corregido via EDITORIAL_OVERRIDES
+"custodia hijos Honduras",informational,/blog/derecho-de-familia/custodia-hijos-honduras-juez,,KEEP,self,,Título corregido via EDITORIAL_OVERRIDES
+"pensión alimenticia Honduras",informational,/blog/derecho-de-familia/pension-alimenticia-honduras-guia-completa,,KEEP,self,,Título corregido via EDITORIAL_OVERRIDES
+"derechos ARCO Honduras",informational,/blog/derechos-ciudadanos/proteccion-datos-personales-derechos-arco-honduras,,KEEP,self,,Título corregido via EDITORIAL_OVERRIDES
+"unión de hecho Honduras",informational,/blog/derecho-de-familia/union-de-hecho-requisitos-derechos-honduras,,KEEP,self,,Título corregido via EDITORIAL_OVERRIDES
+"herencias Honduras",informational,/blog/derecho-civil/herencias-honduras-fallece-familiar,,KEEP,self,,Título corregido via EDITORIAL_OVERRIDES
