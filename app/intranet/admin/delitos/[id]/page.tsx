@@ -101,7 +101,7 @@ export default function AdminDelitoDetailPage() {
           className="h-10 rounded-md border border-border text-center text-sm font-semibold text-text-secondary hover:bg-surface-alt inline-flex items-center justify-center">
           Volver al catálogo
         </Link>
-        <Link href={`/delito-form?id=${delito.id}`}
+        <Link href={`/intranet/admin/delito-form?id=${delito.id}`}
           className="h-10 rounded-md bg-primary text-center text-text-inverse text-sm font-bold hover:bg-primary-light inline-flex items-center justify-center gap-1.5">
           <ExternalLink size={14} /> Editar delito
         </Link>
