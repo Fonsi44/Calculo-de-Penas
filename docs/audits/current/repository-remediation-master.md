@@ -51,9 +51,9 @@ commit o justificación de no cambio y prueba reproducible.
 | 5. Depuración controlada | DONE_VERIFIED | 280/280 decisiones verificadas; 26 fuentes retiradas, 24 one-offs archivados, 14 assets sin consumidor retirados y 26 assets conservados por DB/contrato externo. |
 | 6. Arquitectura | DONE_VERIFIED | Schema separado con barrel compatible y entrypoints por dominio; Drizzle conforme; 564 fuentes con 0 ciclos y 0 imports `components → app`. |
 | 7. PWA/simulador/integraciones | DONE_VERIFIED | PWA usa exclusivamente route handler, simulador determinista etiquetado y mutaciones/integraciones con contrato explícito y fallo cerrado. |
-| 8. CI y gobernanza | DONE_VERIFIED | `npm run verify` cubre higiene, gobernanza, docs, 60 migraciones, lint, TypeScript, 1.932 tests, build y Knip; main protege PR, revisión CODEOWNERS, conversaciones y CI required. |
+| 8. CI y gobernanza | DONE_VERIFIED | `npm run verify` cubre higiene, gobernanza, docs, 60 migraciones, lint, TypeScript, 1.939 tests, build y Knip; main protege PR, revisión CODEOWNERS, conversaciones y CI required. |
 | Validación dinámica | DONE_VERIFIED | `npm run verify` verde y E2E Neon aislado 111/111; cleanup final eliminó 7 usuarios y todas las referencias sintéticas. |
-| Release/cutover | DONE_VERIFIED | Snapshot Neon, baseline 39+21, neutralización 208/208, variables Vercel, deployment productivo y smoke/readiness verdes. PR sigue Draft y sin merge. |
+| Release/cutover | DONE_VERIFIED | Snapshot Neon, baseline 39+21, neutralización 208/208, variables Vercel, merges autorizados, deployments productivos y smoke/readiness verdes. |
 
 ## Reglas de avance
 
@@ -64,7 +64,8 @@ commit o justificación de no cambio y prueba reproducible.
    rutas, scripts, tests y consumidores externos.
 5. Toda escritura productiva requiere autorización explícita, snapshot y
    rollback verificable.
-6. No ejecutar merge, force-push ni eliminación de recursos legacy.
+6. No ejecutar merge, force-push ni eliminación de recursos legacy sin
+   autorización explícita.
 
 ## Cierre
 
@@ -84,3 +85,6 @@ commit o justificación de no cambio y prueba reproducible.
   con owner, criterio de aceptación y riesgo explícitos.
 - La evidencia reproducible está en
   `docs/audits/current/repository-ledger-reconciliation.md`.
+- PR #22 fusionado por autorización administrativa en `main` como
+  `9fbf0a6e0a7808d091b6e56fdbbb88a0917ad365`; CI 30370338869 y
+  deployment productivo `dpl_6x5iFg56j9zXifhFwPnHiE91SB6A` verificados.

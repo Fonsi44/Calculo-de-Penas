@@ -11,7 +11,7 @@ superseded_by: null
 # Reconciliación del ledger maestro
 
 Se reconciliaron **10931 filas** sobre el worktree derivado de
-`main@65aaba22`, incluyendo las retiradas de este cambio.
+`main@9fbf0a6e`, incluyendo las retiradas de este cambio.
 Cada fila tiene una decisión terminal, evidencia actual y un gate reproducible.
 
 ## Estados
