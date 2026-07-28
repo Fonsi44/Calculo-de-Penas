@@ -517,8 +517,7 @@ export function organizationSchema() {
  *
  * Identidad pública verificable: el handle de X (Danilo_Pineda_M) y la firma
  * «Pineda y Asociados» confirman a Danilo Pineda Maradiaga como socio director.
- * Claims confirmados directamente por el titular del sitio el 2026-07-25:
- *   - «más de 15 años de ejercicio profesional»
+ * Claims profesionales publicados de forma prudente:
  *   - «Abogado colegiado en Honduras»
  *   - socio fundador y director
  *   - «defensa penal como área principal» (/despacho)
@@ -539,7 +538,7 @@ export const FOUNDER_PROFILE = {
   imagePenal: '/images/equipo/danilo-pineda-maradiaga-penal.webp',
   imageAltText: 'Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)',
   description:
-    'Abogado colegiado, socio fundador y director de Pineda y Asociados, con más de 15 años de ejercicio profesional en el sur de Honduras. Práctica enfocada en defensa penal: asistencia a detenidos, audiencias iniciales, preliminares, de sobreseimiento, juicio oral y recursos de casación en el departamento de Valle y zonas circunvecinas.',
+    'Abogado penalista y socio director de Pineda y Asociados. Atiende asuntos penales desde las primeras diligencias, audiencias y medidas cautelares hasta los recursos y la ejecución penal en el departamento de Valle y zonas circunvecinas.',
   city: 'Nacaome',
   department: 'Valle',
   cah: process.env.NEXT_PUBLIC_CAH_DANILO || null,

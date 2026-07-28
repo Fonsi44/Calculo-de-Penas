@@ -72,6 +72,17 @@ describe('LAWYER_PROFILES — array canónico de perfiles públicos', () => {
     }
   });
 
+  it('ningún perfil atribuye años de experiencia a una persona sin evidencia', () => {
+    for (const profile of LAWYER_PROFILES) {
+      expect(JSON.stringify(profile)).not.toMatch(
+        /\b(?:más de\s+)?\d+\+?\s*años\s+(?:de\s+)?(?:experiencia|ejercicio|práctica|colegiación)/i,
+      );
+    }
+    expect(FOUNDER_PROFILE.description).not.toMatch(
+      /\b(?:más de\s+)?\d+\+?\s*años\s+(?:de\s+)?(?:experiencia|ejercicio|práctica|colegiación)/i,
+    );
+  });
+
   it('ningún name tiene variantes prohibidas', () => {
     const names = LAWYER_PROFILES.map((p) => p.name);
     expect(names).not.toContain('Thania Pineda');

@@ -57,8 +57,8 @@ export default async function AbogadoPenalistaNacaomePage() {
           </h1>
           <p className="text-base md:text-lg text-text-inverse/85 max-w-3xl mb-8">
             Defensa técnica inmediata conforme al Código Penal hondureño. Asistencia desde la detención,
-            audiencia inicial y hasta el juicio oral. Más de 15 años de ejercicio profesional en el
-            sur de Honduras.
+            audiencia inicial y hasta el juicio oral. El despacho declara más de 15 años de
+            experiencia profesional en el sur de Honduras.
           </p>
           <CTAGroup variant="inverse" message={whatsappMsg} />
         </Container>
@@ -208,7 +208,7 @@ export default async function AbogadoPenalistaNacaomePage() {
               url,
               name: 'Abogado Penalista en Nacaome | Defensa Urgente 24/7 · Valle',
               description:
-                'Abogado penalista en Nacaome, Valle. Defensa penal urgente, detenciones, audiencias. 15+ años de experiencia. Consulta sin costo.',
+                'Defensa penal en Nacaome, Valle: detenciones y audiencias. El despacho declara más de 15 años de experiencia profesional.',
               isPartOf: { '@id': `${site.url}/#website` },
               about: { '@id': `${site.url}/#legal-service` },
             },

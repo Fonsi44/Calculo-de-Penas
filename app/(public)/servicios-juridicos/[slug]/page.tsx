@@ -64,7 +64,7 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     image: FOUNDER_PROFILE.imageAlt,
     imageAltText: FOUNDER_PROFILE.imageAltText ?? 'Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)',
     tagline: 'Defensa penal como pilar histórico del bufete',
-    description: 'Más de 15 años de ejercicio profesional. Audiencias iniciales, preliminares, de sobreseimiento, juicio oral y recursos de casación en el departamento de Valle y la zona sur.',
+    description: 'Abogado penalista y socio director del despacho. Atiende asuntos penales desde las primeras diligencias, audiencias y medidas cautelares hasta los recursos y la ejecución penal.',
     ctaHref: '/derecho-penal',
     ctaLabel: 'Ver defensa penal',
     profileHref: '/equipo/danilo-pineda-maradiaga',

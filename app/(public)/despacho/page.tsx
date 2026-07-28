@@ -255,10 +255,10 @@ export default async function DespachoPage() {
               </div>
             )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
-              Abogado responsable del bufete. Más de 15 años de ejercicio profesional.
-              Litigante en audiencias iniciales, preliminares, de sobreseimiento y juicio
-              oral en el departamento de Valle y zonas circunvecinas. La defensa penal es
-              el pilar histórico del despacho.
+              Abogado penalista y socio director del despacho. Atiende asuntos penales
+              desde las primeras diligencias, audiencias y medidas cautelares hasta los
+              recursos y la ejecución penal. La defensa penal es el pilar histórico del
+              despacho.
             </p>
             <div className="flex flex-wrap items-center gap-2 mt-3">
               <Link

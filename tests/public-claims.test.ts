@@ -38,8 +38,8 @@ describe('afirmaciones institucionales confirmadas por el titular', () => {
   });
 
   it('mantiene la condición fundacional en los perfiles del equipo', () => {
-    expect(FOUNDER_PROFILE.description).toMatch(/más de 15 años/i);
-    expect(FOUNDER_PROFILE.description).toMatch(/colegiado/i);
+    expect(FOUNDER_PROFILE.description).not.toMatch(/\b\d+\+?\s*años|más de \d+\s*años/i);
+    expect(FOUNDER_PROFILE.description).toMatch(/abogado penalista y socio director/i);
     expect(THANIA_PROFILE.jobTitle).toBe('Abogada · Socia fundadora');
     expect(THANIA_PROFILE.description).toMatch(/fundadora/i);
   });
