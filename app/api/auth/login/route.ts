@@ -133,7 +133,7 @@ export async function POST(request: Request) {
     return createAuthResponse({
       message: 'Inicio de sesión exitoso',
       user: { id: user.id, email: user.email, nombre: user.nombre, rol: user.rol },
-    }, token, request);
+    }, token);
   } catch (e: unknown) {
     console.error('[login] Error:', e);
     return Response.json({ error: 'No se pudo iniciar sesión. Intente más tarde.' }, { status: 500 });

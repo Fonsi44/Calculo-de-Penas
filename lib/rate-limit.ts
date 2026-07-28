@@ -36,10 +36,13 @@ function shouldFailClosed(keyPrefix: string): boolean {
 
 export async function rateLimit(identifier: string, opts: RateLimitOpts = {}): Promise<RateLimitResult> {
   // Bypass en tests E2E para no bloquear flujos que hacen múltiples logins.
-  // Usamos globalThis para evitar constant-folding de process.env por el
-  // bundler de Next.js/Turbopack, que inlinea las variables en build time.
+  // El flag __E2E_DISABLE_RATE_LIMIT se setea en instrumentation.ts (runtime)
+  // desde variables server-side (E2E_DISABLE_RATE_LIMIT + E2E_ENVIRONMENT),
+  // protegido contra constant-folding del bundler. NO se usa NEXT_PUBLIC_*.
+  // En producción, aunque el flag esté presente, el guard de E2E_ENVIRONMENT
+  // en instrumentation.ts lo ignora.
   const g = globalThis as { __E2E_DISABLE_RATE_LIMIT?: boolean };
-  if (g.__E2E_DISABLE_RATE_LIMIT === true || process.env.NEXT_PUBLIC_DISABLE_RATE_LIMIT === 'true') {
+  if (g.__E2E_DISABLE_RATE_LIMIT === true) {
     return { ok: true, remaining: DEFAULTS.max, resetAt: Date.now() + DEFAULTS.windowMs, retryAfterSec: 0 };
   }
 

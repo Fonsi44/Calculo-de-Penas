@@ -112,23 +112,27 @@ function getSecretPrevious(): string | null {
  * En staging local sobre HTTP se usa `token` simple porque las cookies __Host-
  * requieren HTTPS y el navegador las rechazaría.
  *
- * La detección se basa en el Host de la request (localhost), que es dinámico
- * y no puede ser plegado por el bundler en build time. Esto evita el problema
- * de constant-folding de process.env en Next.js/Turbopack.
+ * La decisión depende EXCLUSIVAMENTE de configuración server-side explícita.
+ * NO se usan headers de request (Host, Origin) porque el cliente los controla
+ * y un atacante podría falsificarlos para degradar la cookie a `token` sin
+ * Secure. La función isE2ELocalHttpMode se evalúa en runtime vía
+ * instrumentation.ts (no plegable por el bundler), usando E2E_ENVIRONMENT y
+ * E2E_LOCAL_HTTP que solo están presentes en el server E2E controlado.
  */
-function isLocalhostRequest(request?: Request | null): boolean {
-  if (!request) return false;
-  const host = request.headers.get('host') || '';
-  const origin = request.headers.get('origin') || '';
-  return /^localhost(:\d+)?$/.test(host) || /\/\/localhost(:\d+)?\//.test(origin);
+function isE2ELocalHttpMode(): boolean {
+  return (
+    process.env.E2E_ENVIRONMENT === 'staging' &&
+    process.env.E2E_LOCAL_HTTP === 'true' &&
+    process.env.NODE_ENV === 'production'
+  );
 }
 
-function shouldUseHostCookie(request?: Request | null): boolean {
-  return process.env.NODE_ENV === 'production' && !isLocalhostRequest(request);
+function shouldUseHostCookie(): boolean {
+  return !isE2ELocalHttpMode();
 }
 
-export function getCookieName(request?: Request | null): string {
-  return shouldUseHostCookie(request) ? '__Host-token' : 'token';
+export function getCookieName(): string {
+  return shouldUseHostCookie() ? '__Host-token' : 'token';
 }
 
 export const COOKIE_NAME = '__Host-token';
@@ -150,11 +154,11 @@ export function isAllowedAuthEmail(email: string): boolean {
   return normalized.endsWith(ALLOWED_EMAIL_DOMAIN);
 }
 
-function cookieAttrs(request?: Request | null): string {
+function cookieAttrs(): string {
   const parts = ['HttpOnly', 'Path=/', 'SameSite=Lax', `Max-Age=${TOKEN_TTL_SECONDS}`];
   // En producción real se requiere Secure. En staging local sobre HTTP
-  // (localhost) no se añade Secure porque el navegador lo rechazaría.
-  if (shouldUseHostCookie(request)) {
+  // (E2E_LOCAL_HTTP) no se añade Secure porque el navegador lo rechazaría.
+  if (shouldUseHostCookie()) {
     parts.unshift('Secure');
   }
   return parts.join('; ');
@@ -410,19 +414,19 @@ export function authFailureResponse(err: unknown): Response {
   return httpErrorResponse(err);
 }
 
-export function createAuthResponse(data: unknown, token?: string, request?: Request | null) {
+export function createAuthResponse(data: unknown, token?: string) {
   const headers = new Headers({ 'Content-Type': 'application/json' });
   if (token) {
-    headers.append('Set-Cookie', `${getCookieName(request)}=${token}; ${cookieAttrs(request)}`);
-    if (IS_PROD && shouldUseHostCookie(request)) {
+    headers.append('Set-Cookie', `${getCookieName()}=${token}; ${cookieAttrs()}`);
+    if (shouldUseHostCookie()) {
       headers.append('Set-Cookie', `${COOKIE_NAME_FALLBACK}=; Path=/; Max-Age=0; SameSite=Lax; Secure`);
     }
   }
   return new Response(JSON.stringify(data), { headers });
 }
 
-export function createLogoutResponse(request?: Request | null) {
-  const secureAttr = shouldUseHostCookie(request) ? '; Secure' : '';
+export function createLogoutResponse() {
+  const secureAttr = shouldUseHostCookie() ? '; Secure' : '';
   const clearPrimary = `${COOKIE_NAME}=; Path=/; Max-Age=0${secureAttr}; SameSite=Lax`;
   const clearFallback = `${COOKIE_NAME_FALLBACK}=; Path=/; Max-Age=0; SameSite=Lax${secureAttr}`;
   const headers = new Headers({ 'Content-Type': 'application/json' });
