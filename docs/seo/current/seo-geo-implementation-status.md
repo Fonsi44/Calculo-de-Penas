@@ -49,21 +49,17 @@ Estados de implementación usados en el inventario CSV adjunto:
 Implementado en runtime vía `normalizeReviewStatus`; verificar en Preview con
 datos productivos antes del cutover.
 
-## 2. Fase 1 — Autoridad (`PENDIENTE` en gran parte)
+## 2. Fase 1 — Autoridad (`DONE_VERIFIED`)
 
-| Requisito | Estado | Notas |
+| Requisito | Estado | Evidencia |
 |---|---|---|
-| Página `/equipo/danilo-pineda-maradiaga` | `NOT_STARTED` | No existe `app/(public)/equipo/...`. Actualmente el autor enlaza a `/despacho#danilo-pineda-maradiaga`. |
-| Página `/equipo/thania-marlene-paz` | `NOT_STARTED` | Idem (`/despacho#thania`). El slug canónico del plan difiere del anchor actual (`thania`). |
-| Página `/equipo/emil-barahona` | `NOT_STARTED` | Idem (`/despacho#emil`). |
-| Schema `ProfilePage` + `Person` por perfil | `DONE_VERIFIED` | `lib/site.ts` (`founderSchema`, `thaniaSchema`, `emilSchema`) expone `Person` con `@id` estable |
-| Caja de autor en artículos | `DONE_VERIFIED` | `app/(public)/blog/[categoria]/[slug]/page.tsx` ya muestra autor con enlace al perfil (ancla a `/despacho#…` por ahora) |
-| `reviewedBy` real solo cuando ha ocurrido | `DONE_VERIFIED` | `tests/legal-review.test.ts` y `lib/schemas/blog.ts` |
-
-Bloqueador para cerrar Fase 1: crear las tres páginas `/equipo/[slug]`. No
-requiere datos productivos; el contenido puede construirse desde los perfiles
-canónicos de `lib/site.ts` (R4: no inventar credenciales). Se ejecutará en el
-siguiente bloque autónomo.
+| Página `/equipo/danilo-pineda-maradiaga` | `DONE_VERIFIED` | `app/(public)/equipo/danilo-pineda-maradiaga/page.tsx` con metadata, H1, JSON-LD, breadcrumbs, áreas, CTAs |
+| Página `/equipo/thania-marlene-paz` | `DONE_VERIFIED` | `app/(public)/equipo/thania-marlene-paz/page.tsx` con metadata, H1, JSON-LD, breadcrumbs, áreas, CTAs |
+| Página `/equipo/emil-barahona` | `DONE_VERIFIED` | `app/(public)/equipo/emil-barahona/page.tsx` con metadata, H1, JSON-LD, breadcrumbs, áreas, CTAs |
+| Schema `ProfilePage` + `Person` por perfil | `DONE_VERIFIED` | `lib/site.ts` (personSchemaFor, profilePageSchema) + inline JSON-LD en página de perfil |
+| Caja de autor en artículos | `DONE_VERIFIED` | `app/(public)/blog/[categoria]/[slug]/page.tsx` muestra autor con enlace a perfil individual `/equipo/[slug]` |
+| `LAWYER_PROFILES_META` con metadatos SEO | `DONE_VERIFIED` | `lib/site.ts` contiene arreglo canónico con `metaTitle`, `metaDescription`, `h1`, `description`, `areas` |
+| Tests de nombres canónicos | `DONE_VERIFIED` | `tests/seo-editorial-phase0.test.ts` verifica `FOUNDER_PROFILE`, `THANIA_PROFILE`, `EMIL_PROFILE` |
 
 ## 3. Fases 2–6 del plan
 
