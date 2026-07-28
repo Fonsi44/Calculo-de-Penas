@@ -74,7 +74,8 @@ deps-outdated.json
 
 # ── Migrations (solo artefactos generados) ──────────────────
 # Las migraciones SQL son source of truth; no ignorar drizzle/migrations/*.sql
-/drizzle/migrations/meta/
+# El journal y snapshots de Drizzle están versionados y NO se ignoran.
+# /drizzle/migrations/meta/  # NO ignorar — los metadatos son trazabilidad
 
 # ── PWA ─────────────────────────────────────────────────────
 # Service Worker: arquitectura route handler (app/sw.js/route.ts)
