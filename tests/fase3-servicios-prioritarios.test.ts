@@ -419,7 +419,8 @@ describe('FASE 3 — Subsistemas intactos', () => {
     expect(article).toContain('No se garantizan resultados');
     expect(article).toContain('validSignature &&');
     expect(article).toContain('Revisión jurídica institucional:');
-    expect(adapter).toContain('cleanPlaceholderLinks');
+    expect(adapter).not.toContain('cleanPlaceholderLinks');
+    expect(article).toContain('normalizeBlogLinksForRender');
   });
 
   it('páginas geográficas intactas (sin cambios vs HEAD)', () => {

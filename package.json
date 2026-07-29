@@ -131,6 +131,7 @@
     "seo:editorial-staging-seed": "npx tsx scripts/seed-editorial-staging.ts",
     "seo:editorial-signature-validation": "npx tsx scripts/generate-editorial-signature-validation.ts",
     "seo:blog-inventory-recovery": "npx tsx scripts/blog-inventory-recovery.ts",
+    "seo:blog-links-audit": "npx tsx scripts/audit-blog-links.ts",
     "seo:editorial-signature-queue": "npx tsx scripts/generate-editorial-signature-queue.ts",
     "seo:preview-fixtures": "npx tsx scripts/export-preview-blog-fixtures.ts",
     "seo:closure-artifacts": "npx tsx scripts/generate-seo-closure-artifacts.ts",

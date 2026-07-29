@@ -413,7 +413,8 @@ describe('FASE 4 §18-20 — Subsistemas intactos', () => {
   it('el blog evita enlaces de ejemplo y atribuciones jurídicas inventadas', () => {
     const adapter = readRoot('lib/blog.ts');
     const article = readRoot('app/(public)/blog/[categoria]/[slug]/page.tsx');
-    expect(adapter).toContain('cleanPlaceholderLinks');
+    expect(adapter).not.toContain('cleanPlaceholderLinks');
+    expect(article).toContain('normalizeBlogLinksForRender');
     expect(adapter).toContain('COVERS_PENDING_LOCAL_REPLACEMENT');
     expect(article).toContain('validSignature &&');
     expect(article).toContain('Revisión jurídica institucional:');

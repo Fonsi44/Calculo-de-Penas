@@ -250,8 +250,8 @@ describe('FASE 2 — Salvaguardas editoriales del blog', () => {
   it('limpia enlaces de ejemplo y no muestra revisores inexistentes', () => {
     const adapter = readRoot('lib/blog.ts');
     const article = readPublic('blog/[categoria]/[slug]/page.tsx');
-    expect(adapter).toContain('cleanPlaceholderLinks');
-    expect(adapter).toContain('ejemplo\\.com|tuabogado\\.com');
+    expect(adapter).not.toContain('cleanPlaceholderLinks');
+    expect(article).toContain('normalizeBlogLinksForRender');
     expect(article).toContain('validSignature &&');
     expect(article).toContain('Revisión jurídica institucional:');
   });
