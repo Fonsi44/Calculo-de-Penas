@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import { blogPosts } from '@/lib/schema';
 import { eq, and, desc, sql } from 'drizzle-orm';
 import { getPreviewBlogFixtures } from '@/lib/preview-blog-fixtures';
+import { editorialSignatureSchemaMode } from '@/lib/editorial-signature';
 
 /**
  * Contrato de lectura del blog público.
@@ -39,6 +40,16 @@ const publicBlogPostSelection = {
   legalReviewNotes: blogPosts.legalReviewNotes,
   lastReviewedAt: blogPosts.lastReviewedAt,
   nextReviewDueAt: blogPosts.nextReviewDueAt,
+  ...(editorialSignatureSchemaMode() === 'MIGRATED_SIGNATURE_MODE'
+    ? {
+        reviewOrigin: blogPosts.reviewOrigin,
+        signatureType: blogPosts.signatureType,
+        signatureName: blogPosts.signatureName,
+        signatureCandidate: blogPosts.signatureCandidate,
+        reviewedContentHash: blogPosts.reviewedContentHash,
+        signatureValid: blogPosts.signatureValid,
+      }
+    : {}),
 } as const;
 
 function isBuildPhase(): boolean {

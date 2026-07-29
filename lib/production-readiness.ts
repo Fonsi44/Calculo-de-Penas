@@ -12,6 +12,11 @@ export type ReadinessBlogRow = {
   reviewed_by?: string | null;
   reviewed_at?: string | Date | null;
   reviewed_content_hash?: string | null;
+  review_origin?: string | null;
+  signature_type?: string | null;
+  signature_name?: string | null;
+  signature_candidate?: string | null;
+  signature_valid?: boolean | null;
   published: boolean | null;
   noindex: boolean | null;
   canonical_url: string | null;
@@ -39,6 +44,11 @@ function articleFromRow(row: ReadinessBlogRow) {
     reviewedBy: row.reviewed_by,
     reviewedAt: row.reviewed_at,
     reviewedContentHash: row.reviewed_content_hash,
+    reviewOrigin: row.review_origin,
+    signatureType: row.signature_type,
+    signatureName: row.signature_name,
+    signatureCandidate: row.signature_candidate,
+    signatureValid: row.signature_valid,
   };
 }
 

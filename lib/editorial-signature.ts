@@ -41,7 +41,16 @@ type EditorialArticle = {
   reviewedBy?: string | null;
   reviewedAt?: string | Date | null;
   reviewedContentHash?: string | null;
+  reviewOrigin?: string | null;
+  signatureType?: string | null;
+  signatureName?: string | null;
+  signatureCandidate?: string | null;
+  signatureValid?: boolean | null;
 };
+
+export type EditorialSignatureSchemaMode =
+  | 'LEGACY_INSTITUTIONAL_MODE'
+  | 'MIGRATED_SIGNATURE_MODE';
 
 const LAWYER_PROFILE_URLS: Record<string, string> = {
   'Danilo Pineda Maradiaga': '/equipo/danilo-pineda-maradiaga',
@@ -53,11 +62,22 @@ export function hashEditorialContent(body: string): string {
   return createHash('sha256').update(body, 'utf8').digest('hex');
 }
 
+export function editorialSignatureSchemaMode(
+  env: Record<string, string | undefined> = process.env,
+): EditorialSignatureSchemaMode {
+  return env.EDITORIAL_SIGNATURE_SCHEMA_READY === 'true'
+    ? 'MIGRATED_SIGNATURE_MODE'
+    : 'LEGACY_INSTITUTIONAL_MODE';
+}
+
 function normalizedStatus(status?: string | null): string {
   return status?.trim().toLowerCase() ?? '';
 }
 
-export function resolveArticleEditorialState(article: EditorialArticle): ArticleEditorialState {
+export function resolveArticleEditorialState(
+  article: EditorialArticle,
+  mode: EditorialSignatureSchemaMode = editorialSignatureSchemaMode(),
+): ArticleEditorialState {
   const currentContentHash = hashEditorialContent(article.body);
   const status = normalizedStatus(article.reviewStatus);
   const author = article.author?.trim() || site.name;
@@ -69,6 +89,43 @@ export function resolveArticleEditorialState(article: EditorialArticle): Article
   if (status === 'outdated' || status === 'needs_update') return unsigned('outdated');
   if (status === 'pending_resignature' || status === 'lawyer_review_pending') {
     return unsigned('pending_resignature');
+  }
+
+  if (mode === 'MIGRATED_SIGNATURE_MODE') {
+    const persistedHash = article.reviewedContentHash?.trim() ?? '';
+    const persistedType = article.signatureType?.trim() ?? '';
+    const persistedName = article.signatureName?.trim() ?? '';
+    const persistedOrigin = article.reviewOrigin?.trim() ?? '';
+    const firmValid =
+      persistedOrigin === 'firm_historical_review'
+      && persistedType === 'firm'
+      && persistedName === 'Pineda y Asociados';
+    const lawyerValid =
+      persistedOrigin === 'individual_lawyer_review'
+      && persistedType === 'lawyer'
+      && CANONICAL_REVIEWERS.includes(persistedName);
+    const valid =
+      article.signatureValid === true
+      && persistedHash.length === 64
+      && persistedHash === currentContentHash
+      && (firmValid || lawyerValid);
+    return {
+      author,
+      publisher: 'Pineda y Asociados',
+      reviewOrigin: lawyerValid ? 'individual_lawyer_review' : 'firm_historical_review',
+      publicationState: lawyerValid ? 'published_lawyer_signed' : 'published_firm_reviewed',
+      signature: firmValid || lawyerValid
+        ? {
+            type: lawyerValid ? 'lawyer' : 'firm',
+            name: persistedName,
+            profileUrl: lawyerValid ? LAWYER_PROFILE_URLS[persistedName] ?? null : '/despacho',
+            signedAt: article.reviewedAt,
+            reviewedContentHash: persistedHash || null,
+          }
+        : null,
+      currentContentHash,
+      signatureValid: valid,
+    };
   }
 
   const individualSigner = article.reviewedBy?.trim();
@@ -128,8 +185,11 @@ export function resolveArticleEditorialState(article: EditorialArticle): Article
   }
 }
 
-export function isEditoriallyIndexable(article: EditorialArticle): boolean {
-  const state = resolveArticleEditorialState(article);
+export function isEditoriallyIndexable(
+  article: EditorialArticle,
+  mode: EditorialSignatureSchemaMode = editorialSignatureSchemaMode(),
+): boolean {
+  const state = resolveArticleEditorialState(article, mode);
   return article.published !== false
     && state.signatureValid
     && (

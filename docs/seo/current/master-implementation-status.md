@@ -4,7 +4,7 @@ Fecha de corte: 2026-07-28
 
 ## Veredicto
 
-`FASE 3 COMPLETADA Y VERIFICADA`. La home es la única URL comercial primaria para Nacaome; la
+`FASE 4 TÉCNICAMENTE COMPLETADA — AUTORIZACIÓN PRODUCTIVA REQUERIDA`. La home es la única URL comercial primaria para Nacaome; la
 landing de oficina tiene intención operativa secundaria y el artículo conserva
 intención informativa. Los 175 artículos están clasificados y las 40 prioridades
 disponen de propuesta individual, cuerpo completo, metadata, respuesta directa,
@@ -27,18 +27,19 @@ sigue bloqueada por la puerta editorial y la revisión jurídica humana.
 - Bing: 6.932 URLs rastreadas y 290 consultas.
 - `seo:doctor`: 21 OK, 0 ERROR, 2 pendientes opcionales.
 
-## Blog
+## Firma editorial y blog
 
 - Registros totales actuales: 175.
 - Publicados actuales: 134.
 - No publicados: 41.
 - Estado histórico de 141: snapshot previo documentado en
   `docs/blog-duplicity-report.md`; no representa la DB actual.
-- `lawyer_verified`: 0.
-- Legacy `reviewed`: 131; no se equipara a revisión jurídica.
-- Autor genérico o vacío: 175.
-- Por contrato de seguridad editorial, ninguno es indexable/sitemap hasta una
-  revisión jurídica humana real y una migración editorial autorizada.
+- 134 publicados con revisión institucional histórica confirmada por el despacho.
+- 134 hashes persistidos y coincidentes en Neon staging aislado.
+- 134 firmas institucionales válidas; 0 firmas individuales activadas.
+- 134 artículos indexables antes y después; 0 retiradas.
+- 40 propuestas nuevas separadas en `PENDING_RESIGNATURE`.
+- Release A está preparado; Release B permanece bloqueado por firma.
 
 ## Infraestructura conservada y corrección editorial de Fase 3
 
@@ -57,17 +58,15 @@ sigue bloqueada por la puerta editorial y la revisión jurídica humana.
 - Diez artículos representativos —dos por lote— se cargan únicamente en Preview.
   Mantienen `lawyer_review_pending`, `noindex` y no atribuyen `reviewedBy`.
 
-## Bloqueos posteriores a la Fase 3
+## Bloqueos posteriores a la Fase 4
 
-- Revisión jurídica humana específica para convertir artículos concretos a
-  `lawyer_verified`.
-- Autorización productiva para escrituras de DB, redirects, deployment y merge.
+- Autorización productiva agrupada para 0059, modo migrado, merge y Release A.
+- Confirmación futura por allowlist para cualquier firma individual.
 - La DB exclusiva de Vercel Preview no contiene artículos publicados. El
   frontend ya no falla si faltan columnas operativas de revisión IA: `/blog`
   responde 200 sin resultados y las rutas de posts ausentes responden 404.
-- La Fase 4 debe validar los claims con los abogados, resolver fuentes ambiguas,
-  autorizar patches concretos y decidir el cutover. La Fase 3 no atribuye
-  revisiones jurídicas inexistentes.
+- Las 40 propuestas no forman parte de Release A y requieren nueva firma antes
+  de cualquier publicación.
 
 ## Verificación de Preview
 

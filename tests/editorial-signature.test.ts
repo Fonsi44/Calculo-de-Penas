@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   hashEditorialContent,
   isEditoriallyIndexable,
+  editorialSignatureSchemaMode,
   resolveArticleEditorialState,
 } from '@/lib/editorial-signature';
 import { blogPostSchema } from '@/lib/schemas/blog';
@@ -14,6 +15,13 @@ const base = {
 };
 
 describe('firma editorial vinculada a versión', () => {
+  it('separa explícitamente modo legacy y modo migrado', () => {
+    expect(editorialSignatureSchemaMode({ EDITORIAL_SIGNATURE_SCHEMA_READY: 'false' }))
+      .toBe('LEGACY_INSTITUTIONAL_MODE');
+    expect(editorialSignatureSchemaMode({ EDITORIAL_SIGNATURE_SCHEMA_READY: 'true' }))
+      .toBe('MIGRATED_SIGNATURE_MODE');
+  });
+
   it('trata el artículo histórico publicado como revisado institucionalmente', () => {
     const state = resolveArticleEditorialState({ ...base, reviewStatus: 'pending' });
     expect(state.publicationState).toBe('published_firm_reviewed');
@@ -57,6 +65,38 @@ describe('firma editorial vinculada a versión', () => {
       reviewedBy: 'Danilo Pineda Maradiaga',
       reviewedContentHash: hashEditorialContent('<p>Versión anterior.</p>'),
     })).toBe(false);
+  });
+
+  it('en modo migrado rechaza firma sin hash persistido aunque el artículo esté publicado', () => {
+    const state = resolveArticleEditorialState(
+      {
+        ...base,
+        reviewStatus: 'published_firm_reviewed',
+        reviewOrigin: 'firm_historical_review',
+        signatureType: 'firm',
+        signatureName: 'Pineda y Asociados',
+        signatureValid: true,
+      },
+      'MIGRATED_SIGNATURE_MODE',
+    );
+    expect(state.signatureValid).toBe(false);
+  });
+
+  it('en modo migrado exige flag, contrato canónico y hash coincidente', () => {
+    const reviewedContentHash = hashEditorialContent(base.body);
+    const valid = {
+      ...base,
+      reviewStatus: 'published_firm_reviewed',
+      reviewOrigin: 'firm_historical_review',
+      signatureType: 'firm',
+      signatureName: 'Pineda y Asociados',
+      signatureValid: true,
+      reviewedContentHash,
+    };
+    expect(isEditoriallyIndexable(valid, 'MIGRATED_SIGNATURE_MODE')).toBe(true);
+    expect(isEditoriallyIndexable({ ...valid, signatureValid: false }, 'MIGRATED_SIGNATURE_MODE')).toBe(false);
+    expect(isEditoriallyIndexable({ ...valid, body: '<p>Drift.</p>' }, 'MIGRATED_SIGNATURE_MODE')).toBe(false);
+    expect(isEditoriallyIndexable({ ...valid, signatureName: 'No canónico' }, 'MIGRATED_SIGNATURE_MODE')).toBe(false);
   });
 
   it('no muestra un abogado individual sin confirmación verificable', () => {

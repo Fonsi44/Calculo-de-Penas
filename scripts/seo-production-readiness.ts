@@ -1,9 +1,14 @@
 import 'dotenv/config';
 import { existsSync } from 'node:fs';
+import { readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { neon } from '@neondatabase/serverless';
 import cutover from '../data/seo/editorial-cutover.json';
 import { resolveEditorialIndexingMode } from '../lib/editorial-cutover';
+import {
+  editorialSignatureSchemaMode,
+  hashEditorialContent,
+} from '../lib/editorial-signature';
 import {
   calculateReadiness,
   type ReadinessBlogRow,
@@ -35,11 +40,19 @@ async function main() {
   }
 
   const sql = neon(process.env.DATABASE_URL);
-  const rows = await sql`
-    SELECT slug, category, author, body, review_status, reviewed_by, reviewed_at,
-           published, noindex, canonical_url
-    FROM blog_posts
-  ` as ReadinessBlogRow[];
+  const schemaMode = editorialSignatureSchemaMode();
+  const rows = schemaMode === 'MIGRATED_SIGNATURE_MODE'
+    ? await sql`
+        SELECT slug, category, author, body, review_status, reviewed_by, reviewed_at,
+               review_origin, signature_type, signature_name, signature_candidate,
+               reviewed_content_hash, signature_valid, published, noindex, canonical_url
+        FROM blog_posts
+      ` as ReadinessBlogRow[]
+    : await sql`
+        SELECT slug, category, author, body, review_status, reviewed_by, reviewed_at,
+               published, noindex, canonical_url
+        FROM blog_posts
+      ` as ReadinessBlogRow[];
   const currentBlogUrls = await countCurrentProductionBlogUrls();
   const { summary, failures } = calculateReadiness(
     rows,
@@ -61,7 +74,33 @@ async function main() {
     failures.push('Production no tiene autorización explícita de cutover.');
   }
 
-  console.log(JSON.stringify(summary, null, 2));
+  const pendingResignatures = readdirSync(resolve('data/seo/article-editorial-proposals'))
+    .reduce((total, area) => total + readdirSync(resolve('data/seo/article-editorial-proposals', area))
+      .filter((file) => file.endsWith('.json')).length, 0);
+  const migrationReady = existsSync(resolve('drizzle/migrations/0059_blog_editorial_signatures.sql'));
+  const rollbackReady = existsSync(resolve('scripts/rollback-editorial-signatures.ts'));
+  const result = {
+    safeReleaseReady: failures.length === 0,
+    contentProposalReleaseReady: false,
+    migrationReady,
+    schemaMode,
+    institutionalSignatures: summary.firm_reviewed,
+    individualSignatures: summary.lawyer_signed,
+    pendingResignatures,
+    hashMismatches: schemaMode === 'MIGRATED_SIGNATURE_MODE'
+      ? rows.filter((row) => (
+        row.signature_valid !== true
+        || row.reviewed_content_hash !== hashEditorialContent(row.body)
+      )).length
+      : 0,
+    urlsBefore: summary.currently_indexable,
+    urlsAfter: summary.indexable_after_cutover,
+    urlsRemoved: summary.urls_removed,
+    sitemapBefore: summary.currently_indexable,
+    sitemapAfter: summary.indexable_after_cutover,
+    rollbackReady,
+  };
+  console.log(JSON.stringify(result, null, 2));
   console.log(`mode: ${resolveEditorialIndexingMode(process.env)}`);
   console.log(`gate: ${failures.length === 0 ? 'READY' : 'BLOCKED'}`);
   for (const failure of failures) console.log(`- ${failure}`);

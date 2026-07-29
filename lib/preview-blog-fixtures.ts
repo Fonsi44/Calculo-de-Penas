@@ -40,6 +40,14 @@ export function getPreviewBlogFixtures() {
     reviewStatus: fixture.review_status,
     reviewedBy: fixture.reviewed_by,
     reviewedAt: fixture.reviewed_at ? new Date(fixture.reviewed_at) : null,
+    reviewOrigin: fixture.review_status === 'lawyer_review_pending'
+      ? 'pending_resignature'
+      : 'firm_historical_review',
+    signatureType: fixture.review_status === 'lawyer_review_pending' ? null : 'firm',
+    signatureName: fixture.review_status === 'lawyer_review_pending' ? null : 'Pineda y Asociados',
+    signatureCandidate: null,
+    reviewedContentHash: null,
+    signatureValid: false,
     legalReviewNotes: fixture.fixture_only
       ? 'Fixture público sanitizado; no equivale a revisión jurídica.'
       : null,

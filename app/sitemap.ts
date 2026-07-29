@@ -5,7 +5,10 @@ import { blogPosts } from '@/lib/schema';
 import { eq, and, desc } from 'drizzle-orm';
 import { blogCategories } from '@/data/blog/categories';
 import canonicalPathsData from '@/data/seo/canonical-paths.json';
-import { isEditoriallyIndexable } from '@/lib/editorial-signature';
+import {
+  editorialSignatureSchemaMode,
+  isEditoriallyIndexable,
+} from '@/lib/editorial-signature';
 
 function daysAgo(days: number): Date {
   const d = new Date();
@@ -150,6 +153,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       reviewStatus: blogPosts.reviewStatus,
       reviewedBy: blogPosts.reviewedBy,
       reviewedAt: blogPosts.reviewedAt,
+      ...(editorialSignatureSchemaMode() === 'MIGRATED_SIGNATURE_MODE'
+        ? {
+            reviewOrigin: blogPosts.reviewOrigin,
+            signatureType: blogPosts.signatureType,
+            signatureName: blogPosts.signatureName,
+            signatureCandidate: blogPosts.signatureCandidate,
+            reviewedContentHash: blogPosts.reviewedContentHash,
+            signatureValid: blogPosts.signatureValid,
+          }
+        : {}),
     })
     .from(blogPosts)
     .where(and(eq(blogPosts.published, true), eq(blogPosts.noindex, false)))

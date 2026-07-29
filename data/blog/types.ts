@@ -29,6 +29,11 @@ export type Post = {
   reviewedBy?: string;
   reviewedAt?: string;
   reviewedContentHash?: string;
+  reviewOrigin?: string;
+  signatureType?: string;
+  signatureName?: string;
+  signatureCandidate?: string;
+  signatureValid?: boolean;
   legalReviewNotes?: string;
 
   // AI document review (Fase 3B)

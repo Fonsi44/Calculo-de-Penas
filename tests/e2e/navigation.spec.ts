@@ -36,6 +36,10 @@ test.describe('@navigation Navegación web pública', () => {
     // Buscar primer post del blog (puede variar, verificamos que la página no de 404)
     const res = await page.goto('/blog');
     expect(res?.status()).toBe(200);
+    const rejectOptionalCookies = page.getByRole('button', { name: 'Rechazar opcionales' });
+    if (await rejectOptionalCookies.isVisible()) {
+      await rejectOptionalCookies.click();
+    }
     // Hacer clic en el primer enlace de post. Excluir paths especiales del
     // blog (feed.xml, categorías) que no son posts individuales.
     const firstPost = page.locator('a[href^="/blog/"]:not([href$="/feed.xml"]):not([href*="/category/"])').first();
