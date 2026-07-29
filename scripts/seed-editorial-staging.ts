@@ -1,6 +1,42 @@
 import 'dotenv/config';
 import { neon } from '@neondatabase/serverless';
 
+const HISTORICAL_REDIRECT_SLUGS = [
+  'abogados-en-amapala-valle',
+  'abogados-en-choluteca',
+  'abogados-en-marcovia-choluteca',
+  'abogados-en-nacaome',
+  'abogados-en-pespire-choluteca',
+  'abogados-en-san-lorenzo',
+  'abogados-en-san-marcos-de-colon-choluteca',
+] as const;
+const RESTORED_HISTORICAL_ARTICLE_SLUGS = new Set(['abogados-en-nacaome']);
+
+type PublicBlogRow = {
+  slug: string;
+  title: string;
+  description: string;
+  body: string;
+  published_at: Date | string;
+  updated_at: Date | string | null;
+  category: string;
+  tags: string[] | null;
+  author: string | null;
+  reading_time: string | null;
+  cover_image: string | null;
+  featured: boolean | null;
+  published: boolean;
+  meta_title: string | null;
+  meta_description: string | null;
+  og_image: string | null;
+  noindex: boolean | null;
+  canonical_url: string | null;
+  review_status: string | null;
+  reviewed_by: string | null;
+  reviewed_at: Date | string | null;
+  legal_review_notes: string | null;
+};
+
 async function main() {
   const sourceUrl = process.env.SOURCE_DATABASE_URL ?? '';
   const targetUrl = process.env.DATABASE_URL ?? '';
@@ -24,11 +60,18 @@ async function main() {
            review_status, reviewed_by, reviewed_at, legal_review_notes
     FROM blog_posts
     WHERE published = true
+       OR slug = ANY(${HISTORICAL_REDIRECT_SLUGS})
     ORDER BY slug
-  `;
-  if (rows.length !== 134) throw new Error(`Inventario público inesperado: ${rows.length}; esperado 134.`);
+  ` as PublicBlogRow[];
+  if (rows.length !== 141) {
+    throw new Error(`Inventario histórico inesperado: ${rows.length}; esperado 141.`);
+  }
 
-  const results = await target.transaction((tx) => rows.map((row) => tx`
+  const recoveredRows = rows.map((row) => ({
+    ...row,
+    published: row.published === true || RESTORED_HISTORICAL_ARTICLE_SLUGS.has(String(row.slug)),
+  }));
+  const results = await target.transaction((tx) => recoveredRows.map((row) => tx`
     INSERT INTO blog_posts (
       slug, title, description, body, published_at, updated_at, category,
       tags, author, reading_time, cover_image, featured, published,
@@ -68,11 +111,17 @@ async function main() {
     RETURNING slug
   `), { isolationLevel: 'Serializable' });
   const affected = results.reduce((total, result) => total + result.length, 0);
-  if (affected !== 134) throw new Error(`Carga incompleta: ${affected}/134.`);
+  if (affected !== 141) throw new Error(`Carga incompleta: ${affected}/141.`);
   console.log(JSON.stringify({
-    mode: 'public-blog-to-staging',
+    mode: 'historical-public-blog-to-staging',
     targetBranchVerified: true,
     sourceRows: rows.length,
+    productionPublishedArticles: rows.filter((row) => row.published === true).length,
+    restoredHistoricalArticles: recoveredRows.filter((row) => (
+      row.published === true && rows.find((source) => source.slug === row.slug)?.published !== true
+    )).length,
+    previewPublishedArticles: recoveredRows.filter((row) => row.published === true).length,
+    historicalRedirects: recoveredRows.filter((row) => row.published !== true).length,
     affected,
     privateTablesCopied: 0,
   }, null, 2));

@@ -1,15 +1,14 @@
 # Estado de implementación SEO/GEO
 
-Fecha de corte: 2026-07-28
+Fecha de corte: 2026-07-29
 
 ## Veredicto
 
-`FASE 4 TÉCNICAMENTE COMPLETADA — AUTORIZACIÓN PRODUCTIVA REQUERIDA`. La home es la única URL comercial primaria para Nacaome; la
-landing de oficina tiene intención operativa secundaria y el artículo conserva
-intención informativa. Los 175 artículos están clasificados y las 40 prioridades
-disponen de propuesta individual, cuerpo completo, metadata, respuesta directa,
-claim, fuente, pregunta jurídica, patch y rollback. La publicación en Production
-sigue bloqueada por la puerta editorial y la revisión jurídica humana.
+`INCIDENTE DE INVENTARIO EN RECUPERACIÓN — PRODUCCIÓN BLOQUEADA`. La Preview
+canónica había sustituido silenciosamente el inventario histórico por 15
+fixtures. La causa está corregida localmente y la base staging aislada contiene
+141/141 fuentes históricas, pero el incidente no se cerrará hasta validar una
+nueva Preview desplegada. La publicación en Production continúa bloqueada.
 
 ## Base y trazabilidad
 
@@ -32,12 +31,17 @@ sigue bloqueada por la puerta editorial y la revisión jurídica humana.
 - Registros totales actuales: 175.
 - Publicados actuales: 134.
 - No publicados: 41.
-- Estado histórico de 141: snapshot previo documentado en
-  `docs/blog-duplicity-report.md`; no representa la DB actual.
+- Baseline histórico reconciliado: 141 rutas, compuesto por 134 artículos
+  actualmente publicados, 1 artículo informativo de Nacaome restaurado en
+  Preview y 6 rutas locales consolidadas mediante redirect.
+- Los siete cuerpos que explican la diferencia continúan conservados en
+  Production y en la base staging aislada; no se han borrado.
 - 134 publicados con revisión institucional histórica confirmada por el despacho.
-- 134 hashes persistidos y coincidentes en Neon staging aislado.
-- 134 firmas institucionales válidas; 0 firmas individuales activadas.
-- 134 artículos indexables antes y después; 0 retiradas.
+- 135 hashes persistidos y coincidentes en Neon staging aislado, incluyendo el
+  artículo informativo de Nacaome recuperado.
+- 135 firmas institucionales válidas en staging; 0 firmas individuales activadas.
+- Production permanece con 134 artículos indexables; Preview recuperada simula
+  135 artículos y 6 redirects sin retirar ninguna ruta histórica.
 - 40 propuestas nuevas separadas en `PENDING_RESIGNATURE`.
 - Release A está preparado; Release B permanece bloqueado por firma.
 
@@ -55,23 +59,42 @@ sigue bloqueada por la puerta editorial y la revisión jurídica humana.
   Production está explícitamente prohibida.
 - El gate `npm run seo:phase3-quality` valida 40 propuestas, cinco lotes de ocho
   y cero duplicaciones o sustituciones semánticas por encima del umbral.
-- Diez artículos representativos —dos por lote— se cargan únicamente en Preview.
-  Mantienen `lawyer_review_pending`, `noindex` y no atribuyen `reviewedBy`.
+- Las diez propuestas representativas ya no se superponen sobre las versiones
+  históricas de la Preview canónica. Permanecen separadas en los artefactos
+  editoriales con estado `PENDING_RESIGNATURE`.
+
+## Incidente de inventario del blog
+
+- Causa raíz 1: `getPublishedPosts` y `getPostBySlug` sustituían una consulta
+  vacía por `data/seo/preview-blog-fixtures.json`.
+- Causa raíz 2: ese archivo contenía 15 entradas: 4 copias sanitizadas, 10
+  propuestas pendientes y 1 fixture sintético.
+- Causa raíz 3: `lib/blog.ts` superponía 10 cuerpos propuestos sobre cuerpos
+  históricos en la lectura pública.
+- Causa raíz 4: la búsqueda del hub serializaba solo 80 de 134 metadatos.
+- Causa raíz 5: faltaba el redirect de la ruta histórica
+  `/blog/practica-legal/abogados-en-nacaome`.
+- Corrección: origen explícito `database`, `full-public-snapshot` o
+  `limited-test-fixtures`; la Preview canónica exige una fuente completa y
+  falla si recibe menos de 134 publicados.
+- Estado staging: 141 filas históricas, 135 publicadas, 6 redirects, 0 cuerpos
+  distintos y 0 fixtures sintéticos.
+- Evidencia: `blog-recovery-inventory.csv`, `blog-recovery-diff.csv` y
+  `npm run seo:blog-inventory-recovery`.
 
 ## Bloqueos posteriores a la Fase 4
 
 - Autorización productiva agrupada para 0059, modo migrado, merge y Release A.
 - Confirmación futura por allowlist para cualquier firma individual.
-- La DB exclusiva de Vercel Preview no contiene artículos publicados. El
-  frontend ya no falla si faltan columnas operativas de revisión IA: `/blog`
-  responde 200 sin resultados y las rutas de posts ausentes responden 404.
+- La Preview principal debe validarse contra la rama Neon aislada con 141
+  fuentes históricas; no puede degradarse a fixtures limitados.
 - Las 40 propuestas no forman parte de Release A y requieren nueva firma antes
   de cualquier publicación.
 
 ## Verificación de Preview
 
-- Deployment `dpl_J9JbPDDwo4k7Lxo9WmFszmMMyqhU`: `Ready`.
-- Portada, despacho, servicios y tres perfiles: respuesta correcta.
-- Perfil de Danilo: un H1 y tres bloques JSON-LD observados.
-- Checks del Draft PR #25: CI completa, Lighthouse, GitGuardian y Vercel en
-  verde.
+- La deployment afectada permanece como evidencia del incidente y mostraba 15
+  fixtures.
+- PR #25 restaurada a Draft.
+- Nueva Preview de recuperación: pendiente de commit, push y validación de las
+  141 rutas.

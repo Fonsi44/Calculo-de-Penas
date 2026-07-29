@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { Search, Calendar, Clock, X, ArrowRight } from 'lucide-react';
-import { getCategoryName, formatDate } from '@/lib/blog';
+import { getCategoryName, formatDate } from '@/lib/blog-format';
 import { trackBlogSearch } from '@/lib/analytics';
 
 const PLACEHOLDER_EXAMPLES = [

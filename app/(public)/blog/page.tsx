@@ -120,9 +120,10 @@ export default async function BlogHubPage(props: Props) {
   // Derivación para la navegación por categorías.
   const categoryCounts = deriveCategoryCounts(allPosts);
 
-  // Payload ligero (sin body) para el explorador cliente.
-  // Se limita a 80 entradas para evitar serializar el corpus completo en HTML.
-  const explorerPosts = monthFiltered.slice(0, 80).map(toCardData);
+  // Payload ligero (sin body) para el explorador cliente. Debe incluir todo el
+  // inventario para que la búsqueda y los filtros no pierdan artículos que
+  // quedan fuera de la primera página.
+  const explorerPosts = monthFiltered.map(toCardData);
   const explorerPagePosts = pagePosts.map(toCardData);
 
   const buildPageUrl = (p: number) => {
@@ -170,6 +171,16 @@ export default async function BlogHubPage(props: Props) {
                 </h2>
                 <RssButton />
               </div>
+
+              <p
+                className="text-sm text-text-secondary"
+                data-blog-inventory-summary
+              >
+                {monthFiltered.length} artículos disponibles
+                {' · '}Página {page} de {totalPages}
+                {' · '}{featured.length + pagePosts.length} visibles en esta página
+                {featured.length > 0 ? ` (${featured.length} destacados)` : ''}
+              </p>
 
               <BlogExplorer
                 posts={explorerPosts}

@@ -1,7 +1,11 @@
 import { db } from '@/lib/db';
 import { blogPosts } from '@/lib/schema';
 import { eq, and, desc, sql } from 'drizzle-orm';
-import { getPreviewBlogFixtures } from '@/lib/preview-blog-fixtures';
+import {
+  getFullPublicBlogSnapshot,
+  getLimitedTestBlogFixtures,
+  resolvePreviewBlogDataMode,
+} from '@/lib/preview-blog-fixtures';
 import { editorialSignatureSchemaMode } from '@/lib/editorial-signature';
 
 /**
@@ -83,6 +87,35 @@ function isDbReachable(): boolean {
   );
 }
 
+function filterSnapshotPosts(
+  posts: ReturnType<typeof getLimitedTestBlogFixtures>,
+  opts?: { limit?: number; category?: string; featured?: boolean },
+) {
+  let filtered = posts;
+  if (opts?.category) filtered = filtered.filter((post) => post.category === opts.category);
+  if (opts?.featured) filtered = filtered.filter((post) => post.featured);
+  return opts?.limit ? filtered.slice(0, opts.limit) : filtered;
+}
+
+function assertCanonicalPreviewInventory(
+  count: number,
+  opts?: { limit?: number; category?: string; featured?: boolean },
+): void {
+  if (opts?.limit || opts?.category || opts?.featured) return;
+  const environment = (process.env.VERCEL_ENV ?? process.env.APP_ENV ?? '').toLowerCase();
+  if (environment !== 'preview' && environment !== 'staging') return;
+  const expected = Number.parseInt(process.env.SEO_PREVIEW_BLOG_EXPECTED_MIN ?? '135', 10);
+  if (!Number.isFinite(expected) || expected < 1) {
+    throw new Error('[blog-source] SEO_PREVIEW_BLOG_EXPECTED_MIN debe ser un entero positivo.');
+  }
+  if (count < expected) {
+    throw new Error(
+      `[blog-source] Inventario Preview truncado: ${count}/${expected}. `
+      + 'No se permite fallback silencioso.',
+    );
+  }
+}
+
 /**
  * Capa de acceso a `blog_posts`.
  *
@@ -91,6 +124,15 @@ function isDbReachable(): boolean {
  * capturar el error y mostrar una página de error explícita al usuario (app/error.tsx).
  */
 export async function getPublishedPosts(opts?: { limit?: number; category?: string; featured?: boolean }) {
+  const mode = resolvePreviewBlogDataMode();
+  if (mode === 'limited-test-fixtures') {
+    return filterSnapshotPosts(getLimitedTestBlogFixtures(), opts);
+  }
+  if (mode === 'full-public-snapshot') {
+    const rows = filterSnapshotPosts(getFullPublicBlogSnapshot(), opts);
+    assertCanonicalPreviewInventory(rows.length, opts);
+    return rows;
+  }
   if (!isDbReachable() || process.env.TEST_SIMULATE_DB_DOWN === 'true') {
     if (shouldThrowOnDbError()) {
       throw new Error('[blog-db] DATABASE_URL no configurada en runtime.');
@@ -109,7 +151,8 @@ export async function getPublishedPosts(opts?: { limit?: number; category?: stri
     if (opts?.limit) query.limit(opts.limit);
 
     const rows = await query;
-    return rows.length > 0 ? rows : getPreviewBlogFixtures();
+    assertCanonicalPreviewInventory(rows.length, opts);
+    return rows;
   } catch (err) {
     console.error('[blog-db] getPublishedPosts falló.', err);
     if (shouldThrowOnDbError()) {
@@ -120,6 +163,13 @@ export async function getPublishedPosts(opts?: { limit?: number; category?: stri
 }
 
 export async function getPostBySlug(slug: string) {
+  const mode = resolvePreviewBlogDataMode();
+  if (mode === 'limited-test-fixtures') {
+    return getLimitedTestBlogFixtures().find((fixture) => fixture.slug === slug) ?? null;
+  }
+  if (mode === 'full-public-snapshot') {
+    return getFullPublicBlogSnapshot().find((fixture) => fixture.slug === slug) ?? null;
+  }
   if (!isDbReachable() || process.env.TEST_SIMULATE_DB_DOWN === 'true') {
     if (shouldThrowOnDbError()) {
       throw new Error('[blog-db] DATABASE_URL no configurada en runtime.');
@@ -129,8 +179,7 @@ export async function getPostBySlug(slug: string) {
   try {
     const [post] = await db.select(publicBlogPostSelection).from(blogPosts)
       .where(and(eq(blogPosts.slug, slug), eq(blogPosts.published, true)));
-    if (post) return post;
-    return getPreviewBlogFixtures().find((fixture) => fixture.slug === slug) ?? null;
+    return post ?? null;
   } catch (err) {
     console.error('[blog-db] getPostBySlug falló.', err);
     if (shouldThrowOnDbError()) {
@@ -141,6 +190,13 @@ export async function getPostBySlug(slug: string) {
 }
 
 export async function getBlogCategories() {
+  const mode = resolvePreviewBlogDataMode();
+  if (mode === 'limited-test-fixtures') {
+    return [...new Set(getLimitedTestBlogFixtures().map((fixture) => fixture.category))].sort();
+  }
+  if (mode === 'full-public-snapshot') {
+    return [...new Set(getFullPublicBlogSnapshot().map((fixture) => fixture.category))].sort();
+  }
   if (!isDbReachable() || process.env.TEST_SIMULATE_DB_DOWN === 'true') {
     if (shouldThrowOnDbError()) {
       throw new Error('[blog-db] DATABASE_URL no configurada en runtime.');
@@ -163,6 +219,17 @@ export async function getBlogCategories() {
 }
 
 export async function getRelatedPosts(slug: string, category: string, limit = 3) {
+  const mode = resolvePreviewBlogDataMode();
+  if (mode === 'limited-test-fixtures') {
+    return getLimitedTestBlogFixtures()
+      .filter((fixture) => fixture.slug !== slug && fixture.category === category)
+      .slice(0, limit);
+  }
+  if (mode === 'full-public-snapshot') {
+    return getFullPublicBlogSnapshot()
+      .filter((fixture) => fixture.slug !== slug && fixture.category === category)
+      .slice(0, limit);
+  }
   if (!isDbReachable() || process.env.TEST_SIMULATE_DB_DOWN === 'true') {
     if (shouldThrowOnDbError()) {
       throw new Error('[blog-db] DATABASE_URL no configurada en runtime.');

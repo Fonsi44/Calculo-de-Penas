@@ -118,6 +118,11 @@ export default async function BlogCategoryPage(props: Props) {
         <div className="mb-6">
           <CategoryFilter />
         </div>
+        <p className="mb-4 text-sm text-text-secondary" data-blog-category-inventory-summary>
+          {categoryPosts.length} artículos en {cat.nombre.toLowerCase()}
+          {' · '}Página {page} de {totalPages}
+          {' · '}{posts.length} visibles en esta página
+        </p>
         <BlogSearch posts={categoryPosts} />
         {posts.length === 0 ? (
           <div className="text-center py-12">

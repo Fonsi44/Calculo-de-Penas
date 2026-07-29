@@ -1,8 +1,9 @@
 import type { Post } from '@/data/blog/types';
-import { blogCategories } from '@/data/blog/categories';
-import { formatHondurasDate } from '@/lib/datetime';
 import { getPublishedPosts, getPostBySlug as getPostBySlugDb, getBlogCategories } from '@/lib/blog-db';
-import phase3Editorial from '@/data/seo/phase3-editorial-overrides.json';
+export {
+  formatDate,
+  getCategoryName,
+} from '@/lib/blog-format';
 
 const EDITORIAL_OVERRIDES: Record<string, { title: string; description: string }> = {
   'allanamiento-ilegal-violacion-domicilio-honduras': {
@@ -109,41 +110,6 @@ function cleanPlaceholderLinks(html: string): string {
   );
 }
 
-type Phase3Override = {
-  title: string;
-  metaDescription: string;
-  directAnswer: string;
-  body?: string;
-  author: string | null;
-  sources: Array<{ title: string; url: string; sections: string }>;
-  related: Array<{ title: string; href: string }>;
-};
-
-function applyDocumentaryReview(html: string, editorial?: Phase3Override): string {
-  if (!editorial || html.includes('data-phase3-documentary-review')) return html;
-  const sources = editorial.sources.map((source) =>
-    `<li><a href="${source.url}" rel="noopener noreferrer">${source.title}</a> — ${source.sections}</li>`,
-  ).join('');
-  const related = editorial.related.map((item) =>
-    `<li><a href="${item.href}">${item.title}</a></li>`,
-  ).join('');
-  return [
-    html.includes('data-phase3-article-specific') ? '' : [
-      '<section data-phase3-documentary-review="true">',
-      '<h2>Respuesta breve</h2>',
-      `<p>${editorial.directAnswer}</p>`,
-      '</section>',
-    ].join(''),
-    html,
-    '<section data-phase3-documentary-review="true">',
-    '<h2>Fuentes jurídicas consultadas</h2>',
-    `<ul>${sources}</ul>`,
-    '<h2>Artículos relacionados</h2>',
-    `<ul>${related}</ul>`,
-    '</section>',
-  ].join('');
-}
-
 function polishedExcerpt(value: string): string {
   const text = value.trim();
   if (!text || /[.!?…:]$/.test(text)) return text;
@@ -207,26 +173,6 @@ export async function getPostsByTag(tag: string): Promise<Post[]> {
   return posts.filter(p => (p.tags ?? []).includes(tag)).map(mapToPost);
 }
 
-export function getCategoryName(slug: string): string | undefined {
-  return blogCategories.find((c) => c.slug === slug)?.nombre;
-}
-
-export function getCategoryDescription(slug: string): string | undefined {
-  return blogCategories.find((c) => c.slug === slug)?.descripcion;
-}
-
-export function formatDate(dateString: string): string {
-  return formatHondurasDate(dateString, {
-    year: 'numeric', month: 'long', day: 'numeric',
-  });
-}
-
-export function formatDateShort(dateString: string): string {
-  return formatHondurasDate(dateString, {
-    year: 'numeric', month: 'short', day: 'numeric',
-  });
-}
-
 export function getPostsByPage(posts: Post[], page: number, perPage: number): Post[] {
   const start = (page - 1) * perPage;
   return posts.slice(start, start + perPage);
@@ -240,24 +186,18 @@ type PublicBlogPost = Awaited<ReturnType<typeof getPublishedPosts>>[number];
 
 function mapToPost(p: PublicBlogPost): Post {
   const editorial = EDITORIAL_OVERRIDES[p.slug];
-  const documentary = phase3Editorial.status === 'INVALID_GENERIC_SCAFFOLD_DO_NOT_APPLY'
-    ? undefined
-    : phase3Editorial.overrides[p.slug as keyof typeof phase3Editorial.overrides] as Phase3Override | undefined;
-  const title = documentary?.title ?? editorial?.title ?? polishedTitle(p.title);
-  const description = documentary?.metaDescription ?? editorial?.description ?? polishedExcerpt(p.description);
+  const title = editorial?.title ?? polishedTitle(p.title);
+  const description = editorial?.description ?? polishedExcerpt(p.description);
   return {
-    slug: p.slug, title, description, body: applyDocumentaryReview(
-      cleanPlaceholderLinks(documentary?.body ?? p.body),
-      documentary,
-    ),
+    slug: p.slug, title, description, body: cleanPlaceholderLinks(p.body),
     publishedAt: p.publishedAt.toISOString(), category: p.category,
-    tags: p.tags ?? [], author: documentary?.author ?? p.author ?? '', readingTime: p.readingTime ?? '',
+    tags: p.tags ?? [], author: p.author ?? '', readingTime: p.readingTime ?? '',
     coverImage: COVERS_PENDING_LOCAL_REPLACEMENT.has(p.slug) ? undefined : p.coverImage ?? undefined,
     featured: p.featured ?? false,
     updatedAt: p.updatedAt?.toISOString(),
 
-    metaTitle: documentary?.title ?? editorial?.title ?? p.metaTitle ?? undefined,
-    metaDescription: documentary?.metaDescription ?? editorial?.description ?? p.metaDescription ?? undefined,
+    metaTitle: editorial?.title ?? p.metaTitle ?? undefined,
+    metaDescription: editorial?.description ?? p.metaDescription ?? undefined,
     ogImage: p.ogImage ?? undefined,
     noindex: p.noindex ?? undefined,
     canonicalUrl: p.slug === 'abogados-en-nacaome'
