@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { site } from '@/lib/site';
 import { Container } from '@/components/marketing/section';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
@@ -21,6 +21,7 @@ import {
   deriveCategoryCounts,
   filterByMonth,
 } from '@/lib/blog-hub';
+import { resolveBlogPagination } from '@/lib/blog-pagination';
 
 export const revalidate = 3600;
 
@@ -36,41 +37,45 @@ function formatMonthLabel(value: string): string {
 
 const ITEMS_PER_PAGE = 12;
 
-type Props = { searchParams?: Promise<{ tag?: string; page?: string; month?: string }> };
+type BlogSearchParams = {
+  tag?: string | string[];
+  page?: string | string[];
+  month?: string | string[];
+};
+
+type Props = { searchParams?: Promise<BlogSearchParams> };
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const params = await searchParams;
-  const page = parseInt(params?.page ?? '1', 10) || 1;
-  const tagFilter = params?.tag;
-  const monthFilter = params?.month;
-  const hasFilter = !!(tagFilter || monthFilter);
-  const isPaginated = page > 1;
-  // Páginas paginadas (page>1 sin filtros): canonical a page 1 y noindex.
-  // Páginas con filtros (tag/month): canonical autocontenido y noindex.
-  const canonicalPath = hasFilter
-    ? `/blog${tagFilter ? `?tag=${encodeURIComponent(tagFilter)}` : ''}${monthFilter ? `${tagFilter ? '&' : '?'}month=${monthFilter}` : ''}`
-    : '/blog';
+  const contract = resolveBlogPagination({
+    basePath: '/blog',
+    rawPage: params?.page,
+    tag: params?.tag,
+    month: params?.month,
+  });
+  const { page, canonicalPath, isPaginated } = contract;
+  const title = `Blog Jurídico de Abogados en Honduras${isPaginated ? ` (Página ${page})` : ''}`;
+  const description = `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.${isPaginated ? ` Página ${page}.` : ''}`;
   return {
     // Absolute para controlar la longitud total del title (SEO).
-    title: { absolute: `Blog Jurídico de Abogados en Honduras${isPaginated ? ` (Página ${page})` : ''}` },
-    description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.${isPaginated ? ` Página ${page}.` : ''}`,
+    title: { absolute: title },
+    description,
     alternates: { canonical: canonicalPath },
     keywords: ['blog jurídico Honduras', 'artículos legales Honduras', 'derecho penal blog', 'abogados Honduras blog', 'derecho familia artículos', 'noticias legales Honduras', 'guías legales Honduras'],
-    // ?tag= y ?month= no indexables (filtros no canónicos).
-    // Páginas paginadas (page>1): noindex para consolidar autoridad en page 1.
-    robots: hasFilter || isPaginated
+    // Los filtros son noindex; la paginación editorial es indexable.
+    robots: contract.isFiltered
       ? { index: false, follow: true, googleBot: { index: false, follow: true } }
       : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
     twitter: {
       card: 'summary_large_image',
-      title: `Blog Jurídico - Artículos de Abogados en Honduras${page > 1 ? ` (Página ${page})` : ''}`,
-      description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.`,
+      title,
+      description,
       images: [`${site.url}/og-image.webp`],
     },
     openGraph: {
-      title: `Blog Jurídico de Abogados en Honduras${page > 1 ? ` - Página ${page}` : ''}`,
-      description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.`,
-      url: `${site.url}/blog`,
+      title,
+      description,
+      url: `${site.url}${canonicalPath}`,
       siteName: site.name,
       locale: 'es_HN',
       type: 'website',
@@ -81,10 +86,15 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 
 export default async function BlogHubPage(props: Props) {
   const searchParams = await props.searchParams;
-  const tagFilter = searchParams?.tag;
-  const monthFilter = searchParams?.month;
-  const page = parseInt(searchParams?.page ?? '1', 10) || 1;
-  const hasFilter = !!(tagFilter || monthFilter);
+  const initialContract = resolveBlogPagination({
+    basePath: '/blog',
+    rawPage: searchParams?.page,
+    tag: searchParams?.tag,
+    month: searchParams?.month,
+  });
+  if (initialContract.notFound) notFound();
+  if (initialContract.redirectTo) permanentRedirect(initialContract.redirectTo);
+  const { page, tag: tagFilter, month: monthFilter, isFiltered: hasFilter } = initialContract;
 
   // Una sola consulta DB (getAllPosts). El resto se deriva en memoria.
   const allPosts = await getAllPosts();
@@ -113,10 +123,14 @@ export default async function BlogHubPage(props: Props) {
     ? monthFiltered.filter((p) => !featuredSlugs.has(p.slug))
     : monthFiltered;
   const totalPages = getTotalPages(gridSource, ITEMS_PER_PAGE);
-
-  if (page < 1 || (gridSource.length > 0 && page > totalPages)) {
-    notFound();
-  }
+  const contract = resolveBlogPagination({
+    basePath: '/blog',
+    rawPage: searchParams?.page,
+    tag: tagFilter,
+    month: monthFilter,
+    totalPages,
+  });
+  if (contract.notFound) notFound();
 
   const pagePosts = getPostsByPage(gridSource, page, ITEMS_PER_PAGE);
 
@@ -129,21 +143,10 @@ export default async function BlogHubPage(props: Props) {
   const explorerPosts = monthFiltered.map(toCardData);
   const explorerPagePosts = pagePosts.map(toCardData);
 
-  const buildPageUrl = (p: number) => {
-    const base = '/blog';
-    const params = new URLSearchParams();
-    if (p > 1) params.set('page', String(p));
-    if (tagFilter) params.set('tag', tagFilter);
-    if (monthFilter) params.set('month', monthFilter);
-    const qs = params.toString();
-    return qs ? `${base}?${qs}` : base;
-  };
-
   return (
     <>
-      {/* rel prev/next solo en vista paginada sin filtros (indexable). */}
-      {!hasFilter && page > 1 && <link rel="prev" href={site.url + buildPageUrl(page - 1)} />}
-      {!hasFilter && page < totalPages && <link rel="next" href={site.url + buildPageUrl(page + 1)} />}
+      {contract.prevPath && <link rel="prev" href={site.url + contract.prevPath} />}
+      {contract.nextPath && <link rel="next" href={site.url + contract.nextPath} />}
 
       <Breadcrumbs items={[
         { label: 'Inicio', href: '/' },
@@ -192,6 +195,7 @@ export default async function BlogHubPage(props: Props) {
                 page={page}
                 totalPages={totalPages}
                 activeTag={tagFilter ?? null}
+                activeMonth={monthFilter ?? null}
                 itemsPerPage={ITEMS_PER_PAGE}
               />
 
@@ -255,18 +259,20 @@ export default async function BlogHubPage(props: Props) {
 
       <NewsletterSection />
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            blogCollectionSchema(
-              `Blog Jurídico | ${site.name}`,
-              'Artículos, análisis y guías sobre derecho en Honduras.',
-              `${site.url}/blog`,
+      {!contract.isFiltered && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              blogCollectionSchema(
+                `Blog Jurídico${page > 1 ? ` — Página ${page}` : ''} | ${site.name}`,
+                `Artículos, análisis y guías sobre derecho en Honduras.${page > 1 ? ` Página ${page}.` : ''}`,
+                `${site.url}${contract.canonicalPath}`,
+              ),
             ),
-          ),
-        }}
-      />
+          }}
+        />
+      )}
     </>
   );
 }

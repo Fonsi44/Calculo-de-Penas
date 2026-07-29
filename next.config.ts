@@ -66,7 +66,7 @@ const securityHeaders = [
 
 // X-Robots-Tag por ruta (no global). Una regla catch-all con
 // `X-Robots-Tag: index, follow` sobreescribiría la señal `noindex, follow` que
-// envían las páginas legales y los filtros del blog (?tag=, ?month=, ?page=)
+// envían las páginas legales y los filtros del blog (?tag=, ?month=)
 // vía meta robots, generando una contradicción SEO (Ahrefs Fase 1, Jul 2026).
 // Las páginas indexables no necesitan X-Robots-Tag: la metadata por-página y el
 // sitemap son la autoridad. Solo se emite X-Robots-Tag explícito para:
@@ -389,7 +389,7 @@ const nextConfig: NextConfig = {
         // En producción (noindexActive=false) no se emite X-Robots-Tag global:
         // cada página controla su indexación vía meta robots (metadata por-página)
         // y el sitemap solo lista URLs indexables. Así se evita contradecir las
-        // páginas noindex dinámicas (?tag=, ?month=, ?page=) y los filtros.
+        // páginas noindex dinámicas (?tag=, ?month=).
         // En staging (noindexActive=true) se fuerza noindex en todo el sitio.
         headers: noindexActive ? [...securityHeaders, noindexAllHeader] : [...securityHeaders],
       },

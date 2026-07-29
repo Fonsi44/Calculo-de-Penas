@@ -53,6 +53,7 @@ export function BlogExplorer({
   page,
   totalPages,
   activeTag,
+  activeMonth,
   itemsPerPage = 12,
   withSidebar = false,
 }: {
@@ -62,17 +63,19 @@ export function BlogExplorer({
   page: number;
   totalPages: number;
   activeTag?: string | null;
+  activeMonth?: string | null;
   itemsPerPage?: number;
   withSidebar?: boolean;
 }) {
   const router = useRouter();
 
   // Construye la URL de paginación en el cliente (no se puede pasar una
-  // función desde el Server Component). Preserva el ?tag= activo.
+  // función desde el Server Component). Preserva los filtros URL activos.
   const buildPageUrl = (p: number) => {
     const params = new URLSearchParams();
     if (p > 1) params.set('page', String(p));
     if (activeTag) params.set('tag', activeTag);
+    if (activeMonth) params.set('month', activeMonth);
     const qs = params.toString();
     return qs ? `/blog?${qs}` : '/blog';
   };
