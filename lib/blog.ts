@@ -208,6 +208,12 @@ function mapToPost(p: PublicBlogPost): Post {
     reviewedBy: p.reviewedBy ?? undefined,
     reviewedAt: p.reviewedAt?.toISOString() ?? undefined,
     legalReviewNotes: p.legalReviewNotes ?? undefined,
+    reviewOrigin: p.reviewOrigin ?? undefined,
+    signatureType: p.signatureType ?? undefined,
+    signatureName: p.signatureName ?? undefined,
+    signatureCandidate: p.signatureCandidate ?? undefined,
+    reviewedContentHash: p.reviewedContentHash ?? undefined,
+    signatureValid: p.signatureValid ?? undefined,
     // El workflow IA es operativo y no forma parte del contrato de lectura
     // público. Los avisos verificables se habilitan cuando esos datos se
     // incorporen a una vista estable, no mediante SELECT * sobre la tabla.
