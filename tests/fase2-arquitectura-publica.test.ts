@@ -20,14 +20,14 @@ describe('Fase 2 — contratos de arquitectura pública', () => {
   });
 
   it('separa la intención comercial de la guía informativa sobre elegir abogado', () => {
-    const blogAdapter = read('lib/blog.ts');
-    const article = read('app/(public)/blog/[categoria]/[slug]/page.tsx');
+    const metadata = read('data/blog/blog-metadata-overrides.ts');
+    const generatedCta = read('lib/blog-generated-cta.ts');
     const redirects = read('next.config.ts');
-    expect(blogAdapter).toContain(
+    expect(metadata).toContain(
       'Cómo Elegir Abogado en Nacaome: 10 Criterios antes de Contratar',
     );
-    expect(article).toContain('consultar con un abogado en Nacaome');
-    expect(article).toContain('href="/"');
+    expect(generatedCta).toContain('consultar con un abogado en Nacaome');
+    expect(generatedCta).toContain('href="/"');
     expect(redirects).not.toMatch(
       /source:\s*'\/blog\/practica-legal\/abogados-en-nacaome'/,
     );

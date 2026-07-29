@@ -1,100 +1,10 @@
 import type { Post } from '@/data/blog/types';
+import { BLOG_METADATA_OVERRIDES } from '@/data/blog/blog-metadata-overrides';
 import { getPublishedPosts, getPostBySlug as getPostBySlugDb, getBlogCategories } from '@/lib/blog-db';
 export {
   formatDate,
   getCategoryName,
 } from '@/lib/blog-format';
-
-const EDITORIAL_OVERRIDES: Record<string, { title: string; description: string }> = {
-  'allanamiento-ilegal-violacion-domicilio-honduras': {
-    title: 'Allanamiento en Honduras: Derechos y Qué Hacer',
-    description: 'Cuándo puede realizarse un allanamiento en Honduras, qué debe contener la orden judicial y cómo actuar sin obstaculizar a la autoridad.',
-  },
-  'contratos-franquicia-aspectos': {
-    title: 'Contrato de franquicia en Honduras: cláusulas y riesgos',
-    description: 'Cláusulas que conviene revisar en un contrato de franquicia en Honduras: territorio, regalías, uso de marca, terminación y solución de conflictos.',
-  },
-  'guia-aduanera-importaciones-honduras': {
-    title: 'Cómo Importar a Honduras: Requisitos y Documentos',
-    description: 'Documentos, clasificación arancelaria, tributos y etapas generales del despacho para importar mercancías legalmente en Honduras.',
-  },
-  'usucapion-prescripcion-adquisitiva-honduras': {
-    title: 'Usucapión en Honduras: requisitos y proceso judicial',
-    description: 'Qué es la prescripción adquisitiva, qué elementos deben acreditarse y cómo se tramita judicialmente una pretensión de usucapión en Honduras.',
-  },
-  'abogados-en-nacaome': {
-    title: 'Cómo Elegir Abogado en Nacaome: 10 Criterios antes de Contratar',
-    description: 'Criterios prácticos para elegir abogado en Nacaome: especialidad, honorarios, comunicación y experiencia antes de contratar servicios jurídicos en Valle.',
-  },
-  'abogados-en-pespire-choluteca': {
-    title: 'Abogados en Pespire, Honduras: orientación legal para su caso',
-    description: 'Asesoría jurídica para personas, familias y empresas de Pespire y la zona sur de Honduras, con atención desde Nacaome y presupuesto por escrito.',
-  },
-  'audiencia-inicial-proceso-penal-honduras': {
-    title: 'Audiencia inicial en Honduras: proceso y preparación',
-    description: 'Explicación general de la audiencia inicial, la importancia de la defensa técnica y la documentación que conviene organizar con antelación.',
-  },
-  'cuando-necesito-abogado-penalista-honduras': {
-    title: '¿Cuándo necesita un abogado penalista en Honduras?',
-    description: 'Situaciones en las que conviene buscar defensa penal temprana, qué información preparar y cómo se desarrolla una primera consulta.',
-  },
-  'cuando-prescribe-delito-en-honduras': {
-    title: 'Prescripción Penal en Honduras: Plazos y Cálculo',
-    description: 'Cómo se determina la prescripción penal en Honduras según la pena, el delito y los actos que pueden interrumpir o suspender el cómputo.',
-  },
-  'custodia-hijos-honduras-juez': {
-    title: 'Custodia de Hijos en Honduras: Criterios del Juez',
-    description: 'Criterios que el juez evalúa en procesos de custodia en Honduras: interés superior del menor, capacidad parental y régimen de visitas.',
-  },
-  'danos-perjuicios-indemnizacion-honduras': {
-    title: 'Daños y Perjuicios en Honduras: Cómo Reclamar',
-    description: 'Requisitos y pasos para reclamar daños y perjuicios en Honduras: tipos de indemnización, plazos, documentos y procedimiento judicial.',
-  },
-  'defensa-penal-honduras': {
-    title: 'Defensa penal en Honduras: guía de las primeras actuaciones',
-    description: 'Orientación general ante una detención, citación o investigación penal y sobre la importancia de recibir asesoría jurídica desde el inicio.',
-  },
-  'despido-laboral-honduras-guia-completa': {
-    title: 'Despido Injustificado en Honduras: Prestaciones y Plazos',
-    description: 'Prestaciones y plazos ante un despido injustificado en Honduras. Revisión de documentos, cálculo de liquidación y opciones de reclamación laboral.',
-  },
-  'estafas-fraudes-tipos-penales-honduras': {
-    title: 'Estafa en Honduras: Tipos, Denuncia y Defensa',
-    description: 'Tipos de estafa según el Código Penal de Honduras, cómo denunciar y cuándo buscar defensa legal ante acusaciones por fraude.',
-  },
-  'herencias-honduras-fallece-familiar': {
-    title: 'Herencias en Honduras: Testamento y Sucesión',
-    description: 'Pasos para ordenar una herencia en Honduras: testamentos, sucesión intestada, documentos necesarios y diferencias entre vía notarial y judicial.',
-  },
-  'testamentos-sucesiones-herencia-honduras': {
-    title: 'Herencias en Honduras: Testamento y Sucesión',
-    description: 'Cómo se tramita una herencia en Honduras, qué cambia si existe testamento y qué documentos conviene reunir antes de iniciar la sucesión.',
-  },
-  'jornada-laboral-horas-extra-descansos-honduras': {
-    title: 'Jornada Laboral en Honduras: Horas Extra y Recargos',
-    description: 'Límites de la jornada laboral en Honduras, horas extra, recargos, descansos obligatorios y derechos del trabajador según el Código de Trabajo.',
-  },
-  'pension-alimenticia-honduras-guia-completa': {
-    title: 'Pensión Alimenticia en Honduras: Requisitos y Pasos',
-    description: 'Requisitos y procedimiento para solicitar pensión alimenticia en Honduras. Montos, plazos, documentos y ejecución ante incumplimiento.',
-  },
-  'poder-legal-honduras-cuando-se-necesita': {
-    title: 'Poder notarial en Honduras: tipos, alcance y requisitos',
-    description: 'Qué es un poder notarial, para qué trámites puede utilizarse y qué conviene revisar antes de otorgarlo dentro o fuera de Honduras.',
-  },
-  'proteccion-datos-personales-derechos-arco-honduras': {
-    title: 'Derechos ARCO en Honduras: Cómo Ejercerlos',
-    description: 'Derechos de acceso, rectificación, cancelación y oposición (ARCO) en Honduras. Cómo solicitar información y proteger sus datos personales.',
-  },
-  'que-hacer-si-me-detienen-en-honduras': {
-    title: '¿Qué hacer si me detienen en Honduras? Guía práctica',
-    description: 'Recomendaciones generales para actuar con prudencia ante una detención y solicitar asistencia jurídica sin interferir con la actuación de la autoridad.',
-  },
-  'union-de-hecho-requisitos-derechos-honduras': {
-    title: 'Unión de Hecho en Honduras: Requisitos y Derechos',
-    description: 'Requisitos para el reconocimiento de la unión de hecho en Honduras, derechos patrimoniales y sucesorios, y diferencias con el matrimonio.',
-  },
-};
 
 const COVERS_PENDING_LOCAL_REPLACEMENT = new Set([
   'que-hacer-si-me-detienen-en-honduras',
@@ -115,8 +25,8 @@ function polishedTitle(value: string): string {
   // este helper añadía "…" a títulos terminados en preposición, generando
   // exactly los titles rotos que el plan denuncia (p. ej.
   // "Abogados en Nacaome, Valle: 15 Años de…"). Ahora se devuelve el título
-  // sin alterar: la corrección real vive en EDITORIAL_OVERRIDES y en la
-  // reescritura de los artículos (Fase 4, con revisión jurídica humana).
+  // sin alterar: cualquier excepción visible vive en la fuente tipada y
+  // exclusiva BLOG_METADATA_OVERRIDES, nunca en el body persistido.
   // No recortar por caracteres (tampoco): se conservaría una frase incompleta.
   return value.trim();
 }
@@ -178,7 +88,7 @@ export function getTotalPages(posts: Post[], perPage: number): number {
 type PublicBlogPost = Awaited<ReturnType<typeof getPublishedPosts>>[number];
 
 function mapToPost(p: PublicBlogPost): Post {
-  const editorial = EDITORIAL_OVERRIDES[p.slug];
+  const editorial = BLOG_METADATA_OVERRIDES[p.slug];
   const title = editorial?.title ?? polishedTitle(p.title);
   const description = editorial?.description ?? polishedExcerpt(p.description);
   return {
@@ -189,8 +99,9 @@ function mapToPost(p: PublicBlogPost): Post {
     featured: p.featured ?? false,
     updatedAt: p.updatedAt?.toISOString(),
 
-    metaTitle: editorial?.title ?? p.metaTitle ?? undefined,
-    metaDescription: editorial?.description ?? p.metaDescription ?? undefined,
+    metaTitle: editorial?.metaTitle ?? editorial?.title ?? p.metaTitle ?? undefined,
+    metaDescription:
+      editorial?.metaDescription ?? editorial?.description ?? p.metaDescription ?? undefined,
     ogImage: p.ogImage ?? undefined,
     noindex: p.noindex ?? undefined,
     canonicalUrl: p.slug === 'abogados-en-nacaome'

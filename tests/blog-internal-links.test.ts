@@ -117,12 +117,12 @@ describe('analyzeBlogBodyLinks', () => {
   });
 
   it('mantiene instrumentado el CTA inline de los artículos', () => {
-    const blogRoute = readFileSync(
-      'app/(public)/blog/[categoria]/[slug]/page.tsx',
+    const generatedCta = readFileSync(
+      'lib/blog-generated-cta.ts',
       'utf8',
     );
 
-    expect(blogRoute).toContain('data-event-name="seo_blog_cta_click"');
-    expect(blogRoute).toContain('data-cta-location="blog_inline"');
+    expect(generatedCta).toContain('data-event-name="seo_blog_cta_click"');
+    expect(generatedCta).toContain('data-cta-location="blog_inline"');
   });
 });

@@ -416,7 +416,8 @@ describe('FASE 3 — Subsistemas intactos', () => {
   it('el blog mantiene cautelas editoriales y de atribución jurídica', () => {
     const article = readRoot('app/(public)/blog/[categoria]/[slug]/page.tsx');
     const adapter = readRoot('lib/blog.ts');
-    expect(article).toContain('No se garantizan resultados');
+    const generatedCta = readRoot('lib/blog-generated-cta.ts');
+    expect(generatedCta).toContain('No se garantizan resultados');
     expect(article).toContain('validSignature &&');
     expect(article).toContain('Revisión jurídica institucional:');
     expect(adapter).not.toContain('cleanPlaceholderLinks');
