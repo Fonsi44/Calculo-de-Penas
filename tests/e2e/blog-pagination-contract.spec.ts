@@ -24,6 +24,16 @@ async function expectNoOverflow(page: Page) {
   )).toBe(false);
 }
 
+async function preparePage(page: Page) {
+  await page.context().route('**/_vercel/speed-insights/**', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/javascript',
+      body: '',
+    }),
+  );
+}
+
 for (const viewport of [
   { name: 'desktop', width: 1440, height: 900 },
   { name: 'mobile', width: 390, height: 844 },
@@ -35,6 +45,7 @@ for (const viewport of [
     });
 
     test('hub página 2 alinea señales y navegación SSR', async ({ page }) => {
+      await preparePage(page);
       const consoleErrors: string[] = [];
       page.on('console', (message) => {
         if (message.type() === 'error') consoleErrors.push(message.text());
