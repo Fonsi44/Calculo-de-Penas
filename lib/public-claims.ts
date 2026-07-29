@@ -17,20 +17,33 @@ export const PUBLIC_CLAIMS: readonly PublicClaim[] = [
 ] as const;
 
 function uniqueHttps(urls: (string | null | undefined)[]): string[] {
-  return [...new Set(urls.filter((value): value is string => {
-    if (!value) return false;
+  const trackingParameters = new Set([
+    'fbclid',
+    'gclid',
+    'dclid',
+    'msclkid',
+    'mc_cid',
+    'mc_eid',
+  ]);
+
+  const normalized = urls.flatMap((value) => {
+    if (!value) return [];
     try {
-      return new URL(value).protocol === 'https:';
-    } catch {
-      return false;
-    }
-  }))]
-    .map((value) => {
       const parsed = new URL(value);
-      parsed.search = '';
+      if (parsed.protocol !== 'https:') return [];
+      for (const key of [...parsed.searchParams.keys()]) {
+        if (key.startsWith('utm_') || trackingParameters.has(key)) {
+          parsed.searchParams.delete(key);
+        }
+      }
       parsed.hash = '';
-      return parsed.toString();
-    });
+      return [parsed.toString()];
+    } catch {
+      return [];
+    }
+  });
+
+  return [...new Set(normalized)];
 }
 
 export function organizationSameAs(

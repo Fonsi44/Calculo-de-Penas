@@ -64,15 +64,20 @@ describe('contrato de claims públicos y entidades', () => {
   });
 
   it('sameAs está deduplicado, sin tracking y usa HTTPS', () => {
+    const trackingParameters = ['fbclid', 'gclid', 'dclid', 'msclkid', 'mc_cid', 'mc_eid'];
     for (const urls of [legal.sameAs as string[], organization.sameAs as string[], founderSchema().sameAs]) {
       expect(new Set(urls).size).toBe(urls.length);
       for (const url of urls) {
         const parsed = new URL(url);
         expect(parsed.protocol).toBe('https:');
-        expect(parsed.search).toBe('');
         expect(parsed.hash).toBe('');
+        expect([...parsed.searchParams.keys()].some(
+          (key) => key.startsWith('utm_') || trackingParameters.includes(key),
+        )).toBe(false);
       }
     }
+    expect(organization.sameAs).toContain(site.social.facebook);
+    expect(new URL(site.social.facebook!).searchParams.get('id')).toBe('61590934058125');
   });
 
   it('OfferCatalog deriva exactamente del catálogo visible', () => {
