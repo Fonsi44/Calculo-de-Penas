@@ -103,13 +103,6 @@ const COVERS_PENDING_LOCAL_REPLACEMENT = new Set([
   'medidas-sustitutivas-prision-preventiva-honduras',
 ]);
 
-function cleanPlaceholderLinks(html: string): string {
-  return html.replace(
-    /<a\b[^>]*href=["']https?:\/\/(?:www\.)?(?:ejemplo\.com|tuabogado\.com)[^"']*["'][^>]*>([\s\S]*?)<\/a>/gi,
-    '$1',
-  );
-}
-
 function polishedExcerpt(value: string): string {
   const text = value.trim();
   if (!text || /[.!?…:]$/.test(text)) return text;
@@ -189,7 +182,7 @@ function mapToPost(p: PublicBlogPost): Post {
   const title = editorial?.title ?? polishedTitle(p.title);
   const description = editorial?.description ?? polishedExcerpt(p.description);
   return {
-    slug: p.slug, title, description, body: cleanPlaceholderLinks(p.body),
+    slug: p.slug, title, description, body: p.body,
     publishedAt: p.publishedAt.toISOString(), category: p.category,
     tags: p.tags ?? [], author: p.author ?? '', readingTime: p.readingTime ?? '',
     coverImage: COVERS_PENDING_LOCAL_REPLACEMENT.has(p.slug) ? undefined : p.coverImage ?? undefined,

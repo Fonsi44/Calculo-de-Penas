@@ -67,6 +67,8 @@ describe('gate de recuperación del inventario histórico', () => {
     const publicAdapter = readFileSync('lib/blog.ts', 'utf8');
     expect(publicAdapter).not.toContain('phase3-editorial-overrides.json');
     expect(publicAdapter).not.toContain('documentary?.body');
+    expect(publicAdapter).toContain('body: p.body');
+    expect(publicAdapter).not.toContain('cleanPlaceholderLinks');
     expect(publicAdapter).toContain('signatureValid: p.signatureValid');
     expect(publicAdapter).toContain('reviewedContentHash: p.reviewedContentHash');
   });
