@@ -569,8 +569,8 @@ export function founderSchema() {
       addressCountry: site.address.countryCode,
     },
     // sameAs: solo perfiles públicos verificables de Danilo. El handle de X
-    // es claramente personal (Danilo_Pineda_M). Se añade googleBusiness
-    // (perfil del bufete en Google Maps que lo representa como abogado).
+    // es claramente personal (Danilo_Pineda_M). Google Business pertenece
+    // al bufete y queda excluido de esta entidad personal.
     // NO se inventan perfiles (R4). Cuando se verifique LinkedIn
     // personal, añadirlo vía variables de entorno.
     sameAs: personSameAs([site.social.x, FOUNDER_PROFILE.linkedin, FOUNDER_PROFILE.directorio]),

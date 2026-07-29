@@ -20,6 +20,10 @@ const hubSource = readFileSync(
   'utf8',
 );
 const faqSource = readFileSync(join(process.cwd(), 'data/faqs-hubs.ts'), 'utf8');
+const footerSource = readFileSync(
+  join(process.cwd(), 'components/marketing/public-footer.tsx'),
+  'utf8',
+);
 
 describe('contrato de claims públicos y entidades', () => {
   const legal = legalServiceSchema();
@@ -45,6 +49,12 @@ describe('contrato de claims públicos y entidades', () => {
     expect(legal.sameAs).not.toContain(site.social.x);
     expect(organization.sameAs).not.toContain(site.social.x);
     expect(founderSchema().sameAs).toContain(site.social.x);
+    expect(footerSource).toContain(
+      'Perfil personal de X de Danilo Pineda Maradiaga',
+    );
+    expect(footerSource).not.toContain(
+      'aria-label={`Perfil de X de ${site.name}`}',
+    );
   });
 
   it('Google Business aparece solo en entidades corporativas', () => {
