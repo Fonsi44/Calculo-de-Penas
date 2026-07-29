@@ -40,6 +40,10 @@ function hash(value: string): string {
   return createHash('sha256').update(value).digest('hex');
 }
 
+function auditHash(value: string): string {
+  return `sha256:${hash(value).slice(0, 12)}`;
+}
+
 function csvCell(value: unknown): string {
   const normalized = value == null ? '' : String(value);
   return `"${normalized.replaceAll('"', '""')}"`;
@@ -239,8 +243,8 @@ async function main() {
       noindex: row.noindex ?? false,
       canonical: row.canonical_url ?? '',
       redirect_target: redirectTarget,
-      body_hash_production: hash(row.body),
-      body_hash_preview: previewRow ? hash(previewRow.body) : '',
+      body_hash_production: auditHash(row.body),
+      body_hash_preview: previewRow ? auditHash(previewRow.body) : '',
       missing_in_preview: historicallyVisible && !previewRow,
       recovery_action: recoveryAction,
       reason: restoredHistoricalArticle
@@ -267,8 +271,8 @@ async function main() {
       : '';
     return {
       slug,
-      production_body_hash: hash(productionRow.body),
-      recovered_body_hash: previewRow ? hash(previewRow.body) : '',
+      production_body_hash: auditHash(productionRow.body),
+      recovered_body_hash: previewRow ? auditHash(previewRow.body) : '',
       same_body: previewRow
         ? hash(productionRow.body) === hash(previewRow.body)
         : false,
