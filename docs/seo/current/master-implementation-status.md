@@ -4,11 +4,11 @@ Fecha de corte: 2026-07-29
 
 ## Veredicto
 
-`INCIDENTE DE INVENTARIO EN RECUPERACIÓN — PRODUCCIÓN BLOQUEADA`. La Preview
+`INCIDENTE DE INVENTARIO RESUELTO EN PREVIEW — PRODUCCIÓN BLOQUEADA`. La Preview
 canónica había sustituido silenciosamente el inventario histórico por 15
-fixtures. La causa está corregida localmente y la base staging aislada contiene
-141/141 fuentes históricas, pero el incidente no se cerrará hasta validar una
-nueva Preview desplegada. La publicación en Production continúa bloqueada.
+fixtures. La causa está corregida, la base staging aislada contiene 141/141
+fuentes históricas y el despliegue de recuperación superó las 141 comprobaciones
+remotas. La publicación en Production continúa bloqueada.
 
 ## Base y trazabilidad
 
@@ -72,13 +72,21 @@ nueva Preview desplegada. La publicación en Production continúa bloqueada.
 - Causa raíz 3: `lib/blog.ts` superponía 10 cuerpos propuestos sobre cuerpos
   históricos en la lectura pública.
 - Causa raíz 4: la búsqueda del hub serializaba solo 80 de 134 metadatos.
-- Causa raíz 5: faltaba el redirect de la ruta histórica
-  `/blog/practica-legal/abogados-en-nacaome`.
+- Causa raíz 5: el artículo informativo histórico
+  `/blog/practica-legal/abogados-en-nacaome` había sido despublicado pese al
+  contrato canónico que exige conservarlo como artículo, no como redirect.
+- Causa raíz 6: el adaptador público no trasladaba las columnas persistidas de
+  firma y transformaba dos cuerpos al retirar enlaces placeholder, invalidando
+  sus hashes en tiempo de lectura.
 - Corrección: origen explícito `database`, `full-public-snapshot` o
   `limited-test-fixtures`; la Preview canónica exige una fuente completa y
-  falla si recibe menos de 134 publicados.
+  falla si recibe menos de 135 publicados.
 - Estado staging: 141 filas históricas, 135 publicadas, 6 redirects, 0 cuerpos
   distintos y 0 fixtures sintéticos.
+- Estado Preview: 135 artículos HTTP 200, 6 redirects correctos, 135 firmas
+  institucionales visibles, 1 disclaimer por artículo y 0 avisos pendientes.
+- La paginación usa un universo estable de 131 tarjetas más 4 destacados:
+  11 páginas, sin duplicados y con la página 12 rechazada.
 - Evidencia: `blog-recovery-inventory.csv`, `blog-recovery-diff.csv` y
   `npm run seo:blog-inventory-recovery`.
 
@@ -86,8 +94,8 @@ nueva Preview desplegada. La publicación en Production continúa bloqueada.
 
 - Autorización productiva agrupada para 0059, modo migrado, merge y Release A.
 - Confirmación futura por allowlist para cualquier firma individual.
-- La Preview principal debe validarse contra la rama Neon aislada con 141
-  fuentes históricas; no puede degradarse a fixtures limitados.
+- La Preview principal está validada contra la rama Neon aislada con 141
+  fuentes históricas y no puede degradarse a fixtures limitados.
 - Las 40 propuestas no forman parte de Release A y requieren nueva firma antes
   de cualquier publicación.
 
@@ -96,5 +104,10 @@ nueva Preview desplegada. La publicación en Production continúa bloqueada.
 - La deployment afectada permanece como evidencia del incidente y mostraba 15
   fixtures.
 - PR #25 restaurada a Draft.
-- Nueva Preview de recuperación: pendiente de commit, push y validación de las
-  141 rutas.
+- Nueva Preview de recuperación:
+  `https://justicia-verdadera-3pgigoeyq-fonsi-roiget-s-projects.vercel.app`.
+- Barrido remoto: 141/141 rutas correctas, formado por 135 artículos y 6
+  redirects; 0 fallos.
+- Navegador real: listado 135, búsqueda del artículo restaurado, categoría
+  Derecho Penal, paginación 1/11 y 11/11, página 12 no encontrada, escritorio y
+  breakpoint móvil sin desbordamiento, firma y disclaimer visibles.
