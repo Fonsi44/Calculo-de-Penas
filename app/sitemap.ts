@@ -1,20 +1,11 @@
 import type { MetadataRoute } from 'next';
 import { site, absoluteUrl } from '@/lib/site';
-import { db } from '@/lib/db';
-import { blogPosts } from '@/lib/schema';
-import { eq, and, desc } from 'drizzle-orm';
+import { getAllPosts } from '@/lib/blog';
 import { blogCategories } from '@/data/blog/categories';
 import canonicalPathsData from '@/data/seo/canonical-paths.json';
-import {
-  editorialSignatureSchemaMode,
-  isEditoriallyIndexable,
-} from '@/lib/editorial-signature';
+import { isEditoriallyIndexable } from '@/lib/editorial-signature';
 
-function daysAgo(days: number): Date {
-  const d = new Date();
-  d.setDate(d.getDate() - days);
-  return d;
-}
+export const dynamic = 'force-dynamic';
 
 /**
  * Fuente única de verdad para las rutas públicas ESTÁTICAS del sitio.
@@ -55,9 +46,15 @@ export const PUBLIC_ROUTES: Array<{
  */
 export const INDEXNOW_SAFETY_CAP: number = canonicalPathsData.indexnow_safety_cap;
 
-const IS_DB_REACHABLE = Boolean(
-  process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('placeholder') && !process.env.DATABASE_URL.includes('localhost:5432/placeholder'),
-);
+export function isDatabaseConfiguredAtRuntime(
+  value = process.env.DATABASE_URL,
+): boolean {
+  return Boolean(
+    value
+    && !value.includes('placeholder')
+    && !value.includes('localhost:5432/placeholder'),
+  );
+}
 
 // Posts con contenido thin/plantilla (ALTO riesgo en docs/blog-duplicity-report.md).
 // No se excluyen del sitemap (siguen accesibles), pero bajan su `priority` a 0.3
@@ -130,43 +127,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return [];
   }
 
-  const now = new Date();
+  if (!isDatabaseConfiguredAtRuntime()) {
+    throw new Error('[sitemap] Fuente pública completa no disponible en runtime.');
+  }
 
   const staticRoutes = PUBLIC_ROUTES.map((r) => ({
     url: absoluteUrl(r.path),
-    lastModified: daysAgo(r.daysAgo),
     changeFrequency: r.changeFrequency as MetadataRoute.Sitemap[number]['changeFrequency'],
     priority: r.priority,
   }));
 
-  const dbPostsRaw = IS_DB_REACHABLE ? await db
-    .select({
-      slug: blogPosts.slug,
-      category: blogPosts.category,
-      publishedAt: blogPosts.publishedAt,
-      updatedAt: blogPosts.updatedAt,
-      body: blogPosts.body,
-      author: blogPosts.author,
-      published: blogPosts.published,
-      noindex: blogPosts.noindex,
-      canonicalUrl: blogPosts.canonicalUrl,
-      reviewStatus: blogPosts.reviewStatus,
-      reviewedBy: blogPosts.reviewedBy,
-      reviewedAt: blogPosts.reviewedAt,
-      ...(editorialSignatureSchemaMode() === 'MIGRATED_SIGNATURE_MODE'
-        ? {
-            reviewOrigin: blogPosts.reviewOrigin,
-            signatureType: blogPosts.signatureType,
-            signatureName: blogPosts.signatureName,
-            signatureCandidate: blogPosts.signatureCandidate,
-            reviewedContentHash: blogPosts.reviewedContentHash,
-            signatureValid: blogPosts.signatureValid,
-          }
-        : {}),
-    })
-    .from(blogPosts)
-    .where(and(eq(blogPosts.published, true), eq(blogPosts.noindex, false)))
-    .orderBy(desc(blogPosts.publishedAt)) : [];
+  const dbPostsRaw = (await getAllPosts()).filter((post) => !post.noindex);
 
   // Posts con canonical apuntando a otra URL del propio dominio (p. ej. posts
   // `abogados-en-{ciudad}` canonicalizados hacia las landings locales).
@@ -186,6 +157,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Una firma institucional histórica válida permite indexar. La firma
     // individual es opcional y nunca se infiere de la categoría.
     .filter((p) => isEditoriallyIndexable(p));
+
+  const expectedArticles = Number.parseInt(
+    process.env.SEO_SITEMAP_EXPECTED_ARTICLES ?? '135',
+    10,
+  );
+  if (
+    !Number.isSafeInteger(expectedArticles)
+    || expectedArticles < 1
+    || dbPosts.length < expectedArticles
+  ) {
+    throw new Error(
+      `[sitemap] Inventario público incompleto: ${dbPosts.length}/${expectedArticles}.`,
+    );
+  }
 
   // Mapa categoría → fecha del post más reciente. Se usa dbPostsRaw (TODOS los
   // posts publicados/no-noindex, incluyendo los canonicalizados) para que el
@@ -211,7 +196,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const categoryRoutes = blogCategories.map((c) => ({
     url: absoluteUrl(`/blog/${c.slug}`),
-    lastModified: latestPostByCategory.get(c.slug) ?? now,
+    lastModified: latestPostByCategory.get(c.slug),
     changeFrequency: 'weekly' as const,
     priority: HIGH_PRIORITY_CATEGORIES.has(c.slug) ? 0.7 : 0.5,
   }));

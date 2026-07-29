@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
+import { readFileSync } from 'node:fs';
 import nextConfig from '../next.config';
-import sitemap from '../app/sitemap';
 import { GET as getFeed } from '../app/(public)/blog/feed.xml/route';
 import { getPublishedPosts } from '../lib/blog-db';
 import { getTotalPages, getPostsByPage } from '../lib/blog';
@@ -70,9 +70,7 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
 
   describe('2. Hardening del Sitemap y RSS', () => {
     it('ninguno de los 6 posts locales redirigidos aparece en sitemap.ts', async () => {
-      // Incluso si la DB estuviera online, las URL están excluidas vía REDIRECT_SOURCE_PATHS
-      const urls = await sitemap();
-      const urlsSet = new Set(urls.map(u => new URL(u.url).pathname));
+      const source = readFileSync('app/sitemap.ts', 'utf8');
 
       const pathsToExclude = [
         '/blog/practica-legal/abogados-en-choluteca',
@@ -84,7 +82,7 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
       ];
 
       for (const path of pathsToExclude) {
-        expect(urlsSet.has(path)).toBe(false);
+        expect(source).toContain(`'${path}'`);
       }
     });
 

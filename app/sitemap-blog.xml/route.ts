@@ -1,7 +1,5 @@
-import sitemap from '@/app/sitemap';
-import { sitemapResponse } from '@/lib/sitemap-xml';
+import { legacySitemapRedirectResponse } from '@/lib/sitemap-xml';
 
 export async function GET() {
-  const entries = await sitemap();
-  return sitemapResponse(entries.filter(({ url }) => new URL(url).pathname.startsWith('/blog')));
+  return legacySitemapRedirectResponse('blog');
 }

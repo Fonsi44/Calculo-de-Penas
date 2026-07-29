@@ -22,7 +22,17 @@ export function sitemapResponse(entries: MetadataRoute.Sitemap): Response {
   return new Response(sitemapXml(entries), {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+      'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=3600',
+    },
+  });
+}
+
+export function legacySitemapRedirectResponse(segment = 'legacy'): Response {
+  return new Response(null, {
+    status: 308,
+    headers: {
+      Location: 'https://www.pinedayasociadoshn.com/sitemap.xml',
+      'X-Legacy-Sitemap-Segment': segment,
     },
   });
 }
