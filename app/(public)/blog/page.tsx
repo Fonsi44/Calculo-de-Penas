@@ -99,14 +99,17 @@ export default async function BlogHubPage(props: Props) {
     ? filterByMonth(tagFiltered, monthFilter)
     : tagFiltered;
 
-  // Destacados: solo en página 1 sin filtros.
+  // La selección de destacados debe ser estable en toda la paginación. Solo
+  // se renderiza en página 1, pero sus slugs se excluyen siempre del grid para
+  // evitar duplicados y que el total cambie de 11 a 12 al navegar.
   const showFeatured = !hasFilter && page === 1;
-  const featured = showFeatured ? deriveFeaturedPosts(allPosts, 4) : [];
-  const featuredSlugs = new Set(featured.map((f) => f.slug));
+  const featuredSelection = !hasFilter ? deriveFeaturedPosts(allPosts, 4) : [];
+  const featured = showFeatured ? featuredSelection : [];
+  const featuredSlugs = new Set(featuredSelection.map((post) => post.slug));
 
-  // Listado paginado (vista servidor). En página 1 sin filtros, se excluyen
-  // los destacados del grid para no duplicarlos con la sección magazine.
-  const gridSource = showFeatured
+  // Listado paginado (vista servidor). Sin filtros, se excluyen siempre los
+  // destacados del grid para mantener el mismo universo en todas las páginas.
+  const gridSource = !hasFilter
     ? monthFiltered.filter((p) => !featuredSlugs.has(p.slug))
     : monthFiltered;
   const totalPages = getTotalPages(gridSource, ITEMS_PER_PAGE);

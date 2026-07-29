@@ -69,10 +69,11 @@ describe('gate de recuperación del inventario histórico', () => {
     expect(publicAdapter).not.toContain('documentary?.body');
   });
 
-  it('pagina el corpus completo y permite encontrar el último artículo', () => {
-    const posts = Array.from({ length: 134 }, (_, index) => post(index));
-    expect(getTotalPages(posts, 12)).toBe(12);
-    expect(getPostsByPage(posts, 12, 12)).toHaveLength(2);
+  it('mantiene 11 páginas estables tras separar cuatro destacados y permite buscar todo el corpus', () => {
+    const posts = Array.from({ length: 135 }, (_, index) => post(index));
+    const gridPosts = posts.slice(4);
+    expect(getTotalPages(gridPosts, 12)).toBe(11);
+    expect(getPostsByPage(gridPosts, 11, 12)).toHaveLength(11);
     expect(searchPosts(posts as BlogCardData[], 'último-recuperado').map((item) => item.slug))
       .toEqual(['historical-133']);
   });
