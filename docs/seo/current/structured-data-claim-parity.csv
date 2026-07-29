@@ -1,7 +1,7 @@
 "entity","property","schema_value","visible_equivalent","source","confirmed","conditional","removed","reason","result"
 "Organization","foundingDate","2010","Fundado en 2010","Confirmación titular","true","false","false","Claim institucional confirmado","PASS"
 "Organization","founder","Danilo; Thania","Fundadores visibles","LAWYER_PROFILES","true","false","false","Identidades canónicas","PASS"
-"Organization","sameAs","[""https://www.facebook.com/profile.php"",""https://maps.app.goo.gl/xqbpe5n5ufXkH4ff6""]","Perfiles corporativos","site.social + Google Business","true","true","false","X personal excluido","PASS"
+"Organization","sameAs","[""https://www.facebook.com/profile.php?id=61590934058125"",""https://maps.app.goo.gl/xqbpe5n5ufXkH4ff6""]","Perfiles corporativos","site.social + Google Business","true","true","false","X personal excluido","PASS"
 "LegalService","priceRange","OMITTED","Sin equivalente visible","Sin evidencia","false","false","true","Propiedad opcional no confirmada","PASS"
 "LegalService","paymentAccepted","OMITTED","Sin equivalente visible","Sin evidencia","false","false","true","Propiedad opcional no confirmada","PASS"
 "LegalService","currenciesAccepted","OMITTED","Sin equivalente visible","Sin evidencia","false","false","true","Propiedad opcional no confirmada","PASS"
