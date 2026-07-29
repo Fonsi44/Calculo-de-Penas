@@ -41,7 +41,7 @@ const corporateQuestions = corporateCategories.flatMap((category) => category.pr
 const dbRows = await getPublishedFaqs();
 const baseSourceRows = dbRows.length > 0
   ? dbRows.map((row) => ({
-      source: 'preview_db',
+      source: 'database_read_only',
       category: row.category,
       question: row.question,
       answer: row.answer,
@@ -165,7 +165,7 @@ const surfaces = [
   {
     route: '/preguntas-frecuentes',
     source_file: 'lib/faq-db.ts',
-    source_type: dbRows.length > 0 ? 'preview_db+policy' : 'static_fallback+policy',
+    source_type: dbRows.length > 0 ? 'database_read_only+policy' : 'static_fallback+policy',
     visible_question_count: corporateQuestions.length,
     schema_question_count: corporateQuestions.length,
     same_source: corporateUsesSingleSource,
