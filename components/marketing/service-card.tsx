@@ -120,7 +120,7 @@ export function ServiceCard({
         )}
         {responsible && (
           <p className="mt-2 text-xs font-semibold text-text-muted">
-            Área dirigida por {responsible}
+            Responsable: {responsible}
           </p>
         )}
         <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-accent-dark group-hover:gap-2 transition-all">

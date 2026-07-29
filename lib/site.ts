@@ -1,3 +1,12 @@
+import {
+  organizationSameAs,
+  personSameAs,
+} from '@/lib/public-claims';
+import {
+  PUBLIC_SERVICE_CATALOG,
+  publicServiceOfferCatalog,
+} from '@/lib/public-service-catalog';
+
 /**
  * Configuración centralizada del sitio web.
  *
@@ -275,21 +284,7 @@ export function mailtoHref(subject?: string): string {
  * autoridad temática del despacho ante Google.
  */
 export const KNOWS_ABOUT = [
-  'Derecho Penal',
-  'Derecho de Familia',
-  'Derecho Laboral',
-  'Derecho Civil y Notarial',
-  'Derecho Mercantil y Empresarial',
-  'Derecho Tributario y Fiscal',
-  'Derecho Bancario y Financiero',
-  'Derecho Administrativo y Servicio Civil',
-  'Derecho Aduanero',
-  'Regulación Sanitaria',
-  'Extranjería y Migración',
-  'Propiedad Intelectual',
-  'Derecho Ambiental Regulatorio',
-  'Conciliación y Arbitraje',
-  'Código Penal Decreto 130-2017 de Honduras y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)',
+  ...PUBLIC_SERVICE_CATALOG.map((item) => item.name),
 ];
 
 /**
@@ -297,6 +292,14 @@ export const KNOWS_ABOUT = [
  * Incluye LocalBusiness con geo y areaServed para SEO local.
  */
 export function legalServiceSchema() {
+  const corporateSameAs = organizationSameAs([
+    site.social.facebook,
+    site.social.instagram,
+    site.social.linkedin,
+    site.social.youtube,
+    site.social.tiktok,
+    site.googleBusiness,
+  ]);
   const base: Record<string, unknown> = {
     // Sin @context aquí: el wrapper @graph de app/(public)/layout.tsx lo aporta
     // una sola vez. Duplicar @context en cada nodo del @graph es un error de
@@ -315,9 +318,6 @@ export function legalServiceSchema() {
     image: `${site.url}/og-image.webp`,
     // Logo oficial del bufete (PNG transparente, 741×728 ~cuadrado, sin fondo)
     logo: `${site.url}/images/logo.png`,
-    priceRange: '$$',
-    paymentAccepted: 'Cash, Credit Card, Bank Transfer',
-    currenciesAccepted: 'HNL, USD',
     areaServed: [
       { '@type': 'City', name: 'Nacaome' },
       { '@type': 'City', name: 'San Lorenzo' },
@@ -342,7 +342,6 @@ export function legalServiceSchema() {
       postalCode: site.address.postalCode,
       addressCountry: site.address.countryCode,
     },
-    numberOfEmployees: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 10 },
     openingHoursSpecification: site.hoursStructured.map((h) => ({
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: h.dayOfWeek,
@@ -366,50 +365,15 @@ export function legalServiceSchema() {
         })),
       },
     ],
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Servicios jurídicos en Nacaome, Valle — 14 áreas de práctica',
-      itemListElement: [
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Defensa Penal', description: 'Defensa técnica en procesos penales conforme al Código Penal Decreto 130-2017 de Honduras y reformas. Asistencia a detenidos, audiencias, juicio oral y recursos.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho de Familia', description: 'Divorcios, pensión alimenticia, custodia de menores, régimen de visitas y adopciones ante los juzgados de familia.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Laboral', description: 'Despidos injustificados, reclamación de prestaciones, liquidaciones, acoso laboral y asesoría a trabajadores y empleadores.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Civil y Notarial', description: 'Contratos, compraventas, herencias, testamentos, poderes notariales y trámites registrales.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Mercantil y Empresarial', description: 'Constitución de sociedades, contratos comerciales, fusiones, gobierno corporativo y litigio mercantil.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Bancario y Financiero', description: 'Defensa del usuario financiero, reestructuras, ejecución de garantías y cumplimiento CNBS.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Administrativo y Servicio Civil', description: 'Contencioso-administrativo, sanciones regulatorias, despido de servidores públicos y licitaciones.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Aduanero y Comercio Exterior', description: 'Clasificación arancelaria, importación, exportación, ZOLI y defensa ante el SAR.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Regulación Sanitaria', description: 'Registro sanitario ante ARSA, Buenas Prácticas, defensa en sanciones y mala praxis médica.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Extranjería en Honduras', description: 'Visas, residencia temporal y permanente, naturalización y defensa ante el INM.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Propiedad Intelectual', description: 'Registro de marcas, patentes, derechos de autor, licencias y defensa frente a infracciones.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Tributario y Fiscal', description: 'Liquidación de ISR e ISV, fiscalización del SAR, precios de transferencia y contencioso tributario.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Ambiental Regulatorio', description: 'Licencias ambientales, evaluación de impacto, permisos y defensa ante MiAmbiente.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Conciliación y Arbitraje', description: 'Resolución extrajudicial de conflictos, mediación y arbitraje institucional.' } },
-      ],
-    },
+    hasOfferCatalog: publicServiceOfferCatalog(site.url),
     employee: [
       { '@id': `${site.url}/#danilo-pineda-maradiaga` },
       { '@id': `${site.url}/#thania` },
       { '@id': `${site.url}/#emil` },
     ],
-    ...(validUrlsOnly([
-      site.social.facebook,
-      site.social.instagram,
-      site.social.linkedin,
-      site.social.youtube,
-      site.social.tiktok,
-      site.social.x,
-      site.googleBusiness,
-    ]).length > 0
+    ...(corporateSameAs.length > 0
       ? {
-          sameAs: validUrlsOnly([
-            site.social.facebook,
-            site.social.instagram,
-            site.social.linkedin,
-            site.social.youtube,
-            site.social.tiktok,
-            site.social.x,
-            site.googleBusiness,
-          ]),
+          sameAs: corporateSameAs,
         }
       : {}),
   };
@@ -447,6 +411,14 @@ export function websiteSchema() {
  * Schema.org Organization para la home y el bloque "El Despacho".
  */
 export function organizationSchema() {
+  const corporateSameAs = organizationSameAs([
+    site.social.facebook,
+    site.social.instagram,
+    site.social.linkedin,
+    site.social.youtube,
+    site.social.tiktok,
+    site.googleBusiness,
+  ]);
   return {
     // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'Organization',
@@ -469,15 +441,7 @@ export function organizationSchema() {
     // Refuerza E-E-A-T y permite a Google/Microsoft/Knowledge Graph enlazar
     // identidades. Solo URLs reales (Facebook, X, GBP). El propio dominio NO
     // es un perfil externo y por eso no aparece aquí.
-    sameAs: validUrlsOnly([
-      site.social.facebook,
-      site.social.instagram,
-      site.social.linkedin,
-      site.social.youtube,
-      site.social.tiktok,
-      site.social.x,
-      site.googleBusiness
-    ]),
+    sameAs: corporateSameAs,
     contactPoint: [
       {
         '@type': 'ContactPoint',
@@ -609,7 +573,7 @@ export function founderSchema() {
     // (perfil del bufete en Google Maps que lo representa como abogado).
     // NO se inventan perfiles (R4). Cuando se verifique LinkedIn
     // personal, añadirlo vía variables de entorno.
-    sameAs: validUrlsOnly([site.social.x, FOUNDER_PROFILE.linkedin, FOUNDER_PROFILE.directorio]),
+    sameAs: personSameAs([site.social.x, FOUNDER_PROFILE.linkedin, FOUNDER_PROFILE.directorio]),
   };
 }
 
@@ -683,8 +647,8 @@ export function thaniaSchema() {
       addressRegion: site.address.department,
       addressCountry: site.address.countryCode,
     },
-    ...(validUrlsOnly([THANIA_PROFILE.linkedin, THANIA_PROFILE.directorio]).length > 0
-      ? { sameAs: validUrlsOnly([THANIA_PROFILE.linkedin, THANIA_PROFILE.directorio]) }
+    ...(personSameAs([THANIA_PROFILE.linkedin, THANIA_PROFILE.directorio]).length > 0
+      ? { sameAs: personSameAs([THANIA_PROFILE.linkedin, THANIA_PROFILE.directorio]) }
       : {}),
   };
 }
@@ -756,8 +720,8 @@ export function emilSchema() {
       addressRegion: site.address.department,
       addressCountry: site.address.countryCode,
     },
-    ...(validUrlsOnly([EMIL_PROFILE.linkedin, EMIL_PROFILE.directorio]).length > 0
-      ? { sameAs: validUrlsOnly([EMIL_PROFILE.linkedin, EMIL_PROFILE.directorio]) }
+    ...(personSameAs([EMIL_PROFILE.linkedin, EMIL_PROFILE.directorio]).length > 0
+      ? { sameAs: personSameAs([EMIL_PROFILE.linkedin, EMIL_PROFILE.directorio]) }
       : {}),
   };
 }

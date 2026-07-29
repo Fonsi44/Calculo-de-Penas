@@ -412,8 +412,8 @@ export default async function DespachoPage() {
             <p className="text-sm text-text-secondary leading-relaxed text-pretty">
               En la primera consulta se identifica el área principal del caso y se
               asigna al abogado responsable de esa rama. Cuando el asunto cruza
-              varias ramas, el equipo coordina internamente y el cliente mantiene
-              un único punto de contacto. El responsable del caso es quien firma
+              varias ramas, el equipo puede coordinar internamente según las
+              necesidades del asunto. El responsable del caso es quien firma
               los escritos y comparece, no un intermediario.
             </p>
           </Card>

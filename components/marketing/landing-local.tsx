@@ -10,6 +10,7 @@ import { HubFaq } from '@/components/marketing/hub-faq';
 import { IconBadge } from '@/components/marketing/icon-badge';
 import { type LandingLocal } from '@/data/landings-locales';
 import { ViewLocalPageTracker } from '@/components/marketing/view-local-page-tracker';
+import { PUBLIC_SERVICE_CATALOG } from '@/lib/public-service-catalog';
 
 /**
  * Mapa de títulos de servicio (en landings-locales.ts) → slug de área en
@@ -233,7 +234,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
             href="/servicios-juridicos"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
           >
-            Ver las 14 áreas del derecho que atendemos <ArrowRight size={14} />
+            Ver las {PUBLIC_SERVICE_CATALOG.length} áreas de práctica <ArrowRight size={14} />
           </Link>
         </div>
       </Section>

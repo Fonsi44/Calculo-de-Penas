@@ -6,6 +6,7 @@ import { parseCsv } from '@/lib/csv';
 import { LAWYER_PROFILES, site } from '@/lib/site';
 import { sitemapXml } from '@/lib/sitemap-xml';
 import { areasGenerales, hubPenal } from '@/data/areas-juridicas';
+import { PUBLIC_SERVICE_CATALOG } from '@/lib/public-service-catalog';
 
 const read = (path: string) => readFileSync(path, 'utf8');
 
@@ -136,8 +137,11 @@ describe('Fase 2 — contratos de arquitectura pública', () => {
   it('las tarjetas centrales identifican responsable y CTA específico', () => {
     const services = read('app/(public)/servicios-juridicos/page.tsx');
     for (const profile of LAWYER_PROFILES) {
-      expect(services).toContain(profile.name);
+      expect(PUBLIC_SERVICE_CATALOG.some(
+        (item) => item.individualResponsible === profile.name,
+      )).toBe(true);
     }
+    expect(services).toContain('responsible={area.individualResponsible}');
     for (const label of [
       'Ver servicios de defensa penal',
       'Consultar asuntos de familia',

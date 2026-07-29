@@ -13,7 +13,6 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import { Reveal } from '@/components/marketing/reveal';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
-import { getAreasUnified } from '@/lib/areas-unified';
 import { webpageSchema } from '@/lib/seo-schema';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
@@ -22,16 +21,7 @@ import { TOP_ORGANIC_GUIDE_SLUGS } from '@/data/seo/high-intent-guides';
 import { RelatedCities } from '@/components/marketing/related-links';
 import { HubFaq } from '@/components/marketing/hub-faq';
 import { FAQ_SERVICIOS_JURIDICOS } from '@/data/faqs-hubs';
-import { hubPenal } from '@/data/areas-juridicas';
-
-const RESPONSIBLE_BY_AREA: Record<string, string> = {
-  'derecho-penal': 'Danilo Pineda Maradiaga',
-  'derecho-de-familia': 'Thania Marlene Paz',
-  'derecho-laboral': 'Emil Barahona',
-  'derecho-civil-y-notarial': 'Thania Marlene Paz, con apoyo de Emil Barahona',
-  'derecho-mercantil-empresarial': 'Thania Marlene Paz',
-  'derecho-administrativo-y-servicio-civil': 'Thania Marlene Paz',
-};
+import { PUBLIC_SERVICE_CATALOG } from '@/lib/public-service-catalog';
 
 const CTA_BY_AREA: Record<string, string> = {
   'derecho-penal': 'Ver servicios de defensa penal',
@@ -61,19 +51,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function AreasJuridicasPage() {
-  const generalAreas = await getAreasUnified('servicio');
-  const areas = [
-    {
-      slug: hubPenal.slug,
-      titulo: hubPenal.titulo,
-      descripcionCorta: hubPenal.resumen,
-      descripcionLarga: hubPenal.descripcion,
-      icono: 'gavel',
-      categoria: 'servicio' as const,
-      fuente: 'ts' as const,
-    },
-    ...generalAreas,
-  ];
+  const areas = PUBLIC_SERVICE_CATALOG;
   const contentMap = await getPageContent('servicios-juridicos');
 
   return (
@@ -84,9 +62,9 @@ export default async function AreasJuridicasPage() {
       ]} />
       <PageHero
         eyebrow={contentMap['hero.eyebrow'] || 'Servicios Jurídicos'}
-        badge={contentMap['hero.badge'] || 'Cobertura integral'}
+        badge={contentMap['hero.badge'] || 'Catálogo de áreas'}
         title={contentMap['hero.title'] || `Servicios jurídicos para personas, familias y empresas`}
-        subtitle={contentMap['hero.subtitle'] || 'Desde Nacaome, Valle, ofrecemos cobertura legal integral en las principales ramas del derecho hondureño. La defensa penal es nuestra especialidad destacada y la acompañamos con servicios especializados en familia, laboral, civil, mercantil, tributario y más.'}
+        subtitle={contentMap['hero.subtitle'] || 'Desde Nacaome, Valle, prestamos atención en las áreas publicadas en este catálogo. La defensa penal es el pilar histórico del bufete y cada consulta se asigna según su materia y circunstancias.'}
         cta={<CTAGroup variant="inverse" />}
         bgImage="/images/servicios/servicios-bg.webp"
       />
@@ -95,9 +73,9 @@ export default async function AreasJuridicasPage() {
         <div className="mx-auto px-4 sm:px-6 max-w-7xl">
           <ServiceSearch
             items={areas.map((a) => ({
-              href: a.slug === 'derecho-penal' ? '/derecho-penal' : `/servicios-juridicos/${a.slug}`,
-              title: a.titulo,
-              description: a.descripcionCorta || '',
+              href: a.href,
+              title: a.name,
+              description: a.shortDescription,
             }))}
             placeholder='Buscar servicio jurídico: "divorcio", "despido", "contrato"...'
             domain="servicios-juridicos"
@@ -117,12 +95,12 @@ export default async function AreasJuridicasPage() {
           <AnswerBlock
             eyebrow="Catálogo de servicios"
             question="¿Qué áreas del derecho atiende Pineda y Asociados?"
-            answer={`${site.name} atiende 14 áreas del derecho en Nacaome y la zona sur de Honduras: defensa penal (pilar histórico del bufete), familia, laboral, civil y notarial, mercantil y empresarial, administrativo, bancario, aduanero, tributario, migratorio, propiedad intelectual, ambiental y conciliación. Cada caso lo dirige el abogado especialista de la rama correspondiente; el cliente tiene un único punto de contacto y, cuando un asunto cruza varias ramas, el equipo coordina internamente.`}
+            answer={`${site.name} presenta actualmente ${areas.length} áreas de práctica del bufete. Cada consulta se revisa inicialmente para identificar el área aplicable y la asignación profesional adecuada. Cuando un asunto combina varias materias, el equipo puede coordinar su análisis internamente.`}
           >
             <p className="text-sm text-text-secondary leading-relaxed text-pretty">
-              Seleccione debajo el área que corresponde a su situación. Si su caso combina varias
-              ramas, el equipo coordina internamente para que usted no tenga que gestionar varios
-              despachos.
+              El bufete publica información y presta atención en las áreas jurídicas incluidas
+              en este catálogo. La asignación depende de la materia y de las características
+              concretas del asunto.
             </p>
           </AnswerBlock>
         </Container>
@@ -140,14 +118,14 @@ export default async function AreasJuridicasPage() {
             return (
               <Reveal key={area.slug} delay={([1, 2, 3, 4] as const)[index % 4]} className="h-full">
                 <ServiceCard
-                  href={area.slug === 'derecho-penal' ? '/derecho-penal' : `/servicios-juridicos/${area.slug}`}
+                  href={area.href}
                   slug={area.slug}
-                  title={area.titulo}
-                  description={cardSummary(area.descripcionCorta)}
+                  title={area.name}
+                  description={cardSummary(area.shortDescription)}
                   category="services"
                   tone={isPriority ? 'primary' : 'administrativo'}
-                  responsible={RESPONSIBLE_BY_AREA[area.slug] ?? 'el profesional asignado según la materia'}
-                  ctaLabel={CTA_BY_AREA[area.slug] ?? `Consultar servicios de ${area.titulo.toLowerCase()}`}
+                  responsible={area.individualResponsible}
+                  ctaLabel={CTA_BY_AREA[area.slug] ?? `Consultar servicios de ${area.name.toLowerCase()}`}
                   className="h-full"
                 />
               </Reveal>
@@ -233,8 +211,8 @@ export default async function AreasJuridicasPage() {
           itemListElement: areas.map((area, i) => ({
             '@type': 'ListItem',
             position: i + 1,
-            name: area.titulo,
-            url: absoluteUrl(area.slug === 'derecho-penal' ? '/derecho-penal' : `/servicios-juridicos/${area.slug}`),
+            name: area.name,
+            url: absoluteUrl(area.href),
           })),
         }),
       }} />

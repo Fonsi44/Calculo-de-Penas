@@ -24,7 +24,7 @@ const AREAS = [
 const DESPACHO = [
   { label: 'El Despacho', title: 'Conozca el bufete Pineda y Asociados en Nacaome, Valle', href: '/despacho' },
   { label: 'Guía legal: contratar abogado en Honduras', title: 'Cómo elegir abogado en Honduras: colegiación, honorarios, documentos y errores a evitar', href: '/guia-legal-abogados-honduras' },
-  { label: 'Servicios Jurídicos', title: 'Servicios jurídicos en Nacaome: todas las ramas del derecho', href: '/servicios-juridicos' },
+  { label: 'Servicios Jurídicos', title: 'Servicios jurídicos y áreas de práctica en Nacaome', href: '/servicios-juridicos' },
   { label: 'Derecho Penal', title: 'Defensa penal en Nacaome, Valle, San Lorenzo, Choluteca y todo el sur de Honduras', href: '/derecho-penal' },
   { label: 'Blog Jurídico', title: 'Artículos y guías legales para la zona sur de Honduras', href: '/blog' },
   { label: 'Preguntas Frecuentes', title: 'Respuestas a dudas legales frecuentes', href: '/preguntas-frecuentes' },

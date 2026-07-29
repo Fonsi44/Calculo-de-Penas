@@ -115,8 +115,9 @@ describe('FASE 2 — /servicios-juridicos', () => {
     expect(servicios).not.toContain('ServiceBlocks');
   });
 
-  it('conserva el catálogo completo (getAreasUnified)', () => {
-    expect(servicios).toContain('getAreasUnified');
+  it('conserva el catálogo público canónico compartido', () => {
+    expect(servicios).toContain('PUBLIC_SERVICE_CATALOG');
+    expect(servicios).not.toContain('getAreasUnified');
   });
 
   it('no añade un <h1> en el body', () => {

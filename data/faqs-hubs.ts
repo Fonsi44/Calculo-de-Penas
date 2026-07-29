@@ -26,6 +26,7 @@
  */
 
 import { site } from '@/lib/site';
+import { PUBLIC_SERVICE_CATALOG } from '@/lib/public-service-catalog';
 
 export interface HubFaqItem {
   pregunta: string;
@@ -40,7 +41,7 @@ export const FAQ_SERVICIOS_JURIDICOS: HubFaqItem[] = [
   {
     pregunta: '¿Qué áreas del derecho cubre Pineda y Asociados?',
     respuesta:
-      'El bufete atiende 14 áreas: derecho penal, de familia, laboral, civil, notarial, mercantil y empresarial, administrativo, constitucional, migratorio, ambiental, agrario, propiedad intelectual y tributario. La defensa penal es el pilar histórico, con cobertura integral en las demás ramas para casos que combinan varios frentes.',
+      `El bufete presenta actualmente ${PUBLIC_SERVICE_CATALOG.length} áreas de práctica. La defensa penal es su pilar histórico y el catálogo público incluye, entre otras, familia, laboral, civil y notarial, mercantil, administrativo, migratorio, ambiental, propiedad intelectual y tributario.`,
   },
   {
     pregunta: '¿Atienden casos en toda Honduras o solo en el sur?',
@@ -50,7 +51,7 @@ export const FAQ_SERVICIOS_JURIDICOS: HubFaqItem[] = [
   {
     pregunta: '¿Cómo decido qué abogado del bufete lleva mi caso?',
     respuesta:
-      'Cada área la dirige un especialista: Danilo Pineda Maradiaga en derecho penal, Thania Marlene Paz en familia, civil y mercantil, y Emil Barahona en derecho laboral. En la primera consulta se identifica el área principal y se asigna al especialista correspondiente.',
+      'En la primera consulta se identifica el área aplicable y la asignación profesional adecuada. Algunas áreas tienen un responsable individual públicamente confirmado; en las demás, la asignación depende de la materia y de las características del asunto.',
   },
   {
     pregunta: '¿Ofrecen consulta inicial sin costo?',
@@ -60,7 +61,7 @@ export const FAQ_SERVICIOS_JURIDICOS: HubFaqItem[] = [
   {
     pregunta: '¿Mi caso combina varias ramas del derecho, cómo lo gestionan?',
     respuesta:
-      'El bufete coordina internamente entre especialistas cuando un caso combina, por ejemplo, penal y familia, o laboral y civil. El cliente tiene un único punto de contacto y no duplica gestiones entre despachos.',
+      'Cuando un caso combina varias materias, el equipo puede coordinar su análisis internamente. La forma de trabajo y los canales de comunicación se acuerdan según las características del asunto.',
   },
   {
     pregunta: '¿Pueden llevar asuntos a distancia si vivo fuera de Nacaome?',

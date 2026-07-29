@@ -668,9 +668,9 @@ export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
         {
           key: 'hero', label: 'Hero', fields: [
             { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'Servicios Jurídicos' },
-            { key: 'badge', label: 'Badge', type: 'text', default: 'Cobertura integral' },
+            { key: 'badge', label: 'Badge', type: 'text', default: 'Catálogo de áreas' },
             { key: 'title', label: 'Título', type: 'text', default: 'Servicios Jurídicos en Nacaome, Valle — Ramas principales del derecho' },
-            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Desde Nacaome, Valle, ofrecemos cobertura legal integral en las principales ramas del derecho hondureño. La defensa penal es nuestra especialidad destacada y la acompañamos con servicios especializados en familia, laboral, civil, mercantil, tributario y más.' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Desde Nacaome, Valle, prestamos atención en las áreas publicadas en este catálogo. La defensa penal es el pilar histórico del bufete y cada consulta se asigna según su materia y circunstancias.' },
           ],
         },
         {
