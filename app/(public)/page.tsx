@@ -133,32 +133,6 @@ export default async function HomePage() {
     ...areasGenerales.filter((area) => HIGHLIGHTED_AREAS.includes(area.slug)),
   ];
 
-  // FAQ i18n home — LEGACY STRUCTURED-DATA (no UI, no fuente canónica).
-  // Único rol: alimentar el schema JSON-LD FAQPage (rich result) de la home.
-  // No se renderiza visible en la home (ver transformación Fase 3.1); la FAQ
-  // visible vive en /preguntas-frecuentes. La fuente canónica de FAQ comercial
-  // es lib/faq-unified.ts (getFaqsForHub). Estas 6 Q/A i18n se conservan
-  // únicamente para sostener el rich result de la home sin introducir
-  // duplicación visual. Marcar como LEGACY: no ampliar ni usar como modelo.
-  const FAQ_HOME_LEGACY = [
-    { q: t('faq.q1'), a: t('faq.a1') },
-    { q: t('faq.q2'), a: t('faq.a2') },
-    { q: t('faq.q3'), a: t('faq.a3') },
-    { q: t('faq.q4'), a: t('faq.a4') },
-    { q: t('faq.q5'), a: t('faq.a5') },
-    { q: t('faq.q6'), a: t('faq.a6') },
-  ];
-
-  const faqLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: FAQ_HOME_LEGACY.map((f) => ({
-      '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
-    })),
-  };
-
   return (
     <>
       {/* HERO — potente pero equilibrado: texto (7 col) + panel informativo (5 col).
@@ -383,10 +357,6 @@ export default async function HomePage() {
         subtitle="Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones legales disponibles. Atendemos en Nacaome, San Lorenzo, Amapala, Langue, Goascorán, Choluteca, Pespiré, San Marcos de Colón, Marcovia y El Triunfo. Presupuesto por escrito antes de cualquier actuación. Sus datos están protegidos por el secreto profesional del abogado."
       />
 
-      {/* Schema.org JSON-LD — FAQPage (las 6 preguntas i18n se conservan
-          para rich results AEO/GEO; el render visual vive en
-          /preguntas-frecuentes para evitar triplicación). */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
     </>
   );
 }

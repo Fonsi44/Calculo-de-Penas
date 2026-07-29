@@ -1,17 +1,16 @@
 import type { Metadata } from 'next';
 import {
-  Scale, ShieldAlert, Gavel, Users, Briefcase, FileText,
-  Building2, Globe, DollarSign, Shield, HelpCircle,
-  ChevronDown,
+  Shield, HelpCircle, ChevronDown,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { site } from '@/lib/site';
 import { Section, SectionHeader } from '@/components/marketing/section';
-import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
-import { getFaqsForPublicPage, type FaqCategoryPublic } from '@/lib/faq-db';
+import {
+  getCorporateFaqsForPublicPage,
+  type CorporateFaqCategoryPublic,
+} from '@/lib/faq-db';
 import { faqPageSchema } from '@/lib/schemas/legal-page';
-import { stripHtml } from '@/lib/strip-html';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import Link from 'next/link';
@@ -37,69 +36,6 @@ type FaqCluster = {
 };
 
 const CAT_META: Record<string, CatMeta> = {
-  'derecho-penal-general': {
-    icon: Scale,
-    iconColor: 'text-primary',
-    borderColor: 'border-l-primary/40',
-    badgeBg: 'bg-primary/8',
-    badgeText: 'text-primary',
-  },
-  'asistencia-detenidos': {
-    icon: ShieldAlert,
-    iconColor: 'text-aggravation',
-    borderColor: 'border-l-aggravation/40',
-    badgeBg: 'bg-aggravation/8',
-    badgeText: 'text-aggravation',
-  },
-  'proceso-penal': {
-    icon: Gavel,
-    iconColor: 'text-accent-dark',
-    borderColor: 'border-l-accent/40',
-    badgeBg: 'bg-accent/10',
-    badgeText: 'text-accent-dark',
-  },
-  'derecho-de-familia': {
-    icon: Users,
-    iconColor: 'text-primary',
-    borderColor: 'border-l-primary/40',
-    badgeBg: 'bg-primary/8',
-    badgeText: 'text-primary',
-  },
-  'derecho-laboral': {
-    icon: Briefcase,
-    iconColor: 'text-warning',
-    borderColor: 'border-l-warning/40',
-    badgeBg: 'bg-warning/8',
-    badgeText: 'text-warning',
-  },
-  'derecho-civil': {
-    icon: FileText,
-    iconColor: 'text-text-muted',
-    borderColor: 'border-l-border',
-    badgeBg: 'bg-surface-alt',
-    badgeText: 'text-text-secondary',
-  },
-  'derecho-mercantil': {
-    icon: Building2,
-    iconColor: 'text-text-muted',
-    borderColor: 'border-l-border',
-    badgeBg: 'bg-surface-alt',
-    badgeText: 'text-text-secondary',
-  },
-  'extranjeria-migracion': {
-    icon: Globe,
-    iconColor: 'text-primary',
-    borderColor: 'border-l-primary/40',
-    badgeBg: 'bg-primary/8',
-    badgeText: 'text-primary',
-  },
-  'tributario-sar': {
-    icon: DollarSign,
-    iconColor: 'text-warning',
-    borderColor: 'border-l-warning/40',
-    badgeBg: 'bg-warning/8',
-    badgeText: 'text-warning',
-  },
   'bufete-honorarios': {
     icon: Shield,
     iconColor: 'text-accent-dark',
@@ -107,75 +43,19 @@ const CAT_META: Record<string, CatMeta> = {
     badgeBg: 'bg-accent/10',
     badgeText: 'text-accent-dark',
   },
-  'otras-areas': {
-    icon: HelpCircle,
-    iconColor: 'text-text-muted',
-    borderColor: 'border-l-border',
-    badgeBg: 'bg-surface-alt',
-    badgeText: 'text-text-secondary',
-  },
 };
 
 const FAQ_CLUSTERS: FaqCluster[] = [
   {
-    id: 'derecho-penal',
-    title: 'Derecho penal',
-    quickAnswer:
-      'Si enfrenta una detención, citación o investigación penal en Honduras, lo prioritario es activar defensa técnica desde el primer contacto con la autoridad. Las primeras horas definen medidas cautelares, acceso al expediente y estrategia de protección de derechos. Actuar tarde incrementa riesgos procesales y probatorios.',
-    categorySlugs: ['derecho-penal-general', 'asistencia-detenidos', 'proceso-penal'],
-  },
-  {
-    id: 'derecho-laboral',
-    title: 'Derecho laboral',
-    quickAnswer:
-      'En conflictos laborales, los plazos legales suelen ser cortos y la documentación inicial es determinante. Contrato, constancias de pago, comunicaciones y pruebas de jornada ayudan a sustentar reclamos o defensas. Una evaluación temprana permite definir si conviene conciliación, inspección administrativa o demanda judicial.',
-    categorySlugs: ['derecho-laboral'],
-  },
-  {
-    id: 'derecho-familiar',
-    title: 'Derecho familiar',
-    quickAnswer:
-      'Divorcio, custodia, pensión alimenticia y medidas de protección exigen enfoque estratégico y trato humano. Cada caso se analiza con prioridad en seguridad, estabilidad familiar y cumplimiento judicial. La orientación temprana evita errores de trámite y facilita acuerdos sostenibles cuando son jurídicamente viables.',
-    categorySlugs: ['derecho-de-familia'],
-  },
-  {
-    id: 'derecho-civil',
-    title: 'Derecho civil y notarial',
-    quickAnswer:
-      'Contratos, cobros, sucesiones, inmuebles y actos notariales requieren revisión técnica antes de firmar o demandar. Un análisis preventivo reduce litigios costosos y protege su posición jurídica. Cuando ya existe conflicto, se traza una ruta clara de reclamación, negociación o defensa según evidencia y plazos.',
-    categorySlugs: ['derecho-civil'],
-  },
-  {
-    id: 'servicios-juridicos',
-    title: 'Servicios jurídicos especializados',
-    quickAnswer:
-      'Si su asunto involucra empresa, migración, tributos, banca, aduanas, regulación sanitaria o áreas administrativas, conviene definir desde el inicio la rama principal y las ramas de apoyo. Esto evita gestiones duplicadas y acelera la toma de decisiones con una estrategia jurídica integral y trazable.',
-    categorySlugs: ['derecho-mercantil', 'extranjeria-migracion', 'tributario-sar', 'otras-areas'],
-  },
-  {
     id: 'consultas',
-    title: 'Consultas iniciales',
+    title: 'Consultas, honorarios y atención',
     quickAnswer:
-      'La consulta inicial se enfoca en entender hechos, identificar riesgos inmediatos y proponer pasos legales realistas. Mientras más claro sea el contexto y la documentación disponible, más precisa será la orientación. El objetivo es que usted decida informado, con tiempos, costos y alcance definidos por escrito.',
+      'Información corporativa para preparar el primer contacto, conocer cómo se protege su información y entender cuándo se informa el presupuesto.',
     categorySlugs: ['bufete-honorarios'],
-  },
-  {
-    id: 'honorarios',
-    title: 'Honorarios',
-    quickAnswer:
-      'Los honorarios se determinan según complejidad, urgencia, etapas procesales y carga documental del caso. Antes de iniciar actuación profesional se presenta presupuesto por escrito para transparencia y control. Este enfoque evita ambiguedades y permite planificar la estrategia legal con criterios financieros claros.',
-    categorySlugs: [],
-  },
-  {
-    id: 'atencion-local-y-tramites',
-    title: 'Atención local y trámites frecuentes',
-    quickAnswer:
-      'La atención local en Nacaome, Choluteca y San Lorenzo facilita diligencias urgentes, coordinación con juzgados y seguimiento documental oportuno. En trámites frecuentes, preparar requisitos desde el inicio reduce retrasos y rechazos. La prioridad siempre es ejecutar pasos concretos, verificables y adecuados al tipo de asunto.',
-    categorySlugs: [],
   },
 ];
 
-function SectionChip({ cat }: { cat: FaqCategoryPublic }) {
+function SectionChip({ cat }: { cat: CorporateFaqCategoryPublic }) {
   const m = CAT_META[cat.slug];
   const Icon = m?.icon ?? HelpCircle;
   const colorCls = m?.iconColor ?? 'text-text-muted';
@@ -188,23 +68,22 @@ function SectionChip({ cat }: { cat: FaqCategoryPublic }) {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const categoriasFaq = (await getFaqsForPublicPage())
-    .filter((category) => category.slug === 'bufete-honorarios');
+  const categoriasFaq = await getCorporateFaqsForPublicPage();
   const total = categoriasFaq.reduce((acc, c) => acc + c.preguntas.length, 0);
   return {
-    title: `Preguntas Frecuentes en Honduras`,
-    description: `${total} respuestas a preguntas frecuentes sobre defensa penal, familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas con ${site.name}.`,
+    title: 'Preguntas frecuentes sobre consultas y honorarios',
+    description: `${total} respuestas sobre la primera consulta gratuita, confidencialidad, documentación, honorarios, presupuesto y atención de ${site.name}.`,
     alternates: { canonical: '/preguntas-frecuentes' },
-    keywords: ['preguntas frecuentes legales Honduras', 'dudas derecho penal', 'FAQ abogados Honduras', 'consultas legales frecuentes', 'derecho familia preguntas', 'proceso penal dudas', 'honorarios abogados Honduras'],
+    keywords: ['primera consulta gratuita', 'honorarios abogados Honduras', 'presupuesto legal', 'confidencialidad abogado', 'documentos primera consulta'],
     twitter: {
       card: 'summary_large_image',
-      title: `Preguntas Frecuentes en Honduras`,
-      description: `${total} respuestas sobre defensa penal, familia, laboral, civil, mercantil y más. Resuelva sus dudas con ${site.name}.`,
+      title: 'Preguntas frecuentes sobre consultas y honorarios',
+      description: `${total} respuestas sobre consulta gratuita, confidencialidad, documentación, honorarios, presupuesto y atención.`,
       images: [`${site.url}/og/faq.webp`],
     },
     openGraph: {
-      title: `Preguntas Frecuentes en Honduras`,
-      description: `${total} respuestas a preguntas frecuentes sobre defensa penal, familia, laboral, civil, mercantil y más en Honduras. Resuelva sus dudas con ${site.name}.`,
+      title: 'Preguntas frecuentes sobre consultas y honorarios',
+      description: `${total} respuestas sobre consulta gratuita, confidencialidad, documentación, honorarios, presupuesto y atención de ${site.name}.`,
       url: `${site.url}/preguntas-frecuentes`,
       siteName: site.name,
       locale: 'es_HN',
@@ -215,9 +94,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function FaqPage() {
-  const todasCategoriasFaq = await getFaqsForPublicPage();
-  const categoriasFaq = todasCategoriasFaq
-    .filter((category) => category.slug === 'bufete-honorarios');
+  const categoriasFaq = await getCorporateFaqsForPublicPage();
   const totalPreguntas = categoriasFaq.reduce((acc, cat) => acc + cat.preguntas.length, 0);
   const categoriesBySlug = new Map(categoriasFaq.map((c) => [c.slug, c]));
 
@@ -225,16 +102,14 @@ export default async function FaqPage() {
       ...cluster,
       categories: cluster.categorySlugs
         .map((slug) => categoriesBySlug.get(slug))
-        .filter((cat): cat is FaqCategoryPublic => Boolean(cat)),
+        .filter((cat): cat is CorporateFaqCategoryPublic => Boolean(cat)),
     }))
     .filter((cluster) => cluster.categories.length > 0);
 
   const flatFaqs = categoriasFaq.flatMap((c) =>
     c.preguntas.map((p) => ({
       pregunta: p.pregunta,
-      // stripHtml (sanitize-html) en vez de regex: decodifica entidades y
-      // maneja tags anidados correctamente para el FAQPage schema.
-      respuesta: stripHtml(p.respuesta),
+      respuesta: p.respuestaTexto,
     })),
   );
   const flatFaqsForSchema = flatFaqs;
@@ -247,14 +122,12 @@ export default async function FaqPage() {
       ]} />
       <PageHero
         eyebrow="Preguntas Frecuentes"
-        badge="Todas las ramas legales"
-        title="Resuelva sus dudas legales"
+        badge="Información del bufete"
+        title="Antes de su primera consulta"
         subtitle={
           <>
-            {totalPreguntas} respuestas corporativas sobre ubicación, cobertura,
-            evaluación inicial, honorarios, presupuesto, confidencialidad, urgencias
-            y documentación. Las dudas jurídicas específicas se responden en la
-            página de cada área de práctica.
+            {totalPreguntas} respuestas sobre la primera consulta gratuita,
+            confidencialidad, documentación, honorarios, presupuesto y atención.
           </>
         }
         cta={<CTAGroup variant="inverse" />}
@@ -265,9 +138,9 @@ export default async function FaqPage() {
 
       <Section spacing="sm">
         <SectionHeader
-          eyebrow="Indice tematico"
-          title="Navegue por tipo de consulta"
-          subtitle="Organizamos las preguntas en clusters para que encuentre respuestas utiles mas rapido."
+          eyebrow="Índice temático"
+          title="Información para preparar su consulta"
+          subtitle="Encuentre respuestas útiles sobre la atención del bufete."
           align="center"
         />
         <div className="flex flex-wrap gap-2 justify-center">
@@ -317,9 +190,11 @@ export default async function FaqPage() {
                       <span className="text-xs text-text-tertiary">{cat.descripcion}</span>
                     </div>
 
-                    {cat.preguntas.map((p, i) => (
+                    {cat.preguntas.map((p) => (
                       <details
-                        key={i}
+                        key={p.id}
+                        id={p.id}
+                        data-faq-question={p.pregunta}
                         className={`faq-anim group bg-background rounded-lg border border-border/70 hover:border-accent/40 hover:shadow-md transition-all open:shadow-md open:border-accent/30 card-premium ${borderCls} border-l-[3px]`}
                       >
                         <summary className="flex items-center justify-between gap-3 cursor-pointer list-none px-5 py-4 text-sm font-semibold text-text leading-snug hover:text-primary transition-colors">
@@ -353,27 +228,6 @@ export default async function FaqPage() {
             </div>
           )}
 
-          {cluster.id === 'honorarios' && (
-            <div className="grid gap-3 max-w-4xl">
-              <Card padding="md" className="border-l-4 border-l-accent">
-                <h3 className="font-bold text-sm text-text">Cuando se define el costo de un caso</h3>
-                <p className="mt-1.5 text-sm text-text-secondary leading-relaxed">
-                  El costo se define despues de revisar hechos, urgencia, volumen documental y etapas previstas. No se recomienda fijar cifras sin analisis tecnico previo. El despacho entrega presupuesto por escrito antes de cualquier actuacion para que usted pueda decidir con transparencia y sin sorpresas.
-                </p>
-              </Card>
-            </div>
-          )}
-
-          {cluster.id === 'atencion-local-y-tramites' && (
-            <div className="grid gap-3 max-w-4xl">
-              <Card padding="md" className="border-l-4 border-l-primary/40">
-                <h3 className="font-bold text-sm text-text">Que documentos llevar en la primera consulta</h3>
-                <p className="mt-1.5 text-sm text-text-secondary leading-relaxed">
-                  Lleve identificacion, resoluciones, citaciones, contratos y cualquier evidencia relacionada con su asunto. Si no tiene todo, se prioriza lo urgente y se define una lista de documentos faltantes por etapas. Esto acelera la estrategia y evita retrasos en tramites judiciales o administrativos.
-                </p>
-              </Card>
-            </div>
-          )}
         </Section>
       ))}
 
@@ -417,14 +271,16 @@ export default async function FaqPage() {
         ctaHref="/blog"
       />
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            faqPageSchema(flatFaqsForSchema, `${site.url}/preguntas-frecuentes`),
-          ),
-        }}
-      />
+      {flatFaqsForSchema.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              faqPageSchema(flatFaqsForSchema, `${site.url}/preguntas-frecuentes`),
+            ),
+          }}
+        />
+      )}
       <ConsultationCTA />
     </>
   );

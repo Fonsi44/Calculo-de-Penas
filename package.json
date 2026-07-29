@@ -94,6 +94,7 @@
     "security:blog-html": "vitest run tests/blog-html-sanitizer.test.ts && npx tsx scripts/audit-blog-html-sanitization.ts",
     "seo:blog-metadata-only": "vitest run tests/blog-metadata-only.test.ts && npx tsx scripts/audit-blog-metadata-only.ts",
     "seo:blog-route-contract": "vitest run tests/blog-route-contract.test.ts && npx tsx scripts/audit-blog-route-contract.ts",
+    "seo:faq-contract": "vitest run tests/faq-public-contract.test.ts && npx tsx scripts/audit-faq-contract.ts",
     "legal:generated-cta-copy": "npx tsx scripts/validate-generated-cta-copy.ts && vitest run tests/blog-metadata-only.test.ts",
     "seo:health": "node scripts/seo-health-check.mjs",
     "seo:health:json": "node scripts/seo-health-check.mjs --json",

@@ -254,11 +254,11 @@ describe('FASE 3 — Afirmaciones P01-P15 no verificadas', () => {
 /* -------------------------------------------------------------------------- */
 
 describe('FASE 3 — FAQ visible alineada con JSON-LD', () => {
-  it('[slug] pasa area.faqs tanto a areaSchemas como al render visible', () => {
+  it('[slug] delega area.faqs únicamente en HubFaq', () => {
     const src = readPublic('servicios-juridicos/[slug]/page.tsx');
     // HubFaq recibe area.faqs y genera el render visible + JSON-LD FAQPage.
-    expect(src).toMatch(/faqs:\s*area\.faqs/);
-    expect(src).toMatch(/HubFaq/);
+    expect(src).toMatch(/<HubFaq[\s\S]*faqs=\{area\.faqs\}/);
+    expect(src).not.toMatch(/faqs:\s*area\.faqs/);
   });
 
   it('cada área prioritaria tiene entre 5 y 8 FAQ', () => {

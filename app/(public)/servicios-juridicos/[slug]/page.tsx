@@ -215,7 +215,8 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
       keywords: area.keywords,
       url,
     },
-    faqs: area.faqs,
+    // HubFaq renderiza la colección visible y emite el único FAQPage.
+    // No duplicar el mismo schema desde areaSchemas.
     breadcrumbs: [
       { name: 'Inicio', url: absoluteUrl('/') },
       { name: 'Servicios Jurídicos', url: absoluteUrl('/servicios-juridicos') },
