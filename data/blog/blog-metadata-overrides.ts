@@ -34,10 +34,6 @@ export const BLOG_METADATA_OVERRIDES: Readonly<
     title: 'Cómo Elegir Abogado en Nacaome: 10 Criterios antes de Contratar',
     description: 'Criterios prácticos para elegir abogado en Nacaome: especialidad, honorarios, comunicación y experiencia antes de contratar servicios jurídicos en Valle.',
   },
-  'abogados-en-pespire-choluteca': {
-    title: 'Abogados en Pespire, Honduras: orientación legal para su caso',
-    description: 'Asesoría jurídica para personas, familias y empresas de Pespire y la zona sur de Honduras, con atención desde Nacaome y presupuesto por escrito.',
-  },
   'audiencia-inicial-proceso-penal-honduras': {
     title: 'Audiencia inicial en Honduras: proceso y preparación',
     description: 'Explicación general de la audiencia inicial, la importancia de la defensa técnica y la documentación que conviene organizar con antelación.',
@@ -69,12 +65,6 @@ export const BLOG_METADATA_OVERRIDES: Readonly<
   'estafas-fraudes-tipos-penales-honduras': {
     title: 'Estafa en Honduras: Tipos, Denuncia y Defensa',
     description: 'Tipos de estafa según el Código Penal de Honduras, cómo denunciar y cuándo buscar defensa legal ante acusaciones por fraude.',
-  },
-  'herencias-honduras-fallece-familiar': {
-    title: 'Herencia en Honduras: qué hacer tras un fallecimiento',
-    metaTitle: 'Herencia en Honduras tras un fallecimiento',
-    description: 'Qué documentos reunir y qué pasos considerar tras el fallecimiento de un familiar en Honduras, exista o no testamento.',
-    metaDescription: 'Revise qué documentos reunir y qué pasos considerar tras el fallecimiento de un familiar en Honduras, exista o no testamento.',
   },
   'testamentos-sucesiones-herencia-honduras': {
     title: 'Testamentos y sucesiones en Honduras: trámites hereditarios',

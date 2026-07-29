@@ -27,10 +27,10 @@ describe('contrato metadata-only del blog', () => {
 
   it('separa las dos intenciones hereditarias', () => {
     const changes = Object.values(BLOG_METADATA_CHANGE_PLAN);
-    expect(changes).toHaveLength(2);
-    expect(new Set(changes.map((item) => item.after.title)).size).toBe(2);
-    expect(new Set(changes.map((item) => item.after.metaTitle)).size).toBe(2);
-    expect(new Set(changes.map((item) => item.after.metaDescription)).size).toBe(2);
+    expect(changes).toHaveLength(1);
+    expect(BLOG_METADATA_OVERRIDES['herencias-honduras-fallece-familiar']).toBeUndefined();
+    expect(BLOG_METADATA_OVERRIDES['testamentos-sucesiones-herencia-honduras'])
+      .toBeDefined();
   });
 
   it('mantiene metatítulos dentro del rango orientativo', () => {

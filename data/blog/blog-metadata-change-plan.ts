@@ -13,21 +13,6 @@ export type BlogMetadataChange = {
 };
 
 export const BLOG_METADATA_CHANGE_PLAN: Readonly<Record<string, BlogMetadataChange>> = {
-  'herencias-honduras-fallece-familiar': {
-    before: {
-      title: 'Herencias en Honduras: Testamento y Sucesión',
-      metaTitle: 'Herencias en Honduras: Testamento y Sucesión',
-      description: 'Pasos para ordenar una herencia en Honduras: testamentos, sucesión intestada, documentos necesarios y diferencias entre vía notarial y judicial.',
-      metaDescription: 'Pasos para ordenar una herencia en Honduras: testamentos, sucesión intestada, documentos necesarios y diferencias entre vía notarial y judicial.',
-    },
-    after: {
-      title: 'Herencia en Honduras: qué hacer tras un fallecimiento',
-      metaTitle: 'Herencia en Honduras tras un fallecimiento',
-      description: 'Qué documentos reunir y qué pasos considerar tras el fallecimiento de un familiar en Honduras, exista o no testamento.',
-      metaDescription: 'Revise qué documentos reunir y qué pasos considerar tras el fallecimiento de un familiar en Honduras, exista o no testamento.',
-    },
-    reason: 'FIX_DUPLICATE',
-  },
   'testamentos-sucesiones-herencia-honduras': {
     before: {
       title: 'Herencias en Honduras: Testamento y Sucesión',
