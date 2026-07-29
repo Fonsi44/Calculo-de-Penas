@@ -28,6 +28,11 @@ import {
   detectMentionedCities,
 } from '@/lib/blog-context-linker';
 import { normalizeBlogLinksForRender } from '@/lib/blog-link-normalizer';
+import {
+  sanitizeBlogRenderedHtml,
+  sanitizeBlogSourceHtml,
+  serializeBlogJsonLd,
+} from '@/lib/blog-html-sanitizer';
 import { RelatedCities, RelatedCategories } from '@/components/marketing/related-links';
 import {
   toCardData,
@@ -365,18 +370,23 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
   // Inyecta CTA mid-article y luego asigna IDs estables a los H2/H3 del body
   // (server-side) para que el TOC y los fragment anchors (#section) existan en
   // el HTML servidor (SEO/GEO: crawlers y LLMs ven la estructura del doc).
-  const rawHtml = injectMidArticleCta(post.body, post.slug);
+  // Frontera 1: todo body persistido es no confiable. La sanitización ocurre
+  // exclusivamente en render y nunca altera el body ni su hash editorial.
+  const sanitizedSource = sanitizeBlogSourceHtml(post.body);
+  const rawHtml = injectMidArticleCta(sanitizedSource.html, post.slug);
   const { html: withHeadings, headings } = injectHeadingIds(rawHtml);
   // AUTO-LINKING CONTEXTUAL (Jul 2026): inserta enlaces internos a ciudades y
   // áreas de práctica detectadas en el body. Crea la tela de araña blog→geo.
   // Anti-over-optimization: máx 5 enlaces, respeta headings y anchors existentes.
   const renderSafeHtml = normalizeBlogLinksForRender(withHeadings).html;
-  const articleHtml = injectContextLinks(renderSafeHtml, {
+  const contextLinkedHtml = injectContextLinks(renderSafeHtml, {
     excludeHrefs: [postUrl], // evitar self-link
   });
+  // Frontera 2: ninguna transformación controlada llega directamente al sink.
+  const articleHtml = sanitizeBlogRenderedHtml(contextLinkedHtml).html;
   // Detecta ciudades mencionadas para el bloque RelatedCities al final.
-  const mentionedCities = detectMentionedCities(post.body);
-  const faqItems = extractFAQSchema(post.body);
+  const mentionedCities = detectMentionedCities(sanitizedSource.html);
+  const faqItems = extractFAQSchema(sanitizedSource.html);
   const faqLd = faqPageSchema(faqItems);
 
   const categoryCounts = deriveCategoryCounts(allPosts);
@@ -682,12 +692,12 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
       {/* ── SCHEMAS ── */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostSchema(post)) }}
+        dangerouslySetInnerHTML={{ __html: serializeBlogJsonLd(blogPostSchema(post)) }}
       />
       {faqLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeBlogJsonLd(faqLd) }}
         />
       )}
     </>

@@ -2,7 +2,10 @@ import { notFound } from 'next/navigation';
 import { redirect } from 'next/navigation';
 import type { Metadata } from 'next';
 import { consumePreviewToken } from '@/lib/preview-db';
-import { sanitizeHtml } from '@/lib/sanitize';
+import {
+  sanitizeBlogRenderedHtml,
+  sanitizeBlogSourceHtml,
+} from '@/lib/blog-html-sanitizer';
 import { getTokenFromCookies, verifyToken } from '@/lib/auth';
 import { headers } from 'next/headers';
 
@@ -43,7 +46,8 @@ export default async function PreviewPage({ params }: { params: Promise<{ token:
   }
 
   // Defense in depth: re-sanitize HTML before serving.
-  const safeBody = sanitizeHtml(payload.body);
+  const safeSource = sanitizeBlogSourceHtml(payload.body);
+  const safeBody = sanitizeBlogRenderedHtml(safeSource.html).html;
 
   return (
     <div className="min-h-screen bg-white">
