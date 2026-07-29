@@ -1,13 +1,19 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
+import { cache } from 'react';
 import { notFound } from 'next/navigation';
 import { CheckCircle2, ArrowRight, Award } from 'lucide-react';
 import { Section, Container } from '@/components/marketing/section';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { LegalDisclaimer } from '@/components/marketing/legal-disclaimer';
-import { getPublishedPosts } from '@/lib/blog-db';
-import { normalizeReviewStatus } from '@/lib/legal-review';
+import { getPublishedArticleAttributionMetadata } from '@/lib/blog-db';
+import {
+  attributionForProfile,
+  type PublicArticleAttribution,
+} from '@/lib/blog-attribution';
+import { getCategoryName } from '@/lib/blog-format';
 import { buildMetadata } from '@/lib/seo';
 import {
   site,
@@ -19,6 +25,7 @@ import {
 } from '@/lib/site';
 
 export const revalidate = 3600;
+const getAttributions = cache(getPublishedArticleAttributionMetadata);
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -86,16 +93,13 @@ export default async function LawyerProfilePage({ params }: Props) {
   // Artículos escritos y revisados por este abogado (DB-resiliente: si la DB
   // no es alcanzable, se muestra la sección vacía sin romper). Excluye posts
   // pendientes de revisión (noindex) — solo listamos verificados.
-  let authored = 0;
-  let reviewed = 0;
+  let authored: PublicArticleAttribution[] = [];
+  let reviewed: PublicArticleAttribution[] = [];
   try {
-    const posts = await getPublishedPosts();
-    for (const p of posts) {
-      const verified = normalizeReviewStatus(p.reviewStatus) === 'verified';
-      if (!verified) continue;
-      if (p.author === profile.name) authored += 1;
-      if (p.reviewedBy === profile.name) reviewed += 1;
-    }
+    ({ authored, reviewed } = attributionForProfile(
+      await getAttributions(),
+      profile.name,
+    ));
   } catch {
     // En build/preview sin DB, la sección simplemente muestra availability
     // condicional en runtime. No se inventan artículos.
@@ -132,7 +136,8 @@ export default async function LawyerProfilePage({ params }: Props) {
       {/* HERO del perfil */}
       <Section spacing="sm">
         <Container size="lg">
-          <div className="max-w-3xl mx-auto">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(280px,1fr)] lg:items-center">
+            <div>
             <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-eyebrow px-3 py-1.5 rounded-full bg-primary/10 text-primary mb-5">
               Abogado colegiado en Honduras
             </p>
@@ -176,6 +181,17 @@ export default async function LawyerProfilePage({ params }: Props) {
                 )}
               </div>
             )}
+            </div>
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-lg border border-border/50 bg-surface-alt">
+              <Image
+                src={profile.image}
+                alt={profile.imageAlt}
+                fill
+                priority
+                sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw"
+                className="object-cover object-top"
+              />
+            </div>
           </div>
         </Container>
       </Section>
@@ -234,16 +250,44 @@ export default async function LawyerProfilePage({ params }: Props) {
       <Section spacing="sm">
         <Container size="lg">
           <div className="max-w-3xl mx-auto text-sm text-text-secondary">
-            {authored > 0 || reviewed > 0 ? (
-              <p>
-                {authored > 0 && <>Autor de {authored} artículo{authored > 1 ? 's' : ''} verificado{authored > 1 ? 's' : ''} en el blog.</>}
-                {authored > 0 && reviewed > 0 && <br />}
-                {reviewed > 0 && <>Revisor jurídico de {reviewed} contenido{reviewed > 1 ? 's' : ''}.</>}
-              </p>
+            {authored.length > 0 || reviewed.length > 0 ? (
+              <div className="space-y-8">
+                {authored.length > 0 && (
+                  <div>
+                    <h2 className="text-xl font-bold text-text">Artículos publicados</h2>
+                    <p className="mt-1">{authored.length} artículo{authored.length === 1 ? '' : 's'} con autoría individual declarada.</p>
+                    <ul className="mt-4 space-y-3">
+                      {authored.slice(0, 6).map((article) => (
+                        <li key={article.href}>
+                          <Link className="font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent" href={article.href}>
+                            {article.title}
+                          </Link>
+                          <span className="block text-xs text-text-muted">{getCategoryName(article.category) ?? article.category}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {reviewed.length > 0 && (
+                  <div>
+                    <h2 className="text-xl font-bold text-text">Contenidos con revisión individual firmada</h2>
+                    <p className="mt-1">{reviewed.length} contenido{reviewed.length === 1 ? '' : 's'} con revisión individual firmada.</p>
+                    <ul className="mt-4 space-y-3">
+                      {reviewed.slice(0, 6).map((article) => (
+                        <li key={article.href}>
+                          <Link className="font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent" href={article.href}>
+                            {article.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
             ) : (
               <p className="text-text-muted">
-                Los artículos jurídicos del bufete se asignan por área de
-                práctica y se publican únicamente tras revisión jurídica humana.
+                Los contenidos jurídicos del bufete se publican bajo un modelo de
+                revisión institucional o individual según la evidencia editorial disponible.
               </p>
             )}
           </div>

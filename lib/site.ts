@@ -560,6 +560,7 @@ export function founderSchema() {
     // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'Person',
     '@id': `${site.url}/#danilo-pineda-maradiaga`,
+    url: `${site.url}/equipo/${FOUNDER_PROFILE.slug}`,
     name: FOUNDER_PROFILE.name,
     honorificPrefix: 'Abogado',
     // knowsLanguage: coherente con LegalService y Organization.
@@ -608,7 +609,7 @@ export function founderSchema() {
     // (perfil del bufete en Google Maps que lo representa como abogado).
     // NO se inventan perfiles (R4). Cuando se verifique LinkedIn
     // personal, añadirlo vía variables de entorno.
-    sameAs: validUrlsOnly([site.social.x, site.googleBusiness, FOUNDER_PROFILE.linkedin, FOUNDER_PROFILE.directorio]),
+    sameAs: validUrlsOnly([site.social.x, FOUNDER_PROFILE.linkedin, FOUNDER_PROFILE.directorio]),
   };
 }
 
@@ -656,6 +657,7 @@ export function thaniaSchema() {
     // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'Person',
     '@id': `${site.url}/#thania`,
+    url: `${site.url}/equipo/${THANIA_PROFILE.slug}`,
     name: THANIA_PROFILE.name,
     honorificPrefix: 'Abogada',
     // knowsLanguage: coherente con LegalService y Organization.
@@ -728,6 +730,7 @@ export function emilSchema() {
     // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'Person',
     '@id': `${site.url}/#emil`,
+    url: `${site.url}/equipo/${EMIL_PROFILE.slug}`,
     name: EMIL_PROFILE.name,
     honorificPrefix: 'Abogado',
     // knowsLanguage: coherente con LegalService y Organization.

@@ -6,7 +6,14 @@ import {
   getLimitedTestBlogFixtures,
   resolvePreviewBlogDataMode,
 } from '@/lib/preview-blog-fixtures';
-import { editorialSignatureSchemaMode } from '@/lib/editorial-signature';
+import {
+  editorialSignatureSchemaMode,
+  hashEditorialContent,
+} from '@/lib/editorial-signature';
+import {
+  projectPublicAttribution,
+  type ArticleAttributionRow,
+} from '@/lib/blog-attribution';
 
 /**
  * Contrato de lectura del blog público.
@@ -160,6 +167,79 @@ export async function getPublishedPosts(opts?: { limit?: number; category?: stri
     }
     return [];
   }
+}
+
+const attributionSelection = {
+  slug: blogPosts.slug,
+  title: blogPosts.title,
+  category: blogPosts.category,
+  publishedAt: blogPosts.publishedAt,
+  author: blogPosts.author,
+  published: blogPosts.published,
+  noindex: blogPosts.noindex,
+  reviewStatus: blogPosts.reviewStatus,
+  reviewedBy: blogPosts.reviewedBy,
+  reviewOrigin: blogPosts.reviewOrigin,
+  signatureType: blogPosts.signatureType,
+  signatureName: blogPosts.signatureName,
+  signatureCandidate: blogPosts.signatureCandidate,
+  signatureValid: blogPosts.signatureValid,
+  hashValid: sql<boolean>`encode(sha256(convert_to(${blogPosts.body}, 'UTF8')), 'hex') = ${blogPosts.reviewedContentHash}`,
+} as const;
+
+function snapshotAttributionRows(
+  posts: ReturnType<typeof getFullPublicBlogSnapshot>,
+): ArticleAttributionRow[] {
+  return posts.map((post) => ({
+    slug: post.slug,
+    title: post.title,
+    category: post.category,
+    publishedAt: post.publishedAt,
+    author: post.author,
+    published: post.published,
+    noindex: post.noindex,
+    reviewStatus: post.reviewStatus,
+    reviewedBy: post.reviewedBy,
+    reviewOrigin: post.reviewOrigin,
+    signatureType: post.signatureType,
+    signatureName: post.signatureName,
+    signatureCandidate: post.signatureCandidate,
+    signatureValid: post.signatureValid,
+    hashValid: post.reviewedContentHash
+      ? hashEditorialContent(post.body) === post.reviewedContentHash
+      : editorialSignatureSchemaMode() === 'LEGACY_INSTITUTIONAL_MODE',
+    redirected: false,
+  }));
+}
+
+/** Proyección pública ligera para perfiles. Nunca devuelve body ni notas. */
+export async function getPublishedArticleAttributionMetadata() {
+  const mode = resolvePreviewBlogDataMode();
+  if (mode === 'limited-test-fixtures') {
+    return snapshotAttributionRows(getLimitedTestBlogFixtures())
+      .map((row) => projectPublicAttribution(row, editorialSignatureSchemaMode()));
+  }
+  if (mode === 'full-public-snapshot') {
+    const posts = getFullPublicBlogSnapshot();
+    assertCanonicalPreviewInventory(posts.length);
+    return snapshotAttributionRows(posts)
+      .map((row) => projectPublicAttribution(row, editorialSignatureSchemaMode()));
+  }
+  if (!isDbReachable() || process.env.TEST_SIMULATE_DB_DOWN === 'true') {
+    if (shouldThrowOnDbError()) {
+      throw new Error('[blog-db] DATABASE_URL no configurada en runtime.');
+    }
+    return [];
+  }
+  const rows = await db.select(attributionSelection)
+    .from(blogPosts)
+    .where(eq(blogPosts.published, true))
+    .orderBy(desc(blogPosts.publishedAt));
+  assertCanonicalPreviewInventory(rows.length);
+  return rows.map((row) => projectPublicAttribution(
+    { ...row, redirected: false },
+    editorialSignatureSchemaMode(),
+  ));
 }
 
 export async function getPostBySlug(slug: string) {
