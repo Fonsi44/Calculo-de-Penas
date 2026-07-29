@@ -48,18 +48,26 @@ export interface ContactEmailPayload {
 export interface SendResult {
   ok: boolean;
   id?: string;
-  error?: string;
+  errorCode?: string;
+}
+
+function providerErrorCode(error: unknown): string {
+  if (error && typeof error === 'object' && 'statusCode' in error) {
+    const statusCode = Number((error as { statusCode?: unknown }).statusCode);
+    if (Number.isInteger(statusCode) && statusCode > 0) return `EMAIL_PROVIDER_${statusCode}`;
+  }
+  return 'EMAIL_PROVIDER_REQUEST_FAILED';
 }
 
 export async function sendContactEmail(payload: ContactEmailPayload): Promise<SendResult> {
   const client = getClient();
   if (!client) {
-    return { ok: false, error: 'RESEND_API_KEY no configurada' };
+    return { ok: false, errorCode: 'EMAIL_NOT_CONFIGURED' };
   }
 
   const to = getNotificationEmail();
   if (!to) {
-    return { ok: false, error: 'CONTACT_NOTIFICATION_EMAIL no configurado' };
+    return { ok: false, errorCode: 'EMAIL_RECIPIENT_NOT_CONFIGURED' };
   }
   const from = getFromAddress();
   const replyTo = payload.email && payload.email.length > 0 ? payload.email : undefined;
@@ -114,14 +122,11 @@ export async function sendContactEmail(payload: ContactEmailPayload): Promise<Se
       text,
     });
     if (error) {
-      console.error('[email] sendContactEmail error de API:', error);
-      return { ok: false, error: error.message };
+      return { ok: false, errorCode: providerErrorCode(error) };
     }
     return { ok: true, id: data?.id };
-  } catch (e) {
-    const msg = e instanceof Error ? e.message : 'Error desconocido';
-    console.error('[email] sendContactEmail excepción:', msg);
-    return { ok: false, error: msg };
+  } catch {
+    return { ok: false, errorCode: 'EMAIL_PROVIDER_REQUEST_FAILED' };
   }
 }
 
@@ -139,12 +144,12 @@ export interface ConsultaEmailPayload {
 export async function sendConsultaEmail(payload: ConsultaEmailPayload): Promise<SendResult> {
   const client = getClient();
   if (!client) {
-    return { ok: false, error: 'RESEND_API_KEY no configurada' };
+    return { ok: false, errorCode: 'EMAIL_NOT_CONFIGURED' };
   }
 
   const to = getNotificationEmail();
   if (!to) {
-    return { ok: false, error: 'CONTACT_NOTIFICATION_EMAIL no configurado' };
+    return { ok: false, errorCode: 'EMAIL_RECIPIENT_NOT_CONFIGURED' };
   }
   const from = getFromAddress();
   const replyTo = payload.email && payload.email.length > 0 ? payload.email : undefined;
@@ -199,14 +204,11 @@ export async function sendConsultaEmail(payload: ConsultaEmailPayload): Promise<
       text,
     });
     if (error) {
-      console.error('[email] sendConsultaEmail error de API:', error);
-      return { ok: false, error: error.message };
+      return { ok: false, errorCode: providerErrorCode(error) };
     }
     return { ok: true, id: data?.id };
-  } catch (e) {
-    const msg = e instanceof Error ? e.message : 'Error desconocido';
-    console.error('[email] sendConsultaEmail excepción:', msg);
-    return { ok: false, error: msg };
+  } catch {
+    return { ok: false, errorCode: 'EMAIL_PROVIDER_REQUEST_FAILED' };
   }
 }
 
@@ -228,11 +230,11 @@ export interface AutoReplyPayload {
 
 export async function sendAutoReplyEmail(payload: AutoReplyPayload): Promise<SendResult> {
   if (!payload.email) {
-    return { ok: false, error: 'Sin email de destinatario' };
+    return { ok: false, errorCode: 'EMAIL_RECIPIENT_MISSING' };
   }
   const client = getClient();
   if (!client) {
-    return { ok: false, error: 'RESEND_API_KEY no configurada' };
+    return { ok: false, errorCode: 'EMAIL_NOT_CONFIGURED' };
   }
 
   const from = getAutoReplyFromAddress();
@@ -251,14 +253,11 @@ export async function sendAutoReplyEmail(payload: AutoReplyPayload): Promise<Sen
       text,
     });
     if (error) {
-      console.error('[email] sendAutoReplyEmail error de API:', error);
-      return { ok: false, error: error.message };
+      return { ok: false, errorCode: providerErrorCode(error) };
     }
     return { ok: true, id: data?.id };
-  } catch (e) {
-    const msg = e instanceof Error ? e.message : 'Error desconocido';
-    console.error('[email] sendAutoReplyEmail excepción:', msg);
-    return { ok: false, error: msg };
+  } catch {
+    return { ok: false, errorCode: 'EMAIL_PROVIDER_REQUEST_FAILED' };
   }
 }
 

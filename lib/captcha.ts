@@ -66,12 +66,12 @@ export async function verifyTurnstileToken(
 
     const data = (await res.json()) as { success?: boolean; 'error-codes'?: string[] };
     if (!data.success) {
-      console.warn('[captcha] token inválido:', data['error-codes']);
+      console.warn('[captcha] token inválido');
       return false;
     }
     return true;
-  } catch (e) {
-    console.error('[captcha] error verificando token:', (e as Error).message);
+  } catch {
+    console.error('[captcha] error verificando token');
     // Fail-closed en timeout/error de red.
     return false;
   }

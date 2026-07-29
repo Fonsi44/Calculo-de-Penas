@@ -89,6 +89,7 @@
     "db:migrations:apply": "node tools/db/run-migrations.mjs apply",
     "db:migrations:test": "node tools/db/test-migrations.mjs",
     "security:validate-staging": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/security/validate-staging-security.ps1",
+    "security:public-form-logs": "node scripts/security-public-form-logs.mjs && vitest run tests/safe-public-form-logger.test.ts tests/api/consulta-privacy.test.ts tests/api/contacto.test.ts tests/api/email-inbound-catchall.test.ts tests/rate-limit.test.ts tests/analytics-config.test.ts tests/fase2-paginas-centrales.test.ts",
     "seo:health": "node scripts/seo-health-check.mjs",
     "seo:health:json": "node scripts/seo-health-check.mjs --json",
     "seo:ahrefs": "node scripts/seo-ahrefs-audit.mjs",

@@ -132,6 +132,7 @@ export function SolicitarConsultaForm() {
   }));
   const [status, setStatus] = useState<Status>('idle');
   const [err, setErr] = useState('');
+  const [reference, setReference] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
   const [started, setStarted] = useState(false);
 
@@ -172,10 +173,12 @@ export function SolicitarConsultaForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, 'cf-turnstile-response': turnstileToken }),
       });
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error ?? 'No se pudo enviar la solicitud.');
+        const suffix = typeof data.reference === 'string' ? ` Referencia: ${data.reference}.` : '';
+        throw new Error(`${data.error ?? 'No se pudo enviar la solicitud.'}${suffix}`);
       }
+      setReference(typeof data.reference === 'string' ? data.reference : '');
       setStatus('success');
       trackLeadGenerated('consulta_form');
       trackContactFormSubmit({ motivo: form.motivo, ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
@@ -201,6 +204,11 @@ export function SolicitarConsultaForm() {
               respuesta inmediata: el compromiso es atender con la diligencia que
               cada caso requiere.
             </p>
+            {reference ? (
+              <p className="mt-2 text-xs font-semibold text-text-secondary">
+                Referencia de solicitud: <span className="font-mono">{reference}</span>
+              </p>
+            ) : null}
             <div className="mt-4 rounded-lg border border-aggravation/20 bg-aggravation/5 p-3">
               <p className="flex items-center gap-2 text-xs font-bold text-aggravation">
                 <AlertTriangle size={14} /> ¿Urgencia penal?
@@ -235,6 +243,7 @@ export function SolicitarConsultaForm() {
           onClick={() => {
             setStatus('idle');
             setForm(INITIAL_FORM);
+            setReference('');
           }}
           className="mt-4 text-xs font-semibold text-primary hover:text-accent-dark"
         >
