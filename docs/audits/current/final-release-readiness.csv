@@ -1,6 +1,7 @@
 gate,scope,required,automated,manual,status,evidence,blocker,owner_action
 gate_tablas,blog_render,si,si,no,PASS,seo:blog-table-cards-contract (estática + E2E 72 casos + consolidate): tables_transformed=tables_found=6 untransformable=0 represented=source=93 final_table_tags=0 axe/overflow/console=0,no,
 gate_tablas_spans,blog_render_span_policy,si,si,no,PASS,published_tables_with_rowspan=0 published_tables_with_colspan=0; spans se rechazan con information_losses+=1; futura tabla publicada con spans bloqueará el gate,no,
+preview_visual,validacion_autenticada_preview,si,no,si,PASS,validado por propietario 2026-07-30; deployment=ccd15777; desktop/tablet/mobile_390/mobile_320/dark_mode/print/console=PASS,no,ninguna
 gate_a11y,accesibilidad,si,si,no,PASS,a11y:public-contract axe_critical=0 axe_serious=0 (67 tests),no,
 gate_seo_performance,rendimiento,si,si,no,PASS,seo:blog-performance-contract + Lighthouse CI,no,
 gate_public_claims,schema,si,si,no,PASS,seo:public-claims-contract,no,

@@ -1,11 +1,10 @@
-# PR #25 — Cierre técnico final (Paso 13, corrección estricta)
+# PR #25 — Cierre técnico final (Paso 13, CERRADO)
 
-> Estado: **CIERRE TÉCNICO COMPLETO en el ámbito automatizado; PASO 13 =
-> BLOCKED** en tanto el propietario no valide visualmente el Preview
-> autenticado (Vercel SSO) y no existan secrets de staging en GitHub Actions
-> para ejecutar el gate de tablas remotamente.
-> La autorización humana de merge, la validación manual de formularios y el
-> despliegue a Production quedan **fuera** de este cierre.
+> Estado: **PASO 13 CERRADO — LISTO PARA AUTORIZACIÓN DEL PROPIETARIO**.
+> El cierre técnico automatizado y la validación visual del Preview han sido
+> completados. El merge, el despliegue a Production, la validación de Turnstile,
+> persistencia y email quedan como pendientes manuales separados.
+> La PR permanece **Draft, OPEN, UNMERGED**.
 
 ## Resumen ejecutivo
 
@@ -199,33 +198,27 @@ Caso despidos (`/blog/derecho-laboral/despido-laboral-honduras-guia-completa`):
 - **No** se reescribe historial. **No** se modifican hashes editoriales para
   silenciar el scanner.
 
-## Preview visual — PENDING_MANUAL
+## Preview visual — VALIDADO
 
-El deployment de Preview está protegido por **Vercel SSO/Deployment Protection**
-(responde 302 → `vercel.com/sso-api`). Un `fetch` sin credenciales recibe la
-página "Login – Vercel", no el contenido renderizado. Por tanto:
-
-- La validación E2E **local** (webServer propio) pasó: 113 tests, fichas
-  verificadas, 0 tablas en DOM, axe/overflow/console limpios.
-- La validación **visual del deployment de Preview** la debe realizar el
-  propietario autenticado, con la checklist de
-  `docs/ops/final-manual-production-checklist.md` (sección Preview).
-
-Mientras no se reciba confirmación expresa del propietario:
+- **URL:** `https://justicia-verdadera-rlwviejm9-fonsi-roiget-s-projects.vercel.app`
+- **Deployment SHA:** `ccd157777986153482b7a08eec8da8aac4037cae` (C2)
+- **Validado por:** propietario
+- **Fecha:** 2026-07-30
+- **Resultado:** **PASS**
+- **Checklist completada:** desktop, tablet, mobile_390, mobile_320, dark_mode, print/PDF, consola — todo correcto.
 
 ```
-PASO 13 = BLOCKED
-PREVIEW_VISUAL = PENDING_MANUAL
+PASO 13 = CERRADO
+PREVIEW_VISUAL = PASS
 ```
 
 ## Pendientes (responsabilidad del propietario)
 
-1. **Validación visual del Preview autenticado** (checklist en
-   `docs/ops/final-manual-production-checklist.md`).
-2. **Validación manual** de Turnstile, persistencia y entrega de email.
-3. **Cierre manual** del incidente GitGuardian como falso positivo.
-4. **Autorización humana de merge** (la PR sigue Draft).
-5. **Despliegue Production** (no realizado).
+1. **Validación manual** de Turnstile, persistencia y entrega de email
+   (checklist en `docs/ops/final-manual-production-checklist.md`).
+2. **Cierre manual** del incidente GitGuardian `35247669` como falso positivo.
+3. **Autorización humana de merge** (la PR sigue Draft).
+4. **Despliegue Production** (no realizado).
 
 ## Prohibiciones respetadas
 
