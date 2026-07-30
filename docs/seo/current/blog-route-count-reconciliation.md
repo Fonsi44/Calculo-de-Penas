@@ -11,6 +11,3 @@
 - proposal_count: 40
 
 Fórmula: rutas históricas únicas = unión disjunta de rutas publicadas HTTP 200 y orígenes de redirect. Los orígenes no se cuentan como artículos 200.
-
-Validación Preview (`justicia-verdadera-gztd6at2t-fonsi-roiget-s-projects.vercel.app`):
-64/64 orígenes respondieron con el código y `Location` esperados; 0 fallos.

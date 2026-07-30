@@ -90,15 +90,53 @@ sensible).
 
 ---
 
-## Incidente GitGuardian histórico (separado)
+## Validación visual del Preview autenticado
+
+El deployment de Preview está protegido por **Vercel SSO/Deployment Protection**
+(responde 302 → `vercel.com/sso-api`); un `fetch` sin credenciales recibe la
+página de Login. La validación automatizada del render del deployment la debe
+realizar el propietario autenticado. Abrir el Preview del HEAD final y verificar:
+
+```text
+[ ] Ruta de despidos (/blog/derecho-laboral/despido-laboral-honduras-guia-completa) muestra 4 fichas
+[ ] No aparece ninguna tabla original en ningún artículo con tablas
+[ ] Desktop 1440 correcto
+[ ] Tablet 768 correcto
+[ ] Móvil 390 correcto
+[ ] Móvil 320 correcto
+[ ] No hay texto letra por letra (vertical)
+[ ] No hay scroll horizontal
+[ ] Modo oscuro correcto
+[ ] Impresión/PDF conserva el contenido (fichas visibles)
+[ ] Consola sin errores
+```
+
+Registrar al confirmar:
+```text
+validated_by = <propietario>
+validated_at = <timestamp>
+deployment_sha = <SHA del deployment>
+preview_url = <URL del deployment>
+viewports = 1440, 768, 390, 320
+result = PASS | FAIL
+```
+
+Hasta recibir confirmación expresa: `PREVIEW_VISUAL = PENDING_MANUAL`.
+
+---
+
+## Incidente GitGuardian histórico (falso positivo, separado)
 
 - **ID:** `35247669`.
-- **Naturaleza:** huella SHA-256 editorial (firma institucional) en
-  `docs/seo/current/blog-recovery-diff.csv` (commit `1470f3c9`), **no** una
-  credencial real.
-- **Acción del propietario:** revisar en el dashboard de GitGuardian y, si lo
-  confirma como falso positivo editorial, marcarlo como *ignored/resolved*
-  con la justificación "firma editorial, no credencial".
+- **Naturaleza:** **falso positivo**. Es una huella SHA-256 editorial (firma
+  institucional) en `docs/seo/current/blog-recovery-diff.csv` (commit
+  `1470f3c9`), **no una credencial real**.
+- **Rotación:** **NO se requiere rotación** salvo que el propietario descubra
+  independientemente una credencial real. No confundir la firma editorial con
+  una clave.
+- **Acción del propietario:** en el dashboard de GitGuardian, marcarlo como
+  *ignored/resolved* (falso positivo) con la justificación "firma editorial,
+  no credencial".
 - **No** reescribir historial ni modificar hashes editoriales para silenciar
   el scanner.
-- **No** fue introducido por los commits del Paso 12 ni del Bloque B.
+- **No** fue introducido por los commits del Paso 12, Bloque B ni Paso 13.

@@ -1,5 +1,6 @@
 gate,scope,required,automated,manual,status,evidence,blocker,owner_action
-gate_tablas,blog_render,si,si,no,PASS,seo:blog-table-cards-contract tables_transformed=tables_found final_table_tags=0,no,
+gate_tablas,blog_render,si,si,no,PASS,seo:blog-table-cards-contract (estática + E2E 72 casos + consolidate): tables_transformed=tables_found=6 untransformable=0 represented=source=93 final_table_tags=0 axe/overflow/console=0,no,
+gate_tablas_spans,blog_render_span_policy,si,si,no,PASS,published_tables_with_rowspan=0 published_tables_with_colspan=0; spans se rechazan con information_losses+=1; futura tabla publicada con spans bloqueará el gate,no,
 gate_a11y,accesibilidad,si,si,no,PASS,a11y:public-contract axe_critical=0 axe_serious=0 (67 tests),no,
 gate_seo_performance,rendimiento,si,si,no,PASS,seo:blog-performance-contract + Lighthouse CI,no,
 gate_public_claims,schema,si,si,no,PASS,seo:public-claims-contract,no,
@@ -24,6 +25,7 @@ gate_tests,tests,si,si,no,PASS,vitest 133 archivos 2283 tests,no,
 gate_build,build,si,si,no,PASS,next build EXIT=0,no,
 gate_verify,knip_baseline,si,si,no,PASS,repo:knip exceeded=[] types=109 unlisted=0,no,
 gate_determinismo,llms_txt,si,si,no,PASS,2 builds consecutivos SHA estable,no,
+preview_visual,preview_vercel_sso,no,no,si,PENDING_MANUAL,Preview protegido por Vercel SSO; fetch devuelve Login. E2E local pasó (113 tests) pero validación visual autenticada del deployment la debe hacer el propietario,requiere_auth_propietario,PENDIENTE_VALIDACION_MANUAL_SEPARADA
 turnstile_real,formularios,si,no,si,PENDING_MANUAL,no ejecutado contra endpoint real,requiere_produccion,PENDIENTE_VALIDACION_MANUAL_SEPARADA
 persistencia_real,formularios,si,no,si,PENDING_MANUAL,no verificada escritura real en DB prod,requiere_produccion,PENDIENTE_VALIDACION_MANUAL_SEPARADA
 email_real,formularios,no,no,si,PENDING_MANUAL,entrega en Gmail no verificada,requiere_produccion,PENDIENTE_VALIDACION_MANUAL_SEPARADA

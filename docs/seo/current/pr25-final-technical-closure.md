@@ -1,15 +1,17 @@
-# PR #25 — Cierre técnico final (Paso 13)
+# PR #25 — Cierre técnico final (Paso 13, corregido)
 
-> Estado: **CIERRE TÉCNICO COMPLETO**. La autorización humana de merge,
-> la validación manual de formularios y el despliegue a Production quedan
-> **fuera** de este cierre y requieren decisión expresa del propietario.
+> Estado: **CIERRE TÉCNICO COMPLETO en el ámbito automatizado; PASO 13 =
+> BLOCKED** en tanto el propietario no valide visualmente el Preview
+> autenticado (Vercel SSO impide validar el render del deployment con fetch).
+> La autorización humana de merge, la validación manual de formularios y el
+> despliegue a Production quedan **fuera** de este cierre.
 
 ## Resumen ejecutivo
 
 La PR `feat/seo-geo-master-implementation` consolida 13 fases técnicas del
 plan maestro SEO/GEO de Pineda y Asociadas más la sustitución de tablas del
-blog. Todos los gates automatizados están en verde sobre el HEAD final
-`5218755a`. La PR permanece **Draft, OPEN, UNMERGED**.
+blog. Todos los gates automatizados están en verde sobre el HEAD de la
+corrección. La PR permanece **Draft, OPEN, UNMERGED**.
 
 ## Fases (pasos 1–13 + Bloque B)
 
@@ -27,8 +29,8 @@ blog. Todos los gates automatizados están en verde sobre el HEAD final
 | 10 | Claims y schema | CERRADO | seo:public-claims-contract |
 | 11 | Rendimiento del blog | CERRADO | seo:blog-performance-contract |
 | 12 | Accesibilidad | CERRADO | a11y:public-contract (67 tests E2E) |
-| Bloque B | Sustitución de tablas | CERRADO | seo:blog-table-cards-contract (6/6 tablas) |
-| 13 | Cierre técnico | CERRADO | batería §18 completa |
+| Bloque B | Sustitución de tablas | CERRADO | seo:blog-table-cards-contract (estática + E2E 72 casos + consolidate) |
+| 13 | Cierre técnico | CIERRE AUTOMATIZADO; BLOCKED en validación visual | batería §18 completa |
 
 ## Integridad editorial (inviolable)
 
@@ -45,14 +47,57 @@ editorial_state_changes= 0
 production_writes      = 0
 ```
 
+## Sustitución de tablas (Bloque B) — evidencia real
+
+Pipeline render-only: `body → sanitizeBlogSourceHtml → transformBlogTablesForRender
+→ injectContextLinks → sanitizeBlogRenderedHtml → HTML final`.
+
+Gate `seo:blog-table-cards-contract` (4 fases):
+
+1. **Unit tests**: 41 tests (casos estructurales, spans, equivalencia).
+2. **Auditoría estática** sobre staging: `tables_found=6 tables_transformed=6
+   untransformable=0 represented_source_cells=source_cells=93 final_table_tags=0
+   information_losses=0 text_equivalence_failures=0 link_equivalence_failures=0`.
+3. **E2E Playwright**: 72 casos (6 artículos × 4 viewports × light/dark + print),
+   derivados de `blog-table-expected-cases.json` (no lista a mano). Verifica en
+   navegador real: `tables_in_dom=0`, fichas visibles, títulos/labels esperados,
+   `overflow<=1px`, `axe_critical/serious/contrast=0`, `console_errors=0`.
+4. **Consolidate**: valida SHA, cobertura (0 missing, 0 stale), genera
+   `blog-table-runtime-validation.csv` desde JSON reales.
+
+Caso despidos (`/blog/derecho-laboral/despido-laboral-honduras-guia-completa`):
+4 fichas (Despido justificado, injustificado, indirecto, fuerza mayor) + labels
+"Causa según el Artículo 112 CT" y "Derecho a indemnización", verificado en E2E.
+
+### Política de spans (rowspan/colspan) — NO soportados como fichas
+
+- El inventario real confirma: **`published_tables_with_rowspan = 0`** y
+  **`published_tables_with_colspan = 0`** entre los 6 artículos publicados con tablas.
+- Una tabla con rowspan o colspan se clasifica `COMPLEX_SPAN_MATRIX`, es **no
+  transformable**, y registra `information_losses += 1` + `untransformableTables += 1`.
+- El gate **falla antes** de que esa tabla llegue al sanitizer final (nunca se
+  permite que `sanitizeBlogRenderedHtml` elimine contenido silenciosamente).
+- Se corrigió el bug de doble decremento de rowspan en `buildGrid`.
+- Tests cubren: rowspan=2, colspan=2, rowspan+colspan, encabezado con colspan,
+  celda de datos con rowspan — todos verifican **rechazo seguro y explícito**.
+- **Una futura tabla publicada con spans bloqueará el gate** y requerirá mapping
+  explícito (slug + tableIndex) o implementación específica.
+
+### Tablas headerless (sin th ni thead)
+
+- Se clasifican `HEADERLESS_DATA`, no transformables, `information_losses += 1`.
+- **No se inventa copy jurídico** ("Dato 1", "Dato 2") en HTML público.
+- Opciones válidas: inferencia segura probada, mapping explícito, o fallo del gate
+  `UNMAPPED_HEADERLESS_TABLE`.
+
 ## Batería final ejecutada (§18)
 
 - 19 contratos SEO/a11y/security/legal/governance/docs/migrations: **PASS**
+- gate de tablas con E2E real: **PASS** (113 tests totales)
 - lint: **0 errores** (3 warnings preexistentes en `.local/gen-postconditions.mjs`)
 - typecheck: **0 errores**
-- tests: **133 archivos / 2283 tests PASS**
 - build: **PASS**
-- verify (knip baseline): **exceeded=[]**
+- verify (knip baseline): **exceeded=[]** (files=58, types=109, unlisted=0)
 - 2 builds deterministas consecutivos: `llms.txt` SHA estable
 - git diff --check: OK
 
@@ -61,24 +106,50 @@ production_writes      = 0
 - HTML activo: 0 (sanitizer con SOURCE_BLOG_TAGS/RENDERED_BLOG_TAGS).
 - PII en logs: 0 (79 tests de privacidad).
 - Endpoints privados: protegidos por proxy + auth.
-- Tablas del blog: 0 etiquetas de tabla en HTML final (defense-in-depth).
+- Tablas del blog: 0 etiquetas de tabla en HTML final (defense-in-depth + gate
+  que rechaza no transformables antes del sanitizer).
 - CSP/cookies/headers: verificados por governance y a11y contract.
 
-## GitGuardian (histórico, separado)
+## GitGuardian (histórico, falso positivo, separado)
 
-- Incidente `35247669`: huella SHA-256 editorial en
-  `docs/seo/current/blog-recovery-diff.csv` (commit `1470f3c9`), **no**
-  credencial real. Ningún commit del Paso 12/Bloque B/13 introduce secretos
-  nuevos. Requiere cierre manual por el propietario en el dashboard. No se
-  reescribe historial.
+- Incidente `35247669`: **falso positivo**. Es una huella SHA-256 editorial
+  (firma institucional) en `docs/seo/current/blog-recovery-diff.csv` (commit
+  `1470f3c9`), **no una credencial real**.
+- **No requiere rotación** salvo que el propietario descubra independientemente
+  una credencial real.
+- Ningún commit del Paso 12/Bloque B/13 introduce secretos nuevos.
+- Acción del propietario: cierre manual como falso positivo en el dashboard de
+  GitGuardian, con la justificación "firma editorial, no credencial".
+- **No** se reescribe historial. **No** se modifican hashes editoriales para
+  silenciar el scanner.
+
+## Preview visual — PENDING_MANUAL
+
+El deployment de Preview está protegido por **Vercel SSO/Deployment Protection**
+(responde 302 → `vercel.com/sso-api`). Un `fetch` sin credenciales recibe la
+página "Login – Vercel", no el contenido renderizado. Por tanto:
+
+- La validación E2E **local** (webServer propio) pasó: 113 tests, fichas
+  verificadas, 0 tablas en DOM, axe/overflow/console limpios.
+- La validación **visual del deployment de Preview** la debe realizar el
+  propietario autenticado, con la checklist de
+  `docs/ops/final-manual-production-checklist.md` (sección Preview).
+
+Mientras no se reciba confirmación expresa del propietario:
+
+```
+PASO 13 = BLOCKED
+PREVIEW_VISUAL = PENDING_MANUAL
+```
 
 ## Pendientes (responsabilidad del propietario)
 
-1. **Validación manual** de Turnstile, persistencia y entrega de email
-   (checklist en `docs/ops/final-manual-production-checklist.md`).
-2. **Autorización humana de merge** (la PR sigue Draft).
-3. **Cierre manual** del incidente GitGuardian si confirma falso positivo.
-4. **Despliegue Production** (no realizado).
+1. **Validación visual del Preview autenticado** (checklist en
+   `docs/ops/final-manual-production-checklist.md`).
+2. **Validación manual** de Turnstile, persistencia y entrega de email.
+3. **Cierre manual** del incidente GitGuardian como falso positivo.
+4. **Autorización humana de merge** (la PR sigue Draft).
+5. **Despliegue Production** (no realizado).
 
 ## Prohibiciones respetadas
 
