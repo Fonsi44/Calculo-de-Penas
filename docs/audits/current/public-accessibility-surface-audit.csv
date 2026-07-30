@@ -1,0 +1,10 @@
+route,component,control,role,accessible_name,keyboard,focus_visible,aria_state,aria_relation,target_size,contrast,reduced_motion,mobile_reflow,issue,severity,action,final_status
+/,PublicHeader,Menu mobile trigger,button,Abrir menú,partial,yes,aria-expanded,none,no,yes,n/a,yes,FOCUS_TRAP_NO_EXIT,BLOCKER,Implement escape close and focus restoration,VALIDADO
+/,PublicHeader,Desktop nav link,link,El Despacho,yes,yes,none,none,yes,yes,n/a,yes,NONE,NONE,none,VALIDADO
+/,PublicFooter,Enlace de pie,link,Política de privacidad,yes,yes,none,none,yes,yes,n/a,yes,NONE,NONE,none,VALIDADO
+/,FloatingContactRail,Instalar app button,button,Instalar como aplicación,yes,no,none,none,yes,yes,n/a,yes,INVISIBLE_FOCUS,HIGH,Remove focus-visible outline-none or provide alternative,VALIDADO
+/,FloatingContactRail,Instrucciones iOS,dialog,Instalar en iPhone o iPad,yes,yes,aria-modal,none,yes,yes,n/a,yes,MODAL_CONTRACT_INCOMPLETE,HIGH,Implement popover no-modal contract with Escape close and aria-controls,VALIDADO
+/,MobileContactBar,WhatsApp action,link,WhatsApp,yes,yes,none,none,yes,yes,n/a,yes,NONE,NONE,none,VALIDADO
+/,Ticker,Ticker container,presentation,none,no,no,none,none,n/a,yes,no,yes,MOTION_NOT_REDUCED,MEDIUM,Support prefers-reduced-motion and prevent duplicate screen reader announcements,VALIDADO
+/solicitar-consulta,SolicitarConsultaForm,Input Nombre,textbox,Nombre completo,yes,yes,none,none,yes,yes,n/a,yes,NONE,NONE,none,VALIDADO
+/solicitar-consulta,SolicitarConsultaForm,Submit button,button,Enviar consulta,yes,yes,none,none,yes,yes,n/a,yes,NONE,NONE,none,VALIDADO

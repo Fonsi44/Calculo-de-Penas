@@ -1,0 +1,6 @@
+"state","mobile_menu","cookie_consent","chat","pwa_dialog","mobile_contact_bar","floating_rail","focus_owner","background_inert","visual_collision","result"
+"initial_visit","closed","open","hidden","hidden","hidden","hidden","cookie_consent","true","none","PASS"
+"standard_navigation","closed","closed","closed","closed","visible","visible","document.body","false","none","PASS"
+"mobile_menu_open","open","closed","hidden","hidden","hidden","hidden","mobile_menu","true","none","PASS"
+"ios_install_open","closed","closed","hidden","open","visible","visible","ios_install_dialog","false","none","PASS"
+"chat_widget_open","closed","closed","open","hidden","hidden","visible","chat_widget","false","none","PASS"
