@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
 import { readFileSync } from 'node:fs';
 import nextConfig from '../next.config';
 import { GET as getFeed } from '../app/(public)/blog/feed.xml/route';
-import { getPublishedPosts } from '../lib/blog-db';
+import { getPublishedPostSummaries } from '../lib/blog-db';
 import { getTotalPages, getPostsByPage } from '../lib/blog';
 
 // Mock de base de datos para simular caídas de Neon
@@ -109,7 +109,10 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
 
   describe('3. Paginación y control de rangos (404)', () => {
     it('getTotalPages y getPostsByPage funcionan correctamente', () => {
-      const postsFake = Array.from({ length: 25 }, (_, i) => ({ slug: `post-${i}` })) as unknown as Parameters<typeof getTotalPages>[0];
+      const postsFake = Array.from(
+        { length: 25 },
+        (_, i) => ({ slug: `post-${i}` }),
+      );
       const perPage = 10;
       
       expect(getTotalPages(postsFake, perPage)).toBe(3); // 25 / 10 = 3 páginas
@@ -143,7 +146,7 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
       const originalPhase = process.env.NEXT_PHASE;
       delete process.env.NEXT_PHASE;
 
-      await expect(getPublishedPosts()).rejects.toThrow(/DATABASE_URL no configurada/i);
+      await expect(getPublishedPostSummaries()).rejects.toThrow(/DATABASE_URL no configurada/i);
 
       // Restauramos
       if (originalPhase) process.env.NEXT_PHASE = originalPhase;
@@ -156,7 +159,7 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
       // Simulamos fase de compilación
       process.env.NEXT_PHASE = 'phase-production-build';
 
-      const posts = await getPublishedPosts();
+      const posts = await getPublishedPostSummaries();
       expect(posts).toEqual([]);
       
       delete process.env.NEXT_PHASE;

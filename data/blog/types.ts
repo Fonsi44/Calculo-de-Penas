@@ -46,6 +46,27 @@ export type Post = {
 };
 
 /**
+ * Modelo público de listado. Nunca contiene HTML, notas legales internas,
+ * hashes ni candidatos de firma.
+ */
+export type BlogPostSummary = {
+  slug: string;
+  title: string;
+  description: string;
+  publishedAt: string;
+  updatedAt?: string;
+  category: string;
+  tags: string[];
+  author: string;
+  readingTime: string;
+  coverImage?: string;
+  featured: boolean;
+  noindex?: boolean;
+  canonicalUrl?: string;
+  editoriallyIndexable: boolean;
+};
+
+/**
  * Payload ligero de un post para componentes cliente (búsqueda, filtros,
  * "cargar más"). Omite `body` (HTML grande) para no inflar el bundle ni el
  * peso del HTML inicial: el cliente solo necesita metadatos para filtrar,

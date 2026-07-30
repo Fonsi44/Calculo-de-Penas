@@ -7,7 +7,14 @@ import {
 import Link from 'next/link';
 import { Section, Container } from '@/components/marketing/section';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
-import { getAllPosts, getPostBySlug, formatDate, getCategoryName } from '@/lib/blog';
+import {
+  getAllPostParams,
+  getAllPosts,
+  getPostBySlug,
+  getRelatedPostsFromSummaries,
+  formatDate,
+  getCategoryName,
+} from '@/lib/blog';
 import { blogPostSchema } from '@/lib/schemas/blog';
 import { site } from '@/lib/site';
 import { buildBlogMetaDescription, buildBlogMetaTitle } from '@/lib/seo';
@@ -49,7 +56,7 @@ export const revalidate = 3600;
 type Props = { params: Promise<{ categoria: string; slug: string }> };
 
 export async function generateStaticParams() {
-  const posts = await getAllPosts();
+  const posts = await getAllPostParams();
   return posts.map((p) => ({ categoria: p.category, slug: p.slug }));
 }
 
@@ -103,21 +110,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-async function getRelatedPosts(slug: string, category: string, tags: string[], limit = 6) {
-  const all = await getAllPosts();
-  return all
-    .filter((p) => p.slug !== slug)
-    .map((p) => {
-      const catMatch = p.category === category ? 3 : 0;
-      const tagOverlap = p.tags.filter((t) => tags.includes(t)).length;
-      return { post: p, score: catMatch + tagOverlap };
-    })
-    .filter((r) => r.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
-    .map((r) => r.post);
-}
-
 export default async function BlogPostByCategoryPage({ params }: Props) {
   const { categoria, slug } = await params;
   const post = await getPostBySlug(slug);
@@ -127,7 +119,12 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
   const currentIndex = allPosts.findIndex((p) => p.slug === slug);
   const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
   const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
-  const relatedPosts = await getRelatedPosts(slug, post.category, post.tags);
+  const relatedPosts = getRelatedPostsFromSummaries(
+    allPosts,
+    slug,
+    post.category,
+    post.tags,
+  );
   const categoryName = getCategoryName(post.category) ?? post.category;
 
   const postUrl = `/blog/${post.category}/${post.slug}`;

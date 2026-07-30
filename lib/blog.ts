@@ -1,6 +1,12 @@
-import type { Post } from '@/data/blog/types';
+import { cache } from 'react';
+import type { BlogPostSummary, Post } from '@/data/blog/types';
 import { BLOG_METADATA_OVERRIDES } from '@/data/blog/blog-metadata-overrides';
-import { getPublishedPosts, getPostBySlug as getPostBySlugDb, getBlogCategories } from '@/lib/blog-db';
+import {
+  getPublishedPostDetailBySlug,
+  getPublishedPostParams,
+  getPublishedPostSummaries,
+  getBlogCategories,
+} from '@/lib/blog-db';
 export {
   formatDate,
   getCategoryName,
@@ -31,37 +37,73 @@ function polishedTitle(value: string): string {
   return value.trim();
 }
 
-export async function getAllPosts(): Promise<Post[]> {
-  const posts = await getPublishedPosts();
-  return posts.map(mapToPost);
+async function loadAllPostSummaries(): Promise<BlogPostSummary[]> {
+  const posts = await getPublishedPostSummaries();
+  return posts.map(mapToSummary);
 }
 
-export async function getPostBySlug(slug: string): Promise<Post | undefined> {
-  const post = await getPostBySlugDb(slug);
-  return post ? mapToPost(post) : undefined;
+async function loadPostDetail(slug: string): Promise<Post | undefined> {
+  const post = await getPublishedPostDetailBySlug(slug);
+  return post ? mapToDetail(post) : undefined;
 }
 
-export async function getPostsByCategory(categorySlug: string): Promise<Post[]> {
-  const posts = await getPublishedPosts({ category: categorySlug });
-  return posts.map(mapToPost);
+type BlogReadDependencies = {
+  detail: (slug: string) => Promise<Post | undefined>;
+  summaries: () => Promise<BlogPostSummary[]>;
+};
+
+/**
+ * Fábrica instrumentable del contrato request-scoped. Producción usa
+ * `cache()` de React; los tests inyectan un wrapper equivalente y contadores.
+ */
+export function createBlogReadLoaders(
+  cacheFn: typeof cache = cache,
+  dependencies: BlogReadDependencies = {
+    detail: loadPostDetail,
+    summaries: loadAllPostSummaries,
+  },
+) {
+  return {
+    getPostBySlug: cacheFn(dependencies.detail),
+    getAllPosts: cacheFn(dependencies.summaries),
+  };
 }
 
-export async function getFeaturedPosts(): Promise<Post[]> {
-  const posts = await getPublishedPosts({ featured: true });
-  return posts.map(mapToPost);
-}
+const requestScopedLoaders = createBlogReadLoaders();
 
-export async function getRecentPosts(count?: number): Promise<Post[]> {
-  const posts = await getPublishedPosts({ limit: count });
-  return posts.map(mapToPost);
-}
+/** Inventario summary deduplicado por React dentro del render/build actual. */
+export const getAllPosts = requestScopedLoaders.getAllPosts;
+
+/** Metadata y página comparten exactamente este loader request-scoped. */
+export const getPostBySlug = requestScopedLoaders.getPostBySlug;
+
+export const getPostsByCategory = cache(async (
+  categorySlug: string,
+): Promise<BlogPostSummary[]> => {
+  const posts = await getPublishedPostSummaries({ category: categorySlug });
+  return posts.map(mapToSummary);
+});
+
+export const getFeaturedPosts = cache(async (): Promise<BlogPostSummary[]> => {
+  const posts = await getPublishedPostSummaries({ featured: true });
+  return posts.map(mapToSummary);
+});
+
+export const getRecentPosts = cache(async (
+  count?: number,
+): Promise<BlogPostSummary[]> => {
+  const posts = await getPublishedPostSummaries({ limit: count });
+  return posts.map(mapToSummary);
+});
+
+export const getAllPostParams = cache(getPublishedPostParams);
 
 export async function getAllCategorySlugs(): Promise<string[]> {
   return getBlogCategories();
 }
 
 export async function getAllTags(): Promise<string[]> {
-  const posts = await getPublishedPosts();
+  const posts = await getAllPosts();
   const tags = new Set<string>();
   for (const post of posts) {
     for (const tag of post.tags ?? []) {
@@ -71,23 +113,56 @@ export async function getAllTags(): Promise<string[]> {
   return Array.from(tags).sort();
 }
 
-export async function getPostsByTag(tag: string): Promise<Post[]> {
-  const posts = await getPublishedPosts();
-  return posts.filter(p => (p.tags ?? []).includes(tag)).map(mapToPost);
+export async function getPostsByTag(tag: string): Promise<BlogPostSummary[]> {
+  const posts = await getAllPosts();
+  return posts.filter(p => (p.tags ?? []).includes(tag));
 }
 
-export function getPostsByPage(posts: Post[], page: number, perPage: number): Post[] {
+export function getPostsByPage<T>(
+  posts: readonly T[],
+  page: number,
+  perPage: number,
+): T[] {
   const start = (page - 1) * perPage;
   return posts.slice(start, start + perPage);
 }
 
-export function getTotalPages(posts: Post[], perPage: number): number {
+export function getTotalPages(posts: readonly unknown[], perPage: number): number {
   return Math.max(1, Math.ceil(posts.length / perPage));
 }
 
-type PublicBlogPost = Awaited<ReturnType<typeof getPublishedPosts>>[number];
+type PublicBlogPostDetail = NonNullable<
+  Awaited<ReturnType<typeof getPublishedPostDetailBySlug>>
+>;
+type PublicBlogPostSummaryRow = Awaited<
+  ReturnType<typeof getPublishedPostSummaries>
+>[number];
 
-function mapToPost(p: PublicBlogPost): Post {
+function mapToSummary(p: PublicBlogPostSummaryRow): BlogPostSummary {
+  const editorial = BLOG_METADATA_OVERRIDES[p.slug];
+  return {
+    slug: p.slug,
+    title: editorial?.title ?? polishedTitle(p.title),
+    description: editorial?.description ?? polishedExcerpt(p.description),
+    publishedAt: p.publishedAt.toISOString(),
+    updatedAt: p.updatedAt?.toISOString(),
+    category: p.category,
+    tags: p.tags ?? [],
+    author: p.author ?? '',
+    readingTime: p.readingTime ?? '',
+    coverImage: COVERS_PENDING_LOCAL_REPLACEMENT.has(p.slug)
+      ? undefined
+      : p.coverImage ?? undefined,
+    featured: p.featured ?? false,
+    noindex: p.noindex ?? undefined,
+    canonicalUrl: p.slug === 'abogados-en-nacaome'
+      ? `/blog/${p.category}/${p.slug}`
+      : p.canonicalUrl ?? undefined,
+    editoriallyIndexable: p.editoriallyIndexable,
+  };
+}
+
+function mapToDetail(p: PublicBlogPostDetail): Post {
   const editorial = BLOG_METADATA_OVERRIDES[p.slug];
   const title = editorial?.title ?? polishedTitle(p.title);
   const description = editorial?.description ?? polishedExcerpt(p.description);
@@ -111,7 +186,6 @@ function mapToPost(p: PublicBlogPost): Post {
     reviewStatus: p.reviewStatus ?? undefined,
     reviewedBy: p.reviewedBy ?? undefined,
     reviewedAt: p.reviewedAt?.toISOString() ?? undefined,
-    legalReviewNotes: p.legalReviewNotes ?? undefined,
     reviewOrigin: p.reviewOrigin ?? undefined,
     signatureType: p.signatureType ?? undefined,
     signatureName: p.signatureName ?? undefined,
@@ -126,4 +200,28 @@ function mapToPost(p: PublicBlogPost): Post {
     lastReviewedAt: p.lastReviewedAt?.toISOString() ?? undefined,
     nextReviewDueAt: p.nextReviewDueAt?.toISOString() ?? undefined,
   };
+}
+
+export function getRelatedPostsFromSummaries(
+  summaries: readonly BlogPostSummary[],
+  slug: string,
+  category: string,
+  tags: readonly string[],
+  limit = 6,
+): BlogPostSummary[] {
+  return summaries
+    .filter((post) => post.slug !== slug)
+    .map((post) => ({
+      post,
+      score: (post.category === category ? 3 : 0)
+        + post.tags.filter((tag) => tags.includes(tag)).length,
+    }))
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => (
+      b.score - a.score
+      || new Date(b.post.publishedAt).getTime() - new Date(a.post.publishedAt).getTime()
+      || a.post.slug.localeCompare(b.post.slug)
+    ))
+    .slice(0, limit)
+    .map(({ post }) => post);
 }

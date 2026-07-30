@@ -10,7 +10,7 @@
  *   6. GET reenvía a POST (compatibilidad Vercel Cron).
  *
  * NO hace llamadas reales: mockea `next/cache.revalidatePath` y
- * `lib/blog-db.getPostBySlug`.
+ * `lib/blog-db.getPublishedPostRouteBySlug`.
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
@@ -19,9 +19,10 @@ vi.mock('next/cache', () => ({
   revalidatePath: (...args: unknown[]) => revalidatePathMock(...args),
 }));
 
-const getPostBySlugMock = vi.fn();
+const getPublishedPostRouteBySlugMock = vi.fn();
 vi.mock('@/lib/blog-db', () => ({
-  getPostBySlug: (...args: unknown[]) => getPostBySlugMock(...args),
+  getPublishedPostRouteBySlug: (...args: unknown[]) =>
+    getPublishedPostRouteBySlugMock(...args),
 }));
 
 import { POST, GET } from '@/app/api/revalidate/route';
@@ -135,8 +136,8 @@ describe('POST /api/revalidate', () => {
   });
 
   // ─── type: 'slug' ────────────────────────────────────────────────────────
-  it('resuelve categoría desde getPostBySlug y revalida 3 rutas', async () => {
-    getPostBySlugMock.mockResolvedValue({ slug: 'mi-slug', category: 'penal' });
+  it('resuelve categoría desde la proyección mínima y revalida 3 rutas', async () => {
+    getPublishedPostRouteBySlugMock.mockResolvedValue({ slug: 'mi-slug', category: 'penal' });
     const req = jsonRequest(
       { type: 'slug', value: 'mi-slug' },
       { auth: `Bearer ${SECRET}` },
@@ -156,7 +157,7 @@ describe('POST /api/revalidate', () => {
   });
 
   it('usa "penal" como categoría por defecto si el post no la tiene', async () => {
-    getPostBySlugMock.mockResolvedValue({ slug: 'mi-slug', category: null });
+    getPublishedPostRouteBySlugMock.mockResolvedValue({ slug: 'mi-slug', category: null });
     const req = jsonRequest(
       { type: 'slug', value: 'mi-slug' },
       { auth: `Bearer ${SECRET}` },
@@ -166,8 +167,8 @@ describe('POST /api/revalidate', () => {
     expect(body.revalidated).toContain('/blog/penal/mi-slug');
   });
 
-  it('reporta error si el post no está publicado (getPostBySlug=null)', async () => {
-    getPostBySlugMock.mockResolvedValue(null);
+  it('reporta error si el post no está publicado (route lookup=null)', async () => {
+    getPublishedPostRouteBySlugMock.mockResolvedValue(null);
     const req = jsonRequest(
       { type: 'slug', value: 'slug-privado' },
       { auth: `Bearer ${SECRET}` },

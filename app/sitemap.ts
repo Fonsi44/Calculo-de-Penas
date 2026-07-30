@@ -3,7 +3,6 @@ import { site, absoluteUrl } from '@/lib/site';
 import { getAllPosts } from '@/lib/blog';
 import { blogCategories } from '@/data/blog/categories';
 import canonicalPathsData from '@/data/seo/canonical-paths.json';
-import { isEditoriallyIndexable } from '@/lib/editorial-signature';
 
 export const dynamic = 'force-dynamic';
 
@@ -156,7 +155,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
     // Una firma institucional histórica válida permite indexar. La firma
     // individual es opcional y nunca se infiere de la categoría.
-    .filter((p) => isEditoriallyIndexable(p));
+    .filter((p) => p.editoriallyIndexable);
 
   const expectedArticles = Number.parseInt(
     process.env.SEO_SITEMAP_EXPECTED_ARTICLES ?? '135',
