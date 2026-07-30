@@ -47,6 +47,8 @@ Thumbs.db
 /test-results/
 /playwright-report/
 /playwright/.cache/
+# Casos esperados de fichas: artefacto efímero regenerable por --prepare.
+docs/audits/current/blog-table-expected-cases.json
 
 # ── E2E Staging (PR #20) ────────────────────────────────────
 # Entorno E2E aislado: artifacts locales + reports JSON.

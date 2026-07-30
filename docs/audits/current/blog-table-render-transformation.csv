@@ -1,7 +1,9 @@
-slug,table_index,classification,source_rows,source_columns,source_cells,render_pattern,cards_generated,rendered_fields,source_text_hash,rendered_text_hash,text_equivalent,links_before,links_after,tables_in_final_html,information_loss,desktop_pass,mobile_390_pass,mobile_320_pass,print_pass,axe_pass,final_status
-banco-demanda-deuda-defensa-opciones-honduras,0,TABLE,5,2,10,CARDS,4,4,37866f2d9ab5,0c077be9115c,true,1,1,0,0,true,true,true,true,true,PASS
-cuando-necesito-abogado-penalista-honduras,0,TABLE,6,3,18,CARDS,5,10,8081fed86a43,33ed8af8086a,true,0,0,0,0,true,true,true,true,true,PASS
-despido-laboral-honduras-guia-completa,0,TABLE,5,3,15,CARDS,4,8,d510ee05c025,e84f3388836b,true,0,0,0,0,true,true,true,true,true,PASS
-divorcio-honduras-guia-completa,0,TABLE,8,4,32,CARDS,7,21,2c888e77b97e,c44e3d201dce,true,3,3,0,0,true,true,true,true,true,PASS
-habeas-corpus-cuando-interponer-honduras,0,TABLE,6,3,18,CARDS,5,10,d3c17a95ba89,2f8032a71c60,true,0,0,0,0,true,true,true,true,true,PASS
-mediacion-vs-juicio-cual-elegir,0,TABLE,6,3,18,CARDS,5,10,3b9bdd12f521,78e91ac4bb9e,true,1,1,0,0,true,true,true,true,true,PASS
+# Generado por scripts/audit-blog-table-cards-contract.ts (fase estática)
+# head=7020f887cacc4d1cd4991a15fd529c78741382f4 date=2026-07-30T10:55:15.754Z
+tested_code_sha,slug,table_index,classification,source_rows,source_columns,source_cells,represented_source_cells,render_pattern,cards_generated,rendered_title_fields,rendered_value_fields,source_text_hash,rendered_text_hash,text_equivalent,links_before,links_after,links_equivalent,final_table_tags,information_loss,warnings,result
+7020f887cacc4d1cd4991a15fd529c78741382f4,banco-demanda-deuda-defensa-opciones-honduras,0,TWO_COLUMN_DEFINITION,4,2,8,8,CARDS,4,4,4,c96a73a0aec7,e4d3efd7603b,true,0,0,true,0,0,,PASS
+7020f887cacc4d1cd4991a15fd529c78741382f4,cuando-necesito-abogado-penalista-honduras,0,THREE_COLUMN_COMPARISON,5,3,15,15,CARDS,5,5,10,63aefb7d6d38,12be53730ed7,true,0,0,true,0,0,,PASS
+7020f887cacc4d1cd4991a15fd529c78741382f4,despido-laboral-honduras-guia-completa,0,THREE_COLUMN_COMPARISON,4,3,12,12,CARDS,4,4,8,97728afb6488,c70a35486857,true,0,0,true,0,0,,PASS
+7020f887cacc4d1cd4991a15fd529c78741382f4,divorcio-honduras-guia-completa,0,MULTI_COLUMN_COMPARISON,7,4,28,28,CARDS,7,7,21,5ca006d92180,d0a89d577347,true,0,0,true,0,0,,PASS
+7020f887cacc4d1cd4991a15fd529c78741382f4,habeas-corpus-cuando-interponer-honduras,0,THREE_COLUMN_COMPARISON,5,3,15,15,CARDS,5,5,10,674425a409a6,8cabcd72adcf,true,0,0,true,0,0,,PASS
+7020f887cacc4d1cd4991a15fd529c78741382f4,mediacion-vs-juicio-cual-elegir,0,THREE_COLUMN_COMPARISON,5,3,15,15,CARDS,5,5,10,3f9d413a1836,e41fde9d46d8,true,0,0,true,0,0,,PASS
