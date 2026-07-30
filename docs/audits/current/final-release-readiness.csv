@@ -1,0 +1,31 @@
+gate,scope,required,automated,manual,status,evidence,blocker,owner_action
+gate_tablas,blog_render,si,si,no,PASS,seo:blog-table-cards-contract tables_transformed=tables_found final_table_tags=0,no,
+gate_a11y,accesibilidad,si,si,no,PASS,a11y:public-contract axe_critical=0 axe_serious=0 (67 tests),no,
+gate_seo_performance,rendimiento,si,si,no,PASS,seo:blog-performance-contract + Lighthouse CI,no,
+gate_public_claims,schema,si,si,no,PASS,seo:public-claims-contract,no,
+gate_lawyer_profile,autoridad,si,si,no,PASS,seo:lawyer-profile-contract,no,
+gate_crawl,robots_sitemap,si,si,no,PASS,seo:crawl-contract,no,
+gate_pagination,paginacion,si,si,no,PASS,seo:blog-pagination-contract,no,
+gate_faq,faq,si,si,no,PASS,seo:faq-contract (79 source_rows),no,
+gate_blog_route,rutas_blog,si,si,no,PASS,seo:blog-route-contract body_changes=0,no,
+gate_metadata_only,metadata,si,si,no,PASS,seo:blog-metadata-only,no,
+gate_cta_copy,cta_legal,si,si,no,PASS,legal:generated-cta-copy (18 tests),no,
+gate_blog_html,sanitizacion,si,si,no,PASS,security:blog-html blocking=0,no,
+gate_form_logs,privacidad_formularios,si,si,no,PASS,security:public-form-logs (79 tests),no,
+gate_blog_links,enlaces,si,si,no,PASS,seo:blog-links-audit,no,
+gate_inventory_recovery,inventario,si,si,no,PASS,seo:blog-inventory-recovery,no,
+gate_disclaimer_quality,disclaimer,si,si,no,PASS,seo:blog-disclaimer-quality,no,
+gate_governance,gobernanza,si,si,no,PASS,governance 589 fuentes 0 ciclos,no,
+gate_docs_links,docs,si,si,no,PASS,docs:links 55 archivos 0 rotos,no,
+gate_migrations_validate,migraciones,si,si,no,PASS,db:migrations:validate VALIDO sin colisiones,no,
+gate_lint,calidad_codigo,si,si,no,PASS,lint 0 errores (3 warnings preexistentes en .local),no,
+gate_typecheck,tipos,si,si,no,PASS,tsc --noEmit 0 errores,no,
+gate_tests,tests,si,si,no,PASS,vitest 133 archivos 2283 tests,no,
+gate_build,build,si,si,no,PASS,next build EXIT=0,no,
+gate_verify,knip_baseline,si,si,no,PASS,repo:knip exceeded=[] types=109 unlisted=0,no,
+gate_determinismo,llms_txt,si,si,no,PASS,2 builds consecutivos SHA estable,no,
+turnstile_real,formularios,si,no,si,PENDING_MANUAL,no ejecutado contra endpoint real,requiere_produccion,PENDIENTE_VALIDACION_MANUAL_SEPARADA
+persistencia_real,formularios,si,no,si,PENDING_MANUAL,no verificada escritura real en DB prod,requiere_produccion,PENDIENTE_VALIDACION_MANUAL_SEPARADA
+email_real,formularios,no,no,si,PENDING_MANUAL,entrega en Gmail no verificada,requiere_produccion,PENDIENTE_VALIDACION_MANUAL_SEPARADA
+merge_pr,integracion,no,no,no,NOT_APPLICABLE,PR permanece Draft,requiere_autorizacion_humana,AUTORIZACION_HUMANA_REQUERIDA
+production_deploy,despliegue,no,no,no,NOT_APPLICABLE,0 deployments Production,requiere_autorizacion_humana,AUTORIZACION_HUMANA_REQUERIDA
