@@ -93,6 +93,7 @@
     "security:public-form-logs": "node scripts/security-public-form-logs.mjs && vitest run tests/safe-public-form-logger.test.ts tests/api/consulta-privacy.test.ts tests/api/contacto.test.ts tests/api/email-inbound-catchall.test.ts tests/rate-limit.test.ts tests/analytics-config.test.ts tests/fase2-paginas-centrales.test.ts",
     "a11y:public-contract": "playwright test tests/e2e/a11y-public-contract.spec.ts && npx tsx scripts/audit-a11y-public-contract.ts",
     "security:blog-html": "vitest run tests/blog-html-sanitizer.test.ts && npx tsx scripts/audit-blog-html-sanitization.ts",
+    "seo:blog-table-cards-contract": "vitest run tests/blog-table-transformer.test.ts && npx tsx scripts/audit-blog-table-cards-contract.ts",
     "seo:blog-metadata-only": "vitest run tests/blog-metadata-only.test.ts && npx tsx scripts/audit-blog-metadata-only.ts",
     "seo:blog-route-contract": "vitest run tests/blog-route-contract.test.ts && npx tsx scripts/audit-blog-route-contract.ts",
     "seo:faq-contract": "vitest run tests/faq-public-contract.test.ts && npx tsx scripts/audit-faq-contract.ts",

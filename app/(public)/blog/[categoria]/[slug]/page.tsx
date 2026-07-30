@@ -40,6 +40,7 @@ import {
   sanitizeBlogSourceHtml,
   serializeBlogJsonLd,
 } from '@/lib/blog-html-sanitizer';
+import { transformBlogTablesForRender } from '@/lib/blog-table-transformer';
 import { injectMidArticleCta } from '@/lib/blog-generated-cta';
 import { RelatedCities, RelatedCategories } from '@/components/marketing/related-links';
 import {
@@ -160,8 +161,15 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
   const contextLinkedHtml = injectContextLinks(renderSafeHtml, {
     excludeHrefs: [postUrl], // evitar self-link
   });
+  // Transformación de tablas → fichas responsive (Jul 2026): sustituye las
+  // `<table>` del body por fichas semánticas (article-comparison-cards /
+  // article-data-cards) legibles en móvil, sin overflow horizontal ni palabras
+  // partidas letra por letra. Render-only: NO muta post.body ni su hash/firma.
+  const tableCards = transformBlogTablesForRender(contextLinkedHtml);
   // Frontera 2: ninguna transformación controlada llega directamente al sink.
-  const articleHtml = sanitizeBlogRenderedHtml(contextLinkedHtml).html;
+  // El sanitizer de render prohíbe etiquetas de tabla, de modo que cualquier
+  // tabla no transformada se degrada a texto (defense in depth).
+  const articleHtml = sanitizeBlogRenderedHtml(tableCards.html).html;
   // Detecta ciudades mencionadas para el bloque RelatedCities al final.
   const mentionedCities = detectMentionedCities(sanitizedSource.html);
   const faqItems = extractFAQSchema(sanitizedSource.html);

@@ -1,6 +1,10 @@
 import sanitizeHtmlLib from 'sanitize-html';
 
-const BLOG_TAGS = [
+// Etiquetas permitidas en la ETAPA DE FUENTE. Incluye tablas porque el
+// transformador de tablas (lib/blog-table-transformer.ts) necesita leerlas
+// antes de sustituirlas por fichas durante el render. Las tablas NUNCA llegan
+// al HTML final: el sanitizer de render (RENDERED_BLOG_TAGS) las prohíbe.
+const SOURCE_BLOG_TAGS = [
   'p', 'br', 'strong', 'em', 'u', 's', 'del', 'mark', 'small', 'sup', 'sub',
   'h2', 'h3', 'h4', 'h5', 'h6',
   'ul', 'ol', 'li', 'a', 'blockquote', 'pre', 'code', 'hr',
@@ -8,6 +12,20 @@ const BLOG_TAGS = [
   'figure', 'figcaption', 'img',
   'table', 'caption', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td',
   'details', 'summary',
+] as const;
+
+// Etiquetas permitidas en el HTML FINAL renderizado. Sin ninguna etiqueta de
+// tabla: las tablas del body se transforman en fichas semánticas antes de esta
+// etapa. Añade article/dl/dt/dd para hospedar las fichas comparativas.
+const RENDERED_BLOG_TAGS = [
+  'p', 'br', 'strong', 'em', 'u', 's', 'del', 'mark', 'small', 'sup', 'sub',
+  'h2', 'h3', 'h4', 'h5', 'h6',
+  'ul', 'ol', 'li', 'a', 'blockquote', 'pre', 'code', 'hr',
+  'span', 'div', 'section', 'aside',
+  'figure', 'figcaption', 'img',
+  'details', 'summary',
+  // Semántica de fichas (tabla → ficha responsive):
+  'article', 'dl', 'dt', 'dd',
 ] as const;
 
 const ACTIVE_TAGS = new Set([
@@ -34,18 +52,46 @@ const GENERATED_CLASSES = [
   'mb-1', 'text-sm', 'font-semibold', 'text-text', 'text-text-secondary',
   'leading-relaxed', 'mb-2', 'text-primary', 'hover:text-accent-dark',
   'context-link',
+  // Clases de fichas comparativas generadas por lib/blog-table-transformer.ts
+  // (tabla → ficha responsive). Solo se permiten en el render, nunca proceden
+  // del body original.
+  'article-data-cards', 'article-data-card', 'article-data-card__title',
+  'article-data-card__field', 'article-data-card__label', 'article-data-card__value',
+  'article-comparison-cards', 'article-comparison-card',
+  'article-comparison-card__title', 'article-comparison-card__field',
+  'article-comparison-card__label', 'article-comparison-card__value',
+  'article-data-list', 'article-data-list__caption',
+  'article-data-list-wrap',
 ];
 
+// Tags que pueden portar clases generadas en el HTML final renderizado.
+const CLASS_BEARING_TAGS = [
+  'section', 'article', 'div', 'p', 'aside', 'a', 'ul', 'li', 'dl', 'dt', 'dd',
+  'h3', 'h4',
+] as const;
+
+// Atributos permitidos en el render final. Sin atributos de tabla (table/td/th
+// están prohibidos como tags; sus atributos no tienen sentido aquí).
 const FINAL_ATTRIBUTES: Record<string, string[]> = {
-  ...SOURCE_ATTRIBUTES,
-  h2: ['id'],
-  h3: ['id'],
   a: [
     'href', 'target', 'rel', 'class',
     'data-event-name', 'data-cta-location', 'data-cta-topic', 'data-internal-link',
   ],
-  aside: ['class'],
+  img: ['src', 'alt', 'width', 'height', 'loading', 'decoding'],
   p: ['style', 'class'],
+  div: ['style', 'class'],
+  section: ['style', 'class'],
+  article: ['class'],
+  ul: ['class'],
+  li: ['class'],
+  dl: ['class'],
+  dt: ['class'],
+  dd: ['class'],
+  h2: ['id'],
+  h3: ['id', 'class'],
+  h4: ['class'],
+  aside: ['class'],
+  details: ['open'],
 };
 
 const SAFE_PROTOCOL = /^(?:https?|mailto|tel):/i;
@@ -131,13 +177,18 @@ function sanitize(
 ): SanitizedBlogHtml {
   const usedHeadingIds = new Set<string>();
   const allowedAttributes = stage === 'source' ? SOURCE_ATTRIBUTES : FINAL_ATTRIBUTES;
+  const allowedTags = stage === 'source'
+    ? [...SOURCE_BLOG_TAGS, 'h1']
+    : [...RENDERED_BLOG_TAGS];
+  // En el render, todos los tags portadores de clase pueden usar GENERATED_CLASSES.
+  const allowedClasses = stage === 'rendered'
+    ? Object.fromEntries(CLASS_BEARING_TAGS.map((tag) => [tag, [...GENERATED_CLASSES]]))
+    : {};
 
   const sanitized = sanitizeHtmlLib(html, {
-    allowedTags: [...BLOG_TAGS, ...(stage === 'source' ? ['h1'] : [])],
+    allowedTags,
     allowedAttributes,
-    allowedClasses: stage === 'rendered'
-      ? { a: GENERATED_CLASSES, aside: GENERATED_CLASSES, p: GENERATED_CLASSES }
-      : {},
+    allowedClasses,
     allowedSchemes: ['http', 'https', 'mailto', 'tel'],
     allowedSchemesAppliedToAttributes: ['href', 'src'],
     allowProtocolRelative: false,
@@ -197,20 +248,27 @@ function sanitize(
       h2: (tagName, attribs) => {
         if (stage !== 'rendered') return { tagName, attribs: {} as Record<string, string> };
         const id = attribs.id;
-        if (!id || !SAFE_HEADING_ID.test(id) || usedHeadingIds.has(id)) {
-          return { tagName, attribs: {} as Record<string, string> };
+        const safe: Record<string, string> = {};
+        // Conserva el id estable generado por injectHeadingIds (TOC/anchors).
+        if (id && SAFE_HEADING_ID.test(id) && !usedHeadingIds.has(id)) {
+          usedHeadingIds.add(id);
+          safe.id = id;
         }
-        usedHeadingIds.add(id);
-        return { tagName, attribs: { id } };
+        return { tagName, attribs: safe };
       },
       h3: (tagName, attribs) => {
         if (stage !== 'rendered') return { tagName, attribs: {} as Record<string, string> };
         const id = attribs.id;
-        if (!id || !SAFE_HEADING_ID.test(id) || usedHeadingIds.has(id)) {
-          return { tagName, attribs: {} as Record<string, string> };
+        const safe: Record<string, string> = {};
+        if (id && SAFE_HEADING_ID.test(id) && !usedHeadingIds.has(id)) {
+          usedHeadingIds.add(id);
+          safe.id = id;
         }
-        usedHeadingIds.add(id);
-        return { tagName, attribs: { id } };
+        // Conserva la clase generada por el transformador de tablas (fichas).
+        // El allowlist allowedClasses filtra a GENERATED_CLASSES; cualquier clase
+        // arbitraria se elimina ahí, por lo que aquí solo preservamos el valor.
+        if (attribs.class) safe.class = attribs.class;
+        return { tagName, attribs: safe };
       },
     },
     exclusiveFilter: (frame) => {
