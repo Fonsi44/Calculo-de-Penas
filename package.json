@@ -91,6 +91,7 @@
     "db:migrations:test": "node tools/db/test-migrations.mjs",
     "security:validate-staging": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/security/validate-staging-security.ps1",
     "security:public-form-logs": "node scripts/security-public-form-logs.mjs && vitest run tests/safe-public-form-logger.test.ts tests/api/consulta-privacy.test.ts tests/api/contacto.test.ts tests/api/email-inbound-catchall.test.ts tests/rate-limit.test.ts tests/analytics-config.test.ts tests/fase2-paginas-centrales.test.ts",
+    "a11y:public-contract": "playwright test tests/e2e/a11y-public-contract.spec.ts && npx tsx scripts/audit-a11y-public-contract.ts",
     "security:blog-html": "vitest run tests/blog-html-sanitizer.test.ts && npx tsx scripts/audit-blog-html-sanitization.ts",
     "seo:blog-metadata-only": "vitest run tests/blog-metadata-only.test.ts && npx tsx scripts/audit-blog-metadata-only.ts",
     "seo:blog-route-contract": "vitest run tests/blog-route-contract.test.ts && npx tsx scripts/audit-blog-route-contract.ts",
@@ -198,6 +199,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
     "@cyclonedx/cyclonedx-npm": "^6.0.0",
     "@google/genai": "^2.13.0",
     "@next/bundle-analyzer": "16.2.12",

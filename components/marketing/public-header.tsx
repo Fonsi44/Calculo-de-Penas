@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -29,13 +29,36 @@ export function PublicHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const mobileTrapRef = useFocusTrap<HTMLDivElement>(open);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  const mobileTrapRef = useFocusTrap<HTMLDivElement>(open, {
+    onEscape: () => setOpen(false),
+    returnFocusRef: menuButtonRef,
+  });
+
+  const [prevPathname, setPrevPathname] = useState(pathname);
+
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setOpen(false);
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Cerrar menú si la pantalla pasa a desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1280) { // xl es 1280px
+        setOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
@@ -53,7 +76,7 @@ export function PublicHeader() {
             <a
               href={telHref()}
               title="Llamar a Pineda y Asociados"
-              className="flex items-center gap-1.5 hover:text-accent transition-colors focus-visible:outline-none"
+              className="flex items-center gap-1.5 hover:text-accent transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded"
             >
               <Phone size={12} aria-hidden="true" />
               <span className="tabular-nums">{site.phoneDisplay}</span>
@@ -70,14 +93,10 @@ export function PublicHeader() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center gap-2">
         <Link
           href="/"
-          className="group flex items-center gap-2 focus-visible:outline-none flex-shrink-0 cursor-pointer"
+          className="group flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg flex-shrink-0 cursor-pointer"
           aria-label={`Ir a la página de inicio — ${site.shortName}`}
         >
-          {/* Logo oficial — PNG transparente (741×728, ~cuadrado).
-              Altura equilibrada con la barra de navegación (items h-9 = 36px),
-              proporción preservada vía width/height intrínsecos + h-* w-auto.
-              Drop-shadow sutil para contraste sobre fondo navy; sin halo ni
-              escala que provoquen saltos visuales o lo hagan dominar. */}
+          {/* Logo oficial */}
           <Image
             src="/images/logo.png"
             alt={`${site.name} — Logo oficial`}
@@ -92,10 +111,7 @@ export function PublicHeader() {
             decoding="async"
           />
 
-          {/* Wordmark — lockup logo + nombre del bufete. Dos líneas para
-              reforzar la marca sin dominar la barra: nombre (serif, blanco)
-              sobre subtítulo (eyebrow dorado). Compacto y responsive; queda
-              junto al logo en móvil y escritorio. */}
+          {/* Wordmark */}
           <span className="flex flex-col leading-tight">
             <span className="font-serif font-bold text-text-inverse text-sm whitespace-nowrap">
               {site.name}
@@ -115,7 +131,7 @@ export function PublicHeader() {
                 href={item.href}
                 title={item.title}
                 aria-current={active ? 'page' : undefined}
-                className={`relative px-2 h-10 inline-flex items-center text-[13px] font-semibold rounded-lg transition-colors focus-visible:outline-none ${
+                className={`relative px-2 h-10 inline-flex items-center text-[13px] font-semibold rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none ${
                   active
                     ? 'text-accent'
                     : 'text-text-inverse/85 hover:text-accent hover:bg-primary-light/30'
@@ -139,7 +155,7 @@ export function PublicHeader() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackWhatsAppClick('header_desktop')}
-            className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-success text-white btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-all duration-200 focus-visible:outline-none"
+            className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-success text-white btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
             aria-label="Contactar por WhatsApp"
             title="Escribir por WhatsApp a Pineda y Asociados — atención en horario hábil"
           >
@@ -149,7 +165,7 @@ export function PublicHeader() {
             href="/solicitar-consulta#formulario"
             title="Solicitar consulta legal confidencial — Pineda y Asociados"
             onClick={() => trackFormClick('header_desktop')}
-            className="inline-flex items-center gap-2 h-9 px-3.5 rounded-lg bg-accent text-primary text-xs font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none"
+            className="inline-flex items-center gap-2 h-9 px-3.5 rounded-lg bg-accent text-primary text-xs font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
           >
             <Calendar size={13} aria-hidden="true" />
             Solicitar consulta
@@ -157,11 +173,13 @@ export function PublicHeader() {
         </div>
 
         <button
+          ref={menuButtonRef}
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="xl:hidden ml-auto w-10 h-10 inline-flex items-center justify-center rounded-lg bg-primary-light/40 hover:bg-primary-light/60 focus-visible:outline-none transition-colors"
+          className="xl:hidden ml-auto w-11 h-11 inline-flex items-center justify-center rounded-lg bg-primary-light/40 hover:bg-primary-light/60 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none transition-colors"
           aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
           aria-expanded={open}
+          aria-controls="public-mobile-navigation"
         >
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -169,7 +187,7 @@ export function PublicHeader() {
 
       {/* Drawer móvil */}
       {open && (
-        <div ref={mobileTrapRef} className="xl:hidden border-t border-primary-light/60 bg-primary/95 backdrop-blur-md">
+        <div ref={mobileTrapRef} id="public-mobile-navigation" className="xl:hidden border-t border-primary-light/60 bg-primary/95 backdrop-blur-md">
           <nav aria-label="Navegación móvil" className="px-3 py-3 flex flex-col gap-1">
             {NAV.map((item) => {
               const active = isActive(pathname, item.href);
@@ -179,7 +197,8 @@ export function PublicHeader() {
                   href={item.href}
                   title={item.title}
                   onClick={() => setOpen(false)}
-                  className={`relative px-3 h-10 inline-flex items-center justify-between text-sm font-semibold rounded-lg ${
+                  aria-current={active ? 'page' : undefined}
+                  className={`relative px-3 h-11 inline-flex items-center justify-between text-sm font-semibold rounded-lg focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none ${
                     active
                       ? 'text-accent bg-primary-light/30'
                       : 'text-text-inverse/85 hover:text-accent hover:bg-primary-light/30'
@@ -202,13 +221,13 @@ export function PublicHeader() {
                 trackPhoneClick('header_mobile');
                 setOpen(false);
               }}
-              className="px-3 h-10 inline-flex items-center gap-2 text-sm font-semibold text-text-inverse/85 hover:text-accent"
+              className="px-3 h-11 inline-flex items-center gap-2 text-sm font-semibold text-text-inverse/85 hover:text-accent focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg"
             >
               <Phone size={16} />
               {site.phoneDisplay}
             </a>
             <a
-            href={whatsappHref('Hola, necesito una consulta jurídica.')}
+              href={whatsappHref('Hola, necesito una consulta jurídica.')}
               target="_blank"
               rel="noopener noreferrer"
               title="Escribir por WhatsApp a Pineda y Asociados"
@@ -216,7 +235,7 @@ export function PublicHeader() {
                 trackWhatsAppClick('header_mobile');
                 setOpen(false);
               }}
-              className="px-3 h-10 inline-flex items-center gap-2 text-sm font-semibold text-text-inverse/85 hover:text-accent"
+              className="px-3 h-11 inline-flex items-center gap-2 text-sm font-semibold text-text-inverse/85 hover:text-accent focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg"
             >
               <MessageCircle size={16} />
               WhatsApp
@@ -228,7 +247,7 @@ export function PublicHeader() {
                 trackFormClick('header_mobile');
                 setOpen(false);
               }}
-              className="mt-2 h-10 inline-flex items-center justify-center gap-2 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent"
+              className="mt-2 h-11 inline-flex items-center justify-center gap-2 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
             >
               <Calendar size={16} />
               Solicitar consulta

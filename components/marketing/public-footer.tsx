@@ -71,7 +71,7 @@ export function PublicFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 lg:gap-6">
           {/* Identidad */}
           <div>
-            <Link href="/" className="flex items-center gap-2.5 mb-5 focus-visible:outline-none" aria-label={site.name}>
+            <Link href="/" className="flex items-center gap-2.5 mb-5 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg" aria-label={site.name}>
               {/* Logo oficial — PNG transparente (741×728, ~cuadrado). Algo mayor
                   que en el header, sin dominar la columna de identidad. */}
               <Image

@@ -153,7 +153,7 @@ export default async function FaqPage() {
                 className="inline-flex items-center gap-1.5 h-9 px-4 rounded-full bg-surface-alt text-sm font-medium text-text-secondary hover:shadow-md transition-all"
               >
                 {cluster.title}
-                {count > 0 && <span className="text-xxs opacity-60 ml-1">({count})</span>}
+                {count > 0 && <span className="text-xxs text-text-muted ml-1">({count})</span>}
               </Link>
             );
           })}

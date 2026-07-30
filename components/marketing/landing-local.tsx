@@ -138,7 +138,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
             </p>
 
             {/* NAP rápido para SEO local */}
-            <dl className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
               <div className="flex items-start gap-2">
                 <MapPin size={16} className="text-accent mt-0.5 flex-shrink-0" aria-hidden="true" />
                 <span>
@@ -157,7 +157,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
                   {site.phoneDisplay}
                 </a>
               </div>
-            </dl>
+            </div>
 
             <div className="mt-4">
               <CTAGroup variant="inverse" message={whatsappMsg} />

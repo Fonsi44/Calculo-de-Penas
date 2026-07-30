@@ -71,7 +71,7 @@
   --color-primary-dark: #060E20;
   --color-accent: #D4AF37;
   --color-accent-light: #E5C97A;
-  --color-accent-dark: #9A7A22;
+  --color-accent-dark: #705714;
 
   /* Superficies — jerarquía clara: fondo < alt < card < overlay
      Refuerzo: surface-2 añade un nivel sutil entre alt y card para
@@ -87,7 +87,7 @@
   --color-text: #1A1C20;
   --color-text-secondary: #5F6368;
   /* text-muted: ~4.6:1 sobre blanco (AA small text). Antes #8A8F95 (~3.4:1). */
-  --color-text-muted: #6E7177;
+  --color-text-muted: #5B5E64;
   --color-text-inverse: #FFFFFF;
 
   /* Bordes — visibles sin ser agresivos */
@@ -96,7 +96,7 @@
   --color-border-strong: #C4BFB4;
 
   /* Semánticos */
-  --color-success: #0E7A4F;
+  --color-success: #0B6642;
   --color-success-bg: #E6F4ED;
   --color-success-border: #B8DEC9;
 
@@ -555,7 +555,7 @@ input[type="checkbox"] {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.3em;
-  color: var(--color-accent);
+  color: var(--color-accent-dark);
 }
 .eyebrow-rule::before {
   content: "";
@@ -574,7 +574,7 @@ input[type="checkbox"] {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: var(--tracking-eyebrow);
-  color: var(--color-accent);
+  color: var(--color-accent-dark);
 }
 
 /* Título de sección estándar (font-serif, extrabold, responsive, tracking ajustado) */

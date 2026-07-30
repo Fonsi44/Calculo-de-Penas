@@ -133,8 +133,8 @@ export default async function PoliticaPrivacidadPage() {
         </p>
         <LegalList
           items={[
-            <>Vercel Inc. (alojamiento y despliegue del sitio web). Ver su <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">política de privacidad</a>.</>,
-            <>Neon Inc. (base de datos PostgreSQL serverless, región US-East-1). Ver su <a href="https://neon.tech/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">política de privacidad</a>.</>,
+            <>Vercel Inc. (alojamiento y despliegue del sitio web). Ver su <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-accent-dark underline">política de privacidad</a>.</>,
+            <>Neon Inc. (base de datos PostgreSQL serverless, región US-East-1). Ver su <a href="https://neon.tech/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-accent-dark underline">política de privacidad</a>.</>,
           ]}
         />
         <p>
