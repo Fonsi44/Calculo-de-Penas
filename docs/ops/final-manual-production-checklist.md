@@ -27,7 +27,7 @@ secretos ni rutas locales.
 - [ ] Verificar que el widget de Turnstile se renderiza y exige interacción.
 - [ ] Enviar el formulario **sin** resolver el reto → debe rechazarse (4xx).
 - [ ] Resolver el reto y enviar → debe aceptarse.
-- [ ] Confirmar que `NEXT_PUBLIC_TURNSTITE_SITE_KEY` y `TURNSTILE_SECRET_KEY`
+- [ ] Confirmar que `NEXT_PUBLIC_TURNSTILE_SITE_KEY` y `TURNSTILE_SECRET_KEY`
       están configuradas en el entorno objetivo (no revelar valores).
 
 **Evidencia a guardar:** captura del widget renderizado y respuesta HTTP del
@@ -52,8 +52,16 @@ ausencia de PII en logs.
 - [ ] Comprobar que el correo llega a la bandeja de entrada del despacho
       (revisar spam/promociones).
 - [ ] Verificar que el `From`, `Reply-To` y asunto son correctos.
-- [ ] Confirmar que el cuerpo del correo **no contiene** datos del caso legal
-      (solo metadata de contacto).
+- [ ] La notificación interna contiene únicamente los campos esperados del
+      formulario, incluido el resumen enviado por el usuario, y se dirige
+      exclusivamente al destinatario configurado del despacho.
+- [ ] La notificación interna no contiene secretos, token de Turnstile,
+      variables de entorno, stack traces, datos de otros usuarios ni
+      información no enviada por el solicitante.
+- [ ] La respuesta automática al usuario (auto-reply) no reproduce el
+      resumen jurídico ni los detalles del caso.
+- [ ] El resumen puede contener información confidencial y no debe copiarse
+      en capturas, logs, commits, comentarios de PR ni artefactos de auditoría.
 
 **Evidencia a guardar:** copia del correo recibido (cabeceras, sin contenido
 sensible).
