@@ -912,6 +912,8 @@ details.faq-anim:not([open]) > summary:hover {
   max-width: 42rem; /* ~672px: ancho de lectura óptimo */
   margin-left: auto;
   margin-right: auto;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .article-body h2 {

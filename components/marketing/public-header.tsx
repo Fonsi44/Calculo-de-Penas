@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Phone, MessageCircle, Calendar, ChevronDown } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
-import { useFocusTrap } from '@/hooks/use-focus-trap';
 import { trackFormClick, trackPhoneClick, trackWhatsAppClick } from '@/lib/analytics';
 
 const NAV = [
@@ -30,18 +29,30 @@ export function PublicHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const lastPathname = useRef(pathname);
 
-  const mobileTrapRef = useFocusTrap<HTMLDivElement>(open, {
-    onEscape: () => setOpen(false),
-    returnFocusRef: menuButtonRef,
-  });
+  // Cerrar menú al cambiar de ruta
+  useEffect(() => {
+    if (lastPathname.current !== pathname) {
+      lastPathname.current = pathname;
+      const id = requestAnimationFrame(() => setOpen(false));
+      return () => cancelAnimationFrame(id);
+    }
+  }, [pathname]);
 
-  const [prevPathname, setPrevPathname] = useState(pathname);
-
-  if (pathname !== prevPathname) {
-    setPrevPathname(pathname);
-    setOpen(false);
-  }
+  // Cierre seguro con Escape y retorno de foco para el menú móvil no modal
+  useEffect(() => {
+    if (!open) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [open]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4);
@@ -187,7 +198,7 @@ export function PublicHeader() {
 
       {/* Drawer móvil */}
       {open && (
-        <div ref={mobileTrapRef} id="public-mobile-navigation" className="xl:hidden border-t border-primary-light/60 bg-primary/95 backdrop-blur-md">
+        <div id="public-mobile-navigation" className="xl:hidden border-t border-primary-light/60 bg-primary/95 backdrop-blur-md">
           <nav aria-label="Navegación móvil" className="px-3 py-3 flex flex-col gap-1">
             {NAV.map((item) => {
               const active = isActive(pathname, item.href);

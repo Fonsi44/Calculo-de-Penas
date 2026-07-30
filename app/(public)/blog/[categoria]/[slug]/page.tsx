@@ -223,9 +223,9 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                 <span>Autor: <Link href={authorHref} className="hover:text-primary hover:underline transition-colors font-medium text-text-secondary">{post.author}</Link></span>
               </span>
               {validSignature && (
-                <span className="flex items-center gap-1.5">
+                <span className="flex flex-wrap items-center gap-1.5">
                   <BadgeCheck size={15} className="text-accent-dark" />
-                  <span>{individualSignature ? 'Revisión jurídica:' : 'Revisión jurídica institucional:'}{' '}
+                  <span>{individualSignature ? 'Revisión jurídica:' : 'Revisión jurídica institucional:'}</span>
                   <Link href={validSignature.profileUrl ?? '/despacho'} className="hover:text-primary hover:underline transition-colors font-medium text-text-secondary font-semibold">
                     {validSignature.name}
                   </Link>
@@ -234,7 +234,6 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                       {' · '}{formatDate(new Date(validSignature.signedAt).toISOString())}
                     </time>
                   )}
-                  </span>
                 </span>
               )}
             </div>
@@ -333,9 +332,9 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                         colegiados en Honduras, con presencia activa en juzgados de la zona sur.
                       </p>
                       {validSignature && (
-                        <p className="mt-2 flex items-center gap-1.5 text-xs font-medium text-text-secondary">
+                        <p className="mt-2 flex flex-wrap items-center gap-1.5 text-xs font-medium text-text-secondary">
                           <BadgeCheck size={14} className="text-accent-dark" />
-                          {individualSignature ? 'Revisión jurídica:' : 'Revisión jurídica institucional:'}{' '}
+                          <span>{individualSignature ? 'Revisión jurídica:' : 'Revisión jurídica institucional:'}</span>
                           <Link href={validSignature.profileUrl ?? '/despacho'} className="hover:text-primary hover:underline transition-colors font-semibold">
                             {validSignature.name}
                           </Link>

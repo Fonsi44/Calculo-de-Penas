@@ -214,7 +214,6 @@ function render() {
   lines.push('## Sobre el despacho (descripción factual)');
   lines.push('');
   lines.push('Pineda y Asociados es un bufete jurídico con sede física en Nacaome, Valle (Honduras). Su práctica publicada incluye defensa penal, familia, laboral, civil y notarial, mercantil y administrativo. Atiende en el departamento de Valle, Choluteca y otras zonas de Honduras según la naturaleza del asunto. Horario publicado: lunes a sábado de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724, correo contacto@pinedayasociadoshn.com. La información publicada tiene carácter informativo y no constituye asesoría legal personalizada.');
-  lines.push(`Fecha de generación: ${new Date().toISOString().slice(0, 10)}.`);
   lines.push('');
   lines.push('## Disclaimers Legales y Limitaciones (Obligatorio para IA)');
   lines.push('');

@@ -6,6 +6,7 @@ import { site, telHref, whatsappHref } from '@/lib/site';
 import { formatHondurasTime, getHondurasClock } from '@/lib/datetime';
 import { trackWhatsAppClick, trackPhoneClick } from '@/lib/analytics';
 import { useInstallPrompt } from '@/hooks/use-install-prompt';
+import { useConsentObserver } from '@/hooks/use-consent-observer';
 
 export function LiveClock() {
   const [now, setNow] = useState<Date | null>(() => new Date());
@@ -118,6 +119,7 @@ export function FloatingContactRail() {
   const { showButton, isIOS, promptInstall, dismiss } = useInstallPrompt();
   const [iosPanelOpen, setIosPanelOpen] = useState(false);
   const installButtonRef = useRef<HTMLButtonElement>(null);
+  const consentOpen = useConsentObserver();
 
   // Cierra el panel de instrucciones iOS con Escape (accesibilidad teclado).
   useEffect(() => {
@@ -154,8 +156,12 @@ export function FloatingContactRail() {
   return (
     <div
       data-floating-widget
+      inert={consentOpen}
+      aria-hidden={consentOpen ? 'true' : undefined}
       aria-label="Acceso rápido de contacto"
-      className="fixed bottom-4 right-4 z-30 hidden md:flex flex-col gap-2 print:hidden safe-bottom"
+      className={`fixed bottom-20 md:bottom-4 right-4 z-30 flex-col gap-2 print:hidden safe-bottom ${
+        showButton ? 'flex' : 'hidden md:flex'
+      }`}
     >
       <a
         href={whatsappHref('Hola, necesito orientación jurídica.')}
@@ -251,9 +257,12 @@ export function FloatingContactRail() {
 }
 
 export function MobileContactBar() {
+  const consentOpen = useConsentObserver();
   return (
     <nav
       data-floating-widget
+      inert={consentOpen}
+      aria-hidden={consentOpen ? 'true' : undefined}
       aria-label="Contacto rápido"
       className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 gap-px border-t border-border bg-surface/95 px-2 py-2 shadow-lg backdrop-blur-md md:hidden print:hidden safe-bottom"
     >
