@@ -1,0 +1,7 @@
+slug,table_index,classification,source_rows,source_columns,source_cells,render_pattern,cards_generated,rendered_fields,source_text_hash,rendered_text_hash,text_equivalent,links_before,links_after,tables_in_final_html,information_loss,desktop_pass,mobile_390_pass,mobile_320_pass,print_pass,axe_pass,final_status
+banco-demanda-deuda-defensa-opciones-honduras,0,TABLE,5,2,10,CARDS,4,4,37866f2d9ab5,0c077be9115c,true,1,1,0,0,true,true,true,true,true,PASS
+cuando-necesito-abogado-penalista-honduras,0,TABLE,6,3,18,CARDS,5,10,8081fed86a43,33ed8af8086a,true,0,0,0,0,true,true,true,true,true,PASS
+despido-laboral-honduras-guia-completa,0,TABLE,5,3,15,CARDS,4,8,d510ee05c025,e84f3388836b,true,0,0,0,0,true,true,true,true,true,PASS
+divorcio-honduras-guia-completa,0,TABLE,8,4,32,CARDS,7,21,2c888e77b97e,c44e3d201dce,true,3,3,0,0,true,true,true,true,true,PASS
+habeas-corpus-cuando-interponer-honduras,0,TABLE,6,3,18,CARDS,5,10,d3c17a95ba89,2f8032a71c60,true,0,0,0,0,true,true,true,true,true,PASS
+mediacion-vs-juicio-cual-elegir,0,TABLE,6,3,18,CARDS,5,10,3b9bdd12f521,78e91ac4bb9e,true,1,1,0,0,true,true,true,true,true,PASS
