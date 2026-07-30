@@ -212,6 +212,79 @@ PREFLIGHT_BLOCKED
 
 **Motivo:** Las tres variables de Turnstile (`TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`) están ausentes en Vercel Preview. Solo existen en Production.
 
-**Acción requerida del propietario:** Copiar las 3 variables de Turnstile al entorno Preview en Vercel Dashboard (Project Settings → Environment Variables → Preview). No se requieren valores nuevos; se pueden usar los mismos de Production para validación.
+## 15. Plan de desbloqueo de Turnstile en Preview
 
-Una vez desbloqueado, el preflight estará `PREFLIGHT_READY` y se podrá solicitar autorización para ejecutar las pruebas.
+### Hostname Preview estable
+
+| Campo | Valor |
+|-------|-------|
+| Branch alias (estable) | `justicia-verdadera-git-feat-seo-1070ce-fonsi-roiget-s-projects.vercel.app` |
+| Deployment específico actual | `justicia-verdadera-rlwviejm9-fonsi-roiget-s-projects.vercel.app` |
+| Dominio controlado | `pinedayasociadoshn.com` (solo Production) |
+| HOSTNAME_SOURCE | `vercel_inspect` (alias de rama Vercel) |
+| OWNER_CONTROLLED | `false` (subdominio de `vercel.app`) |
+| STABLE_ACROSS_REDEPLOYS | `true` (alias de rama Git) |
+
+> ⚠️ El alias de rama es estable entre redeploys, pero es un subdominio de `vercel.app`. Turnstile recomienda no autorizar `vercel.app`. Se recomienda configurar un subdominio controlado como `preview.pinedayasociadoshn.com` para un entorno Preview permanente y seguro.
+
+### Opción recomendada: Widget Preview separado
+
+**NO reutilizar** automáticamente el widget y secreto de Production. Motivos:
+- Turnstile restringe cada widget a hostnames autorizados.
+- El widget de Production está autorizado para `pinedayasociadoshn.com` — no funcionará en `*.vercel.app`.
+- Copiar el secreto de Production a Preview aumenta el alcance de exposición.
+- Entornos staging/preview y Production deben estar separados.
+
+**Plan:**
+1. Crear un widget Cloudflare Turnstile separado: "Pineda y Asociados — Preview"
+2. Autorizar el hostname Preview exacto en Cloudflare
+3. Configurar las 3 variables solo en Vercel Preview (scope: `feat/seo-geo-master-implementation`)
+4. Redeploy de la rama (las variables no se aplican a deployments existentes)
+5. Verificar widget visible y backend con variables presentes
+
+### Alternativa: Claves oficiales de test de Cloudflare
+
+Cloudflare proporciona claves dummy para pruebas. Ventajas: validan integración, envío positivo/negativo, persistencia, correo. Limitaciones: no validan widget real, restricciones de hostname ni challenge adaptativo. Resultado debe etiquetarse `TURNSTILE_INTEGRATION_TEST=PASS; TURNSTILE_REAL_PREVIEW_WIDGET=NOT_TESTED`.
+
+### Redeploy obligatorio
+
+Añadir variables en Vercel no modifica deployments existentes. Tras configurar, se requiere nuevo Preview deployment. El deployment actual (`justicia-verdadera-rlwviejm9-fonsi-roiget-s-projects.vercel.app`) no recibirá las variables.
+
+### Referencias de commit
+
+| Campo | SHA |
+|-------|-----|
+| `code_head` (último código probado) | `6fba987c` |
+| `preflight_commit` (este documento) | `79379912` |
+
+### Checklist Turnstile Preview (añadida a `docs/ops/final-manual-production-checklist.md`)
+
+```
+[ ] Confirmar que el widget configurado corresponde al entorno objetivo.
+[ ] Confirmar que el hostname exacto está autorizado en Cloudflare.
+[ ] Confirmar que Preview usa un widget/secret separado de Production,
+    salvo decisión expresa documentada del propietario.
+[ ] Confirmar que el deployment fue recreado después de añadir variables.
+```
+
+### Veredicto de setup Turnstile
+
+```
+TURNSTILE_PREVIEW_SETUP_BLOCKED
+```
+
+**Bloqueo:** No existe widget Preview separado ni hostname autorizado. Se requiere acción del propietario en Cloudflare y Vercel.
+
+### Autorización necesaria
+
+Si el propietario opta por widget Preview separado:
+```
+AUTORIZO CONFIGURAR TURNSTILE PREVIEW SEPARADO:
+- crear un widget Cloudflare exclusivo para Preview
+- autorizar únicamente el hostname Preview exacto indicado
+- configurar las 3 variables solo en Vercel Preview
+- limitar las variables a feat/seo-geo-master-implementation si es posible
+- crear un nuevo deployment Preview
+NO Production
+NO envíos todavía
+```

@@ -22,6 +22,11 @@ secretos ni rutas locales.
 
 ## 1. Probar Turnstile (Cloudflare)
 
+- [ ] Confirmar que el widget configurado corresponde al entorno objetivo.
+- [ ] Confirmar que el hostname exacto está autorizado en Cloudflare.
+- [ ] Confirmar que Preview usa un widget/secret separado de Production,
+      salvo decisión expresa documentada del propietario.
+- [ ] Confirmar que el deployment fue recreado después de añadir variables.
 - [ ] En un entorno Production (o Preview con variables reales), abrir
       `/solicitar-consulta`.
 - [ ] Verificar que el widget de Turnstile se renderiza y exige interacción.
