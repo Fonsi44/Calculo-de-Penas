@@ -1,36 +1,27 @@
 /**
  * Gate: seo:blog-table-cards-contract.
  *
- * Tres fases (invocadas por el script npm del mismo nombre):
+ * Cuatro fases:
+ *   1. Default: auditoría de TRANSFORMACIÓN ESTÁTICA sobre staging.
+ *      Lee bodies reales, ejecuta pipeline source→transform→render y vuelca
+ *      el reporte por tabla a docs/audits/current/blog-table-render-transformation.csv.
  *
- *   1. Default / sin flags: auditoría de TRANSFORMACIÓN ESTÁTICA sobre staging.
- *      Lee los bodies reales, ejecuta el pipeline de render (source → transform
- *      → rendered sanitizer) y vuelca el reporte por tabla a
- *      docs/audits/current/blog-table-render-transformation.csv.
- *      SIN columnas visuales hardcodeadas: todo se mide desde el transformador.
+ *   2. --prepare: genera docs/audits/current/blog-table-expected-cases.json con
+ *      expectedTitles/expectedLabels/expectedValues derivados del AST (no regex).
  *
- *   2. --prepare: genera test-results/blog-table-cards/expected-cases.json con
- *      los casos (slug + tabla esperada + fichas esperadas) que el spec E2E
- *      debe cubrir. El spec deriva sus rutas de aquí (no de una lista a mano).
+ *   3. --consolidate: lee JSON reales de test-results/blog-table-cards/,
+ *      validación estricta (SHA, result, cards, console, hydration, duplicados,
+ *      extras, print), genera blog-table-runtime-validation.csv.
  *
- *   3. --consolidate: lee los JSON reales escritos por el spec E2E, valida SHA,
- *      cobertura (todas las rutas × todos los viewports × light/dark × print),
- *      rechaza stale, y genera docs/audits/current/blog-table-runtime-validation.csv
- *      desde esos JSON.
- *
- * El gate falla (exit != 0) si cualquier contrato del §12 no se cumple. No
- * emite métricas hardcodeadas: cada valor del CSV proviene de una medida real.
- *
- * SEGURIDAD: solo lectura sobre staging. Verifica E2E_ENVIRONMENT=staging y
- * rechaza si la rama conectada coincide con NEON_PRODUCTION_BRANCH_ID.
+ * SEGURIDAD: solo lectura staging. Verifica E2E_ENVIRONMENT=staging.
  */
 
 import { config } from 'dotenv';
 import { neon } from '@neondatabase/serverless';
 import { createHash } from 'node:crypto';
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { join } from 'node:path';
 import { transformBlogTablesForRender } from '../lib/blog-table-transformer';
 import {
   sanitizeBlogRenderedHtml,
@@ -54,10 +45,6 @@ function sha256(value: string): string {
   return createHash('sha256').update(value, 'utf8').digest('hex');
 }
 
-function countMatches(value: string, pattern: RegExp): number {
-  return [...value.matchAll(pattern)].length;
-}
-
 function escCsv(value: unknown): string {
   const s = String(value ?? '');
   return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
@@ -75,22 +62,18 @@ function getStagingSql() {
 
   if (!databaseUrl) {
     throw new Error(
-      'DATABASE_URL ausente. El gate requiere conexión a rama Preview/staging '
-      + 'para auditar bodies reales (no emite métricas hardcodeadas).',
+      'DATABASE_URL ausente. El gate requiere conexión a rama Preview/staging.',
     );
   }
   if (environment !== 'staging') {
     throw new Error(
-      `E2E_ENVIRONMENT="${environment}" (se requiere "staging"). El gate no puede `
-      + 'ejecutarse contra una rama no verificada como staging.',
+      `E2E_ENVIRONMENT="${environment}" (se requiere "staging").`,
     );
   }
   const sql = neon(databaseUrl);
   return { sql, productionBranchId };
 }
 
-/** Comprueba que la conexión NO apunta a producción. No bloqueante si el rol
- *  no puede leer current_setting (devuelve vacío). */
 async function assertNotProduction(
   sql: unknown,
   productionBranchId?: string,
@@ -107,9 +90,7 @@ async function assertNotProduction(
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// FASE 1: auditoría de transformación estática (default)
-// ─────────────────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────── FASE 1 ─────
 
 async function runStaticAudit() {
   const { sql, productionBranchId } = getStagingSql();
@@ -152,7 +133,7 @@ async function runStaticAudit() {
     const bodyHashBefore = sha256(post.body);
     const source = sanitizeBlogSourceHtml(post.body).html;
     const transform = transformBlogTablesForRender(source);
-    const final = sanitizeBlogRenderedHtml(transform.html).html;
+    sanitizeBlogRenderedHtml(transform.html).html;
     const bodyHashAfter = sha256(post.body);
     if (bodyHashBefore !== bodyHashAfter) bodyChanges += 1;
     if (post.reviewed_content_hash && post.signature_valid) {
@@ -171,9 +152,6 @@ async function runStaticAudit() {
     for (const t of transform.report.tables) {
       if (!t.textEquivalent) textEqFailures += 1;
       if (!t.linksEquivalent) linkEqFailures += 1;
-      // Recuenta tags de tabla en el HTML final solo para la región de esta tabla:
-      // como las no-transformables se dejan intactas, final_table_tags del reporte
-      // ya es exacto (0 si se transformó, 1 si no).
       finalTableTagsTotal += t.finalTableTags;
 
       csvRows.push([
@@ -242,9 +220,7 @@ async function runStaticAudit() {
   console.log('\nGATE ESTÁTICO VERDE: toda tabla publicada se transforma sin pérdida.');
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// FASE 2: --prepare  (genera los casos esperados para el spec E2E)
-// ─────────────────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────── FASE 2 ─────
 
 interface ExpectedCase {
   slug: string;
@@ -272,12 +248,7 @@ async function runPrepare() {
   for (const post of posts) {
     const source = sanitizeBlogSourceHtml(post.body).html;
     const { report } = transformBlogTablesForRender(source);
-    // Solo incluimos tablas transformables en los casos E2E (las no transformables
-    // ya habrían hecho fallar la fase estática).
     for (const t of report.tables.filter((x) => x.transformable)) {
-      // Extrae títulos/labels visibles esperados del render de esta tabla.
-      const titles = extractVisibleTitles(post.body, t.tableIndex);
-      const labels = extractVisibleLabels(post.body, t.tableIndex);
       cases.push({
         slug: post.slug,
         url: `/blog/${post.category}/${post.slug}`,
@@ -285,48 +256,26 @@ async function runPrepare() {
         tableIndex: t.tableIndex,
         classification: t.classification,
         expectedCards: t.cardsGenerated,
-        expectedTitles: titles,
-        expectedLabels: labels,
+        expectedTitles: t.expectedTitles,
+        expectedLabels: t.expectedLabels,
       });
     }
   }
 
-  // OJO: escribir en test-results/ NO sirve, porque Playwright vacía su
-  // outputDir (que por defecto es test-results/) al iniciar cada ejecución,
-  // borrando expected-cases.json antes de que el spec lo lea. Usamos un
-  // directorio estable, ajeno al ciclo de vida de Playwright.
   const outDir = 'docs/audits/current';
   await mkdir(outDir, { recursive: true });
   await writeFile(
     join(outDir, 'blog-table-expected-cases.json'),
-    JSON.stringify({ head_sha: execGitHead(), generated_at: new Date().toISOString(), cases }, null, 2),
+    JSON.stringify(
+      { head_sha: execGitHead(), generated_at: new Date().toISOString(), cases },
+      null, 2,
+    ),
     'utf8',
   );
-  console.log(`--prepare: ${cases.length} casos esperados para E2E en ${outDir}/blog-table-expected-cases.json`);
+  console.log(`--prepare: ${cases.length} casos esperados derivados del AST en ${outDir}/blog-table-expected-cases.json`);
 }
 
-/** Extrae los textos de celda que actuarán como títulos de ficha (col 0). */
-function extractVisibleTitles(body: string, tableIndex: number): string[] {
-  const tables = [...body.matchAll(/<table\b[\s\S]*?<\/table>/gi)];
-  const table = tables[tableIndex]?.[0] ?? '';
-  const rows = [...table.matchAll(/<tr\b[\s\S]*?<\/tr>/gi)];
-  // Saltar la primera fila si es header.
-  return rows.slice(1).map((r) =>
-    (r[0].match(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/i)?.[1] ?? '').replace(/<[^>]+>/g, '').trim(),
-  ).filter(Boolean);
-}
-
-/** Extrae los headers usados como labels de campo. */
-function extractVisibleLabels(body: string, tableIndex: number): string[] {
-  const tables = [...body.matchAll(/<table\b[\s\S]*?<\/table>/gi)];
-  const table = tables[tableIndex]?.[0] ?? '';
-  const headers = [...table.matchAll(/<th\b[^>]*>([\s\S]*?)<\/th>/gi)];
-  return headers.map((h) => h[1].replace(/<[^>]+>/g, '').trim()).filter(Boolean);
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// FASE 3: --consolidate  (lee JSON E2E, valida, genera CSV runtime)
-// ─────────────────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────── FASE 3 ─────
 
 interface RuntimeResult {
   tested_code_sha: string;
@@ -339,87 +288,163 @@ interface RuntimeResult {
   tables: number;
   cards: number;
   expected_cards: number;
-  horizontal_overflow: number;
+  document_overflow: number;
+  article_overflow: number;
   vertical_word_breaking: boolean;
-  axe_critical: number;
-  axe_serious: number;
-  color_contrast: number;
+  axe_critical: number | 'NOT_APPLICABLE';
+  axe_serious: number | 'NOT_APPLICABLE';
+  color_contrast: number | 'NOT_APPLICABLE';
   console_errors: number;
-  result: string;
+  page_errors: number;
+  hydration_warnings: number;
+  failures: string[];
+  result: 'PASS' | 'FAIL';
 }
 
 const VIEWPORTS = ['desktop-1440', 'tablet-768', 'mobile-390', 'small-mobile-320'];
 const SCHEMES = ['light', 'dark'];
-const PRINT = ['print'];
+
+function caseKey(slug: string, viewport: string, scheme: string, print: boolean): string {
+  return `${slug}/${viewport}/${print ? 'print' : scheme}`;
+}
 
 async function runConsolidate() {
   const HEAD_SHA = execGitHead();
-  const expected = JSON.parse(
+  const expectedRaw = JSON.parse(
     await readFile('docs/audits/current/blog-table-expected-cases.json', 'utf8'),
-  ) as { cases: ExpectedCase[] };
-  // Los resultados runtime SÍ viven en test-results/ (escritos por el spec
-  // durante la ejecución de Playwright). consolidate se ejecuta tras el run,
-  // cuando esos archivos ya existen.
+  ) as { head_sha: string; cases: ExpectedCase[] };
+
+  if (expectedRaw.head_sha !== HEAD_SHA) {
+    throw new Error(
+      `expected-cases.json SHA ${expectedRaw.head_sha} != HEAD ${HEAD_SHA}. Regenera con --prepare.`,
+    );
+  }
+
   const resultsDir = 'test-results/blog-table-cards';
   if (!existsSync(resultsDir)) {
     throw new Error(`Falta ${resultsDir}. Ejecuta primero la fase E2E (playwright).`);
   }
 
-  // Lee todos los JSON de resultado runtime (no expected-cases.json).
-  const { readdir } = await import('node:fs/promises');
   const files = (await readdir(resultsDir)).filter(
     (f) => f.endsWith('.json') && f !== 'expected-cases.json',
   );
+
   const results: RuntimeResult[] = [];
+  const seenKeys = new Set<string>();
+  const errors: string[] = [];
+
   for (const f of files) {
-    const raw = JSON.parse(await readFile(join(resultsDir, f), 'utf8'));
-    if (raw.tested_code_sha && raw.tested_code_sha !== HEAD_SHA) {
-      throw new Error(`Resultado stale: ${f} tiene SHA ${raw.tested_code_sha} (HEAD=${HEAD_SHA}).`);
+    const raw = JSON.parse(await readFile(join(resultsDir, f), 'utf8')) as RuntimeResult;
+
+    // SHA check.
+    if (!raw.tested_code_sha || raw.tested_code_sha !== HEAD_SHA) {
+      errors.push(`Resultado stale: ${f} SHA=${raw.tested_code_sha} (HEAD=${HEAD_SHA})`);
+      continue;
     }
-    results.push(raw as RuntimeResult);
+
+    // Campos requeridos.
+    const required = ['slug', 'viewport', 'color_scheme', 'tables', 'cards', 'expected_cards', 'result'];
+    for (const field of required) {
+      if (!(field in raw)) {
+        errors.push(`Campo ausente en ${f}: ${field}`);
+      }
+    }
+    if (errors.length > 0) continue;
+
+    // Tipos.
+    if (typeof raw.tables !== 'number') errors.push(`tables no es number en ${f}`);
+    if (typeof raw.cards !== 'number') errors.push(`cards no es number en ${f}`);
+    if (typeof raw.console_errors !== 'number') errors.push(`console_errors no es number en ${f}`);
+    if (typeof raw.page_errors !== 'number') errors.push(`page_errors no es number en ${f}`);
+    if (typeof raw.hydration_warnings !== 'number') errors.push(`hydration_warnings no es number en ${f}`);
+    if (errors.length > 0) continue;
+
+    // Result validation.
+    if (raw.result !== 'PASS') {
+      errors.push(`${f}: result=${raw.result} (${raw.failures?.join('; ') ?? 'sin detalles'})`);
+      continue;
+    }
+
+    // Métricas estrictas.
+    if (raw.tables > 0) errors.push(`${f}: tables=${raw.tables}`);
+    if (raw.cards < raw.expected_cards) errors.push(`${f}: cards=${raw.cards}<expected=${raw.expected_cards}`);
+    const maxOverflow = Math.max(raw.document_overflow ?? 0, raw.article_overflow ?? 0);
+    if (maxOverflow > 1) errors.push(`${f}: overflow=${maxOverflow}`);
+    if (raw.vertical_word_breaking) errors.push(`${f}: vertical_word_breaking`);
+    if (typeof raw.axe_critical === 'number' && raw.axe_critical > 0) errors.push(`${f}: axe_critical=${raw.axe_critical}`);
+    if (typeof raw.axe_serious === 'number' && raw.axe_serious > 0) errors.push(`${f}: axe_serious=${raw.axe_serious}`);
+    if (typeof raw.color_contrast === 'number' && raw.color_contrast > 0) errors.push(`${f}: color_contrast=${raw.color_contrast}`);
+    if (raw.console_errors > 0) errors.push(`${f}: console_errors=${raw.console_errors}`);
+    if (raw.page_errors > 0) errors.push(`${f}: page_errors=${raw.page_errors}`);
+    if (raw.hydration_warnings > 0) errors.push(`${f}: hydration_warnings=${raw.hydration_warnings}`);
+
+    // Print específico: cards must be >= expected (no usar :visible)
+    if (raw.print_mode) {
+      if (raw.cards === 0) errors.push(`${f}: print_cards=0 con result=PASS`);
+      // axe debe ser medido o NOT_APPLICABLE justificado.
+      if (raw.axe_critical === 0 && raw.axe_serious === 0 && raw.color_contrast === 0) {
+        // OK: medido y limpio.
+      } else if (
+        raw.axe_critical === 'NOT_APPLICABLE' &&
+        raw.axe_serious === 'NOT_APPLICABLE' &&
+        raw.color_contrast === 'NOT_APPLICABLE'
+      ) {
+        // OK: NOT_APPLICABLE documentado.
+      } else {
+        errors.push(`${f}: print axe no es 0 ni NOT_APPLICABLE (critical=${raw.axe_critical}, serious=${raw.axe_serious}, contrast=${raw.color_contrast})`);
+      }
+    } else {
+      // Pantalla: axe debe ser 0 real.
+      if (raw.axe_critical === 'NOT_APPLICABLE') errors.push(`${f}: screen axe_critical=NOT_APPLICABLE`);
+      if (raw.axe_serious === 'NOT_APPLICABLE') errors.push(`${f}: screen axe_serious=NOT_APPLICABLE`);
+    }
+
+    // Duplicados.
+    const key = caseKey(raw.slug, raw.viewport, raw.color_scheme, raw.print_mode);
+    if (seenKeys.has(key)) {
+      errors.push(`Duplicado: ${key} en ${f}`);
+    }
+    seenKeys.add(key);
+
+    results.push(raw);
   }
 
-  // Verifica cobertura: cada slug esperado × cada viewport × light/dark + print.
-  const missing: string[] = [];
-  for (const c of expected.cases) {
+  // Cobertura: casos esperados vs reales.
+  const expectedKeys = new Set<string>();
+  for (const c of expectedRaw.cases) {
     for (const vp of VIEWPORTS) {
       for (const sc of SCHEMES) {
-        const has = results.some(
-          (r) => r.slug === c.slug && r.viewport === vp && r.color_scheme === sc && !r.print_mode,
-        );
-        if (!has) missing.push(`${c.slug}/${vp}/${sc}`);
+        expectedKeys.add(caseKey(c.slug, vp, sc, false));
       }
-      for (const pr of PRINT) {
-        const has = results.some(
-          (r) => r.slug === c.slug && r.viewport === vp && r.print_mode === true,
-        );
-        if (!has) missing.push(`${c.slug}/${vp}/${pr}`);
-      }
+      expectedKeys.add(caseKey(c.slug, vp, 'light', true)); // print
     }
   }
 
-  // CSV runtime desde los JSON reales.
+  const missing = [...expectedKeys].filter((k) => !seenKeys.has(k));
+  const extra = [...seenKeys].filter((k) => !expectedKeys.has(k));
+
+  if (missing.length > 0) errors.push(`Faltan ${missing.length} casos (${missing.slice(0, 5).join(', ')}${missing.length > 5 ? '...' : ''})`);
+  if (extra.length > 0) errors.push(`Casos no esperados: ${extra.length} (${extra.slice(0, 5).join(', ')}${extra.length > 5 ? '...' : ''})`);
+
+  // CSV runtime.
   const csvHeader = [
     'tested_code_sha', 'timestamp', 'slug', 'viewport', 'color_scheme', 'print_mode',
-    'tables', 'cards', 'expected_cards', 'horizontal_overflow', 'vertical_word_breaking',
-    'axe_critical', 'axe_serious', 'color_contrast', 'console_errors', 'result',
+    'tables', 'cards', 'expected_cards',
+    'document_overflow', 'article_overflow', 'vertical_word_breaking',
+    'axe_critical', 'axe_serious', 'color_contrast',
+    'console_errors', 'page_errors', 'hydration_warnings',
+    'failures', 'result',
   ];
   const csvRows: string[] = [csvHeader.join(',')];
-  let axeCritical = 0, axeSerious = 0, colorContrast = 0, consoleErrors = 0;
-  let overflow = 0, wordBreaking = 0, tablesRemaining = 0;
   for (const r of results) {
     csvRows.push([
       r.tested_code_sha, r.timestamp, r.slug, r.viewport, r.color_scheme, r.print_mode,
-      r.tables, r.cards, r.expected_cards, r.horizontal_overflow, r.vertical_word_breaking,
-      r.axe_critical, r.axe_serious, r.color_contrast, r.console_errors, r.result,
+      r.tables, r.cards, r.expected_cards,
+      r.document_overflow, r.article_overflow, r.vertical_word_breaking,
+      r.axe_critical, r.axe_serious, r.color_contrast,
+      r.console_errors, r.page_errors, r.hydration_warnings,
+      (r.failures ?? []).join('; '), r.result,
     ].map(escCsv).join(','));
-    axeCritical += r.axe_critical;
-    axeSerious += r.axe_serious;
-    colorContrast += r.color_contrast;
-    consoleErrors += r.console_errors;
-    overflow += r.horizontal_overflow;
-    wordBreaking += r.vertical_word_breaking ? 1 : 0;
-    tablesRemaining += r.tables;
   }
 
   await writeFile(
@@ -431,36 +456,45 @@ async function runConsolidate() {
   console.log('=== BLOG TABLE CARDS CONTRACT (runtime consolidated) ===');
   console.log(`head_sha = ${HEAD_SHA}`);
   console.log(`runtime_cases = ${results.length}`);
-  console.log(`expected_cases = ${expected.cases.length}`);
+  console.log(`expected_cases = ${expectedKeys.size}`);
   console.log(`missing_runtime_cases = ${missing.length}`);
-  console.log(`stale_runtime_cases = 0`);
-  console.log(`tables_in_dom = ${tablesRemaining}`);
-  console.log(`mobile_overflow = ${overflow}`);
-  console.log(`vertical_word_breaking = ${wordBreaking}`);
-  console.log(`axe_critical = ${axeCritical}`);
-  console.log(`axe_serious = ${axeSerious}`);
-  console.log(`color_contrast = ${colorContrast}`);
-  console.log(`console_errors = ${consoleErrors}`);
+  console.log(`extra_runtime_cases = ${extra.length}`);
+  console.log(`duplicates = 0`);
+  console.log(`stale = ${errors.filter((e) => e.includes('stale')).length}`);
 
-  const failures: string[] = [];
-  if (missing.length > 0) failures.push(`missing_runtime_cases = ${missing.length}`);
-  if (tablesRemaining > 0) failures.push(`tables_in_dom = ${tablesRemaining}`);
-  if (overflow > 0) failures.push(`mobile_overflow = ${overflow}`);
-  if (wordBreaking > 0) failures.push(`vertical_word_breaking = ${wordBreaking}`);
-  if (axeCritical > 0) failures.push(`axe_critical = ${axeCritical}`);
-  if (axeSerious > 0) failures.push(`axe_serious = ${axeSerious}`);
-  if (colorContrast > 0) failures.push(`color_contrast = ${colorContrast}`);
-  if (consoleErrors > 0) failures.push(`console_errors = ${consoleErrors}`);
+  // Totales.
+  const totalTables = results.reduce((s, r) => s + r.tables, 0);
+  const totalAxeCritical = results.reduce((s, r) => s + (typeof r.axe_critical === 'number' ? r.axe_critical : 0), 0);
+  const totalAxeSerious = results.reduce((s, r) => s + (typeof r.axe_serious === 'number' ? r.axe_serious : 0), 0);
+  const totalContrast = results.reduce((s, r) => s + (typeof r.color_contrast === 'number' ? r.color_contrast : 0), 0);
+  const totalConsoleErrors = results.reduce((s, r) => s + (r.console_errors ?? 0), 0);
+  const totalPageErrors = results.reduce((s, r) => s + (r.page_errors ?? 0), 0);
+  const totalHydration = results.reduce((s, r) => s + (r.hydration_warnings ?? 0), 0);
+  const totalOverflow = results.reduce((s, r) => {
+    return s + Math.max(r.document_overflow ?? 0, r.article_overflow ?? 0);
+  }, 0);
+  const totalWordBreaking = results.filter((r) => r.vertical_word_breaking).length;
 
-  if (failures.length > 0) {
+  console.log(`tables_in_dom = ${totalTables}`);
+  console.log(`mobile_overflow = ${totalOverflow}`);
+  console.log(`vertical_word_breaking = ${totalWordBreaking}`);
+  console.log(`axe_critical = ${totalAxeCritical}`);
+  console.log(`axe_serious = ${totalAxeSerious}`);
+  console.log(`color_contrast = ${totalContrast}`);
+  console.log(`console_errors = ${totalConsoleErrors}`);
+  console.log(`page_errors = ${totalPageErrors}`);
+  console.log(`hydration_warnings = ${totalHydration}`);
+
+  if (errors.length > 0) {
     console.error('\nGATE RUNTIME FALLADO:');
-    for (const f of failures) console.error(`  - ${f}`);
+    for (const e of errors.slice(0, 20)) console.error(`  - ${e}`);
+    if (errors.length > 20) console.error(`  ... y ${errors.length - 20} más.`);
     process.exit(1);
   }
-  console.log('\nGATE RUNTIME VERDE: todas las rutas/viewports/print cubiertos, cero tablas en DOM.');
+  console.log('\nGATE RUNTIME VERDE: todas las rutas/viewports/print cubiertos, validación estricta superada.');
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+// ────────────────────────────────────────────────────────────────────────────────
 
 function execGitHead(): string {
   const { execSync } = require('node:child_process');

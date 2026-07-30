@@ -22,9 +22,12 @@
  *
  * SOPORTE DE SPANS: rowspan y colspan NO se transforman a fichas (la matriz
  * lógica expande el modelo para clasificar, pero no se renderiza como fichas
- * comparativas). El contrato exige `untransformableTables = 0` para publicados;
- * una futura tabla publicada con spans bloqueará el gate y requerirá mapping o
- * implementación específica (ver docs/seo/current/pr25-final-technical-closure.md).
+ * comparativas). El contrato exige `untransformableTables = 0` para publicados.
+ *
+ * EQUIVALENCIA TEXTUAL EXACTA: el multiset de tokens de las celdas de datos fuente
+ * debe ser idéntico al multiset de tokens de los campos renderizados (títulos de
+ * ficha + valores de ficha), excluyendo labels generadas. Comparación exacta,
+ * no por subconjunto.
  */
 
 import { parseDocument } from 'htmlparser2';
@@ -38,16 +41,13 @@ function cloneNodeWithParent(node: Node, parent: Node): Node {
   return cloned;
 }
 
-/** Enlaces (href + texto accesible) extraídos de un fragmento HTML.
- *  Tipo interno: se usa dentro del reporte, sin consumidor externo directo. */
+/** Enlaces (href + texto accesible) extraídos de un fragmento HTML. */
 interface TableLink {
   href: string;
   text: string;
 }
 
-/** Resultado detallado por tabla individual.
- *  Tipo interno: se consume vía BlogTableTransformReport.tables; el audit script
- *  accede por inferencia estructural sin importar este tipo. */
+/** Resultado detallado por tabla individual. */
 interface BlogTableItemReport {
   tableIndex: number;
   classification: string;
@@ -62,11 +62,11 @@ interface BlogTableItemReport {
   renderedValueFields: number;
   representedSourceCells: number;
 
-  /** Texto normalizado de la tabla fuente (entidades/espacios). En memoria solo. */
+  /** Texto normalizado de las celdas de datos fuente (solo <td>). En memoria. */
   sourceNormalizedText: string;
-  /** Texto normalizado del render de ESA tabla (no del artículo completo). */
+  /** Texto normalizado del render de ESA tabla (títulos + valores). */
   renderedNormalizedText: string;
-  /** Equivalencia textual real (multiset de tokens). */
+  /** Equivalencia textual exacta (multiset idéntico, no subconjunto). */
   textEquivalent: boolean;
 
   sourceLinks: TableLink[];
@@ -76,6 +76,11 @@ interface BlogTableItemReport {
 
   finalTableTags: number;
   warnings: string[];
+
+  /** Derivados del AST para --prepare (no regex). */
+  expectedTitles: string[];
+  expectedLabels: string[];
+  expectedValues: string[];
 }
 
 /** Métricas de una invocación al transformador. */
@@ -99,9 +104,7 @@ export interface TransformedBlogTables {
   report: BlogTableTransformReport;
 }
 
-/** Clasificación estructural de una tabla (alineada con el inventario).
- *  Tipo interno: el inventario CSV usa estos valores como columna
- *  `classification`, pero ningún consumidor de producción importa este tipo. */
+/** Clasificación estructural de una tabla (alineada con el inventario). */
 type TableClassification =
   | 'TWO_COLUMN_DEFINITION'
   | 'THREE_COLUMN_COMPARISON'
@@ -138,14 +141,16 @@ function normalizedPlainText(value: string): string {
   return collapseWhitespace(decodeEntities(value).replace(/<[^>]+>/g, ' ')).toLowerCase();
 }
 
-/** Tokeniza un texto normalizado en un multiset estable (para comparación sin orden). */
+/** Tokeniza un texto normalizado en un multiset estable. */
 function tokenMultiset(text: string): string[] {
-  // Split por espacios; cada token se conserva tal cual (incluye números, referencias
-  // legales como "112", signos con significado). No se ignoran palabras.
   return text.split(/\s+/).filter((t) => t.length > 0);
 }
 
-/** Compara dos textos por multiset de tokens (independiente del orden). */
+/**
+ * Compara dos textos por multiset de tokens EXACTO (independiente del orden).
+ * Ambos multisets deben tener exactamente los mismos tokens con las mismas
+ * frecuencias. No se acepta comparación por subconjunto.
+ */
 function textMultisetEqual(a: string, b: string): boolean {
   const ta = tokenMultiset(a).sort();
   const tb = tokenMultiset(b).sort();
@@ -153,44 +158,47 @@ function textMultisetEqual(a: string, b: string): boolean {
   return ta.every((tok, i) => tok === tb[i]);
 }
 
-/** Verifica que TODO token de `data` esté presente en `render` (subconjunto).
- *  El render puede contener tokens extra (labels de encabezado reubicados),
- *  pero no debe perder ningún token de datos. */
-function dataTextContainedIn(data: string, render: string): boolean {
-  const dataTokens = tokenMultiset(data);
-  if (dataTokens.length === 0) return true;
-  const renderCounts = new Map<string, number>();
-  for (const t of tokenMultiset(render)) {
-    renderCounts.set(t, (renderCounts.get(t) ?? 0) + 1);
-  }
-  for (const t of dataTokens) {
-    const remaining = renderCounts.get(t) ?? 0;
-    if (remaining <= 0) return false;
-    renderCounts.set(t, remaining - 1);
-  }
-  return true;
-}
-
-/** Extrae el texto normalizado de SOLO las celdas de datos (<td>) de una tabla. */
-function dataCellsNormalizedText(tableEl: Element): string {
-  const chunks: string[] = [];
-  const walk = (node: Element) => {
+/**
+ * Extrae tokens normalizados SOLO de los campos de datos renderizados:
+ * .article-*-card__title y .article-*-card__value y .article-data-list li.
+ * Excluye labels (.article-*-card__label), captions, y texto externo.
+ *
+ * Usa el texto completo de cada elemento (todos los text nodes combinados)
+ * para preservar puntuación adjunta a palabras (p.ej. "mes." no se parte
+ * en "mes" + "." cuando hay tags inline como <strong>).
+ */
+function extractRenderedDataTokens(cardsHtml: string): string[] {
+  const doc = parseDocument(cardsHtml);
+  const tokens: string[] = [];
+  const collect = (node: Element) => {
     for (const child of node.children || []) {
-      if (!isElement(child)) continue;
-      if (child.tagName === 'td') {
-        chunks.push(getOuterHTML(child as unknown as Parameters<typeof getOuterHTML>[0]));
-      } else if (['thead', 'tbody', 'tfoot', 'tr'].includes(child.tagName)) {
-        walk(child);
+      if (child.type !== 'tag') continue;
+      const el = child as Element;
+      const cls = el.attribs?.class ?? '';
+      if (
+        cls.includes('__title') ||
+        cls.includes('__value') ||
+        el.tagName === 'li'
+      ) {
+        // Extrae el texto completo del elemento (todos los text nodes combinados),
+        // no text nodes individuales. Así "mes." se preserva como un solo token.
+        const fullText = textOf(el);
+        if (fullText.trim()) {
+          tokens.push(normalizedPlainText(fullText));
+        }
+      } else if (cls.includes('__label')) {
+        continue; // salta labels
+      } else {
+        collect(el);
       }
     }
   };
-  walk(tableEl);
-  return normalizedPlainText(chunks.join(' '));
+  const root = (doc as unknown as Element);
+  collect(root);
+  return tokens.flatMap((t) => tokenMultiset(t));
 }
 
-/** Decodifica entidades HTML numéricas/centinela comunes que htmlparser2
- *  emite al serializar (p. ej. &#xfa; = ú). El navegador las renderiza igual,
- *  pero para comparación de equivalencia texto↔texto hay que normalizarlas. */
+/** Decodifica entidades HTML numéricas/centinela comunes. */
 function decodeEntities(value: string): string {
   return value
     .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
@@ -277,17 +285,12 @@ function linksEqual(a: TableLink[], b: TableLink[]): boolean {
 /**
  * Construye el grid lógico de celdas expandiendo rowspan/colspan.
  *
- * NOTA: el grid expandido sirve para CLASIFICAR y contar celdas, NO para
- * renderizar fichas con spans (esos casos son no transformables por contrato).
- *
  * El algoritmo corrige el doble decremento de rowspan: una celda pendiente se
  * decrementa exactamente una vez por fila en la que aparece.
  */
 function buildGrid(trs: Element[]): { grid: ParsedCell[][]; hasSpan: boolean } {
   const grid: ParsedCell[][] = [];
   let hasSpan = false;
-  /** Ocupación diferida por rowspan: colIndex → { cell, remainingRows }.
-   *  remainingRows = filas que aún faltan por rellenar (excluyendo la actual). */
   const pending: Map<number, { cell: ParsedCell; remaining: number }> = new Map();
 
   for (const tr of trs) {
@@ -299,13 +302,12 @@ function buildGrid(trs: Element[]): { grid: ParsedCell[][]; hasSpan: boolean } {
     while (pending.has(colIndex)) {
       const entry = pending.get(colIndex)!;
       row.push(entry.cell);
-      entry.remaining -= 1; // decremento único: esta fila consume una unidad
+      entry.remaining -= 1;
       if (entry.remaining <= 0) pending.delete(colIndex);
       colIndex += 1;
     }
     // 2. Inserta las celdas reales de esta fila en los huecos libres.
     while (cellCursor < cells.length) {
-      // Salta columnas aún ocupadas por rowspan (ya rellenadas en paso 1).
       while (pending.has(colIndex)) colIndex += 1;
       if (cellCursor >= cells.length) break;
       const cellEl = cells[cellCursor++];
@@ -318,7 +320,6 @@ function buildGrid(trs: Element[]): { grid: ParsedCell[][]; hasSpan: boolean } {
         rowspan: Math.max(1, parseInt(cellEl.attribs?.rowspan ?? '1', 10) || 1),
       };
       if (cell.colspan > 1 || cell.rowspan > 1) hasSpan = true;
-      // Inserta la celda (o su repetición lógica por colspan) en la fila actual.
       for (let i = 0; i < cell.colspan; i += 1) {
         while (pending.has(colIndex)) colIndex += 1;
         row.push(cell);
@@ -352,7 +353,6 @@ function parseTable(tableEl: Element): ParsedTable | null {
   }
   const columnCount = grid.reduce((max, row) => Math.max(max, row.length), 0);
 
-  // Detección de encabezados: fila completamente de <th>, o presencia de <thead>.
   const hasThead = !!(findFirst(tableEl, 'thead'));
   const firstRow = grid[0];
   const firstRowAllHeaders = firstRow.length > 0 && firstRow.every((c) => c.isHeader);
@@ -364,7 +364,6 @@ function parseTable(tableEl: Element): ParsedTable | null {
     headers = firstRow.map((c) => c.text);
     dataRows = grid.slice(1);
   } else if (anyHeader) {
-    // Encabezados dispersos: usar la primera fila como etiquetas si tiene algún th.
     headers = firstRow.map((c) => c.text);
     dataRows = grid.slice(1);
   }
@@ -388,19 +387,42 @@ function escapeText(value: string): string {
     .replace(/>/g, '&gt;');
 }
 
-/** Genera el HTML de fichas para una tabla parseada. */
-function renderCards(parsed: ParsedTable): { html: string; cardsGenerated: number; titleFields: number; valueFields: number; representedCells: number } {
+/**
+ * Genera el HTML de fichas para una tabla parseada.
+ * También devuelve expectedTitles, expectedLabels, expectedValues
+ * derivados del AST (no regex).
+ */
+function renderCards(parsed: ParsedTable): {
+  html: string;
+  cardsGenerated: number;
+  titleFields: number;
+  valueFields: number;
+  representedCells: number;
+  expectedTitles: string[];
+  expectedLabels: string[];
+  expectedValues: string[];
+} {
   const { classification, headers, dataRows, columnCount, caption } = parsed;
+  const expectedTitles: string[] = [];
+  const expectedLabels: string[] = headers.slice(1); // col 0 es título, resto son labels
+  const expectedValues: string[] = [];
 
   if (classification === 'SINGLE_COLUMN_LIST' || columnCount <= 1) {
     const items = dataRows.map((row) => row.map((c) => c.html).join(' ')).filter(Boolean);
+    for (const row of dataRows) {
+      if (row.length > 0) {
+        expectedTitles.push(row[0].text);
+        expectedValues.push(row[0].text);
+      }
+    }
     const captionHtml = caption ? `    <p class="article-data-list__caption">${escapeText(caption)}</p>\n` : '';
     const html = `<ul class="article-data-list">\n${items.map((it) => `  <li>${it}</li>`).join('\n')}\n</ul>`;
-    // Cada <li> representa una celda (col 1). El header no se renderiza como celda de datos.
     const represented = items.length;
     return {
       html: caption ? `<section class="article-data-list-wrap">\n${captionHtml}${html}\n</section>` : html,
-      cardsGenerated: items.length, titleFields: 0, valueFields: items.length, representedCells: represented,
+      cardsGenerated: items.length, titleFields: 0, valueFields: items.length,
+      representedCells: represented,
+      expectedTitles, expectedLabels: [], expectedValues,
     };
   }
 
@@ -418,11 +440,11 @@ function renderCards(parsed: ParsedTable): { html: string; cardsGenerated: numbe
   let representedCells = 0;
   for (const row of dataRows) {
     if (row.length === 0) continue;
-    // Primera celda → título de la ficha (actúa como identificador de fila).
     const titleCell = row[0];
     const titleHtml = titleCell.html.trim() || escapeText(titleCell.text);
+    expectedTitles.push(titleCell.text);
     titleFields += 1;
-    representedCells += 1; // la celda título cuenta como representada
+    representedCells += 1;
     const fieldCells = row.slice(1);
     const parts: string[] = [];
     parts.push(`  <article class="${cardClass}">`);
@@ -433,6 +455,7 @@ function renderCards(parsed: ParsedTable): { html: string; cardsGenerated: numbe
       parts.push(`      <p class="${labelClass}">${escapeText(label)}</p>`);
       parts.push(`      <div class="${valueClass}">${cell.html}</div>`);
       parts.push(`    </div>`);
+      expectedValues.push(cell.text);
       valueFields += 1;
       representedCells += 1;
     });
@@ -443,21 +466,11 @@ function renderCards(parsed: ParsedTable): { html: string; cardsGenerated: numbe
     ? `  <p class="${sectionClass}__caption">${escapeText(caption)}</p>\n`
     : '';
   const html = `<section class="${sectionClass}">\n${captionHtml}${cards.join('\n')}\n</section>`;
-  return { html, cardsGenerated: cards.length, titleFields, valueFields, representedCells };
-}
-
-/** Serializa el HTML de una sola tabla (para extraer su texto/links renderizados). */
-function serializeNode(node: Element | Document): string {
-  return getOuterHTML(node as unknown as Parameters<typeof getOuterHTML>[0]);
+  return { html, cardsGenerated: cards.length, titleFields, valueFields, representedCells, expectedTitles, expectedLabels, expectedValues };
 }
 
 /**
  * Reemplaza cada nodo `<table>` del documento por su HTML de fichas, recursivamente.
- * Devuelve el documento serializado y acumula métricas en `report`.
- *
- * Para tablas NO transformables: registra pérdida y NO toca el nodo (el gate
- * fallará antes de llegar al sanitizer final; nunca se deja al sanitizer que
- * elimine contenido silenciosamente).
  */
 function replaceTablesInDocument(
   doc: Document,
@@ -477,7 +490,6 @@ function replaceTablesInDocument(
     report.tablesFound += 1;
     const tableIndex = report.tables.length;
     const parsed = parseTable(table);
-    const sourceOuterHtml = serializeNode(table);
     const sourceLinks = extractLinks(table);
 
     if (!parsed || !parsed.transformable) {
@@ -486,10 +498,6 @@ function replaceTablesInDocument(
       report.informationLosses += 1;
       report.untransformableTables += 1;
       report.warnings.push(warning);
-      // NO se sustituye el nodo: se deja intacto en el documento serializado
-      // (el gate fallará antes del sanitizer; nunca se confía en el sanitizer
-      // para eliminar contenido). El reporte lo refleja como pérdida.
-      // sourceCells = solo celdas de datos (td); los headers son metadata.
       const sourceCells = parsed
         ? parsed.dataRows.reduce((s, r) => s + r.length, 0)
         : 0;
@@ -505,14 +513,17 @@ function replaceTablesInDocument(
         renderedTitleFields: 0,
         renderedValueFields: 0,
         representedSourceCells: 0,
-        sourceNormalizedText: normalizedPlainText(sourceOuterHtml),
+        sourceNormalizedText: '',
         renderedNormalizedText: '',
         textEquivalent: false,
         sourceLinks,
         renderedLinks: [],
         linksEquivalent: false,
-        finalTableTags: 1, // la tabla sigue presente en el HTML
+        finalTableTags: 1,
         warnings: [warning],
+        expectedTitles: [],
+        expectedLabels: [],
+        expectedValues: [],
       });
       continue;
     }
@@ -520,22 +531,26 @@ function replaceTablesInDocument(
     const sourceCells = parsed.dataRows.reduce((s, r) => s + r.length, 0);
     report.sourceCells += sourceCells;
 
-    const { html: cardsHtml, cardsGenerated, titleFields, valueFields, representedCells } = renderCards(parsed);
+    const { html: cardsHtml, cardsGenerated, titleFields, valueFields, representedCells, expectedTitles, expectedLabels, expectedValues } = renderCards(parsed);
     report.cardsGenerated += cardsGenerated;
     report.tablesTransformed += 1;
     report.representedSourceCells += representedCells;
 
-    // Equivalencia textual: TODO token de celdas de datos (<td>) debe estar
-    // presente en el render de las fichas (subconjunto). Los headers pueden
-    // aparecer además como labels, lo cual es correcto y esperable.
-    const cardsDoc = parseDocument(cardsHtml);
-    const renderedNormalized = normalizedPlainText(getOuterHTML(cardsDoc as unknown as Parameters<typeof getOuterHTML>[0]));
-    const renderedLinks = extractLinks(cardsDoc as unknown as Element);
-    const sourceDataText = dataCellsNormalizedText(table);
-    const textEq = dataTextContainedIn(sourceDataText, renderedNormalized);
+    // Equivalencia textual EXACTA: multiset de tokens de celdas fuente
+    // vs. multiset de tokens de campos renderizados (títulos + valores).
+    // Excluye labels. Comparación exacta, no subconjunto.
+    const sourceDataTokens = parsed.dataRows
+      .flatMap((row) => row.map((c) => normalizedPlainText(c.text)))
+      .join(' ');
+    const renderedDataTokens = extractRenderedDataTokens(cardsHtml).join(' ');
+    const textEq = textMultisetEqual(sourceDataTokens, renderedDataTokens);
+
+    const renderedLinks = extractLinks(parseDocument(cardsHtml) as unknown as Element);
     const linksEq = linksEqual(sourceLinks, renderedLinks);
 
-    if (!textEq) report.warnings.push(`Tabla #${tableIndex}: equivalencia textual falsa.`);
+    if (!textEq) {
+      report.warnings.push(`Tabla #${tableIndex}: equivalencia textual falsa (multiset exacto).`);
+    }
     if (!linksEq) report.warnings.push(`Tabla #${tableIndex}: equivalencia de enlaces falsa.`);
 
     report.tables.push({
@@ -549,14 +564,17 @@ function replaceTablesInDocument(
       renderedTitleFields: titleFields,
       renderedValueFields: valueFields,
       representedSourceCells: representedCells,
-      sourceNormalizedText: sourceDataText,
-      renderedNormalizedText: renderedNormalized,
+      sourceNormalizedText: sourceDataTokens,
+      renderedNormalizedText: renderedDataTokens,
       textEquivalent: textEq,
       sourceLinks,
       renderedLinks,
       linksEquivalent: linksEq,
       finalTableTags: 0,
       warnings: [],
+      expectedTitles,
+      expectedLabels,
+      expectedValues,
     });
 
     // Sustituye el nodo `<table>` por los nodos de fichas parseados.
@@ -564,6 +582,7 @@ function replaceTablesInDocument(
     if (!parent || !('children' in parent)) continue;
     const idx = parent.children.indexOf(table);
     if (idx === -1) continue;
+    const cardsDoc = parseDocument(cardsHtml);
     const replacementNodes = (cardsDoc as unknown as Element).children as Node[];
     const newNodes: Node[] = replacementNodes.map((node) => cloneNodeWithParent(node, parent as Node));
     if (newNodes.length === 0) continue;
@@ -608,8 +627,7 @@ export const __testing = {
   buildGrid,
   normalizedPlainText,
   textMultisetEqual,
-  dataTextContainedIn,
-  dataCellsNormalizedText,
+  extractRenderedDataTokens,
   linksEqual,
   extractLinks,
 };

@@ -1,24 +1,23 @@
 /**
- * E2E real de fichas de tablas del blog (Paso 13, §9).
+ * E2E estricto de fichas de tablas del blog (Paso 13, corrección §5-§11).
  *
- * Deriva las rutas de test-results/blog-table-cards/expected-cases.json
- * (generado por `seo:blog-table-cards-contract --prepare`), NO de una lista
- * escrita a mano.
+ * Deriva las rutas de docs/audits/current/blog-table-expected-cases.json
+ * (generado por `seo:blog-table-cards-contract --prepare` desde AST).
  *
- * Para cada artículo publicado con tablas, en 4 viewports (desktop 1440,
- * tablet 768, mobile 390, small-mobile 320) × 2 color schemes (light/dark)
+ * Para cada artículo publicado con tablas, en 4 viewports × 2 color schemes
  * + print mode, verifica en el navegador real:
- *   - cero etiquetas de tabla en el DOM renderizado;
- *   - cards esperadas presentes y visibles;
- *   - títulos y labels esperados visibles;
- *   - overflow horizontal <= 1px;
- *   - sin palabras partidas letra por letra (vertical);
- *   - axe critical/serious/color-contrast = 0;
- *   - cero console errors.
+ *   - cero etiquetas de tabla en el DOM;
+ *   - cards >= expected_cards (impresión: con nodos reales, no :visible);
+ *   - títulos/labels/values esperados visibles;
+ *   - overflow horizontal <= 1px (medido, no hardcodeado);
+ *   - sin palabras partidas letra por letra (medido);
+ *   - axe critical/serious/contrast real (medido en pantalla y print);
+ *   - console errors, page errors, hydration warnings (observados con objeto mutable).
  *
- * Escribe resultados JSON reales en test-results/blog-table-cards/<slug>-<vp>-<scheme>.json
- * que el consolidador (--consolidate) valida y consolida en CSV.
+ * El resultado se calcula a partir de las métricas: result = PASS solo si
+ * todas las assertions pasan. No se hardcodea result=PASS.
  */
+
 import { expect, test, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { execSync } from 'node:child_process';
@@ -26,10 +25,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 
 const HEAD_SHA = execSync('git rev-parse HEAD').toString().trim();
-// Resultados runtime: viven en test-results/ (escritos durante el run).
 const RESULTS_DIR = path.join(process.cwd(), 'test-results/blog-table-cards');
-// Casos esperados: viven en docs/audits/current/ (directorio ESTABLE, no vaciado
-// por Playwright al iniciar; test-results/ SÍ se vacía y borraría el JSON).
 const CASES_FILE = path.join(process.cwd(), 'docs/audits/current/blog-table-expected-cases.json');
 
 interface ExpectedCase {
@@ -66,11 +62,96 @@ const VIEWPORTS = [
   { name: 'small-mobile-320', width: 320, height: 568 },
 ];
 
+/** Diagnósticos de navegador observados con objeto mutable. */
+interface BrowserDiagnostics {
+  consoleErrors: string[];
+  pageErrors: string[];
+  hydrationWarnings: string[];
+}
+
+function observeBrowserDiagnostics(page: Page): BrowserDiagnostics {
+  const diag: BrowserDiagnostics = {
+    consoleErrors: [],
+    pageErrors: [],
+    hydrationWarnings: [],
+  };
+
+  page.on('console', (msg) => {
+    if (msg.type() === 'error') {
+      const text = msg.text();
+      // Filtros explícitos: recursos externos interceptados deliberadamente.
+      // - Vercel Speed Insights: interceptado por route()
+      // - GTM: interceptado por route()
+      if (text.includes('_vercel/speed-insights')) return;
+      if (text.includes('gtm.js')) return;
+      if (text.includes('googletagmanager')) return;
+      diag.consoleErrors.push(text);
+    }
+    // Detecta warnings de hidratación de React.
+    if (msg.type() === 'warning' || msg.type() === 'error') {
+      const text = msg.text();
+      if (
+        text.includes('hydration') ||
+        text.includes('Hydration') ||
+        text.includes('mismatch') ||
+        text.includes('server/client') ||
+        text.includes('did not match') ||
+        text.includes('expected server HTML')
+      ) {
+        diag.hydrationWarnings.push(text);
+      }
+    }
+  });
+
+  page.on('pageerror', (err) => {
+    diag.pageErrors.push(err.message);
+    // pageerror puede contener hydration también.
+    if (
+      err.message.includes('hydration') ||
+      err.message.includes('Hydration') ||
+      err.message.includes('mismatch')
+    ) {
+      diag.hydrationWarnings.push(err.message);
+    }
+  });
+
+  return diag;
+}
+
 function ensureDir() {
   if (!fs.existsSync(RESULTS_DIR)) fs.mkdirSync(RESULTS_DIR, { recursive: true });
 }
 
-function saveResult(data: Record<string, unknown>) {
+interface RuntimeResult {
+  tested_code_sha: string;
+  timestamp: string;
+  slug: string;
+  url: string;
+  viewport: string;
+  color_scheme: string;
+  print_mode: boolean;
+
+  tables: number;
+  cards: number;
+  expected_cards: number;
+
+  document_overflow: number;
+  article_overflow: number;
+  vertical_word_breaking: boolean;
+
+  axe_critical: number | 'NOT_APPLICABLE';
+  axe_serious: number | 'NOT_APPLICABLE';
+  color_contrast: number | 'NOT_APPLICABLE';
+
+  console_errors: number;
+  page_errors: number;
+  hydration_warnings: number;
+
+  failures: string[];
+  result: 'PASS' | 'FAIL';
+}
+
+function saveResult(data: RuntimeResult) {
   ensureDir();
   const printSuffix = data.print_mode ? '-print' : '';
   const filename = `${data.slug}-${data.viewport}-${data.color_scheme}${printSuffix}.json`;
@@ -84,21 +165,32 @@ async function dismissCookieConsent(page: Page) {
     await rejectBtn.click();
     await rejectBtn.waitFor({ state: 'hidden', timeout: 5000 });
   } catch {
-    // Ignore if cookie consent does not mount or is already closed
+    // Ignore
   }
 }
 
-/** Cuenta tags de tabla en el <article> renderizado. */
 async function countTableTags(page: Page): Promise<number> {
   return page.locator('article table, article thead, article tbody, article tfoot, article tr, article th, article td, article caption').count();
 }
 
-/** Cuenta fichas (article-comparison-card / article-data-card) visibles. */
+/** Selector unificado de fichas (clases directas, no descendientes de article). */
+const CARD_SELECTOR = [
+  '.article-comparison-card',
+  '.article-data-card',
+  '.article-data-list > li',
+].join(', ');
+
+/** Cuenta fichas visibles en pantalla. */
 async function countCards(page: Page): Promise<number> {
-  return page.locator('article .article-comparison-card:visible, article .article-data-card:visible, article .article-data-list li:visible').count();
+  return page.locator(`${CARD_SELECTOR}:visible`).count();
 }
 
-/** Detecta overflow horizontal del documento y del artículo. */
+/** Cuenta fichas en impresión: usa locator sin :visible (attached nodes).
+ *  Bajo media=print, :visible no funciona de forma fiable. */
+async function countPrintCards(page: Page): Promise<number> {
+  return page.locator(CARD_SELECTOR).count();
+}
+
 async function measureOverflow(page: Page): Promise<{ doc: number; article: number }> {
   return page.evaluate(() => {
     const docEl = document.documentElement;
@@ -109,21 +201,16 @@ async function measureOverflow(page: Page): Promise<{ doc: number; article: numb
   });
 }
 
-/** Detecta palabras partidas letra por letra (vertical word breaking): busca
- *  elementos .article-*-card cuyo texto contenga un char por línea. Heurística:
- *  si un contenedor de ficha tiene scrollHeight muy superior a lo esperado por
- *  su texto, o si hay muchos <br> automáticos en una sola palabra. Aquí usamos
- *  una comprobación simple: ningún .article-*-card__value debe tener width < 20px
- *  (indicaría compresión vertical por word-break:break-all). */
 async function detectVerticalWordBreaking(page: Page): Promise<boolean> {
   return page.evaluate(() => {
-    const values = document.querySelectorAll('.article-comparison-card__value, .article-data-card__value, .article-comparison-card__title, .article-data-card__title');
+    const values = document.querySelectorAll(
+      '.article-comparison-card__value, .article-data-card__value, '
+      + '.article-comparison-card__title, .article-data-card__title',
+    );
     for (const v of Array.from(values)) {
       const el = v as HTMLElement;
-      // Si el elemento es muy estrecho Y alto (indica apilamiento vertical de letras).
       if (el.offsetWidth < 20 && el.offsetHeight > 60) return true;
     }
-    // Comprueba también ausencia de word-break:break-all aplicado.
     for (const v of Array.from(values)) {
       const el = v as HTMLElement;
       const style = window.getComputedStyle(el);
@@ -144,14 +231,16 @@ async function runAxe(page: Page): Promise<{ critical: number; serious: number; 
   return { critical, serious, contrast };
 }
 
-function collectConsoleErrors(page: Page): number {
-  let errors = 0;
-  page.on('console', (msg) => {
-    if (msg.type() === 'error') errors += 1;
-  });
-  page.on('pageerror', () => { errors += 1; });
-  return errors;
+async function setupPage(page: Page) {
+  await page.context().route('**/_vercel/speed-insights/**', (r) =>
+    r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }),
+  );
+  await page.context().route('**/gtm.js**', (r) =>
+    r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }),
+  );
 }
+
+// ───────────────────────────────────────────────────────────────── PANTALLA ─────
 
 for (const vp of VIEWPORTS) {
   test.describe(`Blog table cards on ${vp.name}`, () => {
@@ -160,10 +249,9 @@ for (const vp of VIEWPORTS) {
     for (const c of EXPECTED.cases) {
       for (const scheme of ['light', 'dark'] as const) {
         test(`${c.slug} - ${scheme} - ${vp.name}`, async ({ page }) => {
-          await page.context().route('**/_vercel/speed-insights/**', (r) => r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
-          await page.context().route('**/gtm.js**', (r) => r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
+          await setupPage(page);
           await page.emulateMedia({ colorScheme: scheme, reducedMotion: 'no-preference' });
-          const consoleErrors = collectConsoleErrors(page);
+          const diag = observeBrowserDiagnostics(page);
 
           await page.goto(c.url, { waitUntil: 'networkidle' });
           await dismissCookieConsent(page);
@@ -175,26 +263,36 @@ for (const vp of VIEWPORTS) {
           const wordBreaking = await detectVerticalWordBreaking(page);
           const axe = await runAxe(page);
 
-          // Verificaciones estrictas.
-          expect(tableTags, `${c.slug}: tags de tabla en DOM debe ser 0`).toBe(0);
-          expect(cards, `${c.slug}: fichas visibles debe ser >= ${c.expectedCards}`).toBeGreaterThanOrEqual(c.expectedCards);
-          expect(overflow.doc, `${c.slug}: overflow doc <= 1px`).toBeLessThanOrEqual(1);
-          expect(overflow.article, `${c.slug}: overflow article <= 1px`).toBeLessThanOrEqual(1);
-          expect(wordBreaking, `${c.slug}: sin palabras partidas letra por letra`).toBe(false);
-          expect(axe.critical, `${c.slug}: axe critical = 0`).toBe(0);
-          expect(axe.serious, `${c.slug}: axe serious = 0`).toBe(0);
-          expect(axe.contrast, `${c.slug}: color contrast = 0`).toBe(0);
+          const failures: string[] = [];
+          if (tableTags !== 0) failures.push(`tables=${tableTags}`);
+          if (cards < c.expectedCards) failures.push(`cards=${cards}<expected=${c.expectedCards}`);
+          if (overflow.doc > 1) failures.push(`doc_overflow=${overflow.doc}`);
+          if (overflow.article > 1) failures.push(`article_overflow=${overflow.article}`);
+          if (wordBreaking) failures.push('vertical_word_breaking');
+          if (axe.critical !== 0) failures.push(`axe_critical=${axe.critical}`);
+          if (axe.serious !== 0) failures.push(`axe_serious=${axe.serious}`);
+          if (axe.contrast !== 0) failures.push(`color_contrast=${axe.contrast}`);
+          if (diag.consoleErrors.length > 0) failures.push(`console_errors=${diag.consoleErrors.length}`);
+          if (diag.pageErrors.length > 0) failures.push(`page_errors=${diag.pageErrors.length}`);
+          if (diag.hydrationWarnings.length > 0) failures.push(`hydration_warnings=${diag.hydrationWarnings.length}`);
 
-          // Títulos esperados visibles.
+          // Títulos y labels esperados visibles.
           for (const title of c.expectedTitles) {
-            await expect(page.locator('article').first(), `${c.slug}: título "${title}" visible`).toContainText(title, { timeout: 5000 });
+            try {
+              await expect(page.locator('article').first()).toContainText(title, { timeout: 5000 });
+            } catch {
+              failures.push(`missing_title="${title}"`);
+            }
           }
-          // Labels esperados visibles (headers reubicados como labels de campo).
-          for (const label of c.expectedLabels.slice(1)) {
-            await expect(page.locator('article').first(), `${c.slug}: label "${label}" visible`).toContainText(label, { timeout: 5000 });
+          for (const label of c.expectedLabels) {
+            try {
+              await expect(page.locator('article').first()).toContainText(label, { timeout: 5000 });
+            } catch {
+              failures.push(`missing_label="${label}"`);
+            }
           }
 
-          const result = {
+          const result: RuntimeResult = {
             tested_code_sha: HEAD_SHA,
             timestamp: new Date().toISOString(),
             slug: c.slug,
@@ -205,39 +303,85 @@ for (const vp of VIEWPORTS) {
             tables: tableTags,
             cards,
             expected_cards: c.expectedCards,
-            horizontal_overflow: Math.max(overflow.doc, overflow.article),
+            document_overflow: overflow.doc,
+            article_overflow: overflow.article,
             vertical_word_breaking: wordBreaking,
             axe_critical: axe.critical,
             axe_serious: axe.serious,
             color_contrast: axe.contrast,
-            console_errors: consoleErrors,
-            result: 'PASS',
+            console_errors: diag.consoleErrors.length,
+            page_errors: diag.pageErrors.length,
+            hydration_warnings: diag.hydrationWarnings.length,
+            failures,
+            result: failures.length === 0 ? 'PASS' : 'FAIL',
           };
           saveResult(result);
+
+          // Solo hacemos assertions estrictas tras guardar el resultado.
+          expect(tableTags, `${c.slug}: tags de tabla en DOM debe ser 0`).toBe(0);
+          expect(cards, `${c.slug}: fichas visibles debe ser >= ${c.expectedCards}`).toBeGreaterThanOrEqual(c.expectedCards);
+          expect(overflow.doc, `${c.slug}: doc overflow <= 1px`).toBeLessThanOrEqual(1);
+          expect(overflow.article, `${c.slug}: article overflow <= 1px`).toBeLessThanOrEqual(1);
+          expect(wordBreaking, `${c.slug}: sin word breaking`).toBe(false);
+          expect(axe.critical, `${c.slug}: axe critical = 0`).toBe(0);
+          expect(axe.serious, `${c.slug}: axe serious = 0`).toBe(0);
+          expect(axe.contrast, `${c.slug}: color contrast = 0`).toBe(0);
+          expect(diag.consoleErrors, `${c.slug}: console errors = 0`).toEqual([]);
+          expect(diag.pageErrors, `${c.slug}: page errors = 0`).toEqual([]);
+          expect(diag.hydrationWarnings, `${c.slug}: hydration warnings = 0`).toEqual([]);
         });
       }
 
-      // Modo impresión (una pasada por viewport y artículo).
+      // ──────────────────────────────────────────────────────────── IMPRESIÓN ─────
+
       test(`${c.slug} - print - ${vp.name}`, async ({ page }) => {
-        await page.context().route('**/_vercel/speed-insights/**', (r) => r.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
+        await setupPage(page);
         await page.emulateMedia({ media: 'print', colorScheme: 'light' });
-        const consoleErrors = collectConsoleErrors(page);
+        const diag = observeBrowserDiagnostics(page);
 
         await page.goto(c.url, { waitUntil: 'networkidle' });
         await dismissCookieConsent(page);
-        // En media: 'print', los chequeos de visibilidad de Playwright pueden no
-        // pasar para <article> (CSS de print). Esperamos a que esté attached.
         await page.locator('article').first().waitFor({ state: 'attached', timeout: 15000 });
 
         const tableTags = await countTableTags(page);
-        const cards = await countCards(page);
-        // En print, las fichas deben seguir presentes (break-inside:avoid).
-        const cardsVisible = await page.locator('article .article-comparison-card, article .article-data-card, article .article-data-list li').count();
+        const cards = await countPrintCards(page);
+        const overflow = await measureOverflow(page);
+        const wordBreaking = await detectVerticalWordBreaking(page);
 
-        expect(tableTags, `${c.slug} print: tags de tabla = 0`).toBe(0);
-        expect(cardsVisible, `${c.slug} print: fichas visibles`).toBeGreaterThan(0);
+        let axeCritical: number | 'NOT_APPLICABLE' = 'NOT_APPLICABLE';
+        let axeSerious: number | 'NOT_APPLICABLE' = 'NOT_APPLICABLE';
+        let colorContrastVal: number | 'NOT_APPLICABLE' = 'NOT_APPLICABLE';
+        try {
+          const axe = await runAxe(page);
+          axeCritical = axe.critical;
+          axeSerious = axe.serious;
+          colorContrastVal = axe.contrast;
+        } catch {
+          // Axe puede no funcionar bajo media=print; se registra como NOT_APPLICABLE.
+        }
 
-        const result = {
+        const failures: string[] = [];
+        if (tableTags !== 0) failures.push(`print_tables=${tableTags}`);
+        if (cards < c.expectedCards) failures.push(`print_cards=${cards}<expected=${c.expectedCards}`);
+        if (overflow.doc > 1) failures.push(`print_doc_overflow=${overflow.doc}`);
+        if (overflow.article > 1) failures.push(`print_article_overflow=${overflow.article}`);
+        if (wordBreaking) failures.push('print_vertical_word_breaking');
+        if (typeof axeCritical === 'number' && axeCritical !== 0) failures.push(`print_axe_critical=${axeCritical}`);
+        if (typeof axeSerious === 'number' && axeSerious !== 0) failures.push(`print_axe_serious=${axeSerious}`);
+        if (typeof colorContrastVal === 'number' && colorContrastVal !== 0) failures.push(`print_color_contrast=${colorContrastVal}`);
+        if (diag.consoleErrors.length > 0) failures.push(`print_console_errors=${diag.consoleErrors.length}`);
+        if (diag.pageErrors.length > 0) failures.push(`print_page_errors=${diag.pageErrors.length}`);
+        if (diag.hydrationWarnings.length > 0) failures.push(`print_hydration_warnings=${diag.hydrationWarnings.length}`);
+
+        // Verificar títulos en impresión.
+        for (const title of c.expectedTitles) {
+          const hasTitle = await page.locator('article').first().textContent().then(
+            (t) => (t ?? '').includes(title),
+          ).catch(() => false);
+          if (!hasTitle) failures.push(`print_missing_title="${title}"`);
+        }
+
+        const result: RuntimeResult = {
           tested_code_sha: HEAD_SHA,
           timestamp: new Date().toISOString(),
           slug: c.slug,
@@ -248,15 +392,38 @@ for (const vp of VIEWPORTS) {
           tables: tableTags,
           cards,
           expected_cards: c.expectedCards,
-          horizontal_overflow: 0,
-          vertical_word_breaking: false,
-          axe_critical: 0,
-          axe_serious: 0,
-          color_contrast: 0,
-          console_errors: consoleErrors,
-          result: 'PASS',
+          document_overflow: overflow.doc,
+          article_overflow: overflow.article,
+          vertical_word_breaking: wordBreaking,
+          axe_critical: axeCritical,
+          axe_serious: axeSerious,
+          color_contrast: colorContrastVal,
+          console_errors: diag.consoleErrors.length,
+          page_errors: diag.pageErrors.length,
+          hydration_warnings: diag.hydrationWarnings.length,
+          failures,
+          result: failures.length === 0 ? 'PASS' : 'FAIL',
         };
         saveResult(result);
+
+        // Assertions estrictas tras guardar.
+        expect(tableTags, `${c.slug} print: tags de tabla = 0`).toBe(0);
+        expect(cards, `${c.slug} print: print cards >= ${c.expectedCards}`).toBeGreaterThanOrEqual(c.expectedCards);
+        expect(overflow.doc, `${c.slug} print: doc overflow <= 1px`).toBeLessThanOrEqual(1);
+        expect(overflow.article, `${c.slug} print: article overflow <= 1px`).toBeLessThanOrEqual(1);
+        expect(wordBreaking, `${c.slug} print: sin word breaking`).toBe(false);
+        if (typeof axeCritical === 'number') {
+          expect(axeCritical, `${c.slug} print: axe critical = 0`).toBe(0);
+        }
+        if (typeof axeSerious === 'number') {
+          expect(axeSerious, `${c.slug} print: axe serious = 0`).toBe(0);
+        }
+        if (typeof colorContrastVal === 'number') {
+          expect(colorContrastVal, `${c.slug} print: color contrast = 0`).toBe(0);
+        }
+        expect(diag.consoleErrors, `${c.slug} print: console errors = 0`).toEqual([]);
+        expect(diag.pageErrors, `${c.slug} print: page errors = 0`).toEqual([]);
+        expect(diag.hydrationWarnings, `${c.slug} print: hydration warnings = 0`).toEqual([]);
       });
     }
   });

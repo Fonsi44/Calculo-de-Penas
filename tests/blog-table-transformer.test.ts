@@ -8,7 +8,7 @@ import {
   sanitizeBlogSourceHtml,
 } from '@/lib/blog-html-sanitizer';
 
-const { normalizedPlainText, classify } = __testing;
+const { normalizedPlainText, classify, textMultisetEqual } = __testing;
 
 /** htmlparser2 serializa tildes como entidades HTML numéricas (&#xfa; = ú).
  *  El navegador las renderiza igual, pero para comparar texto en tests hay
@@ -77,8 +77,6 @@ describe('transformBlogTablesForRender — casos estructurales (#1-#12)', () => 
     const html = '<table><tr><th>Encabezado</th><th>Otro</th></tr>'
       + '<tr><td>dato1</td><td>dato2</td></tr></table>';
     const { html: out, report } = transformBlogTablesForRender(html);
-    // La primera columna actúa como título de ficha (patrón comparativo);
-    // el contenido real dato1 aparece como título y dato2 como valor.
     expect(containsDecoded(out, 'dato1')).toBe(true);
     expect(containsDecoded(out, 'dato2')).toBe(true);
     expect(containsDecoded(out, 'Otro')).toBe(true); // header usado como label
@@ -90,8 +88,6 @@ describe('transformBlogTablesForRender — casos estructurales (#1-#12)', () => 
       + '<tr><td>sin</td><td>th</td></tr></table>';
     const { report } = transformBlogTablesForRender(html);
     expect(report.warnings.length).toBeGreaterThan(0);
-    // No transformada: el contrato exige no inventar etiquetas; el sanitizer
-    // final decidirá. Aquí solo verificamos que no se generaron fichas.
     expect(report.cardsGenerated).toBe(0);
   });
 
@@ -145,9 +141,6 @@ describe('transformBlogTablesForRender — casos estructurales (#1-#12)', () => 
 });
 
 describe('transformBlogTablesForRender — spans, anidadas y malformadas: RECHAZO SEGURO (#13-#16)', () => {
-  // CONTRATO (§6/§7): rowspan y colspan NO se transforman a fichas. Una tabla
-  // con spans es no transformable y debe registrarse como PÉRDIDA (no como
-  // "se conserva intacta"). El gate falla antes de llegar al sanitizer final.
   it('#13 colspan=2: no transformable, information_losses += 1, untransformable += 1', () => {
     const html = '<table><thead><tr><th>A</th><th>B</th><th>C</th></tr></thead>'
       + '<tbody><tr><td colspan="2">combinado</td><td>tercero</td></tr></tbody></table>';
@@ -158,7 +151,6 @@ describe('transformBlogTablesForRender — spans, anidadas y malformadas: RECHAZ
     expect(report.informationLosses).toBe(1);
     expect(report.tables[0].classification).toBe('COMPLEX_SPAN_MATRIX');
     expect(report.tables[0].transformable).toBe(false);
-    // La tabla no se sustituye: sigue presente (final_table_tags = 1).
     expect(report.tables[0].finalTableTags).toBe(1);
   });
 
@@ -201,16 +193,11 @@ describe('transformBlogTablesForRender — spans, anidadas y malformadas: RECHAZ
     expect(report.untransformableTables).toBe(1);
     expect(report.informationLosses).toBe(1);
     expect(report.tables[0].classification).toBe('HEADERLESS_DATA');
-    // No se genera copy jurídico inventado en el render.
     expect(out).not.toMatch(/Dato \d/);
   });
 });
 
 describe('transformBlogTablesForRender — casos span obligatorios (§7): fallo controlado', () => {
-  // Todos estos casos deben producir RECHAZO SEGURO (no transformación).
-  // Una futura tabla publicada con spans bloqueará el gate hasta que exista
-  // mapping o implementación específica.
-
   it('rowspan=2 → COMPLEX_SPAN_MATRIX, pérdida', () => {
     const html = '<table><thead><tr><th>T</th><th>V</th></tr></thead>'
       + '<tbody><tr><td rowspan="2">x</td><td>1</td></tr><tr><td>2</td></tr></tbody></table>';
@@ -278,18 +265,13 @@ describe('transformBlogTablesForRender — seguridad e idempotencia (#17-#21)', 
   });
 
   it('#19 preservación de texto: toda palabra de los datos está en el render', () => {
-    // La primera columna actúa como título de ficha; su header (Tipo) queda
-    // implícito en ese título (patrón comparativo del §7). Verificamos que
-    // TODO el contenido de las filas de datos se preserva literalmente.
     const html = '<table><thead><tr><th>Tipo</th><th>Causa</th><th>Indemnización</th></tr></thead>'
       + '<tbody><tr><td>Despido</td><td>Faltas graves del trabajador</td><td>No procede</td></tr></tbody></table>';
     const { html: out } = transformBlogTablesForRender(html);
-    // El contenido de las celdas de datos debe estar completo en el render.
     expect(textEquivalent(
       '<table><tr><td>Despido</td><td>Faltas graves del trabajador</td><td>No procede</td></tr></table>',
       out,
     )).toBe(true);
-    // Los headers usados como labels de campos también se preservan.
     expect(containsDecoded(out, 'Causa')).toBe(true);
     expect(containsDecoded(out, 'Indemnización')).toBe(true);
   });
@@ -329,7 +311,6 @@ describe('sanitizadores source/rendered (#22-#25)', () => {
     expect(rendered).not.toMatch(/<table\b/i);
     expect(rendered).not.toMatch(/<t[dhr]\b/i);
     expect(rendered).not.toMatch(/<thead|tbody|tfoot|caption/i);
-    // El texto se conserva (degradado a plano, sin markup de tabla)
     expect(rendered).toContain('A');
     expect(rendered).toContain('1');
   });
@@ -353,7 +334,6 @@ describe('sanitizadores source/rendered (#22-#25)', () => {
     const html = '<table class="evil-table" data-exfil="x">'
       + '<thead><tr><th class="arbitrary">A</th></tr></thead>'
       + '<tbody><tr><td onclick="alert(1)">1</td></tr></tbody></table>';
-    // Tras transformar + sanitizer final: ni clases arbitrarias ni onclick.
     const final = sanitizeBlogRenderedHtml(transformBlogTablesForRender(
       sanitizeBlogSourceHtml(html).html,
     ).html).html;
@@ -363,8 +343,6 @@ describe('sanitizadores source/rendered (#22-#25)', () => {
 });
 
 describe('contratos editoriales y caso de aceptación (#26-#30)', () => {
-  // Simula el contrato "el body no se modifica": el transformador opera sobre
-  // una copia HTML y nunca toca el body original.
   it('#26 no se modifica el body: el input del transformador es inmutable', () => {
     const body = '<table><thead><tr><th>A</th></tr></thead><tbody><tr><td>1</td></tr></tbody></table>';
     const bodyCopy = body;
@@ -382,13 +360,12 @@ describe('contratos editoriales y caso de aceptación (#26-#30)', () => {
 
   it('#28 no se modifica la firma: el transformador es puro (sin efectos)', () => {
     const body = '<table><thead><tr><th>A</th></tr></thead><tbody><tr><td>1</td></tr></tbody></table>';
-    // Ejecutar dos veces no altera el body ni acumula estado.
     const r1 = transformBlogTablesForRender(body);
     transformBlogTablesForRender(body);
     transformBlogTablesForRender(body);
     const r4 = transformBlogTablesForRender(body);
     expect(r1.html).toBe(r4.html);
-    expect(body).toMatch(/<table/); // el body sigue teniendo la tabla
+    expect(body).toMatch(/<table/);
   });
 
   it('#29 caso "Tipos de despido": genera las 4 fichas esperadas', () => {
@@ -452,19 +429,15 @@ describe('equivalencia real por tabla (§5)', () => {
       + '<tbody><tr><td>Despido</td><td>Faltas graves</td><td>No procede</td></tr></tbody></table>';
     const { report } = transformBlogTablesForRender(html);
     expect(report.tables[0].textEquivalent).toBe(true);
-    // El multiset incluye tokens con significado (referencias, números).
     expect(report.tables[0].sourceNormalizedText).toMatch(/despido/);
     expect(report.tables[0].renderedNormalizedText).toMatch(/despido/);
   });
 
   it('representedSourceCells = sourceCells para tabla transformable', () => {
-    // sourceCells cuenta SOLO celdas de datos (td), no headers (los headers son
-    // metadata estructural reubicada como labels). 2 filas × 2 cols = 4 datos.
     const html = '<table><thead><tr><th>T</th><th>V</th></tr></thead>'
       + '<tbody><tr><td>a</td><td>b</td></tr><tr><td>c</td><td>d</td></tr></tbody></table>';
     const { report } = transformBlogTablesForRender(html);
     expect(report.tables[0].sourceCells).toBe(4);
-    // representedSourceCells = 2 títulos de ficha (col 0) + 2 valores (col 1) × 2 filas = 4.
     expect(report.tables[0].representedSourceCells).toBe(4);
     expect(report.tables[0].representedSourceCells).toBe(report.tables[0].sourceCells);
   });
@@ -487,5 +460,53 @@ describe('equivalencia real por tabla (§5)', () => {
     expect(report.tables[0].tableIndex).toBe(0);
     expect(report.tables[1].tableIndex).toBe(1);
     expect(report.tables.every((t) => t.transformable)).toBe(true);
+  });
+
+  it('expectedTitles y expectedLabels se derivan del AST (no regex)', () => {
+    const html = '<table><thead><tr><th>Tipo</th><th>Causa</th><th>Indemnización</th></tr></thead>'
+      + '<tbody><tr><td>Despido justificado</td><td>Faltas graves</td><td>No</td></tr>'
+      + '<tr><td>Despido injustificado</td><td>Sin causa</td><td>Sí</td></tr></tbody></table>';
+    const { report } = transformBlogTablesForRender(html);
+    expect(report.tables[0].expectedTitles).toEqual(['Despido justificado', 'Despido injustificado']);
+    expect(report.tables[0].expectedLabels).toEqual(['Causa', 'Indemnización']);
+    expect(report.tables[0].expectedValues).toEqual(['Faltas graves', 'No', 'Sin causa', 'Sí']);
+  });
+});
+
+describe('equivalencia textual EXACTA — multiset idéntico (no subconjunto)', () => {
+  const baseHtml = '<table><thead><tr><th>A</th><th>B</th></tr></thead>'
+    + '<tbody><tr><td>uno</td><td>dos</td></tr><tr><td>tres</td><td>cuatro</td></tr></tbody></table>';
+
+  it('multiset exacto = true cuando tokens fuente y render son idénticos', () => {
+    const { report } = transformBlogTablesForRender(baseHtml);
+    expect(report.tables[0].textEquivalent).toBe(true);
+    // source: uno dos tres cuatro, render: uno dos tres cuatro (títulos + valores)
+    expect(report.tables[0].sourceNormalizedText.split(/\s+/).sort())
+      .toEqual(report.tables[0].renderedNormalizedText.split(/\s+/).sort());
+  });
+
+  it('textMultisetEqual: tokens extra en render → FALSE (no subconjunto)', () => {
+    // Si el render tuviera un token extra, no sería equivalente
+    expect(textMultisetEqual('uno dos tres', 'uno dos tres cuatro')).toBe(false);
+  });
+
+  it('textMultisetEqual: token duplicado → FALSE', () => {
+    expect(textMultisetEqual('uno dos tres', 'uno uno dos tres')).toBe(false);
+  });
+
+  it('textMultisetEqual: número extra → FALSE', () => {
+    expect(textMultisetEqual('uno dos 3', 'uno dos 3 4')).toBe(false);
+  });
+
+  it('textMultisetEqual: referencia legal extra → FALSE', () => {
+    expect(textMultisetEqual('artículo 112 ct', 'artículo 112 ct 113')).toBe(false);
+  });
+
+  it('textMultisetEqual: token ausente → FALSE', () => {
+    expect(textMultisetEqual('uno dos tres', 'uno dos')).toBe(false);
+  });
+
+  it('textMultisetEqual: exactamente iguales → TRUE (único caso que pasa)', () => {
+    expect(textMultisetEqual('uno dos tres cuatro', 'cuatro dos uno tres')).toBe(true);
   });
 });
