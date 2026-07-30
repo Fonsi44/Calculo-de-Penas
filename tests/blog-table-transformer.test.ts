@@ -144,37 +144,117 @@ describe('transformBlogTablesForRender — casos estructurales (#1-#12)', () => 
   });
 });
 
-describe('transformBlogTablesForRender — spans, anidadas y malformadas (#13-#16)', () => {
-  it('#13 colspan se expande sin perder celdas', () => {
+describe('transformBlogTablesForRender — spans, anidadas y malformadas: RECHAZO SEGURO (#13-#16)', () => {
+  // CONTRATO (§6/§7): rowspan y colspan NO se transforman a fichas. Una tabla
+  // con spans es no transformable y debe registrarse como PÉRDIDA (no como
+  // "se conserva intacta"). El gate falla antes de llegar al sanitizer final.
+  it('#13 colspan=2: no transformable, information_losses += 1, untransformable += 1', () => {
     const html = '<table><thead><tr><th>A</th><th>B</th><th>C</th></tr></thead>'
       + '<tbody><tr><td colspan="2">combinado</td><td>tercero</td></tr></tbody></table>';
     const { report } = transformBlogTablesForRender(html);
-    // colspan => COMPLEX_SPAN_MATRIX => no transformable por contrato (§6.5)
+    expect(report.tablesFound).toBe(1);
     expect(report.tablesTransformed).toBe(0);
-    expect(report.warnings.length).toBeGreaterThan(0);
+    expect(report.untransformableTables).toBe(1);
+    expect(report.informationLosses).toBe(1);
+    expect(report.tables[0].classification).toBe('COMPLEX_SPAN_MATRIX');
+    expect(report.tables[0].transformable).toBe(false);
+    // La tabla no se sustituye: sigue presente (final_table_tags = 1).
+    expect(report.tables[0].finalTableTags).toBe(1);
   });
 
-  it('#14 rowspan se clasifica como COMPLEX_SPAN_MATRIX', () => {
-    const html = '<table><thead><tr><th>A</th></tr></thead>'
-      + '<tbody><tr><td rowspan="2">compartido</td></tr><tr><td>otro</td></tr></tbody></table>';
+  it('#14 rowspan=2: no transformable, pérdida registrada', () => {
+    const html = '<table><thead><tr><th>A</th><th>B</th></tr></thead>'
+      + '<tbody><tr><td rowspan="2">compartido</td><td>uno</td></tr>'
+      + '<tr><td>dos</td></tr></tbody></table>';
     const { report } = transformBlogTablesForRender(html);
     expect(report.tablesTransformed).toBe(0);
-    expect(report.warnings.join(' ')).toMatch(/span|COMPLEX/i);
+    expect(report.untransformableTables).toBe(1);
+    expect(report.informationLosses).toBe(1);
+    expect(report.tables[0].classification).toBe('COMPLEX_SPAN_MATRIX');
   });
 
-  it('#15 tabla malformada (sin filas) se reporta y no transforma', () => {
+  it('#15 tabla malformada (sin filas) se reporta como pérdida', () => {
     const html = '<table><caption>vacía</caption></table>';
     const { report } = transformBlogTablesForRender(html);
     expect(report.tablesFound).toBe(1);
     expect(report.tablesTransformed).toBe(0);
+    expect(report.untransformableTables).toBe(1);
+    expect(report.informationLosses).toBe(1);
+    expect(report.tables[0].classification).toBe('MALFORMED_TABLE');
   });
 
-  it('#16 tabla anidada se clasifica NESTED_TABLE y no se transforma', () => {
+  it('#16 tabla anidada se clasifica NESTED_TABLE y registra pérdida', () => {
     const html = '<table><thead><tr><th>A</th></tr></thead><tbody><tr>'
       + '<td><table><tr><td>inner</td></tr></table></td></tr></tbody></table>';
     const { report } = transformBlogTablesForRender(html);
     expect(report.tablesFound).toBeGreaterThanOrEqual(1);
-    expect(report.warnings.join(' ')).toMatch(/nested|NESTED/i);
+    expect(report.untransformableTables).toBeGreaterThanOrEqual(1);
+    expect(report.informationLosses).toBeGreaterThanOrEqual(1);
+    expect(report.tables.some((t) => t.classification === 'NESTED_TABLE')).toBe(true);
+  });
+
+  it('#16b headerless (sin th ni thead) registra pérdida, NO inventa "Dato 1"', () => {
+    const html = '<table><tr><td>solo</td><td>datos</td></tr>'
+      + '<tr><td>sin</td><td>th</td></tr></table>';
+    const { report, html: out } = transformBlogTablesForRender(html);
+    expect(report.tablesTransformed).toBe(0);
+    expect(report.untransformableTables).toBe(1);
+    expect(report.informationLosses).toBe(1);
+    expect(report.tables[0].classification).toBe('HEADERLESS_DATA');
+    // No se genera copy jurídico inventado en el render.
+    expect(out).not.toMatch(/Dato \d/);
+  });
+});
+
+describe('transformBlogTablesForRender — casos span obligatorios (§7): fallo controlado', () => {
+  // Todos estos casos deben producir RECHAZO SEGURO (no transformación).
+  // Una futura tabla publicada con spans bloqueará el gate hasta que exista
+  // mapping o implementación específica.
+
+  it('rowspan=2 → COMPLEX_SPAN_MATRIX, pérdida', () => {
+    const html = '<table><thead><tr><th>T</th><th>V</th></tr></thead>'
+      + '<tbody><tr><td rowspan="2">x</td><td>1</td></tr><tr><td>2</td></tr></tbody></table>';
+    const { report } = transformBlogTablesForRender(html);
+    expect(report.untransformableTables).toBe(1);
+    expect(report.informationLosses).toBe(1);
+    expect(report.tables[0].classification).toBe('COMPLEX_SPAN_MATRIX');
+  });
+
+  it('colspan=2 → COMPLEX_SPAN_MATRIX, pérdida', () => {
+    const html = '<table><thead><tr><th>A</th><th>B</th></tr></thead>'
+      + '<tbody><tr><td colspan="2">combinado</td></tr></tbody></table>';
+    const { report } = transformBlogTablesForRender(html);
+    expect(report.untransformableTables).toBe(1);
+    expect(report.informationLosses).toBe(1);
+    expect(report.tables[0].classification).toBe('COMPLEX_SPAN_MATRIX');
+  });
+
+  it('rowspan + colspan combinados → COMPLEX_SPAN_MATRIX, pérdida', () => {
+    const html = '<table><thead><tr><th>A</th><th>B</th><th>C</th></tr></thead>'
+      + '<tbody><tr><td rowspan="2" colspan="2">compartido</td><td>1</td></tr>'
+      + '<tr><td>2</td></tr></tbody></table>';
+    const { report } = transformBlogTablesForRender(html);
+    expect(report.untransformableTables).toBe(1);
+    expect(report.informationLosses).toBe(1);
+    expect(report.tables[0].classification).toBe('COMPLEX_SPAN_MATRIX');
+  });
+
+  it('encabezado con colspan → COMPLEX_SPAN_MATRIX, pérdida', () => {
+    const html = '<table><thead><tr><th colspan="2">Sección</th></tr></thead>'
+      + '<tbody><tr><td>1</td><td>2</td></tr></tbody></table>';
+    const { report } = transformBlogTablesForRender(html);
+    expect(report.untransformableTables).toBe(1);
+    expect(report.informationLosses).toBe(1);
+    expect(report.tables[0].classification).toBe('COMPLEX_SPAN_MATRIX');
+  });
+
+  it('celda de datos con rowspan → COMPLEX_SPAN_MATRIX, pérdida', () => {
+    const html = '<table><thead><tr><th>A</th><th>B</th></tr></thead>'
+      + '<tbody><tr><td>x</td><td rowspan="2">y</td></tr><tr><td>z</td></tr></tbody></table>';
+    const { report } = transformBlogTablesForRender(html);
+    expect(report.untransformableTables).toBe(1);
+    expect(report.informationLosses).toBe(1);
+    expect(report.tables[0].classification).toBe('COMPLEX_SPAN_MATRIX');
   });
 });
 
@@ -363,5 +443,49 @@ describe('clasificación (helper classify)', () => {
     expect(classify({ columnCount: 3, hasHeaders: true, hasSpan: true, nested: false, malformed: false })).toBe('COMPLEX_SPAN_MATRIX');
     expect(classify({ columnCount: 3, hasHeaders: true, hasSpan: false, nested: true, malformed: false })).toBe('NESTED_TABLE');
     expect(classify({ columnCount: 0, hasHeaders: false, hasSpan: false, nested: false, malformed: true })).toBe('MALFORMED_TABLE');
+  });
+});
+
+describe('equivalencia real por tabla (§5)', () => {
+  it('textEquivalent = true cuando TODO el texto (tokens) está en el render', () => {
+    const html = '<table><thead><tr><th>Tipo</th><th>Causa</th><th>Indemnización</th></tr></thead>'
+      + '<tbody><tr><td>Despido</td><td>Faltas graves</td><td>No procede</td></tr></tbody></table>';
+    const { report } = transformBlogTablesForRender(html);
+    expect(report.tables[0].textEquivalent).toBe(true);
+    // El multiset incluye tokens con significado (referencias, números).
+    expect(report.tables[0].sourceNormalizedText).toMatch(/despido/);
+    expect(report.tables[0].renderedNormalizedText).toMatch(/despido/);
+  });
+
+  it('representedSourceCells = sourceCells para tabla transformable', () => {
+    // sourceCells cuenta SOLO celdas de datos (td), no headers (los headers son
+    // metadata estructural reubicada como labels). 2 filas × 2 cols = 4 datos.
+    const html = '<table><thead><tr><th>T</th><th>V</th></tr></thead>'
+      + '<tbody><tr><td>a</td><td>b</td></tr><tr><td>c</td><td>d</td></tr></tbody></table>';
+    const { report } = transformBlogTablesForRender(html);
+    expect(report.tables[0].sourceCells).toBe(4);
+    // representedSourceCells = 2 títulos de ficha (col 0) + 2 valores (col 1) × 2 filas = 4.
+    expect(report.tables[0].representedSourceCells).toBe(4);
+    expect(report.tables[0].representedSourceCells).toBe(report.tables[0].sourceCells);
+  });
+
+  it('linksEquivalent = true cuando enlaces se preservan con href+texto+orden', () => {
+    const html = '<table><thead><tr><th>Ref</th></tr></thead>'
+      + '<tbody><tr><td><a href="/a">A</a></td></tr>'
+      + '<tr><td><a href="/b">B</a></td></tr></tbody></table>';
+    const { report } = transformBlogTablesForRender(html);
+    expect(report.tables[0].linksEquivalent).toBe(true);
+    expect(report.tables[0].sourceLinks.length).toBe(2);
+    expect(report.tables[0].renderedLinks[0].href).toBe('/a');
+  });
+
+  it('reporte por tabla: tables[] tiene una entrada por cada tabla', () => {
+    const html = '<table><thead><tr><th>A</th></tr></thead><tbody><tr><td>1</td></tr></tbody></table>'
+      + '<table><thead><tr><th>B</th></tr></thead><tbody><tr><td>2</td></tr></tbody></table>';
+    const { report } = transformBlogTablesForRender(html);
+    expect(report.tables.length).toBe(2);
+    expect(report.tables[0].tableIndex).toBe(0);
+    expect(report.tables[1].tableIndex).toBe(1);
+    expect(report.tables.every((t) => t.transformable)).toBe(true);
   });
 });
