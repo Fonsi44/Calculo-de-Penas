@@ -45,8 +45,10 @@ export interface TransformedBlogTables {
   report: BlogTableTransformReport;
 }
 
-/** Clasificación estructural de una tabla (alineada con el inventario). */
-export type TableClassification =
+/** Clasificación estructural de una tabla (alineada con el inventario).
+ *  Tipo interno: el inventario CSV usa estos valores como columna
+ *  `classification`, pero ningún consumidor de producción importa este tipo. */
+type TableClassification =
   | 'TWO_COLUMN_DEFINITION'
   | 'THREE_COLUMN_COMPARISON'
   | 'MULTI_COLUMN_COMPARISON'
