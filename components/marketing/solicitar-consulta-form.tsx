@@ -9,7 +9,7 @@ import {
   trackConsultationFormStart,
   trackConsultationFormError,
 } from '@/lib/analytics';
-import { TurnstileWidget } from './turnstile-widget';
+import { TurnstileWidget, type TurnstileStatus } from './turnstile-widget';
 import { telHref, whatsappHref } from '@/lib/site';
 
 const MOTIVOS = [
@@ -134,6 +134,7 @@ export function SolicitarConsultaForm() {
   const [err, setErr] = useState('');
   const [reference, setReference] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileStatus, setTurnstileStatus] = useState<TurnstileStatus>('loading');
   const [started, setStarted] = useState(false);
 
   // Vista del formulario al montar (evento de conversión FASE 2, sin PII).
@@ -165,6 +166,17 @@ export function SolicitarConsultaForm() {
       trackConsultationFormError({ campo: 'resumen', tipo: 'minlength', ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
       return;
     }
+    // Bloquear el envío cuando el captcha está configurado pero el usuario
+    // aún no ha completado la verificación (o el widget falló al cargar).
+    if (turnstileStatus !== 'unconfigured' && !turnstileToken) {
+      const msg =
+        turnstileStatus === 'error'
+          ? 'No se pudo cargar la verificación antispam. Recargue la página e intente de nuevo.'
+          : 'Complete la verificación antispam antes de enviar.';
+      setErr(msg);
+      trackConsultationFormError({ campo: 'turnstile', tipo: 'captcha', ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
+      return;
+    }
     setStatus('sending');
     setErr('');
     try {
@@ -180,11 +192,13 @@ export function SolicitarConsultaForm() {
       }
       setReference(typeof data.reference === 'string' ? data.reference : '');
       setStatus('success');
+      setTurnstileToken('');
       trackLeadGenerated('consulta_form');
       trackContactFormSubmit({ motivo: form.motivo, ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
     } catch (e) {
       setStatus('error');
       setErr(e instanceof Error ? e.message : 'Error desconocido.');
+      setTurnstileToken('');
       trackConsultationFormError({ tipo: 'submit', ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
     }
   };
@@ -471,11 +485,11 @@ export function SolicitarConsultaForm() {
         />
       </div>
 
-      <TurnstileWidget onToken={setTurnstileToken} />
+      <TurnstileWidget onToken={setTurnstileToken} onStatusChange={setTurnstileStatus} />
 
       <button
         type="submit"
-        disabled={status === 'sending'}
+        disabled={status === 'sending' || (turnstileStatus !== 'unconfigured' && !turnstileToken)}
         className="focus-ring cta-primary-refined w-full h-12 inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-white text-base font-bold btn-shadow-primary btn-shadow-primary-hover hover:bg-primary-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'sending' ? (

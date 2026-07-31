@@ -5,27 +5,42 @@
  *
  * - Si `NEXT_PUBLIC_TURNSTILE_SITE_KEY` está definida, renderiza el widget
  *   oficial cargando el script de Cloudflare al montar.
- * - Si no, renderiza un `<noscript>` informativo (el backend hace bypass
- *   seguro en ese caso, pero avisamos al usuario de que el captcha está
- *   inactivo).
+ * - Si no, notifica el estado `unconfigured` (el backend hace bypass seguro
+ *   en desarrollo y fail-closed en producción).
+ *
+ * Estado comunicado al formulario padre:
+ *  - loading:    cargando el script o renderizando el widget.
+ *  - ready:      widget renderizado, esperando interacción del usuario.
+ *  - verified:   el usuario completó la verificación (token disponible).
+ *  - error:      fallo de carga del script o del widget (mensaje visible).
+ *  - unconfigured: no hay Site Key pública configurada (modo dev local).
  *
  * El widget inyecta un input oculto `cf-turnstile-response` cuyo valor es el
  * token que el backend valida con `verifyTurnstileToken`.
  */
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 declare global {
   interface Window {
     turnstile?: {
       render: (
         el: HTMLElement,
-        opts: { sitekey: string; callback: (token: string) => void; 'error-callback'?: () => void; theme?: 'light' | 'dark' | 'auto'; size?: 'normal' | 'compact' },
+        opts: {
+          sitekey: string;
+          callback: (token: string) => void;
+          'error-callback'?: () => void;
+          'expired-callback'?: () => void;
+          theme?: 'light' | 'dark' | 'auto';
+          size?: 'normal' | 'compact';
+        },
       ) => string;
       reset: (id?: string) => void;
       remove: (id: string) => void;
     };
   }
 }
+
+export type TurnstileStatus = 'loading' | 'ready' | 'verified' | 'error' | 'unconfigured';
 
 const SCRIPT_URL = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
 let scriptPromise: Promise<void> | null = null;
@@ -46,11 +61,28 @@ function loadTurnstileScript(): Promise<void> {
   return scriptPromise;
 }
 
-export function TurnstileWidget({ onToken }: { onToken: (token: string) => void }) {
+export function TurnstileWidget({
+  onToken,
+  onStatusChange,
+}: {
+  onToken: (token: string) => void;
+  onStatusChange?: (status: TurnstileStatus) => void;
+}) {
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
   const [failed, setFailed] = useState(false);
+  // Estado inicial derivado de la site key: sin key → unconfigured.
+  const [status, setStatus] = useState<TurnstileStatus>(siteKey ? 'loading' : 'unconfigured');
+
+  // Notificar cambios de estado al padre de forma estable.
+  const notifyStatus = useCallback(
+    (next: TurnstileStatus) => {
+      setStatus(next);
+      onStatusChange?.(next);
+    },
+    [onStatusChange],
+  );
 
   useEffect(() => {
     if (!siteKey || !containerRef.current) return;
@@ -61,13 +93,29 @@ export function TurnstileWidget({ onToken }: { onToken: (token: string) => void 
         if (cancelled || !window.turnstile || !containerRef.current) return;
         widgetIdRef.current = window.turnstile.render(containerRef.current, {
           sitekey: siteKey,
-          callback: onToken,
-          'error-callback': () => setFailed(true),
+          callback: (token: string) => {
+            notifyStatus('verified');
+            onToken(token);
+          },
+          'error-callback': () => {
+            setFailed(true);
+            notifyStatus('error');
+            onToken('');
+          },
+          'expired-callback': () => {
+            notifyStatus('ready');
+            onToken('');
+          },
           theme: 'light',
           size: 'normal',
         });
+        if (!cancelled) notifyStatus('ready');
       })
-      .catch(() => setFailed(true));
+      .catch(() => {
+        if (cancelled) return;
+        setFailed(true);
+        notifyStatus('error');
+      });
 
     return () => {
       cancelled = true;
@@ -77,9 +125,20 @@ export function TurnstileWidget({ onToken }: { onToken: (token: string) => void 
         } catch {
           // noop
         }
+        widgetIdRef.current = null;
       }
     };
-  }, [siteKey, onToken]);
+  }, [siteKey, onToken, notifyStatus]);
+
+  // Notificar el estado inicial al padre (unconfigured cuando no hay site key).
+  // El estado derivado se calcula en useState, pero el callback del padre debe
+  // enterarse. Este effect corre una sola vez tras el montaje.
+  useEffect(() => {
+    if (!siteKey) {
+      onStatusChange?.('unconfigured');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!siteKey) {
     // Sin clave pública configurada: no hay nada que mostrar. El backend
@@ -91,12 +150,15 @@ export function TurnstileWidget({ onToken }: { onToken: (token: string) => void 
     <div>
       <div ref={containerRef} className="min-h-[65px]" aria-label="Verificación antispam" />
       {failed && (
-        <noscript>
-          <p className="text-xxs text-text-muted mt-1">
-            Si tiene problemas con la verificación, recargue la página o escríbanos directamente a
-            contacto@pinedayasociadoshn.com.
-          </p>
-        </noscript>
+        <p role="alert" className="text-xxs text-aggravation mt-1">
+          No se pudo cargar la verificación antispam. Recargue la página o escríbanos directamente a
+          contacto@pinedayasociadoshn.com.
+        </p>
+      )}
+      {status === 'ready' && !failed && (
+        <p className="text-xxs text-text-muted mt-1" aria-live="polite">
+          Complete la verificación antispam antes de enviar.
+        </p>
       )}
     </div>
   );
