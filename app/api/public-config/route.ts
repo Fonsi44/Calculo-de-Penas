@@ -9,7 +9,8 @@ import { NextResponse } from 'next/server';
  * NO expone secretos (TURNSTILE_SECRET_KEY, DATABASE_URL, etc.).
  */
 export async function GET() {
-  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  const turnstileSiteKey =
+    process.env.TURNSTILE_SITE_KEY ?? process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
   return NextResponse.json(
     { turnstileSiteKey },
@@ -23,4 +24,6 @@ export async function GET() {
   );
 }
 
-export const dynamic = 'force-static';
+// Debe evaluarse en runtime: una respuesta estática congelaría las variables
+// del entorno de Vercel en el momento del build.
+export const dynamic = 'force-dynamic';

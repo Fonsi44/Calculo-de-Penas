@@ -18,7 +18,7 @@ const noindexActive = process.env.NEXT_PUBLIC_NOINDEX === 'true';
 // En desarrollo se mantiene permisiva (sin upgrade) para no romper tests e2e.
 const cspProd = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "img-src 'self' data: blob: https://www.pinedayasociadoshn.com https://lh3.googleusercontent.com https://*.googleusercontent.com",
   "font-src 'self' data: https://fonts.gstatic.com",
@@ -33,7 +33,7 @@ const cspProd = [
 
 const cspDev = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data: https://fonts.gstatic.com",
