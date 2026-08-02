@@ -3,17 +3,19 @@
 /**
  * Widget de Cloudflare Turnstile para formularios públicos.
  *
- * - Si `NEXT_PUBLIC_TURNSTILE_SITE_KEY` está definida, renderiza el widget
- *   oficial cargando el script de Cloudflare al montar.
- * - Si no, notifica el estado `unconfigured` (el backend hace bypass seguro
- *   en desarrollo y fail-closed en producción).
+ * Obtiene la Site Key pública en tiempo de ejecución:
+ *  - Si `NEXT_PUBLIC_TURNSTILE_SITE_KEY` está embebida en el bundle (dev
+ *    local con la variable definida en el entorno), la usa directamente.
+ *  - Si no (producción / Preview Vercel donde NEXT_PUBLIC_* no se inlinea
+ *    siempre en el build), consulta GET /api/public-config al montar. La
+ *    respuesta se cachea 1h en CDN y no contiene secretos.
  *
  * Estado comunicado al formulario padre:
- *  - loading:    cargando el script o renderizando el widget.
+ *  - loading:    cargando o esperando la Site Key.
  *  - ready:      widget renderizado, esperando interacción del usuario.
  *  - verified:   el usuario completó la verificación (token disponible).
- *  - error:      fallo de carga del script o del widget (mensaje visible).
- *  - unconfigured: no hay Site Key pública configurada (modo dev local).
+ *  - error:      fallo de carga de script/Site Key o del widget.
+ *  - unconfigured: no hay Site Key disponible (backend con bypass seguro).
  *
  * El widget inyecta un input oculto `cf-turnstile-response` cuyo valor es el
  * token que el backend valida con `verifyTurnstileToken`.
@@ -68,12 +70,18 @@ export function TurnstileWidget({
   onToken: (token: string) => void;
   onStatusChange?: (status: TurnstileStatus) => void;
 }) {
-  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  // La Site Key puede estar embebida en el bundle (dev local) o necesitar
+  // obtenerse en runtime (Preview/Prod Vercel).
+  const embeddedKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  const [siteKey, setSiteKey] = useState<string | null>(embeddedKey || null);
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
   const [failed, setFailed] = useState(false);
-  // Estado inicial derivado de la site key: sin key → unconfigured.
-  const [status, setStatus] = useState<TurnstileStatus>(siteKey ? 'loading' : 'unconfigured');
+
+  // Estado inicial: loading si hay site key o esperamos obtenerla; unconfigured solo si embeddedKey es ''
+  const [status, setStatus] = useState<TurnstileStatus>(
+    embeddedKey === '' ? 'unconfigured' : 'loading',
+  );
 
   // Notificar cambios de estado al padre de forma estable.
   const notifyStatus = useCallback(
@@ -83,6 +91,31 @@ export function TurnstileWidget({
     },
     [onStatusChange],
   );
+
+  // Obtener la Site Key en runtime si no está en el bundle.
+  useEffect(() => {
+    if (siteKey) return;
+    let cancelled = false;
+    fetch('/api/public-config')
+      .then((r) => r.json())
+      .then((data: { turnstileSiteKey?: string }) => {
+        if (cancelled) return;
+        if (data.turnstileSiteKey) {
+          setSiteKey(data.turnstileSiteKey);
+          notifyStatus('loading');
+        } else {
+          setFailed(true);
+          notifyStatus('error');
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setFailed(true);
+          notifyStatus('error');
+        }
+      });
+    return () => { cancelled = true; };
+  }, [siteKey, notifyStatus]);
 
   useEffect(() => {
     if (!siteKey || !containerRef.current) return;
@@ -130,11 +163,9 @@ export function TurnstileWidget({
     };
   }, [siteKey, onToken, notifyStatus]);
 
-  // Notificar el estado inicial al padre (unconfigured cuando no hay site key).
-  // El estado derivado se calcula en useState, pero el callback del padre debe
-  // enterarse. Este effect corre una sola vez tras el montaje.
+  // Notificar estado unconfigured solo cuando sabemos que no hay key.
   useEffect(() => {
-    if (!siteKey) {
+    if (embeddedKey === '') {
       onStatusChange?.('unconfigured');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

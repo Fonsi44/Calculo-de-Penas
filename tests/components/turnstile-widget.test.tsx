@@ -47,18 +47,36 @@ describe('TurnstileWidget', () => {
     vi.restoreAllMocks();
   });
 
-  it('estado unconfigured cuando NEXT_PUBLIC_TURNSTILE_SITE_KEY no está definida', () => {
+  it('estado unconfigured cuando NEXT_PUBLIC_TURNSTILE_SITE_KEY está vacía', async () => {
     const original = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-    delete process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = '';
 
     const onStatusChange = vi.fn<(s: TurnstileStatus) => void>();
     const { container } = render(
       <TurnstileWidget onToken={vi.fn()} onStatusChange={onStatusChange} />,
     );
 
-    // Sin site key → no renderiza nada.
+    // Con site key vacía → no renderiza nada y notifica unconfigured.
     expect(container.firstChild).toBeNull();
     expect(onStatusChange).toHaveBeenCalledWith('unconfigured');
+
+    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = original;
+  });
+
+  it('intenta obtener site key del API cuando no está en el bundle', async () => {
+    const original = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+    delete process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+    // Mock fetch para devolver la site key desde el API.
+    const fetchMock = vi.fn().mockResolvedValue({
+      json: () => Promise.resolve({ turnstileSiteKey: '0xTEST_FROM_API' }),
+    });
+    global.fetch = fetchMock as unknown as typeof fetch;
+    mockTurnstileApi();
+
+    render(<TurnstileWidget onToken={vi.fn()} />);
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledWith('/api/public-config'));
 
     process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = original;
   });
