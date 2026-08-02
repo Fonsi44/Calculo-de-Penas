@@ -55,6 +55,7 @@ const PUBLIC_API_EXACT = new Set<string>([
   '/api/chat',
   '/api/clasificaciones',
   '/api/remisiones-normativas',
+  '/api/public-config',
 ]);
 
 const PUBLIC_API_PREFIXES = [
