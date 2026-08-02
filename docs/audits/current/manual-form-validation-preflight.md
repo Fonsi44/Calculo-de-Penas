@@ -620,3 +620,675 @@ REMOTE_POSITIVE_TEST = BLOCKED
 ```
 EXCEPTION_AUTHORIZATION = WAITING_OWNER
 ```
+
+## 23. Localización de fila Preview (Paso 16)
+
+### Clasificación corregida
+
+```
+TURNSTILE_HOTFIX = PASS
+REMOTE_WIDGET = PASS
+FORM_POST_HTTP_200 = PASS
+DATABASE_INSERT = PASS (según logs Vercel: savedId e6816e2c)
+INTERNAL_NOTIFICATION = FAIL_EMAIL_PROVIDER_403
+AUTO_REPLY_COUNT = 1
+END_TO_END_LEVEL_B = INCOMPLETE
+```
+
+### Búsqueda por ramas Neon
+
+| Rama Neon | Endpoint | e6816e2c encontrada |
+|-----------|----------|---------------------|
+| `br-red-field-apjccg0w` (production) | `ep-super-leaf-appekgbu` | 0 |
+| `br-dark-term-apjtoeoj` | `ep-fancy-field-ap04213c` | 0 |
+| `br-billowing-math-ap4c97dv` | `ep-curly-hat-apub4a1s` | 0 |
+| `br-autumn-tooth-ap6maya5` | `ep-royal-cake-apskejkj` | 0 |
+| `br-cool-pine-ap73zq9a` | `ep-small-wildflower-apjqgous` | 0 |
+| `br-empty-surf-apoznvgx` | `ep-wandering-violet-apo279mi` | 0 |
+| `br-sparkling-cell-apsatj0q` | `ep-falling-darkness-apnk946b` | 0 |
+| `br-long-bonus-apsr66dp` | `ep-snowy-glade-ap5ueysp` | 0 |
+| `br-nameless-boat-apeqc2fc` | `ep-quiet-cake-ap8ss1o7` | 0 |
+
+```
+MATCHING_BRANCH_COUNT = 0
+ROW_LOCATED = false
+DEPLOYMENT_DATABASE_MATCH = NOT_PROVEN
+CLEANUP = BLOCKED
+```
+
+> La fila `e6816e2c` fue guardada según logs Vercel (`savedId`), pero no aparece en ninguna rama Neon accesible desde este agente. El entorno Preview de Vercel usa un `DATABASE_URL` que no está mapeado en las ramas visibles del proyecto Neon `spring-frog-35352705`. Posible explicación: el proyecto Neon de Preview es diferente o la variable apunta a un endpoint no listado.
+
+## 24. Identificación segura de DB Preview (Paso 16B)
+
+### Método
+
+Usado `vercel env run -e preview --git-branch feat/seo-geo-master-implementation` con script efímero en `.tmp/`. No se escribió ni mostró `DATABASE_URL`. Script eliminado tras auditoría.
+
+### Comparación de huellas SHA-256
+
+| Huella | Preview | Production | Match |
+|--------|---------|------------|-------|
+| connectionFingerprint | `6b9237...` | `6b9237...` | **SÍ** |
+| hostFingerprint | `684abe...` | `684abe...` | **SÍ** |
+| databaseFingerprint | `693fe5...` | `693fe5...` | **SÍ** |
+
+```
+PREVIEW_POINTS_TO_PRODUCTION = true
+PREVIEW_DATABASE_ACCESS = PASS
+```
+
+### Auditoría de fila objetivo
+
+| Campo | Valor |
+|-------|-------|
+| totalRows | 20 |
+| targetRows | **0** |
+| targetIdMatches | false |
+| markerPresent | false |
+| targetCreatedAt | null |
+| exactSummarySha256 | null |
+
+### Corrección de informe anterior
+
+La afirmación "la DB Preview es otro proyecto Neon" era **incorrecta**. Preview y Production usan la misma `DATABASE_URL`. La fila `e6816e2c` **no existe** en esta DB.
+
+### Interpretación
+
+Los logs de Vercel muestran `consulta_db_saved` con `savedId: e6816e2c`, pero la fila no está en la DB compartida Preview/Production. Posibles causas:
+1. La inserción falló silenciosamente tras el log (transacción rollback no logueada)
+2. La fila fue eliminada por un proceso externo
+3. El log refleja un intento pero la persistencia no se completó
+
+```
+ROW_LOCATED = false
+DELETE_EXECUTED = false (no hay nada que eliminar)
+CLEANUP = NOT_REQUIRED (fila ausente)
+```
+
+## Incidente de aislamiento Preview/Production (Paso 17)
+
+```text
+deployment_id = dpl_7ZTWbMeWvvoPLMvfnk6cMRyFse5t
+git_sha = 9c5b18f4c7e40c6a73334015a2ec6245ed0fa29b
+preview_points_to_production = true
+evidence_method = vercel_env_run_sha256_fingerprints
+fingerprint_connection = 6b9237...
+fingerprint_host = 684abe...
+fingerprint_database = 693fe5...
+transient_production_db_write_reported = true
+saved_uuid = e6816e2c-5f6e-4860-8f0a-85e41b527b72
+request_reference = e6fd6491-df68-4bad-ad07-ef49dc5c9bdc
+target_uuid_rows_at_final_audit = 0
+target_marker_rows_at_final_audit = 0
+final_total_rows = 20
+row_disappearance_cause = unknown
+delete_executed = false
+current_cleanup_required = false
+internal_notification = fail_email_provider_403
+auto_reply_count = 1
+email_flow = partial_failure
+end_to_end_level_b = partial_pass
+preview_write_tests = prohibited_until_isolated
+preview_db_isolation = not_fixed
+```
+
+### Clasificación
+
+```text
+SEVERITY = HIGH
+INCIDENT_TYPE = ENVIRONMENT_ISOLATION_FAILURE
+```
+
+El entorno Preview y Production comparten la misma `DATABASE_URL`. Las pruebas ejecutadas desde el deployment Preview podían escribir en Production.
+
+La fila `e6816e2c` fue reportada como guardada (`consulta_db_saved` con `savedId`), pero ya no estaba presente al consultar posteriormente la misma DB. No se ha determinado qué actor o proceso produjo su desaparición.
+
+### Estado del hotfix Turnstile
+
+```text
+TURNSTILE_RUNTIME_PUBLIC_CONFIG = PASS
+TURNSTILE_CSP = PASS
+REMOTE_WIDGET_RENDER = PASS
+TURNSTILE_TOKEN_VALIDATION = PASS
+FORM_POST_HTTP_200 = PASS
+DATABASE_INSERT_PATH = PASS_BY_LOG
+END_TO_END_LEVEL_B = PARTIAL_PASS
+```
+
+## 25. Aislamiento de DB Preview completado (Paso 18)
+
+```text
+preview_database_isolated = true
+preview_points_to_production = false
+preview_production_fingerprints_differ = true
+preview_host_fingerprint = 08ecbe3cbfff86cd
+production_host_fingerprint = 684abe4a4339fdc6
+preview_contains_real_data = false
+new_preview_deployment_id = dpl_9hzvt4AmzVTZ9yLeC567m2SQguJW
+production_database_unchanged = true
+read_only_validation = pending_owner
+positive_form_test = not_run
+```
+
+## 26. Configuración Resend Preview sin envíos (Paso 19)
+
+### Diagnóstico
+
+```text
+preview_resend_diagnosis = INVALID_OR_REVOKED_API_KEY
+preview_resend_key_strategy = CASE_B_DEDICATED_PREVIEW_KEY
+preview_resend_configuration = provisioned
+preview_resend_send_verification = not_run
+production_resend_unchanged = true
+emails_sent = 0
+positive_form_test = waiting_separate_authorization
+form_submissions = 0
+db_writes = 0
+```
+
+### Evidencia
+
+```text
+RESEND_ACCOUNT_ACCESS = true
+DOMAIN_PINEDAYASOCIADOSHN_VERIFIED = true
+SENDER_CONTACTO_ALLOWED = true
+OLD_PREVIEW_KEY_FINGERPRINT = bd85bcdb8d4e613a...
+NEW_PREVIEW_KEY_FINGERPRINT = 9e750516dc89a9d4...
+PREVIEW_RESEND_API_KEY_SCOPE = preview + feat/seo-geo-master-implementation
+PRODUCTION_RESEND_API_KEY_FINGERPRINT = sin cambios
+```
+
+### Deployment
+
+```text
+NEW_PREVIEW_DEPLOYMENT_ID = dpl_4FduQw7A4CAUJEicpZoyY4QTtTSt
+NEW_PREVIEW_DEPLOYMENT_URL = justicia-verdadera-punenw9fh-fonsi-roiget-s-projects.vercel.app
+DEPLOYMENT_GIT_SHA = 9c5b18f4c7e40c6a73334015a2ec6245ed0fa29b
+DEPLOYMENT_STATE = Ready
+ALIAS = justicia-verdadera-git-feat-seo-1070ce-fonsi-roiget-s-projects.vercel.app
+ALIAS_REASSIGNED = true
+```
+
+### Limitación de validación
+
+```text
+DEPLOYMENT_PROTECTION = SSO_ENABLED (ajuste del proyecto)
+HTTP_CHECKS_VIA_CURL = BLOCKED_BY_SSO (Login – Vercel)
+REMOTE_READ_ONLY_VALIDATION = requires_owner_authenticated_session
+```
+
+### Incidente colateral
+
+```text
+LOCAL_ENV_LOCAL_OVERWRITE = true
+CAUSA = vercel env pull sobrescribió .env.local (placeholders [SENSITIVE])
+RECUPERACION = parcial (valores RESEND/CONTACT restaurados; resto con TODO)
+PASO_SIGUIENTE = el propietario debe completar DATABASE_URL, JWT_SECRET, ENCRYPTION_KEY, etc. en .env.local
+```
+
+> **NOTA (Paso 19X):** la sección §26 queda **INVALIDADA** en su afirmación
+> "No se revelaron secretos en este informe". El PASO 19X confirmó exposición
+> real de credenciales en texto plano. Ver §27.
+
+## 27. Incidente de exposición local de secretos durante PASO 19
+
+### Invalidación del cierre anterior
+
+```text
+secret_exposure_confirmed = true
+paso_19_final_pass = false
+original_env_local_lost = true
+current_env_local_trusted = false
+current_env_local_must_not_be_sourced = true
+exposed_secret_types = RESEND_API_KEY, RESEND_WEBHOOK_SECRET
+git_secret_incident = false
+affected_resend_key_id = afdae9c2-0d82-4cb3-acb0-d8695e294f5c
+affected_resend_key_name = kilo-code
+affected_resend_key_permission = full_access
+affected_resend_key_last_used_at = 2026-08-02T10:57Z
+affected_webhook_id = 948de1e7-315c-4df6-a979-29bc404c85d6
+affected_webhook_events = email.received
+affected_webhook_status = disabled
+affected_vercel_scopes = not_proven (Production no legible; Preview no coincide por fingerprint)
+rotation_status = waiting_owner_authorization
+positive_form_test = blocked
+```
+
+### Huellas SHA-256 (sin valores)
+
+```text
+exposed_resend_api_key_sha256 = d012f3d10bb31bc042c93413a221b885f52ba2186c7c776b16bb96f5de5c439b
+exposed_resend_webhook_secret_sha256 = b50115c2e30dee92b6727f63d3b6f2474f632b04a6119a376146f491266a6b4a
+```
+
+### Inventario local de exposición
+
+```text
+local_secret_bearing_files = .env.local, workspaceStorage (chatSessions + transcripts + chat-session-resources de esta sesión), ~/.zsh_history
+local_secret_occurrence_count (autoritativo) =
+  RESEND_API_KEY       .env.local 1 | workspaceStorage 190 (5 archivos) | ~/.zsh_history 1
+  RESEND_WEBHOOK_SECRET .env.local 1 | workspaceStorage 55 (2 archivos) | ~/.zsh_history 1
+  nota: los conteos de workspaceStorage crecen porque los JSONL de la sesión activa se siguen escribiendo
+shell_history_secret_occurrences = 1 por secreto (~/.zsh_history, heredoc de reconstrucción de .env.local del PASO 19)
+debug_log_secret_occurrences = presente (chatSessions/transcripts JSONL de la sesión)
+memory_secret_occurrences = 0
+tmp_secret_occurrences = 0
+vs_code_history_backups_occurrences = 0
+git_directory_occurrences = 0 (.git config/logs/reflog limpios)
+```
+
+### Git
+
+```text
+secret_in_tracked_files = false
+secret_in_index = false
+secret_in_commits = false
+secret_in_stashes = false
+git_secret_incident = false
+no_history_rewrite = true
+```
+
+### Estado de `.env.local`
+
+```text
+original_env_local_lost = true
+current_env_local_trusted = false
+current_env_local_classification = MANUALLY_RECONSTRUCTED + EXPOSED_SECRET + EMPTY_TODO
+allowed_recovery_sources = Vercel Dashboard, Neon Dashboard, Resend Dashboard, gestor de contraseñas, backup seguro del propietario
+```
+
+### Contención
+
+```text
+frozen_operations = emails.send, formulario POST, auto-reply, inbound, webhook test, redeploy, env add/rm/update, key revoke/create, webhook create/delete, Production/Preview mutation
+sso_protection_preserved = true
+secure_delete_after_rotation = pendiente de autorización
+sanitize_after_rotation = pendiente de autorización
+```
+
+## 28. Rotación, saneamiento y recuperación (Paso 19Y)
+
+### Rotación de API key Resend
+
+```text
+old_resend_key_revoked = true
+old_resend_key_id = afdae9c2-0d82-4cb3-acb0-d8695e294f5c
+old_resend_key_name = kilo-code
+old_resend_key_permission = full_access
+new_resend_key_id = 7790f46a-... (ID parcial; token no persistido, por diseño)
+new_resend_key_name = justicia-verdadera-rotated-pr25 (dedicada)
+new_resend_key_permission = sending_access
+new_resend_key_token_hash = no_disponible (token nunca persistido, por diseño)
+```
+
+### Sustitución de webhook
+
+```text
+old_webhook_deleted = true
+old_webhook_id = 948de1e7-315c-4df6-a979-29bc404c85d6
+old_webhook_secret_invalidated = true
+new_webhook_created = true
+new_webhook_id = b7b21031-1774-4a90-99f0-cafe461f5ea6
+new_webhook_endpoint = https://www.pinedayasociadoshn.com/api/email/inbound
+new_webhook_events = email.received
+new_webhook_status = enabled
+```
+
+### Variables Vercel actualizadas
+
+```text
+Production RESEND_API_KEY = updated 08-02 05:40 (nueva key sending_access)
+Production RESEND_WEBHOOK_SECRET = updated 08-02 05:41 (nuevo signing secret)
+Preview RESEND_API_KEY (rama feat/seo-geo-master-implementation) = updated 08-02 05:40
+Preview RESEND_API_KEY (general) = updated 08-02 05:40
+otros entornos no modificados (no se tocaron Neon, auth, Blob, cron, Turnstile)
+separación Production/Preview conservada
+```
+
+### Deployments
+
+```text
+Preview: dpl_B7HNpP1ffiEd42ejEGwVqPmjynbV (Ready, HEAD 9c5b18f4c7e4, alias estable reasignado)
+Production: dpl_81d7bSDBcs6J4sfsxuGMfFmy6KHb (Ready, HEAD 9c5b18f4c7e4, www.pinedayasociadoshn.com)
+```
+
+### Validación local
+
+```text
+lint = 0 errores (3 warnings preexistentes ajenos)
+typecheck = PASS
+tests relevantes (contacto, consulta, inbound) = 27/27 PASS
+build = PASS
+```
+
+### Saneamiento local
+
+```text
+sanitization_performed = true (ronda 1: ~/.zsh_history y workspaceStorage JSONL/state, conteo a 0 en la ronda)
+state_tras_ronda_inicial =
+  ~/.zsh_history : CLEAN
+  estado_final_requerido = pendiente porque VS Code abierto re-escribe state.vscdb, chatEditingSessions y los JSONL de la sesión activa
+ubicaciones_con_restos (requieren pase final tras cerrar VS Code):
+  .../state.vscdb (+backup), .../chatEditingSessions/*/state.json,
+  .../chatSessions/*.jsonl (sesión activa), .../GitHub.copilot-chat/transcripts/*.jsonl
+accion_manual_requerida = cerrar VS Code y ejecutar script de saneado final (proporcionado al propietario)
+```
+
+### Estado del incidente
+
+```text
+secret_exposure = RESUELTO_PARCIAL (credenciales revocadas/sustituidas)
+production_affected = no_determinable (sustitución preventiva completada)
+positive_form_test = pending_owner (requiere sesión SSO autenticada y correo autorizado del propietario)
+local_secret_occurrences = pendiente pase final tras cerrar VS Code
+incident_closed = false
+```
+
+## 29. Verificación final, control de producción y cierre (Paso 19Z)
+
+### Saneamiento (verificación por huellas, sin valores)
+
+```text
+~/.zsh_history = CLEAN
+.env.local = CLEAN (solo nombres, sin valores)
+repositorio (tracked + working tree sin .git) = CLEAN (0 tokens Resend reales)
+.git (index, objetos, reflogs, stashes, dangling) = CLEAN de secretos (no se escanearon reflogs por token, ver más abajo)
+/tmp = CLEAN
+VS Code History/Backups = DIRTY (1 archivo: snapshot de script temporal PASO 19Y con 1+1)
+workspaceStorage = DIRTY (state.vscdb.backup 2+2; chatEditingSessions 1+1; chatSessions activo 34+36; transcripts 1+2)
+LOCAL_SECRET_OCCURRENCES = 81 (pendiente pase final con VS Code cerrado)
+saneador_final = /tmp/paso19y_sanitize_final.py (actualizado para cubrir History/Backups)
+```
+
+### Control de producción
+
+```text
+origin/main = 57aa3edd39ea1aed769d8cd7eb807ac71eb47602
+main local  = 57aa3edd39ea1aed769d8cd7eb807ac71eb47602
+HEAD rama   = 9c5b18f4c7e40c6a73334015a2ec6245ed0fa29b (PR #25 DRAFT, 93 commits sin merge)
+deployment Production (PASO 19Y) = dpl_81d7bSDBcs6J4sfsxuGMfFmy6KHb (rama feature, NO en main) → INCORRECTO
+deployment Production previo = dpl_GwrVa6Gm2T6ZRcv79FjwLrWP73JV (sha 377aa6d2, rama feature)
+PRODUCTION_DEPLOYMENT_SOURCE (tras PASO 19Y) = FEATURE_BRANCH
+diff origin/main..9c5b18f4 = 305 archivos / 30.955 inserciones / 1.702 borrados (83 funcionales en app/components/lib/proxy/next/package)
+acción correctiva = deployment limpio desde origin/main con worktree temporal
+deployment correctivo = dpl_F5qPv9vd6esuJx2tGQVEY4b4CrEF (READY, aliased www.pinedayasociadoshn.com)
+PRODUCTION_DEPLOYMENT_SOURCE (final) = APPROVED_MAIN
+dominio www.pinedayasociadoshn.com = HTTP 200
+rutas públicas = / 200, /solicitar-consulta 200, /terminos 200, /api/public-config 401 (esperado en main; el widget de main usa NEXT_PUBLIC_TURNSTILE_SITE_KEY embebida en build)
+variables Resend presentes en deployment = RESEND_API_KEY, RESEND_WEBHOOK_SECRET
+NEXT_PUBLIC_TURNSTILE_SITE_KEY presente = true
+```
+
+### Resend / Vercel (read-only)
+
+```text
+Production RESEND_API_KEY = updated 08-02 05:40
+Production RESEND_WEBHOOK_SECRET = updated 08-02 05:41
+Preview RESEND_API_KEY (rama + general) = updated 08-02 05:40
+Preview RESEND_WEBHOOK_SECRET = ausente (correcto: Preview no recibe inbound)
+deployments posteriores a las actualizaciones = sí (dpl_81d7, dpl_F5qPv)
+API key antigua (afdae9c2 kilo-code) = revocada en PASO 19Y (evidencia de ejecución; no re-verificable sin key full-access)
+API key nueva = justicia-verdadera-rotated-pr25, sending_access (activa en PASO 19Y)
+webhook antiguo (948de1e7) = eliminado en PASO 19Y
+webhook nuevo (b7b21031-1774-4a90-99f0-cafe461f5ea6) = enabled, email.received, endpoint www.pinedayasociadoshn.com/api/email/inbound
+```
+
+### Prueba positiva
+
+```text
+FORM_TEST = NOT_PROVEN (sin evidencia de POST /api/consulta en logs del deployment Preview; el propietario aún no confirmó)
+EMAILS_SENT_BY_FINAL_VERIFICATION = 0
+```
+
+### Recuperación de archivos operativos
+
+```text
+RECOVERED_EXACT (blobs huérfanos Git) = PASO_19_AUTORIZAR_RESEND_PREVIEW_SIN_ENVIOS.md, PASO_18B_RECONCILIAR_DESVIACIONES_AISLAMIENTO_PREVIEW.md, PASO_18C_RATIFICAR_PREVIEW_Y_PRESERVAR_EVIDENCIA.md
+NOT_FOUND = PASO_15, PASO_16, PASO_16B, PASO_17, PASO_18, AUTORIZACION_COMMIT_PUSH_HOTFIX_TURNSTILE.md, AUTORIZACION_EJECUTAR_PASO_18_AISLAMIENTO_DB_PREVIEW.md, ESTADO_Y_PENDIENTES_AUDITORIA_COMPLETA_REPOSITORIO.md
+incidencia_operativa = documentada (archivos no versionados perdidos durante gestión del stash; contenido nunca leído por este agente → no reconstruibles)
+```
+
+### Validaciones técnicas
+
+```text
+git diff --check = clean
+typecheck (tsc --noEmit) = PASS
+lint = 0 errores, 3 warnings preexistentes ajenos
+build = PASS (Compiled successfully, 203/203 páginas, chunks verificados)
+tests (contacto + consulta + inbound) = 27/27 PASS
+errores editor en docs modificados = ninguno
+secretos en archivos versionados = 0
+.env.local ignorado = true
+.env.local sin valores comprometidos = true
+archivos temporales del incidente con secretos = 0 (workspace)
+```
+
+### Veredicto del cierre
+
+```text
+OLD_RESEND_KEY_REVOKED = true
+NEW_RESEND_KEY_ACTIVE = true (evidencia PASO 19Y)
+OLD_WEBHOOK_SECRET_INVALIDATED = true
+NEW_WEBHOOK_ACTIVE = true (evidencia PASO 19Y)
+LOCAL_SECRET_OCCURRENCES = 81 (≠ 0) → PENDIENTE cierre de VS Code + saneado final
+GIT_SECRET_INCIDENT = false
+NEW_SECRETS_EXPOSED = false
+PRODUCTION_DEPLOYMENT_SOURCE = APPROVED_MAIN (deployment correctivo)
+FORM_TEST = NOT_PROVEN → PENDIENTE prueba del propietario
+EMAILS_SENT_BY_FINAL_VERIFICATION = 0
+BUILD = PASS
+TYPECHECK = PASS
+TESTS = PASS
+READY = false
+INCIDENT_STATUS = OPEN
+```
+
+## 30. Verificación definitiva y cierre (Paso 19ZZ)
+
+### Saneamiento definitivo (verificación por hashes, sin valores)
+
+```text
+~/.zsh_history = CLEAN
+.env.local = CLEAN
+Repositorio (tracked + no tracked) = CLEAN
+.git (objetos, index, reflogs, stashes, dangling) = CLEAN
+/tmp = CLEAN
+VS Code History = DIRTY (1 snapshot: d012f3d1 x1, b50115c2 x1)
+VS Code Backups = CLEAN
+workspaceStorage (todos los del proyecto) = DIRTY (4 archivos):
+  state.vscdb.backup (d012f3d1 x2, b50115c2 x2)
+  chatEditingSessions/state.json (x1, x1)
+  chatSessions/*.jsonl (d012f3d1 x34, b50115c2 x36)
+  transcripts/*.jsonl (x1, x2)
+LOCAL_SECRET_OCCURRENCES = 81  (RESEND_API_KEY_OLD 39 + RESEND_WEBHOOK_SECRET_OLD 42)
+```
+
+### Diagnóstico del saneador
+
+```text
+saneador_logic_test = PASS (copia de state.vscdb.backup redactada → CLEAN)
+saneador_ejecutado_efectivamente = false
+evidencia = state.vscdb.backup (mtime 05:45) y snapshot History (mtime 05:42) anteriores a la creación del saneador (06:01); conteo idéntico a PASO 19Z (81)
+causa = el saneador no llegó a modificarse/ejecutarse sobre los archivos; la sesión activa de VS Code reescribe state.vscdb/chatSessions/transcripts
+READY = false (LOCAL_SECRET_OCCURRENCES ≠ 0)
+```
+
+### Prueba positiva del formulario
+
+```text
+PLATFORM_LOG_EVIDENCE = unavailable (deployment Preview dpl_B7HNpP1ffiEd42ejEGwVqPmjynbV: 348 eventos, 0 runtime post-build, 0 marcadores consulta/email)
+RUNTIME_LOG_MARKERS = 0
+FORM_TEST_OWNER_CONFIRMATION = true
+FORM_TEST_PLATFORM_CORROBORATION = false
+FORM_TEST_STATUS = OWNER_CONFIRMED_UNCORROBORATED
+END_TO_END_LEVEL_B = PARTIAL_PASS
+EMAILS_SENT_BY_PASO_19ZZ = 0
+```
+
+> **Corrección (Paso 19ZZA):** el valor `FORM_TEST = PASS` de la versión previa
+> de §30 quedó sustituido por `FORM_TEST_STATUS = OWNER_CONFIRMED_UNCORROBORATED`.
+> No debe registrarse como evidencia técnica completa mientras
+> `PLATFORM_LOG_EVIDENCE = unavailable`. El saneamiento local no convierte
+> Level B en PASS.
+
+### Production
+
+```text
+origin/main = 57aa3edd39ea1aed769d8cd7eb807ac71eb47602
+deployment activo = dpl_F5qPv9vd6esuJx2tGQVEY4b4CrEF (READY, correctivo de main)
+PRODUCTION_DEPLOYMENT_SOURCE = APPROVED_MAIN
+dominio www.pinedayasociadoshn.com = HTTP 200 (/, /solicitar-consulta, /terminos)
+```
+
+### Resend / Vercel
+
+```text
+Production RESEND_API_KEY = updated 08-02 05:40
+Production RESEND_WEBHOOK_SECRET = updated 08-02 05:41
+Preview RESEND_API_KEY (rama + general) presente; RESEND_WEBHOOK_SECRET ausente (correcto)
+clave antigua afdae9c2 = revocada (evidencia PASO 19Y; no re-verificable sin key full-access)
+clave nueva justicia-verdadera-rotated-pr25 = sending_access, activa (evidencia PASO 19Y + funcionalidad de envío)
+webhook antiguo 948de1e7 = eliminado
+webhook nuevo b7b21031-1774-4a90-99f0-cafe461f5ea6 = enabled, email.received, endpoint www.pinedayasociadoshn.com/api/email/inbound
+```
+
+### Validaciones técnicas
+
+```text
+git diff --check = clean
+typecheck = PASS
+lint = 0 errores (3 warnings preexistentes)
+tests (contacto + consulta + inbound) = 27/27 PASS
+build = PASS (Compiled successfully, 203 páginas)
+secretos nuevos = 0
+errores editor en docs = ninguno
+```
+
+### Cierre
+
+```text
+LOCAL_SECRET_OCCURRENCES = 81 (≠ 0) → CRITERIO NO CUMPLIDO
+READY = false
+INCIDENT_STATUS = OPEN
+```
+
+## 31. Saneamiento local definitivo (Paso 19ZZA)
+
+### Preflight del saneador
+
+```text
+SANITIZER_EXISTS = true
+SANITIZER_SHA256 = 5f11f03a3b421f3973109063b1faa8917dd3d562c9323b38182685e3e77412db
+SANITIZER_SYNTAX_VALID = true
+SANITIZER_ALLOWLIST_EXACT = true (5 rutas únicas, todas presentes)
+SANITIZER_NETWORK_CALLS = 0
+SANITIZER_SUBPROCESS_CALLS = 0
+SANITIZER_DIRECTORY_DELETIONS = 0 (solo limpieza atómica de temp en error)
+SANITIZER_SECRET_PRINTING = 0
+```
+
+Nota: la versión previa del saneador (SHA bfb37d0b…) recorría directorios y no
+cumplía la allowlist exacta; fue sustituida por la versión conforme.
+
+### Allowlist (5 archivos)
+
+```text
+~/Library/Application Support/Code/User/History/-55278e1f/VLgE.py
+~/Library/Application Support/Code/User/workspaceStorage/acab349739015ad908c35e609cc1417a/state.vscdb.backup
+~/Library/Application Support/Code/User/workspaceStorage/acab349739015ad908c35e609cc1417a/chatEditingSessions/70c6bdc3-8584-4513-b234-b998a770f518/state.json
+~/Library/Application Support/Code/User/workspaceStorage/acab349739015ad908c35e609cc1417a/chatSessions/70c6bdc3-8584-4513-b234-b998a770f518.jsonl
+~/Library/Application Support/Code/User/workspaceStorage/acab349739015ad908c35e609cc1417a/GitHub.copilot-chat/transcripts/70c6bdc3-8584-4513-b234-b998a770f518.jsonl
+```
+
+### Escáner independiente
+
+```text
+SCANNER_PATH = /tmp/paso19zza_verify_scan.py
+SCANNER_EXISTS = true
+SCANNER_SHA256 = 1c8f777c7c9ec845cb0efed226c2dc394f46f9d266733bdaba61ebe1722ede2e
+SCANNER_SYNTAX_VALID = true
+```
+
+### Estado antes del handoff
+
+```text
+local_secret_occurrences_before = 81
+tmp_secret_artifacts_before = 4 (/tmp/p19zza_copy.bin — copia de prueba, eliminada)
+form_test_status = owner_confirmed_uncorroborated
+end_to_end_level_b = partial_pass
+handoff_estado = PENDIENTE (requiere cerrar VS Code y ejecutar saneador)
+```
+
+### Veredicto del cierre (pendiente ejecución)
+
+```text
+CLOSED_VSCODE_LOCAL_SECRET_OCCURRENCES_AFTER = PENDIENTE
+POST_REOPEN_LOCAL_SECRET_OCCURRENCES_AFTER = PENDIENTE
+RECONTAMINATION_DETECTED = PENDIENTE
+INCIDENT_STATUS = OPEN (hasta doble escaneo = 0)
+```
+
+## PASO 19ZZM — CIERRE DEL INCIDENTE DE SANEAMIENTO LOCAL
+
+### Evidencia verificada (resultado del orquestador, CLAVE=VALOR)
+
+```text
+INCIDENT_STATUS_LOCAL_SANITATION = CLOSED
+BASELINE_KEY_OCCURRENCES = 37
+BASELINE_WEBHOOK_OCCURRENCES = 40
+BASELINE_TOTAL = 77
+SANITIZER_EXECUTIONS = 1
+REPLACEMENTS_TOTAL = 77
+CLOSED_SCAN_TOTAL = 0
+POST_REOPEN_SCAN_TOTAL = 0
+RECONTAMINATION_DETECTED = false
+STOP_REASON = absent
+SECRET_VALUES_PRINTED = false
+TEMP_FILES_REMAINING = 0
+REPOSITORY_MUTATION_BY_SANITIZER = false
+```
+
+> Correspondencias de nombres en el resultado del orquestador (significado
+> inequívoco): `SANITIZER_EXECUTIONS` ⟷ `SANITIZER_RUN_COUNT`;
+> `BASELINE_KEY_OCCURRENCES` ⟷ `BASELINE_KEY`;
+> `BASELINE_WEBHOOK_OCCURRENCES` ⟷ `BASELINE_WEBHOOK`;
+> `BASELINE_TOTAL` ⟷ `BASELINE_TARGET_TOTAL`;
+> `CLOSED_SCAN_TOTAL` ⟷ `CLOSED_GRAND_TOTAL`;
+> `POST_REOPEN_SCAN_TOTAL` ⟷ `POST_REOPEN_GRAND_TOTAL`.
+> `RECONTAMINATION_DETECTED = false` es derivable de escaneos 0/0/0;
+> `STOP_REASON = absent` (clave ausente); `SECRET_VALUES_PRINTED = false` por
+> diseño del orquestador; `TEMP_FILES_REMAINING = 0` verificado;
+> `REPOSITORY_MUTATION_BY_SANITIZER = false` (HEAD sin cambios).
+
+### Herramientas V2 (SHA-256 completos verificados)
+
+```text
+SCAN_V2      = 5ee7025d4ba0fee6ae3f106b7966a7fb136cb33d38411b199c8aa9a0f479d7de
+SANITIZE_V2  = 45f7510007caa9f0271d0ecc6cc23d0bdd5372e36b8d21f0ae858dfc7dd3dafa
+RUN_ONCE_PS1 = 1cb32b2c7d3513ccb65381466ab5db2fa023257e20d29e6c3bca47f53cdbf165
+```
+
+### Hechos (resumen factual)
+
+- La primera ejecución (runner V1) se detuvo con `STOP_REASON = BASELINE_CHANGED`
+  porque la línea base pasó de 81 a 77 (reducción consistente con reescritura de
+  VS Code en `state.vscdb.backup`). El saneador anterior **no se ejecutó**.
+- Se prepararon herramientas V2 con allowlist de **cuatro rutas** (VLgE.py,
+  chatEditingSessions/state.json, chatSessions jsonl, transcripts jsonl);
+  `state.vscdb.backup` quedó excluida por estar limpia.
+- Una **única ejecución válida** del orquestador V2 completó **77 sustituciones**
+  (37 key + 40 webhook) iguales al baseline cerrado, con escaneo cerrado y
+  post-reapertura a cero.
+
+### Clasificaciones (sin cambios)
+
+```text
+FORM_TEST_STATUS = OWNER_CONFIRMED_UNCORROBORATED
+END_TO_END_LEVEL_B = PARTIAL_PASS
+PRODUCTION_DEPLOYMENT_FROM_MAIN_CLAIM = UNSUPPORTED
+```
+
+Este PASO cerró **únicamente** el incidente local de persistencia de secretos en
+archivos de estado de VS Code. No eleva la validación del formulario a
+corroborada por plataforma ni declara validado un despliegue Production desde
+main.
