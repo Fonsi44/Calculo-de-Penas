@@ -3,7 +3,7 @@
  *
  * Fuente única del origen canónico: NEXT_PUBLIC_SITE_URL (env) con fallback a
  * .env.example. NUNCA hardcodear el dominio en otros scripts: importar desde
- * aquí evita variantes con typo (p. ej. "pinedayasocioshn.com").
+ * aquí evita variantes con typo (p. ej. "la variante sin "da" en "asociados"").
  */
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";

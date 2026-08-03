@@ -170,7 +170,7 @@ reutilizar P01–P15; respuesta visible y JSON-LD coincidentes.
 ## 9. Coherencia NAP y dominio
 
 - **Dominio canónico:** `https://www.pinedayasociadoshn.com` (de `site.url`).
-  No se usa `pinedayasocioshn.com` ni `pinedayasociadoshn.com` sin `www`.
+  No se usa `la variante sin "da" en "asociados"` ni `pinedayasociadoshn.com` sin `www`.
 - **NAP fuente única:** `lib/site.ts`. Cualquier teléfono, dirección, correo u
   horario visible se deriva de `site.*`, sin literales divergentes.
 - faqs-hubs.ts FASE 2: se corrige el horario divergente («lun-vie 8-17» →

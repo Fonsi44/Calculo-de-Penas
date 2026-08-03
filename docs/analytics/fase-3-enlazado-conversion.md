@@ -23,7 +23,7 @@
 
 ### Dominio canónico
 
-`https://www.pinedayasociadoshn.com` — todas las variantes redirigen correctamente. El typo `pinedayasocioshn.com` no existe ni está configurado.
+`https://www.pinedayasociadoshn.com` — todas las variantes redirigen correctamente. El typo `la variante sin "da" en "asociados"` no existe ni está configurado.
 
 ### Evento `contact_form_submit`
 
