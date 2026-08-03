@@ -434,9 +434,19 @@ if (DRY_RUN) {
 }
 
 try {
-  writeFileSync(outputPath, output, 'utf-8');
-  console.log(`✅ llms.txt regenerated successfully → ${outputPath}`);
-  console.log(`   ${output.split('\n').length} lines`);
+  // Escritura idempotente: si solo cambió el timestamp `generated_at`, se
+  // preserva el archivo existente para mantener el árbol Git limpio tras
+  // builds repetidos (determinismo, CI local).
+  const semanticOnly = (s) =>
+    s.split('\n').filter((l) => !/^> generated_at: /.test(l)).join('\n');
+  const existing = existsSync(outputPath) ? readFileSync(outputPath, 'utf-8') : null;
+  if (existing !== null && semanticOnly(existing) === semanticOnly(output)) {
+    console.log(`⏭️  llms.txt sin cambios semánticos (se preserva el existente) → ${outputPath}`);
+  } else {
+    writeFileSync(outputPath, output, 'utf-8');
+    console.log(`✅ llms.txt regenerated successfully → ${outputPath}`);
+    console.log(`   ${output.split('\n').length} lines`);
+  }
 } catch (err) {
   console.error(`❌ Failed to write llms.txt: ${err.message}`);
   process.exit(1);
