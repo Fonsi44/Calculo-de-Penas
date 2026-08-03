@@ -72,6 +72,7 @@ import {
  * (auditoría SEO 2026-06-23) este JSON es la única fuente de rutas estáticas.
  */
 import canonicalPathsData from '../data/seo/canonical-paths.json' with { type: 'json' };
+import localLandingIndexability from '../data/seo/local-landing-indexability.json' with { type: 'json' };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -146,6 +147,13 @@ const SITE_NOINDEX = process.env.NEXT_PUBLIC_NOINDEX === 'true';
 
 /** Lista de paths estáticos canónicos (ordenados por prioridad en el JSON). */
 const STATIC_PATHS = canonicalPathsData.static_routes.map((r) => r.path);
+
+// Landings locales `NOINDEX_UNTIL_UNIQUE` (fuente:
+// data/seo/local-landing-indexability.json). NUNCA deben enviarse a IndexNow.
+const NOINDEX_LOCAL_LANDING_PATHS = new Set(
+  localLandingIndexability.noindex_until_unique
+    .map((slug) => `/abogados-en-${slug}`),
+);
 
 // Landings locales: máxima intención comercial ("abogados en {ciudad}").
 const LOCAL_LANDINGS = STATIC_PATHS.filter((p) => p.startsWith('/abogados-en-'));
@@ -328,6 +336,11 @@ function prepareUrls(rawPaths) {
     const reason = isExcluded(path);
     if (reason) {
       exclusions[reason]++;
+      continue;
+    }
+    // Landings locales noindex: excluidas de IndexNow (decisión 2026-08-03).
+    if (NOINDEX_LOCAL_LANDING_PATHS.has(path)) {
+      exclusions[EXCLUSION_REASONS.explicitNoindex]++;
       continue;
     }
     const url = `https://${HOST}${path}`;

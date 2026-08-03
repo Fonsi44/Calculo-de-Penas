@@ -9,7 +9,7 @@ import {
   trackConsultationFormStart,
   trackConsultationFormError,
 } from '@/lib/analytics';
-import { TurnstileWidget } from './turnstile-widget';
+import { TurnstileWidget, type TurnstileStatus } from './turnstile-widget';
 import { telHref, whatsappHref } from '@/lib/site';
 
 const MOTIVOS = [
@@ -46,6 +46,8 @@ const MOTIVO_FROM_QUERY: Record<string, string> = {
   'derecho-de-familia': 'Divorcio, custodia o pensión de alimentos',
   'derecho-laboral': 'Despido o prestaciones laborales',
   'derecho-civil-y-notarial': 'Contrato, propiedad, sucesión o trámite notarial',
+  'derecho-mercantil-empresarial': 'Otro asunto',
+  'derecho-administrativo-y-servicio-civil': 'Otro asunto',
   'hondurenos-en-espana': 'Asunto desde España',
 };
 
@@ -130,7 +132,9 @@ export function SolicitarConsultaForm() {
   }));
   const [status, setStatus] = useState<Status>('idle');
   const [err, setErr] = useState('');
+  const [reference, setReference] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileStatus, setTurnstileStatus] = useState<TurnstileStatus>('loading');
   const [started, setStarted] = useState(false);
 
   // Vista del formulario al montar (evento de conversión FASE 2, sin PII).
@@ -162,6 +166,17 @@ export function SolicitarConsultaForm() {
       trackConsultationFormError({ campo: 'resumen', tipo: 'minlength', ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
       return;
     }
+    // Bloquear el envío cuando el captcha está configurado pero el usuario
+    // aún no ha completado la verificación (o el widget falló al cargar).
+    if (turnstileStatus !== 'unconfigured' && !turnstileToken) {
+      const msg =
+        turnstileStatus === 'error'
+          ? 'No se pudo cargar la verificación antispam. Recargue la página e intente de nuevo.'
+          : 'Complete la verificación antispam antes de enviar.';
+      setErr(msg);
+      trackConsultationFormError({ campo: 'turnstile', tipo: 'captcha', ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
+      return;
+    }
     setStatus('sending');
     setErr('');
     try {
@@ -170,16 +185,20 @@ export function SolicitarConsultaForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, 'cf-turnstile-response': turnstileToken }),
       });
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error ?? 'No se pudo enviar la solicitud.');
+        const suffix = typeof data.reference === 'string' ? ` Referencia: ${data.reference}.` : '';
+        throw new Error(`${data.error ?? 'No se pudo enviar la solicitud.'}${suffix}`);
       }
+      setReference(typeof data.reference === 'string' ? data.reference : '');
       setStatus('success');
+      setTurnstileToken('');
       trackLeadGenerated('consulta_form');
       trackContactFormSubmit({ motivo: form.motivo, ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
     } catch (e) {
       setStatus('error');
       setErr(e instanceof Error ? e.message : 'Error desconocido.');
+      setTurnstileToken('');
       trackConsultationFormError({ tipo: 'submit', ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
     }
   };
@@ -199,6 +218,11 @@ export function SolicitarConsultaForm() {
               respuesta inmediata: el compromiso es atender con la diligencia que
               cada caso requiere.
             </p>
+            {reference ? (
+              <p className="mt-2 text-xs font-semibold text-text-secondary">
+                Referencia de solicitud: <span className="font-mono">{reference}</span>
+              </p>
+            ) : null}
             <div className="mt-4 rounded-lg border border-aggravation/20 bg-aggravation/5 p-3">
               <p className="flex items-center gap-2 text-xs font-bold text-aggravation">
                 <AlertTriangle size={14} /> ¿Urgencia penal?
@@ -233,6 +257,7 @@ export function SolicitarConsultaForm() {
           onClick={() => {
             setStatus('idle');
             setForm(INITIAL_FORM);
+            setReference('');
           }}
           className="mt-4 text-xs font-semibold text-primary hover:text-accent-dark"
         >
@@ -460,11 +485,11 @@ export function SolicitarConsultaForm() {
         />
       </div>
 
-      <TurnstileWidget onToken={setTurnstileToken} />
+      <TurnstileWidget onToken={setTurnstileToken} onStatusChange={setTurnstileStatus} />
 
       <button
         type="submit"
-        disabled={status === 'sending'}
+        disabled={status === 'sending' || (turnstileStatus !== 'unconfigured' && !turnstileToken)}
         className="focus-ring cta-primary-refined w-full h-12 inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-white text-base font-bold btn-shadow-primary btn-shadow-primary-hover hover:bg-primary-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'sending' ? (
@@ -478,7 +503,7 @@ export function SolicitarConsultaForm() {
         )}
       </button>
       <p className="text-xxs text-text-muted text-center leading-relaxed">
-        Consulta confidencial y sin compromiso · Respuesta en horario hábil ·
+        Evaluación inicial confidencial · Respuesta en horario hábil ·
         Sus datos están protegidos por el secreto profesional. No garantizamos
         resultados, que dependen del análisis individual de cada caso.
       </p>

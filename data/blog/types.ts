@@ -28,6 +28,12 @@ export type Post = {
   reviewStatus?: string;
   reviewedBy?: string;
   reviewedAt?: string;
+  reviewedContentHash?: string;
+  reviewOrigin?: string;
+  signatureType?: string;
+  signatureName?: string;
+  signatureCandidate?: string;
+  signatureValid?: boolean;
   legalReviewNotes?: string;
 
   // AI document review (Fase 3B)
@@ -37,6 +43,27 @@ export type Post = {
   // Content audit
   lastReviewedAt?: string;
   nextReviewDueAt?: string;
+};
+
+/**
+ * Modelo público de listado. Nunca contiene HTML, notas legales internas,
+ * hashes ni candidatos de firma.
+ */
+export type BlogPostSummary = {
+  slug: string;
+  title: string;
+  description: string;
+  publishedAt: string;
+  updatedAt?: string;
+  category: string;
+  tags: string[];
+  author: string;
+  readingTime: string;
+  coverImage?: string;
+  featured: boolean;
+  noindex?: boolean;
+  canonicalUrl?: string;
+  editoriallyIndexable: boolean;
 };
 
 /**

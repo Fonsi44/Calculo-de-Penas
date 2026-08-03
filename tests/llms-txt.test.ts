@@ -38,16 +38,18 @@ describe('llms.txt', () => {
     expect(result.stderr).toMatch(/caracteres de control|debe ser exactamente/);
   });
 
-  it('publica las identidades y credenciales confirmadas sin variantes erróneas', () => {
+  it('publica identidades confirmadas sin credenciales ni fechas no verificadas', () => {
     const output = readFileSync(publicFile, 'utf8');
 
     expect(output).toContain('Thania Marlene Paz');
     expect(output).toContain('Emil Barahona');
     expect(output).not.toContain('Thania Pineda');
     expect(output).not.toContain('Emil Hernández');
-    expect(output).toMatch(/fundado en 2010/i);
-    expect(output).toMatch(/más de 15 años/i);
-    expect(output).toMatch(/abogado colegiado/i);
+    expect(output).not.toMatch(/fundado en 2010/i);
+    expect(output).toContain('/equipo/danilo-pineda-maradiaga');
+    expect(output).toContain('/equipo/thania-marlene-paz');
+    expect(output).toContain('/equipo/emil-barahona');
+    expect(output).toMatch(/abogado penalista/i);
     expect(output).toMatch(/socia fundadora/i);
     expect(output).not.toMatch(/notario colegiado/i);
     expect(output).toContain('Proxy en runtime Node.js');

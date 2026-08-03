@@ -69,14 +69,14 @@ function readJSON(p) {
 // ---------------------------------------------------------------------------
 function probeSitemapDRY() {
   const canonical = readJSON(join(ROOT, 'data/seo/canonical-paths.json'));
-  const sitemapSrc = readText(join(ROOT, 'app/sitemap.ts'));
+  const sitemapSrc = readText(join(ROOT, 'lib/seo/sitemap.ts'));
 
   // PUBLIC_ROUTES debe estar derivado del JSON (post-refactor Jun 2026).
   const usesJson = sitemapSrc.includes('canonical-paths.json');
   if (!usesJson) {
-    err('DRY', 'sitemap.ts no importa data/seo/canonical-paths.json', 'Debe derivar PUBLIC_ROUTES del JSON compartido para evitar desincronías.');
+    err('DRY', 'lib/seo/sitemap.ts no importa data/seo/canonical-paths.json', 'Debe derivar PUBLIC_ROUTES del JSON compartido para evitar desincronías.');
   } else {
-    info('DRY', 'sitemap.ts importa canonical-paths.json como fuente única.', null);
+    info('DRY', 'lib/seo/sitemap.ts importa canonical-paths.json como fuente única.', null);
   }
 
   // IndexNow script también debe consumir el JSON.
@@ -203,9 +203,9 @@ function probePriorities(canonical) {
 // PROBE 8 — THIN_POST_SLUGS en sitemap.ts no vacío
 // ---------------------------------------------------------------------------
 function probeThinSlugs() {
-  const sitemapSrc = readText(join(ROOT, 'app/sitemap.ts'));
+  const sitemapSrc = readText(join(ROOT, 'lib/seo/sitemap.ts'));
   if (!sitemapSrc.includes('THIN_POST_SLUGS')) {
-    err('Thin', 'No se encuentra THIN_POST_SLUGS en sitemap.ts', 'Mitigación activa para posts thin/plantilla (AGENTS.md §7).');
+    err('Thin', 'No se encuentra THIN_POST_SLUGS en lib/seo/sitemap.ts', 'Mitigación activa para posts thin/plantilla (AGENTS.md §7).');
   }
   // Cuenta aproximada de slugs en el Set.
   const m = sitemapSrc.match(/THIN_POST_SLUGS\s*=\s*new Set\(\s*\[([\s\S]*?)\]\s*\)/);

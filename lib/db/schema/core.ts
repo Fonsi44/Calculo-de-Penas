@@ -419,6 +419,12 @@ export const blogPosts = pgTable('blog_posts', {
   reviewedBy: varchar('reviewed_by', { length: 200 }),
   reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
   legalReviewNotes: text('legal_review_notes'),
+  reviewOrigin: varchar('review_origin', { length: 50 }),
+  signatureType: varchar('signature_type', { length: 20 }),
+  signatureName: varchar('signature_name', { length: 200 }),
+  signatureCandidate: varchar('signature_candidate', { length: 200 }),
+  reviewedContentHash: varchar('reviewed_content_hash', { length: 64 }),
+  signatureValid: boolean('signature_valid').default(false),
 
   // AI review workflow (Fase 3)
   aiReviewStatus: varchar('ai_review_status', { length: 50 }).default('not_started'),

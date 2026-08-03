@@ -47,6 +47,8 @@ Thumbs.db
 /test-results/
 /playwright-report/
 /playwright/.cache/
+# Casos esperados de fichas: artefacto efímero regenerable por --prepare.
+docs/audits/current/blog-table-expected-cases.json
 
 # ── E2E Staging (PR #20) ────────────────────────────────────
 # Entorno E2E aislado: artifacts locales + reports JSON.
@@ -70,7 +72,14 @@ yarn-error.log*
 /data/backups/
 /data/google/
 /data/bing/
-/data/seo/
+/data/seo/*
+!/data/seo/canonical-paths.json
+!/data/seo/editorial-cutover.json
+!/data/seo/preview-blog-fixtures.json
+!/data/seo/phase3-editorial-overrides.json
+!/data/seo/local-landing-indexability.json
+!/data/seo/sitemap-public-manifest.json
+!/data/seo/article-seo-relations.json
 *.tmp
 *.dump
 *.sql.gz

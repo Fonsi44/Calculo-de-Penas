@@ -104,7 +104,7 @@ export function NewsletterSection() {
           <p className="text-xs text-text-muted mt-4">
             ¿Prefiere contacto directo?{' '}
             <Link href="/solicitar-consulta#formulario" className="text-primary hover:text-accent-dark font-semibold transition-colors">
-              Solicite una consulta gratuita →
+              Solicite una evaluación inicial confidencial →
             </Link>
           </p>
         </div>

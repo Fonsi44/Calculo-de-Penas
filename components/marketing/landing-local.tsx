@@ -10,6 +10,7 @@ import { HubFaq } from '@/components/marketing/hub-faq';
 import { IconBadge } from '@/components/marketing/icon-badge';
 import { type LandingLocal } from '@/data/landings-locales';
 import { ViewLocalPageTracker } from '@/components/marketing/view-local-page-tracker';
+import { PUBLIC_SERVICE_CATALOG } from '@/lib/public-service-catalog';
 
 /**
  * Mapa de títulos de servicio (en landings-locales.ts) → slug de área en
@@ -137,7 +138,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
             </p>
 
             {/* NAP rápido para SEO local */}
-            <dl className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
               <div className="flex items-start gap-2">
                 <MapPin size={16} className="text-accent mt-0.5 flex-shrink-0" aria-hidden="true" />
                 <span>
@@ -156,7 +157,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
                   {site.phoneDisplay}
                 </a>
               </div>
-            </dl>
+            </div>
 
             <div className="mt-4">
               <CTAGroup variant="inverse" message={whatsappMsg} />
@@ -233,7 +234,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
             href="/servicios-juridicos"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
           >
-            Ver las 14 áreas del derecho que atendemos <ArrowRight size={14} />
+            Ver las {PUBLIC_SERVICE_CATALOG.length} áreas de práctica <ArrowRight size={14} />
           </Link>
         </div>
       </Section>

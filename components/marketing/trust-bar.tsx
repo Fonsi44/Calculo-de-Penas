@@ -11,8 +11,8 @@ interface TrustItem {
 const DEFAULT_ITEMS: TrustItem[] = [
   {
     icon: FileText,
-    title: 'Consulta inicial sin costo',
-    description: 'Evaluación confidencial para conocer su caso',
+    title: 'Evaluación confidencial',
+    description: 'Orientación inicial para conocer su caso',
   },
   {
     icon: Briefcase,

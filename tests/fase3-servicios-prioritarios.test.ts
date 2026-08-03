@@ -254,11 +254,11 @@ describe('FASE 3 — Afirmaciones P01-P15 no verificadas', () => {
 /* -------------------------------------------------------------------------- */
 
 describe('FASE 3 — FAQ visible alineada con JSON-LD', () => {
-  it('[slug] pasa area.faqs tanto a areaSchemas como al render visible', () => {
+  it('[slug] delega area.faqs únicamente en HubFaq', () => {
     const src = readPublic('servicios-juridicos/[slug]/page.tsx');
     // HubFaq recibe area.faqs y genera el render visible + JSON-LD FAQPage.
-    expect(src).toMatch(/faqs:\s*area\.faqs/);
-    expect(src).toMatch(/HubFaq/);
+    expect(src).toMatch(/<HubFaq[\s\S]*faqs=\{area\.faqs\}/);
+    expect(src).not.toMatch(/faqs:\s*area\.faqs/);
   });
 
   it('cada área prioritaria tiene entre 5 y 8 FAQ', () => {
@@ -416,22 +416,29 @@ describe('FASE 3 — Subsistemas intactos', () => {
   it('el blog mantiene cautelas editoriales y de atribución jurídica', () => {
     const article = readRoot('app/(public)/blog/[categoria]/[slug]/page.tsx');
     const adapter = readRoot('lib/blog.ts');
-    expect(article).toContain('No se garantizan resultados');
-    expect(article).toContain('post.reviewedBy &&');
-    expect(adapter).toContain('cleanPlaceholderLinks');
+    const generatedCta = readRoot('lib/blog-generated-cta.ts');
+    expect(generatedCta).toContain('No se garantizan resultados');
+    expect(article).toContain('validSignature &&');
+    expect(article).toContain('Revisión jurídica institucional:');
+    expect(adapter).not.toContain('cleanPlaceholderLinks');
+    expect(article).toContain('normalizeBlogLinksForRender');
   });
 
-  it('páginas geográficas intactas (sin cambios vs HEAD)', () => {
+  it('páginas geográficas sin cambios NUEVOS (salvo política de claims 2026-08-03)', () => {
     // Excluimos las ya modificadas en FASE 1/2 (que están en el árbol desde
     // antes de iniciar FASE 3). Esta validación usa git diff HEAD, que incluye
     // FASE 1/2; por eso comprobamos que NO haya cambios NUEVOS en landings que
-    // no estuvieran ya modificadas al iniciar. Como control mínimo, ninguna
-    // landing de especialidad debe aparecer con cambios de FASE 3.
+    // no estuvieran ya modificadas al iniciar. Las páginas abogado-civil y
+    // abogado-de-familia solo pueden cambiar por la política de claims
+    // «Evaluación inicial confidencial» (decisión 2026-08-03); cualquier otro
+    // cambio nuevo en las demás rutas falla.
     const changed = gitDiffNameOnly('"app/(public)/abogado-civil-nacaome" "app/(public)/abogado-de-familia-nacaome" "app/(public)/abogados-en-choluteca" "app/(public)/abogados-en-san-lorenzo" "app/(public)/abogados-en-goascoran"');
-    // Estas rutas no se tocan en FASE 3; esperamos vacío. (abogado-laboralista-
-    // nacaome y abogado-penalista-* sí estaban modificadas en FASE 1, fuera
-    // de este control.)
-    expect(changed, `páginas locales modificadas: ${changed.join(', ')}`).toHaveLength(0);
+    const allowedPolicyChanges = new Set([
+      'app/(public)/abogado-civil-nacaome/page.tsx',
+      'app/(public)/abogado-de-familia-nacaome/page.tsx',
+    ]);
+    const unexpected = changed.filter((file) => !allowedPolicyChanges.has(file));
+    expect(unexpected, `páginas locales modificadas fuera de política: ${unexpected.join(', ')}`).toHaveLength(0);
   });
 
   it('sección España intacta (sin cambios vs HEAD)', () => {

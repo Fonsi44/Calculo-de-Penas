@@ -269,7 +269,7 @@ export default async function AbogadoPenalistaCholutecaPage() {
             },
             {
               q: '¿Cuánto cuesta un abogado penalista en Choluteca?',
-              a: 'Ofrecemos una primera consulta sin costo para evaluar su caso. Tras el análisis, le entregamos un presupuesto por escrito. Los honorarios dependen de la complejidad y de la etapa del proceso.',
+              a: 'Ofrecemos una evaluación inicial confidencial para evaluar su caso. Tras el análisis, le entregamos un presupuesto por escrito. Los honorarios dependen de la complejidad y de la etapa del proceso.',
             },
             {
               q: '¿Qué delitos defienden?',
@@ -422,7 +422,7 @@ export default async function AbogadoPenalistaCholutecaPage() {
                   name: '¿Cuánto cuesta un abogado penalista en Choluteca?',
                   acceptedAnswer: {
                     '@type': 'Answer',
-                    text: 'Ofrecemos una primera consulta sin costo. Tras el análisis, le entregamos un presupuesto por escrito.',
+                    text: 'Ofrecemos una evaluación inicial confidencial. Tras el análisis, le entregamos un presupuesto por escrito.',
                   },
                 },
                 {

@@ -13,7 +13,6 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import { Reveal } from '@/components/marketing/reveal';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
-import { getAreasUnified } from '@/lib/areas-unified';
 import { webpageSchema } from '@/lib/seo-schema';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
@@ -22,13 +21,29 @@ import { TOP_ORGANIC_GUIDE_SLUGS } from '@/data/seo/high-intent-guides';
 import { RelatedCities } from '@/components/marketing/related-links';
 import { HubFaq } from '@/components/marketing/hub-faq';
 import { FAQ_SERVICIOS_JURIDICOS } from '@/data/faqs-hubs';
-import { hubPenal } from '@/data/areas-juridicas';
+import { PUBLIC_SERVICE_CATALOG } from '@/lib/public-service-catalog';
+
+const CTA_BY_AREA: Record<string, string> = {
+  'derecho-penal': 'Ver servicios de defensa penal',
+  'derecho-de-familia': 'Consultar asuntos de familia',
+  'derecho-laboral': 'Revisar un conflicto laboral',
+  'derecho-civil-y-notarial': 'Revisar contrato, propiedad o herencia',
+  'derecho-mercantil-empresarial': 'Solicitar revisión mercantil',
+  'derecho-administrativo-y-servicio-civil': 'Consultar un procedimiento administrativo',
+};
+
+function cardSummary(value: string): string {
+  const plain = value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const words = plain.split(' ');
+  if (words.length >= 35) return `${words.slice(0, 42).join(' ')}${words.length > 42 ? '…' : ''}`;
+  return `${plain} Le orientamos sobre actuaciones, documentación y siguientes pasos desde nuestra sede en Nacaome, con alcance y presupuesto por escrito.`;
+}
 
 export const metadata: Metadata = buildMetadata({
-  // 48 chars. Antes 69 (se truncaba en SERP). Mantiene intención local.
-  title: `Servicios Jurídicos en ${site.address.city} | 14 Áreas`,
-  // 153 chars.
-  description: `Servicios legales en ${site.address.city} y sur de Honduras: penal, familia, laboral, civil, mercantil y tributario. Presupuesto por escrito. WhatsApp ${site.whatsappDisplay}.`,
+  // 47 chars. Plan maestro §7.1: "Servicios Jurídicos en Nacaome | Áreas de Práctica"
+  title: `Servicios Jurídicos en ${site.address.city} | Áreas de Práctica`,
+  // 157 chars. Plan §7.1
+  description: `Defensa penal y asesoría en familia, laboral, civil, notarial, mercantil y administrativo. Identifique el área adecuada y consulte con un abogado colegiado.`,
   canonicalPath: '/servicios-juridicos',
   keywords: ['abogados Nacaome', 'abogado Valle Honduras', 'áreas del derecho Nacaome', 'derecho familia Valle', 'derecho laboral Nacaome', 'derecho mercantil Valle', 'derecho civil Choluteca', 'bufete jurídico Nacaome'],
   ogImage: '/og/civil.webp',
@@ -36,19 +51,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function AreasJuridicasPage() {
-  const generalAreas = await getAreasUnified('servicio');
-  const areas = [
-    {
-      slug: hubPenal.slug,
-      titulo: hubPenal.titulo,
-      descripcionCorta: hubPenal.resumen,
-      descripcionLarga: hubPenal.descripcion,
-      icono: 'gavel',
-      categoria: 'servicio' as const,
-      fuente: 'ts' as const,
-    },
-    ...generalAreas,
-  ];
+  const areas = PUBLIC_SERVICE_CATALOG;
   const contentMap = await getPageContent('servicios-juridicos');
 
   return (
@@ -59,9 +62,9 @@ export default async function AreasJuridicasPage() {
       ]} />
       <PageHero
         eyebrow={contentMap['hero.eyebrow'] || 'Servicios Jurídicos'}
-        badge={contentMap['hero.badge'] || 'Cobertura integral'}
-        title={contentMap['hero.title'] || `Servicios Jurídicos en ${site.address.city}, ${site.address.department} — Ramas principales del derecho`}
-        subtitle={contentMap['hero.subtitle'] || 'Desde Nacaome, Valle, ofrecemos cobertura legal integral en las principales ramas del derecho hondureño. La defensa penal es nuestra especialidad destacada y la acompañamos con servicios especializados en familia, laboral, civil, mercantil, tributario y más.'}
+        badge={contentMap['hero.badge'] || 'Catálogo de áreas'}
+        title={contentMap['hero.title'] || `Servicios jurídicos para personas, familias y empresas`}
+        subtitle={contentMap['hero.subtitle'] || 'Desde Nacaome, Valle, prestamos atención en las áreas publicadas en este catálogo. La defensa penal es el pilar histórico del bufete y cada consulta se asigna según su materia y circunstancias.'}
         cta={<CTAGroup variant="inverse" />}
         bgImage="/images/servicios/servicios-bg.webp"
       />
@@ -70,9 +73,9 @@ export default async function AreasJuridicasPage() {
         <div className="mx-auto px-4 sm:px-6 max-w-7xl">
           <ServiceSearch
             items={areas.map((a) => ({
-              href: a.slug === 'derecho-penal' ? '/derecho-penal' : `/servicios-juridicos/${a.slug}`,
-              title: a.titulo,
-              description: a.descripcionCorta || '',
+              href: a.href,
+              title: a.name,
+              description: a.shortDescription,
             }))}
             placeholder='Buscar servicio jurídico: "divorcio", "despido", "contrato"...'
             domain="servicios-juridicos"
@@ -92,12 +95,12 @@ export default async function AreasJuridicasPage() {
           <AnswerBlock
             eyebrow="Catálogo de servicios"
             question="¿Qué áreas del derecho atiende Pineda y Asociados?"
-            answer={`${site.name} atiende 14 áreas del derecho en Nacaome y la zona sur de Honduras: defensa penal (pilar histórico del bufete), familia, laboral, civil y notarial, mercantil y empresarial, administrativo, bancario, aduanero, tributario, migratorio, propiedad intelectual, ambiental y conciliación. Cada caso lo dirige el abogado especialista de la rama correspondiente; el cliente tiene un único punto de contacto y, cuando un asunto cruza varias ramas, el equipo coordina internamente.`}
+            answer={`${site.name} presenta actualmente ${areas.length} áreas de práctica del bufete. Cada consulta se revisa inicialmente para identificar el área aplicable y la asignación profesional adecuada. Cuando un asunto combina varias materias, el equipo puede coordinar su análisis internamente.`}
           >
             <p className="text-sm text-text-secondary leading-relaxed text-pretty">
-              Seleccione debajo el área que corresponde a su situación. Si su caso combina varias
-              ramas, el equipo coordina internamente para que usted no tenga que gestionar varios
-              despachos.
+              El bufete publica información y presta atención en las áreas jurídicas incluidas
+              en este catálogo. La asignación depende de la materia y de las características
+              concretas del asunto.
             </p>
           </AnswerBlock>
         </Container>
@@ -115,12 +118,14 @@ export default async function AreasJuridicasPage() {
             return (
               <Reveal key={area.slug} delay={([1, 2, 3, 4] as const)[index % 4]} className="h-full">
                 <ServiceCard
-                  href={area.slug === 'derecho-penal' ? '/derecho-penal' : `/servicios-juridicos/${area.slug}`}
+                  href={area.href}
                   slug={area.slug}
-                  title={area.titulo}
-                  description={area.descripcionCorta}
+                  title={area.name}
+                  description={cardSummary(area.shortDescription)}
                   category="services"
                   tone={isPriority ? 'primary' : 'administrativo'}
+                  responsible={area.individualResponsible}
+                  ctaLabel={CTA_BY_AREA[area.slug] ?? `Consultar servicios de ${area.name.toLowerCase()}`}
                   className="h-full"
                 />
               </Reveal>
@@ -206,8 +211,8 @@ export default async function AreasJuridicasPage() {
           itemListElement: areas.map((area, i) => ({
             '@type': 'ListItem',
             position: i + 1,
-            name: area.titulo,
-            url: absoluteUrl(area.slug === 'derecho-penal' ? '/derecho-penal' : `/servicios-juridicos/${area.slug}`),
+            name: area.name,
+            url: absoluteUrl(area.href),
           })),
         }),
       }} />

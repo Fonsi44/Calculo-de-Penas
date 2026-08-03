@@ -31,7 +31,7 @@ export const FAQ_GUIA_LEGAL_HONDURAS: HubFaqItem[] = [
   {
     pregunta: '¿La primera consulta tiene costo?',
     respuesta:
-      'Eso depende del despacho. En Pineda y Asociados la consulta inicial de evaluación es confidencial y sin costo: permite entender el caso, plantear una estrategia inicial y entregar un presupuesto por escrito. Solo se generan honorarios cuando el cliente autoriza por escrito la representación formal.',
+      'Eso depende del despacho. En Pineda y Asociados la evaluación inicial es confidencial: permite entender el caso, plantear una estrategia inicial y entregar un presupuesto por escrito. Solo se generan honorarios cuando el cliente autoriza por escrito la representación formal.',
   },
   {
     pregunta: '¿Qué pasa si no estoy de acuerdo con mi abogado actual?',

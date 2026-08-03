@@ -1,0 +1,380 @@
+{
+  // ===========================================================================
+  // Configuración canónica de OpenCode — Pineda y Asociados
+  // ===========================================================================
+  // Agentes:        .opencode/agents/*.md
+  // Skills:         .opencode/skills/<nombre>/SKILL.md
+  // Comandos:       .opencode/commands/*.md
+  // Guía operativa: .opencode/README.md
+  // Doctor:         npm run opencode:doctor
+  //
+  // Jerarquía: ChatGPT (orquestador) → usuario → task-executor (ejecutor).
+  // No se cambia el modelo/proveedor. No se hacen push, merge ni deploy.
+  // ===========================================================================
+  "$schema": "https://opencode.ai/config.json",
+
+  // Modelo predeterminado: DeepSeek V4 Pro (implementación compleja).
+  // V4 Flash (deepseek/deepseek-v4-flash) para documentación y tareas rápidas.
+  "model": "deepseek/deepseek-v4-pro",
+  "small_model": "deepseek/deepseek-v4-flash",
+
+  // No compartir sesiones con el servicio de OpenCode.
+  "share": "disabled",
+
+  // Agente predeterminado read-only (modo plan). El agente de ejecución
+  // (task-executor / implementation) se selecciona explícitamente por el usuario.
+  "default_agent": "plan",
+
+  // Instrucciones: AGENTS.md (canónico) + instrucciones específicas de VS Code.
+  "instructions": [
+    "AGENTS.md",
+    ".github/copilot-instructions.md",
+    ".github/instructions/typescript.instructions.md",
+    ".github/instructions/tests.instructions.md",
+    ".github/instructions/docs.instructions.md",
+    ".github/instructions/security.instructions.md"
+  ],
+
+  // Skills portables en .agents/skills/ (compatibles OpenCode + VS Code).
+  "skills": {
+    "paths": [".agents/skills"]
+  },
+
+  // ---------------------------------------------------------------------------
+  // LSP — built-ins habilitados; se desactivan explícitamente los servidores
+  // que auto-instalarían binarios extra al abrir .sh/.yml.
+  // typescript: usa la dependencia "typescript" (^5) del proyecto.
+  // eslint:     usa la dependencia "eslint" (^9) del proyecto.
+  // ---------------------------------------------------------------------------
+  "lsp": {
+    "bash": { "disabled": true },
+    "yaml-ls": { "disabled": true },
+    "deno": { "disabled": true },
+    "oxlint": { "disabled": true }
+  },
+
+  // ---------------------------------------------------------------------------
+  // MCP — siete servidores: 1 local de navegador + 5 remotos oficiales +
+  // semgrep (CLI local, desactivado por entorno).
+  //
+  // Principios:
+  // - Solo servidores OFICIALES. Sin Playwright MCP, filesystem, git genérico,
+  //   postgres genérico, memory, sequential-thinking, puppeteer ni
+  //   servidores comunitarios (duplican tools internas de OpenCode).
+  // - Mínimo contexto: github/neon/vercel/resend/semgrep ocultos globalmente
+  //   (ver "tools" más abajo) y re-habilitados solo por agente en
+  //   .opencode/agents/*.md. context7 y chrome-devtools quedan globales.
+  // - Sin secretos literales: OAuth para remotos; ninguna API key en este
+  //   archivo. Referencias {env:VAR} si alguna vez fueran necesarias.
+  // - Sin dependencias MCP en package.json (knip baseline devDependencies: 0).
+  // ---------------------------------------------------------------------------
+
+  "mcp": {
+    // Navegador local — conservado EXACTO (versión fijada y flags).
+    // chrome-devtools-mcp@1.6.0 (Apache-2.0, repositorio oficial ChromeDevTools).
+    // -y pinza versión; --slim expone solo 3 herramientas básicas;
+    // --headless sin UI; --isolated perfil temporal (sin cookies ni sesiones);
+    // --no-usage-statistics y --no-performance-crux evitan telemetría/exfiltración.
+    "chrome-devtools": {
+      "type": "local",
+      "command": [
+        "npx",
+        "--yes",
+        "chrome-devtools-mcp@1.6.0",
+        "--slim",
+        "--headless",
+        "--isolated",
+        "--no-usage-statistics",
+        "--no-performance-crux"
+      ],
+      "enabled": true
+    },
+
+    // Documentación actual/específica de versión (remoto oficial Context7).
+    // Sin API key para la instalación inicial; si existiera CONTEXT7_API_KEY
+    // en el entorno podría referenciarse vía {env:CONTEXT7_API_KEY} sin valor.
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true,
+      "timeout": 15000
+    },
+
+    // GitHub remoto oficial — HABILITADO vía PAT personal (oauth: false):
+    // el servidor exige OAuth pero NO soporta Dynamic Client Registration
+    // (RFC 7591), así que la autenticación se hace con un Personal Access
+    // Token de solo lectura en `Authorization: Bearer {env:GITHUB_PERSONAL_ACCESS_TOKEN}`.
+    // El token vive ÚNICAMENTE en el entorno de la terminal desde la que se
+    // arranca OpenCode (export GITHUB_PERSONAL_ACCESS_TOKEN=... o ~/.zshrc),
+    // nunca en este archivo ni en el repositorio.
+    // X-MCP-Readonly: true  → solo tools de lectura (las de escritura se omiten
+    //   aunque el toolset las incluya).
+    // X-MCP-Lockdown: true  → sin passthrough de prompts a models.
+    // X-MCP-Toolsets: allowlist acotada (sin all, sin projects/gists/
+    //   notifications/orgs/copilot).
+    "github": {
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "enabled": true,
+      "timeout": 20000,
+      "oauth": false,
+      "headers": {
+        "Authorization": "Bearer {env:GITHUB_PERSONAL_ACCESS_TOKEN}",
+        "X-MCP-Toolsets": "repos,issues,pull_requests,actions,code_security,dependabot,secret_protection",
+        "X-MCP-Readonly": "true",
+        "X-MCP-Lockdown": "true"
+      }
+    },
+
+    // Neon remoto oficial — SOLO LECTURA por dos vías (defensa en profundidad):
+    //   ?readonly=true (query param, prioridad alta según docs de Neon) y
+    //   cabecera x-read-only (obligatoria según política del proyecto).
+    // En read-only no se registran tools mutables (create/delete/migrations).
+    // OAuth vía `opencode mcp auth neon` (PENDIENTE humano).
+    "neon": {
+      "type": "remote",
+      "url": "https://mcp.neon.tech/mcp?readonly=true",
+      "enabled": true,
+      "timeout": 20000,
+      "headers": {
+        "x-read-only": "true"
+      }
+    },
+
+    // Vercel remoto oficial — HABILITADO tras verificación empírica: el flujo
+    // OAuth oficial funcionó (client pre-registrado de OpenCode aceptado por
+    // mcp.vercel.com; `opencode mcp auth vercel` → authenticated). Aunque la
+    // doc de Vercel no lista OpenCode entre sus clientes, la autorización
+    // OAuth estándar fue aceptada. Inventario verificado (33 tools): lectura
+    // = get_*/list_*/search_*/web_fetch_*/check_*/get_web_analytics;
+    // escritura = buy_*/deploy_*/update_*/add_*/change_*/edit_*/import-*/
+    // reply_* — TODAS denegadas por patrón en "permission" (defensa en
+    // profundidad) y ocultas globalmente por "tools".
+    "vercel": {
+      "type": "remote",
+      "url": "https://mcp.vercel.com",
+      "enabled": true,
+      "timeout": 20000
+    },
+
+    // Resend remoto oficial — HABILITADO tras OAuth completado y verificación
+    // del inventario (91 tools: lectura get_*/list_*; 53 tools de escritura
+    // denegadas por patrón en "permission"). Política deny-by-default para
+    // envíos en despacho legal: solo consulta de logs/dominios/plantillas/
+    // webhooks. No se usa RESEND_API_KEY aquí.
+    "resend": {
+      "type": "remote",
+      "url": "https://mcp.resend.com/mcp",
+      "enabled": true,
+      "timeout": 20000
+    },
+
+    // Semgrep CLI oficial — HABILITADO: instalado de forma aislada y segura
+    // con `uv tool install --python 3.12 semgrep` (v1.172.0, en
+    // ~/.local/bin/semgrep; uv gestiona su propio Python 3.12, fuera del
+    // proyecto). No está en node_modules ni en package.json. Sin autofix
+    // (ver denies) y sin login (no se configura SEMGREP_APP_TOKEN).
+    "semgrep": {
+      "type": "local",
+      "command": ["semgrep", "mcp"],
+      "enabled": true,
+      "timeout": 20000
+    },
+
+    // Playwright MCP oficial (Microsoft) — local. Uso permitido: localhost y
+    // Preview read-only (navegación, responsive, accesibilidad, consola,
+    // enlaces). PROHIBIDO: formularios reales, emails, DB writes, usuarios
+    // reales y acciones mutables en Production. Todas las tools requieren
+    // aprobación (permission playwright_* = ask). Sin credenciales ni
+    // navegador con perfil personal (--isolated equivalente no aplica aquí;
+    // el servidor usa su propio perfil temporal).
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "--yes", "@playwright/mcp@latest"],
+      "enabled": true,
+      "timeout": 30000
+    }
+  },
+
+  // ---------------------------------------------------------------------------
+  // Filtrado global de herramientas — principio de mínimo contexto.
+  // Los patrones <servidor>_* ocultan globalmente las tools de github, neon,
+  // vercel, resend y semgrep; cada agente las re-habilita solo donde las
+  // necesita (.opencode/agents/*.md, clave "tools", patrón aditivo).
+  // context7 (context7_query-docs, context7_resolve-library-id),
+  // chrome-devtools y playwright quedan disponibles globalmente (playwright
+  // con aprobación: permission playwright_* = ask).
+  // ---------------------------------------------------------------------------
+  "tools": {
+    "github_*": false,
+    "neon_*": false,
+    "vercel_*": false,
+    "resend_*": false,
+    "semgrep_*": false
+  },
+
+  // ---------------------------------------------------------------------------
+  // Permisos — principio de mínimos privilegios.
+  // Reglas con patrón: la ÚLTIMA coincidencia gana; se evalúa en orden.
+  // Lectura y validación = automático; escritura/git/instalación = aprobación;
+  // acciones destructivas, push/merge/deploy/producción = denegado.
+  // ---------------------------------------------------------------------------
+  "permission": {
+    "read": "allow",
+    "glob": "allow",
+    "grep": "allow",
+    "list": "allow",
+    "todowrite": "allow",
+    "edit": "ask",
+    "write": "ask",
+    "webfetch": "ask",
+    "skill": "allow",
+    "external_directory": "ask",
+    "bash": {
+      // Regla amplia primero (última coincidencia gana).
+      "*": "ask",
+      // Validaciones locales y Git read-only: automáticas.
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "git show*": "allow",
+      "git branch*": "allow",
+      "git rev-parse*": "allow",
+      "git ls-files*": "allow",
+      "git check-ignore*": "allow",
+      "opencode --version": "allow",
+      "opencode debug*": "allow",
+      "opencode agent list*": "allow",
+      "opencode models*": "allow",
+      "opencode mcp list*": "allow",
+      "opencode mcp auth list*": "allow",
+      "code --list-extensions*": "allow",
+      "npm run lint*": "allow",
+      "npm run typecheck*": "allow",
+      "npm run build:ci*": "allow",
+      "npm run test*": "allow",
+      "npm run verify*": "allow",
+      "npm run opencode:doctor*": "allow",
+      "npx tsc --noEmit*": "allow",
+      "npx vitest*": "allow",
+      "node scripts/opencode-doctor.mjs*": "allow",
+      // Requieren aprobación explícita.
+      "npm install*": "ask",
+      "npm ci*": "ask",
+      "npx ctx7 setup*": "ask",
+      "opencode auth login*": "ask",
+      "opencode mcp auth*": "ask",
+      "code --install-extension*": "ask",
+      "git add*": "ask",
+      // Destructivos, remotos y de producción: denegados siempre.
+      "git commit*": "deny",
+      "git push*": "deny",
+      "git merge*": "deny",
+      "git rebase*": "deny",
+      "git cherry-pick*": "deny",
+      "git reset*": "deny",
+      "git clean*": "deny",
+      "git checkout --*": "deny",
+      "git restore*": "deny",
+      "rm -rf*": "deny",
+      "Remove-Item * -Recurse*": "deny",
+      "sudo*": "deny",
+      "chmod 777*": "deny",
+      "vercel*": "deny",
+      "neonctl*": "deny",
+      "resend*": "deny",
+      "drizzle-kit*": "deny",
+      "npm run db:migrations:apply*": "deny",
+      "npm run db:migrations:baseline:apply*": "deny",
+      "npm run seed:*": "deny",
+      "npm run rag:*:aplicar*": "deny",
+      "npm run blog:*:aplicar*": "deny",
+      "npm run corregir:*aplicar*": "deny",
+      // Impresión de .env*: denegada (secretos).
+      "cat .env*": "deny",
+      "type .env*": "deny",
+      "Get-Content .env*": "deny"
+    },
+
+    // MCP — policy por servidor (context7 y github lectura; playwright,
+    // vercel y neon requieren aprobación). Los deny por tool específicos
+    // de abajo tienen prioridad (última coincidencia gana).
+    "context7_*": "allow",
+    "github_*": "allow",
+    "playwright_*": "ask",
+    "vercel_*": "ask",
+    "neon_*": "ask",
+
+    // Deny por tool de MCP (escritura remota) — defensa en profundidad.
+    // GitHub y Neon además NO registran estas tools por su modo read-only
+    // server-side (X-MCP-Readonly / ?readonly=true+x-read-only); estas reglas
+    // cubren el caso de que el servidor las exponga. Nombres verificados en
+    // la documentación oficial (github-mcp-server README, mcp-server-neon).
+    "github_actions_run_trigger": "deny",
+    "github_issue_write": "deny",
+    "github_add_issue_comment": "deny",
+    "github_create_pull_request": "deny",
+    "github_update_pull_request": "deny",
+    "github_merge_pull_request": "deny",
+    "github_update_pull_request_branch": "deny",
+    "github_pull_request_review_write": "deny",
+    "github_add_comment_to_pending_review": "deny",
+    "github_add_reply_to_pull_request_comment": "deny",
+    "github_create_or_update_file": "deny",
+    "github_delete_file": "deny",
+    "github_push_files": "deny",
+    "github_create_branch": "deny",
+    "github_create_repository": "deny",
+    "github_fork_repository": "deny",
+    "github_star_repository": "deny",
+    "github_unstar_repository": "deny",
+    "neon_create_project": "deny",
+    "neon_delete_project": "deny",
+    "neon_create_branch": "deny",
+    "neon_delete_branch": "deny",
+    "neon_reset_from_parent": "deny",
+    "neon_prepare_database_migration": "deny",
+    "neon_complete_database_migration": "deny",
+    "neon_prepare_query_tuning": "deny",
+    "neon_complete_query_tuning": "deny",
+    "neon_provision_neon_auth": "deny",
+    "neon_configure_neon_auth": "deny",
+    "neon_provision_neon_data_api": "deny",
+    // Resend — 53 tools de escritura denegadas por patrón (inventario real
+    // verificado con OAuth: get-*/list-* son lectura; el resto escritura).
+    // Con el prefijo resend_ y guiones preservados:
+    "resend_create-*": "deny",
+    "resend_send-*": "deny",
+    "resend_compose-*": "deny",
+    "resend_cancel-*": "deny",
+    "resend_add-*": "deny",
+    "resend_batch-*": "deny",
+    "resend_remove-*": "deny",
+    "resend_update-*": "deny",
+    "resend_connect-*": "deny",
+    "resend_disconnect-*": "deny",
+    "resend_duplicate-*": "deny",
+    "resend_publish-*": "deny",
+    "resend_manage-*": "deny",
+    "resend_verify-*": "deny",
+    "resend_revoke-*": "deny",
+    // Vercel — 13 tools de escritura denegadas por patrón (inventario real
+    // verificado con OAuth). Incluye compras (buy_*), deploys, protección de
+    // deployment y mutaciones de toolbar. Lectura (get_*/list_*/search_*/...)
+    // queda permitida solo en agentes autorizados. Nota: las tools de Vercel
+    // usan guion bajo (_) salvo import-claude-design-from-url (guion).
+    "vercel_buy_*": "deny",
+    "vercel_deploy_*": "deny",
+    "vercel_update_*": "deny",
+    "vercel_add_*": "deny",
+    "vercel_change_*": "deny",
+    "vercel_edit_*": "deny",
+    "vercel_import-*": "deny",
+    "vercel_reply_*": "deny"
+  },
+
+  // No se configura formatter runtime: el proyecto usa ESLint y scripts propios.
+  "formatter": false,
+
+  "logLevel": "INFO"
+}

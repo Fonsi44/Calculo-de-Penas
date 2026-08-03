@@ -7,7 +7,14 @@ import {
 import Link from 'next/link';
 import { Section, Container } from '@/components/marketing/section';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
-import { getAllPosts, getPostBySlug, formatDate, getCategoryName } from '@/lib/blog';
+import {
+  getAllPostParams,
+  getAllPosts,
+  getPostBySlug,
+  getRelatedPostsFromSummaries,
+  formatDate,
+  getCategoryName,
+} from '@/lib/blog';
 import { blogPostSchema } from '@/lib/schemas/blog';
 import { site } from '@/lib/site';
 import { buildBlogMetaDescription, buildBlogMetaTitle } from '@/lib/seo';
@@ -17,15 +24,24 @@ import { ShareButtons } from '@/components/blog/share-buttons';
 import { RelatedService } from '@/components/blog/related-service';
 import { BlogCtaBar } from '@/components/blog/blog-cta-bar';
 import { LegalDisclaimer } from '@/components/marketing/legal-disclaimer';
-import { AiReviewNotice } from '@/components/blog/ai-review-notice';
-import { CANONICAL_REVIEWERS } from '@/lib/legal-review';
+import {
+  isEditoriallyIndexable,
+  resolveArticleEditorialState,
+} from '@/lib/editorial-signature';
 import { extractFAQSchema, faqPageSchema } from '@/lib/faq-schema';
 import { BlogSidebar } from '@/components/blog/blog-sidebar';
 import {
   injectContextLinks,
   detectMentionedCities,
-  normalizeBlogInternalLinks,
 } from '@/lib/blog-context-linker';
+import { normalizeBlogLinksForRender } from '@/lib/blog-link-normalizer';
+import {
+  sanitizeBlogRenderedHtml,
+  sanitizeBlogSourceHtml,
+  serializeBlogJsonLd,
+} from '@/lib/blog-html-sanitizer';
+import { transformBlogTablesForRender } from '@/lib/blog-table-transformer';
+import { injectMidArticleCta } from '@/lib/blog-generated-cta';
 import { RelatedCities, RelatedCategories } from '@/components/marketing/related-links';
 import {
   toCardData,
@@ -35,223 +51,19 @@ import {
   deriveArchiveMonths,
   deriveAllTags,
 } from '@/lib/blog-hub';
+import {
+  getCanonicalRelatedSummaries,
+  loadArticleSeoRelations,
+  type ArticleSeoRelations,
+} from '@/lib/seo/article-relations';
+import articleSeoRelationsData from '@/data/seo/article-seo-relations.json';
 
 export const revalidate = 3600;
 
 type Props = { params: Promise<{ categoria: string; slug: string }> };
 
-const MID_POST_CTA_COPY: Record<string, { title: string; body: string; anchor: string }> = {
-  'defensa-penal-honduras': {
-    title: 'Necesita una defensa penal inmediata?',
-    body: 'Si enfrenta una investigacion o audiencia, conviene ordenar hechos y evidencia con defensa tecnica desde el inicio.',
-    anchor: 'Solicitar consulta penal confidencial',
-  },
-  'abogado-penalista-sur-honduras': {
-    title: 'Actue a tiempo en su caso penal',
-    body: 'Las primeras decisiones procesales suelen marcar el rumbo del expediente. Una revision temprana ayuda a evitar errores de alto impacto.',
-    anchor: 'Hablar con un abogado penalista',
-  },
-  'despido-laboral-honduras-guia-completa': {
-    title: 'Evalua su despido con enfoque tecnico',
-    body: 'Con contrato, comprobantes y cronologia laboral, puede definirse una ruta clara de reclamo o negociacion en plazos utiles.',
-    anchor: 'Solicitar revision de caso laboral',
-  },
-  'divorcio-honduras-guia-completa': {
-    title: 'Necesita orientacion para su proceso familiar?',
-    body: 'Una estrategia temprana en divorcio, custodia y alimentos reduce conflictos y mejora la proteccion juridica de su familia.',
-    anchor: 'Solicitar consulta de derecho de familia',
-  },
-  'pension-alimenticia-honduras-guia-completa': {
-    title: 'Ordene su caso de pension alimenticia',
-    body: 'Con documentacion correcta y objetivos claros, es posible avanzar con mayor precision en conciliacion o via judicial.',
-    anchor: 'Iniciar consulta sobre pension alimenticia',
-  },
-  'abogados-en-choluteca': {
-    title: 'Atencion legal para Choluteca y zona sur',
-    body: 'Puede iniciar por WhatsApp o llamada y definir una hoja de ruta concreta segun el tipo de asunto y su urgencia.',
-    anchor: 'Solicitar consulta desde Choluteca',
-  },
-  'danos-perjuicios-indemnizacion-honduras': {
-    title: 'Ha sufrido danos y necesita reclamar?',
-    body: 'La indemnizacion por danos y perjuicios requiere probar el dano, la culpa y la relacion causal. Un abogado civil puede evaluar la viabilidad de su reclamo.',
-    anchor: 'Consultar sobre mi caso de danos',
-  },
-  'prescripcion-deudas-plazos-honduras': {
-    title: 'Tiene una deuda que ya prescribio?',
-    body: 'Conocer los plazos de prescripcion es el primer paso. Un abogado puede confirmar si su deuda ya prescribio y que accion tomar.',
-    anchor: 'Verificar si mi deuda prescribio',
-  },
-  'pension-alimenticia-porcentaje-honduras-2026': {
-    title: 'Necesita fijar o modificar una pension?',
-    body: 'El calculo correcto de la pension alimenticia depende de ingresos, numero de hijos y necesidades del menor. Evite errores que retrasen el proceso.',
-    anchor: 'Calcular mi pension alimenticia',
-  },
-  'estafas-fraudes-tipos-penales-honduras': {
-    title: 'Fue victima de una estafa?',
-    body: 'Las estafas requieren accion penal inmediata para preservar pruebas y evitar que el responsable disponga de los bienes defraudados.',
-    anchor: 'Denunciar una estafa con abogado',
-  },
-  'poder-notarial-honduras-tipos-requisitos': {
-    title: 'Necesita un poder notarial seguro?',
-    body: 'Cada tipo de poder tiene requisitos especificos. Un poder mal redactado puede ser impugnado o rechazado. Hagalo bien desde el inicio.',
-    anchor: 'Solicitar poder notarial en Nacaome',
-  },
-  'custodia-hijos-honduras-juez': {
-    title: 'Esta en disputa la custodia de sus hijos?',
-    body: 'El juez decide segun el interes superior del menor. Una estrategia legal solida puede marcar la diferencia en el resultado.',
-    anchor: 'Consultar sobre custodia de menores',
-  },
-  'pension-alimenticia-honduras-como-solicitarla': {
-    title: 'Listo para solicitar la pension alimenticia?',
-    body: 'El proceso requiere documentacion especifica y seguir los pasos correctos ante el juzgado de familia. No lo haga solo.',
-    anchor: 'Iniciar solicitud de pension ya',
-  },
-  'que-hacer-si-me-detienen-en-honduras': {
-    title: 'Tiene un familiar detenido?',
-    body: 'Las primeras 24 horas son criticas. Un abogado penalista puede garantizar sus derechos desde el primer momento y evitar abusos procesales.',
-    anchor: 'Asistencia inmediata por detencion',
-  },
-  'medidas-sustitutivas-prision-preventiva-honduras': {
-    title: 'Busca evitar la prision preventiva?',
-    body: 'Existen 7 medidas sustitutivas que un abogado puede solicitar al juez. Cada caso tiene particularidades que deben argumentarse tecnicamente.',
-    anchor: 'Solicitar revision de medida cautelar',
-  },
-  'derechos-detenido-honduras-guia-constitucional': {
-    title: 'Conoce a alguien detenido?',
-    body: 'La Constitucion garantiza derechos fundamentales desde la detencion. Un abogado puede verificar que se respeten y actuar si no es asi.',
-    anchor: 'Verificar derechos del detenido',
-  },
-  'calcular-prestaciones-laborales-honduras': {
-    title: 'Quiere saber cuanto le deben?',
-    body: 'El calculo de prestaciones incluye varios conceptos que su empleador podria estar omitiendo. Revise su caso con un abogado laboralista.',
-    anchor: 'Calcular mis prestaciones ahora',
-  },
-  'despido-injustificado-honduras-derechos-trabajador': {
-    title: 'Lo despidieron sin justa causa?',
-    body: 'Tiene derecho a indemnizacion. Pero debe actuar dentro de los plazos legales. No espere: cada dia cuenta en un reclamo laboral.',
-    anchor: 'Reclamar mi despido injustificado',
-  },
-  'acoso-laboral-mobbing-honduras': {
-    title: 'Sufre acoso en su trabajo?',
-    body: 'El mobbing es una violacion a sus derechos laborales. Puede denunciarlo y reclamar indemnizacion. No tiene que soportarlo en silencio.',
-    anchor: 'Denunciar acoso laboral',
-  },
-  'delitos-mas-comunes-honduras': {
-    title: 'Enfrenta una acusacion penal?',
-    body: 'Conocer el delito que le imputan es el primer paso. Un abogado penalista puede explicarle sus opciones y construir su defensa.',
-    anchor: 'Consultar sobre mi caso penal',
-  },
-  'violencia-domestica-ruta-legal-honduras': {
-    title: 'Necesita proteccion urgente?',
-    body: 'La ley preve medidas de proteccion inmediatas para victimas de violencia domestica. No espere a que la situacion empeore.',
-    anchor: 'Solicitar medidas de proteccion',
-  },
-  'audiencia-inicial-proceso-penal-honduras': {
-    title: 'Tiene una audiencia inicial proxima?',
-    body: 'Lo que ocurra en esa audiencia define el rumbo del proceso. Llegar con defensa tecnica es su derecho y su mejor estrategia.',
-    anchor: 'Preparar mi audiencia inicial',
-  },
-  'compraventa-inmuebles-aspectos-legales-honduras': {
-    title: 'Va a comprar o vender una propiedad?',
-    body: 'Una compraventa sin due diligence puede costarle su patrimonio. Verifique gravamenes, impuestos y titularidad antes de firmar.',
-    anchor: 'Revisar mi compraventa con abogado',
-  },
-  'contratos-arrendamiento-derechos-obligaciones-honduras': {
-    title: 'Va a firmar un contrato de alquiler?',
-    body: 'Las clausulas abusivas en contratos de arrendamiento son comunes. Un abogado civil puede revisarlo antes de que firme.',
-    anchor: 'Revisar mi contrato de arrendamiento',
-  },
-  'derechos-laborales-basicos-honduras': {
-    title: 'Conoce todos sus derechos como trabajador?',
-    body: 'Muchos empleadores cuentan con que usted no conozca sus derechos. Informese y, si necesita reclamar, tenga un abogado a su lado.',
-    anchor: 'Consultar mis derechos laborales',
-  },
-  'derechos-trabajadora-embarazada-honduras': {
-    title: 'Esta embarazada y teme por su empleo?',
-    body: 'El fuero maternal la protege contra el despido. Si fue despedida estando embarazada, tiene derecho a reintegro e indemnizacion.',
-    anchor: 'Proteger mi estabilidad laboral',
-  },
-  'testamentos-sucesiones-herencia-honduras': {
-    title: 'Necesita gestionar una herencia?',
-    body: 'Las sucesiones requieren tramites especificos ante notario o juez. Un error puede retrasar la disposicion de los bienes por meses o anos.',
-    anchor: 'Iniciar tramite de sucesion',
-  },
-  'calcular-liquidacion-laboral-honduras': {
-    title: 'No esta seguro de que su liquidacion sea correcta?',
-    body: 'Muchos empleadores calculan de menos. Un abogado laboralista puede revisar su liquidacion y reclamar la diferencia si corresponde.',
-    anchor: 'Verificar mi liquidacion laboral',
-  },
-  'abogado-penalista-choluteca': {
-    title: 'Necesita defensa penal en Choluteca?',
-    body: 'Atendemos casos penales en los juzgados de Choluteca. Contactenos para una consulta confidencial sobre su situacion.',
-    anchor: 'Hablar con abogado penalista en Choluteca',
-  },
-  'divorcio-choluteca': {
-    title: 'Quiere iniciar su divorcio en Choluteca?',
-    body: 'Cada tipo de divorcio tiene requisitos y costos distintos. Una consulta temprana le ayuda a elegir la via mas conveniente.',
-    anchor: 'Consultar sobre divorcio en Choluteca',
-  },
-  'abogado-civil-choluteca': {
-    title: 'Necesita un abogado civil en Choluteca?',
-    body: 'Contratos, herencias, cobro de deudas y compraventas. Asesoria civil con conocimiento de los juzgados de la zona sur.',
-    anchor: 'Consultar con abogado civil',
-  },
-  'cuando-necesito-abogado-penalista-honduras': {
-    title: 'No sabe si necesita un abogado penalista?',
-    body: 'Si recibio una citacion, esta siendo investigado o fue detenido, necesita defensa tecnica cuanto antes. No espere a que sea tarde.',
-    anchor: 'Evaluar mi situacion penal sin costo',
-  },
-  'empleador-no-paga-salario-honduras': {
-    title: 'Su empleador no le paga?',
-    body: 'La retencion de salario es ilegal. Puede reclamar el pago de lo adeudado mas intereses y danos. Actue antes de que prescribe.',
-    anchor: 'Reclamar salarios impagos',
-  },
-  'clausulas-abusivas-contratos-como-detectar-honduras': {
-    title: 'Firmo un contrato con clausulas abusivas?',
-    body: 'Muchas clausulas abusivas pueden declararse nulas. Un abogado civil puede revisar su contrato y asesorarle sobre sus opciones.',
-    anchor: 'Revisar mi contrato ahora',
-  },
-  'usucapion-prescripcion-adquisitiva-honduras': {
-    title: 'Quiere legalizar la propiedad que posee?',
-    body: 'La usucapion permite adquirir la propiedad por posesion continua. El proceso requiere cumplir plazos y requisitos especificos.',
-    anchor: 'Consultar sobre usucapion',
-  },
-};
-
-function injectMidArticleCta(body: string, slug: string): string {
-  const hasContextualTopic = Boolean(MID_POST_CTA_COPY[slug]);
-  if (!hasContextualTopic) return body;
-  if (body.includes('/solicitar-consulta')) return body;
-
-  const paragraphEndRegex = /<\/p>/gi;
-  const paragraphEndPositions: number[] = [];
-  let match: RegExpExecArray | null;
-  while ((match = paragraphEndRegex.exec(body)) !== null) {
-    paragraphEndPositions.push(match.index + match[0].length);
-  }
-
-  const targetIndex = paragraphEndPositions.length >= 3
-    ? Math.max(1, Math.floor(paragraphEndPositions.length * 0.65) - 1)
-    : -1;
-
-  const ctaHtml = `
-<aside class="my-7 rounded-lg border border-accent/30 bg-surface-alt p-4">
-  <p class="text-xxs font-bold uppercase tracking-wider text-accent-dark mb-1">Consulta legal</p>
-  <p class="text-sm font-semibold text-text mb-1">¿Necesita orientación sobre este tema?</p>
-  <p class="text-sm text-text-secondary leading-relaxed mb-2">Podemos revisar su situación concreta, explicarle las opciones disponibles y, si procede, preparar un presupuesto por escrito. No se garantizan resultados.</p>
-  <a href="/solicitar-consulta#formulario" data-event-name="seo_blog_cta_click" data-cta-location="blog_inline" data-cta-topic="${slug}" class="text-sm font-semibold text-primary hover:text-accent-dark">Solicitar una consulta confidencial</a>
-</aside>`;
-
-  if (targetIndex >= 0) {
-    const insertionPoint = paragraphEndPositions[targetIndex];
-    return `${body.slice(0, insertionPoint)}${ctaHtml}${body.slice(insertionPoint)}`;
-  }
-
-  return `${body}${ctaHtml}`;
-}
-
 export async function generateStaticParams() {
-  const posts = await getAllPosts();
+  const posts = await getAllPostParams();
   return posts.map((p) => ({ categoria: p.category, slug: p.slug }));
 }
 
@@ -269,7 +81,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   );
   const ogImg = post.ogImage || post.coverImage || '/og-image.webp';
   const canonical = post.canonicalUrl || `/blog/${post.category}/${post.slug}`;
-  const noindex = post.noindex === true;
+  // Una versión publicada con firma institucional o individual válida es
+  // indexable. Drafts, versiones desactualizadas y propuestas aún sin nueva
+  // firma reciben noindex sin afectar a la versión histórica publicada.
+  const noindex = post.noindex === true
+    || !isEditoriallyIndexable(post);
 
   return {
     title: { absolute: metaTitle },
@@ -301,21 +117,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-async function getRelatedPosts(slug: string, category: string, tags: string[], limit = 6) {
-  const all = await getAllPosts();
-  return all
-    .filter((p) => p.slug !== slug)
-    .map((p) => {
-      const catMatch = p.category === category ? 3 : 0;
-      const tagOverlap = p.tags.filter((t) => tags.includes(t)).length;
-      return { post: p, score: catMatch + tagOverlap };
-    })
-    .filter((r) => r.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
-    .map((r) => r.post);
-}
-
 export default async function BlogPostByCategoryPage({ params }: Props) {
   const { categoria, slug } = await params;
   const post = await getPostBySlug(slug);
@@ -325,40 +126,72 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
   const currentIndex = allPosts.findIndex((p) => p.slug === slug);
   const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
   const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
-  const relatedPosts = await getRelatedPosts(slug, post.category, post.tags);
+
+  // Relaciones canónicas (lib/seo/article-relations.ts): si el artículo tiene
+  // relación definida y validada, se usan targets deterministas; si no, se
+  // mantiene el fallback por similitud (categoría + tags).
+  const relationsBySlug = new Map<string, ArticleSeoRelations>(
+    loadArticleSeoRelations(articleSeoRelationsData).map((r) => [r.slug, r]),
+  );
+  const canonicalRelation = relationsBySlug.get(slug);
+  const canonicalRelated = canonicalRelation
+    ? getCanonicalRelatedSummaries(allPosts, canonicalRelation)
+    : [];
+  const relatedPosts = canonicalRelated.length > 0
+    ? canonicalRelated
+    : getRelatedPostsFromSummaries(
+      allPosts,
+      slug,
+      post.category,
+      post.tags,
+    );
   const categoryName = getCategoryName(post.category) ?? post.category;
 
   const postUrl = `/blog/${post.category}/${post.slug}`;
 
   const LAWYER_SLUGS: Record<string, string> = {
     'Danilo Pineda Maradiaga': 'danilo-pineda-maradiaga',
-    'Thania Marlene Paz': 'thania',
-    'Emil Barahona': 'emil',
+    'Thania Marlene Paz': 'thania-marlene-paz',
+    'Emil Barahona': 'emil-barahona',
   };
 
-  const isReviewed =
-    post.reviewStatus === 'verified' &&
-    post.reviewedBy &&
-    CANONICAL_REVIEWERS.includes(post.reviewedBy) &&
-    post.reviewedAt;
+  const editorial = resolveArticleEditorialState(post);
+  const validSignature = editorial.signatureValid ? editorial.signature : null;
+  const individualSignature = validSignature?.type === 'lawyer';
+  const showPreviewResignatureNotice =
+    (process.env.VERCEL_ENV === 'preview' || process.env.APP_ENV === 'staging')
+    && editorial.publicationState === 'pending_resignature';
 
   const authorSlug = post.author ? LAWYER_SLUGS[post.author] : null;
-  const authorHref = authorSlug ? `/despacho#${authorSlug}` : '/despacho';
+  const authorHref = authorSlug ? `/equipo/${authorSlug}` : '/despacho';
 
   // Inyecta CTA mid-article y luego asigna IDs estables a los H2/H3 del body
   // (server-side) para que el TOC y los fragment anchors (#section) existan en
   // el HTML servidor (SEO/GEO: crawlers y LLMs ven la estructura del doc).
-  const rawHtml = injectMidArticleCta(post.body, post.slug);
+  // Frontera 1: todo body persistido es no confiable. La sanitización ocurre
+  // exclusivamente en render y nunca altera el body ni su hash editorial.
+  const sanitizedSource = sanitizeBlogSourceHtml(post.body);
+  const rawHtml = injectMidArticleCta(sanitizedSource.html, post.slug);
   const { html: withHeadings, headings } = injectHeadingIds(rawHtml);
   // AUTO-LINKING CONTEXTUAL (Jul 2026): inserta enlaces internos a ciudades y
   // áreas de práctica detectadas en el body. Crea la tela de araña blog→geo.
   // Anti-over-optimization: máx 5 enlaces, respeta headings y anchors existentes.
-  const articleHtml = injectContextLinks(normalizeBlogInternalLinks(withHeadings), {
+  const renderSafeHtml = normalizeBlogLinksForRender(withHeadings).html;
+  const contextLinkedHtml = injectContextLinks(renderSafeHtml, {
     excludeHrefs: [postUrl], // evitar self-link
   });
+  // Transformación de tablas → fichas responsive (Jul 2026): sustituye las
+  // `<table>` del body por fichas semánticas (article-comparison-cards /
+  // article-data-cards) legibles en móvil, sin overflow horizontal ni palabras
+  // partidas letra por letra. Render-only: NO muta post.body ni su hash/firma.
+  const tableCards = transformBlogTablesForRender(contextLinkedHtml);
+  // Frontera 2: ninguna transformación controlada llega directamente al sink.
+  // El sanitizer de render prohíbe etiquetas de tabla, de modo que cualquier
+  // tabla no transformada se degrada a texto (defense in depth).
+  const articleHtml = sanitizeBlogRenderedHtml(tableCards.html).html;
   // Detecta ciudades mencionadas para el bloque RelatedCities al final.
-  const mentionedCities = detectMentionedCities(post.body);
-  const faqItems = extractFAQSchema(post.body);
+  const mentionedCities = detectMentionedCities(sanitizedSource.html);
+  const faqItems = extractFAQSchema(sanitizedSource.html);
   const faqLd = faqPageSchema(faqItems);
 
   const categoryCounts = deriveCategoryCounts(allPosts);
@@ -416,17 +249,18 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                 <User size={15} className="text-accent-dark" />
                 <span>Autor: <Link href={authorHref} className="hover:text-primary hover:underline transition-colors font-medium text-text-secondary">{post.author}</Link></span>
               </span>
-              {isReviewed && (
-                <span className="flex items-center gap-1.5">
+              {validSignature && (
+                <span className="flex flex-wrap items-center gap-1.5">
                   <BadgeCheck size={15} className="text-accent-dark" />
-                  <span>Revisión jurídica:{' '}
-                  <Link href={`/despacho#${LAWYER_SLUGS[post.reviewedBy!]}`} className="hover:text-primary hover:underline transition-colors font-medium text-text-secondary font-semibold">
-                    {post.reviewedBy}
+                  <span>{individualSignature ? 'Revisión jurídica:' : 'Revisión jurídica institucional:'}</span>
+                  <Link href={validSignature.profileUrl ?? '/despacho'} className="hover:text-primary hover:underline transition-colors font-medium text-text-secondary font-semibold">
+                    {validSignature.name}
                   </Link>
-                  {post.reviewedAt && (
-                    <time dateTime={post.reviewedAt}> · {formatDate(post.reviewedAt)}</time>
+                  {validSignature.signedAt && (
+                    <time dateTime={new Date(validSignature.signedAt).toISOString()}>
+                      {' · '}{formatDate(new Date(validSignature.signedAt).toISOString())}
+                    </time>
                   )}
-                  </span>
                 </span>
               )}
             </div>
@@ -464,12 +298,12 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
           <div className="grid lg:grid-cols-[1fr_20rem] gap-8 lg:gap-10">
             <div className="min-w-0">
               <article>
-                {!isReviewed && (
-                  <div className="p-4 mb-6 rounded-lg bg-surface-alt border border-yellow-500/20 text-xs text-text-secondary leading-relaxed flex items-start gap-2.5 shadow-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-yellow-500 flex-shrink-0 mt-1.5" />
-                    <div>
-                      <span className="font-bold text-text">Aviso informativo:</span> Este contenido tiene fines exclusivamente de divulgación general. Está pendiente de revisión jurídica individual por un abogado colegiado. Para un análisis detallado de su caso, consulte directamente a nuestro despacho.
-                    </div>
+                {showPreviewResignatureNotice && (
+                  <div
+                    className="mb-6 rounded-lg border border-accent/40 bg-accent/10 p-4 text-sm font-semibold text-text"
+                    data-preview-editorial-status="pending_resignature"
+                  >
+                    Versión editorial en preparación para nueva firma
                   </div>
                 )}
                 <BlogTOC headings={headings} />
@@ -496,15 +330,12 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
 
                 {/* Disclaimer legal único con fecha de revisión real del post (E-E-A-T).
                     El footer global NO repite este concepto (ver public-footer.tsx). */}
-                <LegalDisclaimer lastReviewedIso={post.updatedAt ?? post.publishedAt} />
-
-                {/* Aviso de revisión documental IA (Fase 3B).
-                    Semántica por estado: completed/source_checked/needs_human_review muestran
-                    mensaje; blocked/not_started/in_progress no renderizan (evita falsa confianza).
-                    No menciona proveedor ni modelo. */}
-                <AiReviewNotice
-                  aiReviewStatus={post.aiReviewStatus ?? null}
-                  aiReviewedAt={post.aiReviewedAt ?? null}
+                <LegalDisclaimer
+                  documentaryReviewedAt={
+                    post.aiReviewStatus === 'completed' || post.aiReviewStatus === 'source_checked'
+                      ? post.aiReviewedAt
+                      : null
+                  }
                 />
 
                 <RelatedService category={post.category} />
@@ -527,15 +358,17 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                         Bufete jurídico con sede en Nacaome y más de 15 años de experiencia. Abogados
                         colegiados en Honduras, con presencia activa en juzgados de la zona sur.
                       </p>
-                      {isReviewed && (
-                        <p className="mt-2 flex items-center gap-1.5 text-xs font-medium text-text-secondary">
+                      {validSignature && (
+                        <p className="mt-2 flex flex-wrap items-center gap-1.5 text-xs font-medium text-text-secondary">
                           <BadgeCheck size={14} className="text-accent-dark" />
-                          Revisión jurídica:{' '}
-                          <Link href={`/despacho#${LAWYER_SLUGS[post.reviewedBy!]}`} className="hover:text-primary hover:underline transition-colors font-semibold">
-                            {post.reviewedBy}
+                          <span>{individualSignature ? 'Revisión jurídica:' : 'Revisión jurídica institucional:'}</span>
+                          <Link href={validSignature.profileUrl ?? '/despacho'} className="hover:text-primary hover:underline transition-colors font-semibold">
+                            {validSignature.name}
                           </Link>
-                          {post.reviewedAt && (
-                            <time dateTime={post.reviewedAt}> · {formatDate(post.reviewedAt)}</time>
+                          {validSignature.signedAt && (
+                            <time dateTime={new Date(validSignature.signedAt).toISOString()}>
+                              {' · '}{formatDate(new Date(validSignature.signedAt).toISOString())}
+                            </time>
                           )}
                         </p>
                       )}
@@ -663,12 +496,12 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
       {/* ── SCHEMAS ── */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostSchema(post)) }}
+        dangerouslySetInnerHTML={{ __html: serializeBlogJsonLd(blogPostSchema(post)) }}
       />
       {faqLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeBlogJsonLd(faqLd) }}
         />
       )}
     </>

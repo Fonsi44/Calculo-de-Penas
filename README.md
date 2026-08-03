@@ -225,6 +225,38 @@ secreto aparece en git history, requiere rotación en el proveedor. Guías en
 
 ---
 
+## Entorno OpenCode
+
+El repositorio está preparado para ejecutarse con OpenCode de forma segura
+(versión verificada: **1.18.11**). Guía operativa completa en
+[`.opencode/README.md`](.opencode/README.md); protocolo para agentes IA en
+[`AGENTS.md`](AGENTS.md) §7bis.
+
+- **Arranque (PowerShell 7 en macOS):**
+  ```bash
+  pwsh -NoProfile -File scripts/start-opencode.ps1
+  ```
+  (valida la raíz Git, no contiene secretos y propaga el exit code).
+- **Agente principal:** `task-executor`. Subagentes: `repo-auditor`,
+  `backend-engineer`, `frontend-engineer`, `database-engineer`,
+  `seo-geo-content`, `security-reviewer`, `qa-release`, `docs-governance`.
+- **Comandos:** `/task`, `/audit`, `/implement`, `/verify`, `/seo-check`,
+  `/ui-check`, `/release-check`, `/handoff`, `/environment-check`.
+- **Doctor del entorno:** `npm run opencode:doctor` (0 FAIL = sano).
+- **MCP (siete oficiales):** `context7` y `chrome-devtools` globales;
+  `neon` (solo lectura, OAuth completado), `vercel` (escritura denegada por
+  patrón) y `semgrep` (instalado con uv) habilitados; `github` (OAuth
+  incompatible) y `resend` (política deny-by-default de envíos) deshabilitados
+  (ver `.opencode/README.md`). Tools de github/neon/vercel/resend/semgrep
+  ocultas globalmente y habilitadas solo por agente. Comprobar con
+  `opencode mcp list` y `opencode mcp auth list`.
+- **LSP:** built-ins TypeScript y ESLint. Comprobar con
+  `opencode debug lsp diagnostics <archivo>`.
+- Tras modificar `opencode.jsonc`, agentes, skills o comandos, **reiniciar
+  OpenCode** para que los cambios tengan efecto.
+
+---
+
 ## Documentación
 
 | Documento | Contenido |

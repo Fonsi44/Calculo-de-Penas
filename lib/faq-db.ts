@@ -4,10 +4,19 @@ import { faqEntries } from '@/lib/schema';
 import { eq, asc } from 'drizzle-orm';
 import { faqCategoriesMeta } from '@/data/faq-categories';
 import { categoriasFaq } from '@/data/faq';
+import {
+  publicFaqPlainText,
+  sanitizePublicFaqHtml,
+} from '@/lib/faq-public-sanitizer';
 
 export type FaqQuestion = {
   pregunta: string;
   respuesta: string;
+};
+
+export type PublicFaqQuestion = FaqQuestion & {
+  id: string;
+  respuestaTexto: string;
 };
 
 export type FaqCategoryPublic = {
@@ -17,7 +26,48 @@ export type FaqCategoryPublic = {
   preguntas: FaqQuestion[];
 };
 
+export type CorporateFaqCategoryPublic = Omit<FaqCategoryPublic, 'preguntas'> & {
+  preguntas: PublicFaqQuestion[];
+};
+
 const faqMetaMap = new Map(faqCategoriesMeta.map((c) => [c.slug, c]));
+const CORPORATE_CATEGORY = 'bufete-honorarios';
+// Decisión 2026-08-03: formulación canónica NEUTRA (lib/marketing-policy.ts).
+// El propietario no ha confirmado que todas las consultas sean gratuitas.
+const EVALUATION_QUESTION: FaqQuestion = {
+  pregunta: '¿Cómo funciona la evaluación inicial?',
+  respuesta:
+    'La evaluación inicial es confidencial. En ella se identifican el área aplicable, la documentación necesaria y los siguientes pasos. Cualquier servicio posterior se informa y presupuesta por escrito, y no se garantizan resultados.',
+};
+
+function stableFaqId(question: string, index: number): string {
+  const normalized = question
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 64);
+  return `faq-${normalized || index + 1}`;
+}
+
+export function preparePublicFaqQuestions(questions: FaqQuestion[]): PublicFaqQuestion[] {
+  const seen = new Set<string>();
+  return questions.flatMap((question, index) => {
+    const pregunta = question.pregunta.trim();
+    const respuesta = sanitizePublicFaqHtml(question.respuesta);
+    const respuestaTexto = publicFaqPlainText(respuesta);
+    const duplicateKey = pregunta.toLocaleLowerCase('es-HN');
+    if (!pregunta || !respuestaTexto || seen.has(duplicateKey)) return [];
+    seen.add(duplicateKey);
+    return [{
+      id: stableFaqId(pregunta, index),
+      pregunta,
+      respuesta,
+      respuestaTexto,
+    }];
+  });
+}
 
 const IS_DB_REACHABLE = Boolean(
   process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('placeholder') && !process.env.DATABASE_URL.includes('localhost:5432/placeholder'),
@@ -74,9 +124,29 @@ export const getFaqsForPublicPage = cache(async (): Promise<FaqCategoryPublic[]>
       slug,
       titulo: meta?.titulo ?? slug,
       descripcion: meta?.descripcion ?? '',
-      preguntas: grouped[slug] ?? [],
-    };
+    preguntas: grouped[slug] ?? [],
+  };
   });
+});
+
+export const getCorporateFaqsForPublicPage = cache(async (): Promise<CorporateFaqCategoryPublic[]> => {
+  const categories = await getFaqsForPublicPage();
+  const corporate = categories.find((category) => category.slug === CORPORATE_CATEGORY);
+  if (!corporate) return [];
+
+  const questions = [...corporate.preguntas];
+  const hasEvaluationQuestion = questions.some(
+    (question) => question.pregunta.trim().toLocaleLowerCase('es-HN')
+      === EVALUATION_QUESTION.pregunta.toLocaleLowerCase('es-HN'),
+  );
+  if (!hasEvaluationQuestion) questions.unshift({
+    ...EVALUATION_QUESTION,
+  });
+
+  return [{
+    ...corporate,
+    preguntas: preparePublicFaqQuestions(questions),
+  }];
 });
 
 export async function getFaqCategories() {

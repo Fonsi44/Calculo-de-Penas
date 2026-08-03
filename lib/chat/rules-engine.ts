@@ -17,6 +17,7 @@
  */
 
 import { site } from '../site';
+import { PUBLIC_SERVICE_CATALOG } from '../public-service-catalog';
 import { detectUrgency } from './guardrails';
 import {
   sugerirAreaLegal,
@@ -211,8 +212,7 @@ function respuestaPorIntencion(
 
     case 'servicios':
       return (
-        'Atendemos 14 áreas del derecho: penal, familia, laboral, civil y notarial, mercantil, tributario, bancario, ' +
-        'administrativo, aduanero, regulación sanitaria, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje. ' +
+        `El catálogo público presenta ${PUBLIC_SERVICE_CATALOG.length} áreas de práctica del bufete. ` +
         'Puede ver el catálogo completo en la sección "Servicios Jurídicos" del menú. ¿Quiere que le ayude a identificar ' +
         'qué área corresponde a su consulta?'
       );

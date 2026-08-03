@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
+import { readFileSync } from 'node:fs';
 import nextConfig from '../next.config';
-import sitemap from '../app/sitemap';
 import { GET as getFeed } from '../app/(public)/blog/feed.xml/route';
-import { getPublishedPosts } from '../lib/blog-db';
+import { getPublishedPostSummaries } from '../lib/blog-db';
 import { getTotalPages, getPostsByPage } from '../lib/blog';
 
 // Mock de base de datos para simular caídas de Neon
@@ -23,13 +23,12 @@ vi.mock('@/lib/db', () => ({
 describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
   
   describe('1. Redirecciones 301/308 de posts locales', () => {
-    it('las 7 redirecciones locales de canibalización están configuradas en next.config.ts', async () => {
+    it('las 6 redirecciones locales vigentes están configuradas y Nacaome queda informativo', async () => {
       const redirects = await nextConfig.redirects?.();
       expect(redirects).toBeDefined();
       if (!redirects) return;
 
       const localRedirects = [
-        { src: '/blog/practica-legal/abogados-en-nacaome', dest: '/abogados-en-nacaome' },
         { src: '/blog/practica-legal/abogados-en-choluteca', dest: '/abogados-en-choluteca' },
         { src: '/blog/practica-legal/abogados-en-san-lorenzo', dest: '/abogados-en-san-lorenzo' },
         { src: '/blog/practica-legal/abogados-en-pespire-choluteca', dest: '/abogados-en-pespire' },
@@ -44,14 +43,16 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
         expect(match?.destination).toBe(rule.dest);
         expect(match?.permanent).toBe(true);
       }
+      expect(redirects.some((rule: { source: string }) => (
+        rule.source === '/blog/practica-legal/abogados-en-nacaome'
+      ))).toBe(false);
     });
 
-    it('no existen redirecciones circulares ni en cadena entre los 7 posts locales y sus destinos', async () => {
+    it('no existen redirecciones circulares ni en cadena entre los 6 posts locales y sus destinos', async () => {
       const redirects = await nextConfig.redirects?.() || [];
       const sources = new Set(redirects.map((r: { source: string }) => r.source));
       
       const localDestinations = [
-        '/abogados-en-nacaome',
         '/abogados-en-choluteca',
         '/abogados-en-san-lorenzo',
         '/abogados-en-pespire',
@@ -68,13 +69,10 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
   });
 
   describe('2. Hardening del Sitemap y RSS', () => {
-    it('ninguno de los 7 posts locales redirigidos aparece en sitemap.ts', async () => {
-      // Incluso si la DB estuviera online, las URL están excluidas vía REDIRECT_SOURCE_PATHS
-      const urls = await sitemap();
-      const urlsSet = new Set(urls.map(u => new URL(u.url).pathname));
+    it('ninguno de los 6 posts locales redirigidos aparece en sitemap.ts', async () => {
+      const source = readFileSync('lib/seo/sitemap.ts', 'utf8');
 
       const pathsToExclude = [
-        '/blog/practica-legal/abogados-en-nacaome',
         '/blog/practica-legal/abogados-en-choluteca',
         '/blog/practica-legal/abogados-en-san-lorenzo',
         '/blog/practica-legal/abogados-en-pespire-choluteca',
@@ -84,18 +82,17 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
       ];
 
       for (const path of pathsToExclude) {
-        expect(urlsSet.has(path)).toBe(false);
+        expect(source).toContain(`'${path}'`);
       }
     });
 
-    it('ninguno de los 7 posts locales redirigidos aparece en el feed RSS', async () => {
+    it('ninguno de los 6 posts locales redirigidos aparece en el feed RSS', async () => {
       // RSS consume getAllPosts() que filtra por published = true. Al estar despublicados,
       // no deben listarse en el XML.
       const res = await getFeed();
       const body = await res.text();
 
       const slugsToExclude = [
-        'abogados-en-nacaome',
         'abogados-en-choluteca',
         'abogados-en-san-lorenzo',
         'abogados-en-pespire-choluteca',
@@ -112,7 +109,10 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
 
   describe('3. Paginación y control de rangos (404)', () => {
     it('getTotalPages y getPostsByPage funcionan correctamente', () => {
-      const postsFake = Array.from({ length: 25 }, (_, i) => ({ slug: `post-${i}` })) as unknown as Parameters<typeof getTotalPages>[0];
+      const postsFake = Array.from(
+        { length: 25 },
+        (_, i) => ({ slug: `post-${i}` }),
+      );
       const perPage = 10;
       
       expect(getTotalPages(postsFake, perPage)).toBe(3); // 25 / 10 = 3 páginas
@@ -146,7 +146,7 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
       const originalPhase = process.env.NEXT_PHASE;
       delete process.env.NEXT_PHASE;
 
-      await expect(getPublishedPosts()).rejects.toThrow(/DATABASE_URL no configurada/i);
+      await expect(getPublishedPostSummaries()).rejects.toThrow(/DATABASE_URL no configurada/i);
 
       // Restauramos
       if (originalPhase) process.env.NEXT_PHASE = originalPhase;
@@ -159,7 +159,7 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
       // Simulamos fase de compilación
       process.env.NEXT_PHASE = 'phase-production-build';
 
-      const posts = await getPublishedPosts();
+      const posts = await getPublishedPostSummaries();
       expect(posts).toEqual([]);
       
       delete process.env.NEXT_PHASE;

@@ -32,7 +32,7 @@ export function CtaSpain() {
           <p className="mt-3 text-sm md:text-base text-text-secondary leading-relaxed max-w-2xl mx-auto">
             Cuéntenos su caso y le indicamos el alcance concreto del servicio, qué podemos
             asumir desde Honduras y qué pasos requieren su actuación o un profesional
-            habilitado en España. Primera evaluación sin compromiso.
+            habilitado en España. Evaluación inicial confidencial.
           </p>
           <div className="mt-5 flex flex-wrap gap-3 justify-center">
             <Link

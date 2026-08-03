@@ -125,7 +125,7 @@ export function LegalSection({ number, title, children, id }: LegalSectionProps)
   return (
     <section id={id} className="mb-9 last:mb-0">
       <h2 className="font-serif font-extrabold text-xl md:text-2xl text-primary mb-3 flex items-baseline gap-2.5 scroll-mt-32">
-        <span className="text-accent text-sm md:text-base font-bold tabular-nums">
+        <span className="text-accent-dark text-sm md:text-base font-bold tabular-nums">
           {number}.
         </span>
         <span>{title}</span>
@@ -161,7 +161,7 @@ export function LegalList({ items, ordered = false, className }: LegalListProps)
   return (
     <Tag
       className={cn(
-        'text-sm leading-comfortable pl-5 space-y-1.5 marker:text-accent',
+        'text-sm leading-comfortable pl-5 space-y-1.5 marker:text-accent-dark',
         ordered ? 'list-decimal' : 'list-disc',
         className,
       )}

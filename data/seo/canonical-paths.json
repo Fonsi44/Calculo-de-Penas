@@ -23,6 +23,24 @@
       "days_ago": 0
     },
     {
+      "path": "/equipo/danilo-pineda-maradiaga",
+      "priority": 0.8,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/equipo/thania-marlene-paz",
+      "priority": 0.8,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
+      "path": "/equipo/emil-barahona",
+      "priority": 0.8,
+      "change_frequency": "monthly",
+      "days_ago": 0
+    },
+    {
       "path": "/guia-legal-abogados-honduras",
       "priority": 0.9,
       "change_frequency": "monthly",

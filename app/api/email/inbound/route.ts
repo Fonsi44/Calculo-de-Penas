@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getClient } from '@/lib/email';
 import { verifyResendWebhook } from '@/lib/webhook-verify';
+import { createPublicFormRequestId, logPublicFormEvent } from '@/lib/safe-public-form-logger';
 
 // ── Config (leídas lazy para permitir stub en tests) ────────────────────
 function getAllowedDomain(): string {
@@ -57,29 +58,46 @@ function escapeHtml(input: string): string {
 // ── Lógica principal ─────────────────────────────────────────────────────
 
 export async function POST(request: NextRequest) {
+  const requestId = createPublicFormRequestId();
   const webhookSecret = process.env.RESEND_WEBHOOK_SECRET;
 
   if (webhookSecret) {
     const rawBody = await request.text();
     const result = verifyResendWebhook(rawBody, Object.fromEntries(request.headers), webhookSecret);
     if (!result.ok) {
-      console.warn('[email/inbound] Webhook rechazado:', result.reason);
+      logPublicFormEvent({
+        event: 'email_inbound_failed',
+        requestId,
+        requestPath: '/api/email/inbound',
+        status: 'rejected',
+        httpStatus: 401,
+        provider: 'resend',
+        errorCode: 'WEBHOOK_SIGNATURE_INVALID',
+      });
       return NextResponse.json({ error: 'Webhook no verificado' }, { status: 401 });
     }
     let event: ResendEmailReceived;
     try {
       event = JSON.parse(rawBody) as ResendEmailReceived;
     } catch {
-      console.warn('[email/inbound] Body no es JSON válido tras verificación');
+      logPublicFormEvent({
+        event: 'email_inbound_failed',
+        requestId,
+        requestPath: '/api/email/inbound',
+        status: 'rejected',
+        httpStatus: 400,
+        provider: 'resend',
+        errorCode: 'VALIDATION_ERROR',
+      });
       return NextResponse.json({ error: 'JSON inválido' }, { status: 400 });
     }
-    return processEvent(event);
+    return processEvent(event, requestId);
   }
 
   if (process.env.NODE_ENV === 'production') {
     console.error('[email/inbound] RESEND_WEBHOOK_SECRET no configurado en producción. Webhook rechazado por seguridad.');
     return NextResponse.json(
-      { error: 'Webhook no configurado: falta RESEND_WEBHOOK_SECRET' },
+      { error: 'Webhook no disponible temporalmente', reference: requestId },
       { status: 503 },
     );
   }
@@ -87,18 +105,33 @@ export async function POST(request: NextRequest) {
   console.warn('[email/inbound] RESEND_WEBHOOK_SECRET no configurado (modo dev). Procesando sin verificar firma.');
   try {
     const event: ResendEmailReceived = await request.json();
-    return processEvent(event);
-  } catch (e) {
-    console.error('[email/inbound] Error procesando webhook:', e instanceof Error ? e.message : 'Error');
+    return processEvent(event, requestId);
+  } catch {
+    logPublicFormEvent({
+      event: 'email_inbound_failed',
+      requestId,
+      requestPath: '/api/email/inbound',
+      status: 'failed',
+      httpStatus: 500,
+      provider: 'resend',
+      errorCode: 'INTERNAL_ERROR',
+    });
     return NextResponse.json({ ok: false }, { status: 500 });
   }
 }
 
-async function processEvent(event: ResendEmailReceived): Promise<Response> {
+async function processEvent(event: ResendEmailReceived, requestId: string): Promise<Response> {
   try {
     if (event.type !== 'email.received') {
       return NextResponse.json({ ok: true });
     }
+    logPublicFormEvent({
+      event: 'email_inbound_received',
+      requestId,
+      requestPath: '/api/email/inbound',
+      status: 'ok',
+      provider: 'resend',
+    });
 
     const { data } = event;
     const fromEmail = extractEmailFromHeader(data.from);
@@ -118,14 +151,18 @@ async function processEvent(event: ResendEmailReceived): Promise<Response> {
 
     // Si ningún destinatario es del dominio, ignorar silenciosamente.
     if (domainRecipients.length === 0) {
-      console.log('[email/inbound] Ignorado: ningún destinatario pertenece a', getAllowedDomain(), allRecipients);
+      logPublicFormEvent({
+        event: 'email_inbound_ignored',
+        requestId,
+        requestPath: '/api/email/inbound',
+        status: 'skipped',
+        provider: 'resend',
+      });
       return NextResponse.json({ ok: true });
     }
 
     // Usar la primera dirección del dominio como "recibido para".
     const recipientAddress = domainRecipients[0];
-    console.log('[email/inbound] Recibido de:', fromEmail, 'para:', recipientAddress, 'Asunto:', data.subject);
-
     // ── Recuperar contenido completo vía Receiving API ──────────────────
     let fullText = data.text || '';
     let fullHtml = data.html || '';
@@ -144,8 +181,15 @@ async function processEvent(event: ResendEmailReceived): Promise<Response> {
             fullAttachments = (raw.attachments as typeof fullAttachments) || fullAttachments;
           }
         }
-      } catch (e) {
-        console.warn('[email/inbound] No se pudo recuperar cuerpo completo vía Receiving API:', e instanceof Error ? e.message : 'Error');
+      } catch {
+        logPublicFormEvent({
+          event: 'email_inbound_failed',
+          requestId,
+          requestPath: '/api/email/inbound',
+          status: 'failed',
+          provider: 'resend',
+          errorCode: 'EMAIL_RECEIVING_FETCH_FAILED',
+        });
       }
     }
 
@@ -212,17 +256,46 @@ async function processEvent(event: ResendEmailReceived): Promise<Response> {
       });
 
       if (fwdError) {
-        console.error('[email/inbound] Error al reenviar:', fwdError);
+        logPublicFormEvent({
+          event: 'email_inbound_failed',
+          requestId,
+          requestPath: '/api/email/inbound',
+          status: 'failed',
+          provider: 'resend',
+          errorCode: 'EMAIL_PROVIDER_REQUEST_FAILED',
+        });
       } else {
-        console.log('[email/inbound] Correo reenviado a:', getForwardTo(), 'ID:', fwdData?.id);
+        logPublicFormEvent({
+          event: 'email_inbound_forwarded',
+          requestId,
+          requestPath: '/api/email/inbound',
+          status: 'ok',
+          provider: 'resend',
+          providerMessageId: fwdData?.id,
+        });
       }
-    } catch (e) {
-      console.error('[email/inbound] Excepción reenviando:', e instanceof Error ? e.message : 'Error');
+    } catch {
+      logPublicFormEvent({
+        event: 'email_inbound_failed',
+        requestId,
+        requestPath: '/api/email/inbound',
+        status: 'failed',
+        provider: 'resend',
+        errorCode: 'EMAIL_PROVIDER_REQUEST_FAILED',
+      });
     }
 
     return NextResponse.json({ ok: true });
-  } catch (e) {
-    console.error('[email/inbound] Error procesando webhook:', e instanceof Error ? e.message : 'Error');
+  } catch {
+    logPublicFormEvent({
+      event: 'email_inbound_failed',
+      requestId,
+      requestPath: '/api/email/inbound',
+      status: 'failed',
+      httpStatus: 500,
+      provider: 'resend',
+      errorCode: 'INTERNAL_ERROR',
+    });
     return NextResponse.json({ ok: false }, { status: 500 });
   }
 }

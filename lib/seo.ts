@@ -92,6 +92,9 @@ export interface BuildMetadataInput {
   ogType?: 'website' | 'article' | 'profile';
   /** Si true, aplica noindex,nofollow. */
   noindex?: boolean;
+  /** Si noindex=true y noindexFollow=true, emite `noindex, follow` (mantiene
+   *  el rastreo). Útil para landings NOINDEX_UNTIL_UNIQUE. */
+  noindexFollow?: boolean;
   /** Para `article`: fecha ISO de publicación. */
   publishedTime?: string;
   /** Para `article`: fecha ISO de modificación. */
@@ -114,6 +117,7 @@ export function buildMetadata(input: BuildMetadataInput): Metadata {
     ogImageAlt = site.name,
     ogType = 'website',
     noindex = false,
+    noindexFollow = false,
     publishedTime,
     modifiedTime,
     authors,
@@ -148,7 +152,11 @@ export function buildMetadata(input: BuildMetadataInput): Metadata {
       images: [imgUrl],
     },
     robots: noindex
-      ? { index: false, follow: false, googleBot: { index: false, follow: false } }
+      ? {
+          index: false,
+          follow: noindexFollow,
+          googleBot: { index: false, follow: noindexFollow },
+        }
       : {
           index: true,
           follow: true,

@@ -18,7 +18,7 @@ const noindexActive = process.env.NEXT_PUBLIC_NOINDEX === 'true';
 // En desarrollo se mantiene permisiva (sin upgrade) para no romper tests e2e.
 const cspProd = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "img-src 'self' data: blob: https://www.pinedayasociadoshn.com https://lh3.googleusercontent.com https://*.googleusercontent.com",
   "font-src 'self' data: https://fonts.gstatic.com",
@@ -33,7 +33,7 @@ const cspProd = [
 
 const cspDev = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data: https://fonts.gstatic.com",
@@ -66,7 +66,7 @@ const securityHeaders = [
 
 // X-Robots-Tag por ruta (no global). Una regla catch-all con
 // `X-Robots-Tag: index, follow` sobreescribiría la señal `noindex, follow` que
-// envían las páginas legales y los filtros del blog (?tag=, ?month=, ?page=)
+// envían las páginas legales y los filtros del blog (?tag=, ?month=)
 // vía meta robots, generando una contradicción SEO (Ahrefs Fase 1, Jul 2026).
 // Las páginas indexables no necesitan X-Robots-Tag: la metadata por-página y el
 // sitemap son la autoridad. Solo se emite X-Robots-Tag explícito para:
@@ -280,13 +280,13 @@ const nextConfig: NextConfig = {
       { source: '/abogado-laboralista-valle', destination: '/abogado-laboralista-nacaome', permanent: true },
       { source: '/abogado-de-familia-valle', destination: '/abogado-de-familia-nacaome', permanent: true },
       { source: '/abogado-civil-valle', destination: '/abogado-civil-nacaome', permanent: true },
-      { source: '/bufete-juridico-valle', destination: '/abogados-en-nacaome', permanent: true },
+      { source: '/bufete-juridico-valle', destination: '/', permanent: true },
       { source: '/abogado-penalista-honduras', destination: '/abogado-penalista-nacaome', permanent: true },
       // === FIX 404: Landings locales huérfanas (Audit Jul 2026, Fase 2) ===
       // URLs de ciudades secundarias. Cuatro ya tienen landing propia (audit
       // P7 Jul 2026): Caridad, Alianza, Concepción de María, San Antonio de
       // Flores. Las restantes siguen redirigiendo al vecino más cercano.
-      { source: '/abogados-en-aramcina', destination: '/abogados-en-nacaome', permanent: true },
+      { source: '/abogados-en-aramcina', destination: '/', permanent: true },
       { source: '/abogados-en-apacilagua', destination: '/abogados-en-choluteca', permanent: true },
       { source: '/abogados-en-duyure', destination: '/abogados-en-san-marcos-de-colon', permanent: true },
       { source: '/abogados-en-morolica', destination: '/abogados-en-san-marcos-de-colon', permanent: true },
@@ -306,7 +306,6 @@ const nextConfig: NextConfig = {
       { source: '/defensa-penal-nacaome', destination: '/abogado-penalista-nacaome', permanent: true },
       { source: '/defensa-penal-sur-honduras', destination: '/derecho-penal', permanent: true },
       // === CONSOLIDACIÓN DE POSTS LOCALES POST-AUDITORÍA (Jul 2026) ===
-      { source: '/blog/practica-legal/abogados-en-nacaome', destination: '/abogados-en-nacaome', permanent: true },
       { source: '/blog/practica-legal/abogados-en-choluteca', destination: '/abogados-en-choluteca', permanent: true },
       { source: '/blog/practica-legal/abogados-en-san-lorenzo', destination: '/abogados-en-san-lorenzo', permanent: true },
       { source: '/blog/practica-legal/abogados-en-pespire-choluteca', destination: '/abogados-en-pespire', permanent: true },
@@ -390,7 +389,7 @@ const nextConfig: NextConfig = {
         // En producción (noindexActive=false) no se emite X-Robots-Tag global:
         // cada página controla su indexación vía meta robots (metadata por-página)
         // y el sitemap solo lista URLs indexables. Así se evita contradecir las
-        // páginas noindex dinámicas (?tag=, ?month=, ?page=) y los filtros.
+        // páginas noindex dinámicas (?tag=, ?month=).
         // En staging (noindexActive=true) se fuerza noindex en todo el sitio.
         headers: noindexActive ? [...securityHeaders, noindexAllHeader] : [...securityHeaders],
       },

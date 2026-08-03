@@ -363,8 +363,8 @@ export const categoriasFaq: FaqCategory[] = [
         respuesta: `Nuestra sede física está en Nacaome, Valle. Cubrimos principalmente la zona sur de Honduras: San Lorenzo, Choluteca, Goascorán, Amapala y municipios aledaños. Las demás localidades que mencionamos son zonas de atención habitual, no oficinas del bufete. Para casos que requieran desplazamiento fuera de esta zona, puede consultarnos y valoramos la viabilidad del caso.`,
       },
       {
-        pregunta: '¿Ofrecen consulta inicial gratuita?',
-        respuesta: 'Sí, ofrecemos una consulta inicial confidencial y sin compromiso para evaluar su caso y determinar si podemos ayudarle. La primera consulta no le obliga a contratar nuestros servicios.',
+        pregunta: '¿Cómo funciona la evaluación inicial?',
+        respuesta: 'La evaluación inicial es confidencial: permite identificar el tipo de asunto, su urgencia y si el despacho puede atenderlo. Antes de cualquier actuación profesional se informa el alcance de la consulta y, cuando corresponda, se entrega un presupuesto por escrito. No se garantizan resultados y el contacto inicial no le obliga a contratar.',
       },
       {
         pregunta: '¿Cómo se cobran los honorarios?',

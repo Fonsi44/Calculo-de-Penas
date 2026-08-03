@@ -41,6 +41,8 @@ import {
   trackChatServiceSuggested,
 } from './chat-analytics';
 
+import { useConsentObserver } from '@/hooks/use-consent-observer';
+
 type Msg = { role: 'assistant' | 'user'; content: string };
 
 const PRIVATE_PREFIXES = [
@@ -75,6 +77,7 @@ function whatsappContextual(topic?: string): string {
 
 export function ChatWidget() {
   const pathname = usePathname();
+  const consentOpen = useConsentObserver();
 
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([
@@ -262,6 +265,8 @@ export function ChatWidget() {
   return createPortal(
     <div
       data-floating-widget
+      inert={consentOpen}
+      aria-hidden={consentOpen ? 'true' : undefined}
       className="hidden md:flex print:hidden safe-bottom"
       style={{
         position: 'fixed',
@@ -280,6 +285,7 @@ export function ChatWidget() {
           (card-premium, shadows, accent, radius-lg). */}
       {open && (
         <div
+          id="chat-asistente-virtual"
           role="dialog"
           aria-modal="false"
           aria-label="Asistente virtual"
@@ -468,6 +474,7 @@ export function ChatWidget() {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? 'Cerrar asistente virtual' : 'Abrir asistente virtual'}
         aria-expanded={open}
+        aria-controls="chat-asistente-virtual"
         className="relative w-12 h-12 rounded-full bg-primary text-text-inverse flex items-center justify-center btn-shadow-primary btn-shadow-primary-hover hover:-translate-y-0.5 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         style={{
           pointerEvents: 'auto',

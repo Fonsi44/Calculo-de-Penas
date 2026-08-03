@@ -571,6 +571,68 @@ export const areasGenerales: AreaStandalone[] = [
     heroTitle: 'Derecho Mercantil y Empresarial',
     heroSubtitle:
       'Constituya, haga crecer y defienda su empresa con seguridad jurídica en Honduras. Atención personalizada a emprendedores, PYMEs, sociedades anónimas, sucursales y corporativos: contratos mercantiles, fusiones y adquisiciones, gobierno corporativo, propiedad industrial, arbitraje y litigio estratégico ante Juzgados de Letras de lo Mercantil.',
+    respuestaDirecta:
+      'Pineda y Asociados asesora a emprendedores, empresas y socios en la organización y protección jurídica de su actividad. El área mercantil comprende constitución y reforma de sociedades, contratos comerciales, gobierno corporativo, cumplimiento, conflictos entre socios, cobros y litigios empresariales. La estructura y el trámite adecuados dependen del negocio, las personas involucradas, los documentos disponibles y la autoridad competente.',
+    situacionesHabituales: [
+      'Constitución, reforma, transformación, disolución o liquidación de una sociedad.',
+      'Redacción o revisión de contratos de suministro, distribución, franquicia o agencia.',
+      'Conflictos entre socios, administradores, proveedores o clientes empresariales.',
+      'Cobro de facturas, títulos valores u obligaciones comerciales.',
+      'Revisión jurídica previa a una inversión, compra de activos o asociación.',
+      'Protección de marca, nombre comercial y otros activos intangibles.',
+    ],
+    documentosIniciales: {
+      items: [
+        'Escritura constitutiva, estatutos y reformas inscritas',
+        'Contratos, propuestas, órdenes de compra o facturas relacionadas',
+        'Actas de asamblea, junta directiva o acuerdos entre socios',
+        'Comunicaciones y requerimientos relevantes',
+        'Constancias registrales o administrativas disponibles',
+      ],
+      nota:
+        'No envíe contraseñas, credenciales bancarias ni libros corporativos completos en el primer contacto. El despacho confirmará el canal y los documentos necesarios.',
+    },
+    proceso: {
+      intro: 'El recorrido se adapta al objetivo empresarial y a la documentación existente.',
+      pasos: [
+        { titulo: 'Identificación del objetivo', descripcion: 'Definimos la operación, el conflicto o el riesgo que necesita resolver.' },
+        { titulo: 'Revisión documental', descripcion: 'Analizamos contratos, estatutos, actas y antecedentes disponibles.' },
+        { titulo: 'Mapa de riesgos', descripcion: 'Explicamos obligaciones, alternativas y contingencias relevantes.' },
+        { titulo: 'Propuesta de actuación', descripcion: 'Detallamos los trámites, negociaciones o acciones que podrían proceder.' },
+        { titulo: 'Presupuesto por escrito', descripcion: 'Confirmamos alcance, honorarios y gastos antes de iniciar.' },
+        { titulo: 'Ejecución y seguimiento', descripcion: 'Preparamos documentos, coordinamos registros o representamos en el procedimiento.' },
+      ],
+    },
+    autoridades: [
+      'Registro Mercantil competente',
+      'Instituto de la Propiedad',
+      'Servicio de Administración de Rentas',
+      'Juzgados con competencia civil o mercantil',
+      'Centros de conciliación o arbitraje cuando exista convenio aplicable',
+    ],
+    factoresQueVarian: [
+      'Tipo societario y situación registral.',
+      'Alcance económico y territorial de la operación.',
+      'Contenido de los contratos y garantías.',
+      'Existencia de controversia entre las partes.',
+      'Trámites ante registros y autoridades competentes.',
+    ],
+    erroresFrecuentes: [
+      'Utilizar contratos genéricos sin adaptarlos a la operación.',
+      'Ejecutar acuerdos societarios sin documentarlos correctamente.',
+      'Mezclar patrimonio personal y empresarial.',
+      'Firmar garantías o exclusividades sin revisar su alcance.',
+      'Posponer la reclamación hasta deteriorar la prueba o la relación comercial.',
+    ],
+    fuentesGenerales: [
+      { titulo: 'Código de Comercio de Honduras', institucion: 'Poder Judicial de Honduras', url: 'https://www.poderjudicial.gob.hn' },
+      { titulo: 'Información registral empresarial', institucion: 'Cámara de Comercio e Industria de Tegucigalpa', url: 'https://www.ccit.hn' },
+      { titulo: 'Instituto de la Propiedad', institucion: 'Instituto de la Propiedad', url: 'https://www.ip.gob.hn' },
+    ],
+    ctaContextual: {
+      href: '/solicitar-consulta?motivo=derecho-mercantil-empresarial#formulario',
+      label: 'Solicitar revisión de un asunto mercantil',
+    },
     subservicios: [
       { titulo: 'Constitución de sociedades', descripcion: 'Sociedad anónima, de responsabilidad limitada, en comandita, cooperativa y sucursal.' },
       { titulo: 'Reformas estatutarias', descripcion: 'Aumento de capital, modificación de objeto social, transformación y fusión.' },
@@ -591,7 +653,7 @@ export const areasGenerales: AreaStandalone[] = [
     ],
     faqs: [
       { pregunta: '¿Qué tipo de sociedad me conviene en Honduras?', respuesta: 'Depende del tamaño, objeto social y necesidades de capital. La Sociedad Anónima (S.A.) es la más usada por su responsabilidad limitada. La S. de R.L. es común en PYMEs familiares.' },
-      { pregunta: '¿Cuánto tarda constituir una sociedad en Honduras?', respuesta: 'Entre 7 y 15 días hábiles con todos los documentos, dependiendo del Registro Mercantil y la publicación en La Gaceta.' },
+      { pregunta: '¿Cuánto tarda constituir una sociedad en Honduras?', respuesta: 'El tiempo depende del tipo societario, la documentación, el registro competente y las subsanaciones que puedan solicitarse. Tras revisar la operación le explicamos las etapas y los factores que pueden afectar el trámite, sin prometer un plazo cerrado.' },
       { pregunta: '¿Es obligatorio tener un agente residente?', respuesta: 'Sí, para sucursales de empresas extranjeras en Honduras.' },
     ],
     areasRelacionadas: ['derecho-bancario-y-financiero', 'propiedad-intelectual', 'tributario-fiscal'],
@@ -655,6 +717,68 @@ export const areasGenerales: AreaStandalone[] = [
     heroTitle: 'Derecho Administrativo y Servicio Civil',
     heroSubtitle:
       'Defensa frente a la Administración Pública en Honduras: sanciones del SAR, ENEE, ARSA, CONATEL y CNBS; despidos de servidores públicos; estabilidad laboral; contencioso-administrativo; licitaciones y contratos del Estado; responsabilidad patrimonial del Estado; acceso a la información pública (IAIP); habeas data y habeas corpus. Actuación ante Juzgados de Letras de lo Contencioso y la Corte Suprema de Justicia.',
+    respuestaDirecta:
+      'Pineda y Asociados asesora a personas, servidores públicos y empresas frente a resoluciones, sanciones y actuaciones de la Administración Pública hondureña. El trabajo puede comprender revisión del expediente, recursos administrativos, procedimientos disciplinarios, contratación pública y, cuando corresponda, la vía contencioso-administrativa. Los recursos y plazos aplicables deben confirmarse en la resolución y la normativa específica de cada entidad.',
+    situacionesHabituales: [
+      'Notificación de multa, sanción o resolución administrativa desfavorable.',
+      'Procedimiento disciplinario o terminación de una relación de servicio público.',
+      'Recurso contra una decisión de una entidad reguladora.',
+      'Controversia en licitación, contratación o ejecución de un contrato público.',
+      'Solicitud de acceso a información o rectificación de datos ante una autoridad.',
+      'Reclamación por daños atribuidos a una actuación administrativa.',
+    ],
+    documentosIniciales: {
+      items: [
+        'Resolución, notificación o acto administrativo impugnado',
+        'Expediente o antecedentes administrativos disponibles',
+        'Recursos o escritos presentados previamente',
+        'Contrato, nombramiento o acuerdo relacionado',
+        'Constancia de la fecha y forma de notificación',
+      ],
+      nota:
+        'La fecha de notificación puede ser relevante para calcular plazos. Comparta inicialmente una copia legible y no envíe credenciales ni expedientes completos hasta confirmar el canal.',
+    },
+    proceso: {
+      intro: 'La vía depende del acto, la entidad, el procedimiento aplicable y si la vía administrativa ya fue agotada.',
+      pasos: [
+        { titulo: 'Revisión de la notificación', descripcion: 'Identificamos autoridad, acto, fecha y recursos indicados.' },
+        { titulo: 'Estudio del expediente', descripcion: 'Revisamos antecedentes, competencia, procedimiento y motivación.' },
+        { titulo: 'Confirmación de vía y plazo', descripcion: 'Determinamos qué recurso o acción podría proceder según la norma aplicable.' },
+        { titulo: 'Propuesta de estrategia', descripcion: 'Explicamos alternativas, prueba necesaria y riesgos.' },
+        { titulo: 'Presupuesto por escrito', descripcion: 'Definimos alcance y honorarios antes de presentar actuaciones.' },
+        { titulo: 'Presentación y seguimiento', descripcion: 'Preparamos el escrito y damos seguimiento ante la entidad o tribunal competente.' },
+      ],
+    },
+    autoridades: [
+      'Entidad administrativa que emitió el acto',
+      'Dirección General de Servicio Civil',
+      'Juzgados de Letras de lo Contencioso Administrativo',
+      'Corte de Apelaciones o Corte Suprema de Justicia cuando corresponda',
+      'Instituto de Acceso a la Información Pública',
+    ],
+    factoresQueVarian: [
+      'Entidad y normativa sectorial aplicable.',
+      'Fecha y forma de notificación.',
+      'Recursos administrativos disponibles.',
+      'Estado del expediente y prueba incorporada.',
+      'Necesidad de agotar la vía administrativa.',
+    ],
+    erroresFrecuentes: [
+      'Ignorar la fecha exacta de notificación.',
+      'Presentar un recurso ante autoridad incompetente.',
+      'Responder sin solicitar o revisar el expediente.',
+      'Confundir una petición informal con un recurso administrativo.',
+      'Esperar al final del procedimiento para buscar orientación.',
+    ],
+    fuentesGenerales: [
+      { titulo: 'Ley de Procedimiento Administrativo', institucion: 'Poder Judicial de Honduras', url: 'https://www.poderjudicial.gob.hn' },
+      { titulo: 'Ley de la Jurisdicción de lo Contencioso Administrativo', institucion: 'Poder Judicial de Honduras', url: 'https://www.poderjudicial.gob.hn' },
+      { titulo: 'Portal de transparencia', institucion: 'Instituto de Acceso a la Información Pública', url: 'https://portalunico.iaip.gob.hn' },
+    ],
+    ctaContextual: {
+      href: '/solicitar-consulta?motivo=derecho-administrativo-y-servicio-civil#formulario',
+      label: 'Consultar una resolución o sanción administrativa',
+    },
     subservicios: [
       { titulo: 'Recurso de reposición y apelación administrativa', descripcion: 'Agotamiento de la vía administrativa.' },
       { titulo: 'Demanda contencioso-administrativa', descripcion: 'Nulidad de actos, indemnizaciones, silencio administrativo.' },
@@ -671,7 +795,7 @@ export const areasGenerales: AreaStandalone[] = [
       { titulo: 'Procedimiento administrativo migratorio', descripcion: 'Resoluciones del INM.' },
     ],
     faqs: [
-      { pregunta: '¿Cómo impugno una multa del SAR?', respuesta: 'Recurso de reposición ante la Administración Tributaria en 15 días, y si no prospera, demanda ante el Contencioso Administrativo.' },
+      { pregunta: '¿Cómo impugno una multa del SAR?', respuesta: 'Debe revisarse la resolución, la fecha de notificación y la normativa tributaria aplicable para confirmar el recurso, el órgano competente y el plazo. Si la vía administrativa no resuelve la controversia, puede evaluarse la jurisdicción contencioso-administrativa.' },
       { pregunta: '¿Puedo ser despedido siendo empleado público?', respuesta: 'Sí, pero solo por justa causa calificada por la Dirección General de Servicio Civil, previa audiencia y defensa.' },
     ],
     areasRelacionadas: ['derecho-aduanero-y-comercio-exterior', 'tributario-fiscal', 'regulacion-sanitaria'],

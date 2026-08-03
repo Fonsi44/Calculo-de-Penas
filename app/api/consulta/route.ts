@@ -1,40 +1,91 @@
 import { consultaSchema, validate } from '@/lib/validation';
-import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
+import { rateLimit, getClientIp } from '@/lib/rate-limit';
 import { sendConsultaEmail, sendAutoReplyEmail, isEmailConfigured } from '@/lib/email';
 import { ipFromRequest, uaFromRequest } from '@/lib/audit';
 import { verifyTurnstileToken } from '@/lib/captcha';
 import { db } from '@/lib/db';
 import { solicitudesConsulta } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
+import {
+  createPublicFormRequestId,
+  logPublicFormEvent,
+} from '@/lib/safe-public-form-logger';
 
 const CONSULTA_MAX = 10;
 const CONSULTA_WINDOW_MS = 15 * 60 * 1000;
+const REQUEST_PATH = '/api/consulta';
+
+function errorResponse(
+  error: string,
+  reference: string,
+  status: number,
+  headers?: HeadersInit,
+): Response {
+  return Response.json({ error, reference }, { status, headers });
+}
 
 export async function POST(request: Request) {
+  const startedAt = Date.now();
+  const requestId = createPublicFormRequestId();
+  logPublicFormEvent({ event: 'consulta_received', requestId, requestPath: REQUEST_PATH, status: 'ok' });
+
   const ip = getClientIp(request);
   const uaFingerprint = request.headers.get('user-agent')?.slice(0, 64) ?? 'unknown';
   const identifier = `${ip}|${uaFingerprint}`;
-  const rl = await rateLimit(identifier, { keyPrefix: 'consulta', windowMs: CONSULTA_WINDOW_MS, max: CONSULTA_MAX });
+  const rl = await rateLimit(identifier, {
+    keyPrefix: 'consulta',
+    windowMs: CONSULTA_WINDOW_MS,
+    max: CONSULTA_MAX,
+  });
   if (!rl.ok) {
-    return rateLimitResponse(rl);
+    logPublicFormEvent({
+      event: 'consulta_rate_limited',
+      requestId,
+      requestPath: REQUEST_PATH,
+      status: 'rejected',
+      httpStatus: 429,
+      errorCode: 'RATE_LIMITED',
+    });
+    return errorResponse(
+      'Demasiadas solicitudes. Intente de nuevo más tarde.',
+      requestId,
+      429,
+      {
+        'Retry-After': String(rl.retryAfterSec),
+        'X-RateLimit-Remaining': '0',
+        'X-RateLimit-Reset': String(Math.floor(rl.resetAt / 1000)),
+      },
+    );
   }
 
   let body: unknown;
   try {
     body = await request.json();
   } catch {
-    return Response.json({ error: 'JSON inválido' }, { status: 400 });
+    logPublicFormEvent({
+      event: 'consulta_validation_failed',
+      requestId,
+      requestPath: REQUEST_PATH,
+      status: 'rejected',
+      httpStatus: 400,
+      errorCode: 'VALIDATION_ERROR',
+    });
+    return errorResponse('JSON inválido', requestId, 400);
   }
 
   const parsed = validate(consultaSchema, body);
   if (!parsed.success) {
-    return Response.json({ error: parsed.error }, { status: 400 });
+    logPublicFormEvent({
+      event: 'consulta_validation_failed',
+      requestId,
+      requestPath: REQUEST_PATH,
+      status: 'rejected',
+      httpStatus: 400,
+      errorCode: 'VALIDATION_ERROR',
+    });
+    return errorResponse(parsed.error, requestId, 400);
   }
 
-  // FASE 2: los campos opcionales (medio preferido, localidad, urgencia y
-  // condicionales) se agregan al resumen que se persiste en DB y se envía por
-  // email. No se añaden columnas a solicitudesConsulta (no se migra el schema,
-  // restricción §7 AGENTS.md). Solo se incluyen los campos con valor real.
   const extras: string[] = [];
   const d = parsed.data;
   if (d.medioPreferido) {
@@ -48,12 +99,8 @@ export async function POST(request: Request) {
   }
   if (d.localidad) extras.push(`Localidad/país: ${d.localidad}`);
   if (d.urgencia) {
-    const uLabels: Record<string, string> = {
-      normal: 'Normal',
-      alta: 'Alta',
-      penal: 'Urgencia penal',
-    };
-    extras.push(`Urgencia: ${uLabels[d.urgencia] ?? d.urgencia}`);
+    const labels: Record<string, string> = { normal: 'Normal', alta: 'Alta', penal: 'Urgencia penal' };
+    extras.push(`Urgencia: ${labels[d.urgencia] ?? d.urgencia}`);
   }
   if (d.fechaAudiencia) extras.push(`Fecha audiencia/citación: ${d.fechaAudiencia}`);
   if (d.hayDetencion) extras.push(`¿Hay detención?: ${d.hayDetencion === 'si' ? 'Sí' : 'No'}`);
@@ -64,103 +111,189 @@ export async function POST(request: Request) {
     ? `${d.resumen}\n\n— Datos del formulario —\n${extras.join('\n')}`
     : d.resumen;
 
-  // Cloudflare Turnstile — bypass seguro si faltan claves (lib/captcha.ts).
   const turnstileOk = await verifyTurnstileToken(
     (body as Record<string, unknown>)['cf-turnstile-response'] as string | undefined,
     ip,
   );
   if (!turnstileOk) {
-    return Response.json({ error: 'Verificación antispam inválida. Recargue e intente de nuevo.' }, { status: 400 });
+    logPublicFormEvent({
+      event: 'consulta_captcha_failed',
+      requestId,
+      requestPath: REQUEST_PATH,
+      status: 'rejected',
+      httpStatus: 400,
+      provider: 'turnstile',
+      errorCode: 'CAPTCHA_FAILED',
+    });
+    return errorResponse(
+      'Verificación antispam inválida. Recargue e intente de nuevo.',
+      requestId,
+      400,
+    );
   }
 
-  // Guardar en BD — siempre funciona, no depende de servicio externo
-  const insertResult = await db.insert(solicitudesConsulta).values({
-    nombre: parsed.data.nombre,
-    telefono: parsed.data.telefono,
-    email: parsed.data.email ?? null,
-    motivo: parsed.data.motivo,
-    resumen: resumenCompleto,
-    ip: ipFromRequest(request),
-    userAgent: uaFromRequest(request),
-    emailStatus: 'pending',
-  }).returning({ id: solicitudesConsulta.id });
+  let savedId: string | undefined;
+  try {
+    const insertResult = await db.insert(solicitudesConsulta).values({
+      nombre: d.nombre,
+      telefono: d.telefono,
+      email: d.email ?? null,
+      motivo: d.motivo,
+      resumen: resumenCompleto,
+      ip: ipFromRequest(request),
+      userAgent: uaFromRequest(request),
+      emailStatus: 'pending',
+    }).returning({ id: solicitudesConsulta.id });
+    savedId = insertResult[0]?.id;
+  } catch {
+    logPublicFormEvent({
+      event: 'consulta_db_failed',
+      requestId,
+      requestPath: REQUEST_PATH,
+      status: 'failed',
+      httpStatus: 500,
+      provider: 'neon',
+      errorCode: 'DATABASE_WRITE_FAILED',
+    });
+    return errorResponse('No se pudo procesar la solicitud. Inténtelo de nuevo.', requestId, 500);
+  }
 
-  const savedId = insertResult[0]?.id;
   if (!savedId) {
-    console.error('[consulta] no se pudo insertar en DB');
-    return Response.json({ error: 'Error al guardar la solicitud' }, { status: 500 });
+    logPublicFormEvent({
+      event: 'consulta_db_failed',
+      requestId,
+      requestPath: REQUEST_PATH,
+      status: 'failed',
+      httpStatus: 500,
+      provider: 'neon',
+      errorCode: 'DATABASE_WRITE_FAILED',
+    });
+    return errorResponse('No se pudo procesar la solicitud. Inténtelo de nuevo.', requestId, 500);
   }
+  logPublicFormEvent({
+    event: 'consulta_db_saved',
+    requestId,
+    requestPath: REQUEST_PATH,
+    status: 'ok',
+    savedId,
+  });
 
-  // Enviar email — ahora es parte del flujo principal con actualización en DB
   let emailOk = true;
-
   if (isEmailConfigured()) {
     try {
       const result = await sendConsultaEmail({
-        nombre: parsed.data.nombre,
-        telefono: parsed.data.telefono,
-        email: parsed.data.email ?? null,
-        motivo: parsed.data.motivo,
+        nombre: d.nombre,
+        telefono: d.telefono,
+        email: d.email ?? null,
+        motivo: d.motivo,
         resumen: resumenCompleto,
         ip: ipFromRequest(request),
         userAgent: uaFromRequest(request),
         submittedAt: new Date(),
       });
-
       if (result.ok) {
         await db.update(solicitudesConsulta)
           .set({ emailStatus: 'sent', emailId: result.id })
           .where(eq(solicitudesConsulta.id, savedId));
-        console.log('[consulta] email enviado correctamente:', result.id);
+        logPublicFormEvent({
+          event: 'consulta_notification_sent',
+          requestId,
+          requestPath: REQUEST_PATH,
+          status: 'ok',
+          provider: 'resend',
+          providerMessageId: result.id,
+          savedId,
+        });
       } else {
         emailOk = false;
-        const errorMsg = result.error ?? 'Error desconocido';
-        console.error('[consulta] email falló:', errorMsg);
         await db.update(solicitudesConsulta)
-          .set({ emailStatus: 'failed', emailError: errorMsg })
+          .set({ emailStatus: 'failed', emailError: result.errorCode })
           .where(eq(solicitudesConsulta.id, savedId));
+        logPublicFormEvent({
+          event: 'consulta_notification_failed',
+          requestId,
+          requestPath: REQUEST_PATH,
+          status: 'failed',
+          provider: 'resend',
+          errorCode: result.errorCode ?? 'NOTIFICATION_FAILED',
+          savedId,
+        });
       }
-    } catch (e) {
+    } catch {
       emailOk = false;
-      const errorMsg = e instanceof Error ? e.message : 'Error desconocido';
-      console.error('[consulta] excepción enviando email:', errorMsg);
       await db.update(solicitudesConsulta)
-        .set({ emailStatus: 'failed', emailError: errorMsg })
+        .set({ emailStatus: 'failed', emailError: 'NOTIFICATION_FAILED' })
         .where(eq(solicitudesConsulta.id, savedId));
+      logPublicFormEvent({
+        event: 'consulta_notification_failed',
+        requestId,
+        requestPath: REQUEST_PATH,
+        status: 'failed',
+        provider: 'resend',
+        errorCode: 'NOTIFICATION_FAILED',
+        savedId,
+      });
     }
   } else {
+    emailOk = false;
     await db.update(solicitudesConsulta)
-      .set({ emailStatus: 'skipped', emailError: 'RESEND_API_KEY no configurada' })
+      .set({ emailStatus: 'skipped', emailError: 'EMAIL_NOT_CONFIGURED' })
       .where(eq(solicitudesConsulta.id, savedId));
+    logPublicFormEvent({
+      event: 'consulta_notification_failed',
+      requestId,
+      requestPath: REQUEST_PATH,
+      status: 'skipped',
+      provider: 'resend',
+      errorCode: 'EMAIL_NOT_CONFIGURED',
+      savedId,
+    });
   }
 
-  // Auto-respuesta al usuario si proporcionó email
-  console.log('[consulta] debug auto-reply: email=', parsed.data.email, 'tipo=', typeof parsed.data.email);
-  if (parsed.data.email) {
-    console.log('[consulta] debug auto-reply: intentando enviar a', parsed.data.email);
+  if (d.email) {
     try {
       const autoResult = await sendAutoReplyEmail({
-        nombre: parsed.data.nombre,
-        email: parsed.data.email,
+        nombre: d.nombre,
+        email: d.email,
         tipo: 'consulta',
-        motivo: parsed.data.motivo,
+        motivo: d.motivo,
       });
-      if (autoResult.ok) {
-        console.log('[consulta] auto-respuesta enviada:', autoResult.id);
-      } else {
-        console.warn('[consulta] auto-respuesta falló:', autoResult.error);
-      }
-    } catch (e) {
-      console.error('[consulta] excepción auto-respuesta:', e instanceof Error ? e.message : 'Error');
+      logPublicFormEvent({
+        event: autoResult.ok ? 'consulta_autoreply_sent' : 'consulta_autoreply_failed',
+        requestId,
+        requestPath: REQUEST_PATH,
+        status: autoResult.ok ? 'ok' : 'failed',
+        provider: 'resend',
+        providerMessageId: autoResult.ok ? autoResult.id : undefined,
+        errorCode: autoResult.ok ? undefined : (autoResult.errorCode ?? 'NOTIFICATION_FAILED'),
+        savedId,
+      });
+    } catch {
+      logPublicFormEvent({
+        event: 'consulta_autoreply_failed',
+        requestId,
+        requestPath: REQUEST_PATH,
+        status: 'failed',
+        provider: 'resend',
+        errorCode: 'NOTIFICATION_FAILED',
+        savedId,
+      });
     }
-  } else {
-    console.log('[consulta] debug auto-reply: email vacío, se omite');
   }
 
-  // Siempre devolvemos ok aunque el email falle (la consulta está guardada)
+  logPublicFormEvent({
+    event: 'consulta_completed',
+    requestId,
+    requestPath: REQUEST_PATH,
+    status: 'ok',
+    httpStatus: 200,
+    savedId,
+    durationMs: Date.now() - startedAt,
+  });
   return Response.json({
     ok: true,
     id: savedId,
+    reference: requestId,
     email: emailOk ? 'sent' : 'failed',
   });
 }

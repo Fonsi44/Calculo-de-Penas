@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createHmac, timingSafeEqual } from 'node:crypto';
+import { createPublicFormRequestId, logPublicFormEvent } from '@/lib/safe-public-form-logger';
 
 export function verifyWhatsAppSignature(rawBody: string, signature: string | null, secret: string | undefined): boolean {
   if (!secret || !signature?.startsWith('sha256=')) return false;
@@ -23,6 +24,7 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const requestId = createPublicFormRequestId();
   const rawBody = await request.text();
   if (!verifyWhatsAppSignature(
     rawBody,
@@ -45,8 +47,13 @@ export async function POST(request: Request) {
   const value = change?.value;
 
   if (value?.messages?.[0]) {
-    const msg = value.messages[0];
-    console.log('[WhatsApp] Mensaje recibido:', JSON.stringify(msg));
+    logPublicFormEvent({
+      event: 'whatsapp_webhook_received',
+      requestId,
+      requestPath: '/api/whatsapp',
+      status: 'ok',
+      provider: 'whatsapp',
+    });
   }
 
   return NextResponse.json({ ok: true });

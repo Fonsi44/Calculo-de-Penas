@@ -44,20 +44,11 @@ export function CookieConsent() {
 
     const previousFocus =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    const floatingWidgets = Array.from(
-      document.querySelectorAll<HTMLElement>('[data-floating-widget]'),
-    );
-    const previousWidgetState = floatingWidgets.map((widget) => ({
-      widget,
-      inert: widget.hasAttribute('inert'),
-      ariaHidden: widget.getAttribute('aria-hidden'),
-    }));
-
     document.body.dataset.consentDialogOpen = 'true';
-    for (const widget of floatingWidgets) {
-      widget.setAttribute('inert', '');
-      widget.setAttribute('aria-hidden', 'true');
-    }
+    document.querySelectorAll('[data-floating-widget]').forEach((el) => {
+      el.setAttribute('inert', '');
+      el.setAttribute('aria-hidden', 'true');
+    });
 
     const frame = window.requestAnimationFrame(() => {
       initialFocusRef.current?.focus();
@@ -73,19 +64,14 @@ export function CookieConsent() {
 
       if (event.key !== 'Tab' || !dialogRef.current) return;
       const focusable = Array.from(
-        dialogRef.current.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+         dialogRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
         ),
-      ).filter((element) => !element.hasAttribute('hidden'));
-
-      if (focusable.length === 0) {
-        event.preventDefault();
-        dialogRef.current.focus();
-        return;
-      }
-
+      );
+      if (focusable.length === 0) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
+
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         last.focus();
@@ -100,11 +86,10 @@ export function CookieConsent() {
       window.cancelAnimationFrame(frame);
       document.removeEventListener('keydown', onKeyDown);
       delete document.body.dataset.consentDialogOpen;
-      for (const { widget, inert, ariaHidden } of previousWidgetState) {
-        if (!inert) widget.removeAttribute('inert');
-        if (ariaHidden === null) widget.removeAttribute('aria-hidden');
-        else widget.setAttribute('aria-hidden', ariaHidden);
-      }
+      document.querySelectorAll('[data-floating-widget]').forEach((el) => {
+        el.removeAttribute('inert');
+        el.removeAttribute('aria-hidden');
+      });
       previousFocus?.focus();
     };
   }, [isOpen, reopened]);

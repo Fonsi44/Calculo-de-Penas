@@ -1,0 +1,3 @@
+"file","line","surface","is_rendered","is_dead_code","risk_category","action","replacement","body_affected","final_status"
+"lib/blog-generated-cta.ts","1","blog_inline","true","false","SAFE","CENTRALIZE","GENERATED_LEGAL_CTA_COPY","false","SAFE"
+"app/(public)/blog/[categoria]/[slug]/page.tsx","36","blog_inline","true","false","DEAD_COPY","REMOVED","MID_POST_CTA_SLUGS","false","FIXED"

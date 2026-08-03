@@ -23,10 +23,10 @@ import { EditorialBlock } from '@/components/marketing/editorial-block';
 import { TrustLimits } from '@/components/marketing/trust-limits';
 
 export const metadata: Metadata = buildMetadata({
-  // 56 chars. Antes 38 (subutilizado).
-  title: `Bufete de Abogados en ${site.address.city} | 15+ Años de Experiencia`,
-  // 152 chars. Antes 198 (se truncaba).
-  description: `Bufete en ${site.address.city}, Valle. Más de 15 años en defensa penal, familia, laboral, civil y mercantil. Consulta confidencial y presupuesto por escrito.`,
+  // 50 chars. Plan maestro §6.1: "Bufete de Abogados en Nacaome | Nuestro Equipo"
+  title: `Bufete de Abogados en ${site.address.city} | Nuestro Equipo`,
+  // 155 chars. Plan §6.1
+  description: `Conozca a los abogados colegiados de ${site.name}, sus áreas de práctica y la metodología de atención del bufete en ${site.address.city} y la zona sur de Honduras.`,
   canonicalPath: '/despacho',
   keywords: ['abogados Nacaome', 'bufete jurídico Valle Honduras', 'abogados Nacaome Valle', 'despacho jurídico sur Honduras', 'equipo legal Nacaome', 'consulta confidencial Valle', 'bufete jurídico Nacaome', 'bufete jurídico sur Honduras', 'abogados Goascorán', 'abogados Amapala', 'abogados Pespire', 'abogados San Marcos de Colón', 'abogados Marcovia'],
   ogImage: `/api/og?tag=El+Despacho&title=${encodeURIComponent(`Bufete en ${site.address.city}, ${site.address.department}`)}&subtitle=${encodeURIComponent('Compromiso legal, rigor técnico y visión de vanguardia. Más de 15 años de ejercicio profesional.')}`,
@@ -38,7 +38,7 @@ function despachoContent(content: Record<string, string>) {
   const storedHeroSubtitle = content['hero.subtitle']?.trim();
   const heroTitle =
     !storedHeroTitle || storedHeroTitle.includes('Visión de Vanguardia')
-      ? 'Bufete de abogados en Nacaome, Valle'
+      ? 'Bufete de abogados en Nacaome con experiencia en distintas áreas del derecho'
       : storedHeroTitle;
   const heroSubtitle =
     !storedHeroSubtitle
@@ -72,7 +72,7 @@ function despachoContent(content: Record<string, string>) {
       ],
     },
     commitments: [
-      content['commitments.c1'] || 'Consulta inicial confidencial y sin compromiso',
+      content['commitments.c1'] || 'Evaluación inicial confidencial',
       content['commitments.c2'] || 'Explicación clara de cada etapa procesal',
       content['commitments.c3'] || 'Honestidad sobre las expectativas reales del caso',
       content['commitments.c4'] || 'Presupuesto de honorarios por escrito',
@@ -128,7 +128,7 @@ export default async function DespachoPage() {
           <AnswerBlock
             eyebrow="El bufete"
             question="¿Quién es Pineda y Asociados?"
-            answer={`${site.name} es un bufete jurídico fundado en Nacaome, Valle (Honduras), con más de 15 años de ejercicio profesional. Su pilar histórico es la defensa penal, complementada con derecho de familia, laboral, civil y notarial, mercantil y empresarial, administrativo y migratorio. Atiende con un único punto de contacto por caso y coordina internamente entre especialistas cuando un asunto cruza varias ramas del derecho.`}
+            answer={`${site.name} es un bufete jurídico con sede en ${site.address.city}, ${site.address.department}. El despacho atiende asuntos penales, familiares, laborales, civiles, notariales, mercantiles y administrativos mediante un equipo de abogados colegiados en Honduras. Cada caso se asigna según el área de práctica del abogado responsable y se gestiona con confidencialidad, trazabilidad documental y comunicación directa.`}
           />
         </Container>
       </Section>
@@ -227,7 +227,12 @@ export default async function DespachoPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Danilo Pineda Maradiaga — socio director (identidad pública).
               Su foto y nombre se exponen con su consentimiento expreso. */}
-          <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col">
+          <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col relative group">
+            <Link
+              href="/equipo/danilo-pineda-maradiaga"
+              aria-label={`Ver perfil completo de ${FOUNDER_PROFILE.name}`}
+              className="absolute inset-0 z-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            />
             <div className="flex items-center gap-4">
               <span className="team-monogram" aria-hidden="true">DP</span>
               <div>
@@ -245,27 +250,40 @@ export default async function DespachoPage() {
             {(FOUNDER_PROFILE.cah || FOUNDER_PROFILE.linkedin || FOUNDER_PROFILE.directorio) && (
               <div className="flex flex-wrap gap-2 mt-4">
                 {FOUNDER_PROFILE.cah && <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary font-medium"><Award size={12}/> CAH: {FOUNDER_PROFILE.cah}</span>}
-                {FOUNDER_PROFILE.linkedin && <a href={FOUNDER_PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">LinkedIn</a>}
-                {FOUNDER_PROFILE.directorio && <a href={FOUNDER_PROFILE.directorio} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">Directorio Jurídico</a>}
+                {FOUNDER_PROFILE.linkedin && <a href={FOUNDER_PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="relative z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">LinkedIn</a>}
+                {FOUNDER_PROFILE.directorio && <a href={FOUNDER_PROFILE.directorio} target="_blank" rel="noopener noreferrer" className="relative z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">Directorio Jurídico</a>}
               </div>
             )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
-              Abogado responsable del bufete. Más de 15 años de ejercicio profesional.
-              Litigante en audiencias iniciales, preliminares, de sobreseimiento y juicio
-              oral en el departamento de Valle y zonas circunvecinas. La defensa penal es
-              el pilar histórico del despacho.
+              Abogado penalista y socio director del despacho. Atiende asuntos penales
+              desde las primeras diligencias, audiencias y medidas cautelares hasta los
+              recursos y la ejecución penal. La defensa penal es el pilar histórico del
+              despacho.
             </p>
-            <Link
-              href="/derecho-penal"
-              className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
-            >
-              Ver especialidad en defensa penal <ArrowRight size={14} />
-            </Link>
+            <div className="flex flex-wrap items-center gap-2 mt-3">
+              <Link
+                href={`/equipo/danilo-pineda-maradiaga`}
+                className="relative z-10 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+              >
+                Ver perfil completo <ArrowRight size={14} />
+              </Link>
+              <Link
+                href="/derecho-penal"
+                className="relative z-10 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+              >
+                Defensa penal <ArrowRight size={14} />
+              </Link>
+            </div>
           </Card>
 
           {/* Thania Marlene Paz — socia fundadora (administrativo, familia,
               civil y notarial, mercantil y empresarial). */}
-          <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col">
+          <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col relative group">
+            <Link
+              href="/equipo/thania-marlene-paz"
+              aria-label={`Ver perfil completo de ${THANIA_PROFILE.name}`}
+              className="absolute inset-0 z-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            />
             <div className="flex items-center gap-4">
               <span className="team-monogram" aria-hidden="true">TP</span>
               <div>
@@ -283,25 +301,38 @@ export default async function DespachoPage() {
             {(THANIA_PROFILE.cah || THANIA_PROFILE.linkedin || THANIA_PROFILE.directorio) && (
               <div className="flex flex-wrap gap-2 mt-4">
                 {THANIA_PROFILE.cah && <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary font-medium"><Award size={12}/> CAH: {THANIA_PROFILE.cah}</span>}
-                {THANIA_PROFILE.linkedin && <a href={THANIA_PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">LinkedIn</a>}
-                {THANIA_PROFILE.directorio && <a href={THANIA_PROFILE.directorio} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">Directorio Jurídico</a>}
+                {THANIA_PROFILE.linkedin && <a href={THANIA_PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="relative z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">LinkedIn</a>}
+                {THANIA_PROFILE.directorio && <a href={THANIA_PROFILE.directorio} target="_blank" rel="noopener noreferrer" className="relative z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">Directorio Jurídico</a>}
               </div>
             )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
-              Abogada socia fundadora del bufete. Especializada en derecho
+              Abogada socia fundadora del bufete. Su práctica se concentra en derecho
               administrativo, familia, civil y notarial, y mercantil y empresarial.
               Atiende casos en Nacaome, Valle y la zona sur de Honduras.
             </p>
-            <Link
-              href="/servicios-juridicos/derecho-de-familia"
-              className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
-            >
-              Ver especialidad en derecho de familia <ArrowRight size={14} />
-            </Link>
+            <div className="flex flex-wrap items-center gap-2 mt-3">
+              <Link
+                href={`/equipo/thania-marlene-paz`}
+                className="relative z-10 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+              >
+                Ver perfil completo <ArrowRight size={14} />
+              </Link>
+              <Link
+                href="/servicios-juridicos/derecho-de-familia"
+                className="relative z-10 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+              >
+                Derecho de familia <ArrowRight size={14} />
+              </Link>
+            </div>
           </Card>
 
           {/* Emil Barahona — socio del bufete (laboral, penal, civil y notarial). */}
-          <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col">
+          <Card padding="md" className="card-premium border-accent/30 h-full flex flex-col relative group">
+            <Link
+              href="/equipo/emil-barahona"
+              aria-label={`Ver perfil completo de ${EMIL_PROFILE.name}`}
+              className="absolute inset-0 z-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            />
             <div className="flex items-center gap-4">
               <span className="team-monogram" aria-hidden="true">EB</span>
               <div>
@@ -319,20 +350,28 @@ export default async function DespachoPage() {
             {(EMIL_PROFILE.cah || EMIL_PROFILE.linkedin || EMIL_PROFILE.directorio) && (
               <div className="flex flex-wrap gap-2 mt-4">
                 {EMIL_PROFILE.cah && <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary font-medium"><Award size={12}/> CAH: {EMIL_PROFILE.cah}</span>}
-                {EMIL_PROFILE.linkedin && <a href={EMIL_PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">LinkedIn</a>}
-                {EMIL_PROFILE.directorio && <a href={EMIL_PROFILE.directorio} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">Directorio Jurídico</a>}
+                {EMIL_PROFILE.linkedin && <a href={EMIL_PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="relative z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">LinkedIn</a>}
+                {EMIL_PROFILE.directorio && <a href={EMIL_PROFILE.directorio} target="_blank" rel="noopener noreferrer" className="relative z-10 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface border border-border-light text-xs text-text-secondary hover:text-primary transition-colors">Directorio Jurídico</a>}
               </div>
             )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
-              Abogado socio del bufete. Especializado en derecho laboral, civil y
+              Abogado socio del bufete. Su práctica se concentra en derecho laboral, civil y
               notarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.
             </p>
-            <Link
-              href="/servicios-juridicos/derecho-laboral"
-              className="inline-flex items-center gap-1.5 mt-3 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
-            >
-              Ver especialidad en derecho laboral <ArrowRight size={14} />
-            </Link>
+            <div className="flex flex-wrap items-center gap-2 mt-3">
+              <Link
+                href={`/equipo/emil-barahona`}
+                className="relative z-10 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+              >
+                Ver perfil completo <ArrowRight size={14} />
+              </Link>
+              <Link
+                href="/servicios-juridicos/derecho-laboral"
+                className="relative z-10 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+              >
+                Derecho laboral <ArrowRight size={14} />
+              </Link>
+            </div>
           </Card>
         </div>
       </Section>
@@ -341,15 +380,16 @@ export default async function DespachoPage() {
       <Section spacing="md">
         <SectionHeader
           eyebrow="Cómo trabajamos"
-          title="Cuatro pasos para acompañarle en su caso"
+          title="Cinco pasos para acompañarle en su caso"
           subtitle="Un método claro y trazable que aplicamos a todas las áreas del bufete, con la confidencialidad y el rigor técnico que su situación requiere."
         />
         <ProcessStepper
           steps={[
-            { step: 1, title: 'Consulta inicial', desc: 'Evaluamos su caso de forma confidencial y le explicamos las opciones reales con honestidad, sea penal, civil, laboral o cualquier otra área.' },
-            { step: 2, title: 'Estrategia legal', desc: 'Analizamos pruebas, normativa aplicable y diseñamos la estrategia jurídica óptima, identificando si requiere coordinación con otras áreas.' },
-            { step: 3, title: 'Gestión y litigio', desc: 'Tramitamos su asunto con diligencia en sede administrativa, judicial o notarial, según corresponda. Le mantenemos informado en cada etapa.' },
-            { step: 4, title: 'Cierre y seguimiento', desc: 'Le entregamos un informe claro del resultado y, si procede, los recursos o las actuaciones complementarias disponibles.' },
+            { step: 1, title: 'Evaluación inicial', desc: 'Escuchamos los hechos, identificamos la urgencia y revisamos la documentación disponible de forma confidencial, sea penal, civil, laboral o cualquier otra área.' },
+            { step: 2, title: 'Diagnóstico jurídico', desc: 'Explicamos la normativa aplicable, las opciones reales, los riesgos y los plazos, identificando si requiere coordinación con otras áreas.' },
+            { step: 3, title: 'Propuesta por escrito', desc: 'Definimos por escrito el alcance, los honorarios y las actuaciones antes de iniciar. No se inicia ninguna gestión sin su autorización expresa.' },
+            { step: 4, title: 'Gestión y seguimiento', desc: 'Documentamos las actuaciones y le mantenemos informado en cada etapa del asunto.' },
+            { step: 5, title: 'Cierre', desc: 'Entregamos un resumen del resultado y de los pasos posteriores cuando sean necesarios.' },
           ]}
           withConnector
         />
@@ -373,8 +413,8 @@ export default async function DespachoPage() {
             <p className="text-sm text-text-secondary leading-relaxed text-pretty">
               En la primera consulta se identifica el área principal del caso y se
               asigna al abogado responsable de esa rama. Cuando el asunto cruza
-              varias ramas, el equipo coordina internamente y el cliente mantiene
-              un único punto de contacto. El responsable del caso es quien firma
+              varias ramas, el equipo puede coordinar internamente según las
+              necesidades del asunto. El responsable del caso es quien firma
               los escritos y comparece, no un intermediario.
             </p>
           </Card>

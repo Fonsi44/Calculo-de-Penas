@@ -1,0 +1,28 @@
+# public-route-final-validation.csv — rutas públicas validadas en el cierre del Paso 13
+# head=5218755a preview=https://justicia-verdadera-ivtm953kq-fonsi-roiget-s-projects.vercel.app (Paso 12)
+# Nota: el Preview del HEAD final (5218755a) se valida tras el push. Las rutas
+# marcadas VALIDATED_AT_PREVIEW_PASO12 fueron probadas en el deploy anterior;
+# las VALIDATE_AFTER_DEPLOY requieren el nuevo Preview del HEAD final.
+route,expected_status,actual_status,canonical,robots,indexable,schema,mobile,desktop,console,result
+/,200,VALIDATED_AT_PREVIEW_PASO12,https://www.pinedayasociadoshn.com,index,follow,true,true,200,0,PASS
+/despacho,200,VALIDATE_AFTER_DEPLOY,https://www.pinedayasociadoshn.com/despacho,index,follow,true,VALIDATE_AFTER_DEPLOY,VALIDATE_AFTER_DEPLOY,0,PENDING_RUNTIME
+/servicios-juridicos,200,VALIDATE_AFTER_DEPLOY,https://www.pinedayasociadoshn.com/servicios-juridicos,index,follow,true,VALIDATE_AFTER_DEPLOY,VALIDATE_AFTER_DEPLOY,0,PENDING_RUNTIME
+/derecho-penal,200,VALIDATED_AT_PREVIEW_PASO12,https://www.pinedayasociadoshn.com/derecho-penal,index,follow,true,true,200,0,PASS
+/preguntas-frecuentes,200,VALIDATED_AT_PREVIEW_PASO12,https://www.pinedayasociadoshn.com/preguntas-frecuentes,index,follow,true,true,200,0,PASS
+/blog,200,VALIDATED_AT_PREVIEW_PASO12,https://www.pinedayasociadoshn.com/blog,index,follow,true,true,200,0,PASS
+/blog?page=2,200,VALIDATE_AFTER_DEPLOY,https://www.pinedayasociadoshn.com/blog,index,follow,true,VALIDATE_AFTER_DEPLOY,VALIDATE_AFTER_DEPLOY,0,PENDING_RUNTIME
+/blog/derecho-laboral/despido-laboral-honduras-guia-completa,200,VALIDATE_AFTER_DEPLOY,https://www.pinedayasociadoshn.com/blog/derecho-laboral/despido-laboral-honduras-guia-completa,index,follow,true,VALIDATE_AFTER_DEPLOY,VALIDATE_AFTER_DEPLOY,0,PENDING_RUNTIME
+/blog/derecho-penal/defensa-penal-honduras,200,VALIDATED_AT_PREVIEW_PASO12,https://www.pinedayasociadoshn.com/blog/derecho-penal/defensa-penal-honduras,index,follow,true,true,200,0,PASS
+/equipo/danilo-pineda-maradiaga,200,VALIDATED_AT_PREVIEW_PASO12,https://www.pinedayasociadoshn.com/equipo/danilo-pineda-maradiaga,index,follow,true,true,200,0,PASS
+/abogados-en-nacaome,200,VALIDATED_AT_PREVIEW_PASO12,https://www.pinedayasociadoshn.com/abogados-en-nacaome,index,follow,true,true,200,0,PASS
+/solicitar-consulta,200,VALIDATE_AFTER_DEPLOY,https://www.pinedayasociadoshn.com/solicitar-consulta,noindex,nofollow,false,VALIDATE_AFTER_DEPLOY,VALIDATE_AFTER_DEPLOY,0,PENDING_RUNTIME
+/politica-privacidad,200,VALIDATED_AT_PREVIEW_PASO12,https://www.pinedayasociadoshn.com/politica-privacidad,noindex,nofollow,false,true,200,0,PASS
+/robots.txt,200,VALIDATED_AT_PREVIEW_PASO12,n/a,robots,n/a,n/a,true,200,0,PASS
+/sitemap.xml,200,VALIDATE_AFTER_DEPLOY,n/a,sitemap,n/a,n/a,VALIDATE_AFTER_DEPLOY,VALIDATE_AFTER_DEPLOY,0,PENDING_RUNTIME
+/llms.txt,200,VALIDATED_AT_PREVIEW_PASO12,n/a,n/a,n/a,n/a,true,200,0,PASS
+/abogados-en-choluteca,200,VALIDATED_AT_PREVIEW_PASO12,https://www.pinedayasociadoshn.com/abogados-en-choluteca,index,follow,true,true,200,0,PASS
+/blog/derecho-civil/herencias-honduras-fallece-familiar,308,VALIDATED_AT_REDIRECT,https://www.pinedayasociadoshn.com/blog/derecho-civil/testamentos-sucesiones-herencia-honduras,noindex,nofollow,false,VALIDATE_AFTER_DEPLOY,VALIDATE_AFTER_DEPLOY,0,PENDING_RUNTIME
+# Resumen: 9 VALIDATED_AT_PREVIEW_PASO12 (PASS), 8 VALIDATE_AFTER_DEPLOY (PENDING_RUNTIME).
+# El contrato route-contract (gate_blog_route) ya validó bodies/signatures=0 en CI.
+# Preview globalmente noindex (verificado en Paso 12).
+# Cero canonical mismatch, cero host Preview en schema (verificado por seo:public-claims-contract).

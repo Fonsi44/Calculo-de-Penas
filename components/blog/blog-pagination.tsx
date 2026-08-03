@@ -39,7 +39,7 @@ export function BlogPagination({
     ) : (
       <Link
         href={buildPageUrl(p)}
-        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors"
+        className="focus-ring inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors"
       >
         {icon === 'prev' && <ArrowLeft size={14} />}
         {label}
@@ -50,8 +50,8 @@ export function BlogPagination({
 
   return (
     <nav
-      className="flex justify-center items-center gap-3 mt-10"
-      aria-label="Paginación del blog"
+      className="flex flex-wrap justify-center items-center gap-3 mt-10"
+      aria-label="Paginación"
     >
       {btn(page - 1, 'Anterior', 'prev', page <= 1)}
       <span className="text-sm text-text-secondary px-2" aria-current="page">

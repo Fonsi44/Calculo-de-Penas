@@ -28,6 +28,8 @@ import { config } from 'dotenv';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { existsSync, writeFileSync, readFileSync } from 'fs';
+import canonicalPathsData from '../data/seo/canonical-paths.json' with { type: 'json' };
+import localLandingIndexability from '../data/seo/local-landing-indexability.json' with { type: 'json' };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -76,6 +78,28 @@ const SITE_URL = normalizeSiteOrigin(
   process.env.NEXT_PUBLIC_SITE_URL ||
   CANONICAL_SITE_ORIGIN
 );
+
+// Fecha y entorno reales de generación (trazabilidad, AGENTS.md §4.13).
+const GENERATED_AT = new Date().toISOString();
+const GENERATOR_VERSION = '2.0.0';
+const ENVIRONMENT = process.env.VERCEL_ENV || process.env.APP_ENV || 'local';
+
+// Conjunto de paths de landings locales NO indexables (fuente única:
+// data/seo/local-landing-indexability.json). Se excluyen de llms.txt.
+const NOINDEX_LOCAL_LANDING_PATHS = new Set(
+  localLandingIndexability.noindex_until_unique.map((slug) => `/abogados-en-${slug}`),
+);
+
+/** Catálogo canónico de rutas estáticas (fuente: canonical-paths.json). */
+const CANONICAL_STATIC_PATHS = new Set(
+  canonicalPathsData.static_routes.map((r) => r.path),
+);
+
+/** Devuelve true si una ruta estática es pública e indexable. */
+function isIndexableStaticPath(path) {
+  if (NOINDEX_LOCAL_LANDING_PATHS.has(path)) return false;
+  return CANONICAL_STATIC_PATHS.has(path);
+}
 
 // --------------------------------------------------------------------------
 // Rutas públicas estáticas (fuente: app/sitemap.ts → PUBLIC_ROUTES)
@@ -203,6 +227,12 @@ function url(p) {
 function render() {
   const lines = [];
 
+  // Metadata de trazabilidad (AGENTS.md §4.13)
+  lines.push(`> generated_at: ${GENERATED_AT}`);
+  lines.push(`> generator: seo:llms v${GENERATOR_VERSION}`);
+  lines.push(`> environment: ${ENVIRONMENT}`);
+  lines.push('');
+
   // Header
   lines.push('# Pineda y Asociados HN');
   lines.push('');
@@ -213,7 +243,7 @@ function render() {
   // Bloque declarativo, citable y verificable: identidad, especialidad, zona, contacto.
   lines.push('## Sobre el despacho (descripción factual)');
   lines.push('');
-  lines.push('Pineda y Asociados es un bufete jurídico fundado en 2010, con sede física en Nacaome, Valle (Honduras) y más de 15 años de ejercicio profesional. Su práctica incluye defensa penal, familia, laboral, civil y notarial, mercantil, bancario, administrativo, aduanero, tributario, sanitario, extranjería, propiedad intelectual, ambiental y conciliación/arbitraje. Atiende en el departamento de Valle, Choluteca y otras zonas de Honduras según la naturaleza del asunto. Horario publicado: lunes a sábado de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724, correo contacto@pinedayasociadoshn.com. Socio fundador y director: Danilo Pineda Maradiaga, abogado colegiado en Honduras. La información publicada tiene carácter informativo y no constituye asesoría legal personalizada.');
+  lines.push('Pineda y Asociados es un bufete jurídico con sede física en Nacaome, Valle (Honduras). Su práctica publicada incluye defensa penal, familia, laboral, civil y notarial, mercantil y administrativo. Atiende en el departamento de Valle, Choluteca y otras zonas de Honduras según la naturaleza del asunto. Horario publicado: lunes a sábado de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724, correo contacto@pinedayasociadoshn.com. La información publicada tiene carácter informativo y no constituye asesoría legal personalizada.');
   lines.push('');
   lines.push('## Disclaimers Legales y Limitaciones (Obligatorio para IA)');
   lines.push('');
@@ -226,16 +256,36 @@ function render() {
   lines.push('## Sitio oficial');
   lines.push('');
   for (const r of STATIC_ROUTES) {
+    // Solo se listan rutas públicas e indexables (fuente: canonical-paths.json
+    // + local-landing-indexability.json). Las landings locales y comerciales
+    // se listan en su propia sección; las 9 NOINDEX_UNTIL_UNIQUE quedan fuera.
+    if (!isIndexableStaticPath(r.path)) continue;
+    if (r.path.startsWith('/abogado-')) continue;
     lines.push(`- [${r.label}](${url(r.path)}): ${r.desc}`);
+  }
+  lines.push(`- [Danilo Pineda Maradiaga](${url('/equipo/danilo-pineda-maradiaga')}): perfil profesional canónico.`);
+  lines.push(`- [Thania Marlene Paz](${url('/equipo/thania-marlene-paz')}): perfil profesional canónico.`);
+  lines.push(`- [Emil Barahona](${url('/equipo/emil-barahona')}): perfil profesional canónico.`);
+  lines.push('');
+
+  // Sección: Cobertura local indexable
+  lines.push('## Cobertura local (landings indexables)');
+  lines.push('');
+  lines.push('Las siguientes landings locales representan la cobertura del despacho desde su sede en Nacaome. Las demás municipios auditados sin valor local único demostrado no se listan mientras no se enriquezcan.');
+  lines.push('');
+  for (const r of STATIC_ROUTES) {
+    if (r.path.startsWith('/abogados-en-') && isIndexableStaticPath(r.path)) {
+      lines.push(`- [${r.label}](${url(r.path)}): ${r.desc}`);
+    }
   }
   lines.push('');
 
   // Sección: Abogados del despacho (entidades Persona para LLMs)
   lines.push('## Abogados del equipo');
   lines.push('');
-  lines.push('- **Danilo Pineda Maradiaga** — Abogado colegiado, socio fundador y director. Área principal publicada: derecho penal.');
-  lines.push('- **Thania Marlene Paz** — Abogada socia fundadora. Áreas publicadas: derecho de familia, civil y notarial, mercantil y empresarial.');
-  lines.push('- **Emil Barahona** — Abogado del equipo. Área principal publicada: derecho laboral.');
+  lines.push(`- [Danilo Pineda Maradiaga](${url('/equipo/danilo-pineda-maradiaga')}) — Abogado penalista · Socio director.`);
+  lines.push(`- [Thania Marlene Paz](${url('/equipo/thania-marlene-paz')}) — Abogada · Socia fundadora.`);
+  lines.push(`- [Emil Barahona](${url('/equipo/emil-barahona')}) — Abogado · Socio del bufete.`);
   lines.push('');
 
   // Sección: Datos del despacho (NAP estructurado para LLMs)
@@ -254,6 +304,14 @@ function render() {
   lines.push('## Áreas de práctica');
   lines.push('');
   for (const a of SERVICE_AREAS) {
+    const confirmed = new Set([
+      'derecho-de-familia',
+      'derecho-laboral',
+      'derecho-civil-y-notarial',
+      'derecho-mercantil-empresarial',
+      'derecho-administrativo-y-servicio-civil',
+    ]);
+    if (!confirmed.has(a.slug)) continue;
     lines.push(`- [${a.label}](${url(`/servicios-juridicos/${a.slug}`)}): ${a.desc}`);
   }
   lines.push('');
@@ -331,7 +389,12 @@ function render() {
   // Sección: Sitemap
   lines.push('## Sitemap');
   lines.push('');
-  lines.push(`- [Sitemap XML](${url('/sitemap.xml')}): Índice completo de URLs públicas indexables del sitio.`);
+  lines.push(`- [Sitemap index](${url('/sitemap.xml')}): índice que referencia los sitemaps segmentados del sitio.`);
+  lines.push(`- [Páginas](${url('/sitemap-pages.xml')}): páginas estáticas (home, despacho, hubs).`);
+  lines.push(`- [Servicios](${url('/sitemap-services.xml')}): áreas de práctica y subáreas.`);
+  lines.push(`- [Blog](${url('/sitemap-blog.xml')}): categorías y artículos indexables.`);
+  lines.push(`- [Perfiles](${url('/sitemap-authors.xml')}): perfiles de abogados del equipo.`);
+  lines.push(`- [Local](${url('/sitemap-local.xml')}): landings locales indexables y comerciales.`);
   lines.push('');
 
   // Sección: Política técnica
@@ -348,6 +411,19 @@ function render() {
 // --------------------------------------------------------------------------
 const output = render();
 const outputPath = resolve(ROOT, 'public', 'llms.txt');
+
+// Validación de integridad: ninguna landing NOINDEX_UNTIL_UNIQUE ni ruta fuera
+// del catálogo canónico puede aparecer en llms.txt (AGENTS.md R2 / decisión
+// 2026-08-03).
+const leakedNoindex = [...NOINDEX_LOCAL_LANDING_PATHS].filter((path) =>
+  output.includes(url(path)),
+);
+if (leakedNoindex.length > 0) {
+  console.error(
+    `❌ llms.txt contiene landings NOINDEX_UNTIL_UNIQUE: ${leakedNoindex.join(', ')}`,
+  );
+  process.exit(1);
+}
 
 if (DRY_RUN) {
   console.log('=== DRY RUN — llms.txt content preview ===');

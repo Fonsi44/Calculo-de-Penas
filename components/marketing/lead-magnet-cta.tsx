@@ -44,7 +44,7 @@ export function LeadMagnetCTA({ area, titulo, descripcion }: LeadMagnetCTAProps)
       <div className="mt-8 p-6 rounded-xl bg-success/5 border border-success/20 text-center">
         <CheckCircle2 size={24} className="text-success mx-auto mb-2" />
         <p className="font-bold text-sm text-text">Guía descargada correctamente</p>
-        <p className="text-xs text-text-secondary mt-1">Revise su bandeja de entrada. Si necesita asesoría personalizada, solicite una consulta gratuita.</p>
+        <p className="text-xs text-text-secondary mt-1">Revise su bandeja de entrada. Si necesita asesoría personalizada, solicite una evaluación inicial confidencial.</p>
       </div>
     );
   }
@@ -77,7 +77,7 @@ export function LeadMagnetCTA({ area, titulo, descripcion }: LeadMagnetCTAProps)
           className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors flex-shrink-0 disabled:opacity-60"
         >
           {status === 'loading' ? <Loader2 size={14} className="animate-spin" /> : <FileDown size={14} />}
-          Descargar guía gratuita
+          Descargar la guía
         </button>
       </form>
       {status === 'error' && (

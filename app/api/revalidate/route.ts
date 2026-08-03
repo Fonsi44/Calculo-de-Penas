@@ -37,7 +37,7 @@
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { timingSafeEqual } from 'crypto';
-import { getPostBySlug } from '@/lib/blog-db';
+import { getPublishedPostRouteBySlug } from '@/lib/blog-db';
 import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
 
 const bodySchema = z.object({
@@ -129,7 +129,7 @@ export async function POST(request: Request) {
         // Resolver la ruta canónica del post: /blog/<categoria>/<slug>.
         // Intrínsecamente seguro: el path se construye desde la DB, no desde
         // entrada del usuario.
-        const post = await getPostBySlug(v);
+        const post = await getPublishedPostRouteBySlug(v);
         if (!post) {
           errores.push({ value: v, error: 'Post no encontrado (¿no publicado?)' });
           continue;

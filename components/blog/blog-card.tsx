@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/ui';
 import { blogCategories } from '@/data/blog/categories';
-import { formatHondurasDate } from '@/lib/datetime';
 import type { BlogCardData } from '@/data/blog/types';
 
 /**
@@ -43,7 +42,11 @@ function catMeta(slug: string) {
 }
 
 function shortDate(iso: string): string {
-  return formatHondurasDate(iso, { year: 'numeric', month: 'short', day: 'numeric' });
+  const d = new Date(iso);
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}/${month}/${year}`;
 }
 
 type Props = {
@@ -146,11 +149,11 @@ export function BlogCard({ post, variant = 'default', priority, ctaLabel, classN
         href={href}
         title={post.title}
         className={cn(
-          'group flex rounded-lg border border-border/40 bg-background overflow-hidden hover:border-accent/40 hover:shadow-md transition-all min-h-0',
+          'group flex w-full min-w-0 rounded-lg border border-border/40 bg-background overflow-hidden hover:border-accent/40 hover:shadow-md transition-all min-h-0',
           className,
         )}
       >
-        <div className="relative w-28 sm:w-32 flex-shrink-0 overflow-hidden bg-primary/5 aspect-square lg:aspect-auto">
+        <div className="relative w-16 xs:w-28 sm:w-32 flex-shrink-0 overflow-hidden bg-primary/5 aspect-square lg:aspect-auto">
           {post.coverImage ? (
             <Image
               src={post.coverImage}
@@ -164,14 +167,14 @@ export function BlogCard({ post, variant = 'default', priority, ctaLabel, classN
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
           )}
         </div>
-        <div className="flex flex-col flex-1 p-3.5 min-w-0 justify-center">
+        <div className="flex flex-col flex-1 p-2 xs:p-3.5 min-w-0 justify-center">
           <span className={cn('self-start inline-block text-xxs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full mb-1.5', badgeCls)}>
             {catNombre}
           </span>
           <h3 className="font-serif font-bold text-sm leading-snug text-text group-hover:text-primary transition-colors line-clamp-2">
             {post.title}
           </h3>
-          <p className="mt-2 text-xxs text-text-muted flex items-center gap-3">
+          <p className="mt-2 text-xxs text-text-muted flex flex-wrap items-center gap-x-2 gap-y-1">
             <span className="flex items-center gap-1"><Calendar size={11} /> {shortDate(post.publishedAt)}</span>
             <span className="flex items-center gap-1"><Clock size={11} /> {post.readingTime}</span>
           </p>

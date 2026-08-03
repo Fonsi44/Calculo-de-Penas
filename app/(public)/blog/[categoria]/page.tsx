@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { Section, Container } from '@/components/marketing/section';
 import { BlogCard } from '@/components/blog/blog-card';
 import { blogCategories } from '@/data/blog/categories';
@@ -12,12 +12,20 @@ import { BlogSearch } from '@/components/blog/blog-search';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { buildBlogMetaTitle } from '@/lib/seo';
+import { resolveBlogPagination } from '@/lib/blog-pagination';
 
-export const revalidate = 3600;
+// La página de categoría lee `searchParams` (paginación). En Next 16, una
+// ruta que usa APIs dinámicas y además se prerenderiza (generateStaticParams +
+// ISR) provoca DYNAMIC_SERVER_USAGE → 500. Se fuerza render dinámico, igual
+// que el índice /blog (que sí funciona). Corrige el 500 en /blog/[categoria].
+export const dynamic = 'force-dynamic';
 
 const ITEMS_PER_PAGE = 12;
 
-type Props = { params: Promise<{ categoria: string }>; searchParams?: Promise<{ page?: string }> };
+type Props = {
+  params: Promise<{ categoria: string }>;
+  searchParams?: Promise<{ page?: string | string[] }>;
+};
 
 export async function generateStaticParams() {
   const slugs = await getAllCategorySlugs();
@@ -27,11 +35,13 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { categoria } = await params;
   const sp = await searchParams;
-  const page = parseInt(sp?.page ?? '1', 10) || 1;
+  const contract = resolveBlogPagination({
+    basePath: `/blog/${categoria}`,
+    rawPage: sp?.page,
+  });
+  const { page, canonicalPath, isPaginated } = contract;
   const cat = blogCategories.find((c) => c.slug === categoria);
   if (!cat) return {};
-  const isPaginated = page > 1;
-  const canonicalPath = isPaginated ? `/blog/${categoria}` : `/blog/${categoria}`;
   const metaTitle = buildBlogMetaTitle(
     `${cat.nombre} - Blog Jurídico${isPaginated ? ` (Página ${page})` : ''}`,
   );
@@ -44,19 +54,16 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
     description: isPaginated ? `${cat.descripcion} Página ${page}.` : cat.descripcion,
     alternates: { canonical: canonicalPath },
     keywords: [cat.nombre.toLowerCase(), 'artículos legales Honduras', 'blog jurídico Honduras', `${cat.nombre.toLowerCase()} Honduras`],
-    // Páginas paginadas (page>1): noindex para consolidar autoridad en page 1.
-    robots: isPaginated
-      ? { index: false, follow: true, googleBot: { index: false, follow: true } }
-      : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
+    robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
     twitter: {
       card: 'summary_large_image',
       title: metaTitle,
-      description: cat.descripcion,
+      description: isPaginated ? `${cat.descripcion} Página ${page}.` : cat.descripcion,
       images: [`${site.url}/og-image.webp`],
     },
     openGraph: {
       title: metaTitle,
-      description: cat.descripcion,
+      description: isPaginated ? `${cat.descripcion} Página ${page}.` : cat.descripcion,
       url: `${site.url}${canonicalPath}`,
       siteName: site.name,
       locale: 'es_HN',
@@ -69,7 +76,13 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
 export default async function BlogCategoryPage(props: Props) {
   const { categoria } = await props.params;
   const searchParams = await props.searchParams;
-  const page = parseInt(searchParams?.page ?? '1', 10) || 1;
+  const initialContract = resolveBlogPagination({
+    basePath: `/blog/${categoria}`,
+    rawPage: searchParams?.page,
+  });
+  if (initialContract.notFound) notFound();
+  if (initialContract.redirectTo) permanentRedirect(initialContract.redirectTo);
+  const { page } = initialContract;
 
   const cat = blogCategories.find((c) => c.slug === categoria);
   if (!cat) notFound();
@@ -77,21 +90,19 @@ export default async function BlogCategoryPage(props: Props) {
   const categoryPosts = await getPostsByCategory(categoria);
   const totalPages = getTotalPages(categoryPosts, ITEMS_PER_PAGE);
 
-  if (page < 1 || (categoryPosts.length > 0 && page > totalPages)) {
-    notFound();
-  }
+  const contract = resolveBlogPagination({
+    basePath: `/blog/${categoria}`,
+    rawPage: searchParams?.page,
+    totalPages,
+  });
+  if (contract.notFound) notFound();
 
   const posts = getPostsByPage(categoryPosts, page, ITEMS_PER_PAGE);
 
-  const buildPageUrl = (p: number) => {
-    const base = `/blog/${categoria}`;
-    return p > 1 ? `${base}?page=${p}` : base;
-  };
-
   return (
     <>
-      {page > 1 && <link rel="prev" href={site.url + buildPageUrl(page - 1)} />}
-      {page < totalPages && <link rel="next" href={site.url + buildPageUrl(page + 1)} />}
+      {contract.prevPath && <link rel="prev" href={site.url + contract.prevPath} />}
+      {contract.nextPath && <link rel="next" href={site.url + contract.nextPath} />}
       <Breadcrumbs items={[
         { label: 'Inicio', href: '/' },
         { label: 'Blog Jurídico', href: '/blog' },
@@ -118,6 +129,11 @@ export default async function BlogCategoryPage(props: Props) {
         <div className="mb-6">
           <CategoryFilter />
         </div>
+        <p className="mb-4 text-sm text-text-secondary" data-blog-category-inventory-summary>
+          {categoryPosts.length} artículos en {cat.nombre.toLowerCase()}
+          {' · '}Página {page} de {totalPages}
+          {' · '}{posts.length} visibles en esta página
+        </p>
         <BlogSearch posts={categoryPosts} />
         {posts.length === 0 ? (
           <div className="text-center py-12">
@@ -145,9 +161,9 @@ export default async function BlogCategoryPage(props: Props) {
               {posts.map((p) => <BlogCard key={p.slug} post={p} />)}
             </div>
             {totalPages > 1 && (
-              <nav className="flex justify-center items-center gap-3 mt-8" aria-label="Paginación">
+              <nav className="flex flex-wrap justify-center items-center gap-3 mt-8" aria-label="Paginación">
                 {page > 1 ? (
-                  <Link href={buildPageUrl(page - 1)} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors">
+                  <Link href={contract.prevPath!} className="focus-ring inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors">
                     <ArrowLeft size={14} /> Anterior
                   </Link>
                 ) : (
@@ -157,7 +173,7 @@ export default async function BlogCategoryPage(props: Props) {
                 )}
                 <span className="text-sm text-text-secondary px-2">Página {page} de {totalPages}</span>
                 {page < totalPages ? (
-                  <Link href={buildPageUrl(page + 1)} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors">
+                  <Link href={contract.nextPath!} className="focus-ring inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border/40 text-sm font-semibold text-text hover:border-accent/40 hover:text-primary transition-colors">
                     Siguiente <ArrowRight size={14} />
                   </Link>
                 ) : (
@@ -202,7 +218,7 @@ export default async function BlogCategoryPage(props: Props) {
         __html: JSON.stringify(blogCollectionSchema(
           `${cat.nombre} | Blog Jurídico | ${site.name}`,
           cat.descripcion,
-          `${site.url}/blog/${categoria}`,
+          `${site.url}${contract.canonicalPath}`,
         )),
       }} />
     </>

@@ -196,20 +196,26 @@ describe('FASE 5 §7 — Preservación de garantías', () => {
     expect(site.url).toBe('https://www.pinedayasociadoshn.com');
   });
 
-  it('footer conserva las 10 ciudades R18', () => {
+  it('footer conserva las ciudades con landing indexable (R18 2026-08-03)', () => {
     const footer = readComponent('public-footer.tsx');
-    const CIUDADES_R18 = [
+    const CIUDADES_INDEXABLES = [
       'Nacaome', 'Choluteca', 'San Lorenzo', 'Goascorán',
-      'San Marcos de Colón', 'El Triunfo', 'Marcovia',
-      'Pespire', 'Namasigüe', 'Orocuina',
+      'San Marcos de Colón', 'El Triunfo', 'Amapala',
     ];
-    // El footer usa literales con/sin tildes; comprobamos por substring flexible.
-    for (const ciudad of CIUDADES_R18) {
-      // Normalizamos: quitamos tildes del fuente para tolerar variantes.
-      const normalize = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      const footerNorm = normalize(footer);
+    const CIUDADES_NOINDEX = [
+      'Marcovia', 'Pespire', 'Namasigüe', 'Orocuina',
+    ];
+    // Normalizamos: quitamos tildes del fuente para tolerar variantes.
+    const normalize = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const footerNorm = normalize(footer);
+    for (const ciudad of CIUDADES_INDEXABLES) {
       const ciudadNorm = normalize(ciudad);
       expect(footerNorm).toContain(ciudadNorm);
+    }
+    // Las landings NOINDEX_UNTIL_UNIQUE no aparecen en listados SEO automáticos.
+    for (const ciudad of CIUDADES_NOINDEX) {
+      const ciudadNorm = normalize(ciudad);
+      expect(footerNorm).not.toContain(ciudadNorm);
     }
   });
 

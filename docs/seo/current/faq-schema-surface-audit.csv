@@ -1,0 +1,6 @@
+"route","source_file","source_type","visible_question_count","schema_question_count","same_source","same_page_visible","answer_sanitized","schema_plain_text","duplicate_schema","metadata_scope_matches","risk","action","final_status"
+"/","app/(public)/page.tsx","none","0","0","true","true","true","true","false","true","NONE","REMOVE_SCHEMA","PASS"
+"/servicios-juridicos/[slug]","app/(public)/servicios-juridicos/[slug]/page.tsx","HubFaq","dynamic","dynamic","true","true","true","true","false","true","NONE","KEEP","PASS"
+"/preguntas-frecuentes","lib/faq-db.ts","static_fallback+policy","10","10","true","true","true","true","false","true","NONE","ALIGN_METADATA+SANITIZE","PASS"
+"HubFaq consumers","components/marketing/hub-faq.tsx","typed_static_same_collection","dynamic","dynamic","true","true","true","true","false","true","NONE","KEEP","PASS"
+"/blog/[categoria]/[slug]","app/(public)/blog/[categoria]/[slug]/page.tsx","sanitized_visible_article_html","dynamic","dynamic","true","true","true","true","false","true","NONE","KEEP","PASS"

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, MessageCircle, Mail, MapPin, Clock } from 'lucide-react';
 import { site, telHref, whatsappHref, mailtoHref } from '@/lib/site';
-import { LEGAL_DISCLAIMER_SHORT, LEGAL_FRAME_BADGE } from '@/lib/legal-disclaimer';
+import { LEGAL_FRAME_BADGE } from '@/lib/legal-disclaimer';
 import { CookiePreferencesButton } from '@/components/cookie-consent';
 
 const AREAS = [
@@ -24,17 +24,18 @@ const AREAS = [
 const DESPACHO = [
   { label: 'El Despacho', title: 'Conozca el bufete Pineda y Asociados en Nacaome, Valle', href: '/despacho' },
   { label: 'Guía legal: contratar abogado en Honduras', title: 'Cómo elegir abogado en Honduras: colegiación, honorarios, documentos y errores a evitar', href: '/guia-legal-abogados-honduras' },
-  { label: 'Servicios Jurídicos', title: 'Servicios jurídicos en Nacaome: todas las ramas del derecho', href: '/servicios-juridicos' },
+  { label: 'Servicios Jurídicos', title: 'Servicios jurídicos y áreas de práctica en Nacaome', href: '/servicios-juridicos' },
   { label: 'Derecho Penal', title: 'Defensa penal en Nacaome, Valle, San Lorenzo, Choluteca y todo el sur de Honduras', href: '/derecho-penal' },
   { label: 'Blog Jurídico', title: 'Artículos y guías legales para la zona sur de Honduras', href: '/blog' },
   { label: 'Preguntas Frecuentes', title: 'Respuestas a dudas legales frecuentes', href: '/preguntas-frecuentes' },
-  { label: 'Solicitar Consulta', title: 'Solicite una consulta legal gratuita y confidencial', href: '/solicitar-consulta#formulario' },
+  { label: 'Solicitar Consulta', title: 'Solicite una evaluación inicial confidencial', href: '/solicitar-consulta#formulario' },
   { label: 'Hondureños en España', title: 'Asistencia legal para hondureños residentes en España', href: '/hondurenos-en-espana' },
   { label: 'Cómo llegar', title: 'Indicaciones para llegar al bufete en Nacaome, Valle', href: '/como-llegar' },
 ];
 
-// Landings de SEO local — enlazadas desde todas las páginas (footer) para
-// transferir autoridad interna y facilitar el descubrimiento por Google.
+// Landings de SEO local — enlazadas desde todas las páginas (footer). Solo
+// landings INDEXABLES (las 9 NOINDEX_UNTIL_UNIQUE quedan fuera de listados SEO
+// automáticos; fuente: data/seo/local-landing-indexability.json).
 const COBERTURA = [
   { label: 'Abogados en Nacaome', title: 'Abogados en Nacaome, Valle — sede principal del bufete', href: '/abogados-en-nacaome' },
   { label: 'Abogados en Choluteca', title: 'Abogados en Choluteca, Honduras — defensa y asesoría legal', href: '/abogados-en-choluteca' },
@@ -42,10 +43,7 @@ const COBERTURA = [
   { label: 'Abogados en Goascorán', title: 'Abogados en Goascorán, Valle — zona fronteriza', href: '/abogados-en-goascoran' },
   { label: 'Abogados en San Marcos de Colón', title: 'Abogados en San Marcos de Colón, Choluteca — zona fronteriza', href: '/abogados-en-san-marcos-de-colon' },
   { label: 'Abogados en El Triunfo', title: 'Abogados en El Triunfo, Choluteca — zona fronteriza sur', href: '/abogados-en-el-triunfo' },
-  { label: 'Abogados en Marcovia', title: 'Abogados en Marcovia, Choluteca — cobertura legal en el sur', href: '/abogados-en-marcovia' },
-  { label: 'Abogados en Pespire', title: 'Abogados en Pespire, Choluteca — asesoría legal en el sur', href: '/abogados-en-pespire' },
-  { label: 'Abogados en Namasigüe', title: 'Abogados en Namasigüe, Choluteca — asesoría legal en occidente', href: '/abogados-en-namasigue' },
-  { label: 'Abogados en Orocuina', title: 'Abogados en Orocuina, Choluteca — asesoría legal en oriente', href: '/abogados-en-orocuina' },
+  { label: 'Abogados en Amapala', title: 'Abogados en Amapala, Valle — isla y puerto del Golfo de Fonseca', href: '/abogados-en-amapala' },
 ];
 
 const LEGALES = [
@@ -71,7 +69,7 @@ export function PublicFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 lg:gap-6">
           {/* Identidad */}
           <div>
-            <Link href="/" className="flex items-center gap-2.5 mb-5 focus-visible:outline-none" aria-label={site.name}>
+            <Link href="/" className="flex items-center gap-2.5 mb-5 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg" aria-label={site.name}>
               {/* Logo oficial — PNG transparente (741×728, ~cuadrado). Algo mayor
                   que en el header, sin dominar la columna de identidad. */}
               <Image
@@ -256,8 +254,8 @@ export function PublicFooter() {
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" className="text-accent flex-shrink-0" aria-hidden="true">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                   </svg>
-                  <a href={site.social.x} target="_blank" rel="noopener noreferrer" className="text-text-inverse/80 hover:text-accent" aria-label={`Perfil de X de ${site.name}`}>
-                    X
+                  <a href={site.social.x} target="_blank" rel="noopener noreferrer" className="text-text-inverse/80 hover:text-accent" aria-label="Perfil personal de X de Danilo Pineda Maradiaga">
+                    X de Danilo Pineda
                   </a>
                 </li>
               )}
@@ -290,7 +288,6 @@ export function PublicFooter() {
         <div className="mt-4 pt-4 border-t border-accent/10 text-xs text-text-inverse/75">
           <p className="text-pretty">
             Contenido elaborado por el <strong className="text-text-inverse/70">Equipo legal de Pineda y Asociados</strong> — abogados en Nacaome, Valle, Honduras.{' '}
-            {LEGAL_DISCLAIMER_SHORT}
           </p>
         </div>
       </div>

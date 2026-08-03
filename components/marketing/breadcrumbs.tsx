@@ -40,7 +40,7 @@ export function Breadcrumbs({ items, className = '' }: BreadcrumbsProps) {
     <>
       <nav
         aria-label="Breadcrumb"
-        className={`flex items-center gap-1.5 text-xs text-text-muted py-3 ${className}`}
+        className={`flex flex-wrap items-center gap-1.5 text-xs text-text-muted py-3 overflow-hidden ${className}`}
       >
         {items.map((item, i) => (
           <span key={i} className="flex items-center gap-1.5 min-w-0">
@@ -48,12 +48,12 @@ export function Breadcrumbs({ items, className = '' }: BreadcrumbsProps) {
             {item.href ? (
               <Link
                 href={item.href}
-                className="hover:text-primary transition-colors truncate"
+                className="hover:text-primary transition-colors truncate max-w-[120px] sm:max-w-none"
               >
                 {item.label}
               </Link>
             ) : (
-              <span className="text-text-secondary truncate" aria-current="page">{item.label}</span>
+              <span className="text-text-secondary truncate max-w-[120px] sm:max-w-none" aria-current="page">{item.label}</span>
             )}
           </span>
         ))}

@@ -39,7 +39,7 @@ export function BlogSidebar({
   const recentArchive = archive.slice(0, 6);
 
   return (
-    <aside className="space-y-8 lg:sticky lg:top-6 self-start">
+    <aside className="space-y-8 lg:sticky lg:top-6 self-start w-full max-w-full overflow-hidden">
       {/* Categorías — top 8 (las más activas) */}
       <SidebarBlock title="Explorar por categoría" as="h2">
         <ul className="space-y-0.5">
@@ -62,7 +62,7 @@ export function BlogSidebar({
       {/* Lecturas recomendadas — 4 */}
       {popular.length > 0 && (
         <SidebarBlock title="Lecturas recomendadas" as="h2">
-          <div className="space-y-3">
+          <div className="space-y-3 overflow-hidden">
             {popular.slice(0, 4).map((p) => <BlogCard key={p.slug} post={p} variant="compact" />)}
           </div>
         </SidebarBlock>
@@ -71,7 +71,7 @@ export function BlogSidebar({
       {/* Recientes — 4 */}
       {recent.length > 0 && (
         <SidebarBlock title="Artículos recientes" as="h2">
-          <div className="space-y-3">
+          <div className="space-y-3 overflow-hidden">
             {recent.slice(0, 4).map((p) => <BlogCard key={p.slug} post={p} variant="compact" />)}
           </div>
         </SidebarBlock>
@@ -129,7 +129,7 @@ function SidebarBlock({
 }) {
   const Tag = as ?? 'h3';
   return (
-    <section className="rounded-lg border border-border/40 bg-surface p-5">
+    <section className="rounded-lg border border-border/40 bg-surface p-4 xs:p-5 w-full max-w-full overflow-hidden">
       <Tag className="font-serif font-bold text-base text-primary mb-4 flex items-center gap-2">
         <span className="block w-6 h-px bg-accent" />
         {title}

@@ -1,5 +1,10 @@
 import { blogCategories } from '@/data/blog/categories';
-import type { Post, BlogCardData, BlogCategoryWithCount, BlogArchiveMonth } from '@/data/blog/types';
+import type {
+  BlogPostSummary,
+  BlogCardData,
+  BlogCategoryWithCount,
+  BlogArchiveMonth,
+} from '@/data/blog/types';
 
 /**
  * Lógica de datos del "content hub" del blog (/blog).
@@ -23,8 +28,8 @@ import type { Post, BlogCardData, BlogCategoryWithCount, BlogArchiveMonth } from
 
 export type SortMode = 'recent' | 'relevant';
 
-/** Convierte un Post completo en el payload ligero BlogCardData (sin body). */
-export function toCardData(post: Post): BlogCardData {
+/** Convierte un summary servidor en el payload mínimo del cliente. */
+export function toCardData(post: BlogPostSummary): BlogCardData {
   return {
     slug: post.slug,
     title: post.title,
@@ -49,12 +54,15 @@ export function toCardData(post: Post): BlogCardData {
  * categoría (sin repetir categoría salvo que sea inevitable). El primer
  * elemento es el "destacado principal" (tarjeta grande).
  */
-export function deriveFeaturedPosts(posts: Post[], limit = 4): Post[] {
+export function deriveFeaturedPosts(
+  posts: BlogPostSummary[],
+  limit = 4,
+): BlogPostSummary[] {
   const sorted = [...posts].sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
   const featured = sorted.filter((p) => p.featured);
-  const result: Post[] = [];
+  const result: BlogPostSummary[] = [];
   const usedSlugs = new Set<string>();
   const usedCats = new Set<string>();
 
@@ -91,7 +99,7 @@ export function deriveFeaturedPosts(posts: Post[], limit = 4): Post[] {
  * contenido aparecen como chips principales y el resto va al desplegable
  * "Más categorías".
  */
-export function deriveCategoryCounts(posts: Post[]): BlogCategoryWithCount[] {
+export function deriveCategoryCounts(posts: BlogPostSummary[]): BlogCategoryWithCount[] {
   const counts = new Map<string, number>();
   for (const p of posts) {
     counts.set(p.category, (counts.get(p.category) ?? 0) + 1);
@@ -107,7 +115,10 @@ export function deriveCategoryCounts(posts: Post[]): BlogCategoryWithCount[] {
  * métricas). Ordena por: (1) featured, (2) más etiquetas (mayor cobertura
  * temática), (3) más reciente. Devuelve los primeros `limit`.
  */
-export function derivePopularPosts(posts: Post[], limit = 5): Post[] {
+export function derivePopularPosts(
+  posts: BlogPostSummary[],
+  limit = 5,
+): BlogPostSummary[] {
   return [...posts]
     .sort((a, b) => {
       if (!!b.featured !== !!a.featured) return b.featured ? 1 : -1;
@@ -119,21 +130,27 @@ export function derivePopularPosts(posts: Post[], limit = 5): Post[] {
 }
 
 /** Posts más recientes (para el widget "Artículos recientes" del sidebar). */
-export function deriveRecentPosts(posts: Post[], limit = 5): Post[] {
+export function deriveRecentPosts(
+  posts: BlogPostSummary[],
+  limit = 5,
+): BlogPostSummary[] {
   return [...posts]
     .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
     .slice(0, limit);
 }
 
 /** Etiquetas únicas ordenadas alfabéticamente (widget de etiquetas). */
-export function deriveAllTags(posts: Post[]): string[] {
+export function deriveAllTags(posts: BlogPostSummary[]): string[] {
   const tags = new Set<string>();
   for (const p of posts) for (const t of p.tags ?? []) tags.add(t);
   return Array.from(tags).sort((a, b) => a.localeCompare(b, 'es'));
 }
 
 /** Filtra posts de un mes específico (value YYYY-MM). */
-export function filterByMonth(posts: Post[], month: string): Post[] {
+export function filterByMonth(
+  posts: BlogPostSummary[],
+  month: string,
+): BlogPostSummary[] {
   if (!month) return posts;
   return posts.filter((p) => {
     const d = new Date(p.publishedAt);
@@ -147,7 +164,10 @@ export function filterByMonth(posts: Post[], month: string): Post[] {
  * del más reciente al más antiguo. `label` usa formato es-HN legible
  * ("mayo 2026"). Pensado para un widget de archivo tipo WordPress.
  */
-export function deriveArchiveMonths(posts: Post[], limit = 8): BlogArchiveMonth[] {
+export function deriveArchiveMonths(
+  posts: BlogPostSummary[],
+  limit = 8,
+): BlogArchiveMonth[] {
   const counts = new Map<string, number>();
   for (const p of posts) {
     const d = new Date(p.publishedAt);

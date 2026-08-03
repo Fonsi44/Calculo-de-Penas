@@ -26,6 +26,7 @@
  */
 
 import { site } from '@/lib/site';
+import { PUBLIC_SERVICE_CATALOG } from '@/lib/public-service-catalog';
 
 export interface HubFaqItem {
   pregunta: string;
@@ -40,7 +41,7 @@ export const FAQ_SERVICIOS_JURIDICOS: HubFaqItem[] = [
   {
     pregunta: '¿Qué áreas del derecho cubre Pineda y Asociados?',
     respuesta:
-      'El bufete atiende 14 áreas: derecho penal, de familia, laboral, civil, notarial, mercantil y empresarial, administrativo, constitucional, migratorio, ambiental, agrario, propiedad intelectual y tributario. La defensa penal es el pilar histórico, con cobertura integral en las demás ramas para casos que combinan varios frentes.',
+      `El bufete presenta actualmente ${PUBLIC_SERVICE_CATALOG.length} áreas de práctica. La defensa penal es su pilar histórico y el catálogo público incluye, entre otras, familia, laboral, civil y notarial, mercantil, administrativo, migratorio, ambiental, propiedad intelectual y tributario.`,
   },
   {
     pregunta: '¿Atienden casos en toda Honduras o solo en el sur?',
@@ -50,17 +51,17 @@ export const FAQ_SERVICIOS_JURIDICOS: HubFaqItem[] = [
   {
     pregunta: '¿Cómo decido qué abogado del bufete lleva mi caso?',
     respuesta:
-      'Cada área la dirige un especialista: Danilo Pineda Maradiaga en derecho penal, Thania Marlene Paz en familia, civil y mercantil, y Emil Barahona en derecho laboral. En la primera consulta se identifica el área principal y se asigna al especialista correspondiente.',
+      'En la primera consulta se identifica el área aplicable y la asignación profesional adecuada. Algunas áreas tienen un responsable individual públicamente confirmado; en las demás, la asignación depende de la materia y de las características del asunto.',
   },
   {
-    pregunta: '¿Ofrecen consulta inicial sin costo?',
+    pregunta: '¿Cómo funciona la evaluación inicial?',
     respuesta:
-      'Sí, la primera consulta por WhatsApp, llamada o formulario es confidencial y sin costo. Permite evaluar el caso, plantear una estrategia inicial y entregar un presupuesto por escrito cuando se requiera representación formal.',
+      'La evaluación inicial es confidencial. En ella se identifica el área aplicable, la documentación necesaria y los siguientes pasos. Cuando se requiera representación formal, se entrega un presupuesto por escrito antes de iniciar.',
   },
   {
     pregunta: '¿Mi caso combina varias ramas del derecho, cómo lo gestionan?',
     respuesta:
-      'El bufete coordina internamente entre especialistas cuando un caso combina, por ejemplo, penal y familia, o laboral y civil. El cliente tiene un único punto de contacto y no duplica gestiones entre despachos.',
+      'Cuando un caso combina varias materias, el equipo puede coordinar su análisis internamente. La forma de trabajo y los canales de comunicación se acuerdan según las características del asunto.',
   },
   {
     pregunta: '¿Pueden llevar asuntos a distancia si vivo fuera de Nacaome?',
@@ -127,9 +128,9 @@ export const FAQ_DESPACHO: HubFaqItem[] = [
  */
 export const FAQ_SOLICITAR_CONSULTA: HubFaqItem[] = [
   {
-    pregunta: '¿La primera consulta tiene costo?',
+    pregunta: '¿La evaluación inicial tiene costo?',
     respuesta:
-      'No. La consulta inicial por WhatsApp, llamada o formulario es gratuita y confidencial. Sirve para evaluar el caso y entregar un presupuesto por escrito si se requiere representación formal.',
+      'Las condiciones de la evaluación inicial dependen del tipo de asunto y del alcance solicitado. Puede pedir las condiciones y, cuando se requiera representación formal, un presupuesto por escrito antes de iniciar.',
   },
   {
     pregunta: '¿Cuánto tardan en responder?',

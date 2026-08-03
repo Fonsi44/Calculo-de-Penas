@@ -115,8 +115,9 @@ describe('FASE 2 — /servicios-juridicos', () => {
     expect(servicios).not.toContain('ServiceBlocks');
   });
 
-  it('conserva el catálogo completo (getAreasUnified)', () => {
-    expect(servicios).toContain('getAreasUnified');
+  it('conserva el catálogo público canónico compartido', () => {
+    expect(servicios).toContain('PUBLIC_SERVICE_CATALOG');
+    expect(servicios).not.toContain('getAreasUnified');
   });
 
   it('no añade un <h1> en el body', () => {
@@ -250,9 +251,10 @@ describe('FASE 2 — Salvaguardas editoriales del blog', () => {
   it('limpia enlaces de ejemplo y no muestra revisores inexistentes', () => {
     const adapter = readRoot('lib/blog.ts');
     const article = readPublic('blog/[categoria]/[slug]/page.tsx');
-    expect(adapter).toContain('cleanPlaceholderLinks');
-    expect(adapter).toContain('ejemplo\\.com|tuabogado\\.com');
-    expect(article).toContain('post.reviewedBy &&');
+    expect(adapter).not.toContain('cleanPlaceholderLinks');
+    expect(article).toContain('normalizeBlogLinksForRender');
+    expect(article).toContain('validSignature &&');
+    expect(article).toContain('Revisión jurídica institucional:');
   });
 });
 

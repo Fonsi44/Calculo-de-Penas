@@ -1,3 +1,12 @@
+import {
+  organizationSameAs,
+  personSameAs,
+} from '@/lib/public-claims';
+import {
+  PUBLIC_SERVICE_CATALOG,
+  publicServiceOfferCatalog,
+} from '@/lib/public-service-catalog';
+
 /**
  * Configuración centralizada del sitio web.
  *
@@ -138,13 +147,12 @@ export const site = {
   shortName: process.env.NEXT_PUBLIC_SITE_SHORT ?? 'Pineda y Asociados',
   tagline:
     process.env.NEXT_PUBLIC_SITE_TAGLINE ??
-    'Abogados en Nacaome, Valle | Bufete Pineda y Asociados',
+    'Abogados en Nacaome, Valle | Pineda y Asociados',
   description:
-    process.env.NEXT_PUBLIC_SITE_DESCRIPTION ??
-    'Bufete en Nacaome, Valle. Defensa penal, familia, laboral, civil y mercantil. Atención directa y presupuesto por escrito. WhatsApp +504 9536-3724.',
+    'Abogados en Nacaome para defensa penal y asuntos de familia, laborales, civiles y mercantiles. Atención directa y presupuesto por escrito.',
   keywords:
     (process.env.NEXT_PUBLIC_SITE_KEYWORDS ??
-      'abogados Nacaome, bufete jurídico Valle Honduras, abogado penalista Nacaome, defensa penal sur Honduras, abogados San Lorenzo, abogados Choluteca, abogados Goascorán, abogados Amapala, abogados Pespire, abogados San Marcos de Colón, abogados Marcovia, abogado de familia Valle, abogado laboral Nacaome, derecho civil sur Honduras, abogado mercantil Nacaome, consulta legal gratuita Nacaome, bufete jurídico sur Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),
+      'abogados Nacaome, bufete jurídico Valle Honduras, abogado penalista Nacaome, defensa penal sur Honduras, abogados San Lorenzo, abogados Choluteca, abogados Goascorán, abogados Amapala, abogados Pespire, abogados San Marcos de Colón, abogados Marcovia, abogado de familia Valle, abogado laboral Nacaome, derecho civil sur Honduras, abogado mercantil Nacaome, evaluación legal confidencial Nacaome, bufete jurídico sur Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),
   phone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '+50495363724',
   /** Formato legible del teléfono. Deriva del mismo número que `phone` para
    *  garantizar NAP coherente (un solo dato). Si se cambia NEXT_PUBLIC_CONTACT_PHONE,
@@ -276,21 +284,7 @@ export function mailtoHref(subject?: string): string {
  * autoridad temática del despacho ante Google.
  */
 export const KNOWS_ABOUT = [
-  'Derecho Penal',
-  'Derecho de Familia',
-  'Derecho Laboral',
-  'Derecho Civil y Notarial',
-  'Derecho Mercantil y Empresarial',
-  'Derecho Tributario y Fiscal',
-  'Derecho Bancario y Financiero',
-  'Derecho Administrativo y Servicio Civil',
-  'Derecho Aduanero',
-  'Regulación Sanitaria',
-  'Extranjería y Migración',
-  'Propiedad Intelectual',
-  'Derecho Ambiental Regulatorio',
-  'Conciliación y Arbitraje',
-  'Código Penal Decreto 130-2017 de Honduras y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)',
+  ...PUBLIC_SERVICE_CATALOG.map((item) => item.name),
 ];
 
 /**
@@ -298,6 +292,14 @@ export const KNOWS_ABOUT = [
  * Incluye LocalBusiness con geo y areaServed para SEO local.
  */
 export function legalServiceSchema() {
+  const corporateSameAs = organizationSameAs([
+    site.social.facebook,
+    site.social.instagram,
+    site.social.linkedin,
+    site.social.youtube,
+    site.social.tiktok,
+    site.googleBusiness,
+  ]);
   const base: Record<string, unknown> = {
     // Sin @context aquí: el wrapper @graph de app/(public)/layout.tsx lo aporta
     // una sola vez. Duplicar @context en cada nodo del @graph es un error de
@@ -316,9 +318,6 @@ export function legalServiceSchema() {
     image: `${site.url}/og-image.webp`,
     // Logo oficial del bufete (PNG transparente, 741×728 ~cuadrado, sin fondo)
     logo: `${site.url}/images/logo.png`,
-    priceRange: '$$',
-    paymentAccepted: 'Cash, Credit Card, Bank Transfer',
-    currenciesAccepted: 'HNL, USD',
     areaServed: [
       { '@type': 'City', name: 'Nacaome' },
       { '@type': 'City', name: 'San Lorenzo' },
@@ -343,7 +342,6 @@ export function legalServiceSchema() {
       postalCode: site.address.postalCode,
       addressCountry: site.address.countryCode,
     },
-    numberOfEmployees: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 10 },
     openingHoursSpecification: site.hoursStructured.map((h) => ({
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: h.dayOfWeek,
@@ -367,50 +365,15 @@ export function legalServiceSchema() {
         })),
       },
     ],
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Servicios jurídicos en Nacaome, Valle — 14 áreas de práctica',
-      itemListElement: [
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Defensa Penal', description: 'Defensa técnica en procesos penales conforme al Código Penal Decreto 130-2017 de Honduras y reformas. Asistencia a detenidos, audiencias, juicio oral y recursos.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho de Familia', description: 'Divorcios, pensión alimenticia, custodia de menores, régimen de visitas y adopciones ante los juzgados de familia.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Laboral', description: 'Despidos injustificados, reclamación de prestaciones, liquidaciones, acoso laboral y asesoría a trabajadores y empleadores.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Civil y Notarial', description: 'Contratos, compraventas, herencias, testamentos, poderes notariales y trámites registrales.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Mercantil y Empresarial', description: 'Constitución de sociedades, contratos comerciales, fusiones, gobierno corporativo y litigio mercantil.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Bancario y Financiero', description: 'Defensa del usuario financiero, reestructuras, ejecución de garantías y cumplimiento CNBS.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Administrativo y Servicio Civil', description: 'Contencioso-administrativo, sanciones regulatorias, despido de servidores públicos y licitaciones.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Aduanero y Comercio Exterior', description: 'Clasificación arancelaria, importación, exportación, ZOLI y defensa ante el SAR.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Regulación Sanitaria', description: 'Registro sanitario ante ARSA, Buenas Prácticas, defensa en sanciones y mala praxis médica.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Extranjería en Honduras', description: 'Visas, residencia temporal y permanente, naturalización y defensa ante el INM.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Propiedad Intelectual', description: 'Registro de marcas, patentes, derechos de autor, licencias y defensa frente a infracciones.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Tributario y Fiscal', description: 'Liquidación de ISR e ISV, fiscalización del SAR, precios de transferencia y contencioso tributario.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Derecho Ambiental Regulatorio', description: 'Licencias ambientales, evaluación de impacto, permisos y defensa ante MiAmbiente.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Conciliación y Arbitraje', description: 'Resolución extrajudicial de conflictos, mediación y arbitraje institucional.' } },
-      ],
-    },
+    hasOfferCatalog: publicServiceOfferCatalog(site.url),
     employee: [
       { '@id': `${site.url}/#danilo-pineda-maradiaga` },
-      { '@id': `${site.url}/#thania` },
-      { '@id': `${site.url}/#emil` },
+      { '@id': `${site.url}/#thania-marlene-paz` },
+      { '@id': `${site.url}/#emil-barahona` },
     ],
-    ...(validUrlsOnly([
-      site.social.facebook,
-      site.social.instagram,
-      site.social.linkedin,
-      site.social.youtube,
-      site.social.tiktok,
-      site.social.x,
-      site.googleBusiness,
-    ]).length > 0
+    ...(corporateSameAs.length > 0
       ? {
-          sameAs: validUrlsOnly([
-            site.social.facebook,
-            site.social.instagram,
-            site.social.linkedin,
-            site.social.youtube,
-            site.social.tiktok,
-            site.social.x,
-            site.googleBusiness,
-          ]),
+          sameAs: corporateSameAs,
         }
       : {}),
   };
@@ -448,6 +411,14 @@ export function websiteSchema() {
  * Schema.org Organization para la home y el bloque "El Despacho".
  */
 export function organizationSchema() {
+  const corporateSameAs = organizationSameAs([
+    site.social.facebook,
+    site.social.instagram,
+    site.social.linkedin,
+    site.social.youtube,
+    site.social.tiktok,
+    site.googleBusiness,
+  ]);
   return {
     // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'Organization',
@@ -470,15 +441,7 @@ export function organizationSchema() {
     // Refuerza E-E-A-T y permite a Google/Microsoft/Knowledge Graph enlazar
     // identidades. Solo URLs reales (Facebook, X, GBP). El propio dominio NO
     // es un perfil externo y por eso no aparece aquí.
-    sameAs: validUrlsOnly([
-      site.social.facebook,
-      site.social.instagram,
-      site.social.linkedin,
-      site.social.youtube,
-      site.social.tiktok,
-      site.social.x,
-      site.googleBusiness
-    ]),
+    sameAs: corporateSameAs,
     contactPoint: [
       {
         '@type': 'ContactPoint',
@@ -508,7 +471,7 @@ export function organizationSchema() {
     // Socios fundadores confirmados directamente por el titular del sitio.
     founder: [
       { '@id': `${site.url}/#danilo-pineda-maradiaga` },
-      { '@id': `${site.url}/#thania` },
+      { '@id': `${site.url}/#thania-marlene-paz` },
     ],
   };
 }
@@ -518,8 +481,7 @@ export function organizationSchema() {
  *
  * Identidad pública verificable: el handle de X (Danilo_Pineda_M) y la firma
  * «Pineda y Asociados» confirman a Danilo Pineda Maradiaga como socio director.
- * Claims confirmados directamente por el titular del sitio el 2026-07-25:
- *   - «más de 15 años de ejercicio profesional»
+ * Claims profesionales publicados de forma prudente:
  *   - «Abogado colegiado en Honduras»
  *   - socio fundador y director
  *   - «defensa penal como área principal» (/despacho)
@@ -530,6 +492,8 @@ export function organizationSchema() {
 export const FOUNDER_PROFILE = {
   name: 'Danilo Pineda Maradiaga',
   jobTitle: 'Abogado penalista · Socio director',
+  /** Slug canónico de la página de perfil (plan maestro §4): /equipo/danilo-pineda-maradiaga. */
+  slug: 'danilo-pineda-maradiaga',
   /** Retrato principal (Foto1) — home + /despacho + schema Person.image. */
   image: '/images/equipo/danilo-pineda-maradiaga.webp',
   /** Retrato alternativo (Foto2) — /derecho-penal + sidebar /solicitar-consulta. */
@@ -538,7 +502,7 @@ export const FOUNDER_PROFILE = {
   imagePenal: '/images/equipo/danilo-pineda-maradiaga-penal.webp',
   imageAltText: 'Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)',
   description:
-    'Abogado colegiado, socio fundador y director de Pineda y Asociados, con más de 15 años de ejercicio profesional en el sur de Honduras. Práctica enfocada en defensa penal: asistencia a detenidos, audiencias iniciales, preliminares, de sobreseimiento, juicio oral y recursos de casación en el departamento de Valle y zonas circunvecinas.',
+    'Abogado penalista y socio director de Pineda y Asociados. Atiende asuntos penales desde las primeras diligencias, audiencias y medidas cautelares hasta los recursos y la ejecución penal en el departamento de Valle y zonas circunvecinas.',
   city: 'Nacaome',
   department: 'Valle',
   cah: process.env.NEXT_PUBLIC_CAH_DANILO || null,
@@ -560,6 +524,7 @@ export function founderSchema() {
     // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'Person',
     '@id': `${site.url}/#danilo-pineda-maradiaga`,
+    url: `${site.url}/equipo/${FOUNDER_PROFILE.slug}`,
     name: FOUNDER_PROFILE.name,
     honorificPrefix: 'Abogado',
     // knowsLanguage: coherente con LegalService y Organization.
@@ -590,10 +555,9 @@ export function founderSchema() {
     knowsAbout: [
       'Derecho Penal',
       'Derecho Procesal Penal',
-      'Derecho de Familia',
-      'Derecho Laboral',
-      'Derecho Civil y Notarial',
-      'Derecho Mercantil y Empresarial',
+      'Defensa de personas detenidas, investigadas o acusadas',
+      'Ejecución penal',
+      'Recursos penales',
       'Código Penal Decreto 130-2017 de Honduras y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)',
     ],
     address: {
@@ -604,11 +568,11 @@ export function founderSchema() {
       addressCountry: site.address.countryCode,
     },
     // sameAs: solo perfiles públicos verificables de Danilo. El handle de X
-    // es claramente personal (Danilo_Pineda_M). Se añade googleBusiness
-    // (perfil del bufete en Google Maps que lo representa como abogado).
+    // es claramente personal (Danilo_Pineda_M). Google Business pertenece
+    // al bufete y queda excluido de esta entidad personal.
     // NO se inventan perfiles (R4). Cuando se verifique LinkedIn
     // personal, añadirlo vía variables de entorno.
-    sameAs: validUrlsOnly([site.social.x, site.googleBusiness, FOUNDER_PROFILE.linkedin, FOUNDER_PROFILE.directorio]),
+    sameAs: personSameAs([site.social.x, FOUNDER_PROFILE.linkedin, FOUNDER_PROFILE.directorio]),
   };
 }
 
@@ -625,10 +589,12 @@ export function founderSchema() {
 export const THANIA_PROFILE = {
   name: 'Thania Marlene Paz',
   jobTitle: 'Abogada · Socia fundadora',
+  /** Slug canónico de la página de perfil (plan maestro §4): /equipo/thania-marlene-paz. */
+  slug: 'thania-marlene-paz',
   image: '/images/equipo/thania-marlene-paz.webp',
   imageAltText: 'Thania Marlene Paz, abogada socia fundadora de Pineda y Asociados en Nacaome, Valle (Honduras)',
   description:
-    'Abogada socia fundadora de Pineda y Asociados. Especializada en derecho administrativo, familia, civil y notarial, y mercantil y empresarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.',
+    'Abogada socia fundadora de Pineda y Asociados. Su práctica se concentra en derecho administrativo, familia, civil y notarial, y mercantil y empresarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.',
   specialties: [
     'Derecho Administrativo y Servicio Civil',
     'Derecho de Familia',
@@ -653,7 +619,8 @@ export function thaniaSchema() {
   return {
     // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'Person',
-    '@id': `${site.url}/#thania`,
+    '@id': `${site.url}/#thania-marlene-paz`,
+    url: `${site.url}/equipo/${THANIA_PROFILE.slug}`,
     name: THANIA_PROFILE.name,
     honorificPrefix: 'Abogada',
     // knowsLanguage: coherente con LegalService y Organization.
@@ -679,8 +646,8 @@ export function thaniaSchema() {
       addressRegion: site.address.department,
       addressCountry: site.address.countryCode,
     },
-    ...(validUrlsOnly([THANIA_PROFILE.linkedin, THANIA_PROFILE.directorio]).length > 0
-      ? { sameAs: validUrlsOnly([THANIA_PROFILE.linkedin, THANIA_PROFILE.directorio]) }
+    ...(personSameAs([THANIA_PROFILE.linkedin, THANIA_PROFILE.directorio]).length > 0
+      ? { sameAs: personSameAs([THANIA_PROFILE.linkedin, THANIA_PROFILE.directorio]) }
       : {}),
   };
 }
@@ -697,10 +664,12 @@ export function thaniaSchema() {
 export const EMIL_PROFILE = {
   name: 'Emil Barahona',
   jobTitle: 'Abogado · Socio del bufete',
+  /** Slug canónico de la página de perfil (plan maestro §4): /equipo/emil-barahona. */
+  slug: 'emil-barahona',
   image: '/images/equipo/emil-barahona.webp',
   imageAltText: 'Emil Barahona, abogado socio de Pineda y Asociados en Nacaome, Valle (Honduras)',
   description:
-    'Abogado socio de Pineda y Asociados. Especializado en derecho laboral, penal, y civil y notarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.',
+    'Abogado socio de Pineda y Asociados. Su práctica se concentra en derecho laboral, penal, y civil y notarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.',
   specialties: [
     'Derecho Laboral',
     'Derecho Penal',
@@ -723,7 +692,8 @@ export function emilSchema() {
   return {
     // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'Person',
-    '@id': `${site.url}/#emil`,
+    '@id': `${site.url}/#emil-barahona`,
+    url: `${site.url}/equipo/${EMIL_PROFILE.slug}`,
     name: EMIL_PROFILE.name,
     honorificPrefix: 'Abogado',
     // knowsLanguage: coherente con LegalService y Organization.
@@ -749,8 +719,109 @@ export function emilSchema() {
       addressRegion: site.address.department,
       addressCountry: site.address.countryCode,
     },
-    ...(validUrlsOnly([EMIL_PROFILE.linkedin, EMIL_PROFILE.directorio]).length > 0
-      ? { sameAs: validUrlsOnly([EMIL_PROFILE.linkedin, EMIL_PROFILE.directorio]) }
+    ...(personSameAs([EMIL_PROFILE.linkedin, EMIL_PROFILE.directorio]).length > 0
+      ? { sameAs: personSameAs([EMIL_PROFILE.linkedin, EMIL_PROFILE.directorio]) }
       : {}),
   };
+}
+
+/**
+ * Registro canónico de los perfiles públicos del equipo (plan maestro §4).
+ *
+ * SLUG: nombre estable en la URL pública (`/equipo/[slug]`). No reutiliza
+ * los anchors cortos del `/despacho` (`thania`, `emil`): el plan exige slugs
+ * legibles con el nombre completo o apellido completo. La correspondencia
+ * con el `@id` del nodo `Person` del @graph global se expone vía `personId`,
+ * para que el `ProfilePage.mainEntity` enlace siempre al mismo `Person`.
+ *
+ * IDEMPOTENCIA: ninguna de estas rutas requiere datos productivos para
+ * construirse (todo viene de `lib/site.ts`). Esto cumple R4: no se inventan
+ * credenciales, CAH, universidad, casos ganados ni años de colegiación.
+ */
+interface LawyerProfileMeta {
+  slug: string;
+  personId: string;
+  name: string;
+  jobTitle: string;
+  /** SEO title absoluto (sin sufijo de marca). Plan maestro §4.2. */
+  metaTitle: string;
+  /** Meta description (plan maestro §4.2). */
+  metaDescription: string;
+  /** H1 visible (plan maestro §4.2). */
+  h1: string;
+  /** Texto profesional canónico (plan §2.1). */
+  description: string;
+  /** Áreas verificadas. */
+  areas: readonly string[];
+  /** Path de imagen relativo (puede no existir todavía). */
+  image: string;
+  imageAlt: string;
+}
+
+export const LAWYER_PROFILES: readonly LawyerProfileMeta[] = [
+  {
+    slug: 'danilo-pineda-maradiaga',
+    personId: `${site.url}/#danilo-pineda-maradiaga`,
+    name: FOUNDER_PROFILE.name,
+    jobTitle: FOUNDER_PROFILE.jobTitle,
+    metaTitle: 'Danilo Pineda Maradiaga | Abogado Penalista en Honduras',
+    metaDescription:
+      'Perfil de Danilo Pineda Maradiaga, abogado penalista y socio director. Defensa penal en Nacaome y la zona sur de Honduras.',
+    h1: 'Danilo Pineda Maradiaga, abogado penalista',
+    description:
+      'Danilo Pineda Maradiaga es abogado penalista, socio director de Pineda y Asociados y abogado colegiado en Honduras. Su práctica se concentra en la defensa penal, la asistencia desde las primeras diligencias, las audiencias, los recursos y la ejecución de la pena. Atiende asuntos en Nacaome y en la zona sur de Honduras con un enfoque técnico, prudente y basado en el análisis individual de cada expediente.',
+    areas: [
+      'Derecho penal',
+      'Proceso penal',
+      'Defensa de personas detenidas, investigadas o acusadas',
+      'Ejecución penal',
+      'Recursos penales',
+    ],
+    image: FOUNDER_PROFILE.image,
+    imageAlt: FOUNDER_PROFILE.imageAltText,
+  },
+  {
+    slug: 'thania-marlene-paz',
+    personId: `${site.url}/#thania-marlene-paz`,
+    name: THANIA_PROFILE.name,
+    jobTitle: THANIA_PROFILE.jobTitle,
+    metaTitle: 'Thania Marlene Paz | Abogada de Familia, Civil y Mercantil',
+    metaDescription:
+      'Perfil de Thania Marlene Paz, socia fundadora y abogada colegiada en Honduras. Derecho de familia, administrativo, civil, notarial y mercantil.',
+    h1: 'Thania Marlene Paz, abogada de familia, civil y mercantil',
+    description:
+      'Thania Marlene Paz es abogada, socia fundadora de Pineda y Asociados y abogada colegiada en Honduras. Su práctica comprende derecho de familia, derecho administrativo, asuntos civiles y notariales y asesoría mercantil. Interviene en procedimientos que requieren coordinación documental, negociación, prevención de riesgos y representación ante autoridades administrativas o judiciales.',
+    areas: [
+      'Derecho de familia',
+      'Derecho administrativo',
+      'Derecho civil y notarial',
+      'Derecho mercantil y empresarial',
+    ],
+    image: THANIA_PROFILE.image,
+    imageAlt: THANIA_PROFILE.imageAltText,
+  },
+  {
+    slug: 'emil-barahona',
+    personId: `${site.url}/#emil-barahona`,
+    name: EMIL_PROFILE.name,
+    jobTitle: EMIL_PROFILE.jobTitle,
+    metaTitle: 'Emil Barahona | Abogado Laboral, Civil y Penal',
+    metaDescription:
+      'Perfil de Emil Barahona, socio de Pineda y Asociados y abogado colegiado en Honduras. Derecho laboral, civil, notarial y apoyo en materia penal.',
+    h1: 'Emil Barahona, abogado laboral, civil y penal',
+    description:
+      'Emil Barahona es abogado, socio de Pineda y Asociados y abogado colegiado en Honduras. Su práctica se centra en derecho laboral, asuntos civiles y notariales y apoyo en materia penal. Asesora a trabajadores, particulares y empresas mediante el análisis de documentos, la preparación de reclamaciones y la representación en procedimientos de negociación o litigio.',
+    areas: [
+      'Derecho laboral',
+      'Derecho civil y notarial',
+      'Apoyo en derecho penal',
+    ],
+    image: EMIL_PROFILE.image,
+    imageAlt: EMIL_PROFILE.imageAltText,
+  },
+] as const;
+
+/** Resuelve un profile por slug, o undefined si no existe (R4: no inventa). */
+export function getLawyerProfileBySlug(slug: string): LawyerProfileMeta | undefined {
+  return LAWYER_PROFILES.find((p) => p.slug === slug);
 }

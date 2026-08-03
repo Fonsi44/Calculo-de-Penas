@@ -39,7 +39,7 @@ const TRUST_ITEMS: readonly TrustItem[] = [
   {
     icon: Phone,
     title: 'Atención directa',
-    description: 'El abogado responsable del área atiende su caso, sin intermediarios. Un único punto de contacto por expediente.',
+    description: 'La asignación profesional se define según la materia y las características del asunto.',
   },
   {
     icon: ShieldCheck,

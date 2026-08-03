@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import {
   Scale,
   ShieldCheck,
@@ -9,7 +10,7 @@ import {
   Gavel,
   Award,
 } from 'lucide-react';
-import { site, FOUNDER_PROFILE } from '@/lib/site';
+import { site, FOUNDER_PROFILE, LAWYER_PROFILES } from '@/lib/site';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
   // redirects 301 y todos los canonicals. La normalización de Next es segura.
   // Auditoría 2026-07-06 (A-02): decisión documentada, sin cambio de código.
   alternates: { canonical: `${site.url}/` },
-  keywords: ['abogados Nacaome', 'bufete jurídico Valle', 'defensa penal Nacaome', 'abogado penalista Valle', 'abogados San Lorenzo', 'abogados Choluteca', 'abogados Goascorán', 'abogados San Marcos de Colón', 'abogados El Triunfo', 'abogados Marcovia', 'abogados Pespire', 'abogados Namasigüe', 'abogados Orocuina', 'abogados sur Honduras', 'abogados zona sur Honduras', 'consulta legal gratuita Nacaome', 'despacho jurídico Nacaome'],
+  keywords: ['abogados Nacaome', 'bufete jurídico Valle', 'defensa penal Nacaome', 'abogado penalista Valle', 'abogados San Lorenzo', 'abogados Choluteca', 'abogados Goascorán', 'abogados San Marcos de Colón', 'abogados El Triunfo', 'abogados Marcovia', 'abogados Pespire', 'abogados Namasigüe', 'abogados Orocuina', 'abogados sur Honduras', 'abogados zona sur Honduras', 'evaluación legal confidencial Nacaome', 'despacho jurídico Nacaome'],
   robots: {
     index: true,
     follow: true,
@@ -118,6 +119,7 @@ export default async function HomePage() {
     { step: 2, title: t('process.step2_title'), desc: t('process.step2_desc') },
     { step: 3, title: t('process.step3_title'), desc: t('process.step3_desc') },
     { step: 4, title: t('process.step4_title'), desc: t('process.step4_desc') },
+    { step: 5, title: t('process.step5_title'), desc: t('process.step5_desc') },
   ];
 
   const WHY_POINTS = [
@@ -131,32 +133,6 @@ export default async function HomePage() {
     hubPenal,
     ...areasGenerales.filter((area) => HIGHLIGHTED_AREAS.includes(area.slug)),
   ];
-
-  // FAQ i18n home — LEGACY STRUCTURED-DATA (no UI, no fuente canónica).
-  // Único rol: alimentar el schema JSON-LD FAQPage (rich result) de la home.
-  // No se renderiza visible en la home (ver transformación Fase 3.1); la FAQ
-  // visible vive en /preguntas-frecuentes. La fuente canónica de FAQ comercial
-  // es lib/faq-unified.ts (getFaqsForHub). Estas 6 Q/A i18n se conservan
-  // únicamente para sostener el rich result de la home sin introducir
-  // duplicación visual. Marcar como LEGACY: no ampliar ni usar como modelo.
-  const FAQ_HOME_LEGACY = [
-    { q: t('faq.q1'), a: t('faq.a1') },
-    { q: t('faq.q2'), a: t('faq.a2') },
-    { q: t('faq.q3'), a: t('faq.a3') },
-    { q: t('faq.q4'), a: t('faq.a4') },
-    { q: t('faq.q5'), a: t('faq.a5') },
-    { q: t('faq.q6'), a: t('faq.a6') },
-  ];
-
-  const faqLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: FAQ_HOME_LEGACY.map((f) => ({
-      '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
-    })),
-  };
 
   return (
     <>
@@ -203,7 +179,7 @@ export default async function HomePage() {
                 </span>
               </div>
               <h1 className="font-serif font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight text-text-inverse text-balance">
-                Defensa penal y asesoría jurídica en Nacaome y Honduras
+                Abogados en Nacaome para defensa penal y asesoría jurídica
               </h1>
               <p className="mt-4 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-2xl text-pretty">
                 {t('hero.subtitle')}
@@ -257,7 +233,7 @@ export default async function HomePage() {
                   )}
                   <div className="flex items-center gap-2 pt-0.5">
                     <CheckCircle2 size={13} className="text-accent flex-shrink-0" />
-                    <p className="text-xs text-text-inverse/80">Consulta inicial sin costo · Presupuesto por escrito</p>
+                    <p className="text-xs text-text-inverse/80">Evaluación confidencial · Presupuesto por escrito</p>
                   </div>
                 </div>
               </div>
@@ -319,6 +295,37 @@ export default async function HomePage() {
         />
       </Section>
 
+      <Section spacing="md" ariaLabel="Equipo de abogados">
+        <SectionHeader
+          eyebrow="Equipo"
+          title="Abogados responsables, con perfil público"
+          subtitle="Conozca quién dirige cada área y consulte su experiencia profesional antes de solicitar una valoración de su caso."
+        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {LAWYER_PROFILES.map((profile) => (
+            <Link
+              key={profile.slug}
+              href={`/equipo/${profile.slug}`}
+              className="group rounded-lg border border-border-light bg-surface p-5 hover:border-accent/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"
+              aria-label={`Ver perfil profesional de ${profile.name}`}
+            >
+              <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark">
+                {profile.jobTitle}
+              </p>
+              <h2 className="mt-2 font-serif text-xl font-extrabold text-primary group-hover:text-accent-dark transition-colors">
+                {profile.name}
+              </h2>
+              <p className="mt-3 text-sm text-text-secondary leading-relaxed">
+                {profile.areas.slice(0, 3).join(' · ')}
+              </p>
+              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark">
+                Ver perfil completo
+              </span>
+            </Link>
+          ))}
+        </div>
+      </Section>
+
       {/* CÓMO TRABAJAMOS — proceso de atención (stepper) */}
       <Section spacing="md" ariaLabel="Proceso de atención">
         <SectionHeader
@@ -348,13 +355,9 @@ export default async function HomePage() {
           visual completa FAQ que duplicaba el hub FAQ canónico). */}
       <ConsultationCTA
         variant="closing"
-        subtitle="Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones legales disponibles. Atendemos en Nacaome, San Lorenzo, Amapala, Langue, Goascorán, Choluteca, Pespiré, San Marcos de Colón, Marcovia y El Triunfo. Presupuesto por escrito antes de cualquier actuación. Sus datos están protegidos por el secreto profesional del abogado."
+        subtitle="Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones legales disponibles. Atendemos en Nacaome, San Lorenzo, Amapala, Goascorán, Choluteca, San Marcos de Colón y El Triunfo. Presupuesto por escrito antes de cualquier actuación. Sus datos están protegidos por el secreto profesional del abogado."
       />
 
-      {/* Schema.org JSON-LD — FAQPage (las 6 preguntas i18n se conservan
-          para rich results AEO/GEO; el render visual vive en
-          /preguntas-frecuentes para evitar triplicación). */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
     </>
   );
 }

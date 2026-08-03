@@ -71,7 +71,7 @@
   --color-primary-dark: #060E20;
   --color-accent: #D4AF37;
   --color-accent-light: #E5C97A;
-  --color-accent-dark: #9A7A22;
+  --color-accent-dark: #705714;
 
   /* Superficies — jerarquía clara: fondo < alt < card < overlay
      Refuerzo: surface-2 añade un nivel sutil entre alt y card para
@@ -87,7 +87,7 @@
   --color-text: #1A1C20;
   --color-text-secondary: #5F6368;
   /* text-muted: ~4.6:1 sobre blanco (AA small text). Antes #8A8F95 (~3.4:1). */
-  --color-text-muted: #6E7177;
+  --color-text-muted: #5B5E64;
   --color-text-inverse: #FFFFFF;
 
   /* Bordes — visibles sin ser agresivos */
@@ -96,7 +96,7 @@
   --color-border-strong: #C4BFB4;
 
   /* Semánticos */
-  --color-success: #0E7A4F;
+  --color-success: #0B6642;
   --color-success-bg: #E6F4ED;
   --color-success-border: #B8DEC9;
 
@@ -555,7 +555,7 @@ input[type="checkbox"] {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.3em;
-  color: var(--color-accent);
+  color: var(--color-accent-dark);
 }
 .eyebrow-rule::before {
   content: "";
@@ -574,7 +574,7 @@ input[type="checkbox"] {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: var(--tracking-eyebrow);
-  color: var(--color-accent);
+  color: var(--color-accent-dark);
 }
 
 /* Título de sección estándar (font-serif, extrabold, responsive, tracking ajustado) */
@@ -912,6 +912,8 @@ details.faq-anim:not([open]) > summary:hover {
   max-width: 42rem; /* ~672px: ancho de lectura óptimo */
   margin-left: auto;
   margin-right: auto;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .article-body h2 {
@@ -1033,6 +1035,201 @@ details.faq-anim:not([open]) > summary:hover {
   }
   .article-body h2 + h3 {
     margin-top: 1.75rem;
+  }
+}
+
+/* ============================================================
+   FICHAS DE DATOS / COMPARATIVAS (Jul 2026)
+   Sustituyen a las <table> del blog en el render para evitar
+   overflow horizontal y palabras partidas en móvil. El HTML lo
+   genera lib/blog-table-transformer.ts (render-only); el CSS solo
+   aporta presentación. Identidad azul oscuro + dorado (§9 prompt).
+   ============================================================ */
+
+/* --- Contenedor de comparación (tablas de 3+ columnas) --- */
+.article-body .article-comparison-cards,
+.article-body .article-data-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1.75rem 0;
+  /* Permite grid de 2 columnas en escritorio para fichas breves, pero
+     nunca comprime campos jurídicos en columnas estrechas: cada ficha
+     usa min-width:0 para que el contenido pueda fluir sin overflow. */
+}
+
+.article-body .article-comparison-cards__caption,
+.article-body .article-data-cards__caption,
+.article-body .article-data-list__caption {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent-dark);
+  margin: 0 0 0.5rem;
+}
+
+.article-body .article-comparison-card,
+.article-body .article-data-card {
+  min-width: 0; /* clave: permite que el contenido encoja sin overflow */
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border-light);
+  border-left: 3px solid var(--color-accent); /* acento dorado lateral */
+  border-radius: var(--radius-lg, 0.5rem);
+  padding: 1.125rem 1.25rem;
+  /* Evita cortar una ficha entre páginas al imprimir */
+  break-inside: avoid;
+}
+
+.article-body .article-comparison-card__title,
+.article-body .article-data-card__title,
+.article-body .article-comparison-card > h3,
+.article-body .article-data-card > h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border-light);
+  /* Sin overflow horizontal aunque el título sea largo */
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.article-body .article-comparison-card__field,
+.article-body .article-data-card__field {
+  margin-bottom: 0.875rem;
+  min-width: 0;
+}
+.article-body .article-comparison-card__field:last-child,
+.article-body .article-data-card__field:last-child {
+  margin-bottom: 0;
+}
+
+.article-body .article-comparison-card__label,
+.article-body .article-data-card__label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
+  margin: 0 0 0.25rem;
+  /* Contraste AA sobre fondo surface-alt garantizado por tokens */
+}
+
+.article-body .article-comparison-card__value,
+.article-body .article-data-card__value {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  /* Clave anti-overflow y anti-palabras-partidas-letra-a-letra */
+  overflow-wrap: anywhere;
+  word-break: normal;
+  min-width: 0;
+}
+.article-body .article-comparison-card__value :is(p, ul, ol),
+.article-body .article-data-card__value :is(p, ul, ol) {
+  margin: 0 0 0.5rem;
+}
+.article-body .article-comparison-card__value :is(p, ul, ol):last-child,
+.article-body .article-data-card__value :is(p, ul, ol):last-child {
+  margin-bottom: 0;
+}
+.article-body .article-comparison-card__value a,
+.article-body .article-data-card__value a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+.article-body .article-comparison-card__value a:hover,
+.article-body .article-data-card__value a:hover {
+  color: var(--color-accent-dark);
+}
+
+/* --- Lista de datos (tablas de 1 columna) --- */
+.article-body .article-data-list {
+  list-style: none;
+  margin: 1.75rem 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+.article-body .article-data-list li {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border-light);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-lg, 0.5rem);
+  padding: 0.75rem 1rem;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  break-inside: avoid;
+}
+
+/* --- Responsive: escritorio permite 2 columnas SOLO para fichas de
+   definición (2 columnas origen, contenido breve). Las comparativas
+   (3+ columnas origen) siempre van en una sola columna para no
+   comprimir campos jurídicos. --- */
+@media (min-width: 768px) {
+  .article-body .article-data-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+/* --- Móvil: una sola columna, ancho 100%, sin texto vertical --- */
+@media (max-width: 640px) {
+  .article-body .article-comparison-cards,
+  .article-body .article-data-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+  .article-body .article-comparison-card,
+  .article-body .article-data-card {
+    padding: 1rem;
+  }
+}
+
+/* --- Dark mode: las fichas heredan los tokens, que ya cambian en
+   oscuro. Solo reforzamos el borde lateral dorado. --- */
+@media (prefers-color-scheme: dark) {
+  .article-body .article-comparison-card,
+  .article-body .article-data-card,
+  .article-body .article-data-list li {
+    border-left-color: var(--color-accent-light);
+  }
+}
+
+/* --- Impresión: fichas expandidas, sin fondos, bordes visibles,
+   sin cortar entre páginas. Sin tabla original (ya eliminada). --- */
+@media print {
+  .article-body .article-comparison-cards,
+  .article-body .article-data-cards,
+  .article-body .article-data-list {
+    display: block !important;
+  }
+  .article-body .article-comparison-card,
+  .article-body .article-data-card,
+  .article-body .article-data-list li {
+    background: #fff !important;
+    border: 1px solid #999 !important;
+    border-left: 3px solid #666 !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 0.75rem;
+  }
+  .article-body .article-comparison-card__title,
+  .article-body .article-data-card__title,
+  .article-body .article-comparison-card > h3,
+  .article-body .article-data-card > h3 {
+    color: #000;
+  }
+  .article-body .article-comparison-card__value,
+  .article-body .article-data-card__value,
+  .article-body .article-comparison-card__label,
+  .article-body .article-data-card__label {
+    color: #000;
   }
 }
 

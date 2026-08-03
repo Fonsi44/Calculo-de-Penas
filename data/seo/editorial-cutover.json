@@ -1,0 +1,18 @@
+{
+  "_comment": "Gate versionado corregido: la revisión institucional histórica es válida. Production conserva la indexación vigente hasta el despliegue autorizado; la firma individual no es requisito. Rollback: retirar SEO_EDITORIAL_CUTOVER o SEO_EDITORIAL_CUTOVER_APPROVAL_ID.",
+  "version": 2,
+  "state": "approved",
+  "production_sitemap_snapshot": {
+    "captured_at": "2026-07-28",
+    "source": "https://www.pinedayasociadoshn.com/sitemap.xml",
+    "observed_urls": 213
+  },
+  "approved_removal_urls": [],
+  "required_migrations": [
+    "0056_fix_blog_posts_ai_review_columns.sql",
+    "0057_reconcile_pr20_schema_contract.sql",
+    "0058_reconcile_pgcrypto_contract.sql",
+    "0059_blog_editorial_signatures.sql"
+  ],
+  "required_redirect_register": "docs/seo/current/redirect-candidates.csv"
+}

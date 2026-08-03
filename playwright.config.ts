@@ -30,7 +30,7 @@ export default defineConfig({
   webServer: process.env.PLAYWRIGHT_BASE_URL
     ? undefined
     : {
-        command: 'node scripts/e2e-start.mjs',
+        command: 'npm run e2e:start:public',
         url: BASE_URL,
         reuseExistingServer: !process.env.CI,
         timeout: 240_000,

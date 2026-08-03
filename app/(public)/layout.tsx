@@ -117,6 +117,14 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex flex-col min-h-screen bg-background pb-16 md:pb-0">
+      {/* Skip link: salta a #main (contenido principal) sin pasar por la
+          navegación. Visible solo al recibir foco (WCAG 2.4.1). */}
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[9999] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-text-inverse"
+      >
+        Ir al contenido principal
+      </a>
       <PublicHeader />
       <main id="main" className="flex-1">
         {children}

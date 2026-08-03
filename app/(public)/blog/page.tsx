@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { site } from '@/lib/site';
 import { Container } from '@/components/marketing/section';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
@@ -9,6 +9,7 @@ import { NewsletterSection } from '@/components/blog/newsletter-section';
 import { BlogHero } from '@/components/blog/blog-hero';
 import { FeaturedPosts } from '@/components/blog/featured-posts';
 import { BlogExplorer } from '@/components/blog/blog-explorer';
+import { BlogSidebar } from '@/components/blog/blog-sidebar';
 import { blogCollectionSchema } from '@/lib/schemas/blog';
 import {
   getAllPosts,
@@ -19,8 +20,13 @@ import {
   toCardData,
   deriveFeaturedPosts,
   deriveCategoryCounts,
+  derivePopularPosts,
+  deriveRecentPosts,
+  deriveArchiveMonths,
+  deriveAllTags,
   filterByMonth,
 } from '@/lib/blog-hub';
+import { resolveBlogPagination } from '@/lib/blog-pagination';
 
 export const revalidate = 3600;
 
@@ -36,41 +42,45 @@ function formatMonthLabel(value: string): string {
 
 const ITEMS_PER_PAGE = 12;
 
-type Props = { searchParams?: Promise<{ tag?: string; page?: string; month?: string }> };
+type BlogSearchParams = {
+  tag?: string | string[];
+  page?: string | string[];
+  month?: string | string[];
+};
+
+type Props = { searchParams?: Promise<BlogSearchParams> };
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const params = await searchParams;
-  const page = parseInt(params?.page ?? '1', 10) || 1;
-  const tagFilter = params?.tag;
-  const monthFilter = params?.month;
-  const hasFilter = !!(tagFilter || monthFilter);
-  const isPaginated = page > 1;
-  // Páginas paginadas (page>1 sin filtros): canonical a page 1 y noindex.
-  // Páginas con filtros (tag/month): canonical autocontenido y noindex.
-  const canonicalPath = hasFilter
-    ? `/blog${tagFilter ? `?tag=${encodeURIComponent(tagFilter)}` : ''}${monthFilter ? `${tagFilter ? '&' : '?'}month=${monthFilter}` : ''}`
-    : '/blog';
+  const contract = resolveBlogPagination({
+    basePath: '/blog',
+    rawPage: params?.page,
+    tag: params?.tag,
+    month: params?.month,
+  });
+  const { page, canonicalPath, isPaginated } = contract;
+  const title = `Blog Jurídico de Abogados en Honduras${isPaginated ? ` (Página ${page})` : ''}`;
+  const description = `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.${isPaginated ? ` Página ${page}.` : ''}`;
   return {
     // Absolute para controlar la longitud total del title (SEO).
-    title: { absolute: `Blog Jurídico de Abogados en Honduras${isPaginated ? ` (Página ${page})` : ''}` },
-    description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.${isPaginated ? ` Página ${page}.` : ''}`,
+    title: { absolute: title },
+    description,
     alternates: { canonical: canonicalPath },
     keywords: ['blog jurídico Honduras', 'artículos legales Honduras', 'derecho penal blog', 'abogados Honduras blog', 'derecho familia artículos', 'noticias legales Honduras', 'guías legales Honduras'],
-    // ?tag= y ?month= no indexables (filtros no canónicos).
-    // Páginas paginadas (page>1): noindex para consolidar autoridad en page 1.
-    robots: hasFilter || isPaginated
+    // Los filtros son noindex; la paginación editorial es indexable.
+    robots: contract.isFiltered
       ? { index: false, follow: true, googleBot: { index: false, follow: true } }
       : { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 } },
     twitter: {
       card: 'summary_large_image',
-      title: `Blog Jurídico - Artículos de Abogados en Honduras${page > 1 ? ` (Página ${page})` : ''}`,
-      description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.`,
+      title,
+      description,
       images: [`${site.url}/og-image.webp`],
     },
     openGraph: {
-      title: `Blog Jurídico de Abogados en Honduras${page > 1 ? ` - Página ${page}` : ''}`,
-      description: `Artículos, análisis y guías sobre derecho penal, familia, laboral y más en Honduras. Escrito por el equipo de ${site.name}.`,
-      url: `${site.url}/blog`,
+      title,
+      description,
+      url: `${site.url}${canonicalPath}`,
       siteName: site.name,
       locale: 'es_HN',
       type: 'website',
@@ -81,10 +91,15 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 
 export default async function BlogHubPage(props: Props) {
   const searchParams = await props.searchParams;
-  const tagFilter = searchParams?.tag;
-  const monthFilter = searchParams?.month;
-  const page = parseInt(searchParams?.page ?? '1', 10) || 1;
-  const hasFilter = !!(tagFilter || monthFilter);
+  const initialContract = resolveBlogPagination({
+    basePath: '/blog',
+    rawPage: searchParams?.page,
+    tag: searchParams?.tag,
+    month: searchParams?.month,
+  });
+  if (initialContract.notFound) notFound();
+  if (initialContract.redirectTo) permanentRedirect(initialContract.redirectTo);
+  const { page, tag: tagFilter, month: monthFilter, isFiltered: hasFilter } = initialContract;
 
   // Una sola consulta DB (getAllPosts). El resto se deriva en memoria.
   const allPosts = await getAllPosts();
@@ -99,47 +114,49 @@ export default async function BlogHubPage(props: Props) {
     ? filterByMonth(tagFiltered, monthFilter)
     : tagFiltered;
 
-  // Destacados: solo en página 1 sin filtros.
+  // La selección de destacados debe ser estable en toda la paginación. Solo
+  // se renderiza en página 1, pero sus slugs se excluyen siempre del grid para
+  // evitar duplicados y que el total cambie de 11 a 12 al navegar.
   const showFeatured = !hasFilter && page === 1;
-  const featured = showFeatured ? deriveFeaturedPosts(allPosts, 4) : [];
-  const featuredSlugs = new Set(featured.map((f) => f.slug));
+  const featuredSelection = !hasFilter ? deriveFeaturedPosts(allPosts, 4) : [];
+  const featured = showFeatured ? featuredSelection : [];
+  const featuredSlugs = new Set(featuredSelection.map((post) => post.slug));
 
-  // Listado paginado (vista servidor). En página 1 sin filtros, se excluyen
-  // los destacados del grid para no duplicarlos con la sección magazine.
-  const gridSource = showFeatured
+  // Listado paginado (vista servidor). Sin filtros, se excluyen siempre los
+  // destacados del grid para mantener el mismo universo en todas las páginas.
+  const gridSource = !hasFilter
     ? monthFiltered.filter((p) => !featuredSlugs.has(p.slug))
     : monthFiltered;
   const totalPages = getTotalPages(gridSource, ITEMS_PER_PAGE);
-
-  if (page < 1 || (gridSource.length > 0 && page > totalPages)) {
-    notFound();
-  }
+  const contract = resolveBlogPagination({
+    basePath: '/blog',
+    rawPage: searchParams?.page,
+    tag: tagFilter,
+    month: monthFilter,
+    totalPages,
+  });
+  if (contract.notFound) notFound();
 
   const pagePosts = getPostsByPage(gridSource, page, ITEMS_PER_PAGE);
 
-  // Derivación para la navegación por categorías.
+  // Derivaciones para la navegación y el sidebar tipo magazine/WordPress.
+  // Todas parten de la consulta única ya realizada a la DB.
   const categoryCounts = deriveCategoryCounts(allPosts);
+  const popular = derivePopularPosts(allPosts, 5).map(toCardData);
+  const recent = deriveRecentPosts(allPosts, 5).map(toCardData);
+  const archive = deriveArchiveMonths(allPosts, 8);
+  const tags = deriveAllTags(allPosts);
 
-  // Payload ligero (sin body) para el explorador cliente.
-  // Se limita a 80 entradas para evitar serializar el corpus completo en HTML.
-  const explorerPosts = monthFiltered.slice(0, 80).map(toCardData);
+  // Payload ligero (sin body) para el explorador cliente. Debe incluir todo el
+  // inventario para que la búsqueda y los filtros no pierdan artículos que
+  // quedan fuera de la primera página.
+  const explorerPosts = monthFiltered.map(toCardData);
   const explorerPagePosts = pagePosts.map(toCardData);
-
-  const buildPageUrl = (p: number) => {
-    const base = '/blog';
-    const params = new URLSearchParams();
-    if (p > 1) params.set('page', String(p));
-    if (tagFilter) params.set('tag', tagFilter);
-    if (monthFilter) params.set('month', monthFilter);
-    const qs = params.toString();
-    return qs ? `${base}?${qs}` : base;
-  };
 
   return (
     <>
-      {/* rel prev/next solo en vista paginada sin filtros (indexable). */}
-      {!hasFilter && page > 1 && <link rel="prev" href={site.url + buildPageUrl(page - 1)} />}
-      {!hasFilter && page < totalPages && <link rel="next" href={site.url + buildPageUrl(page + 1)} />}
+      {contract.prevPath && <link rel="prev" href={site.url + contract.prevPath} />}
+      {contract.nextPath && <link rel="next" href={site.url + contract.nextPath} />}
 
       <Breadcrumbs items={[
         { label: 'Inicio', href: '/' },
@@ -157,10 +174,11 @@ export default async function BlogHubPage(props: Props) {
         <FeaturedPosts posts={featured.map(toCardData)} />
       )}
 
-      {/* ── Contenido principal: buscador, filtros y cuadrícula ── */}
+      {/* ── Contenido principal: cuadrícula + sidebar editorial ── */}
       <section id="articulos" className="py-10 md:py-14">
         <Container size="lg">
-          <div className="min-w-0 space-y-6">
+          <div className="grid lg:grid-cols-[minmax(0,1fr)_20rem] gap-8 lg:gap-10">
+            <div className="min-w-0 space-y-6">
               <div className="flex items-center justify-between gap-4">
                 <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary">
                   {tagFilter ? 'Artículos etiquetados' : monthFilter ? `Archivo: ${formatMonthLabel(monthFilter)}` : page > 1 ? 'Todos los artículos' : 'Todos los artículos'}
@@ -171,6 +189,16 @@ export default async function BlogHubPage(props: Props) {
                 <RssButton />
               </div>
 
+              <p
+                className="text-sm text-text-secondary"
+                data-blog-inventory-summary
+              >
+                {monthFiltered.length} artículos disponibles
+                {' · '}Página {page} de {totalPages}
+                {' · '}{featured.length + pagePosts.length} visibles en esta página
+                {featured.length > 0 ? ` (${featured.length} destacados)` : ''}
+              </p>
+
               <BlogExplorer
                 posts={explorerPosts}
                 categories={categoryCounts}
@@ -178,6 +206,7 @@ export default async function BlogHubPage(props: Props) {
                 page={page}
                 totalPages={totalPages}
                 activeTag={tagFilter ?? null}
+                activeMonth={monthFilter ?? null}
                 itemsPerPage={ITEMS_PER_PAGE}
               />
 
@@ -190,6 +219,15 @@ export default async function BlogHubPage(props: Props) {
                   Consulte nuestras preguntas frecuentes →
                 </Link>
               </p>
+            </div>
+
+            <BlogSidebar
+              categories={categoryCounts}
+              popular={popular}
+              recent={recent}
+              archive={archive}
+              tags={tags}
+            />
           </div>
         </Container>
       </section>
@@ -241,18 +279,20 @@ export default async function BlogHubPage(props: Props) {
 
       <NewsletterSection />
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            blogCollectionSchema(
-              `Blog Jurídico | ${site.name}`,
-              'Artículos, análisis y guías sobre derecho en Honduras.',
-              `${site.url}/blog`,
+      {!contract.isFiltered && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              blogCollectionSchema(
+                `Blog Jurídico${page > 1 ? ` — Página ${page}` : ''} | ${site.name}`,
+                `Artículos, análisis y guías sobre derecho en Honduras.${page > 1 ? ` Página ${page}.` : ''}`,
+                `${site.url}${contract.canonicalPath}`,
+              ),
             ),
-          ),
-        }}
-      />
+          }}
+        />
+      )}
     </>
   );
 }

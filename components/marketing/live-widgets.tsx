@@ -1,11 +1,12 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Activity, Calendar, Download, MessageCircle, Phone, Share, X } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
 import { formatHondurasTime, getHondurasClock } from '@/lib/datetime';
 import { trackWhatsAppClick, trackPhoneClick } from '@/lib/analytics';
 import { useInstallPrompt } from '@/hooks/use-install-prompt';
+import { useConsentObserver } from '@/hooks/use-consent-observer';
 
 export function LiveClock() {
   const [now, setNow] = useState<Date | null>(() => new Date());
@@ -117,12 +118,17 @@ export function LiveOfficeStatus() {
 export function FloatingContactRail() {
   const { showButton, isIOS, promptInstall, dismiss } = useInstallPrompt();
   const [iosPanelOpen, setIosPanelOpen] = useState(false);
+  const installButtonRef = useRef<HTMLButtonElement>(null);
+  const consentOpen = useConsentObserver();
 
   // Cierra el panel de instrucciones iOS con Escape (accesibilidad teclado).
   useEffect(() => {
     if (!iosPanelOpen) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIosPanelOpen(false);
+      if (e.key === 'Escape') {
+        setIosPanelOpen(false);
+        installButtonRef.current?.focus();
+      }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -136,25 +142,33 @@ export function FloatingContactRail() {
     }
   }, [isIOS, promptInstall]);
 
-  const closeIosPanel = useCallback(() => setIosPanelOpen(false), []);
+  const closeIosPanel = useCallback(() => {
+    setIosPanelOpen(false);
+    installButtonRef.current?.focus();
+  }, []);
 
   const handleIosGotIt = useCallback(() => {
     dismiss();
     setIosPanelOpen(false);
+    installButtonRef.current?.focus();
   }, [dismiss]);
 
   return (
     <div
       data-floating-widget
+      inert={consentOpen}
+      aria-hidden={consentOpen ? 'true' : undefined}
       aria-label="Acceso rápido de contacto"
-      className="fixed bottom-4 right-4 z-30 hidden md:flex flex-col gap-2 print:hidden safe-bottom"
+      className={`fixed bottom-20 md:bottom-4 right-4 z-30 flex-col gap-2 print:hidden safe-bottom ${
+        showButton ? 'flex' : 'hidden md:flex'
+      }`}
     >
       <a
         href={whatsappHref('Hola, necesito orientación jurídica.')}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => trackWhatsAppClick('floating_button')}
-        className="group w-12 h-12 rounded-full bg-success text-white flex items-center justify-center btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-transform"
+        className="group w-12 h-12 rounded-full bg-success text-white flex items-center justify-center btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-transform focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
         aria-label="Contactar por WhatsApp"
         title="WhatsApp"
       >
@@ -168,11 +182,14 @@ export function FloatingContactRail() {
           Oculto si ya está instalada o si el usuario lo descartó (<30 días). */}
       {showButton && (
         <button
+          ref={installButtonRef}
           type="button"
           onClick={handleInstallClick}
-          className="group w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 transition-transform focus-visible:outline-none"
+          className="group w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 transition-transform focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
           aria-label="Instalar como aplicación"
           title="Instalar esta web como aplicación"
+          aria-expanded={iosPanelOpen}
+          aria-controls={isIOS ? "ios-install-instructions" : undefined}
         >
           <Download size={20} aria-hidden="true" />
           <span className="absolute right-full mr-2 whitespace-nowrap rounded-md bg-text text-text-inverse text-xxs font-semibold px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
@@ -185,13 +202,11 @@ export function FloatingContactRail() {
           beforeinstallprompt, la instalación es manual vía Compartir. */}
       {iosPanelOpen && (
         <>
-          {/* Overlay clic-fuera para cerrar. role=presentation porque el
-              overlay no es accionable por teclado (el cierre real vía Escape
-              y botón X ya está cubierto). */}
+          {/* Overlay clic-fuera para cerrar. */}
           <div role="presentation" onClick={closeIosPanel} className="fixed inset-0 z-40" />
           <div
-            role="dialog"
-            aria-modal="true"
+            id="ios-install-instructions"
+            role="region"
             aria-label="Cómo instalar en iPhone o iPad"
             className="absolute bottom-full right-0 mb-2 z-50 w-64 rounded-lg border border-accent/30 bg-surface text-text shadow-xl p-4"
           >
@@ -201,7 +216,7 @@ export function FloatingContactRail() {
                 type="button"
                 onClick={closeIosPanel}
                 aria-label="Cerrar instrucciones"
-                className="-mr-1 -mt-1 p-1 rounded text-text-secondary hover:text-text focus-visible:outline-none"
+                className="-mr-1 -mt-1 p-1 rounded text-text-secondary hover:text-text focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
               >
                 <X size={14} aria-hidden="true" />
               </button>
@@ -230,7 +245,7 @@ export function FloatingContactRail() {
             <button
               type="button"
               onClick={handleIosGotIt}
-              className="mt-3 w-full h-9 rounded-md bg-accent text-primary text-xs font-bold hover:bg-accent-light transition-colors focus-visible:outline-none"
+              className="mt-3 w-full h-9 rounded-md bg-accent text-primary text-xs font-bold hover:bg-accent-light transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
             >
               Entendido
             </button>
@@ -242,16 +257,19 @@ export function FloatingContactRail() {
 }
 
 export function MobileContactBar() {
+  const consentOpen = useConsentObserver();
   return (
     <nav
       data-floating-widget
+      inert={consentOpen}
+      aria-hidden={consentOpen ? 'true' : undefined}
       aria-label="Contacto rápido"
       className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 gap-px border-t border-border bg-surface/95 px-2 py-2 shadow-lg backdrop-blur-md md:hidden print:hidden safe-bottom"
     >
       <a
         href={telHref()}
         onClick={() => trackPhoneClick('mobile_contact_bar')}
-        className="inline-flex h-11 items-center justify-center gap-2 rounded-lg text-xs font-bold text-primary hover:bg-primary/5"
+        className="inline-flex h-11 items-center justify-center gap-2 rounded-lg text-xs font-bold text-primary hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
       >
         <Phone size={18} aria-hidden="true" />
         Llamar
@@ -261,14 +279,14 @@ export function MobileContactBar() {
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => trackWhatsAppClick('mobile_contact_bar')}
-        className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-success text-xs font-bold text-white btn-shadow-success"
+        className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-success text-xs font-bold text-white btn-shadow-success focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
       >
         <MessageCircle size={18} aria-hidden="true" />
         WhatsApp
       </a>
       <a
         href="/solicitar-consulta#formulario"
-        className="inline-flex h-11 items-center justify-center gap-2 rounded-lg text-xs font-bold text-primary hover:bg-accent/10"
+        className="inline-flex h-11 items-center justify-center gap-2 rounded-lg text-xs font-bold text-primary hover:bg-accent/10 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
       >
         <Calendar size={18} aria-hidden="true" />
         Consulta
@@ -285,11 +303,20 @@ export function Ticker() {
   ];
   return (
     <div className="bg-primary-dark text-text-inverse/80 overflow-hidden border-b border-primary-light/30">
-      <div className="flex animate-[ticker_45s_linear_infinite] whitespace-nowrap py-1.5">
-        {[...items, ...items, ...items].map((t, i) => (
+      <div className="flex animate-[ticker_45s_linear_infinite] motion-reduce:animate-none motion-reduce:flex-wrap motion-reduce:justify-center whitespace-nowrap py-1.5">
+        {items.map((t, i) => (
           <span
-            key={i}
+            key={`main-${i}`}
             className="inline-flex items-center gap-2 px-6 text-xxs font-semibold"
+          >
+            <Activity size={10} className="text-accent" aria-hidden="true" /> {t}
+          </span>
+        ))}
+        {[...items, ...items].map((t, i) => (
+          <span
+            key={`dup-${i}`}
+            aria-hidden="true"
+            className="inline-flex items-center gap-2 px-6 text-xxs font-semibold motion-reduce:hidden"
           >
             <Activity size={10} className="text-accent" /> {t}
           </span>
@@ -299,6 +326,15 @@ export function Ticker() {
         @keyframes ticker {
           0% { transform: translateX(0); }
           100% { transform: translateX(-33.333%); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .flex {
+            animation: none !important;
+            white-space: normal !important;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+          }
         }
       `}</style>
     </div>
