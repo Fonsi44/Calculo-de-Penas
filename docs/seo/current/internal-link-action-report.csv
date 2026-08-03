@@ -1,11 +1,11 @@
-generated_at,2026-08-03T11:39:07.182Z
+generated_at,2026-08-03T16:55:37.323Z
 timezone,America/Tegucigalpa
 environment,local
 source,./docs/seo/current/internal-link-audit.csv
 generator,seo:internal-link-gap-report
 row_count,53
 filters,status=ACTION_REQUIRED
-commit,63dc2f0f
+commit,3e2bbc35
 
 url,slug,category,problema,service_link_esperado,cluster_links_recomendados,official_sources_ausentes,accion
 /blog/tributario/devolucion-impuestos-como-solicitarla-honduras,devolucion-impuestos-como-solicitarla-honduras,tributario,Todos los artículos permanecen lawyer_review_pending; no se añaden enlaces públicos hacia contenidos aún no autorizados.,Derecho Tributario y Fiscal (/servicios-juridicos/tributario-fiscal),defensa-sar-choluteca,no,Revisar enlaces contextuales, añadir servicio y fuentes oficiales; no añadir landings noindex.
