@@ -189,7 +189,7 @@ completo o en ramas de rescue.
 | 7     | `3e2bbc35` |                    chore(seo): refrescar timestamp generado de llms.txt | 1        | Sincronizar `llms.txt` con build                            |
 | 8     | `62ca06a4` |      chore(seo): actualizar procedencia del informe de enlazado interno | 1        | Re-sincronizar `generated_at`/`commit`                      |
 | 9     | `d4821aa5` |   fix(seo): gate runtime no trata DATABASE_URL placeholder como DB real | 1        | `hasDb` → `connectionMode` (SKIPPED honesto)                |
-| 10    | `1bad9c83` |        fix(ci): actualizar baseline knip para gates de datos dinámicos | 1        | Deuda knip legítima de scripts/lib nuevos (CI)             |
+| 10    | `1bad9c83` |         fix(ci): actualizar baseline knip para gates de datos dinámicos | 1        | Deuda knip legítima de scripts/lib nuevos (CI)              |
 
 Los 14 commits previos no se reescribieron. El PR #25 se fusionó con **merge commit**
 (`79dc9141`, parents `57aa3edd` + `1bad9c83`) conservando la secuencia lógica de commits.
@@ -284,7 +284,7 @@ No se marca `PASS` ninguna validación no ejecutada.
     está integrado a nivel de repositorio (no en workflow local), por lo que no
     se modifica su configuración; se documenta como falso positivo específico.
   - Los checks obligatorios de `main` son solo `Higiene, Lint, TypeScript,
-    Tests, Build` (protección de rama); quedó **verde** antes del merge.
+Tests, Build` (protección de rama); quedó **verde** antes del merge.
 - **PR #23:** cerrado tras preservar `ca5e03ee` → `e062b7fa` (comentario técnico).
 - **Merge:** PR #25 marcado ready y fusionado en `main` con **merge commit**
   `79dc9141` (2026-08-03T17:10Z); PR cerrado.
@@ -317,16 +317,16 @@ No se marca `PASS` ninguna validación no ejecutada.
 
 ## 15. Limpieza
 
-| Elemento | Cantidad | Detalle |
-|---|---|---|
-| Ramas locales eliminadas | 10 | `docs/final-remediation-closure`, `refactor/repository-professionalization`, `chore/audit-ledger-reconciliation`, `staging/fase6-preproduction`, `feat/seo-geo-content-authority`, `feat/seo-geo-content-authority-clean`, `backup/fase6-invalida-595d10b8`, `backup/mac-setup-edde8f25`, `backup/seo-before-sol-rebuild-2026-07-28`, `backup/seo-geo-before-cleanup-2026-07-28` |
-| Ramas remotas eliminadas | 6 | Mismas (excepto backups locales); + `git remote prune origin` |
-| Ramas conservadas | 9 | `main`, `feat/seo-geo-master-implementation` (integración), `hotfix/intranet-access-accounts` (auth sensible), 6 `rescue/stash-N-*` |
-| Stashes eliminados | 6 | Todos preservados (ramas `rescue/stash-N-*`, `stash-N.patch`, bundle) |
-| Stashes conservados | 0 | — |
-| Worktrees limpiados | 2 | `jv-ledger.tfjQl2`, `jv-pr20-fix.0P9KST` (prunable; ramas sincronizadas con origin) |
-| Tags creados | 2 | `rescue/seo-geo-master-20260803-103835` (seguridad), `seo-geo-public-release-20260803` (release, publicado) |
-| Rescue por stash | 6 | `rescue/stash-0..5-*` (conservados) |
+| Elemento                 | Cantidad | Detalle                                                                                                                                                                                                                                                                                                                                                                          |
+| ------------------------ | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ramas locales eliminadas | 10       | `docs/final-remediation-closure`, `refactor/repository-professionalization`, `chore/audit-ledger-reconciliation`, `staging/fase6-preproduction`, `feat/seo-geo-content-authority`, `feat/seo-geo-content-authority-clean`, `backup/fase6-invalida-595d10b8`, `backup/mac-setup-edde8f25`, `backup/seo-before-sol-rebuild-2026-07-28`, `backup/seo-geo-before-cleanup-2026-07-28` |
+| Ramas remotas eliminadas | 6        | Mismas (excepto backups locales); + `git remote prune origin`                                                                                                                                                                                                                                                                                                                    |
+| Ramas conservadas        | 9        | `main`, `feat/seo-geo-master-implementation` (integración), `hotfix/intranet-access-accounts` (auth sensible), 6 `rescue/stash-N-*`                                                                                                                                                                                                                                              |
+| Stashes eliminados       | 6        | Todos preservados (ramas `rescue/stash-N-*`, `stash-N.patch`, bundle)                                                                                                                                                                                                                                                                                                            |
+| Stashes conservados      | 0        | —                                                                                                                                                                                                                                                                                                                                                                                |
+| Worktrees limpiados      | 2        | `jv-ledger.tfjQl2`, `jv-pr20-fix.0P9KST` (prunable; ramas sincronizadas con origin)                                                                                                                                                                                                                                                                                              |
+| Tags creados             | 2        | `rescue/seo-geo-master-20260803-103835` (seguridad), `seo-geo-public-release-20260803` (release, publicado)                                                                                                                                                                                                                                                                      |
+| Rescue por stash         | 6        | `rescue/stash-0..5-*` (conservados)                                                                                                                                                                                                                                                                                                                                              |
 
 Ninguna rama o stash se eliminó sin preservación (bundle `repository-all.bundle` + ramas/tags de rescue).
 
@@ -334,19 +334,19 @@ Ninguna rama o stash se eliminó sin preservación (bundle `repository-all.bundl
 
 ## 16. Estado final
 
-| Elemento | Valor |
-|---|---|
-| Rama local | `main` |
-| `main` local vs `origin/main` | idénticos (`79dc9141`) |
-| Árbol de trabajo | limpio (salvo este informe pendiente de commit final) |
-| Stashes sin clasificar | 0 |
-| Worktrees obsoletos | 0 |
-| PR antiguos con trabajo pendiente | 0 (PR #23 cerrado; PR #25 fusionado) |
-| Ramas eliminadas sin preservación | 0 |
-| CI (check obligatorio de `main`) | verde |
-| Production | verificada (22 URLs 200; contenido del nuevo build) |
-| PR abiertos | 0 con trabajo pendiente (quedan PRs históricos cerrados de dependabot/Vercel) |
-| Deployment | `79dc9141` en Production (Ready) |
+| Elemento                          | Valor                                                                         |
+| --------------------------------- | ----------------------------------------------------------------------------- |
+| Rama local                        | `main`                                                                        |
+| `main` local vs `origin/main`     | idénticos (`79dc9141`)                                                        |
+| Árbol de trabajo                  | limpio (salvo este informe pendiente de commit final)                         |
+| Stashes sin clasificar            | 0                                                                             |
+| Worktrees obsoletos               | 0                                                                             |
+| PR antiguos con trabajo pendiente | 0 (PR #23 cerrado; PR #25 fusionado)                                          |
+| Ramas eliminadas sin preservación | 0                                                                             |
+| CI (check obligatorio de `main`)  | verde                                                                         |
+| Production                        | verificada (22 URLs 200; contenido del nuevo build)                           |
+| PR abiertos                       | 0 con trabajo pendiente (quedan PRs históricos cerrados de dependabot/Vercel) |
+| Deployment                        | `79dc9141` en Production (Ready)                                              |
 
 Se conservan de forma deliberada: `feat/seo-geo-master-implementation` (rama de
 integración, útil para revert), `hotfix/intranet-access-accounts` (rama de auth
