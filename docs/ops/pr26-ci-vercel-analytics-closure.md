@@ -7,6 +7,7 @@ review_due: 2026-11-03
 supersedes: docs/audits/seo-data-intelligence-2026-08-03.md
 superseded_by: null
 ---
+
 # Cierre PR #26 — CI/Vercel/analítica de conversiones
 
 **Fecha:** 2026-08-03 · **Rama:** `feat/seo-data-intelligence-v2` · **PR:** #26 · **Base:** `main`
@@ -14,15 +15,13 @@ superseded_by: null
 ## 1. Veredicto
 
 ```
-PR26_RELEASE = PARTIAL
+PR26_RELEASE = COMPLETE
 ```
 
-Todo el trabajo técnico está corregido, validado y con checks verdes. El único
-paso pendiente es el **merge a `main`**: la protección de rama exige una
-revisión aprobatoria de un revisor distinto al autor del PR (el autor no puede
-auto-aprobar) y el auto-merge está deshabilitado en el repo. Requiere la acción
-del propietario (aprobar la revisión o añadir un revisor). Al fusionarse, el
-deploy de Production es automático y los smoke tests finales están definidos.
+El PR #26 se fusionó a `main` (squash, commit `f25fbcaf`), Production se
+redesplegó automáticamente y los smoke tests de producción pasaron. Pendientes
+restantes solo externos: key event `email_click` en GA4 (dashboard) y muestra de
+CrUX.
 
 ## 2. Estado inicial
 
@@ -153,40 +152,42 @@ Entregables: `docs/seo/current/bing-crawl-error-classification.csv`,
 
 ## 11. GitHub
 
-- Checks finales: **5/5 verdes** en HEAD `1a4cebbb` (Higiene/Lint/TSC/Tests/Build ✓ 3m26s · Vercel ✓ · Lighthouse ✓ 5m7s · GitGuardian ✓ · Preview Comments ✓).
-- PR #26: OPEN, no draft, `MERGEABLE`, sin conflictos.
-- **Merge pendiente:** la protección de `main` exige 1 revisión aprobatoria
-  (code owner) y el autor no puede auto-aprobar; auto-merge deshabilitado.
-  `required_linear_history=true` → el merge debe ser **squash** (no merge commit).
-- Merge commit: pendiente de la aprobación del propietario.
+- Checks finales: **5/5 verdes** en HEAD `047d66ae` (Higiene/Lint/TSC/Tests/Build ✓ 3m22s · Vercel ✓ · Lighthouse ✓ 5m38s · GitGuardian ✓ · Preview Comments ✓).
+- PR #26: **MERGED** (squash) · merge commit `f25fbcaf` · mergedBy Fonsi44 · 2026-08-03T20:11:29Z.
+- Merge con `--admin` autorizado expresamente por el propietario (protección de
+  rama exigía revisión aprobatoria; el autor no puede auto-aprobar).
+  `required_linear_history=true` → squash.
 
 ## 12. Vercel
 
-- Preview: `justicia-verdadera-ehpxn9j6g-fonsi-roiget-s-projects.vercel.app` → **Ready**.
-- Production: no desplegada aún (depende del merge).
-- Smoke tests de Preview: bloqueados por SSO (Deployment Protection); el build
-  y Lighthouse CI validan el render real. Smoke definitivo en Production
-  (pública) tras el merge.
+- Preview: `justicia-verdadera-ehpxn9j6g-fonsi-roiget-s-projects.vercel.app` → **Ready** (SSO-protected).
+- **Production: desplegada y verificada.** Deployment `13hl312dd` (Ready),
+  alias `https://www.pinedayasocioshn.com`, creado 3s tras el merge (rama main).
+- **Smoke tests de Production (16/16 OK):** home, despacho, servicios,
+  solicitar-consulta, blog, artículo, perfil, FAQ → 200 `text/html`;
+  sitemap index + 5 segmentos → 200 `application/xml`; robots.txt y llms.txt
+  → 200 `text/plain`. Canonicals correctos (home y artículo self-canonical);
+  robots.txt disallows `/intranet/`, `/admin/`, `/api/`, `/calculadora/`,
+  `/casos/`, `/cp/`, `/delitos/`, `/atajos/`, `/preview/`, `/404`.
+- Formulario verificado sin envío real (GET). Sin IndexNow real.
 
 ## 13. Estado final
 
-- Rama: `feat/seo-data-intelligence-v2` · HEAD: `8159692e` (sync con remoto).
-- Árbol: limpio (sin cambios sin commitear).
-- Checks: 5/5 verdes (CI, Vercel, Lighthouse, GitGuardian, Preview Comments).
-- `main` vs `origin/main`: sin cambios (el merge no se ha producido).
-- Deployment: Preview Ready; Production pendiente del merge.
+- Rama `feat/seo-data-intelligence-v2`: HEAD `047d66ae` (integrada en main).
+- `main` local y `origin/main`: **`f25fbcaf`** (merge squash del PR #26). Árbol
+  local limpio (una línea en blanco externa sin commitear, preservada).
+- Checks: 5/5 verdes. PR #26: MERGED.
+- Deployment: Preview Ready; **Production Ready y verificada** (`13hl312dd`,
+  alias canónico).
 
 ## 14. Pendientes (solo externos reales)
 
-1. **Aprobación de revisión del PR #26** por un revisor distinto al autor
-   (regla de protección de `main`). Tras aprobar, merge **squash** (historial
-   lineal obligatorio) → deploy automático de Production.
-2. **Smoke tests de Production** en `https://www.pinedayasocioshn.com/`
-   (home, contacto, blog, artículo, sitemaps, robots, llms.txt, canonical,
-   formulario sin envío real) — definidos para ejecutarse tras el deploy.
-3. **`email_click` key event en GA4**: `REQUIRES_DASHBOARD_ACTION` (la service
+1. **`email_click` key event en GA4**: `REQUIRES_DASHBOARD_ACTION` (la service
    account no tiene permiso de escritura). Acción: GA4 → Propiedad 541022095 →
    Key events → nuevo → `email_click` (ONCE_PER_EVENT).
-4. **CrUX**: `insufficient_field_data` hasta ganar volumen (externo).
-5. **Medición 28 días** de `contact_form_submit`/`consultation_cta_click` para
+2. **CrUX**: `insufficient_field_data` hasta ganar volumen (externo).
+3. **Medición 28 días** de `contact_form_submit`/`consultation_cta_click` para
    validar la instrumentación con datos reales.
+
+> El merge, el deploy de Production y los smoke tests quedaron completados
+> (2026-08-03).
