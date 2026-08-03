@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "generatedAt": "2026-08-03",
   "maximum": {
-    "files": 58,
+    "files": 61,
     "exports": 211,
     "types": 115,
     "duplicates": 1,
-    "binaries": 6,
+    "binaries": 8,
     "dependencies": 0,
     "devDependencies": 0,
     "unlisted": 0,

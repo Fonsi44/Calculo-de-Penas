@@ -1,0 +1,13 @@
+{
+  "generatedAt": "2026-08-03T18:24:09.845Z",
+  "total": 175,
+  "byAction": {
+    "DATA_REQUIRED": 66,
+    "UPDATE": 29,
+    "KEEP": 43,
+    "NOINDEX": 33,
+    "MERGE": 3,
+    "EXPAND": 1
+  },
+  "gscSource": "2026-02-04→2026-08-03"
+}

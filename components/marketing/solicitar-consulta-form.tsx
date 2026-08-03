@@ -5,9 +5,9 @@ import { Send, Loader2, CheckCircle2, AlertCircle, User, Phone, Mail, PhoneCall,
 import {
   trackContactFormSubmit,
   trackLeadGenerated,
-  trackConsultationFormView,
-  trackConsultationFormStart,
-  trackConsultationFormError,
+  trackContactFormView,
+  trackContactFormStart,
+  trackContactFormError,
 } from '@/lib/analytics';
 import { TurnstileWidget, type TurnstileStatus } from './turnstile-widget';
 import { telHref, whatsappHref } from '@/lib/site';
@@ -63,6 +63,27 @@ const URGENCIAS = [
   { value: 'alta', label: 'Alta (audiencia/citación próxima)' },
   { value: 'penal', label: 'Urgencia penal (detención en curso)' },
 ] as const;
+
+/** Mapea el motivo (categoría del caso) a un área de práctica estable para
+ *  analítica. NUNCA envía el detalle del caso ni el texto del usuario: solo
+ *  la categoría amplia (penal/laboral/familia/civil/espana/otro). §9.2. */
+const MOTIVO_SERVICE_AREA: Record<string, string> = {
+  'Familiar detenido': 'penal',
+  'Citaciones o audiencias': 'penal',
+  'Investigación en curso': 'penal',
+  'Querella o denuncia': 'penal',
+  'Recurso o apelación': 'penal',
+  'Atención a víctima': 'penal',
+  'Despido o prestaciones laborales': 'laboral',
+  'Divorcio, custodia o pensión de alimentos': 'familia',
+  'Contrato, propiedad, sucesión o trámite notarial': 'civil-notarial',
+  'Asunto desde España': 'espana',
+  'Otro asunto': 'otro',
+};
+
+function serviceAreaOf(motivo: string): string {
+  return MOTIVO_SERVICE_AREA[motivo] ?? 'otro';
+}
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
@@ -137,33 +158,37 @@ export function SolicitarConsultaForm() {
   const [turnstileStatus, setTurnstileStatus] = useState<TurnstileStatus>('loading');
   const [started, setStarted] = useState(false);
 
-  // Vista del formulario al montar (evento de conversión FASE 2, sin PII).
+  // Vista del formulario al montar (evento de conversión, sin PII).
   // Se dispara una sola vez al montar el componente.
   useEffect(() => {
-    trackConsultationFormView(typeof window !== 'undefined' ? window.location.pathname : '');
+    trackContactFormView(typeof window !== 'undefined' ? window.location.pathname : '');
   }, []);
 
   const onText =
     (k: keyof FormState) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
       setForm((f) => ({ ...f, [k]: e.target.value }));
-      // Primer campo editado → dispara form_start una sola vez.
+      // Primer campo editado → dispara contact_form_start una sola vez.
       if (!started) {
         setStarted(true);
-        trackConsultationFormStart(typeof window !== 'undefined' ? window.location.pathname : '');
+        trackContactFormStart(typeof window !== 'undefined' ? window.location.pathname : '');
       }
     };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Guard anti-doble-envío: mientras una solicitud está en curso se ignora
+    // cualquier nuevo submit (evita envíos duplicados y submits falsos).
+    if (status === 'sending') return;
+    const pagePath = typeof window !== 'undefined' ? window.location.pathname : '';
     if (!form.acepta) {
       setErr('Debe aceptar la política de privacidad.');
-      trackConsultationFormError({ campo: 'acepta', tipo: 'consent', ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
+      trackContactFormError({ category: 'validation', field: 'acepta', pagePath });
       return;
     }
     if (form.resumen.length < 15) {
       setErr('Describa brevemente su situación (mínimo 15 caracteres).');
-      trackConsultationFormError({ campo: 'resumen', tipo: 'minlength', ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
+      trackContactFormError({ category: 'validation', field: 'resumen', pagePath });
       return;
     }
     // Bloquear el envío cuando el captcha está configurado pero el usuario
@@ -174,32 +199,53 @@ export function SolicitarConsultaForm() {
           ? 'No se pudo cargar la verificación antispam. Recargue la página e intente de nuevo.'
           : 'Complete la verificación antispam antes de enviar.';
       setErr(msg);
-      trackConsultationFormError({ campo: 'turnstile', tipo: 'captcha', ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
+      trackContactFormError({ category: 'turnstile', field: 'turnstile', pagePath });
       return;
     }
     setStatus('sending');
     setErr('');
+    let resStatus = 0;
     try {
       const res = await fetch('/api/consulta', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, 'cf-turnstile-response': turnstileToken }),
       });
+      resStatus = res.status;
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         const suffix = typeof data.reference === 'string' ? ` Referencia: ${data.reference}.` : '';
         throw new Error(`${data.error ?? 'No se pudo enviar la solicitud.'}${suffix}`);
       }
+      // Éxito real: el servidor confirmó (HTTP 2xx) y la solicitud quedó
+      // persistida. Se envía el evento de conversión con datos NO personales.
       setReference(typeof data.reference === 'string' ? data.reference : '');
       setStatus('success');
       setTurnstileToken('');
       trackLeadGenerated('consulta_form');
-      trackContactFormSubmit({ motivo: form.motivo, ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
+      trackContactFormSubmit({
+        formName: 'consulta',
+        pagePath,
+        serviceArea: serviceAreaOf(form.motivo),
+        submissionStatus: 'success',
+        transport: form.medioPreferido,
+      });
     } catch (e) {
       setStatus('error');
       setErr(e instanceof Error ? e.message : 'Error desconocido.');
       setTurnstileToken('');
-      trackConsultationFormError({ tipo: 'submit', ruta: typeof window !== 'undefined' ? window.location.pathname : '' });
+      // Categoría de error controlada (§9.3): nunca se envía el mensaje.
+      const category =
+        resStatus === 429
+          ? 'rate_limit'
+          : resStatus >= 500
+            ? 'server'
+            : resStatus >= 400
+              ? 'validation'
+              : resStatus === 0
+                ? 'network'
+                : 'unknown';
+      trackContactFormError({ category, pagePath });
     }
   };
 

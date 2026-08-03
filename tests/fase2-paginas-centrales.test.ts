@@ -200,24 +200,37 @@ describe('FASE 2 — data/faq.ts: categoría bufete-honorarios enfocada en contr
 });
 
 describe('FASE 2 — Analítica: sin PII y exclusión de preview/intranet', () => {
-  it('trackContactFormSubmit solo recibe motivo y ruta (no nombre/tel/email)', () => {
+  it('trackContactFormSubmit usa solo datos no personales (formName/pagePath/serviceArea/submissionStatus/transport)', () => {
     const formComponent = readRoot('components/marketing/solicitar-consulta-form.tsx');
     const callMatch = formComponent.match(/trackContactFormSubmit\(\{[^}]*\}\)/);
     expect(callMatch, 'debe llamar a trackContactFormSubmit').not.toBeNull();
     const call = callMatch![0];
     // No debe incluir nombre, telefono, email ni resumen como parámetros.
     expect(call).not.toMatch(/\b(nombre|telefono|email|resumen)\s*:/);
-    expect(call).toMatch(/motivo/);
+    // Usa los parámetros estables no personales (§9.2).
+    expect(call).toMatch(/formName/);
+    expect(call).toMatch(/pagePath/);
+    expect(call).toMatch(/serviceArea/);
+    expect(call).toMatch(/submissionStatus/);
+    expect(call).toMatch(/transport/);
+  });
+
+  it('el submit está protegido contra doble envío (guard status sending)', () => {
+    const formComponent = readRoot('components/marketing/solicitar-consulta-form.tsx');
+    expect(formComponent).toMatch(/status === 'sending'/);
+    expect(formComponent).toMatch(/Guard anti-doble-envío/);
   });
 
   it('los nuevos helpers FASE 2 existen y son sin PII', () => {
     const analytics = readRoot('lib/analytics.ts');
-    expect(analytics).toContain('export function trackConsultationFormView');
-    expect(analytics).toContain('export function trackConsultationFormStart');
-    expect(analytics).toContain('export function trackConsultationFormError');
+    expect(analytics).toContain('export function trackContactFormView');
+    expect(analytics).toContain('export function trackContactFormStart');
+    expect(analytics).toContain('export function trackContactFormError');
     expect(analytics).toContain('export function trackClickMaps');
     expect(analytics).toContain('export function trackViewService');
     expect(analytics).toContain('export function trackViewTeamSection');
+    expect(analytics).toContain('export function trackConsultationCtaClick');
+    expect(analytics).toContain('export type ContactFormErrorCategory');
   });
 
   it('excluye /preview y /intranet del tracking', () => {

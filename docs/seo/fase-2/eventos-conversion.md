@@ -14,18 +14,23 @@ sin nombre/correo/teléfono en parámetros, excluidos en preview e intranet).
 | ------ | ------ | ---------- | ------- |
 | `whatsapp_click` | `trackWhatsAppClick` | `value` | Clic en botón WhatsApp (CTAGroup, contacto) |
 | `phone_click` | `trackPhoneClick` | `value` | Clic en botón de llamada |
-| `form_click` | `trackFormClick` | `value` | Clic en CTA de formulario |
-| `email_click` | `trackEmailClick` | `value` | Clic en enlace mailto |
+| `form_click` | `trackFormClick` | `value`, `cta_location`, `source_path` | Clic en CTA de formulario genérico |
+| `consultation_cta_click` | `trackConsultationCtaClick` | `value`, `cta_location`, `source_path` | Clic en el CTA principal de consulta ("Solicitar evaluación confidencial") |
+| `email_click` | `trackEmailClick` | `value`, `cta_location`, `source_path` | Clic en enlace mailto |
 | `directions_click` | `trackDirectionsClick` | `value` | Clic en indicaciones |
-| `contact_form_submit` | `trackContactFormSubmit` | `value`, `motivo` (catálogo, ≤40), `ruta` (≤100) | Envío exitoso del formulario de consulta |
+| `contact_form_submit` | `trackContactFormSubmit` | `value`, `form_name`, `page_path`, `service_area` (categoría), `submission_status`, `transport` | Envío exitoso del formulario de consulta (HTTP 2xx) |
 | `lead_generated` | `trackLeadGenerated` | `value` | Conversión genérica de lead |
 | `faq_open` | `trackFaqOpen` | `question` (≤100), `page?` | Apertura de FAQ |
 | `blog_search` | `trackBlogSearch` | `query` (≤100) | Búsqueda en blog |
 | `internal_click` | `trackInternalClick` | `target` (≤100) | Clic en enlace interno |
 | `scroll_depth` | `trackScrollDepth` | `percent`, `value` | Profundidad de scroll |
 
-`contact_form_submit` **solo** recibe `motivo` (categoría del desplegable, no
-texto libre) y `ruta`. **No** recibe nombre, teléfono, email ni resumen del caso.
+`contact_form_submit` **solo** recibe datos no personales: `form_name`
+("consulta"), `page_path`, `service_area` (categoría amplia derivada del
+motivo: penal/laboral/familia/civil-notarial/espana/otro), `submission_status`
+("success" solo tras confirmación del servidor) y `transport` (medio preferido
+seleccionado). **No** recibe nombre, teléfono, email, resumen del caso ni
+contenido jurídico.
 
 ---
 
@@ -33,25 +38,30 @@ texto libre) y `ruta`. **No** recibe nombre, teléfono, email ni resumen del cas
 
 | Evento | Helper | Parámetros (sin PII) | Disparo | Ubicación |
 | ------ | ------ | -------------------- | ------- | --------- |
-| `consultation_form_view` | `trackConsultationFormView` | `value`, `ruta?` (≤100) | Montaje del formulario de consulta | `solicitar-consulta-form.tsx` (useEffect) |
-| `consultation_form_start` | `trackConsultationFormStart` | `value`, `ruta?` (≤100) | Primer campo editado del formulario | `solicitar-consulta-form.tsx` (onText) |
-| `consultation_form_error` | `trackConsultationFormError` | `value`, `campo?` (≤40, identificador), `tipo?` (≤40), `ruta?` (≤100) | Error de validación o envío | `solicitar-consulta-form.tsx` |
+| `contact_form_view` | `trackContactFormView` | `value`, `page_path?` | Montaje del formulario de consulta | `solicitar-consulta-form.tsx` (useEffect) |
+| `contact_form_start` | `trackContactFormStart` | `value`, `page_path?` | Primer campo editado del formulario (una sola vez) | `solicitar-consulta-form.tsx` (onText) |
+| `contact_form_error` | `trackContactFormError` | `value`, `category` (validation\|turnstile\|rate_limit\|network\|server\|delivery\|unknown), `field?` (identificador), `page_path?` | Error de validación o envío (sin el valor del campo) | `solicitar-consulta-form.tsx` |
 | `click_maps` | `trackClickMaps` | `value`, `origen?` (≤40) | Clic en enlace a Google Maps/indicaciones | `tracked-maps-link.tsx` (/como-llegar) |
 | `view_service` | `trackViewService` | `value`, `servicio?` (≤60, slug/identificador) | Vista de página o tarjeta de servicio | Disponible para uso en ServiceCard/áreas (no aplica PII) |
 | `view_team_section` | `trackViewTeamSection` | `value`, `ruta?` (≤100) | Vista de la sección de equipo | Disponible para uso en /despacho y home |
 
+> **2026-08-03:** los eventos `consultation_form_view/start/error` se
+> renombraron a `contact_form_view/start/error` para unificar la familia de
+> conversión del formulario (§9 del cierre PR26). Se añadió
+> `consultation_cta_click` para el CTA principal.
+
 ### 2.1. Embudo de conversión del formulario
 
 ```
-consultation_form_view  →  consultation_form_start  →  consultation_form_error*
-                                                        │
-                                                        └→ (corrección) → contact_form_submit / lead_generated
+contact_form_view  →  contact_form_start  →  contact_form_error*
+                                                   │
+                                                   └→ (corrección) → contact_form_submit / lead_generated
 ```
 
-- `consultation_form_view`: el usuario llegó al formulario (oportunidad de conversión).
-- `consultation_form_start`: el usuario interactuó (intentó completar).
-- `consultation_form_error`: fricción detectable por campo/tipo **sin exponer el valor**.
-- `contact_form_submit` + `lead_generated`: conversión confirmada tras HTTP 200.
+- `contact_form_view`: el usuario llegó al formulario (oportunidad de conversión).
+- `contact_form_start`: el usuario interactuó (intentó completar).
+- `contact_form_error`: fricción detectable por categoría controlada **sin exponer el valor**.
+- `contact_form_submit` + `lead_generated`: conversión confirmada tras HTTP 2xx.
 
 ### 2.2. Reglas de PII aplicadas
 

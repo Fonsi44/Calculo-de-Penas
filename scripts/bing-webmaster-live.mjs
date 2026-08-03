@@ -16,59 +16,99 @@
  *   npm run seo:bing:live -- --json-only
  */
 
-import { config } from 'dotenv';
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import fs from 'node:fs';
-import { atomicWrite, atomicWriteJson, hasFlag, writeDatasetsCsv, withRetry } from './analytics/export-utils.mjs';
+import { config } from "dotenv";
+import { resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import fs from "node:fs";
+import { canonicalOrigin } from "./seo-data-config.mjs";
+import {
+  atomicWrite,
+  atomicWriteJson,
+  hasFlag,
+  writeDatasetsCsv,
+  withRetry,
+} from "./analytics/export-utils.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(__dirname, '..');
-config({ path: resolve(ROOT, '.env') });
-config({ path: resolve(ROOT, '.env.local'), override: true });
+const ROOT = resolve(__dirname, "..");
+config({ path: resolve(ROOT, ".env") });
+config({ path: resolve(ROOT, ".env.local"), override: true });
 
-const BING_DATA_DIR = resolve(ROOT, 'data', 'bing');
-const OUT_JSON = resolve(BING_DATA_DIR, 'bing-live.json');
-const OUT_MD = resolve(ROOT, 'docs', 'audits', 'bing-live-report.md');
-const OUT_CSV = resolve(BING_DATA_DIR, 'bing-live.csv');
-const TOKEN_FILE = resolve(ROOT, '.secrets', 'bing-oauth.json');
+const BING_DATA_DIR = resolve(ROOT, "data", "bing");
+const OUT_JSON = resolve(BING_DATA_DIR, "bing-live.json");
+const OUT_MD = resolve(ROOT, "docs", "audits", "bing-live-report.md");
+const OUT_CSV = resolve(BING_DATA_DIR, "bing-live.csv");
+const TOKEN_FILE = resolve(ROOT, ".secrets", "bing-oauth.json");
 
-const API_KEY = process.env.INDEXNOW_KEY;
-const SITE_URL = 'https://www.pinedayasociadoshn.com/';
+// Credencial de Bing Webmaster API, SEPARADA de INDEXNOW_KEY (que es solo del
+// protocolo IndexNow). Se conserva INDEXNOW_KEY como fallback DEPRECADO para
+// compatibilidad con configuraciones previas, pero se advierte en el log.
+const API_KEY = process.env.BING_WEBMASTER_API_KEY || process.env.INDEXNOW_KEY;
+const BING_CRED_SOURCE = process.env.BING_WEBMASTER_API_KEY
+  ? "BING_WEBMASTER_API_KEY"
+  : process.env.INDEXNOW_KEY
+    ? "INDEXNOW_KEY (DEPRECADO para Bing; usa BING_WEBMASTER_API_KEY)"
+    : null;
+
+// Origen canónico desde la fuente única (NEXT_PUBLIC_SITE_URL / .env.example).
+const CANONICAL_ORIGIN = canonicalOrigin();
+if (!CANONICAL_ORIGIN) {
+  console.error(
+    "ERROR: NEXT_PUBLIC_SITE_URL no definido en env ni .env.example",
+  );
+  process.exit(1);
+}
+const SITE_URL = `${CANONICAL_ORIGIN}/`;
 const SITE_URL_ENC = encodeURIComponent(SITE_URL);
 
-const JSON_ONLY = process.argv.includes('--json-only');
+const JSON_ONLY = process.argv.includes("--json-only");
+if (BING_CRED_SOURCE && !JSON_ONLY)
+  console.log(`Bing credencial: ${BING_CRED_SOURCE}`);
 
 function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
 function loadOAuthToken() {
-  try { return JSON.parse(fs.readFileSync(TOKEN_FILE, 'utf-8')); }
-  catch { return null; }
+  try {
+    return JSON.parse(fs.readFileSync(TOKEN_FILE, "utf-8"));
+  } catch {
+    return null;
+  }
 }
 
 async function getJson(method, params = {}) {
   const qs = new URLSearchParams(params);
   const hasOAuth = loadOAuthToken();
-  const authHeader = hasOAuth ? { Authorization: `Bearer ${hasOAuth.access_token}` } : {};
-  if (API_KEY) qs.set('apikey', API_KEY);
+  const authHeader = hasOAuth
+    ? { Authorization: `Bearer ${hasOAuth.access_token}` }
+    : {};
+  if (API_KEY) qs.set("apikey", API_KEY);
 
   const url = `https://ssl.bing.com/webmaster/api.svc/json/${method}?${qs.toString()}`;
   try {
-    const res = await withRetry(() => fetch(url, { headers: authHeader, signal: AbortSignal.timeout(30000) }));
+    const res = await withRetry(() =>
+      fetch(url, { headers: authHeader, signal: AbortSignal.timeout(30000) }),
+    );
     const text = await res.text();
-    try { return { ok: res.ok, ...JSON.parse(text) }; }
-    catch { return { ok: false, error: text.slice(0, 200) }; }
+    try {
+      return { ok: res.ok, ...JSON.parse(text) };
+    } catch {
+      return { ok: false, error: text.slice(0, 200) };
+    }
   } catch (e) {
     return { ok: false, error: e.message };
   }
 }
 
 async function getCrawlStats() {
-  const data = await getJson('GetCrawlStats', { siteUrl: SITE_URL });
+  const data = await getJson("GetCrawlStats", { siteUrl: SITE_URL });
   if (data.ok && Array.isArray(data.d)) {
-    let crawled = 0, code2xx = 0, code4xx = 0, code5xx = 0, errors = 0;
+    let crawled = 0,
+      code2xx = 0,
+      code4xx = 0,
+      code5xx = 0,
+      errors = 0;
     for (const r of data.d) {
       crawled += r.CrawledPages || 0;
       code2xx += r.Code2xx || 0;
@@ -76,15 +116,22 @@ async function getCrawlStats() {
       code5xx += r.Code5xx || 0;
       errors += r.CrawlErrors || 0;
     }
-    return { daysReported: data.d.length, crawledPages: crawled, code2xx, code4xx, code5xx, crawlErrors: errors };
+    return {
+      daysReported: data.d.length,
+      crawledPages: crawled,
+      code2xx,
+      code4xx,
+      code5xx,
+      crawlErrors: errors,
+    };
   }
   return null;
 }
 
 async function getQueryStats() {
-  const data = await getJson('GetQueryStats', { siteUrl: SITE_URL });
+  const data = await getJson("GetQueryStats", { siteUrl: SITE_URL });
   if (data.ok && data.d) {
-    return (data.d || []).map(q => ({
+    return (data.d || []).map((q) => ({
       query: q.Query,
       clicks: q.Clicks || 0,
       impressions: q.Impressions || 0,
@@ -96,15 +143,18 @@ async function getQueryStats() {
 }
 
 async function getLinkCounts() {
-  const data = await getJson('GetLinkCounts', { siteUrl: SITE_URL });
+  const data = await getJson("GetLinkCounts", { siteUrl: SITE_URL });
   if (data.ok && data.d) {
-    return { totalLinks: data.d.TotalLinks || 0, totalPages: data.d.TotalPages || 0 };
+    return {
+      totalLinks: data.d.TotalLinks || 0,
+      totalPages: data.d.TotalPages || 0,
+    };
   }
   return null;
 }
 
 async function getUrlInfo(url) {
-  const data = await getJson('GetUrlInfo', {
+  const data = await getJson("GetUrlInfo", {
     siteUrl: SITE_URL,
     url,
   });
@@ -122,13 +172,13 @@ async function getUrlInfo(url) {
 }
 
 async function main() {
-  if (!JSON_ONLY) console.log('Bing Webmaster Tools — LIVE Data Extractor\n');
+  if (!JSON_ONLY) console.log("Bing Webmaster Tools — LIVE Data Extractor\n");
 
   if (!API_KEY) {
     const result = {
-      status: 'no_credentials',
+      status: "no_credentials",
       timestamp: new Date().toISOString(),
-      message: 'INDEXNOW_KEY no configurada en .env.local',
+      message: "INDEXNOW_KEY no configurada en .env.local",
     };
     ensureDir(BING_DATA_DIR);
     fs.writeFileSync(OUT_JSON, JSON.stringify(result, null, 2));
@@ -138,13 +188,16 @@ async function main() {
 
   const oauth = loadOAuthToken();
   const hasOAuth = oauth && Date.now() < (oauth.expires_at || 0);
-  if (!JSON_ONLY) console.log(`Auth: ${hasOAuth ? 'OAuth ✅' : 'API Key'} | Timestamp: ${new Date().toISOString()}\n`);
+  if (!JSON_ONLY)
+    console.log(
+      `Auth: ${hasOAuth ? "OAuth ✅" : "API Key"} | Timestamp: ${new Date().toISOString()}\n`,
+    );
 
   const result = {
-    status: 'ok',
+    status: "ok",
     timestamp: new Date().toISOString(),
     site: SITE_URL,
-    authMode: hasOAuth ? 'OAuth' : 'API Key',
+    authMode: hasOAuth ? "OAuth" : "API Key",
     crawlStats: null,
     queries: [],
     backlinks: null,
@@ -152,19 +205,22 @@ async function main() {
   };
 
   // Crawl stats
-  if (!JSON_ONLY) console.log('Consultando crawl stats...');
+  if (!JSON_ONLY) console.log("Consultando crawl stats...");
   result.crawlStats = await getCrawlStats();
   if (!JSON_ONLY && result.crawlStats) {
-    console.log(`  Días: ${result.crawlStats.daysReported} | crawled: ${result.crawlStats.crawledPages} | 4xx: ${result.crawlStats.code4xx} | errors: ${result.crawlStats.crawlErrors}`);
+    console.log(
+      `  Días: ${result.crawlStats.daysReported} | crawled: ${result.crawlStats.crawledPages} | 4xx: ${result.crawlStats.code4xx} | errors: ${result.crawlStats.crawlErrors}`,
+    );
   }
 
   // Query stats
-  if (!JSON_ONLY) console.log('Consultando queries...');
+  if (!JSON_ONLY) console.log("Consultando queries...");
   result.queries = await getQueryStats();
-  if (!JSON_ONLY) console.log(`  Queries encontradas: ${result.queries.length}`);
+  if (!JSON_ONLY)
+    console.log(`  Queries encontradas: ${result.queries.length}`);
 
   // Backlinks
-  if (!JSON_ONLY) console.log('Consultando backlinks...');
+  if (!JSON_ONLY) console.log("Consultando backlinks...");
   result.backlinks = await getLinkCounts();
   if (!JSON_ONLY && result.backlinks) {
     console.log(`  Links totales: ${result.backlinks.totalLinks}`);
@@ -190,43 +246,57 @@ async function main() {
     `${SITE_URL}abogados-en-orocuina`,
   ];
 
-  if (!JSON_ONLY) console.log('Consultando URLs prioritarias...');
+  if (!JSON_ONLY) console.log("Consultando URLs prioritarias...");
   for (let i = 0; i < PRIORITY_URLS.length; i += 3) {
     const batch = PRIORITY_URLS.slice(i, i + 3);
     const batchResults = await Promise.all(batch.map(getUrlInfo));
     for (const r of batchResults) {
       if (r) result.priorityUrls.push(r);
     }
-    if (i + 3 < PRIORITY_URLS.length) await new Promise(r => setTimeout(r, 500));
+    if (i + 3 < PRIORITY_URLS.length)
+      await new Promise((r) => setTimeout(r, 500));
   }
 
-  const crawled = result.priorityUrls.filter(u => u.crawled && !u.crawled.startsWith('01/01/0001'));
-  const notCrawled = result.priorityUrls.filter(u => !u.crawled || u.crawled.startsWith('01/01/0001'));
+  const crawled = result.priorityUrls.filter(
+    (u) => u.crawled && !u.crawled.startsWith("01/01/0001"),
+  );
+  const notCrawled = result.priorityUrls.filter(
+    (u) => !u.crawled || u.crawled.startsWith("01/01/0001"),
+  );
   if (!JSON_ONLY) {
-    console.log(`\n  URLs prioritarias rastreadas: ${crawled.length}/${result.priorityUrls.length}`);
+    console.log(
+      `\n  URLs prioritarias rastreadas: ${crawled.length}/${result.priorityUrls.length}`,
+    );
     if (notCrawled.length > 0) {
-      console.log('  No rastreadas aún:');
-      notCrawled.forEach(u => console.log(`    ${u.url.replace(SITE_URL, '/')}`));
+      console.log("  No rastreadas aún:");
+      notCrawled.forEach((u) =>
+        console.log(`    ${u.url.replace(SITE_URL, "/")}`),
+      );
     }
   }
 
   // Save JSON
   ensureDir(BING_DATA_DIR);
-  if (!hasFlag('--dry-run')) {
+  if (!hasFlag("--dry-run")) {
     await atomicWriteJson(OUT_JSON, result);
-    await writeDatasetsCsv(OUT_CSV, { queries: result.queries, priorityUrls: result.priorityUrls });
+    await writeDatasetsCsv(OUT_CSV, {
+      queries: result.queries,
+      priorityUrls: result.priorityUrls,
+    });
   }
   if (!JSON_ONLY) {
-    console.log(hasFlag('--dry-run')
-      ? '\nDry-run: JSON/CSV no escritos.'
-      : `\nDatos guardados en: ${OUT_JSON}`);
+    console.log(
+      hasFlag("--dry-run")
+        ? "\nDry-run: JSON/CSV no escritos."
+        : `\nDatos guardados en: ${OUT_JSON}`,
+    );
   }
 
   // Generate Markdown report
-  ensureDir(resolve(ROOT, 'docs', 'audits'));
+  ensureDir(resolve(ROOT, "docs", "audits"));
   let md = `# Bing WMT — Datos LIVE\n\n`;
   md += `**Generado:** ${new Date().toISOString()}\n`;
-  md += `**Modo:** ${hasOAuth ? 'OAuth' : 'API Key'}\n\n`;
+  md += `**Modo:** ${hasOAuth ? "OAuth" : "API Key"}\n\n`;
 
   md += `## Crawl Stats\n\n`;
   if (result.crawlStats) {
@@ -243,7 +313,7 @@ async function main() {
   if (result.queries.length > 0) {
     md += `| Query | Clics | Impresiones | Posición | CTR |\n`;
     md += `|-------|-------|-------------|----------|-----|\n`;
-    result.queries.slice(0, 20).forEach(q => {
+    result.queries.slice(0, 20).forEach((q) => {
       md += `| ${q.query} | ${q.clicks} | ${q.impressions} | ${q.position} | ${q.ctr}% |\n`;
     });
   } else {
@@ -253,9 +323,10 @@ async function main() {
   md += `\n## URLs Prioritarias\n\n`;
   md += `| URL | Rastreada | HTTP | Anchors |\n`;
   md += `|-----|-----------|------|--------|\n`;
-  result.priorityUrls.forEach(u => {
-    const crawled = u.crawled && !u.crawled.startsWith('01/01/0001') ? 'Sí' : 'No';
-    md += `| ${u.url} | ${crawled} | ${u.httpCode || '?'} | ${u.anchors || 0} |\n`;
+  result.priorityUrls.forEach((u) => {
+    const crawled =
+      u.crawled && !u.crawled.startsWith("01/01/0001") ? "Sí" : "No";
+    md += `| ${u.url} | ${crawled} | ${u.httpCode || "?"} | ${u.anchors || 0} |\n`;
   });
 
   md += `\n## Certificaciones\n\n`;
@@ -263,12 +334,17 @@ async function main() {
   md += `- [ ] \`.secrets/\` está en \`.gitignore\`\n`;
   md += `- [ ] Datos guardados en \`data/bing/\`\n`;
 
-  if (!hasFlag('--dry-run')) await atomicWrite(OUT_MD, md);
+  if (!hasFlag("--dry-run")) await atomicWrite(OUT_MD, md);
   if (!JSON_ONLY) {
-    console.log(hasFlag('--dry-run')
-      ? 'Dry-run: reporte Markdown no escrito.'
-      : `Reporte guardado en: ${OUT_MD}`);
+    console.log(
+      hasFlag("--dry-run")
+        ? "Dry-run: reporte Markdown no escrito."
+        : `Reporte guardado en: ${OUT_MD}`,
+    );
   }
 }
 
-main().catch(e => { console.error(e); process.exit(1); });
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});

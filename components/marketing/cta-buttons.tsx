@@ -4,7 +4,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Phone, MessageCircle, Calendar, ShieldAlert, MapPin } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
-import { trackWhatsAppClick, trackPhoneClick, trackFormClick, trackDirectionsClick } from '@/lib/analytics';
+import { trackWhatsAppClick, trackPhoneClick, trackConsultationCtaClick, trackDirectionsClick } from '@/lib/analytics';
 
 interface CTAGroupProps {
   variant?: 'primary' | 'inline' | 'compact' | 'inverse';
@@ -56,7 +56,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
         <a
           href="/solicitar-consulta#formulario"
           title="Solicitar consulta legal confidencial con Pineda y Asociados en Nacaome"
-          onClick={() => trackFormClick('cta_solicitar')}
+          onClick={() => trackConsultationCtaClick('cta_solicitar')}
           className="btn-shimmer inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer"
         >
           <Calendar size={16} aria-hidden="true" />
@@ -71,7 +71,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
         <a
           href="/solicitar-consulta#formulario"
           title="Solicitar consulta legal confidencial — Pineda y Asociados"
-          onClick={() => trackFormClick('cta_inverse')}
+          onClick={() => trackConsultationCtaClick('cta_inverse')}
           className="btn-shimmer inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer"
         >
           <Calendar size={16} aria-hidden="true" />
@@ -94,7 +94,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
       <a
         href="/solicitar-consulta#formulario"
         title="Solicitar consulta legal con Pineda y Asociados en Nacaome"
-        onClick={() => trackFormClick('cta_primary')}
+        onClick={() => trackConsultationCtaClick('cta_primary')}
         className="btn-shimmer inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer"
       >
         <Calendar size={16} aria-hidden="true" />
@@ -209,7 +209,7 @@ export function ContactStrip({ variant = 'horizontal', className }: ContactStrip
             title={`${it.label} — ${it.value} · Pineda y Asociados`}
             className="focus-visible:outline-none rounded-md block"
             onClick={() => {
-              if (it.href?.includes('/solicitar-consulta')) trackFormClick('contact_strip');
+              if (it.href?.includes('/solicitar-consulta')) trackConsultationCtaClick('contact_strip');
               else if (it.href?.includes('/como-llegar')) trackDirectionsClick('contact_strip');
             }}
           >
