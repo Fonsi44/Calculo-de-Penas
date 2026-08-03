@@ -132,9 +132,10 @@ function main(): void {
 
   loadEnvFile(envFile);
   const inspection = inspectEnvironment();
-  const dbUrl = process.env.DATABASE_URL;
-  const hasDb =
-    dbUrl !== undefined && dbUrl !== null && !dbUrl.includes("placeholder");
+  // Una DATABASE_URL "undefined"/placeholder/desconocida no es una DB usable.
+  // Usamos connectionMode (fail-closed de environment-guard) en lugar de solo
+  // comprobar la variable, para no tratar valores placeholder como DB real.
+  const hasDb = inspection.connectionMode !== "none";
   const results: GateEntry[] = [];
   let failed = false;
 
