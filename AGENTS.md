@@ -11,11 +11,11 @@ comandos de validación. Este protocolo es permanente.
 Todo agente opera en uno de estos tres modos. El modo debe declararse al inicio
 de la tarea y respetarse hasta el final.
 
-| Modo | Lectura | Escritura | Commits | Llamadas externas | Instalaciones / migraciones |
-|------|---------|-----------|---------|-------------------|------------------------------|
-| **`AUDITORÍA`** | Sí, **sin exclusiones** | No | No | Solo GET sin efectos | No |
-| **`IMPLEMENTACIÓN`** | Sí | Cambios autorizados, pequeños y trazables | Solo con autorización expresa del usuario | Solo con autorización expresa | Solo con autorización expresa |
-| **`VERIFICACIÓN`** | Sí | No | No | Solo comprobaciones de solo lectura | No |
+| Modo                 | Lectura                 | Escritura                                 | Commits                                   | Llamadas externas                   | Instalaciones / migraciones   |
+| -------------------- | ----------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------- | ----------------------------- |
+| **`AUDITORÍA`**      | Sí, **sin exclusiones** | No                                        | No                                        | Solo GET sin efectos                | No                            |
+| **`IMPLEMENTACIÓN`** | Sí                      | Cambios autorizados, pequeños y trazables | Solo con autorización expresa del usuario | Solo con autorización expresa       | Solo con autorización expresa |
+| **`VERIFICACIÓN`**   | Sí                      | No                                        | No                                        | Solo comprobaciones de solo lectura | No                            |
 
 **Ningún archivo, subsistema o directorio queda excluido de lectura durante una
 auditoría.** La lectura es siempre libre. Las restricciones de la §7 (auth,
@@ -52,56 +52,56 @@ autorización. La capacidad de observación es total; la de modificación, acota
 Una fuente de verdad por subsistema. El contenido original vive en estas
 fuentes; los índices derivados (como `embeddings`) no son fuente primaria.
 
-| Subsistema | Fuente |
-|------------|--------|
-| Blog | DB `blog_posts` vía `lib/blog-db.ts` |
-| Categorías blog | `data/blog/categories.ts` |
-| FAQ | DB `faq_entries` vía `lib/faq-db.ts` |
-| Categorías FAQ | `data/faq-categories.ts` |
-| Delitos CP | `data/delitos.json` (100 % verificables contra CP de Honduras) |
-| Páginas editables | DB `page_content` vía `lib/page-content-db.ts` |
-| Schema DB | `lib/schema.ts` |
-| Config sitio | `lib/site.ts` |
-| Artículos CP | `data/articulos_cp.json` |
-| Constitución | `data/articulos_constitucion.json` |
-| Códigos legales | `data/codigo_trabajo.json`, `codigo_civil.json`, `codigo_comercio.json`, `codigo_tributario.json` |
-| Áreas jurídicas | `data/areas-juridicas.ts` |
-| Landings locales | `data/landings-locales.ts` |
-| Indexabilidad pública | `lib/seo/public-indexability.ts` + `data/seo/local-landing-indexability.json` (clasificación de landings) + `data/seo/canonical-paths.json` (catálogo estático) |
-| Manifiesto sitemap | `data/seo/sitemap-public-manifest.json` |
-| SEO Live | `data/google/`, `data/bing/`, `data/seo/` (regenerable) |
-| RAG / Búsqueda semántica | DB `embeddings` vía `lib/rag/` (índice vectorial pgvector) |
+| Subsistema               | Fuente                                                                                                                                                          |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Blog                     | DB `blog_posts` vía `lib/blog-db.ts`                                                                                                                            |
+| Categorías blog          | `data/blog/categories.ts`                                                                                                                                       |
+| FAQ                      | DB `faq_entries` vía `lib/faq-db.ts`                                                                                                                            |
+| Categorías FAQ           | `data/faq-categories.ts`                                                                                                                                        |
+| Delitos CP               | `data/delitos.json` (100 % verificables contra CP de Honduras)                                                                                                  |
+| Páginas editables        | DB `page_content` vía `lib/page-content-db.ts`                                                                                                                  |
+| Schema DB                | `lib/schema.ts`                                                                                                                                                 |
+| Config sitio             | `lib/site.ts`                                                                                                                                                   |
+| Artículos CP             | `data/articulos_cp.json`                                                                                                                                        |
+| Constitución             | `data/articulos_constitucion.json`                                                                                                                              |
+| Códigos legales          | `data/codigo_trabajo.json`, `codigo_civil.json`, `codigo_comercio.json`, `codigo_tributario.json`                                                               |
+| Áreas jurídicas          | `data/areas-juridicas.ts`                                                                                                                                       |
+| Landings locales         | `data/landings-locales.ts`                                                                                                                                      |
+| Indexabilidad pública    | `lib/seo/public-indexability.ts` + `data/seo/local-landing-indexability.json` (clasificación de landings) + `data/seo/canonical-paths.json` (catálogo estático) |
+| Manifiesto sitemap       | `data/seo/sitemap-public-manifest.json`                                                                                                                         |
+| SEO Live                 | `data/google/`, `data/bing/`, `data/seo/` (regenerable)                                                                                                         |
+| RAG / Búsqueda semántica | DB `embeddings` vía `lib/rag/` (índice vectorial pgvector)                                                                                                      |
 
 ---
 
 ## 3. Reglas absolutas
 
-| # | Regla |
-|---|-------|
-| R1 | Leer el archivo antes de editarlo. No asumir. |
-| R2 | Una fuente de verdad por subsistema (ver §2). |
-| R3 | No usar datos mock como solución final. Persistencia = DB. |
-| R4 | No inventar datos legales. Citas verificables contra CP de Honduras. |
-| R5 | No rediseñar la web pública (`app/(public)/**`). SEO sí; visual no. |
-| R6 | No exponer la intranet. `/intranet/*`, `/admin/*` son PRIVADAS. |
-| R7 | Un cambio lógico por commit. Commits atómicos en español con prefijo. |
-| R8 | Validar según la matriz de la §4 (no siempre suite completa). |
-| R9 | No cambiar arquitectura sin justificación técnica. |
-| R10 | No modificar configuración de modelos, proveedores o APIs externas. |
-| R11 | Clasificar con honestidad: `IMPLEMENTADO`, `VALIDADO`, `NO VALIDADO`, `PENDIENTE`, `RIESGO`. |
-| R12 | No usar verbos complacientes. "hecho/listo/completado" solo si es exacto. |
-| R13 | Posts 600–1200 palabras guía. Ampliación IA → 800–1000 sin inventar datos legales. |
-| R14 | Disclaimer legal en componente `<LegalDisclaimer>`, nunca en body del post. |
-| R15 | Un solo `<h1>` por página de post (el título). Body usa `<h2>`/`<h3>`. |
-| R16 | Design tokens canónicos: radius `rounded-lg`, sombras vía `.btn-shadow-*`, icono `w-11 h-11`. Dorado solo acento. |
-| R17 | IA en blog: verificar contra fuentes canónicas. Dry-run por defecto. Sin relleno genérico. |
-| R18 | Footer/Home: solo ciudades con landing indexable (ver `data/seo/local-landing-indexability.json`); máximo 10. Las 9 landings `NOINDEX_UNTIL_UNIQUE` no aparecen en módulos destacados ni listados SEO automáticos. |
-| R19 | No borrar código muerto sin comprobar imports, rutas dinámicas, scripts, tests, cron, webhooks y despliegues. |
-| R20 | No ocultar errores con `try/catch` vacíos, casts inseguros, desactivación de reglas o exclusión de tests. |
-| R21 | No declarar una tarea completada sin ejecutar las validaciones correspondientes. |
-| R22 | Mantener aislados la web pública, el blog, la intranet, SGIE y administración cuando el cambio no afecte a todos. |
+| #   | Regla                                                                                                                                                                                                                                                                                                                                                                                |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| R1  | Leer el archivo antes de editarlo. No asumir.                                                                                                                                                                                                                                                                                                                                        |
+| R2  | Una fuente de verdad por subsistema (ver §2).                                                                                                                                                                                                                                                                                                                                        |
+| R3  | No usar datos mock como solución final. Persistencia = DB.                                                                                                                                                                                                                                                                                                                           |
+| R4  | No inventar datos legales. Citas verificables contra CP de Honduras.                                                                                                                                                                                                                                                                                                                 |
+| R5  | No rediseñar la web pública (`app/(public)/**`). SEO sí; visual no.                                                                                                                                                                                                                                                                                                                  |
+| R6  | No exponer la intranet. `/intranet/*`, `/admin/*` son PRIVADAS.                                                                                                                                                                                                                                                                                                                      |
+| R7  | Un cambio lógico por commit. Commits atómicos en español con prefijo.                                                                                                                                                                                                                                                                                                                |
+| R8  | Validar según la matriz de la §4 (no siempre suite completa).                                                                                                                                                                                                                                                                                                                        |
+| R9  | No cambiar arquitectura sin justificación técnica.                                                                                                                                                                                                                                                                                                                                   |
+| R10 | No modificar configuración de modelos, proveedores o APIs externas.                                                                                                                                                                                                                                                                                                                  |
+| R11 | Clasificar con honestidad: `IMPLEMENTADO`, `VALIDADO`, `NO VALIDADO`, `PENDIENTE`, `RIESGO`.                                                                                                                                                                                                                                                                                         |
+| R12 | No usar verbos complacientes. "hecho/listo/completado" solo si es exacto.                                                                                                                                                                                                                                                                                                            |
+| R13 | Posts 600–1200 palabras guía. Ampliación IA → 800–1000 sin inventar datos legales.                                                                                                                                                                                                                                                                                                   |
+| R14 | Disclaimer legal en componente `<LegalDisclaimer>`, nunca en body del post.                                                                                                                                                                                                                                                                                                          |
+| R15 | Un solo `<h1>` por página de post (el título). Body usa `<h2>`/`<h3>`.                                                                                                                                                                                                                                                                                                               |
+| R16 | Design tokens canónicos: radius `rounded-lg`, sombras vía `.btn-shadow-*`, icono `w-11 h-11`. Dorado solo acento.                                                                                                                                                                                                                                                                    |
+| R17 | IA en blog: verificar contra fuentes canónicas. Dry-run por defecto. Sin relleno genérico.                                                                                                                                                                                                                                                                                           |
+| R18 | Footer/Home: solo ciudades con landing indexable (ver `data/seo/local-landing-indexability.json`); máximo 10. Las 9 landings `NOINDEX_UNTIL_UNIQUE` no aparecen en módulos destacados ni listados SEO automáticos.                                                                                                                                                                   |
+| R19 | No borrar código muerto sin comprobar imports, rutas dinámicas, scripts, tests, cron, webhooks y despliegues.                                                                                                                                                                                                                                                                        |
+| R20 | No ocultar errores con `try/catch` vacíos, casts inseguros, desactivación de reglas o exclusión de tests.                                                                                                                                                                                                                                                                            |
+| R21 | No declarar una tarea completada sin ejecutar las validaciones correspondientes.                                                                                                                                                                                                                                                                                                     |
+| R22 | Mantener aislados la web pública, el blog, la intranet, SGIE y administración cuando el cambio no afecte a todos.                                                                                                                                                                                                                                                                    |
 | R23 | Autoría del blog: vigente excepción temporal de autoría corporativa (ver `docs/seo/decisions/temporary-corporate-blog-authorship.md`). PROHIBIDO cambiar `author`, `reviewedBy`, firmas o estados editoriales por motivos de autoría sin autorización expresa del propietario. No usar la marca como autor humano en contenidos que requieran autor individual sin esa autorización. |
-| R24 | Política comercial: única formulación «Evaluación inicial confidencial» (`lib/marketing-policy.ts`). PROHIBIDO publicar variantes de consulta gratuita/sin costo/sin compromiso no confirmadas. Validación obligatoria al escribir contenido administrable. |
+| R24 | Política comercial: única formulación «Evaluación inicial confidencial» (`lib/marketing-policy.ts`). PROHIBIDO publicar variantes de consulta gratuita/sin costo/sin compromiso no confirmadas. Validación obligatoria al escribir contenido administrable.                                                                                                                          |
 
 ---
 
@@ -110,30 +110,35 @@ fuentes; los índices derivados (como `embeddings`) no son fuente primaria.
 La validación universal (`lint` + `tsc` + `test` + `build`) no es siempre
 necesaria ni proporcionada. Aplíquese según el tipo de cambio:
 
-| Tipo de cambio | Validación mínima |
-|----------------|-------------------|
-| **Documentación** (`.md`) | Formato, enlaces internos rotos, coherencia. No requiere build ni suite. |
-| **Código localizado** (un módulo, una ruta, un componente) | `npm run lint` + `npx tsc --noEmit` + pruebas relacionadas al módulo. |
-| **Cambios transversales / seguridad / auth / DB / configuración** | `npm run lint && npx tsc --noEmit && npm run test && npm run build`. |
-| **SEO estático** (sitemap, robots, schema, metadata) | `npm run build` + validadores locales (`seo:ahrefs`, `validate-jsonld.mjs`). |
-| **Datos live** (GSC, GA4, Bing, IndexNow) | Solo cuando sean necesarios, existan credenciales válidas y el usuario lo haya autorizado expresamente. |
+| Tipo de cambio                                                    | Validación mínima                                                                                       |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Documentación** (`.md`)                                         | Formato, enlaces internos rotos, coherencia. No requiere build ni suite.                                |
+| **Código localizado** (un módulo, una ruta, un componente)        | `npm run lint` + `npx tsc --noEmit` + pruebas relacionadas al módulo.                                   |
+| **Cambios transversales / seguridad / auth / DB / configuración** | `npm run lint && npx tsc --noEmit && npm run test && npm run build`.                                    |
+| **SEO estático** (sitemap, robots, schema, metadata)              | `npm run build` + validadores locales (`seo:ahrefs`, `validate-jsonld.mjs`).                            |
+| **Datos live** (GSC, GA4, Bing, IndexNow)                         | Solo cuando sean necesarios, existan credenciales válidas y el usuario lo haya autorizado expresamente. |
 
 Comandos base: `npm run lint`, `npm run typecheck` (`tsc --noEmit`),
 `npm run test` (Vitest), `npm run build` (Next.js).
 
 ### Validación por área
 
-| Área | Comandos |
-|------|----------|
-| Schema DB | `npx drizzle-kit generate` |
-| Blog | `npm run validate:dates && npm run content:audit` |
-| Contenido editorial | `npm run blog:normalizar` (dry-run) → `:aplicar` |
-| IndexNow | `npm run indexnow:dry` |
-| SEO Live | `npm run seo:doctor && npm run seo:collect` |
-| SEO off-page | `npm run seo:health` |
-| Gate SEO/GEO público | `npm run seo:public-contract` |
-| RAG / Indexación vectorial | `npm run rag:indexar` (dry-run) → `:aplicar` |
-| RAG / Extraer PDFs | `npm run rag:extraer-pdfs` (dry-run) → `:aplicar` |
+| Área                                 | Comandos                                                                                                      |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| Schema DB                            | `npx drizzle-kit generate`                                                                                    |
+| Blog                                 | `npm run validate:dates && npm run content:audit`                                                             |
+| Contenido editorial                  | `npm run blog:normalizar` (dry-run) → `:aplicar`                                                              |
+| IndexNow                             | `npm run indexnow:dry`                                                                                        |
+| SEO Live                             | `npm run seo:doctor && npm run seo:collect`                                                                   |
+| SEO off-page                         | `npm run seo:health`                                                                                          |
+| Gate SEO/GEO público                 | `npm run seo:public-contract`                                                                                 |
+| Contenido dinámico (política/claims) | `npm run content:audit-dynamic` → `npm run content:remediate-commercial-claims` (dry-run; rechaza producción) |
+| Enlazado interno (53 casos)          | `npm run seo:internal-links:audit` → `npm run seo:internal-links:patch -- --env-file <local                   | staging>` (dry-run; rechaza producción) |
+| Contrato del blog (datos dinámicos)  | `npm run seo:blog-contract -- --env-file <local                                                               | staging>`                               |
+| Sitemap en runtime                   | `npm run seo:sitemap:validate-runtime -- --base-url <app>` (requiere app con base local/staging)              |
+| Gate SEO/GEO runtime unificado       | `npm run seo:runtime-contract -- --env-file <local                                                            | staging> [--run-e2e] [--run-a11y]`      |
+| RAG / Indexación vectorial           | `npm run rag:indexar` (dry-run) → `:aplicar`                                                                  |
+| RAG / Extraer PDFs                   | `npm run rag:extraer-pdfs` (dry-run) → `:aplicar`                                                             |
 
 ---
 
@@ -206,33 +211,48 @@ Guía operativa completa en `.opencode/README.md`.
 - **Orquestación:** ChatGPT es el orquestador externo; el usuario copia en
   OpenCode los prompts preparados por ChatGPT; `task-executor` es el agente
   ejecutor de cada bloque. No sustituir al orquestador ni autoavanzar de fase.
-- **Configuración canónica:** `opencode.jsonc` (permisos, LSP, MCP). Agentes en
-  `.opencode/agents/`, skills en `.opencode/skills/`, comandos en
-  `.opencode/commands/`. No duplicar configuración en `~/.config/opencode`.
-- **Agente principal:** `task-executor` (primary). Subagentes read-only:
-  `repo-auditor`, `security-reviewer`, `qa-release`. Subagentes de
-  implementación: `backend-engineer`, `frontend-engineer`, `database-engineer`,
-  `seo-geo-content`, `docs-governance`.
+- **Configuración canónica:** `opencode.jsonc` (permisos, LSP, MCP, modelo
+  DeepSeek V4, `share: disabled`, agente predeterminado `plan` read-only).
+  Agentes en `.opencode/agents/`, skills en `.opencode/skills/` y
+  `.agents/skills/` (portables, compatibles VS Code), comandos en
+  `.opencode/commands/`, instrucciones VS Code en `.github/` (copilot-
+  instructions.md y `.github/instructions/*.instructions.md`). No duplicar
+  configuración en `~/.config/opencode`.
+- **Agente principal:** `task-executor` (primary) y `implementation` (primary
+  con plan previo). Subagentes read-only: `repo-auditor`, `security-reviewer`,
+  `qa-release`, `audit-read-only`, `security-review`. Subagentes de
+  validación: `test-validator`, `preview-validator`, `pr-handoff`. Subagentes
+  de implementación: `backend-engineer`, `frontend-engineer`,
+  `database-engineer`, `seo-geo-content`, `docs-governance`.
+- **Modelo:** DeepSeek V4 Pro (`deepseek/deepseek-v4-pro`) por defecto
+  (implementación compleja) y V4 Flash (`deepseek/deepseek-v4-flash`) para
+  tareas rápidas/documentación.
 - **Permisos:** lectura/validación automáticas; escritura/git/instalaciones con
-  aprobación; push/merge/rebase/reset/clean/deploy/migraciones denegados.
-  Sin `--auto` como comportamiento normal.
-- **MCP (siete oficiales):** `chrome-devtools` local (chrome-devtools-mcp@1.6.0,
-  `--slim --headless --isolated`, sin cookies ni sesiones ni perfil personal)
-  y `context7` globales; `neon` (solo lectura server-side, `x-read-only`+
-  `?readonly=true`, OAuth **completado**) y `vercel` (autenticado; escritura
-  denegada por patrón: compras/deploys/protección) y `semgrep` (instalado con
-  uv, v1.172.0) habilitados; `github` (OAuth incompatible: DCR no soportado)
-  y `resend` (autenticado pero deshabilitado por política deny-by-default de
-  envíos; denies por patrón ya configurados) deshabilitados. Tools de
-  github/neon/vercel/resend/semgrep ocultas globalmente y habilitadas solo por
-  agente (`tools` en `.opencode/agents/*.md`; matriz en `.opencode/README.md`).
-  Sin secretos literales y sin dependencias MCP en `package.json`.
+  aprobación; commit/push/merge/rebase/reset/clean/deploy/migraciones
+  denegados. Sin `--auto` como comportamiento normal.
+- **MCP (ocho oficiales):** `chrome-devtools` local (chrome-devtools-mcp@1.6.0,
+  `--slim --headless --isolated`, sin cookies ni sesiones ni perfil personal),
+  `context7`, `playwright` (local, `@playwright/mcp`, con aprobación),
+  `neon` (solo lectura server-side, `x-read-only`+`?readonly=true`, OAuth
+  completado), `vercel` (OAuth; escritura denegada por patrón), `resend`
+  (deny-by-default de envíos) y `semgrep` (CLI local) habilitados; `github`
+  (read-only server-side `X-MCP-Readonly`; autenticación vía PAT del entorno,
+  no OAuth por incompatibilidad DCR). Tools de github/neon/vercel/resend/
+  semgrep ocultas globalmente y habilitadas solo por agente (`tools` en
+  `.opencode/agents/*.md`; matriz en `.opencode/README.md`). Sin secretos
+  literales y sin dependencias MCP en `package.json`.
 - **LSP:** built-ins de TypeScript y ESLint habilitados (dependencias del
   proyecto); deshabilitados bash/yaml-ls/deno/oxlint. Verificar con
   `opencode debug lsp diagnostics <archivo>`.
 - **Doctor del entorno:** `npm run opencode:doctor` (read-only). 0 FAIL = sano.
 - **Wrapper de arranque (PowerShell 7 en macOS):**
   `pwsh -NoProfile -File scripts/start-opencode.ps1` desde la raíz Git.
+- **Terminal del workspace:** PowerShell 7 (perfil por defecto en
+  `.vscode/settings.json`); todos los comandos se ejecutan con PowerShell o
+  `pwsh -NoProfile -Command '<comando>'`. No usar Bash como interfaz principal.
+- **VS Code:** extensiones recomendadas en `.vscode/extensions.json`;
+  instrucciones de agentes en `.github/copilot-instructions.md` y
+  `.github/instructions/`; skills portables en `.agents/skills/`.
 - **Obligaciones:** tras cada bloque, entregar el informe (`AGENTS.md` §9) y
   **detenerse**. Prohibido autoavanzar, push, merge, deploy y operar
   producción desde el entorno OpenCode.

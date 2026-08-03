@@ -13,10 +13,32 @@
   // ===========================================================================
   "$schema": "https://opencode.ai/config.json",
 
-  // Agente principal por defecto: ejecuta el bloque ordenado por el orquestador.
-  "default_agent": "task-executor",
+  // Modelo predeterminado: DeepSeek V4 Pro (implementación compleja).
+  // V4 Flash (deepseek/deepseek-v4-flash) para documentación y tareas rápidas.
+  "model": "deepseek/deepseek-v4-pro",
+  "small_model": "deepseek/deepseek-v4-flash",
 
-  "instructions": ["AGENTS.md"],
+  // No compartir sesiones con el servicio de OpenCode.
+  "share": "disabled",
+
+  // Agente predeterminado read-only (modo plan). El agente de ejecución
+  // (task-executor / implementation) se selecciona explícitamente por el usuario.
+  "default_agent": "plan",
+
+  // Instrucciones: AGENTS.md (canónico) + instrucciones específicas de VS Code.
+  "instructions": [
+    "AGENTS.md",
+    ".github/copilot-instructions.md",
+    ".github/instructions/typescript.instructions.md",
+    ".github/instructions/tests.instructions.md",
+    ".github/instructions/docs.instructions.md",
+    ".github/instructions/security.instructions.md"
+  ],
+
+  // Skills portables en .agents/skills/ (compatibles OpenCode + VS Code).
+  "skills": {
+    "paths": [".agents/skills"]
+  },
 
   // ---------------------------------------------------------------------------
   // LSP — built-ins habilitados; se desactivan explícitamente los servidores
@@ -157,6 +179,20 @@
       "command": ["semgrep", "mcp"],
       "enabled": true,
       "timeout": 20000
+    },
+
+    // Playwright MCP oficial (Microsoft) — local. Uso permitido: localhost y
+    // Preview read-only (navegación, responsive, accesibilidad, consola,
+    // enlaces). PROHIBIDO: formularios reales, emails, DB writes, usuarios
+    // reales y acciones mutables en Production. Todas las tools requieren
+    // aprobación (permission playwright_* = ask). Sin credenciales ni
+    // navegador con perfil personal (--isolated equivalente no aplica aquí;
+    // el servidor usa su propio perfil temporal).
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "--yes", "@playwright/mcp@latest"],
+      "enabled": true,
+      "timeout": 30000
     }
   },
 
@@ -165,8 +201,9 @@
   // Los patrones <servidor>_* ocultan globalmente las tools de github, neon,
   // vercel, resend y semgrep; cada agente las re-habilita solo donde las
   // necesita (.opencode/agents/*.md, clave "tools", patrón aditivo).
-  // context7 (context7_query-docs, context7_resolve-library-id) y
-  // chrome-devtools quedan disponibles globalmente (sin regla que las oculte).
+  // context7 (context7_query-docs, context7_resolve-library-id),
+  // chrome-devtools y playwright quedan disponibles globalmente (playwright
+  // con aprobación: permission playwright_* = ask).
   // ---------------------------------------------------------------------------
   "tools": {
     "github_*": false,
@@ -189,11 +226,14 @@
     "list": "allow",
     "todowrite": "allow",
     "edit": "ask",
+    "write": "ask",
     "webfetch": "ask",
+    "skill": "allow",
     "external_directory": "ask",
     "bash": {
       // Regla amplia primero (última coincidencia gana).
       "*": "ask",
+      // Validaciones locales y Git read-only: automáticas.
       "git status*": "allow",
       "git diff*": "allow",
       "git log*": "allow",
@@ -201,19 +241,33 @@
       "git branch*": "allow",
       "git rev-parse*": "allow",
       "git ls-files*": "allow",
+      "git check-ignore*": "allow",
       "opencode --version": "allow",
       "opencode debug*": "allow",
       "opencode agent list*": "allow",
+      "opencode models*": "allow",
       "opencode mcp list*": "allow",
+      "opencode mcp auth list*": "allow",
+      "code --list-extensions*": "allow",
       "npm run lint*": "allow",
       "npm run typecheck*": "allow",
+      "npm run build:ci*": "allow",
       "npm run test*": "allow",
-      "npm run build*": "allow",
       "npm run verify*": "allow",
       "npm run opencode:doctor*": "allow",
       "npx tsc --noEmit*": "allow",
+      "npx vitest*": "allow",
       "node scripts/opencode-doctor.mjs*": "allow",
-      // Destructivos y de producción: denegados siempre.
+      // Requieren aprobación explícita.
+      "npm install*": "ask",
+      "npm ci*": "ask",
+      "npx ctx7 setup*": "ask",
+      "opencode auth login*": "ask",
+      "opencode mcp auth*": "ask",
+      "code --install-extension*": "ask",
+      "git add*": "ask",
+      // Destructivos, remotos y de producción: denegados siempre.
+      "git commit*": "deny",
       "git push*": "deny",
       "git merge*": "deny",
       "git rebase*": "deny",
@@ -223,9 +277,12 @@
       "git checkout --*": "deny",
       "git restore*": "deny",
       "rm -rf*": "deny",
+      "Remove-Item * -Recurse*": "deny",
       "sudo*": "deny",
+      "chmod 777*": "deny",
       "vercel*": "deny",
       "neonctl*": "deny",
+      "resend*": "deny",
       "drizzle-kit*": "deny",
       "npm run db:migrations:apply*": "deny",
       "npm run db:migrations:baseline:apply*": "deny",
@@ -233,12 +290,20 @@
       "npm run rag:*:aplicar*": "deny",
       "npm run blog:*:aplicar*": "deny",
       "npm run corregir:*aplicar*": "deny",
-      // Escritura en el sistema: requiere aprobación explícita.
-      "npm install*": "ask",
-      "npm ci*": "ask",
-      "git add*": "ask",
-      "git commit*": "ask"
+      // Impresión de .env*: denegada (secretos).
+      "cat .env*": "deny",
+      "type .env*": "deny",
+      "Get-Content .env*": "deny"
     },
+
+    // MCP — policy por servidor (context7 y github lectura; playwright,
+    // vercel y neon requieren aprobación). Los deny por tool específicos
+    // de abajo tienen prioridad (última coincidencia gana).
+    "context7_*": "allow",
+    "github_*": "allow",
+    "playwright_*": "ask",
+    "vercel_*": "ask",
+    "neon_*": "ask",
 
     // Deny por tool de MCP (escritura remota) — defensa en profundidad.
     // GitHub y Neon además NO registran estas tools por su modo read-only

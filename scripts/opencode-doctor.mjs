@@ -183,13 +183,15 @@ if (existsSync(COMMANDS_DIR)) {
 }
 
 // ── 5. MCP ─────────────────────────────────────────────────────────────────
-// Política: SOLO los 7 servidores oficiales permitidos. Cualquier otro
-// servidor (comunitario, redundante con tools internas de OpenCode, o
-// Playwright/Puppeteer MCP) es un FAIL. Sin secretos literales y sin
-// dependencias MCP en package.json.
+// Política: SOLO servidores oficiales permitidos (8: context7,
+// chrome-devtools, github, neon, vercel, resend, semgrep y playwright local
+// oficial con aprobación por tool). Cualquier otro servidor (comunitario o
+// redundante con tools internas de OpenCode) es un FAIL. Sin secretos
+// literales y sin dependencias MCP en package.json.
 const ALLOWED_MCP = new Map([
   ['context7', { expectEnabled: true, note: 'remoto oficial de documentación (query-docs, resolve-library-id)' }],
   ['chrome-devtools', { expectEnabled: true, note: 'navegador local pinzado chrome-devtools-mcp@1.6.0 --slim --headless --isolated' }],
+  ['playwright', { expectEnabled: true, note: 'local oficial @playwright/mcp (aprobación por tool: playwright_* = ask); localhost/Preview read-only, sin formularios/emails/DB' }],
   ['github', { expectEnabled: true, note: 'habilitado vía PAT personal (oauth:false + {env:GITHUB_PERSONAL_ACCESS_TOKEN}); X-MCP-Readonly + X-MCP-Lockdown + toolsets acotados' }],
   ['neon', { expectEnabled: true, note: 'remoto oficial SOLO LECTURA (x-read-only + ?readonly=true); OAuth compatible (clientId pre-registrado)' }],
   ['vercel', { expectEnabled: true, note: 'autenticado (OAuth OK pese a no figurar en la lista pública de clientes); inventario verificado: lectura get_*/list_*/search_*; escritura denegada por patrón' }],
@@ -199,10 +201,10 @@ const ALLOWED_MCP = new Map([
 const configuredMcp = config?.mcp ? Object.keys(config.mcp) : [];
 for (const name of configuredMcp) {
   if (!ALLOWED_MCP.has(name)) {
-    const isPlaywright = /playwright|puppeteer/i.test(name);
+    const isPlaywright = /puppeteer/i.test(name);
     check(`MCP: ${name}`, 'FAIL', isPlaywright
-      ? 'Playwright/Puppeteer MCP prohibido por política'
-      : 'servidor no autorizado (solo oficiales: context7, chrome-devtools, github, neon, vercel, resend, semgrep)');
+      ? 'Puppeteer MCP prohibido por política (solo Playwright MCP oficial local)'
+      : 'servidor no autorizado (solo oficiales: context7, chrome-devtools, playwright, github, neon, vercel, resend, semgrep)');
   }
 }
 if (!configuredMcp.length) check('MCP configurados', 'NOT_APPLICABLE', 'ninguno');
