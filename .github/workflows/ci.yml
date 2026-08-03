@@ -47,5 +47,57 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Verify
-        run: npm run verify
+      - name: Repo hygiene
+        id: hygiene
+        run: node tools/ci/repo-hygiene.mjs
+
+      - name: Governance
+        id: governance
+        run: npm run governance
+
+      - name: Docs links
+        id: docs
+        run: npm run docs:links
+
+      - name: Migrations validate
+        id: migrations
+        run: npm run db:migrations:validate
+
+      - name: Lint
+        id: lint
+        run: npm run lint
+
+      - name: TypeScript
+        id: typescript
+        run: npx tsc --noEmit
+
+      - name: Tests
+        id: tests
+        run: npm test
+
+      - name: Build
+        id: build
+        run: npm run build:ci
+
+      - name: Knip baseline
+        id: knip
+        run: npm run repo:knip
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## CI — Resumen"
+            echo ""
+            echo "| Gate | Resultado |"
+            echo "| --- | --- |"
+            echo "| Repo hygiene | ${{ steps.hygiene.outcome }} |"
+            echo "| Governance | ${{ steps.governance.outcome }} |"
+            echo "| Docs links | ${{ steps.docs.outcome }} |"
+            echo "| Migrations validate | ${{ steps.migrations.outcome }} |"
+            echo "| Lint | ${{ steps.lint.outcome }} |"
+            echo "| TypeScript | ${{ steps.typescript.outcome }} |"
+            echo "| Tests | ${{ steps.tests.outcome }} |"
+            echo "| Build | ${{ steps.build.outcome }} |"
+            echo "| Knip | ${{ steps.knip.outcome }} |"
+          } >> "$GITHUB_STEP_SUMMARY"
