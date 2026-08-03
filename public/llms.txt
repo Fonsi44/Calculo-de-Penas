@@ -1,4 +1,4 @@
-> generated_at: 2026-08-03T12:04:45.863Z
+> generated_at: 2026-08-03T13:47:12.563Z
 > generator: seo:llms v2.0.0
 > environment: local
 
