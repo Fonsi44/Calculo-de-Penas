@@ -79,6 +79,7 @@ yarn-error.log*
 !/data/seo/phase3-editorial-overrides.json
 !/data/seo/local-landing-indexability.json
 !/data/seo/sitemap-public-manifest.json
+!/data/seo/article-seo-relations.json
 *.tmp
 *.dump
 *.sql.gz

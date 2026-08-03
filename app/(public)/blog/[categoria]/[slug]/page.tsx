@@ -51,6 +51,12 @@ import {
   deriveArchiveMonths,
   deriveAllTags,
 } from '@/lib/blog-hub';
+import {
+  getCanonicalRelatedSummaries,
+  loadArticleSeoRelations,
+  type ArticleSeoRelations,
+} from '@/lib/seo/article-relations';
+import articleSeoRelationsData from '@/data/seo/article-seo-relations.json';
 
 export const revalidate = 3600;
 
@@ -120,12 +126,25 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
   const currentIndex = allPosts.findIndex((p) => p.slug === slug);
   const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
   const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
-  const relatedPosts = getRelatedPostsFromSummaries(
-    allPosts,
-    slug,
-    post.category,
-    post.tags,
+
+  // Relaciones canónicas (lib/seo/article-relations.ts): si el artículo tiene
+  // relación definida y validada, se usan targets deterministas; si no, se
+  // mantiene el fallback por similitud (categoría + tags).
+  const relationsBySlug = new Map<string, ArticleSeoRelations>(
+    loadArticleSeoRelations(articleSeoRelationsData).map((r) => [r.slug, r]),
   );
+  const canonicalRelation = relationsBySlug.get(slug);
+  const canonicalRelated = canonicalRelation
+    ? getCanonicalRelatedSummaries(allPosts, canonicalRelation)
+    : [];
+  const relatedPosts = canonicalRelated.length > 0
+    ? canonicalRelated
+    : getRelatedPostsFromSummaries(
+      allPosts,
+      slug,
+      post.category,
+      post.tags,
+    );
   const categoryName = getCategoryName(post.category) ?? post.category;
 
   const postUrl = `/blog/${post.category}/${post.slug}`;
