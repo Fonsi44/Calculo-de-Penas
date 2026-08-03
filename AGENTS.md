@@ -67,6 +67,8 @@ fuentes; los índices derivados (como `embeddings`) no son fuente primaria.
 | Códigos legales | `data/codigo_trabajo.json`, `codigo_civil.json`, `codigo_comercio.json`, `codigo_tributario.json` |
 | Áreas jurídicas | `data/areas-juridicas.ts` |
 | Landings locales | `data/landings-locales.ts` |
+| Indexabilidad pública | `lib/seo/public-indexability.ts` + `data/seo/local-landing-indexability.json` (clasificación de landings) + `data/seo/canonical-paths.json` (catálogo estático) |
+| Manifiesto sitemap | `data/seo/sitemap-public-manifest.json` |
 | SEO Live | `data/google/`, `data/bing/`, `data/seo/` (regenerable) |
 | RAG / Búsqueda semántica | DB `embeddings` vía `lib/rag/` (índice vectorial pgvector) |
 
@@ -93,11 +95,13 @@ fuentes; los índices derivados (como `embeddings`) no son fuente primaria.
 | R15 | Un solo `<h1>` por página de post (el título). Body usa `<h2>`/`<h3>`. |
 | R16 | Design tokens canónicos: radius `rounded-lg`, sombras vía `.btn-shadow-*`, icono `w-11 h-11`. Dorado solo acento. |
 | R17 | IA en blog: verificar contra fuentes canónicas. Dry-run por defecto. Sin relleno genérico. |
-| R18 | Footer/Home: solo 10 ciudades prioritarias (Nacaome, Choluteca, San Lorenzo, Goascorán, San Marcos de Colón, El Triunfo, Marcovia, Pespire, Namasigüe, Orocuina). |
+| R18 | Footer/Home: solo ciudades con landing indexable (ver `data/seo/local-landing-indexability.json`); máximo 10. Las 9 landings `NOINDEX_UNTIL_UNIQUE` no aparecen en módulos destacados ni listados SEO automáticos. |
 | R19 | No borrar código muerto sin comprobar imports, rutas dinámicas, scripts, tests, cron, webhooks y despliegues. |
 | R20 | No ocultar errores con `try/catch` vacíos, casts inseguros, desactivación de reglas o exclusión de tests. |
 | R21 | No declarar una tarea completada sin ejecutar las validaciones correspondientes. |
 | R22 | Mantener aislados la web pública, el blog, la intranet, SGIE y administración cuando el cambio no afecte a todos. |
+| R23 | Autoría del blog: vigente excepción temporal de autoría corporativa (ver `docs/seo/decisions/temporary-corporate-blog-authorship.md`). PROHIBIDO cambiar `author`, `reviewedBy`, firmas o estados editoriales por motivos de autoría sin autorización expresa del propietario. No usar la marca como autor humano en contenidos que requieran autor individual sin esa autorización. |
+| R24 | Política comercial: única formulación «Evaluación inicial confidencial» (`lib/marketing-policy.ts`). PROHIBIDO publicar variantes de consulta gratuita/sin costo/sin compromiso no confirmadas. Validación obligatoria al escribir contenido administrable. |
 
 ---
 
@@ -127,6 +131,7 @@ Comandos base: `npm run lint`, `npm run typecheck` (`tsc --noEmit`),
 | IndexNow | `npm run indexnow:dry` |
 | SEO Live | `npm run seo:doctor && npm run seo:collect` |
 | SEO off-page | `npm run seo:health` |
+| Gate SEO/GEO público | `npm run seo:public-contract` |
 | RAG / Indexación vectorial | `npm run rag:indexar` (dry-run) → `:aplicar` |
 | RAG / Extraer PDFs | `npm run rag:extraer-pdfs` (dry-run) → `:aplicar` |
 
