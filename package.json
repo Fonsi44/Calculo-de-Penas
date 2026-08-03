@@ -106,6 +106,8 @@
     "legal:generated-cta-copy": "npx tsx scripts/validate-generated-cta-copy.ts && vitest run tests/blog-metadata-only.test.ts",
     "seo:health": "node scripts/seo-health-check.mjs",
     "seo:health:json": "node scripts/seo-health-check.mjs --json",
+    "seo:public-contract": "npx tsx scripts/seo-public-contract.ts",
+    "seo:internal-links-report": "npx tsx scripts/report-internal-link-gaps.ts",
     "seo:ahrefs": "node scripts/seo-ahrefs-audit.mjs",
     "visual:baseline": "node scripts/visual-regression.cjs baseline",
     "visual:check": "node scripts/visual-regression.cjs check",
