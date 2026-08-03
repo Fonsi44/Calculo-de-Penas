@@ -9,7 +9,7 @@ superseded_by: null
 ---
 # Implementación de crecimiento SEO/GEO basado en datos — v1
 
-**Rama:** `feat/seo-growth-data-driven-v1` · **Dominio:** `https://www.pinedayasocioshn.com/`
+**Rama:** `feat/seo-growth-data-driven-v1` · **Dominio:** `https://www.www.pinedayasociadoshn.com/`
 
 ## Veredicto
 

@@ -31,7 +31,7 @@ export function canonicalDomains(envContent = readFileSync(resolve(ROOT, '.env.e
     throw new Error(`Host inesperado en .env.example: ${host}`);
   }
   return {
-    correctHost: host,                        // www.pinedayasocioshn.com
+    correctHost: host,                        // la variante sin "da" en "asociados"
     typoHost: host.replace('asociados', 'asocios'), // variante sin "da"
     correctBare: host.replace('www.', ''),
     typoBare: host.replace('www.', '').replace('asociados', 'asocios'),
