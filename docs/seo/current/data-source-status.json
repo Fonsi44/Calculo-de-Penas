@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2026-08-03T18:34:59.269Z",
+  "timezone": "America/Tegucigalpa",
+  "sources": {
+    "gsc": {
+      "status": "ok",
+      "period": "2026-02-04→2026-08-03",
+      "clicks": 621,
+      "impressions": 26491,
+      "rows": 1369
+    },
+    "ga4": {
+      "status": "baseline",
+      "propertyId": "541022095",
+      "measurementId": null,
+      "period": "2026-05-05→2026-08-03",
+      "users": "881",
+      "sessions": "1128",
+      "keyEvents": "14"
+    },
+    "bing": {
+      "status": "ok",
+      "authMode": "API Key",
+      "queries": 375,
+      "crawl": {
+        "daysReported": 54,
+        "crawledPages": 7885,
+        "code2xx": 17854,
+        "code4xx": 1042,
+        "code5xx": 0,
+        "crawlErrors": 1238
+      }
+    },
+    "crux": {
+      "status": "SKIPPED_WITH_REASON",
+      "reason": "Origen sin datos en Chrome UX Report (tráfico insuficiente)"
+    }
+  }
+}
