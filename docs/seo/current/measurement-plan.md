@@ -20,7 +20,7 @@ priporice sobre **datos observados**, no supuestos.
 ```mermaid
 flowchart LR
     A[Vista de página] --> B[Interés: faq_open / scroll_depth / view_service]
-    B --> C[Intención: consultation_form_view / form_start / whatsapp_click]
+    B --> C[Intención: contact_form_view / form_start / whatsapp_click]
     C --> D[Conversión: contact_form_submit / lead_generated / tel_click]
 ```
 
@@ -33,7 +33,7 @@ flowchart LR
 | `form_start`                  | GA4 enhanced measurement            | 67                  | Microconversión |
 | `faq_open`                    | `trackFaqOpen`                      | 11                  | Interés         |
 | `whatsapp_click`              | `trackWhatsAppClick`                | 9                   | Intención       |
-| `consultation_form_view`      | `trackConsultationFormView`         | 3                   | Intención       |
+| `contact_form_view`          | `trackContactFormView`           | 3                   | Intención       |
 | `phone_click`                 | `trackPhoneClick`                   | 3                   | Conversión      |
 | `file_download`               | enhanced measurement                | 2                   | Interés         |
 | `lead_generated`              | `trackLeadGenerated`                | 2                   | Conversión      |
@@ -42,42 +42,50 @@ flowchart LR
 | `internal_click`              | `trackInternalClick`                | 1                   | Interés         |
 | `seo_blog_cta_click`          | —                                   | 1                   | Intención       |
 
-### 3.2 Eventos definidos en código pero SIN llegada observada (brechas)
+### 3.2 Eventos definidos en código y su estado (tras cierre §9 PR26)
 
-| Evento                                                                                                              | Helper                       | Riesgo                                                                                                                          |
-| ------------------------------------------------------------------------------------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `contact_form_submit`                                                                                               | `trackContactFormSubmit`     | **Conversión clave ausente**: el envío con éxito no llega a GA4 (formulario server-rendered sin JS de éxito). Acción requerida. |
-| `consultation_form_start`                                                                                           | `trackConsultationFormStart` | Custom event definido, no observado; `form_start` (enhanced) sí llega. Evaluar consolidar.                                      |
-| `consultation_form_error`                                                                                           | `trackConsultationFormError` | No observado.                                                                                                                   |
-| `email_click`                                                                                                       | `trackEmailClick`            | No observado.                                                                                                                   |
-| `directions_click`                                                                                                  | `trackDirectionsClick`       | No observado.                                                                                                                   |
-| `scroll_depth`                                                                                                      | `trackScrollDepth`           | No observado (puede depender de threshold).                                                                                     |
-| `click_maps`, `blog_search`, `view_team_section`, `view_local_page`, `cta_local`, `cta_spain`, `view_spain_service` | varios                       | No observados o por debajo de umbral.                                                                                           |
+| Evento                | Helper                       | Estado 2026-08-03                                                                        |
+| --------------------- | ---------------------------- | --------------------------------------------------------------------------------------- |
+| `contact_form_submit` | `trackContactFormSubmit`     | **Instrumentado** tras HTTP 2xx, sin PII, con guard anti-doble-envío. Key event YA en GA4. |
+| `contact_form_start`  | `trackContactFormStart`      | Renombrado desde `consultation_form_start`. No observado aún (nuevo).                     |
+| `contact_form_error`  | `trackContactFormError`      | Renombrado desde `consultation_form_error`; categorías controladas. No observado aún.     |
+| `consultation_cta_click` | `trackConsultationCtaClick` | Nuevo; CTA principal de consulta. No observado aún.                                       |
+| `email_click`         | `trackEmailClick`            | No observado aún. **Key event pendiente: REQUIRES_DASHBOARD_ACTION** (SA sin permiso de escritura). |
+| `directions_click`    | `trackDirectionsClick`       | No observado.                                                                           |
+| `scroll_depth`        | `trackScrollDepth`           | No observado (puede depender de threshold).                                              |
+| `click_maps`, `blog_search`, `view_team_section`, `view_local_page`, `cta_local`, `cta_spain`, `view_spain_service` | varios | No observados o por debajo de umbral. |
 
 ### 3.3 Diagnóstico
 
-- **Conversión principal (formulario) NO se mide de extremo a extremo.**
-  `form_start` (67) indica interés real; `contact_form_submit` (0) indica que el
-  cierre del embudo no está instrumentado → el ROI orgánico se subestima.
+- **Conversión principal instrumentada (2026-08-03).** `contact_form_submit` se
+  envía solo tras confirmación del servidor (HTTP 2xx = solicitud persistida),
+  con parámetros no personales (`form_name`, `page_path`, `service_area`,
+  `submission_status`, `transport`) y guard anti-doble-envío. Ya está marcado
+  como key event en GA4.
+- **`email_click` requiere acción manual** en GA4 (key event); la service
+  account no tiene permiso de escritura (§10).
 - **Volumen bajo de eventos** (chat_opened=1, lead_generated=2) coherente con
   tráfico orgánico modesto (621 clics GSC / 180 días) y sin datos CrUX
   (origen sin volumen para Chrome UX Report).
 - **Consentimiento:** el banner de cookies puede bloquear `gtag` hasta el
   consentimiento (ver `components/cookie-consent.tsx`). Los eventos se cuentan
-  solo tras consentimiento `granted`; el 100 % de navegadores de la muestra no
-  garantiza paridad entre sesiones consentidas y no consentidas.
+  solo tras consentimiento `granted`; sin consentimiento no se envía ningún
+  evento GA4 identificable (gtag no se carga con GA ID).
 
-## 4. Modelo de medición propuesto (target 28 días)
+## 4. Modelo de medición (estado 2026-08-03)
 
-1. **Instrumentar `contact_form_submit`** en el manejador de éxito del
-   formulario de consulta (enviar evento client-side tras respuesta 2xx del
-   endpoint, sin PII en parámetros). Marcar como **evento clave** en GA4.
-2. **Consolidar** `consultation_form_start` y `form_start`: usar un único
-   evento canónico `form_start` (enhanced) + parámetro `ruta` para no duplicar.
+1. **`contact_form_submit` instrumentado** en el manejador de éxito (HTTP 2xx),
+   sin PII, con guard anti-doble-envío y categorías de error controladas. Key
+   event YA configurado en GA4.
+2. **Familia unificada `contact_form_*`**: view/start/error/submit (renombrada
+   desde `consultation_*`). `form_start` (enhanced) sigue como señal de interés.
 3. **Revisar umbral de `scroll_depth`** y `faq_open` como señales de
    engagement en posts (ya operativas).
-4. **Marcar como eventos clave en GA4:** `contact_form_submit`,
-   `whatsapp_click`, `phone_click`, `lead_generated`, `email_click`.
+4. **Key events en GA4 (verificados vía Admin API):** `contact_form_submit` ✓,
+   `whatsapp_click` ✓, `phone_click` ✓, `lead_generated` ✓. **`email_click`
+   pendiente: REQUIRES_DASHBOARD_ACTION** (GA4 → Propiedad 541022095 → Key
+   events → nuevo → `email_click`). No marcar `contact_form_start` ni
+   `contact_form_error` como conversiones.
 5. **Ventana 28 días** para reportes de conversión; los KPI por landing se
    evalúan con `ga4-organic-conversions.csv` (141 landing pages).
 
