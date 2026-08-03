@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-03T18:34:59.269Z",
+  "generatedAt": "2026-08-03T20:49:50.850Z",
   "timezone": "America/Tegucigalpa",
   "sources": {
     "gsc": {
@@ -14,8 +14,8 @@
       "propertyId": "541022095",
       "measurementId": null,
       "period": "2026-05-05→2026-08-03",
-      "users": "881",
-      "sessions": "1128",
+      "users": "883",
+      "sessions": "1130",
       "keyEvents": "14"
     },
     "bing": {
