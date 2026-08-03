@@ -25,6 +25,7 @@
     "audit:ledger:reconcile": "node tools/audit/reconcile-remediation-ledger.mjs",
     "docs:links": "node tools/ci/docs-links.mjs",
     "governance": "node tools/ci/governance.mjs",
+    "opencode:doctor": "node scripts/opencode-doctor.mjs",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",

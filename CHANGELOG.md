@@ -15,6 +15,45 @@ y este proyecto se adhiere a [Semantic Versioning 2.0.0](https://semver.org/spec
 ## [Unreleased]
 
 ### Added
+- **Entorno OpenCode profesional:** configuración canónica `opencode.jsonc`
+  (permisos mínimos con push/merge/deploy/migraciones denegados, LSP
+  TypeScript/ESLint, MCP `chrome-devtools` con chrome-devtools-mcp@1.6.0 en
+  `--slim --headless --isolated --no-usage-statistics`). Arquitectura de 9
+  agentes (`.opencode/agents/`): `task-executor` (primary) + `repo-auditor`,
+  `backend-engineer`, `frontend-engineer`, `database-engineer`,
+  `seo-geo-content`, `security-reviewer`, `qa-release`, `docs-governance`.
+  12 skills bajo demanda (`.opencode/skills/`): gobernanza, exploración,
+  frontend, backend/seguridad, neon-drizzle, testing, seo-geo-jsonld,
+  contenido legal, rendimiento/a11y, git/release, documentación y depuración.
+  9 comandos (`.opencode/commands/`): task, audit, implement, verify,
+  seo-check, ui-check, release-check, handoff, environment-check. Doctor del
+  entorno `scripts/opencode-doctor.mjs` (`npm run opencode:doctor`, read-only,
+   0 FAIL = sano). Wrapper de arranque PowerShell 7
+   `scripts/start-opencode.ps1`. Documentación: `.opencode/README.md`, sección
+   `AGENTS.md` §7bis y sección "Entorno OpenCode" en `README.md`.
+- **MCP oficiales ampliados (7 servidores) y OAuth completado por web:**
+  `context7` (documentación, global), `chrome-devtools` (conservado exacto,
+  1.6.0 `--slim --headless --isolated --no-usage-statistics
+  --no-performance-crux`), `neon` (solo lectura server-side
+  `x-read-only`+`?readonly=true`; OAuth **completado**), `vercel`
+  (autenticado por OAuth pese a no figurar en la lista pública de clientes;
+  inventario 33 tools verificado, **13 de escritura denegadas por patrón**:
+  compras/deploys/protección/toolbar) y `semgrep` (instalado aislado con
+  `uv tool install --python 3.12 semgrep`, v1.172.0) habilitados; `github`
+  (OAuth incompatible con OpenCode: DCR no soportado, verificado) y `resend`
+  (autenticado por OAuth pero **deshabilitado por política deny-by-default de
+  envíos**; inventario 91 tools verificado, **53 de escritura denegadas por
+  patrón**) deshabilitados con causa documentada. Tools de
+  github/neon/vercel/resend/semgrep ocultas globalmente (`tools` en
+  `opencode.jsonc`) y re-habilitadas por agente (matriz en
+  `.opencode/README.md`). Doctor ampliado: estado de los 7 MCP,
+  enabled/disabled esperado, conectividad, OAuth pendiente/completado,
+  modo read-only de github/neon (FAIL si falta), denies de vercel (FAIL si
+  faltan), ausencia de secretos literales, ausencia de MCP redundantes/
+  Playwright y de dependencias MCP en `package.json`. Sin secretos literales
+  en el repo (tokens OAuth viven en `~/.local/share/opencode/mcp-auth.json`).
+
+### Added
 - **Fase 6 — Staging integral y preparación de producción:** entorno staging aislado en Vercel Preview con rama `staging/fase6-preproduction`. Base Neon `staging_neondb` creada y separada de producción, con 55/55 migraciones aplicadas e idempotentes. Variables Preview configuradas: `DATABASE_URL`, `DEEPSEEK_API_KEY`, `RESEND_API_KEY`, `JWT_SECRET`, `CRON_SECRET`, `ENCRYPTION_KEY`, `IA_DOCUMENTAL_*`, `DROPBOX_SIGN_TEST_MODE`. Protección mediante `NEXT_PUBLIC_NOINDEX=true`, `APP_ENV=staging`, Vercel SSO. Guardias reutilizables `lib/staging-guard.ts` y `lib/email-allowlist.ts`. Endpoints `/api/health` y `/api/health/readiness`. Feature flags con deny-by-default, kill switches. Email wrapper `lib/email-staging-wrapper.ts`. E2E-start.mjs actualizado para aceptar DBs staging. Documentación operativa completa (8 archivos). Lint: 0 errors, 54 warnings (baseline 57). Certificación real: Vitest 3×1274 PASS, TypeScript 0 errors, Build PASS, Drizzle check OK, deployment Preview funcional con protección SSO y noindex.
 - **Fase 4B-1 — P2-07 Aprobación documental en bloque:** operación segura, explicable, idempotente, auditable y parcialmente reversible. Servicio `bulk-approval-service` (preview sin mutaciones, confirmación con control optimista por `version`, resultado parcial, reversión segura ventana 72h). Integración con readiness (recálculo), resumen incremental (invalidación de checkpoint) y next-action. Flag `sgie.documents.bulk_approve` (11ª flag canónica, deny-by-default). Migración 0044 (`documentos_expediente.version`, `document_bulk_approvals`, `document_bulk_approval_items`, enum auditoría `documento_bulk_approved`/`documento_bulk_reverted`, seed flag). API preview/confirm/status/revert con Zod+CSRF+rate-limit. UI en bandeja de revisión (selección múltiple, modal preview/confirm/resultado). Outbox `document.approved`/`document.approval.reverted`. ADR-013. Tests: servicio 31, API 10, UI 7. E2E Neon aislado 16/16 (rama efímera eliminada, cero residuos). Suite 1113/1113 (3× paralela).
 - **Fase 4A — Automatización documental core (P2-01 a P2-06):** 6 servicios que encadenan clasificación, auto-vinculación, extracción estructurada, contradicciones, resumen incremental y siguiente mejor acción, integrados vía `DocumentAutomationOrchestrator` con autorización previa (`canAccessCase`), correlation ID, auditoría en `ai_pipeline_runs` y resiliencia por etapas. FeatureFlagService con deny-by-default, 6 scopes, precedencia, kill switch admin, cache y auditoría. Migraciones 0038–0043 (idempotentes, hash SHA-256). Schemas canónicos sembrados (identidad, rtn, resolución judicial, poder, etc.). Defense prompt injection (documento=DATO, allowlist tipos). ADR-010/011/012. E2E Fase 4A: 19/19 assertions con DeepSeek real (`deepseek-v4-flash`).

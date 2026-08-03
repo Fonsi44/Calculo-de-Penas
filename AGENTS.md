@@ -198,6 +198,47 @@ Los agentes pueden auditar y reportar problemas en cualquiera de estos archivos.
 
 ---
 
+## 7bis. Operación con OpenCode (entorno de desarrollo)
+
+El proyecto está configurado para ejecutarse con OpenCode de forma segura.
+Guía operativa completa en `.opencode/README.md`.
+
+- **Orquestación:** ChatGPT es el orquestador externo; el usuario copia en
+  OpenCode los prompts preparados por ChatGPT; `task-executor` es el agente
+  ejecutor de cada bloque. No sustituir al orquestador ni autoavanzar de fase.
+- **Configuración canónica:** `opencode.jsonc` (permisos, LSP, MCP). Agentes en
+  `.opencode/agents/`, skills en `.opencode/skills/`, comandos en
+  `.opencode/commands/`. No duplicar configuración en `~/.config/opencode`.
+- **Agente principal:** `task-executor` (primary). Subagentes read-only:
+  `repo-auditor`, `security-reviewer`, `qa-release`. Subagentes de
+  implementación: `backend-engineer`, `frontend-engineer`, `database-engineer`,
+  `seo-geo-content`, `docs-governance`.
+- **Permisos:** lectura/validación automáticas; escritura/git/instalaciones con
+  aprobación; push/merge/rebase/reset/clean/deploy/migraciones denegados.
+  Sin `--auto` como comportamiento normal.
+- **MCP (siete oficiales):** `chrome-devtools` local (chrome-devtools-mcp@1.6.0,
+  `--slim --headless --isolated`, sin cookies ni sesiones ni perfil personal)
+  y `context7` globales; `neon` (solo lectura server-side, `x-read-only`+
+  `?readonly=true`, OAuth **completado**) y `vercel` (autenticado; escritura
+  denegada por patrón: compras/deploys/protección) y `semgrep` (instalado con
+  uv, v1.172.0) habilitados; `github` (OAuth incompatible: DCR no soportado)
+  y `resend` (autenticado pero deshabilitado por política deny-by-default de
+  envíos; denies por patrón ya configurados) deshabilitados. Tools de
+  github/neon/vercel/resend/semgrep ocultas globalmente y habilitadas solo por
+  agente (`tools` en `.opencode/agents/*.md`; matriz en `.opencode/README.md`).
+  Sin secretos literales y sin dependencias MCP en `package.json`.
+- **LSP:** built-ins de TypeScript y ESLint habilitados (dependencias del
+  proyecto); deshabilitados bash/yaml-ls/deno/oxlint. Verificar con
+  `opencode debug lsp diagnostics <archivo>`.
+- **Doctor del entorno:** `npm run opencode:doctor` (read-only). 0 FAIL = sano.
+- **Wrapper de arranque (PowerShell 7 en macOS):**
+  `pwsh -NoProfile -File scripts/start-opencode.ps1` desde la raíz Git.
+- **Obligaciones:** tras cada bloque, entregar el informe (`AGENTS.md` §9) y
+  **detenerse**. Prohibido autoavanzar, push, merge, deploy y operar
+  producción desde el entorno OpenCode.
+
+---
+
 ## 8. Subsistemas externos (manuales especializados)
 
 Los manuales operativos extensos viven bajo `docs/`, no en este protocolo.
