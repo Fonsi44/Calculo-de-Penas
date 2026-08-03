@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import { pageContent } from '@/lib/schema';
 import { eq, and, sql } from 'drizzle-orm';
 import { cache } from 'react';
+import { validateEditablePageContent } from '@/lib/content-policy';
 
 export type PageContentRow = typeof pageContent.$inferSelect;
 export type PageContentInsert = typeof pageContent.$inferInsert;
@@ -45,6 +46,10 @@ export async function upsertPageContent(params: {
   content: string;
   updatedBy?: string;
 }) {
+  // Política de contenido administrable: bloquea claims comerciales no
+  // autorizados y testimonios ficticios antes de persistir (AGENTS.md R24).
+  validateEditablePageContent(params.page, params.section, params.field, params.content);
+
   const existing = await db.select({ id: pageContent.id })
     .from(pageContent)
     .where(and(
@@ -360,7 +365,7 @@ export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
             { key: 'title_line1', label: 'Título línea 1', type: 'text', default: 'Defensa penal y asesoría jurídica en Nacaome y Honduras' },
             { key: 'title_line2', label: 'Título línea 2', type: 'text', default: '' },
             { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Defensa penal y asesoría jurídica integral de la mano de abogados con presencia activa en los juzgados de Nacaome, Valle y todo Honduras. En Pineda y Asociados recibirá comunicación clara y un equipo coordinado en cada rama del derecho.' },
-            { key: 'check1', label: 'Check 1', type: 'text', default: 'Primera consulta sin compromiso' },
+            { key: 'check1', label: 'Check 1', type: 'text', default: 'Evaluación inicial confidencial' },
             { key: 'check2', label: 'Check 2', type: 'text', default: 'Atención directa de abogados en Nacaome' },
           ],
         },
@@ -405,28 +410,34 @@ export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
         },
         {
           key: 'testimonials', label: 'Testimonios', fields: [
-            { key: 'title', label: 'Título', type: 'text', default: 'Lo que dicen quienes confían en nosotros' },
-            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Casos reales, resultados verificables. Publicamos con autorización y anonimizamos por confidencialidad.' },
-            { key: 'testimonial1_name', label: 'Testimonio 1 — nombre', type: 'text', default: 'Caso anonimizado · Defensa penal' },
-            { key: 'testimonial1_body', label: 'Testimonio 1 — texto', type: 'textarea', default: 'Mi familia y yo estábamos pasando por una situación muy difícil. El equipo nos orientó desde el primer día con claridad y profesionalismo. Logramos una resolución favorable que no esperábamos.' },
-            { key: 'testimonial2_name', label: 'Testimonio 2 — nombre', type: 'text', default: 'Caso anonimizado · Derecho laboral' },
-            { key: 'testimonial2_body', label: 'Testimonio 2 — texto', type: 'textarea', default: 'Me despidieron sin previo aviso después de 8 años en la empresa. Los abogados calcularon cada prestación y lograron que me pagaran lo que me correspondía. Muy agradecido.' },
-            { key: 'testimonial3_name', label: 'Testimonio 3 — nombre', type: 'text', default: 'Caso anonimizado · Derecho de familia' },
-            { key: 'testimonial3_body', label: 'Testimonio 3 — texto', type: 'textarea', default: 'Un proceso de divorcio complicado con hijos de por medio. La abogada fue muy sensible pero firme. Se logró un acuerdo que protege a mis hijos. Recomiendo totalmente.' },
+            { key: 'title', label: 'Título', type: 'text', default: '' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: '' },
+            // Testimonios desactivados por política 2026-08-03: solo se pueden
+            // publicar reseñas reales autorizadas (Plan Maestro §17.3). Los
+            // defaults quedan VACÍOS para impedir la activación accidental de
+            // contenido ficticio. No publicar hasta aportar datos reales.
+            { key: 'testimonial1_name', label: 'Testimonio 1 — nombre', type: 'text', default: '' },
+            { key: 'testimonial1_body', label: 'Testimonio 1 — texto', type: 'textarea', default: '' },
+            { key: 'testimonial2_name', label: 'Testimonio 2 — nombre', type: 'text', default: '' },
+            { key: 'testimonial2_body', label: 'Testimonio 2 — texto', type: 'textarea', default: '' },
+            { key: 'testimonial3_name', label: 'Testimonio 3 — nombre', type: 'text', default: '' },
+            { key: 'testimonial3_body', label: 'Testimonio 3 — texto', type: 'textarea', default: '' },
           ],
         },
         {
           key: 'process', label: 'Cómo trabajamos', fields: [
-            { key: 'title', label: 'Título', type: 'text', default: 'Cuatro pasos, sin importar el área' },
-            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Un método claro y trazable para cada caso, desde la consulta inicial hasta el cierre.' },
-            { key: 'step1_title', label: 'Paso 1 — título', type: 'text', default: 'Consulta inicial' },
+            { key: 'title', label: 'Título', type: 'text', default: 'Cinco pasos, sin importar el área' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Un método claro y trazable para cada caso, desde la evaluación inicial hasta el cierre.' },
+            { key: 'step1_title', label: 'Paso 1 — título', type: 'text', default: 'Evaluación inicial' },
             { key: 'step1_desc', label: 'Paso 1 — descripción', type: 'textarea', default: 'Evaluamos su caso de forma confidencial y le explicamos las opciones reales con honestidad.' },
-            { key: 'step2_title', label: 'Paso 2 — título', type: 'text', default: 'Estrategia legal' },
-            { key: 'step2_desc', label: 'Paso 2 — descripción', type: 'textarea', default: 'Analizamos pruebas, normativa aplicable y diseñamos la estrategia jurídica óptima para su caso.' },
-            { key: 'step3_title', label: 'Paso 3 — título', type: 'text', default: 'Gestión y litigio' },
-            { key: 'step3_desc', label: 'Paso 3 — descripción', type: 'textarea', default: 'Tramitamos su asunto con diligencia. Actuamos en sede administrativa, judicial o notarial según corresponda.' },
-            { key: 'step4_title', label: 'Paso 4 — título', type: 'text', default: 'Cierre y seguimiento' },
-            { key: 'step4_desc', label: 'Paso 4 — descripción', type: 'textarea', default: 'Le entregamos un informe claro del resultado y, si procede, los recursos disponibles.' },
+            { key: 'step2_title', label: 'Paso 2 — título', type: 'text', default: 'Diagnóstico jurídico' },
+            { key: 'step2_desc', label: 'Paso 2 — descripción', type: 'textarea', default: 'Analizamos pruebas, normativa aplicable y le explicamos las opciones reales, los riesgos y los plazos.' },
+            { key: 'step3_title', label: 'Paso 3 — título', type: 'text', default: 'Propuesta por escrito' },
+            { key: 'step3_desc', label: 'Paso 3 — descripción', type: 'textarea', default: 'Definimos alcance, honorarios y actuaciones por escrito antes de iniciar.' },
+            { key: 'step4_title', label: 'Paso 4 — título', type: 'text', default: 'Gestión y seguimiento' },
+            { key: 'step4_desc', label: 'Paso 4 — descripción', type: 'textarea', default: 'Documentamos las actuaciones y le mantenemos informado en cada etapa.' },
+            { key: 'step5_title', label: 'Paso 5 — título', type: 'text', default: 'Cierre' },
+            { key: 'step5_desc', label: 'Paso 5 — descripción', type: 'textarea', default: 'Le entregamos un resumen del resultado y de los pasos posteriores cuando sean necesarios.' },
           ],
         },
         {
@@ -487,8 +498,8 @@ export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
           key: 'hero', label: 'Hero', fields: [
             { key: 'eyebrow', label: 'Eyebrow', type: 'text', default: 'El Despacho' },
             { key: 'badge', label: 'Badge', type: 'text', default: 'Multidisciplinar' },
-            { key: 'title', label: 'Título', type: 'text', default: 'Compromiso Legal, Rigor Técnico y Visión de Vanguardia' },
-            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Bufete jurídico fundado sobre los pilares del rigor metodológico, la confidencialidad y la excelencia jurídica. Combinamos solvencia técnica con digitalización de procesos.' },
+            { key: 'title', label: 'Título', type: 'text', default: 'Bufete jurídico en Nacaome, Valle' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Bufete de abogados colegiados en Honduras. Trabajamos con rigor metodológico, confidencialidad y comunicación clara, y aplicamos procesos documentados a cada asunto.' },
           ],
         },
         {
@@ -515,7 +526,7 @@ export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
         {
           key: 'commitments', label: 'Compromisos', fields: [
             { key: 'label', label: 'Etiqueta', type: 'text', default: 'Nuestros compromisos' },
-            { key: 'c1', label: 'Compromiso 1', type: 'text', default: 'Consulta inicial confidencial y sin compromiso' },
+            { key: 'c1', label: 'Compromiso 1', type: 'text', default: 'Evaluación inicial confidencial' },
             { key: 'c2', label: 'Compromiso 2', type: 'text', default: 'Explicación clara de cada etapa procesal' },
             { key: 'c3', label: 'Compromiso 3', type: 'text', default: 'Honestidad sobre las expectativas reales del caso' },
             { key: 'c4', label: 'Compromiso 4', type: 'text', default: 'Presupuesto de honorarios por escrito' },
@@ -551,8 +562,8 @@ export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
           key: 'guarantees', label: 'Garantías', fields: [
             { key: 'g1_title', label: 'Garantía 1 — título', type: 'text', default: 'Secreto profesional' },
             { key: 'g1_desc', label: 'Garantía 1 — descripción', type: 'textarea', default: 'Su información está protegida por el secreto profesional.' },
-            { key: 'g2_title', label: 'Garantía 2 — título', type: 'text', default: 'Sin compromiso' },
-            { key: 'g2_desc', label: 'Garantía 2 — descripción', type: 'textarea', default: 'La consulta inicial no le obliga a contratar nuestros servicios.' },
+            { key: 'g2_title', label: 'Garantía 2 — título', type: 'text', default: 'Evaluación inicial confidencial' },
+            { key: 'g2_desc', label: 'Garantía 2 — descripción', type: 'textarea', default: 'La evaluación inicial le permite conocer las opciones y los siguientes pasos sin obligarle a contratar nuestros servicios.' },
             { key: 'g3_title', label: 'Garantía 3 — título', type: 'text', default: 'Respuesta en horario hábil' },
             { key: 'g3_desc', label: 'Garantía 3 — descripción', type: 'textarea', default: 'Le respondemos el mismo día hábil por el canal que prefiera.' },
           ],

@@ -111,7 +111,7 @@ export default async function AbogadoDeFamiliaNacaomePage() {
         />
         <div className="space-y-3 mt-6 max-w-3xl mx-auto">
           {[
-            { q: '¿Cuánto cuesta un divorcio en Nacaome?', a: 'El costo depende del tipo de divorcio. El divorcio por mutuo consentimiento es el más rápido y económico. Solicite una consulta sin costo para recibir un presupuesto por escrito adaptado a su caso.' },
+            { q: '¿Cuánto cuesta un divorcio en Nacaome?', a: 'El costo depende del tipo de divorcio. El divorcio por mutuo consentimiento es el más rápido y económico. Solicite una evaluación inicial confidencial para recibir un presupuesto por escrito adaptado a su caso.' },
             { q: '¿Cómo se calcula la pensión alimenticia?', a: 'El juez fija un porcentaje del salario del obligado según el número de hijos y las necesidades del menor. En Honduras, oscila típicamente entre el 15% y el 50% del ingreso neto, según las circunstancias.' },
             { q: '¿Quién se queda con la custodia de los hijos?', a: 'El juez decide según el interés superior del menor. Puede otorgar custodia exclusiva a uno de los padres o custodia compartida. Se evalúan factores como la estabilidad, el entorno y la capacidad de cada progenitor.' },
             { q: '¿Puedo divorciarme si mi cónyuge no quiere?', a: 'Sí. El divorcio contencioso procede aunque uno de los cónyuges no esté de acuerdo. Se requiere invocar una causal legal del Código de Familia. Un abogado le guiará en el proceso.' },
@@ -207,7 +207,7 @@ export default async function AbogadoDeFamiliaNacaomePage() {
               '@type': 'FAQPage',
               '@id': `${url}/#faqpage`,
               mainEntity: [
-                { '@type': 'Question', name: '¿Cuánto cuesta un divorcio en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: 'Depende del tipo de divorcio. Solicite una consulta sin costo para recibir un presupuesto por escrito.' } },
+                { '@type': 'Question', name: '¿Cuánto cuesta un divorcio en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: 'Depende del tipo de divorcio. Solicite una evaluación inicial confidencial para recibir un presupuesto por escrito.' } },
                 { '@type': 'Question', name: '¿Cómo se calcula la pensión alimenticia?', acceptedAnswer: { '@type': 'Answer', text: 'El juez fija un porcentaje del salario según el número de hijos. En Honduras oscila entre el 15% y el 50% del ingreso neto.' } },
                 { '@type': 'Question', name: '¿Quién se queda con la custodia?', acceptedAnswer: { '@type': 'Answer', text: 'El juez decide según el interés superior del menor. Puede ser custodia exclusiva o compartida.' } },
                 { '@type': 'Question', name: '¿Puedo divorciarme si mi cónyuge no quiere?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. El divorcio contencioso procede aunque uno de los cónyuges no esté de acuerdo.' } },

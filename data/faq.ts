@@ -364,7 +364,7 @@ export const categoriasFaq: FaqCategory[] = [
       },
       {
         pregunta: '¿Cómo funciona la evaluación inicial?',
-        respuesta: 'El primer contacto permite identificar el tipo de asunto, su urgencia y si el despacho puede atenderlo. Antes de cualquier actuación profesional se informa el alcance de la consulta y, cuando corresponda, se entrega un presupuesto por escrito. El contacto inicial no le obliga a contratar.',
+        respuesta: 'La evaluación inicial es confidencial: permite identificar el tipo de asunto, su urgencia y si el despacho puede atenderlo. Antes de cualquier actuación profesional se informa el alcance de la consulta y, cuando corresponda, se entrega un presupuesto por escrito. No se garantizan resultados y el contacto inicial no le obliga a contratar.',
       },
       {
         pregunta: '¿Cómo se cobran los honorarios?',

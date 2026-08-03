@@ -54,9 +54,9 @@ export const FAQ_SERVICIOS_JURIDICOS: HubFaqItem[] = [
       'En la primera consulta se identifica el área aplicable y la asignación profesional adecuada. Algunas áreas tienen un responsable individual públicamente confirmado; en las demás, la asignación depende de la materia y de las características del asunto.',
   },
   {
-    pregunta: '¿Ofrecen consulta inicial sin costo?',
+    pregunta: '¿Cómo funciona la evaluación inicial?',
     respuesta:
-      'Sí, la primera consulta por WhatsApp, llamada o formulario es confidencial y sin costo. Permite evaluar el caso, plantear una estrategia inicial y entregar un presupuesto por escrito cuando se requiera representación formal.',
+      'La evaluación inicial es confidencial. En ella se identifica el área aplicable, la documentación necesaria y los siguientes pasos. Cuando se requiera representación formal, se entrega un presupuesto por escrito antes de iniciar.',
   },
   {
     pregunta: '¿Mi caso combina varias ramas del derecho, cómo lo gestionan?',
@@ -128,9 +128,9 @@ export const FAQ_DESPACHO: HubFaqItem[] = [
  */
 export const FAQ_SOLICITAR_CONSULTA: HubFaqItem[] = [
   {
-    pregunta: '¿La primera consulta tiene costo?',
+    pregunta: '¿La evaluación inicial tiene costo?',
     respuesta:
-      'No. La consulta inicial por WhatsApp, llamada o formulario es gratuita y confidencial. Sirve para evaluar el caso y entregar un presupuesto por escrito si se requiere representación formal.',
+      'Las condiciones de la evaluación inicial dependen del tipo de asunto y del alcance solicitado. Puede pedir las condiciones y, cuando se requiera representación formal, un presupuesto por escrito antes de iniciar.',
   },
   {
     pregunta: '¿Cuánto tardan en responder?',

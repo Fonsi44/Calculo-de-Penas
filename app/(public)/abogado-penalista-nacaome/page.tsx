@@ -118,7 +118,7 @@ export default async function AbogadoPenalistaNacaomePage() {
         <div className="space-y-3 mt-6 max-w-3xl mx-auto">
           {[
             { q: '¿Qué hacer si me detienen en Nacaome?', a: `Tiene derecho a un abogado desde el primer momento. No declare sin representación legal. Contáctenos por WhatsApp al ${site.whatsappDisplay} y acudimos de inmediato.` },
-            { q: '¿Cuánto cuesta un abogado penalista en Nacaome?', a: 'Ofrecemos una primera consulta sin costo para evaluar su caso. Tras el análisis, le entregamos un presupuesto por escrito. Los honorarios dependen de la complejidad y etapa del proceso.' },
+            { q: '¿Cuánto cuesta un abogado penalista en Nacaome?', a: 'Ofrecemos una evaluación inicial confidencial para evaluar su caso. Tras el análisis, le entregamos un presupuesto por escrito. Los honorarios dependen de la complejidad y etapa del proceso.' },
             { q: '¿Atienden emergencias penales 24 horas?', a: 'Sí. En caso de detención o urgencia penal, contáctenos por WhatsApp a cualquier hora. La defensa en las primeras horas es decisiva para el resultado del caso.' },
             { q: '¿Qué delitos defienden?', a: 'Defendemos todo tipo de delitos del Código Penal hondureño: homicidio, hurto, robo, estafa, lesiones, delitos sexuales, narcotráfico, lavado de activos, extorsión, portación ilegal de armas, violencia doméstica y más.' },
             { q: '¿Cómo funciona el proceso penal en Honduras?', a: 'El proceso penal tiene tres etapas: investigación (Fiscalía), etapa intermedia (audiencia preliminar) y juicio oral. La defensa técnica puede lograr un sobreseimiento definitivo desde la etapa inicial.' },
@@ -218,7 +218,7 @@ export default async function AbogadoPenalistaNacaomePage() {
               '@id': `${url}/#faqpage`,
               mainEntity: [
                 { '@type': 'Question', name: '¿Qué hacer si me detienen en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: `Tiene derecho a un abogado desde el primer momento. No declare sin representación legal. Contáctenos por WhatsApp al ${site.whatsappDisplay} y acudimos de inmediato.` } },
-                { '@type': 'Question', name: '¿Cuánto cuesta un abogado penalista en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: 'Ofrecemos una primera consulta sin costo para evaluar su caso. Tras el análisis, le entregamos un presupuesto por escrito.' } },
+                { '@type': 'Question', name: '¿Cuánto cuesta un abogado penalista en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: 'Ofrecemos una evaluación inicial confidencial para evaluar su caso. Tras el análisis, le entregamos un presupuesto por escrito.' } },
                 { '@type': 'Question', name: '¿Atienden emergencias penales 24 horas?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. En caso de detención o urgencia penal, contáctenos por WhatsApp a cualquier hora.' } },
                 { '@type': 'Question', name: '¿Qué delitos defienden?', acceptedAnswer: { '@type': 'Answer', text: 'Defendemos todo tipo de delitos del Código Penal hondureño: homicidio, hurto, robo, estafa, lesiones, delitos sexuales, narcotráfico, lavado de activos, extorsión y más.' } },
                 { '@type': 'Question', name: '¿Cómo funciona el proceso penal en Honduras?', acceptedAnswer: { '@type': 'Answer', text: 'El proceso penal tiene tres etapas: investigación (Fiscalía), etapa intermedia (audiencia preliminar) y juicio oral.' } },

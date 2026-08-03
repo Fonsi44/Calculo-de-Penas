@@ -112,7 +112,7 @@ export default async function AbogadoCivilNacaomePage() {
         <div className="space-y-3 mt-6 max-w-3xl mx-auto">
           {[
             { q: '¿Qué necesito para comprar una casa en Honduras?', a: 'Debe verificar que el vendedor sea el dueño legítimo, que la propiedad esté libre de gravámenes y al día en impuestos. Le asistimos con la debida diligencia, redacción de la escritura e inscripción registral.' },
-            { q: '¿Cuánto cuesta un poder notarial en Nacaome?', a: 'El costo varía según el tipo de poder. Un poder especial tiene un costo menor que un poder general. Solicite una consulta sin costo para recibir un presupuesto exacto.' },
+            { q: '¿Cuánto cuesta un poder notarial en Nacaome?', a: 'El costo varía según el tipo de poder. Un poder especial tiene un costo menor que un poder general. Solicite una evaluación inicial confidencial para recibir un presupuesto por escrito.' },
             { q: '¿Qué pasa si alguien muere sin testamento?', a: 'Se abre la sucesión intestada. Los herederos legales deben tramitar la declaratoria de herederos ante notario o juez para poder disponer de los bienes del fallecido.' },
             { q: '¿Cómo sé si una propiedad tiene problemas legales?', a: 'Realizamos un estudio registral completo: revisión de antecedentes en el Registro de la Propiedad, verificación de impuestos municipales y comprobación de que no existan embargos o anotaciones preventivas.' },
             { q: '¿Qué diferencia hay entre un contrato privado y una escritura pública?', a: 'La escritura pública otorga fecha cierta, fe pública notarial y es necesaria para inscribir en el Registro de la Propiedad. El contrato privado es válido entre las partes pero tiene limitaciones probatorias frente a terceros.' },
@@ -209,7 +209,7 @@ export default async function AbogadoCivilNacaomePage() {
               '@id': `${url}/#faqpage`,
               mainEntity: [
                 { '@type': 'Question', name: '¿Qué necesito para comprar una casa en Honduras?', acceptedAnswer: { '@type': 'Answer', text: 'Verificar que el vendedor sea dueño legítimo, que la propiedad esté libre de gravámenes y al día en impuestos. Le asistimos con la debida diligencia.' } },
-                { '@type': 'Question', name: '¿Cuánto cuesta un poder notarial en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: 'Varía según el tipo de poder. Solicite una consulta sin costo para recibir un presupuesto exacto.' } },
+                { '@type': 'Question', name: '¿Cuánto cuesta un poder notarial en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: 'Varía según el tipo de poder. Solicite una evaluación inicial confidencial para recibir un presupuesto por escrito.' } },
                 { '@type': 'Question', name: '¿Qué pasa si alguien muere sin testamento?', acceptedAnswer: { '@type': 'Answer', text: 'Se abre la sucesión intestada. Los herederos deben tramitar la declaratoria de herederos ante notario o juez.' } },
                 { '@type': 'Question', name: '¿Cómo sé si una propiedad tiene problemas legales?', acceptedAnswer: { '@type': 'Answer', text: 'Realizamos un estudio registral completo: revisión de antecedentes, impuestos y verificación de embargos.' } },
                 { '@type': 'Question', name: '¿Qué diferencia hay entre contrato privado y escritura pública?', acceptedAnswer: { '@type': 'Answer', text: 'La escritura pública otorga fecha cierta y fe pública notarial. Es necesaria para inscribir en el Registro de la Propiedad.' } },

@@ -251,7 +251,7 @@ const DEFAULT_CONTENT: typeof AREA_CONTENT[string] = {
   faqs: [
     { q: '¿Necesito abogado para este tipo de asuntos?', a: 'Aunque algunos trámites pueden parecer sencillos, la asesoría legal profesional evita errores que pueden ser costosos o irreversibles. Un abogado conoce los plazos, requisitos y estrategias adecuadas.' },
     { q: '¿Cuánto tiempo puede tomar resolver mi caso?', a: 'Depende de la complejidad y del tipo de procedimiento. En la consulta inicial podemos darle una estimación realista basada en nuestra experiencia con casos similares.' },
-    { q: '¿Ofrecen consulta inicial gratuita?', a: 'Sí. La primera consulta es confidencial y sin costo. Evaluamos su caso y le explicamos sus opciones con honestidad, antes de cualquier compromiso.' },
+    { q: '¿Cómo funciona la evaluación inicial?', a: 'La evaluación inicial es confidencial: permite entender el caso, plantear una estrategia inicial y entregar un presupuesto por escrito antes de cualquier compromiso formal.' },
   ],
 };
 
@@ -310,7 +310,7 @@ export function LeadMagnetPdf({ magnet }: LeadMagnetPdfProps) {
         <View style={styles.ctaBox}>
           <Text style={styles.ctaTitle}>¿Necesita asesoría legal en {magnet.titulo.replace('Guía legal: ', '')}?</Text>
           <Text style={styles.ctaBody}>
-            Solicite una consulta confidencial sin costo. Nuestro equipo evaluará su caso
+            Solicite una evaluación inicial confidencial. Nuestro equipo evaluará su caso
             y le explicará sus opciones con claridad y honestidad.
           </Text>
           <Text style={styles.contactLine}>📞 {site.phoneDisplay}</Text>

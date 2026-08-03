@@ -72,7 +72,7 @@ function despachoContent(content: Record<string, string>) {
       ],
     },
     commitments: [
-      content['commitments.c1'] || 'Consulta inicial confidencial y sin compromiso',
+      content['commitments.c1'] || 'Evaluación inicial confidencial',
       content['commitments.c2'] || 'Explicación clara de cada etapa procesal',
       content['commitments.c3'] || 'Honestidad sobre las expectativas reales del caso',
       content['commitments.c4'] || 'Presupuesto de honorarios por escrito',

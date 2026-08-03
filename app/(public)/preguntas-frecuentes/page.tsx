@@ -72,18 +72,18 @@ export async function generateMetadata(): Promise<Metadata> {
   const total = categoriasFaq.reduce((acc, c) => acc + c.preguntas.length, 0);
   return {
     title: 'Preguntas frecuentes sobre consultas y honorarios',
-    description: `${total} respuestas sobre la primera consulta gratuita, confidencialidad, documentación, honorarios, presupuesto y atención de ${site.name}.`,
+    description: `${total} respuestas sobre evaluación inicial confidencial, documentación, honorarios, presupuesto y atención de ${site.name}.`,
     alternates: { canonical: '/preguntas-frecuentes' },
-    keywords: ['primera consulta gratuita', 'honorarios abogados Honduras', 'presupuesto legal', 'confidencialidad abogado', 'documentos primera consulta'],
+    keywords: ['evaluación inicial confidencial', 'honorarios abogados Honduras', 'presupuesto legal', 'confidencialidad abogado', 'documentos primera consulta'],
     twitter: {
       card: 'summary_large_image',
       title: 'Preguntas frecuentes sobre consultas y honorarios',
-      description: `${total} respuestas sobre consulta gratuita, confidencialidad, documentación, honorarios, presupuesto y atención.`,
+      description: `${total} respuestas sobre evaluación inicial confidencial, documentación, honorarios, presupuesto y atención.`,
       images: [`${site.url}/og/faq.webp`],
     },
     openGraph: {
       title: 'Preguntas frecuentes sobre consultas y honorarios',
-      description: `${total} respuestas sobre consulta gratuita, confidencialidad, documentación, honorarios, presupuesto y atención de ${site.name}.`,
+      description: `${total} respuestas sobre evaluación inicial confidencial, documentación, honorarios, presupuesto y atención de ${site.name}.`,
       url: `${site.url}/preguntas-frecuentes`,
       siteName: site.name,
       locale: 'es_HN',
@@ -126,8 +126,8 @@ export default async function FaqPage() {
         title="Antes de su primera consulta"
         subtitle={
           <>
-            {totalPreguntas} respuestas sobre la primera consulta gratuita,
-            confidencialidad, documentación, honorarios, presupuesto y atención.
+            {totalPreguntas} respuestas sobre evaluación inicial confidencial,
+            documentación, honorarios, presupuesto y atención.
           </>
         }
         cta={<CTAGroup variant="inverse" />}

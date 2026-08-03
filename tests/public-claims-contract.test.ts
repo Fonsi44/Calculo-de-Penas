@@ -127,13 +127,18 @@ describe('contrato de claims públicos y entidades', () => {
     expect(faqSource).not.toContain('no duplica gestiones');
   });
 
-  it('conserva fundación, fundadores y primera consulta gratuita', () => {
+  it('conserva fundación y fundadores; la gratuidad de la consulta NO está confirmada', () => {
     expect(organization.foundingDate).toBe('2010');
     expect(organization.founder).toEqual([
       { '@id': `${site.url}/#danilo-pineda-maradiaga` },
-      { '@id': `${site.url}/#thania` },
+      { '@id': `${site.url}/#thania-marlene-paz` },
     ]);
-    expect(PUBLIC_CLAIMS.find((claim) => claim.key === 'firstConsultationFree')?.value).toBe(true);
+    // Decisión 2026-08-03: el propietario no ha confirmado que todas las
+    // consultas sean gratuitas. El claim pasa a unconfirmed y no público.
+    const freeClaim = PUBLIC_CLAIMS.find((claim) => claim.key === 'firstConsultationFree');
+    expect(freeClaim?.value).toBeNull();
+    expect(freeClaim?.status).toBe('unconfirmed');
+    expect(freeClaim?.public).toBe(false);
   });
 
   it('knowsAbout institucional coincide con el catálogo', () => {

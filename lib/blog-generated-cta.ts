@@ -39,8 +39,8 @@ export const MID_POST_CTA_SLUGS: ReadonlySet<string> = new Set([
 export const GENERATED_LEGAL_CTA_COPY = {
   eyebrow: 'Consulta legal',
   title: '¿Necesita orientación sobre este tema?',
-  body: 'Podemos revisar su situación concreta, explicarle las opciones disponibles y, si procede, preparar un presupuesto por escrito. La primera consulta es gratuita, confidencial y sin compromiso. No se garantizan resultados.',
-  anchor: 'Solicitar una consulta gratuita y confidencial',
+  body: 'Podemos revisar su situación concreta, explicarle las opciones disponibles y, si procede, preparar un presupuesto por escrito. La evaluación inicial es confidencial. No se garantizan resultados.',
+  anchor: 'Solicitar una evaluación inicial confidencial',
 } as const;
 
 export function injectMidArticleCta(body: string, slug: string): string {

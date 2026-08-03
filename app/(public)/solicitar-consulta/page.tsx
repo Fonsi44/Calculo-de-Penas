@@ -215,7 +215,7 @@ export default async function SolicitarConsultaPage() {
                 </a>
               </div>
               <p className="text-xxs text-text-secondary leading-relaxed">
-                Consulta confidencial y sin compromiso · Sus datos están protegidos por el secreto profesional.
+                Evaluación inicial confidencial · Sus datos están protegidos por el secreto profesional.
               </p>
             </div>
           </div>

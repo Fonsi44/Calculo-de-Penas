@@ -105,10 +105,10 @@ const dataAuditRows = sourceRows.map((row) => {
   };
 });
 
-const freeQuestion = corporateQuestions.find((question) =>
-  question.pregunta.toLocaleLowerCase('es-HN').includes('primera consulta es gratuita'),
+const evaluationQuestion = corporateQuestions.find((question) =>
+  question.pregunta.toLocaleLowerCase('es-HN').includes('evaluación inicial'),
 );
-const freeAnswer = freeQuestion?.respuestaTexto.toLocaleLowerCase('es-HN') ?? '';
+const evaluationAnswer = evaluationQuestion?.respuestaTexto.toLocaleLowerCase('es-HN') ?? '';
 
 const hiddenHomeSchema = HOME.includes('FAQ_HOME_LEGACY')
   || HOME.includes("'@type': 'FAQPage'");
@@ -228,11 +228,12 @@ const failures = [
   !blogFaqVisibleContract && 'blog_schema_visible_mismatch',
   duplicateServiceSchema && 'duplicate_service_schema',
   corporateQuestions.length === 0 && 'empty_public_faq',
-  !freeQuestion && 'free_consultation_missing',
-  !freeAnswer.includes('gratuita') && 'free_consultation_not_free',
-  !freeAnswer.includes('confidencial') && 'confidentiality_missing',
-  !freeAnswer.includes('sin compromiso') && 'without_commitment_missing',
-  !freeAnswer.includes('no se garantizan resultados') && 'no_guarantee_missing',
+  !evaluationQuestion && 'evaluation_question_missing',
+  !evaluationAnswer.includes('confidencial') && 'confidentiality_missing',
+  // Política 2026-08-03: no se permiten claims de gratuidad no confirmados.
+  /gratuita|gratuito|sin costo|sin compromiso/.test(evaluationAnswer)
+    && 'unauthorized_free_claim',
+  !evaluationAnswer.includes('no se garantizan resultados') && 'no_guarantee_missing',
 ].filter(Boolean);
 
 writeFileSync(

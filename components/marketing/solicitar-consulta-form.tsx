@@ -503,7 +503,7 @@ export function SolicitarConsultaForm() {
         )}
       </button>
       <p className="text-xxs text-text-muted text-center leading-relaxed">
-        Consulta confidencial y sin compromiso · Respuesta en horario hábil ·
+        Evaluación inicial confidencial · Respuesta en horario hábil ·
         Sus datos están protegidos por el secreto profesional. No garantizamos
         resultados, que dependen del análisis individual de cada caso.
       </p>

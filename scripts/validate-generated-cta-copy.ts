@@ -5,13 +5,17 @@ import { sanitizeBlogRenderedHtml } from '../lib/blog-html-sanitizer';
 async function main() {
 const copy = Object.values(GENERATED_LEGAL_CTA_COPY).join(' ');
 const required = [
-  /primera consulta es gratuita/i,
+  /evaluación inicial confidencial/i,
   /confidencial/i,
-  /sin compromiso/i,
   /no se garantizan resultados/i,
 ];
 for (const pattern of required) {
   if (!pattern.test(copy)) throw new Error(`Falta contrato CTA: ${pattern}.`);
+}
+// Política 2026-08-03: prohibido afirmar gratuidad/sin costo/sin compromiso.
+if (/consulta gratuita|sin costo|primera consulta es gratuita|sin compromiso/i
+  .test(copy)) {
+  throw new Error('El CTA contiene un claim comercial no autorizado.');
 }
 if (/(ganar[aá]|garantiz(?:a|amos)|tiene derecho a|evite la c[aá]rcel|indemnizaci[oó]n asegurada)/i
   .test(copy.replace(/no se garantizan resultados/gi, ''))) {

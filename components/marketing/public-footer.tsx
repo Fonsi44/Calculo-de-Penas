@@ -28,13 +28,14 @@ const DESPACHO = [
   { label: 'Derecho Penal', title: 'Defensa penal en Nacaome, Valle, San Lorenzo, Choluteca y todo el sur de Honduras', href: '/derecho-penal' },
   { label: 'Blog Jurídico', title: 'Artículos y guías legales para la zona sur de Honduras', href: '/blog' },
   { label: 'Preguntas Frecuentes', title: 'Respuestas a dudas legales frecuentes', href: '/preguntas-frecuentes' },
-  { label: 'Solicitar Consulta', title: 'Solicite una consulta legal gratuita y confidencial', href: '/solicitar-consulta#formulario' },
+  { label: 'Solicitar Consulta', title: 'Solicite una evaluación inicial confidencial', href: '/solicitar-consulta#formulario' },
   { label: 'Hondureños en España', title: 'Asistencia legal para hondureños residentes en España', href: '/hondurenos-en-espana' },
   { label: 'Cómo llegar', title: 'Indicaciones para llegar al bufete en Nacaome, Valle', href: '/como-llegar' },
 ];
 
-// Landings de SEO local — enlazadas desde todas las páginas (footer) para
-// transferir autoridad interna y facilitar el descubrimiento por Google.
+// Landings de SEO local — enlazadas desde todas las páginas (footer). Solo
+// landings INDEXABLES (las 9 NOINDEX_UNTIL_UNIQUE quedan fuera de listados SEO
+// automáticos; fuente: data/seo/local-landing-indexability.json).
 const COBERTURA = [
   { label: 'Abogados en Nacaome', title: 'Abogados en Nacaome, Valle — sede principal del bufete', href: '/abogados-en-nacaome' },
   { label: 'Abogados en Choluteca', title: 'Abogados en Choluteca, Honduras — defensa y asesoría legal', href: '/abogados-en-choluteca' },

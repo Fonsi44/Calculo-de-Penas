@@ -216,7 +216,7 @@ export default function GuiaLegalPage() {
             </p>
           </div>
           <p className="mt-4 text-text-secondary leading-relaxed">
-            En Pineda y Asociados la primera consulta de evaluación es gratuita y se entrega
+            En Pineda y Asociados la evaluación inicial es confidencial y se entrega
             presupuesto por escrito. Solicítela por WhatsApp al {site.phoneDisplay} o mediante el{' '}
             <Link href="/solicitar-consulta" className="text-accent-dark underline underline-offset-2">
               formulario de consulta
@@ -276,7 +276,7 @@ export default function GuiaLegalPage() {
           <div className="mt-10 rounded-lg bg-primary text-text-inverse p-6 text-center">
             <p className="font-serif text-xl">¿Necesita una consulta jurídica en Honduras?</p>
             <p className="mt-2 text-text-inverse/85 text-sm">
-              Atendemos en Nacaome, Valle y toda la zona sur. Primera consulta sin costo.
+              Atendemos en Nacaome, Valle y toda la zona sur. Evaluación inicial confidencial.
             </p>
             <Link
               href="/solicitar-consulta"

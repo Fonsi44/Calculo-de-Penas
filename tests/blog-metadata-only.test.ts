@@ -59,12 +59,18 @@ describe('CTA jurídico generado', () => {
   });
 
   it.each([
-    ['gratuita', /primera consulta es gratuita/i],
+    ['evaluación inicial confidencial', /evaluaci[oó]n inicial confidencial/i],
     ['confidencial', /confidencial/i],
-    ['sin compromiso', /sin compromiso/i],
+    ['sin claim gratuito', /consulta gratuita|sin costo|gratuit[oa]/i],
     ['sin garantía', /no se garantizan resultados/i],
   ])('incluye %s', (_label, pattern) => {
-    expect(Object.values(GENERATED_LEGAL_CTA_COPY).join(' ')).toMatch(pattern);
+    const text = Object.values(GENERATED_LEGAL_CTA_COPY).join(' ');
+    if (pattern.source.includes('consulta gratuita|sin costo')) {
+      // Decisión 2026-08-03: no puede contener claims de gratuidad no confirmados.
+      expect(text).not.toMatch(/consulta\s+gratuit[oa]|sin\s+costo|primera\s+consulta\s+es\s+gratuita/i);
+    } else {
+      expect(text).toMatch(pattern);
+    }
   });
 
   it('no incluye promesas absolutas', () => {
@@ -82,7 +88,7 @@ describe('CTA jurídico generado', () => {
     const final = sanitizeBlogRenderedHtml(html).html;
     expect(final).toContain('seo_blog_cta_click');
     expect(final).toContain('blog_inline');
-    expect(final).toContain('primera consulta es gratuita');
+    expect(final).toContain('evaluación inicial confidencial');
     expect(final).toContain('/solicitar-consulta#formulario');
   });
 
