@@ -153,7 +153,7 @@ Entregables: `docs/seo/current/bing-crawl-error-classification.csv`,
 
 ## 11. GitHub
 
-- Checks: **5/5 verdes** (Higiene/Lint/TSC/Tests/Build ✓ · Vercel ✓ · Lighthouse ✓ · GitGuardian ✓ · Preview Comments ✓).
+- Checks finales: **5/5 verdes** en HEAD `1a4cebbb` (Higiene/Lint/TSC/Tests/Build ✓ 3m26s · Vercel ✓ · Lighthouse ✓ 5m7s · GitGuardian ✓ · Preview Comments ✓).
 - PR #26: OPEN, no draft, `MERGEABLE`, sin conflictos.
 - **Merge pendiente:** la protección de `main` exige 1 revisión aprobatoria
   (code owner) y el autor no puede auto-aprobar; auto-merge deshabilitado.
@@ -170,8 +170,9 @@ Entregables: `docs/seo/current/bing-crawl-error-classification.csv`,
 
 ## 13. Estado final
 
-- Rama: `feat/seo-data-intelligence-v2` · HEAD: `55dbccc1` (sync con remoto).
+- Rama: `feat/seo-data-intelligence-v2` · HEAD: `1a4cebbb` (sync con remoto).
 - Árbol: limpio (sin cambios sin commitear).
+- Checks: 5/5 verdes (CI, Vercel, Lighthouse, GitGuardian, Preview Comments).
 - `main` vs `origin/main`: sin cambios (el merge no se ha producido).
 - Deployment: Preview Ready; Production pendiente del merge.
 
