@@ -13,7 +13,6 @@ import {
   scanContentPolicyViolations,
   validateContentPolicy,
   validateEditablePageContent,
-  type ContentPolicyViolation,
 } from '@/lib/content-policy';
 
 describe('scanContentPolicyViolations — estructura', () => {
