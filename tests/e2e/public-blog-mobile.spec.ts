@@ -97,7 +97,8 @@ test.describe('blog público móvil 390 × 844', () => {
       await expect(page.locator('h1')).toHaveCount(1);
       const cta = page.locator('[data-event-name="seo_blog_cta_click"]');
       await expect(cta).toBeVisible();
-      await expect(cta).toContainText('gratuita');
+      await expect(cta).toContainText('evaluación inicial confidencial');
+      await expect(cta).not.toContainText('gratuita');
       await expect(page.locator('.article-body')).toContainText(
         'No se garantizan resultados',
       );

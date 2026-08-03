@@ -73,7 +73,7 @@ for (const viewport of [
       await expect(page.getByText('Información del bufete')).toBeVisible();
       await expect(page.locator('meta[name="description"]')).toHaveAttribute(
         'content',
-        /consulta gratuita.*confidencialidad.*documentación.*honorarios.*presupuesto.*atención/i,
+        /evaluación inicial confidencial.*confidencialidad.*documentación.*honorarios.*presupuesto.*atención/i,
       );
       await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
         'href',
@@ -98,12 +98,12 @@ for (const viewport of [
       expect(entities).toHaveLength(await details.count());
 
       const freeConsultation = details.filter({
-        hasText: '¿La primera consulta es gratuita?',
+        hasText: '¿Cómo funciona la evaluación inicial?',
       });
       await expect(freeConsultation).toHaveCount(1);
       await expect(freeConsultation).toContainText('confidencial');
-      await expect(freeConsultation).toContainText('sin compromiso');
-      await expect(freeConsultation).toContainText('no se garantizan resultados');
+      await expect(freeConsultation).not.toContainText('sin costo');
+      await expect(freeConsultation).not.toContainText('sin compromiso');
 
       const firstSummary = details.first().locator('summary');
       await firstSummary.focus();
