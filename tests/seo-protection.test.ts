@@ -14,7 +14,7 @@ import { isPublicApiPath, isPublicPagePath } from '@/proxy';
 import { legalServiceSchema, organizationSchema, websiteSchema, founderSchema, thaniaSchema, emilSchema, site } from '@/lib/site';
 import { areaSchemas, faqPageSchema } from '@/lib/schemas/legal-page';
 import robotsFn from '@/app/robots';
-import { PUBLIC_ROUTES, THIN_POST_SLUGS } from '@/app/sitemap';
+import { PUBLIC_ROUTES, THIN_POST_SLUGS } from '@/lib/seo/sitemap';
 
 // Rutas que NUNCA deben ser públicas, indexables ni enlazadas (AGENTS.md reglas 17-19).
 const PRIVATE_PREFIXES = ['/intranet/', '/admin/', '/calculadora', '/casos/', '/cp/', '/delitos/', '/atajos'];
@@ -70,7 +70,7 @@ describe('proxy.ts — clasificación de rutas', () => {
   });
 });
 
-describe('app/sitemap.ts — sin rutas privadas en PUBLIC_ROUTES', () => {
+describe('lib/seo/sitemap.ts — sin rutas privadas en PUBLIC_ROUTES', () => {
   it('PUBLIC_ROUTES no contiene ninguna ruta privada', () => {
     for (const route of PUBLIC_ROUTES) {
       for (const prefix of PRIVATE_PREFIXES) {

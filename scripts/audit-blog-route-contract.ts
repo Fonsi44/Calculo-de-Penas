@@ -74,7 +74,7 @@ async function main() {
   }
 
   const nextConfig = await readFile('next.config.ts', 'utf8');
-  const sitemapSource = await readFile('app/sitemap.ts', 'utf8');
+  const sitemapSource = await readFile('lib/seo/sitemap.ts', 'utf8');
   const redirects = parseRedirects(nextConfig);
   const redirectBySource = new Map(redirects.map((item) => [item.source, item]));
   const redirectSources = new Set(redirects.map((item) => item.source));

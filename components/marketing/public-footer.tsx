@@ -42,10 +42,7 @@ const COBERTURA = [
   { label: 'Abogados en Goascorán', title: 'Abogados en Goascorán, Valle — zona fronteriza', href: '/abogados-en-goascoran' },
   { label: 'Abogados en San Marcos de Colón', title: 'Abogados en San Marcos de Colón, Choluteca — zona fronteriza', href: '/abogados-en-san-marcos-de-colon' },
   { label: 'Abogados en El Triunfo', title: 'Abogados en El Triunfo, Choluteca — zona fronteriza sur', href: '/abogados-en-el-triunfo' },
-  { label: 'Abogados en Marcovia', title: 'Abogados en Marcovia, Choluteca — cobertura legal en el sur', href: '/abogados-en-marcovia' },
-  { label: 'Abogados en Pespire', title: 'Abogados en Pespire, Choluteca — asesoría legal en el sur', href: '/abogados-en-pespire' },
-  { label: 'Abogados en Namasigüe', title: 'Abogados en Namasigüe, Choluteca — asesoría legal en occidente', href: '/abogados-en-namasigue' },
-  { label: 'Abogados en Orocuina', title: 'Abogados en Orocuina, Choluteca — asesoría legal en oriente', href: '/abogados-en-orocuina' },
+  { label: 'Abogados en Amapala', title: 'Abogados en Amapala, Valle — isla y puerto del Golfo de Fonseca', href: '/abogados-en-amapala' },
 ];
 
 const LEGALES = [

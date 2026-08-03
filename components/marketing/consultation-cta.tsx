@@ -43,7 +43,7 @@ export function ConsultationCTA({
   const defaultEyebrow = 'Evaluación confidencial en Nacaome, Valle';
   const defaultTitle = 'Cada caso es único. Cuéntenos el suyo y le orientamos sin compromiso.';
   const defaultSubtitle =
-    'Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones legales disponibles. Atendemos en Nacaome, San Lorenzo, Amapala, Langue, Goascorán, Choluteca, Pespiré, San Marcos de Colón, Marcovia y El Triunfo. Presupuesto por escrito antes de cualquier actuación. Sus datos están protegidos por el secreto profesional del abogado.';
+    'Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones legales disponibles. Atendemos en Nacaome, San Lorenzo, Amapala, Goascorán, Choluteca, San Marcos de Colón y El Triunfo. Presupuesto por escrito antes de cualquier actuación. Sus datos están protegidos por el secreto profesional del abogado.';
 
   if (variant === 'footer') {
     return (

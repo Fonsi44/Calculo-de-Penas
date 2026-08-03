@@ -4,7 +4,7 @@ import { BLOG_METADATA_OVERRIDES } from '@/data/blog/blog-metadata-overrides';
 import { BLOG_ROUTE_DECISIONS } from '@/data/blog/blog-route-decisions';
 
 const nextConfig = readFileSync('next.config.ts', 'utf8');
-const sitemap = readFileSync('app/sitemap.ts', 'utf8');
+const sitemap = readFileSync('lib/seo/sitemap.ts', 'utf8');
 const redirects = [...nextConfig.matchAll(
   /source:\s*'([^']*\/blog\/[^']*)',\s*destination:\s*'([^']+)',\s*permanent:\s*true/g,
 )].map((match) => ({ source: match[1], destination: match[2] }));

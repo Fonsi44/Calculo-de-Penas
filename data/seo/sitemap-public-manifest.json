@@ -1,0 +1,9 @@
+{
+  "_comment": "Manifiesto de sitemap público (sustituye al gate rígido de 135 artículos). El sitemap NO falla por un conteo exacto: valida contra este manifiesto. Si una retirada jurídica autorizada reduce el inventario, declárese la URL en allowed_withdrawn con su motivo; si el inventario baja del piso min_indexable por debajo de lo autorizado, el build falla con error descriptivo. La lista exacta de URLs la determina la DB (blog_posts) en runtime; este manifiesto solo fija el piso y las retiradas autorizadas.",
+  "schema_version": 1,
+  "updated_at": "2026-08-03",
+  "blog": {
+    "min_indexable": 100,
+    "allowed_withdrawn": []
+  }
+}

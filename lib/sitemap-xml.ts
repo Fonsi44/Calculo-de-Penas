@@ -27,6 +27,27 @@ export function sitemapResponse(entries: MetadataRoute.Sitemap): Response {
   });
 }
 
+/** Serializa un sitemap index XML válido. */
+export function sitemapIndexXml(index: Array<{ url: string }>): string {
+  const body = index.map((entry) => [
+    '  <sitemap>',
+    `    <loc>${escapeXml(entry.url)}</loc>`,
+    '  </sitemap>',
+  ].join('\n')).join('\n');
+
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</sitemapindex>\n`;
+}
+
+/** Response del sitemap index con cabeceras XML. */
+export function sitemapIndexResponse(index: Array<{ url: string }>): Response {
+  return new Response(sitemapIndexXml(index), {
+    headers: {
+      'Content-Type': 'application/xml; charset=utf-8',
+      'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=3600',
+    },
+  });
+}
+
 export function legacySitemapRedirectResponse(segment = 'legacy'): Response {
   return new Response(null, {
     status: 308,

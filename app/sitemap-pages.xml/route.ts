@@ -1,5 +1,9 @@
-import { legacySitemapRedirectResponse } from '@/lib/sitemap-xml';
+import { buildPagesSitemap } from '@/lib/seo/sitemap';
+import { sitemapResponse } from '@/lib/sitemap-xml';
 
+export const dynamic = 'force-dynamic';
+
+/** /sitemap-pages.xml — páginas estáticas del sitio. */
 export async function GET() {
-  return legacySitemapRedirectResponse('pages');
+  return sitemapResponse(await buildPagesSitemap());
 }

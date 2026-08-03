@@ -1,5 +1,9 @@
-import { legacySitemapRedirectResponse } from '@/lib/sitemap-xml';
+import { buildServicesSitemap } from '@/lib/seo/sitemap';
+import { sitemapResponse } from '@/lib/sitemap-xml';
 
+export const dynamic = 'force-dynamic';
+
+/** /sitemap-services.xml — servicios y subáreas. */
 export async function GET() {
-  return legacySitemapRedirectResponse('services');
+  return sitemapResponse(await buildServicesSitemap());
 }

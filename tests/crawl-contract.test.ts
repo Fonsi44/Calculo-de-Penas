@@ -6,10 +6,14 @@ import {
   PUBLIC_CRAWLER_DISALLOW_PATHS,
 } from '@/lib/crawl-policy';
 import {
-  legacySitemapRedirectResponse,
+  sitemapIndexXml,
   sitemapXml,
 } from '@/lib/sitemap-xml';
-import { isDatabaseConfiguredAtRuntime, PUBLIC_ROUTES } from '@/app/sitemap';
+import {
+  buildSitemapIndex,
+  isDatabaseConfiguredAtRuntime,
+  PUBLIC_ROUTES,
+} from '@/lib/seo/sitemap';
 import { site } from '@/lib/site';
 
 type Rule = {
@@ -80,11 +84,24 @@ describe('semántica del contrato robots', () => {
   });
 });
 
-describe('arquitectura y XML del sitemap único', () => {
-  it('los endpoints segmentados heredados redirigen permanentemente al raíz', () => {
-    const response = legacySitemapRedirectResponse();
-    expect(response.status).toBe(308);
-    expect(response.headers.get('location')).toBe(`${site.url}/sitemap.xml`);
+describe('arquitectura y XML del sitemap index', () => {
+  it('el sitemap index referencia los cinco segmentos segmentados', () => {
+    const index = buildSitemapIndex();
+    expect(index.map((entry) => entry.url)).toEqual([
+      `${site.url}/sitemap-pages.xml`,
+      `${site.url}/sitemap-services.xml`,
+      `${site.url}/sitemap-blog.xml`,
+      `${site.url}/sitemap-authors.xml`,
+      `${site.url}/sitemap-local.xml`,
+    ]);
+  });
+
+  it('genera un sitemap index XML válido', () => {
+    const xml = sitemapIndexXml([{ url: `${site.url}/sitemap-pages.xml` }]);
+    expect(xml).toMatch(/^<\?xml version="1.0" encoding="UTF-8"\?>/);
+    expect(xml).toContain('<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
+    expect(xml).toContain('<loc>');
+    expect(xml).not.toContain('<urlset');
   });
 
   it('genera un urlset XML válido y escapa entidades', () => {

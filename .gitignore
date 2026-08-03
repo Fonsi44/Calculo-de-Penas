@@ -77,6 +77,8 @@ yarn-error.log*
 !/data/seo/editorial-cutover.json
 !/data/seo/preview-blog-fixtures.json
 !/data/seo/phase3-editorial-overrides.json
+!/data/seo/local-landing-indexability.json
+!/data/seo/sitemap-public-manifest.json
 *.tmp
 *.dump
 *.sql.gz

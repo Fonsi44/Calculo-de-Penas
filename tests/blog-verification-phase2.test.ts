@@ -70,7 +70,7 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
 
   describe('2. Hardening del Sitemap y RSS', () => {
     it('ninguno de los 6 posts locales redirigidos aparece en sitemap.ts', async () => {
-      const source = readFileSync('app/sitemap.ts', 'utf8');
+      const source = readFileSync('lib/seo/sitemap.ts', 'utf8');
 
       const pathsToExclude = [
         '/blog/practica-legal/abogados-en-choluteca',

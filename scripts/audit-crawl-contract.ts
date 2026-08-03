@@ -10,6 +10,14 @@ import {
   PUBLIC_CRAWLER_DISALLOW_PATHS,
 } from '@/lib/crawl-policy';
 import { sitemapXml } from '@/lib/sitemap-xml';
+import sitemapManifest from '@/data/seo/sitemap-public-manifest.json';
+import {
+  buildAuthorsSitemap,
+  buildBlogSitemap,
+  buildLocalSitemap,
+  buildPagesSitemap,
+  buildServicesSitemap,
+} from '@/lib/seo/sitemap';
 
 const ROOT = process.cwd();
 const SURFACE = join(ROOT, 'docs/seo/current/crawl-surface-audit.csv');
@@ -47,8 +55,22 @@ async function main() {
   process.env.NEXT_PUBLIC_NOINDEX = 'false';
 
   const { site } = await import('@/lib/site');
-  const { default: buildSitemap } = await import('@/app/sitemap');
-  const entries = await buildSitemap();
+  // Sitemaps segmentados reales (200 XML): el índice referencia los 5 segmentos.
+  const [pagesEntries, servicesEntries, blogEntries, authorsEntries, localEntries] =
+    await Promise.all([
+      buildPagesSitemap(),
+      buildServicesSitemap(),
+      buildBlogSitemap(),
+      buildAuthorsSitemap(),
+      buildLocalSitemap(),
+    ]);
+  const entries = [
+    ...pagesEntries,
+    ...servicesEntries,
+    ...blogEntries,
+    ...authorsEntries,
+    ...localEntries,
+  ];
   const urls = entries.map((entry) => new URL(entry.url));
   const paths = urls.map((url) => url.pathname);
   const uniquePaths = new Set(paths);
@@ -62,7 +84,11 @@ async function main() {
 
   const failures: string[] = [];
   if (entries.length !== uniquePaths.size) failures.push('duplicate sitemap URLs');
-  if (articlePaths.length !== 135) failures.push(`article URLs ${articlePaths.length}/135`);
+  // Validación por manifiesto versionado (no conteo rígido de 135).
+  const { min_indexable: minIndexable } = sitemapManifest.blog;
+  if (articlePaths.length < minIndexable) {
+    failures.push(`article URLs ${articlePaths.length}/${minIndexable} (bajo el piso del manifiesto)`);
+  }
   if (categoryPaths.length !== blogCategories.length) failures.push('incomplete category inventory');
   if (redirectSources.some((source) => uniquePaths.has(source))) failures.push('redirect source in sitemap');
   if (urls.some((url) => url.origin !== site.url || url.protocol !== 'https:')) failures.push('invalid host');
@@ -77,7 +103,7 @@ async function main() {
   if (!xml.includes('<urlset') || xml.includes('<sitemapindex') || xml.includes('<html')) {
     failures.push('invalid XML architecture');
   }
-  const sitemapSource = readFileSync(join(ROOT, 'app/sitemap.ts'), 'utf8');
+  const sitemapSource = readFileSync(join(ROOT, 'lib/seo/sitemap.ts'), 'utf8');
   if (sitemapSource.includes('const IS_DB_REACHABLE')) failures.push('module-level DB decision');
   if (!sitemapSource.includes("dynamic = 'force-dynamic'")) failures.push('sitemap is not runtime dynamic');
 
@@ -159,7 +185,7 @@ async function main() {
 
   console.log(`robots_user_agents_checked = ${ALLOWED_CRAWLER_USER_AGENTS.length + FULLY_BLOCKED_USER_AGENTS.length + 1}`);
   console.log(`private_paths_checked = ${PUBLIC_CRAWLER_DISALLOW_PATHS.length}`);
-  console.log('sitemap_architecture = single_urlset');
+  console.log('sitemap_architecture = sitemap_index_of_5_segments');
   console.log(`sitemap_urls = ${entries.length}`);
   for (const name of ['pages', 'services', 'blog', 'authors', 'local']) {
     console.log(`${name}_urls = ${sections.get(name) ?? 0}`);

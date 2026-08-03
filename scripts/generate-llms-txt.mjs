@@ -28,6 +28,8 @@ import { config } from 'dotenv';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { existsSync, writeFileSync, readFileSync } from 'fs';
+import canonicalPathsData from '../data/seo/canonical-paths.json' with { type: 'json' };
+import localLandingIndexability from '../data/seo/local-landing-indexability.json' with { type: 'json' };
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -76,6 +78,28 @@ const SITE_URL = normalizeSiteOrigin(
   process.env.NEXT_PUBLIC_SITE_URL ||
   CANONICAL_SITE_ORIGIN
 );
+
+// Fecha y entorno reales de generación (trazabilidad, AGENTS.md §4.13).
+const GENERATED_AT = new Date().toISOString();
+const GENERATOR_VERSION = '2.0.0';
+const ENVIRONMENT = process.env.VERCEL_ENV || process.env.APP_ENV || 'local';
+
+// Conjunto de paths de landings locales NO indexables (fuente única:
+// data/seo/local-landing-indexability.json). Se excluyen de llms.txt.
+const NOINDEX_LOCAL_LANDING_PATHS = new Set(
+  localLandingIndexability.noindex_until_unique.map((slug) => `/abogados-en-${slug}`),
+);
+
+/** Catálogo canónico de rutas estáticas (fuente: canonical-paths.json). */
+const CANONICAL_STATIC_PATHS = new Set(
+  canonicalPathsData.static_routes.map((r) => r.path),
+);
+
+/** Devuelve true si una ruta estática es pública e indexable. */
+function isIndexableStaticPath(path) {
+  if (NOINDEX_LOCAL_LANDING_PATHS.has(path)) return false;
+  return CANONICAL_STATIC_PATHS.has(path);
+}
 
 // --------------------------------------------------------------------------
 // Rutas públicas estáticas (fuente: app/sitemap.ts → PUBLIC_ROUTES)
@@ -203,6 +227,12 @@ function url(p) {
 function render() {
   const lines = [];
 
+  // Metadata de trazabilidad (AGENTS.md §4.13)
+  lines.push(`> generated_at: ${GENERATED_AT}`);
+  lines.push(`> generator: seo:llms v${GENERATOR_VERSION}`);
+  lines.push(`> environment: ${ENVIRONMENT}`);
+  lines.push('');
+
   // Header
   lines.push('# Pineda y Asociados HN');
   lines.push('');
@@ -226,14 +256,28 @@ function render() {
   lines.push('## Sitio oficial');
   lines.push('');
   for (const r of STATIC_ROUTES) {
-    // Las landings locales y comerciales siguen en auditoría. No declararlas
-    // como contenido autorizado hasta que tengan valor único y aprobación.
-    if (r.path.startsWith('/abogados-en-') || r.path.startsWith('/abogado-')) continue;
+    // Solo se listan rutas públicas e indexables (fuente: canonical-paths.json
+    // + local-landing-indexability.json). Las landings locales y comerciales
+    // se listan en su propia sección; las 9 NOINDEX_UNTIL_UNIQUE quedan fuera.
+    if (!isIndexableStaticPath(r.path)) continue;
+    if (r.path.startsWith('/abogado-')) continue;
     lines.push(`- [${r.label}](${url(r.path)}): ${r.desc}`);
   }
   lines.push(`- [Danilo Pineda Maradiaga](${url('/equipo/danilo-pineda-maradiaga')}): perfil profesional canónico.`);
   lines.push(`- [Thania Marlene Paz](${url('/equipo/thania-marlene-paz')}): perfil profesional canónico.`);
   lines.push(`- [Emil Barahona](${url('/equipo/emil-barahona')}): perfil profesional canónico.`);
+  lines.push('');
+
+  // Sección: Cobertura local indexable
+  lines.push('## Cobertura local (landings indexables)');
+  lines.push('');
+  lines.push('Las siguientes landings locales representan la cobertura del despacho desde su sede en Nacaome. Las demás municipios auditados sin valor local único demostrado no se listan mientras no se enriquezcan.');
+  lines.push('');
+  for (const r of STATIC_ROUTES) {
+    if (r.path.startsWith('/abogados-en-') && isIndexableStaticPath(r.path)) {
+      lines.push(`- [${r.label}](${url(r.path)}): ${r.desc}`);
+    }
+  }
   lines.push('');
 
   // Sección: Abogados del despacho (entidades Persona para LLMs)
@@ -345,7 +389,12 @@ function render() {
   // Sección: Sitemap
   lines.push('## Sitemap');
   lines.push('');
-  lines.push(`- [Sitemap XML](${url('/sitemap.xml')}): Índice completo de URLs públicas indexables del sitio.`);
+  lines.push(`- [Sitemap index](${url('/sitemap.xml')}): índice que referencia los sitemaps segmentados del sitio.`);
+  lines.push(`- [Páginas](${url('/sitemap-pages.xml')}): páginas estáticas (home, despacho, hubs).`);
+  lines.push(`- [Servicios](${url('/sitemap-services.xml')}): áreas de práctica y subáreas.`);
+  lines.push(`- [Blog](${url('/sitemap-blog.xml')}): categorías y artículos indexables.`);
+  lines.push(`- [Perfiles](${url('/sitemap-authors.xml')}): perfiles de abogados del equipo.`);
+  lines.push(`- [Local](${url('/sitemap-local.xml')}): landings locales indexables y comerciales.`);
   lines.push('');
 
   // Sección: Política técnica
@@ -362,6 +411,19 @@ function render() {
 // --------------------------------------------------------------------------
 const output = render();
 const outputPath = resolve(ROOT, 'public', 'llms.txt');
+
+// Validación de integridad: ninguna landing NOINDEX_UNTIL_UNIQUE ni ruta fuera
+// del catálogo canónico puede aparecer en llms.txt (AGENTS.md R2 / decisión
+// 2026-08-03).
+const leakedNoindex = [...NOINDEX_LOCAL_LANDING_PATHS].filter((path) =>
+  output.includes(url(path)),
+);
+if (leakedNoindex.length > 0) {
+  console.error(
+    `❌ llms.txt contiene landings NOINDEX_UNTIL_UNIQUE: ${leakedNoindex.join(', ')}`,
+  );
+  process.exit(1);
+}
 
 if (DRY_RUN) {
   console.log('=== DRY RUN — llms.txt content preview ===');

@@ -1,5 +1,9 @@
-import { legacySitemapRedirectResponse } from '@/lib/sitemap-xml';
+import { buildAuthorsSitemap } from '@/lib/seo/sitemap';
+import { sitemapResponse } from '@/lib/sitemap-xml';
 
+export const dynamic = 'force-dynamic';
+
+/** /sitemap-authors.xml — perfiles de abogados (/equipo/*). */
 export async function GET() {
-  return legacySitemapRedirectResponse('authors');
+  return sitemapResponse(await buildAuthorsSitemap());
 }

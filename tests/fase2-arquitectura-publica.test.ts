@@ -95,13 +95,14 @@ describe('Fase 2 — contratos de arquitectura pública', () => {
     expect(contact).not.toMatch(/Legal Gratuita|Confidencial · Sin costo/);
   });
 
-  it('publica un sitemap único y redirige los endpoints segmentados heredados', () => {
+  it('publica sitemap index y segmentos XML reales (200, sin redirects)', () => {
     const robots = read('app/robots.ts');
     expect(robots).toContain('/sitemap.xml');
+    expect(read('app/sitemap.xml/route.ts')).toContain('sitemapIndexResponse');
     for (const name of ['pages', 'services', 'blog', 'authors', 'local']) {
-      expect(robots).not.toContain(`/sitemap-${name}.xml`);
-      expect(read(`app/sitemap-${name}.xml/route.ts`))
-        .toContain('legacySitemapRedirectResponse');
+      const route = read(`app/sitemap-${name}.xml/route.ts`);
+      expect(route).not.toContain('legacySitemapRedirectResponse');
+      expect(route).toContain('sitemapResponse');
     }
     const xml = sitemapXml([{
       url: `${site.url}/equipo/danilo-pineda-maradiaga?x=1&y=2`,

@@ -1,3 +1,7 @@
+> generated_at: 2026-08-03T12:04:45.863Z
+> generator: seo:llms v2.0.0
+> environment: local
+
 # Pineda y Asociados HN
 
 > Sitio web oficial de Pineda y Asociados, bufete jurídico multidisciplinario con sede en Nacaome, Valle, Honduras. Este archivo ayuda a sistemas de IA, motores de respuesta y asistentes de búsqueda a identificar las fuentes públicas, canónicas y relevantes del sitio.
@@ -23,10 +27,29 @@ Pineda y Asociados es un bufete jurídico con sede física en Nacaome, Valle (Ho
 - [Solicitar Consulta](https://www.pinedayasociadoshn.com/solicitar-consulta): Formulario público para solicitar asesoría legal.
 - [Hondureños en España](https://www.pinedayasociadoshn.com/hondurenos-en-espana): Asistencia legal para hondureños residentes en España.
 - [Cómo Llegar](https://www.pinedayasociadoshn.com/como-llegar): Dirección física y mapa de ubicación del bufete en Nacaome.
+- [Abogados en Nacaome](https://www.pinedayasociadoshn.com/abogados-en-nacaome): Landing SEO local — sede principal.
+- [Abogados en Choluteca](https://www.pinedayasociadoshn.com/abogados-en-choluteca): Landing SEO local — cobertura en Choluteca.
+- [Abogados en San Lorenzo](https://www.pinedayasociadoshn.com/abogados-en-san-lorenzo): Landing SEO local — cobertura en San Lorenzo.
+- [Abogados en Goascorán](https://www.pinedayasociadoshn.com/abogados-en-goascoran): Landing SEO local — cobertura en Goascorán, Valle.
+- [Abogados en San Marcos de Colón](https://www.pinedayasociadoshn.com/abogados-en-san-marcos-de-colon): Landing SEO local — cobertura en San Marcos de Colón.
+- [Abogados en El Triunfo](https://www.pinedayasociadoshn.com/abogados-en-el-triunfo): Landing SEO local — cobertura en El Triunfo, Choluteca.
+- [Abogados en Amapala](https://www.pinedayasociadoshn.com/abogados-en-amapala): Landing SEO local — cobertura en Amapala, Valle.
 - [Guía Legal para Contratar Abogado en Honduras](https://www.pinedayasociadoshn.com/guia-legal-abogados-honduras): Página pilar nacional — cómo elegir abogado, colegiación, honorarios y errores a evitar.
 - [Danilo Pineda Maradiaga](https://www.pinedayasociadoshn.com/equipo/danilo-pineda-maradiaga): perfil profesional canónico.
 - [Thania Marlene Paz](https://www.pinedayasociadoshn.com/equipo/thania-marlene-paz): perfil profesional canónico.
 - [Emil Barahona](https://www.pinedayasociadoshn.com/equipo/emil-barahona): perfil profesional canónico.
+
+## Cobertura local (landings indexables)
+
+Las siguientes landings locales representan la cobertura del despacho desde su sede en Nacaome. Las demás municipios auditados sin valor local único demostrado no se listan mientras no se enriquezcan.
+
+- [Abogados en Nacaome](https://www.pinedayasociadoshn.com/abogados-en-nacaome): Landing SEO local — sede principal.
+- [Abogados en Choluteca](https://www.pinedayasociadoshn.com/abogados-en-choluteca): Landing SEO local — cobertura en Choluteca.
+- [Abogados en San Lorenzo](https://www.pinedayasociadoshn.com/abogados-en-san-lorenzo): Landing SEO local — cobertura en San Lorenzo.
+- [Abogados en Goascorán](https://www.pinedayasociadoshn.com/abogados-en-goascoran): Landing SEO local — cobertura en Goascorán, Valle.
+- [Abogados en San Marcos de Colón](https://www.pinedayasociadoshn.com/abogados-en-san-marcos-de-colon): Landing SEO local — cobertura en San Marcos de Colón.
+- [Abogados en El Triunfo](https://www.pinedayasociadoshn.com/abogados-en-el-triunfo): Landing SEO local — cobertura en El Triunfo, Choluteca.
+- [Abogados en Amapala](https://www.pinedayasociadoshn.com/abogados-en-amapala): Landing SEO local — cobertura en Amapala, Valle.
 
 ## Abogados del equipo
 
@@ -131,7 +154,12 @@ Exclusión estricta:
 
 ## Sitemap
 
-- [Sitemap XML](https://www.pinedayasociadoshn.com/sitemap.xml): Índice completo de URLs públicas indexables del sitio.
+- [Sitemap index](https://www.pinedayasociadoshn.com/sitemap.xml): índice que referencia los sitemaps segmentados del sitio.
+- [Páginas](https://www.pinedayasociadoshn.com/sitemap-pages.xml): páginas estáticas (home, despacho, hubs).
+- [Servicios](https://www.pinedayasociadoshn.com/sitemap-services.xml): áreas de práctica y subáreas.
+- [Blog](https://www.pinedayasociadoshn.com/sitemap-blog.xml): categorías y artículos indexables.
+- [Perfiles](https://www.pinedayasociadoshn.com/sitemap-authors.xml): perfiles de abogados del equipo.
+- [Local](https://www.pinedayasociadoshn.com/sitemap-local.xml): landings locales indexables y comerciales.
 
 ## Política técnica
 

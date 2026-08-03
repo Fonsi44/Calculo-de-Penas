@@ -16,6 +16,10 @@
 
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo';
+import {
+  isLandingNoindex,
+  getLandingDecision,
+} from '@/lib/seo/public-indexability';
 
 export type LandingLocal = {
   /** Slug usado en la URL: /abogados-en-{slug} (o path personalizado si se define) */
@@ -883,15 +887,26 @@ export const TOP_COBERTURA_SLUGS = new Set([
   'goascoran',
   'san-marcos-de-colon',
   'el-triunfo',
-  'marcovia',
-  'pespire',
-  'namasigue',
-  'orocuina',
+  'amapala',
 ]);
 
-/** Devuelve las landings destacadas para la Home (top 10 por relevancia). */
+/** Devuelve las landings destacadas para la Home (top indexables). */
 export function getFeaturedLandings(): LandingLocal[] {
   return landingsLocales.filter((l) => TOP_COBERTURA_SLUGS.has(l.slug));
+}
+
+/**
+ * Decisión de indexabilidad de una landing (fuente única).
+ * Exportado para tests y componentes que necesiten clasificar.
+ */
+export function getLandingIndexability(slug: string): {
+  indexable: boolean;
+  decision?: string;
+} {
+  return {
+    indexable: !isLandingNoindex(slug),
+    decision: getLandingDecision(slug),
+  };
 }
 
 /** Devuelve una landing por slug, o undefined si no existe. */
@@ -926,10 +941,15 @@ export function landingMetadata(landing: LandingLocal): Metadata {
       : landing.distanciaKm <= 60
         ? `Abogados en ${landing.ciudad} | Sur de Honduras`
         : `Abogados en ${landing.ciudad} | Bufete desde Nacaome`);
+  // Decisiones de indexabilidad: las landings NOINDEX_UNTIL_UNIQUE emiten
+  // `noindex, follow` (fuente única: data/seo/local-landing-indexability.json).
+  const noindex = isLandingNoindex(landing.slug);
   return buildMetadata({
     title: seoTitle,
     description: landing.description,
     canonicalPath,
+    noindex,
+    noindexFollow: true,
     // Keywords des-canibalizadas: NO incluye "abogado penalista {ciudad}"
     // (esa keyword la targetean las landings de cargo dedicadas
     // /abogado-penalista-nacaome y /abogado-penalista-choluteca).

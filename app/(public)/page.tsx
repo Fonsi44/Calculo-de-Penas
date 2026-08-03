@@ -354,7 +354,7 @@ export default async function HomePage() {
           visual completa FAQ que duplicaba el hub FAQ canónico). */}
       <ConsultationCTA
         variant="closing"
-        subtitle="Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones legales disponibles. Atendemos en Nacaome, San Lorenzo, Amapala, Langue, Goascorán, Choluteca, Pespiré, San Marcos de Colón, Marcovia y El Triunfo. Presupuesto por escrito antes de cualquier actuación. Sus datos están protegidos por el secreto profesional del abogado."
+        subtitle="Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones legales disponibles. Atendemos en Nacaome, San Lorenzo, Amapala, Goascorán, Choluteca, San Marcos de Colón y El Triunfo. Presupuesto por escrito antes de cualquier actuación. Sus datos están protegidos por el secreto profesional del abogado."
       />
 
     </>

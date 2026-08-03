@@ -29,7 +29,7 @@ const read = (path: string) => readFileSync(join(process.cwd(), path), 'utf8');
 const detailPageSource = read('app/(public)/blog/[categoria]/[slug]/page.tsx');
 const hubSource = read('app/(public)/blog/page.tsx');
 const categorySource = read('app/(public)/blog/[categoria]/page.tsx');
-const sitemapSource = read('app/sitemap.ts');
+const sitemapSource = read('lib/seo/sitemap.ts');
 const feedSource = read('app/(public)/blog/feed.xml/route.ts');
 const blogSource = read('lib/blog.ts');
 
