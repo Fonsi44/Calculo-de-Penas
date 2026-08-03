@@ -170,7 +170,7 @@ Entregables: `docs/seo/current/bing-crawl-error-classification.csv`,
 
 ## 13. Estado final
 
-- Rama: `feat/seo-data-intelligence-v2` · HEAD: `1a4cebbb` (sync con remoto).
+- Rama: `feat/seo-data-intelligence-v2` · HEAD: `8159692e` (sync con remoto).
 - Árbol: limpio (sin cambios sin commitear).
 - Checks: 5/5 verdes (CI, Vercel, Lighthouse, GitGuardian, Preview Comments).
 - `main` vs `origin/main`: sin cambios (el merge no se ha producido).
