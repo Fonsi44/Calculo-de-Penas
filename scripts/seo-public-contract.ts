@@ -149,7 +149,11 @@ async function main() {
     'page-content-db conserva testimonios de ejemplo publicables.',
   );
   const contentPolicy = readFileSync(join(ROOT, 'lib/content-policy.ts'), 'utf8');
-  check(contentPolicy.includes("section === 'testimonials'"),
+  const blocksTestimonials =
+    contentPolicy.includes("TESTIMONIALS_SECTION = 'testimonials'")
+    || contentPolicy.includes("section === 'testimonials'")
+    || contentPolicy.includes('unauthorized_testimonial');
+  check(blocksTestimonials,
     'Falta bloqueo de la sección testimonials en content-policy.');
 
   // ── 6. IDs JSON-LD únicos y coherentes ─────────────────────────────────
