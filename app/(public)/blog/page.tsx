@@ -9,6 +9,7 @@ import { NewsletterSection } from '@/components/blog/newsletter-section';
 import { BlogHero } from '@/components/blog/blog-hero';
 import { FeaturedPosts } from '@/components/blog/featured-posts';
 import { BlogExplorer } from '@/components/blog/blog-explorer';
+import { BlogSidebar } from '@/components/blog/blog-sidebar';
 import { blogCollectionSchema } from '@/lib/schemas/blog';
 import {
   getAllPosts,
@@ -19,6 +20,10 @@ import {
   toCardData,
   deriveFeaturedPosts,
   deriveCategoryCounts,
+  derivePopularPosts,
+  deriveRecentPosts,
+  deriveArchiveMonths,
+  deriveAllTags,
   filterByMonth,
 } from '@/lib/blog-hub';
 import { resolveBlogPagination } from '@/lib/blog-pagination';
@@ -134,8 +139,13 @@ export default async function BlogHubPage(props: Props) {
 
   const pagePosts = getPostsByPage(gridSource, page, ITEMS_PER_PAGE);
 
-  // Derivación para la navegación por categorías.
+  // Derivaciones para la navegación y el sidebar tipo magazine/WordPress.
+  // Todas parten de la consulta única ya realizada a la DB.
   const categoryCounts = deriveCategoryCounts(allPosts);
+  const popular = derivePopularPosts(allPosts, 5).map(toCardData);
+  const recent = deriveRecentPosts(allPosts, 5).map(toCardData);
+  const archive = deriveArchiveMonths(allPosts, 8);
+  const tags = deriveAllTags(allPosts);
 
   // Payload ligero (sin body) para el explorador cliente. Debe incluir todo el
   // inventario para que la búsqueda y los filtros no pierdan artículos que
@@ -164,10 +174,11 @@ export default async function BlogHubPage(props: Props) {
         <FeaturedPosts posts={featured.map(toCardData)} />
       )}
 
-      {/* ── Contenido principal: buscador, filtros y cuadrícula ── */}
+      {/* ── Contenido principal: cuadrícula + sidebar editorial ── */}
       <section id="articulos" className="py-10 md:py-14">
         <Container size="lg">
-          <div className="min-w-0 space-y-6">
+          <div className="grid lg:grid-cols-[minmax(0,1fr)_20rem] gap-8 lg:gap-10">
+            <div className="min-w-0 space-y-6">
               <div className="flex items-center justify-between gap-4">
                 <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary">
                   {tagFilter ? 'Artículos etiquetados' : monthFilter ? `Archivo: ${formatMonthLabel(monthFilter)}` : page > 1 ? 'Todos los artículos' : 'Todos los artículos'}
@@ -208,6 +219,15 @@ export default async function BlogHubPage(props: Props) {
                   Consulte nuestras preguntas frecuentes →
                 </Link>
               </p>
+            </div>
+
+            <BlogSidebar
+              categories={categoryCounts}
+              popular={popular}
+              recent={recent}
+              archive={archive}
+              tags={tags}
+            />
           </div>
         </Container>
       </section>
