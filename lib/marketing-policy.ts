@@ -58,3 +58,26 @@ export function assertNoProhibitedClaims(
     );
   }
 }
+
+/**
+ * Sustituye TODAS las variantes comerciales no autorizadas por la formulación
+ * canónica. Devuelve el texto resultante y el número de reemplazos.
+ *
+ * Solo debe usarse en remediación con revisión: las sustituciones mecánicas
+ * pueden dejar frases forzadas; los casos ambiguos se elevan a revisión
+ * manual. Es idempotente (una segunda pasada no cambia el texto).
+ */
+export function remediateProhibitedClaims(text: string): {
+  text: string;
+  replacements: number;
+} {
+  let out = text;
+  let replacements = 0;
+  for (const re of PROHIBITED_CONSULTATION_CLAIM_PATTERNS) {
+    out = out.replace(re, () => {
+      replacements += 1;
+      return EVALUACION_INICIAL_CONFIDENCIAL;
+    });
+  }
+  return { text: out, replacements };
+}
