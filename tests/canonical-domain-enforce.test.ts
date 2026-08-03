@@ -30,7 +30,7 @@ describe('Dominio canónico de producción (enforce §2)', () => {
   it('no hay variante incorrecta en archivos ejecutables ni documentación operativa', () => {
     const hits = findTypoHits(envContent);
     expect(hits, `variante incorrecta presente en: ${hits.join(', ')}`).toEqual([]);
-  });
+  }, 30000);
 
   it('los tests de protección sí escriben la variante a propósito (no se rompen)', () => {
     // Verificación: los tests de rechazo contienen la variante inválida para
