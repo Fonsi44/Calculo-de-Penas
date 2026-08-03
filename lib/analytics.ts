@@ -100,26 +100,52 @@ export function trackFormClick(ctaLocation?: string) {
   trackEvent('form_click', conversionParams(ctaLocation));
 }
 
+/** Clic en el CTA principal de consulta ("Solicitar evaluación confidencial").
+ *  §9.4 — se deduplica: un mismo enlace dispara un único evento. */
+export function trackConsultationCtaClick(ctaLocation?: string) {
+  trackEvent('consultation_cta_click', conversionParams(ctaLocation));
+}
+
 export function trackLeadGenerated(ctaLocation?: string) {
   trackEvent('lead_generated', conversionParams(ctaLocation));
 }
 
 /** Evento de conversión: formulario de consulta enviado con éxito.
- *  Debe marcarse como evento clave en GA4 (ver informe Fase 1).
- *  Se dispara solo tras respuesta exitosa del servidor (HTTP 200).
- *  No incluye datos personales. Solo parámetros seguros:
- *  - motivo: categoría seleccionada en el formulario
- *  - ruta: página desde la que se envió */
-export function trackContactFormSubmit(params?: { motivo?: string; ruta?: string }) {
+ *  Debe marcarse como evento clave en GA4 (§10).
+ *  Se dispara SOLO tras respuesta exitosa del servidor (HTTP 2xx = éxito de
+ *  negocio: la solicitud quedó persistida). No se envía al pulsar el botón,
+ *  ni ante errores de validación/captcha/server, ni más de una vez por envío
+ *  (el formulario bloquea reenvíos mientras está en curso).
+ *
+ *  Parámetros permitidos (§9.2) — únicamente datos NO personales:
+ *  - form_name: identificador estable del formulario (p. ej. "consulta")
+ *  - page_path: ruta de la página donde se envió
+ *  - service_area: área de práctica derivada del motivo (categoría, no el
+ *    detalle del caso)
+ *  - submission_status: "success" solo cuando el servidor confirmó
+ *  - transport: medio preferido de contacto seleccionado (categoría)
+ *
+ *  NUNCA incluye nombre, email, teléfono, mensaje, IP, referencia de
+ *  expediente ni contenido jurídico. */
+export function trackContactFormSubmit(params?: {
+  formName?: string;
+  pagePath?: string;
+  serviceArea?: string;
+  submissionStatus?: 'success' | 'error';
+  transport?: string;
+}) {
   trackEvent('contact_form_submit', {
     value: 1,
-    ...(params?.motivo ? { motivo: params.motivo.slice(0, 40) } : {}),
-    ...(params?.ruta ? { ruta: params.ruta.slice(0, 100) } : {}),
+    form_name: params?.formName?.slice(0, 40) || 'consulta',
+    page_path: params?.pagePath?.slice(0, 120) || 'unknown',
+    ...(params?.serviceArea ? { service_area: params.serviceArea.slice(0, 40) } : {}),
+    submission_status: params?.submissionStatus ?? 'success',
+    ...(params?.transport ? { transport: params.transport.slice(0, 20) } : {}),
   });
 }
 
-export function trackEmailClick(..._args: unknown[]) {
-  trackEvent('email_click', { value: 1 });
+export function trackEmailClick(ctaLocation?: string) {
+  trackEvent('email_click', conversionParams(ctaLocation));
 }
 
 export function trackDirectionsClick(..._args: unknown[]) {
@@ -167,25 +193,44 @@ export function trackScrollDepth(percent: number) {
 // isAnalyticsExcludedPath, que ya filtra /preview y /intranet.
 // ---------------------------------------------------------------------------
 
+/** Parámetro de ruta (no personal) para eventos de formulario. */
+function formPagePath(pagePath?: string): EventParams {
+  return { page_path: pagePath?.slice(0, 120) || 'unknown' };
+}
+
 /** Vista del formulario de consulta (cuando el bloque es visible). */
-export function trackConsultationFormView(ruta?: string) {
-  trackEvent('consultation_form_view', { value: 1, ...(ruta ? { ruta: ruta.slice(0, 100) } : {}) });
+export function trackContactFormView(pagePath?: string) {
+  trackEvent('contact_form_view', { value: 1, ...formPagePath(pagePath) });
 }
 
-/** Inicio de interacción con el formulario de consulta (primer campo editado). */
-export function trackConsultationFormStart(ruta?: string) {
-  trackEvent('consultation_form_start', { value: 1, ...(ruta ? { ruta: ruta.slice(0, 100) } : {}) });
+/** Inicio de interacción con el formulario (primer campo editado, una sola vez). */
+export function trackContactFormStart(pagePath?: string) {
+  trackEvent('contact_form_start', { value: 1, ...formPagePath(pagePath) });
 }
 
-/** Error de validación del formulario de consulta.
- *  NO incluye el valor del campo (puede ser PII): solo el identificador del
- *  campo y el tipo de error. */
-export function trackConsultationFormError(params?: { campo?: string; tipo?: string; ruta?: string }) {
-  trackEvent('consultation_form_error', {
+/** Categorías controladas de error (§9.3). No se envía el texto del usuario. */
+export type ContactFormErrorCategory =
+  | 'validation'
+  | 'turnstile'
+  | 'rate_limit'
+  | 'network'
+  | 'server'
+  | 'delivery'
+  | 'unknown';
+
+/** Error del formulario de consulta.
+ *  NO incluye el valor del campo ni el mensaje de excepción: solo la
+ *  categoría controlada y, opcionalmente, el identificador del campo. */
+export function trackContactFormError(params?: {
+  category: ContactFormErrorCategory;
+  field?: string;
+  pagePath?: string;
+}) {
+  trackEvent('contact_form_error', {
     value: 1,
-    ...(params?.campo ? { campo: params.campo.slice(0, 40) } : {}),
-    ...(params?.tipo ? { tipo: params.tipo.slice(0, 40) } : {}),
-    ...(params?.ruta ? { ruta: params.ruta.slice(0, 100) } : {}),
+    category: params?.category ?? 'unknown',
+    ...(params?.field ? { field: params.field.slice(0, 40) } : {}),
+    ...formPagePath(params?.pagePath),
   });
 }
 
