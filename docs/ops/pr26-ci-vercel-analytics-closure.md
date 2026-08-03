@@ -1,3 +1,12 @@
+---
+status: current
+owner: engineering
+created: 2026-08-03
+last_reviewed: 2026-08-03
+review_due: 2026-11-03
+supersedes: docs/audits/seo-data-intelligence-2026-08-03.md
+superseded_by: null
+---
 # Cierre PR #26 — CI/Vercel/analítica de conversiones
 
 **Fecha:** 2026-08-03 · **Rama:** `feat/seo-data-intelligence-v2` · **PR:** #26 · **Base:** `main`
@@ -61,24 +70,24 @@ propietario. El build es Ready y Lighthouse CI validó el render real de la app.
 
 ## 5. Instrumentación (§9)
 
-| Evento | Disparador | Consentimiento | PII | Key event | Prueba |
-| --- | --- | --- | --- | --- | --- |
-| `contact_form_view` | Montaje del formulario | Consent Mode | No | No (micro) | `conversion-instrumentation.test.ts` |
-| `contact_form_start` | Primer campo editado (1x) | Consent Mode | No | No | idem |
-| `contact_form_submit` | **HTTP 2xx** (solicitud persistida) | Consent Mode | No (`form_name`, `page_path`, `service_area`, `submission_status`, `transport`) | **Sí (ya configurado)** | éxito→1 submit; error→0; doble clic→1 |
-| `contact_form_error` | Error controlado (validation/turnstile/rate_limit/network/server/delivery/unknown) | Consent Mode | No (categoría + campo) | No | sin texto del usuario |
-| `phone_click` / `whatsapp_click` / `email_click` | Clic en canal | Consent Mode | No | phone/whatsapp **Sí**; email **REQUIRES_DASHBOARD_ACTION** | helpers + delegación data-event |
-| `consultation_cta_click` | CTA principal de consulta | Consent Mode | No | No (micro) | helpers |
+| Evento                                           | Disparador                                                                         | Consentimiento | PII                                                                             | Key event                                                  | Prueba                                |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------- |
+| `contact_form_view`                              | Montaje del formulario                                                             | Consent Mode   | No                                                                              | No (micro)                                                 | `conversion-instrumentation.test.ts`  |
+| `contact_form_start`                             | Primer campo editado (1x)                                                          | Consent Mode   | No                                                                              | No                                                         | idem                                  |
+| `contact_form_submit`                            | **HTTP 2xx** (solicitud persistida)                                                | Consent Mode   | No (`form_name`, `page_path`, `service_area`, `submission_status`, `transport`) | **Sí (ya configurado)**                                    | éxito→1 submit; error→0; doble clic→1 |
+| `contact_form_error`                             | Error controlado (validation/turnstile/rate_limit/network/server/delivery/unknown) | Consent Mode   | No (categoría + campo)                                                          | No                                                         | sin texto del usuario                 |
+| `phone_click` / `whatsapp_click` / `email_click` | Clic en canal                                                                      | Consent Mode   | No                                                                              | phone/whatsapp **Sí**; email **REQUIRES_DASHBOARD_ACTION** | helpers + delegación data-event       |
+| `consultation_cta_click`                         | CTA principal de consulta                                                          | Consent Mode   | No                                                                              | No (micro)                                                 | helpers                               |
 
 Guard anti-doble-envío (`status==='sending'`). Sin consentimiento no se carga
 gtag → cero eventos GA4 (verificado en test).
 
 ## 6. Bing (§12)
 
-| Clasificación | Cantidad | Acción |
-| --- | --- | --- |
-| OK (200) | 202 | Ninguna |
-| CURRENT_INTERNAL_404 | 0 | Ninguna |
+| Clasificación        | Cantidad | Acción  |
+| -------------------- | -------- | ------- |
+| OK (200)             | 202      | Ninguna |
+| CURRENT_INTERNAL_404 | 0        | Ninguna |
 
 La API de Bing no expone detalle por URL. Crawl del sitemap actual (202 URLs) +
 cruce con enlaces internos: **0 errores 4xx actuales**. Los agregados
@@ -113,34 +122,34 @@ Entregables: `docs/seo/current/bing-crawl-error-classification.csv`,
 
 ## 9. Validaciones
 
-| Comando | Exit | Resultado | Detalles |
-| --- | --- | --- | --- |
-| `npm run verify` | 0 | PASS | lint 0 err · tsc limpio · 2451 tests · build · knip |
-| `npm run verify` (2ª vez) | 0 | PASS | árbol limpio (determinismo) |
-| `npm run deploy:preflight` | 0 | PASS | gates pre-deploy sin credenciales live |
-| `npm run lint` | 0 | PASS | 0 errores (3 avisos preexistentes en `.local/`) |
-| `npx tsc --noEmit` | 0 | PASS | — |
-| `npm test` | 0 | PASS | 146 archivos / 2451 tests |
-| `npm run build` | 0 | PASS | — |
-| `npm run seo:public-contract` | 0 | PASS | 170 tests |
-| `npm run seo:runtime-contract` (Preview) | 0 | PASS | 2 PASS / 0 FAIL / 7 SKIPPED |
-| `npm run test:a11y` | — | NO EJECUTADO | requiere app corriendo; cubierto por Lighthouse CI (a11y) |
-| `npm run seo:data doctor` | 0 | PARTIAL (esperado) | canónico PASS, gcloud/bq PASS, Bing API key |
-| `npm run seo:data audit` | 0 | PARTIAL | 2 avisos de title preexistentes, sin errores críticos |
-| `git diff --check` | 0 | PASS | — |
-| CI GitHub | — | PASS | Higiene/Lint/TypeScript/Tests/Build 2m36s |
-| Lighthouse CI | — | PASS | 5m26s |
-| Vercel | — | PASS | Preview Ready |
+| Comando                                  | Exit | Resultado          | Detalles                                                  |
+| ---------------------------------------- | ---- | ------------------ | --------------------------------------------------------- |
+| `npm run verify`                         | 0    | PASS               | lint 0 err · tsc limpio · 2451 tests · build · knip       |
+| `npm run verify` (2ª vez)                | 0    | PASS               | árbol limpio (determinismo)                               |
+| `npm run deploy:preflight`               | 0    | PASS               | gates pre-deploy sin credenciales live                    |
+| `npm run lint`                           | 0    | PASS               | 0 errores (3 avisos preexistentes en `.local/`)           |
+| `npx tsc --noEmit`                       | 0    | PASS               | —                                                         |
+| `npm test`                               | 0    | PASS               | 146 archivos / 2451 tests                                 |
+| `npm run build`                          | 0    | PASS               | —                                                         |
+| `npm run seo:public-contract`            | 0    | PASS               | 170 tests                                                 |
+| `npm run seo:runtime-contract` (Preview) | 0    | PASS               | 2 PASS / 0 FAIL / 7 SKIPPED                               |
+| `npm run test:a11y`                      | —    | NO EJECUTADO       | requiere app corriendo; cubierto por Lighthouse CI (a11y) |
+| `npm run seo:data doctor`                | 0    | PARTIAL (esperado) | canónico PASS, gcloud/bq PASS, Bing API key               |
+| `npm run seo:data audit`                 | 0    | PARTIAL            | 2 avisos de title preexistentes, sin errores críticos     |
+| `git diff --check`                       | 0    | PASS               | —                                                         |
+| CI GitHub                                | —    | PASS               | Higiene/Lint/TypeScript/Tests/Build 2m36s                 |
+| Lighthouse CI                            | —    | PASS               | 5m26s                                                     |
+| Vercel                                   | —    | PASS               | Preview Ready                                             |
 
 ## 10. Commits (sobre los 5 del bloque SEO)
 
-| Hash | Mensaje | Propósito |
-| --- | --- | --- |
-| `ef162376` | fix(ci): pipeline verify determinista y baseline knip alineado | Causa raíz CI |
-| `73ff672a` | ci: exponer gates de despliegue individuales y añadir deploy:preflight | Mejora CI + paridad |
-| `044c2194` | feat(analytics): medir conversiones reales de consulta sin PII | Instrumentación §9 |
-| `6d554b52` | fix(seo): clasificar y remediar errores de rastreo de Bing | Clasificación §12 |
-| `55dbccc1` | docs(analytics): registrar plan de medición, nombres estables y estado de key events | Documentación |
+| Hash       | Mensaje                                                                              | Propósito           |
+| ---------- | ------------------------------------------------------------------------------------ | ------------------- |
+| `ef162376` | fix(ci): pipeline verify determinista y baseline knip alineado                       | Causa raíz CI       |
+| `73ff672a` | ci: exponer gates de despliegue individuales y añadir deploy:preflight               | Mejora CI + paridad |
+| `044c2194` | feat(analytics): medir conversiones reales de consulta sin PII                       | Instrumentación §9  |
+| `6d554b52` | fix(seo): clasificar y remediar errores de rastreo de Bing                           | Clasificación §12   |
+| `55dbccc1` | docs(analytics): registrar plan de medición, nombres estables y estado de key events | Documentación       |
 
 ## 11. GitHub
 
