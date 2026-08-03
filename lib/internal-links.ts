@@ -12,6 +12,7 @@
  * reciba autoridad y rutas múltiples de descubrimiento (clusters temáticos,
  * silos geográficos, relaciones semánticas).
  */
+import { isLandingNoindex } from '@/lib/seo/public-indexability';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SERVICIOS — catálogo canónico (13 áreas generales + penal como hub propio)
@@ -104,7 +105,7 @@ export const BLOG_TO_SERVICE: Record<string, { name: string; href: string }> = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// CIUDADES — R18: 10 prioritarias + 6 secundarias
+// CIUDADES — R18: 10 prioritarias + 6 secundarias (filtradas por indexabilidad)
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
@@ -168,21 +169,27 @@ const CITY_META: Record<string, { ciudad: string; departamento: string }> = {
   'san-antonio-de-flores': { ciudad: 'San Antonio de Flores', departamento: 'Choluteca' },
 };
 
-/** Devuelve las ciudades prioritarias (R18) como CityLink[]. */
+/** Devuelve las ciudades prioritarias (R18) como CityLink[].
+ *  Excluye las landings `NOINDEX_UNTIL_UNIQUE` para no enlazarlas desde
+ *  listados SEO automáticos (módulos destacados, chips, footer). */
 export function getPriorityCities(limit?: number): CityLink[] {
-  const slugs = limit ? PRIORITY_CITY_SLUGS.slice(0, limit) : PRIORITY_CITY_SLUGS;
-  return slugs.map((slug) => {
+  const slugs = PRIORITY_CITY_SLUGS
+    .filter((slug) => !isLandingNoindex(slug));
+  const selected = limit ? slugs.slice(0, limit) : slugs;
+  return selected.map((slug) => {
     const meta = CITY_META[slug];
     return { slug, ciudad: meta.ciudad, departamento: meta.departamento, href: `/abogados-en-${slug}` };
   });
 }
 
-/** Devuelve todas las ciudades (16) como CityLink[]. */
+/** Devuelve todas las ciudades indexables como CityLink[]. */
 export function getAllCities(): CityLink[] {
-  return ALL_CITY_SLUGS.map((slug) => {
-    const meta = CITY_META[slug];
-    return { slug, ciudad: meta.ciudad, departamento: meta.departamento, href: `/abogados-en-${slug}` };
-  });
+  return ALL_CITY_SLUGS
+    .filter((slug) => !isLandingNoindex(slug))
+    .map((slug) => {
+      const meta = CITY_META[slug];
+      return { slug, ciudad: meta.ciudad, departamento: meta.departamento, href: `/abogados-en-${slug}` };
+    });
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -273,9 +280,9 @@ export function getRelatedCitiesForContent(mentionedCitySlug?: string | null, li
     const rest = priority.filter((c) => c.slug !== mentionedCitySlug);
     return [mentioned, ...rest].slice(0, limit);
   }
-  // Si la ciudad mencionada es secundaria, añadirla al principio.
+  // Si la ciudad mencionada es secundaria e indexable, añadirla al principio.
   const meta = CITY_META[mentionedCitySlug];
-  if (meta) {
+  if (meta && !isLandingNoindex(mentionedCitySlug)) {
     const secondaryCity: CityLink = {
       slug: mentionedCitySlug,
       ciudad: meta.ciudad,
