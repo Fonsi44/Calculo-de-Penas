@@ -123,8 +123,9 @@ const blogFaqVisibleContract =
   BLOG_PAGE.includes('extractFAQSchema(sanitizedSource.html)')
   && BLOG_PAGE.includes('dangerouslySetInnerHTML={{ __html: articleHtml }}');
 const hubVisibleContract =
-  HUB_FAQ.includes('faqs.map((faq, i)')
-  && HUB_FAQ.includes('mainEntity: faqs.map((f)');
+  HUB_FAQ.includes('prepareFaqPairs')
+  && HUB_FAQ.includes('faqPageSchemaFromPairs')
+  && HUB_FAQ.includes('preparedFaqs.map(');
 const duplicateServiceSchema =
   SERVICE_PAGE.includes('<HubFaq')
   && SERVICE_PAGE.includes('faqs: area.faqs');

@@ -1,5 +1,10 @@
 import type { HubFaqItem } from '@/data/faqs-hubs';
 import { ChevronDown } from 'lucide-react';
+import {
+  prepareFaqPairs,
+  faqPageSchemaFromPairs,
+  assertFaqPairsPolicySafe,
+} from '@/lib/faq-common';
 
 export function HubFaq({
   faqs,
@@ -14,20 +19,12 @@ export function HubFaq({
   eyebrow?: string;
   id?: string;
 }) {
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    '@id': `${url}#faqpage`,
-    url,
-    mainEntity: faqs.map((f) => ({
-      '@type': 'Question',
-      name: f.pregunta,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: f.respuesta,
-      },
-    })),
-  };
+  // FAQ visible y schema proceden de la misma fuente normalizada
+  // (lib/faq-common.ts): sin duplicados, sin respuestas vacías y sin claims
+  // comerciales no autorizados.
+  assertFaqPairsPolicySafe(faqs);
+  const preparedFaqs = prepareFaqPairs(faqs);
+  const faqSchema = faqPageSchemaFromPairs(preparedFaqs, url);
 
   return (
     <section id={id} className="py-8 md:py-12" aria-labelledby={`${id}-title`}>
@@ -39,7 +36,7 @@ export function HubFaq({
           {title}
         </h2>
         <div className="mt-5 space-y-2">
-          {faqs.map((faq, i) => (
+          {preparedFaqs.map((faq, i) => (
             <details
               key={i}
               data-faq-question={faq.pregunta}
@@ -66,10 +63,12 @@ export function HubFaq({
           ))}
         </div>
       </div>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
     </section>
   );
 }

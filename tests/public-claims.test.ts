@@ -33,7 +33,7 @@ describe('afirmaciones institucionales confirmadas por el titular', () => {
     expect(organization.foundingDate).toBe('2010');
     expect(organization.founder).toEqual([
       { '@id': `${site.url}/#danilo-pineda-maradiaga` },
-      { '@id': `${site.url}/#thania` },
+      { '@id': `${site.url}/#thania-marlene-paz` },
     ]);
   });
 

@@ -368,8 +368,8 @@ export function legalServiceSchema() {
     hasOfferCatalog: publicServiceOfferCatalog(site.url),
     employee: [
       { '@id': `${site.url}/#danilo-pineda-maradiaga` },
-      { '@id': `${site.url}/#thania` },
-      { '@id': `${site.url}/#emil` },
+      { '@id': `${site.url}/#thania-marlene-paz` },
+      { '@id': `${site.url}/#emil-barahona` },
     ],
     ...(corporateSameAs.length > 0
       ? {
@@ -471,7 +471,7 @@ export function organizationSchema() {
     // Socios fundadores confirmados directamente por el titular del sitio.
     founder: [
       { '@id': `${site.url}/#danilo-pineda-maradiaga` },
-      { '@id': `${site.url}/#thania` },
+      { '@id': `${site.url}/#thania-marlene-paz` },
     ],
   };
 }
@@ -555,10 +555,9 @@ export function founderSchema() {
     knowsAbout: [
       'Derecho Penal',
       'Derecho Procesal Penal',
-      'Derecho de Familia',
-      'Derecho Laboral',
-      'Derecho Civil y Notarial',
-      'Derecho Mercantil y Empresarial',
+      'Defensa de personas detenidas, investigadas o acusadas',
+      'Ejecución penal',
+      'Recursos penales',
       'Código Penal Decreto 130-2017 de Honduras y reformas vigentes (119-2019, 46-2020, 93-2021, 59-2024)',
     ],
     address: {
@@ -595,7 +594,7 @@ export const THANIA_PROFILE = {
   image: '/images/equipo/thania-marlene-paz.webp',
   imageAltText: 'Thania Marlene Paz, abogada socia fundadora de Pineda y Asociados en Nacaome, Valle (Honduras)',
   description:
-    'Abogada socia fundadora de Pineda y Asociados. Especializada en derecho administrativo, familia, civil y notarial, y mercantil y empresarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.',
+    'Abogada socia fundadora de Pineda y Asociados. Su práctica se concentra en derecho administrativo, familia, civil y notarial, y mercantil y empresarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.',
   specialties: [
     'Derecho Administrativo y Servicio Civil',
     'Derecho de Familia',
@@ -620,7 +619,7 @@ export function thaniaSchema() {
   return {
     // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'Person',
-    '@id': `${site.url}/#thania`,
+    '@id': `${site.url}/#thania-marlene-paz`,
     url: `${site.url}/equipo/${THANIA_PROFILE.slug}`,
     name: THANIA_PROFILE.name,
     honorificPrefix: 'Abogada',
@@ -670,7 +669,7 @@ export const EMIL_PROFILE = {
   image: '/images/equipo/emil-barahona.webp',
   imageAltText: 'Emil Barahona, abogado socio de Pineda y Asociados en Nacaome, Valle (Honduras)',
   description:
-    'Abogado socio de Pineda y Asociados. Especializado en derecho laboral, penal, y civil y notarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.',
+    'Abogado socio de Pineda y Asociados. Su práctica se concentra en derecho laboral, penal, y civil y notarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.',
   specialties: [
     'Derecho Laboral',
     'Derecho Penal',
@@ -693,7 +692,7 @@ export function emilSchema() {
   return {
     // @context lo aporta el wrapper @graph en app/(public)/layout.tsx.
     '@type': 'Person',
-    '@id': `${site.url}/#emil`,
+    '@id': `${site.url}/#emil-barahona`,
     url: `${site.url}/equipo/${EMIL_PROFILE.slug}`,
     name: EMIL_PROFILE.name,
     honorificPrefix: 'Abogado',
@@ -783,7 +782,7 @@ export const LAWYER_PROFILES: readonly LawyerProfileMeta[] = [
   },
   {
     slug: 'thania-marlene-paz',
-    personId: `${site.url}/#thania`,
+    personId: `${site.url}/#thania-marlene-paz`,
     name: THANIA_PROFILE.name,
     jobTitle: THANIA_PROFILE.jobTitle,
     metaTitle: 'Thania Marlene Paz | Abogada de Familia, Civil y Mercantil',
@@ -803,7 +802,7 @@ export const LAWYER_PROFILES: readonly LawyerProfileMeta[] = [
   },
   {
     slug: 'emil-barahona',
-    personId: `${site.url}/#emil`,
+    personId: `${site.url}/#emil-barahona`,
     name: EMIL_PROFILE.name,
     jobTitle: EMIL_PROFILE.jobTitle,
     metaTitle: 'Emil Barahona | Abogado Laboral, Civil y Penal',

@@ -5,8 +5,8 @@ import { resolveArticleEditorialState } from '../editorial-signature';
 
 const validLawyersMap: Record<string, string> = {
   'Danilo Pineda Maradiaga': `${site.url}/#danilo-pineda-maradiaga`,
-  'Thania Marlene Paz': `${site.url}/#thania`,
-  'Emil Barahona': `${site.url}/#emil`,
+  'Thania Marlene Paz': `${site.url}/#thania-marlene-paz`,
+  'Emil Barahona': `${site.url}/#emil-barahona`,
 };
 
 export function blogPostSchema(post: Post) {
@@ -32,7 +32,7 @@ export function blogPostSchema(post: Post) {
         reviewedBy: {
           '@type': editorial.signature.type === 'lawyer' ? 'Person' : 'Organization',
           '@id': editorial.signature.type === 'lawyer'
-            ? `${site.url}${editorial.signature.profileUrl}#person`
+            ? validLawyersMap[editorial.signature.name] ?? `${site.url}/#organization`
             : `${site.url}/#organization`,
           name: editorial.signature.name,
         },

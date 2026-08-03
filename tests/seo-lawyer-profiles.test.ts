@@ -6,7 +6,7 @@
  *  - Cada perfil tiene name, jobTitle, metaTitle, metaDescription, h1, areas.
  *  - Ningún perfil contiene datos inventados (CAH placeholder, universidad).
  *  - El orden es socio director → socia fundadora → socio.
- *  - El `@id` Person es el correcto (#danilo-pineda-maradiaga, #thania, #emil).
+ *  - El `@id` Person es el correcto (#danilo-pineda-maradiaga, #thania-marlene-paz, #emil-barahona).
  *  - No hay names duplicados ni vacíos.
  *  - getLawyerProfileBySlug resuelve correctamente y notFound() para slugs inválidos.
  */
@@ -60,8 +60,8 @@ describe('LAWYER_PROFILES — array canónico de perfiles públicos', () => {
 
   it('personId (@id) es correcto para cada perfil', () => {
     expect(LAWYER_PROFILES[0].personId).toBe(`${site.url}/#danilo-pineda-maradiaga`);
-    expect(LAWYER_PROFILES[1].personId).toBe(`${site.url}/#thania`);
-    expect(LAWYER_PROFILES[2].personId).toBe(`${site.url}/#emil`);
+    expect(LAWYER_PROFILES[1].personId).toBe(`${site.url}/#thania-marlene-paz`);
+    expect(LAWYER_PROFILES[2].personId).toBe(`${site.url}/#emil-barahona`);
   });
 
   it('ningún perfil contiene CAH placeholder ni universidad inventada', () => {

@@ -306,7 +306,7 @@ export default async function DespachoPage() {
               </div>
             )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
-              Abogada socia fundadora del bufete. Especializada en derecho
+              Abogada socia fundadora del bufete. Su práctica se concentra en derecho
               administrativo, familia, civil y notarial, y mercantil y empresarial.
               Atiende casos en Nacaome, Valle y la zona sur de Honduras.
             </p>
@@ -355,7 +355,7 @@ export default async function DespachoPage() {
               </div>
             )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
-              Abogado socio del bufete. Especializado en derecho laboral, civil y
+              Abogado socio del bufete. Su práctica se concentra en derecho laboral, civil y
               notarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.
             </p>
             <div className="flex flex-wrap items-center gap-2 mt-3">
@@ -380,15 +380,16 @@ export default async function DespachoPage() {
       <Section spacing="md">
         <SectionHeader
           eyebrow="Cómo trabajamos"
-          title="Cuatro pasos para acompañarle en su caso"
+          title="Cinco pasos para acompañarle en su caso"
           subtitle="Un método claro y trazable que aplicamos a todas las áreas del bufete, con la confidencialidad y el rigor técnico que su situación requiere."
         />
         <ProcessStepper
           steps={[
-            { step: 1, title: 'Consulta inicial', desc: 'Evaluamos su caso de forma confidencial y le explicamos las opciones reales con honestidad, sea penal, civil, laboral o cualquier otra área.' },
-            { step: 2, title: 'Estrategia legal', desc: 'Analizamos pruebas, normativa aplicable y diseñamos la estrategia jurídica óptima, identificando si requiere coordinación con otras áreas.' },
-            { step: 3, title: 'Gestión y litigio', desc: 'Tramitamos su asunto con diligencia en sede administrativa, judicial o notarial, según corresponda. Le mantenemos informado en cada etapa.' },
-            { step: 4, title: 'Cierre y seguimiento', desc: 'Le entregamos un informe claro del resultado y, si procede, los recursos o las actuaciones complementarias disponibles.' },
+            { step: 1, title: 'Evaluación inicial', desc: 'Escuchamos los hechos, identificamos la urgencia y revisamos la documentación disponible de forma confidencial, sea penal, civil, laboral o cualquier otra área.' },
+            { step: 2, title: 'Diagnóstico jurídico', desc: 'Explicamos la normativa aplicable, las opciones reales, los riesgos y los plazos, identificando si requiere coordinación con otras áreas.' },
+            { step: 3, title: 'Propuesta por escrito', desc: 'Definimos por escrito el alcance, los honorarios y las actuaciones antes de iniciar. No se inicia ninguna gestión sin su autorización expresa.' },
+            { step: 4, title: 'Gestión y seguimiento', desc: 'Documentamos las actuaciones y le mantenemos informado en cada etapa del asunto.' },
+            { step: 5, title: 'Cierre', desc: 'Entregamos un resumen del resultado y de los pasos posteriores cuando sean necesarios.' },
           ]}
           withConnector
         />

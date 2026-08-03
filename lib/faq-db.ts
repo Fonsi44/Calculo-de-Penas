@@ -32,12 +32,12 @@ export type CorporateFaqCategoryPublic = Omit<FaqCategoryPublic, 'preguntas'> & 
 
 const faqMetaMap = new Map(faqCategoriesMeta.map((c) => [c.slug, c]));
 const CORPORATE_CATEGORY = 'bufete-honorarios';
-const FREE_CONSULTATION_QUESTION: FaqQuestion = {
-  pregunta: '¿La primera consulta es gratuita?',
+// Decisión 2026-08-03: formulación canónica NEUTRA (lib/marketing-policy.ts).
+// El propietario no ha confirmado que todas las consultas sean gratuitas.
+const EVALUATION_QUESTION: FaqQuestion = {
+  pregunta: '¿Cómo funciona la evaluación inicial?',
   respuesta:
-    'Sí. La primera consulta es gratuita, confidencial y sin compromiso. '
-    + 'Permite valorar inicialmente su situación. Cualquier servicio posterior '
-    + 'se informa y presupuesta por escrito, y no se garantizan resultados.',
+    'La evaluación inicial es confidencial. En ella se identifican el área aplicable, la documentación necesaria y los siguientes pasos. Cualquier servicio posterior se informa y presupuesta por escrito, y no se garantizan resultados.',
 };
 
 function stableFaqId(question: string, index: number): string {
@@ -135,12 +135,12 @@ export const getCorporateFaqsForPublicPage = cache(async (): Promise<CorporateFa
   if (!corporate) return [];
 
   const questions = [...corporate.preguntas];
-  const hasFreeConsultation = questions.some(
+  const hasEvaluationQuestion = questions.some(
     (question) => question.pregunta.trim().toLocaleLowerCase('es-HN')
-      === FREE_CONSULTATION_QUESTION.pregunta.toLocaleLowerCase('es-HN'),
+      === EVALUATION_QUESTION.pregunta.toLocaleLowerCase('es-HN'),
   );
-  if (!hasFreeConsultation) questions.unshift({
-    ...FREE_CONSULTATION_QUESTION,
+  if (!hasEvaluationQuestion) questions.unshift({
+    ...EVALUATION_QUESTION,
   });
 
   return [{

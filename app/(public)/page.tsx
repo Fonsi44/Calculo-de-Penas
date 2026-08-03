@@ -119,6 +119,7 @@ export default async function HomePage() {
     { step: 2, title: t('process.step2_title'), desc: t('process.step2_desc') },
     { step: 3, title: t('process.step3_title'), desc: t('process.step3_desc') },
     { step: 4, title: t('process.step4_title'), desc: t('process.step4_desc') },
+    { step: 5, title: t('process.step5_title'), desc: t('process.step5_desc') },
   ];
 
   const WHY_POINTS = [
