@@ -14,7 +14,11 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { buildBlogMetaTitle } from '@/lib/seo';
 import { resolveBlogPagination } from '@/lib/blog-pagination';
 
-export const revalidate = 3600;
+// La página de categoría lee `searchParams` (paginación). En Next 16, una
+// ruta que usa APIs dinámicas y además se prerenderiza (generateStaticParams +
+// ISR) provoca DYNAMIC_SERVER_USAGE → 500. Se fuerza render dinámico, igual
+// que el índice /blog (que sí funciona). Corrige el 500 en /blog/[categoria].
+export const dynamic = 'force-dynamic';
 
 const ITEMS_PER_PAGE = 12;
 
