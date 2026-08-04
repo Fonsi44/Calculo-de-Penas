@@ -178,10 +178,17 @@ describe("apply-seo-growth-batch1: copy prohibido", () => {
     ).toThrow();
   });
 
-  it("rechaza años no verificados", () => {
+  it("rechaza años no verificados (no vigentes)", () => {
     expect(() =>
-      assertNoProhibitedCopy("slug", "metaTitle", "Divorcio en Honduras 2026"),
+      assertNoProhibitedCopy("slug", "metaTitle", "Divorcio en Honduras 2024"),
     ).toThrow();
+  });
+
+  it("permite el año vigente (mantenimiento anual comprobado)", () => {
+    const year = String(new Date().getFullYear());
+    expect(() =>
+      assertNoProhibitedCopy("slug", "metaTitle", `Pensión alimenticia en Honduras ${year}`),
+    ).not.toThrow();
   });
 
   it("acepta copy editorial limpio", () => {
