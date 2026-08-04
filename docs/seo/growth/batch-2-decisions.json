@@ -1,0 +1,115 @@
+{
+  "generatedAt": "2026-08-04T09:45:00.000Z",
+  "batch": 2,
+  "note": "Decisiones editoriales curadas para el lote 2. Solo metadata; sin tocar contenido jurídico. METADATA_ONLY: no añade hechos legales nuevos.",
+  "decisions": {
+    "cobro-deudas-choluteca": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Cobro judicial de deudas en Choluteca",
+      "meta": "Cómo reclamar judicialmente el cobro de deudas en Choluteca: proceso, plazos, base legal y documentos que necesita en Honduras.",
+      "reason": "Title con marca '| Pineda y Asociados' que desperdicia caracteres y meta con claim 'cobran solo si usted cobra' (no verificado). H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: se elimina el claim contingente; no se añaden cifras."
+    },
+    "accidente-transito-choluteca": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Accidente de tránsito en Choluteca: cómo reclamar",
+      "meta": "Qué hacer tras un accidente de tránsito en Choluteca y cómo reclamar indemnización: pasos, marco legal y derechos de la víctima.",
+      "reason": "Title con marca y meta con 'Guía completa' (plantilla). H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: sin cifras ni hechos nuevos; reclamar indemnización ya está en el body."
+    },
+    "tipos-sociedad-mercantil-honduras": {
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Datos muy bajos (2 impresiones). Title/meta/H1 de calidad y alineados. Se difiere (INSUFFICIENT_DATA).",
+      "legalNotes": "Sin cambios."
+    },
+    "diferencia-denuncia-querella-acusacion-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Denuncia, querella y acusación en Honduras: diferencias",
+      "meta": "Quién puede informar un delito, cómo participa la víctima y cuándo formaliza la acusación el Ministerio Público en Honduras.",
+      "reason": "Title truncado y con duplicidad 'en Honduras en Honduras'. La meta actual es válida y se conserva. H1 válido.",
+      "legalNotes": "METADATA_ONLY: restatement del contenido del body (rol del Ministerio Público)."
+    },
+    "contratos-arrendamiento-derechos-obligaciones-honduras": {
+      "classification": "APPROVED_METADATA_ONLY",
+      "keepH1": true,
+      "title": "Arrendamiento en Honduras: derechos y obligaciones",
+      "meta": "Derechos y obligaciones de inquilinos y propietarios en Honduras: contrato, depósito, reparaciones, mora y desalojo.",
+      "reason": "Meta promocional ('Conozca los'). Title y H1 ya válidos (se conservan).",
+      "legalNotes": "METADATA_ONLY: sin cifras; conceptos ya presentes en el body."
+    },
+    "fianza-medidas-cautelares-proceso-penal-honduras": {
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 adecuados y alineados (Código Procesal Penal Decreto 9-99-E ya citado). CTR bajo a posición 11.4 se explica por competencia SERP, no por metadata.",
+      "legalNotes": "Sin cambios."
+    },
+    "contratos-mercantiles-esenciales-empresas-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Contratos mercantiles esenciales en Honduras",
+      "meta": "Los 5 contratos mercantiles esenciales en Honduras: compraventa, distribución, agencia, franquicia y suministro, y cómo proteger su empresa.",
+      "reason": "Title con 'Guía Esencial' (plantilla) y meta truncada ('Proteja su empresa con'). H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: los 5 contratos ya están en el body; sin hechos nuevos."
+    },
+    "naturalizacion-nacionalidad-hondurena": {
+      "classification": "APPROVED_TITLE_META_H1",
+      "keepH1": false,
+      "title": "Naturalización en Honduras: requisitos y proceso",
+      "meta": "Requisitos, documentos y el proceso para obtener la nacionalidad hondureña por naturalización ante el Congreso Nacional.",
+      "reason": "Title con 'Guía Completa 2026' (año no verificado) y meta con 'Obtenga' (promocional). H1 con 'Guía para Obtener' (plantilla).",
+      "legalNotes": "METADATA_ONLY: proceso ante el Congreso Nacional ya está en el body; sin cifras nuevas."
+    },
+    "registro-medicamentos-productos-farmaceuticos-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Registro de medicamentos en Honduras: requisitos ARSA",
+      "meta": "Requisitos técnicos para el registro de medicamentos en Honduras ante la ARSA: certificado OMS, buenas prácticas de manufactura, estabilidad y etiquetado.",
+      "reason": "Title con marca '| Pineda y Asociados' y meta truncada ('etiquetado en'). H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: requisitos ARSA ya presentes en el body; sin cifras nuevas."
+    },
+    "competencia-desleal-como-denunciar-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Competencia desleal en Honduras: cómo denunciarla",
+      "meta": "Actos de competencia desleal en Honduras (confusión, engaño, denigración, secretos) y vías para denunciarlos: Instituto de la Propiedad y demanda judicial.",
+      "reason": "Title con orden atípico y meta truncada ('demanda judicial y'). H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: actos y vías ya presentes en el body; sin hechos nuevos."
+    },
+    "registro-sanitario-alimentos-arsa-paso-a-paso-honduras": {
+      "classification": "APPROVED_METADATA_ONLY",
+      "keepH1": true,
+      "title": "Registro sanitario ARSA Honduras: requisitos y pasos",
+      "meta": "Qué productos necesitan registro sanitario ARSA en Honduras: requisitos, proceso paso a paso, vigencia y renovación para fabricantes e importadores.",
+      "reason": "Meta truncada ('fabricantes e…'). Title y H1 ya válidos (se conservan).",
+      "legalNotes": "METADATA_ONLY: se omite la cifra de plazos/vigencia de la meta (el body la conserva intacta); sin hechos nuevos."
+    },
+    "cuando-prescribe-delito-en-honduras": {
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados con la intención y de calidad; posición 4.4 adecuada.",
+      "legalNotes": "Sin cambios."
+    },
+    "que-hacer-si-me-detienen-en-honduras": {
+      "classification": "APPROVED_TITLE_META_H1",
+      "keepH1": false,
+      "title": "¿Qué hacer si me detienen en Honduras?",
+      "meta": "Recomendaciones generales para actuar con prudencia ante una detención y solicitar asistencia jurídica sin interferir con la actuación de la autoridad.",
+      "reason": "Title y H1 con 'Guía práctica' (plantilla). La meta actual es válida y se conserva.",
+      "legalNotes": "METADATA_ONLY: sin hechos legales nuevos; recomendaciones generales ya en el body."
+    },
+    "sar-notifica-fiscalizacion-que-hacer-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Fiscalización del SAR en Honduras: cómo responder",
+      "meta": "El proceso de fiscalización del SAR en Honduras: sus derechos, plazos, documentación necesaria y cómo impugnar liquidaciones.",
+      "reason": "Title con 'Guía Completa' (plantilla). H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: derechos/plazos/impugnación ya presentes en el body; sin cifras nuevas."
+    },
+    "codigo-aduanero-centroamericano": {
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados (CAUCA/RECAUCA) y CTR 3.13 saludable.",
+      "legalNotes": "Sin cambios."
+    }
+  }
+}

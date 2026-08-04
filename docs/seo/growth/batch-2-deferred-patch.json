@@ -1,0 +1,57 @@
+{
+  "generatedAt": "2026-08-04T09:49:21.417Z",
+  "source": "batch-2-current-metadata.json",
+  "status": "DEFERRED",
+  "count": 4,
+  "note": "KEEP_NO_CHANGE/INSUFFICIENT_DATA excluidos de la aplicación de producción.",
+  "patch": [
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-mercantil/tipos-sociedad-mercantil-honduras",
+      "slug": "tipos-sociedad-mercantil-honduras",
+      "category": "",
+      "gsc_evidence": "score=40 imp=2 ctr=0 pos=10.5",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Datos muy bajos (2 impresiones). Title/meta/H1 de calidad y alineados. Se difiere (INSUFFICIENT_DATA).",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/fianza-medidas-cautelares-proceso-penal-honduras",
+      "slug": "fianza-medidas-cautelares-proceso-penal-honduras",
+      "category": "",
+      "gsc_evidence": "score=37 imp=105 ctr=0.95 pos=11.4",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 adecuados y alineados (Código Procesal Penal Decreto 9-99-E ya citado). CTR bajo a posición 11.4 se explica por competencia SERP, no por metadata.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/cuando-prescribe-delito-en-honduras",
+      "slug": "cuando-prescribe-delito-en-honduras",
+      "category": "",
+      "gsc_evidence": "score=34 imp=504 ctr=1.39 pos=4.4",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados con la intención y de calidad; posición 4.4 adecuada.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-aduanero/codigo-aduanero-centroamericano",
+      "slug": "codigo-aduanero-centroamericano",
+      "category": "",
+      "gsc_evidence": "score=31 imp=64 ctr=3.13 pos=7.4",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados (CAUCA/RECAUCA) y CTR 3.13 saludable.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    }
+  ]
+}

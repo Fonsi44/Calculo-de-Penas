@@ -33,29 +33,51 @@
  *   $env:ALLOW_PRODUCTION_SEO_BATCH1='true'; npx tsx scripts/apply-seo-growth-batch1.ts \
  *       --env-file .env --env production --mode capture
  */
-import { readFileSync, writeFileSync, appendFileSync, existsSync, mkdirSync } from 'node:fs';
-import { resolve, join, dirname } from 'node:path';
-import { pathToFileURL } from 'node:url';
-import { createHash } from 'node:crypto';
-import { Pool } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-serverless';
-import { eq } from 'drizzle-orm';
-import { blogPosts } from '../lib/schema';
+import {
+  readFileSync,
+  writeFileSync,
+  appendFileSync,
+  existsSync,
+  mkdirSync,
+} from "node:fs";
+import { resolve, join, dirname } from "node:path";
+import { pathToFileURL } from "node:url";
+import { createHash } from "node:crypto";
+import { Pool } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-serverless";
+import { eq } from "drizzle-orm";
+import { blogPosts } from "../lib/schema";
 import {
   loadEnvFile,
   inspectEnvironment,
   describeEnvironment,
   type EnvKind,
-} from './lib/environment-guard';
-import { scanContentPolicyViolations } from '../lib/content-policy';
-import { META_TITLE_MAX } from '../lib/seo';
-import { canonicalOrigin } from './seo-data-config.mjs';
+} from "./lib/environment-guard";
+import { scanContentPolicyViolations } from "../lib/content-policy";
+import { META_TITLE_MAX } from "../lib/seo";
+import { canonicalOrigin } from "./seo-data-config.mjs";
 
 const ROOT = process.cwd();
-const APPROVED_JSON = resolve(ROOT, 'docs/seo/growth/batch-1-approved-patch.json');
-const BACKUP_DIR = resolve(ROOT, '.secrets/backups');
+const BACKUP_DIR = resolve(ROOT, ".secrets/backups");
 
-export const ALLOWED_COLUMNS: ReadonlySet<string> = new Set(['title', 'metaTitle', 'metaDescription']);
+/** Número de lote activo (se fija en main desde --batch). */
+let BATCH_NUM = 1;
+function approvedJsonPath(): string {
+  return resolve(
+    ROOT,
+    "docs/seo/growth",
+    `batch-${BATCH_NUM}-approved-patch.json`,
+  );
+}
+function batchPrefix(): string {
+  return `seo-growth-batch${BATCH_NUM}`;
+}
+
+export const ALLOWED_COLUMNS: ReadonlySet<string> = new Set([
+  "title",
+  "metaTitle",
+  "metaDescription",
+]);
 /**
  * Host canónico derivado de NEXT_PUBLIC_SITE_URL (.env.example) vía
  * seo-data-config. NUNCA se hardcodea el dominio (evita reintroducir la
@@ -63,13 +85,16 @@ export const ALLOWED_COLUMNS: ReadonlySet<string> = new Set(['title', 'metaTitle
  */
 export const CANONICAL_HOST: string = (() => {
   const origin = canonicalOrigin();
-  if (!origin) throw new Error('[batch1] No se pudo derivar el origen canónico desde .env.example');
+  if (!origin)
+    throw new Error(
+      "[batch1] No se pudo derivar el origen canónico desde .env.example",
+    );
   return new URL(origin).host;
 })();
 export const META_DESC_MAX = 170;
 
-type Mode = 'dry-run' | 'capture' | 'apply' | 'verify' | 'rollback';
-type DeclaredEnv = 'local' | 'staging' | 'production';
+type Mode = "dry-run" | "capture" | "apply" | "verify" | "rollback";
+type DeclaredEnv = "local" | "staging" | "production";
 
 interface RowState {
   title: string | null;
@@ -92,7 +117,11 @@ export interface PatchEntry {
 interface BackupFile {
   timestamp: string;
   env: string;
-  entries: Array<{ slug: string; before: RowState; after: Record<string, string> }>;
+  entries: Array<{
+    slug: string;
+    before: RowState;
+    after: Record<string, string>;
+  }>;
 }
 
 // ───────────────────────────── CLI ─────────────────────────────────────────
@@ -101,25 +130,28 @@ export function parseArgs(argv: string[]) {
     const i = argv.indexOf(name);
     return i >= 0 && argv[i + 1] ? argv[i + 1] : undefined;
   };
-  const mode = (get('--mode') ?? 'dry-run') as Mode;
-  const env = (get('--env') ?? 'staging') as DeclaredEnv;
-  const envFile = get('--env-file');
-  const backup = get('--backup');
+  const mode = (get("--mode") ?? "dry-run") as Mode;
+  const env = (get("--env") ?? "staging") as DeclaredEnv;
+  const envFile = get("--env-file");
+  const backup = get("--backup");
+  const batch = Number(get("--batch") ?? 1);
+  if (!Number.isInteger(batch) || batch < 1)
+    throw new Error(`[batch1] --batch inválido: ${batch}`);
   const only: string[] = [];
   for (let i = 0; i < argv.length - 1; i++) {
-    if (argv[i] === '--only' && argv[i + 1]) only.push(argv[i + 1]);
+    if (argv[i] === "--only" && argv[i + 1]) only.push(argv[i + 1]);
   }
-  if (!['dry-run', 'capture', 'apply', 'verify', 'rollback'].includes(mode)) {
+  if (!["dry-run", "capture", "apply", "verify", "rollback"].includes(mode)) {
     throw new Error(`[batch1] --mode inválido: ${mode}`);
   }
-  if (!['local', 'staging', 'production'].includes(env)) {
+  if (!["local", "staging", "production"].includes(env)) {
     throw new Error(`[batch1] --env inválido: ${env}`);
   }
-  return { mode, env, envFile, backup, only };
+  return { mode, env, envFile, backup, only, batch };
 }
 
 export function sha256(text: string): string {
-  return createHash('sha256').update(text).digest('hex');
+  return createHash("sha256").update(text).digest("hex");
 }
 
 /**
@@ -136,23 +168,23 @@ export function assertWriteAllowed(
       `[batch1] Entorno declarado (${declaredEnv}) no coincide con el detectado (${detected}). Abortando.`,
     );
   }
-  if (detected === 'production') {
-    if (envVars.ALLOW_PRODUCTION_SEO_BATCH1 !== 'true') {
+  if (detected === "production") {
+    if (envVars.ALLOW_PRODUCTION_SEO_BATCH1 !== "true") {
       throw new Error(
-        '[batch1] Producción requiere ALLOW_PRODUCTION_SEO_BATCH1=true (autorización explícita). Abortando.',
+        "[batch1] Producción requiere ALLOW_PRODUCTION_SEO_BATCH1=true (autorización explícita). Abortando.",
       );
     }
     return;
   }
-  if (detected === 'staging') {
-    if (envVars.ALLOW_STAGING_MIGRATIONS !== 'true') {
+  if (detected === "staging") {
+    if (envVars.ALLOW_STAGING_MIGRATIONS !== "true") {
       throw new Error(
-        '[batch1] Escritura en staging requiere ALLOW_STAGING_MIGRATIONS=true. Abortando.',
+        "[batch1] Escritura en staging requiere ALLOW_STAGING_MIGRATIONS=true. Abortando.",
       );
     }
     return;
   }
-  if (detected === 'local') {
+  if (detected === "local") {
     // Local: permitido para pruebas de ciclo (siempre que se declare local).
     return;
   }
@@ -161,12 +193,20 @@ export function assertWriteAllowed(
 
 function audit(env: string, event: Record<string, unknown>): void {
   mkdirSync(BACKUP_DIR, { recursive: true });
-  const file = join(BACKUP_DIR, `seo-growth-batch1-audit-${env}.jsonl`);
-  appendFileSync(file, JSON.stringify({ ts: new Date().toISOString(), ...event }) + '\n', 'utf8');
+  const file = join(BACKUP_DIR, `${batchPrefix()}-audit-${env}.jsonl`);
+  appendFileSync(
+    file,
+    JSON.stringify({
+      ts: new Date().toISOString(),
+      batch: BATCH_NUM,
+      ...event,
+    }) + "\n",
+    "utf8",
+  );
 }
 
 function backupPath(env: string, timestamp: string): string {
-  return join(BACKUP_DIR, `seo-growth-batch1-${env}-${timestamp}.json`);
+  return join(BACKUP_DIR, `${batchPrefix()}-${env}-${timestamp}.json`);
 }
 
 export function assertCanonicalUrl(url: string): void {
@@ -175,25 +215,39 @@ export function assertCanonicalUrl(url: string): void {
   }
 }
 
-export function assertNoProhibitedCopy(slug: string, field: string, text: string): void {
-  const errors = scanContentPolicyViolations(text).filter((v) => v.severity === 'error');
+export function assertNoProhibitedCopy(
+  slug: string,
+  field: string,
+  text: string,
+): void {
+  const errors = scanContentPolicyViolations(text).filter(
+    (v) => v.severity === "error",
+  );
   if (errors.length > 0) {
-    throw new Error(`[batch1] Copy prohibido en ${slug}.${field}: ${errors.map((e) => e.code).join(',')}`);
+    throw new Error(
+      `[batch1] Copy prohibido en ${slug}.${field}: ${errors.map((e) => e.code).join(",")}`,
+    );
   }
-  if (/\bResuelve\b/i.test(text) || /pasos concretos, requisitos y fuentes oficiales/i.test(text)) {
+  if (
+    /\bResuelve\b/i.test(text) ||
+    /pasos concretos, requisitos y fuentes oficiales/i.test(text)
+  ) {
     throw new Error(`[batch1] Lenguaje de plantilla en ${slug}.${field}`);
   }
   if (/\b20\d{2}\b/.test(text)) {
-    throw new Error(`[batch1] Año no verificado en ${slug}.${field}: ${text.match(/\b20\d{2}\b/)?.[0]}`);
+    throw new Error(
+      `[batch1] Año no verificado en ${slug}.${field}: ${text.match(/\b20\d{2}\b/)?.[0]}`,
+    );
   }
 }
 
 export function validatePatch(patch: PatchEntry[]): void {
   const slugs = new Set<string>();
   for (const e of patch) {
-    if (e.status !== 'APPROVED') continue;
+    if (e.status !== "APPROVED") continue;
     assertCanonicalUrl(e.url);
-    if (slugs.has(e.slug)) throw new Error(`[batch1] Slug duplicado en patch: ${e.slug}`);
+    if (slugs.has(e.slug))
+      throw new Error(`[batch1] Slug duplicado en patch: ${e.slug}`);
     slugs.add(e.slug);
     for (const key of Object.keys(e.after)) {
       if (!ALLOWED_COLUMNS.has(key)) {
@@ -203,31 +257,44 @@ export function validatePatch(patch: PatchEntry[]): void {
     if (!e.after.title && !e.after.metaTitle && !e.after.metaDescription) {
       throw new Error(`[batch1] Entrada sin cambios: ${e.slug}`);
     }
-    const metaTitle = e.after.metaTitle ?? '';
-    const metaDesc = e.after.metaDescription ?? '';
+    const metaTitle = e.after.metaTitle ?? "";
+    const metaDesc = e.after.metaDescription ?? "";
     if (metaTitle.length > META_TITLE_MAX) {
-      throw new Error(`[batch1] metaTitle excede ${META_TITLE_MAX}: ${e.slug} (${metaTitle.length})`);
+      throw new Error(
+        `[batch1] metaTitle excede ${META_TITLE_MAX}: ${e.slug} (${metaTitle.length})`,
+      );
     }
     if (metaDesc.length > META_DESC_MAX) {
-      throw new Error(`[batch1] metaDescription excede ${META_DESC_MAX}: ${e.slug} (${metaDesc.length})`);
+      throw new Error(
+        `[batch1] metaDescription excede ${META_DESC_MAX}: ${e.slug} (${metaDesc.length})`,
+      );
     }
-    assertNoProhibitedCopy(e.slug, 'title', e.after.title ?? '');
-    assertNoProhibitedCopy(e.slug, 'metaTitle', metaTitle);
-    assertNoProhibitedCopy(e.slug, 'metaDescription', metaDesc);
+    assertNoProhibitedCopy(e.slug, "title", e.after.title ?? "");
+    assertNoProhibitedCopy(e.slug, "metaTitle", metaTitle);
+    assertNoProhibitedCopy(e.slug, "metaDescription", metaDesc);
     const expectedHash = sha256(JSON.stringify(e.after));
     if (e.contentHash !== expectedHash) {
-      throw new Error(`[batch1] contentHash no coincide en ${e.slug}: el JSON fue editado sin regenerar`);
+      throw new Error(
+        `[batch1] contentHash no coincide en ${e.slug}: el JSON fue editado sin regenerar`,
+      );
     }
   }
 }
 
-export async function readRow(db: ReturnType<typeof drizzle>, slug: string): Promise<RowState | null> {
-  const rows = await db.select({
-    title: blogPosts.title,
-    metaTitle: blogPosts.metaTitle,
-    metaDescription: blogPosts.metaDescription,
-    updatedAt: blogPosts.updatedAt,
-  }).from(blogPosts).where(eq(blogPosts.slug, slug)).limit(1);
+export async function readRow(
+  db: ReturnType<typeof drizzle>,
+  slug: string,
+): Promise<RowState | null> {
+  const rows = await db
+    .select({
+      title: blogPosts.title,
+      metaTitle: blogPosts.metaTitle,
+      metaDescription: blogPosts.metaDescription,
+      updatedAt: blogPosts.updatedAt,
+    })
+    .from(blogPosts)
+    .where(eq(blogPosts.slug, slug))
+    .limit(1);
   if (rows.length === 0) return null;
   const r = rows[0];
   return {
@@ -240,17 +307,22 @@ export async function readRow(db: ReturnType<typeof drizzle>, slug: string): Pro
 
 export function sameState(a: RowState | null, b: RowState | null): boolean {
   if (!a || !b) return a === b;
-  return (a.title ?? '') === (b.title ?? '')
-    && (a.metaTitle ?? '') === (b.metaTitle ?? '')
-    && (a.metaDescription ?? '') === (b.metaDescription ?? '');
+  return (
+    (a.title ?? "") === (b.title ?? "") &&
+    (a.metaTitle ?? "") === (b.metaTitle ?? "") &&
+    (a.metaDescription ?? "") === (b.metaDescription ?? "")
+  );
 }
 
-export function buildUpdate(row: RowState, after: RowState | Record<string, string | null | undefined>) {
+export function buildUpdate(
+  row: RowState,
+  after: RowState | Record<string, string | null | undefined>,
+) {
   const update: Record<string, string> = {};
-  for (const col of ['title', 'metaTitle', 'metaDescription'] as const) {
+  for (const col of ["title", "metaTitle", "metaDescription"] as const) {
     const target = after[col];
     if (target === undefined || target === null) continue;
-    const current = row[col] ?? '';
+    const current = row[col] ?? "";
     if (current !== target) update[col] = target;
   }
   return update;
@@ -258,36 +330,49 @@ export function buildUpdate(row: RowState, after: RowState | Record<string, stri
 
 // ───────────────────────────── MAIN ────────────────────────────────────────
 async function main(): Promise<void> {
-  const { mode, env, envFile, backup, only } = parseArgs(process.argv.slice(2));
+  const { mode, env, envFile, backup, only, batch } = parseArgs(
+    process.argv.slice(2),
+  );
+  BATCH_NUM = batch;
 
   if (envFile) loadEnvFile(envFile);
   const inspection = inspectEnvironment();
-  console.log(`[batch1] modo=${mode} env_declarado=${env} | ${describeEnvironment(inspection)}`);
+  console.log(
+    `[batch1] modo=${mode} env_declarado=${env} | ${describeEnvironment(inspection)}`,
+  );
 
   if (!process.env.DATABASE_URL) {
-    throw new Error(`[batch1] Falta DATABASE_URL. ¿--env-file correcto? (${envFile ?? 'ninguno'})`);
+    throw new Error(
+      `[batch1] Falta DATABASE_URL. ¿--env-file correcto? (${envFile ?? "ninguno"})`,
+    );
   }
 
-  const isWriteMode = mode === 'apply' || mode === 'rollback' || mode === 'capture';
+  const isWriteMode =
+    mode === "apply" || mode === "rollback" || mode === "capture";
   if (isWriteMode) {
     assertWriteAllowed(inspection.kind, env, process.env);
   }
 
-  const raw = JSON.parse(readFileSync(APPROVED_JSON, 'utf8')) as {
+  const raw = JSON.parse(readFileSync(approvedJsonPath(), "utf8")) as {
     applyPolicy: { columns: string[] };
     patch: PatchEntry[];
   };
   if (raw.applyPolicy.columns.some((c) => !ALLOWED_COLUMNS.has(c))) {
-    throw new Error(`[batch1] applyPolicy.columns contiene columnas no permitidas`);
+    throw new Error(
+      `[batch1] applyPolicy.columns contiene columnas no permitidas`,
+    );
   }
-  const patchAll = raw.patch.filter((e) => e.status === 'APPROVED');
-  if (patchAll.length === 0) throw new Error('[batch1] No hay entradas APPROVED en el patch');
+  const patchAll = raw.patch.filter((e) => e.status === "APPROVED");
+  if (patchAll.length === 0)
+    throw new Error("[batch1] No hay entradas APPROVED en el patch");
   let patch = patchAll;
   if (only.length > 0) {
     const allSlugs = new Set(patchAll.map((e) => e.slug));
     const unknown = only.filter((s) => !allSlugs.has(s));
     if (unknown.length > 0) {
-      throw new Error(`[batch1] --only con slug(s) no presentes en el patch: ${unknown.join(', ')}`);
+      throw new Error(
+        `[batch1] --only con slug(s) no presentes en el patch: ${unknown.join(", ")}`,
+      );
     }
     patch = patchAll.filter((e) => only.includes(e.slug));
     console.log(`[batch1] filtro --only: ${patch.length} entradas`);
@@ -299,7 +384,7 @@ async function main(): Promise<void> {
   const dbLabel = inspection.kind;
 
   // ── dry-run ────────────────────────────────────────────────────────────
-  if (mode === 'dry-run') {
+  if (mode === "dry-run") {
     let changes = 0;
     let noops = 0;
     for (const e of patch) {
@@ -316,17 +401,21 @@ async function main(): Promise<void> {
         console.log(`  [NOOP] ${e.slug} (ya aplicado)`);
       } else {
         changes++;
-        console.log(`  [CHANGE] ${e.slug} → ${Object.keys(update).join(',')} `
-          + `| before_match=${beforeOk === null ? 'no-capturado' : beforeOk ? 'ok' : 'MISMATCH'}`);
+        console.log(
+          `  [CHANGE] ${e.slug} → ${Object.keys(update).join(",")} ` +
+            `| before_match=${beforeOk === null ? "no-capturado" : beforeOk ? "ok" : "MISMATCH"}`,
+        );
       }
     }
-    console.log(`[batch1] dry-run: ${changes} cambios, ${noops} no-op. Sin escrituras.`);
+    console.log(
+      `[batch1] dry-run: ${changes} cambios, ${noops} no-op. Sin escrituras.`,
+    );
     await pool.end();
     return;
   }
 
   // ── capture ────────────────────────────────────────────────────────────
-  if (mode === 'capture') {
+  if (mode === "capture") {
     const beforeMap: Record<string, RowState> = {};
     let missing = 0;
     for (const e of patch) {
@@ -339,29 +428,46 @@ async function main(): Promise<void> {
       beforeMap[e.slug] = current;
     }
     if (missing > 0) {
-      console.error(`[batch1] capture abortado: ${missing} fila(s) ausente(s) en la DB.`);
+      console.error(
+        `[batch1] capture abortado: ${missing} fila(s) ausente(s) en la DB.`,
+      );
       await pool.end();
       process.exitCode = 1;
       return;
     }
-    const updated = { ...raw, patch: raw.patch.map((e) => (
-      e.status === 'APPROVED' && beforeMap[e.slug]
-        ? { ...e, before: beforeMap[e.slug], rowVersion: (e.rowVersion ?? 1) + 1 }
-        : e
-    )) };
-    writeFileSync(APPROVED_JSON, JSON.stringify(updated, null, 2) + '\n', 'utf8');
+    const updated = {
+      ...raw,
+      patch: raw.patch.map((e) =>
+        e.status === "APPROVED" && beforeMap[e.slug]
+          ? {
+              ...e,
+              before: beforeMap[e.slug],
+              rowVersion: (e.rowVersion ?? 1) + 1,
+            }
+          : e,
+      ),
+    };
+    writeFileSync(
+      approvedJsonPath(),
+      JSON.stringify(updated, null, 2) + "\n",
+      "utf8",
+    );
     audit(dbLabel, { mode, env, captured: patch.length, missing });
-    console.log(`[batch1] capture: ${patch.length} antes capturados → ${APPROVED_JSON}`);
+    console.log(
+      `[batch1] capture: ${patch.length} antes capturados → ${approvedJsonPath()}`,
+    );
     await pool.end();
     return;
   }
 
   // ── apply ──────────────────────────────────────────────────────────────
-  if (mode === 'apply') {
+  if (mode === "apply") {
     const missingBefore = patch.filter((e) => e.before === null);
     if (missingBefore.length > 0) {
-      throw new Error(`[batch1] Falta before capturado (ejecuta --mode capture) para: `
-        + missingBefore.map((e) => e.slug).join(', '));
+      throw new Error(
+        `[batch1] Falta before capturado (ejecuta --mode capture) para: ` +
+          missingBefore.map((e) => e.slug).join(", "),
+      );
     }
 
     // Precondición global: cada fila debe estar en estado `before` (pendiente)
@@ -376,28 +482,43 @@ async function main(): Promise<void> {
         continue;
       }
       rowMap[e.slug] = current;
-      const alreadyApplied = Object.keys(buildUpdate(current, e.after)).length === 0;
+      const alreadyApplied =
+        Object.keys(buildUpdate(current, e.after)).length === 0;
       if (!sameState(current, e.before) && !alreadyApplied) {
-        mismatches.push(`${e.slug}: valores actuales != before capturado ni after (divergencia)`);
+        mismatches.push(
+          `${e.slug}: valores actuales != before capturado ni after (divergencia)`,
+        );
       }
     }
     if (mismatches.length > 0) {
-      console.error(`[batch1] PRECONDICIÓN FALLIDA (${mismatches.length}):\n- ${mismatches.join('\n- ')}`);
-      console.error('[batch1] Sin escrituras. Re-ejecuta --mode capture si los datos cambiaron.');
+      console.error(
+        `[batch1] PRECONDICIÓN FALLIDA (${mismatches.length}):\n- ${mismatches.join("\n- ")}`,
+      );
+      console.error(
+        "[batch1] Sin escrituras. Re-ejecuta --mode capture si los datos cambiaron.",
+      );
       await pool.end();
       process.exitCode = 1;
       return;
     }
 
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     const backupFile = backupPath(dbLabel, timestamp);
     const backupData: BackupFile = {
       timestamp,
       env: dbLabel,
-      entries: patch.map((e) => ({ slug: e.slug, before: rowMap[e.slug], after: e.after })),
+      entries: patch.map((e) => ({
+        slug: e.slug,
+        before: rowMap[e.slug],
+        after: e.after,
+      })),
     };
     mkdirSync(dirname(backupFile), { recursive: true });
-    writeFileSync(backupFile, JSON.stringify(backupData, null, 2) + '\n', 'utf8');
+    writeFileSync(
+      backupFile,
+      JSON.stringify(backupData, null, 2) + "\n",
+      "utf8",
+    );
     console.log(`[batch1] backup → ${backupFile}`);
 
     let applied = 0;
@@ -411,21 +532,31 @@ async function main(): Promise<void> {
         continue;
       }
       await db.transaction(async (tx) => {
-        await tx.update(blogPosts)
+        await tx
+          .update(blogPosts)
           .set(update)
           .where(eq(blogPosts.slug, e.slug));
       });
       applied++;
-      console.log(`  [APPLIED] ${e.slug} → ${Object.keys(update).join(',')}`);
+      console.log(`  [APPLIED] ${e.slug} → ${Object.keys(update).join(",")}`);
     }
-    audit(dbLabel, { mode, env, applied, noops, backup: backupFile, timestamp });
-    console.log(`[batch1] apply: ${applied} aplicadas, ${noops} no-op. Backup: ${backupFile}`);
+    audit(dbLabel, {
+      mode,
+      env,
+      applied,
+      noops,
+      backup: backupFile,
+      timestamp,
+    });
+    console.log(
+      `[batch1] apply: ${applied} aplicadas, ${noops} no-op. Backup: ${backupFile}`,
+    );
     await pool.end();
     return;
   }
 
   // ── verify ─────────────────────────────────────────────────────────────
-  if (mode === 'verify') {
+  if (mode === "verify") {
     const divergences: string[] = [];
     for (const e of patch) {
       const current = await readRow(db, e.slug);
@@ -434,45 +565,61 @@ async function main(): Promise<void> {
         continue;
       }
       const fields: string[] = [];
-      for (const col of ['title', 'metaTitle', 'metaDescription'] as const) {
+      for (const col of ["title", "metaTitle", "metaDescription"] as const) {
         const target = e.after[col];
         if (target === undefined) continue;
-        if ((current[col] ?? '') !== target) fields.push(col);
+        if ((current[col] ?? "") !== target) fields.push(col);
       }
       if (fields.length > 0) {
-        divergences.push(`${e.slug}: divergencia en ${fields.join(',')}`);
+        divergences.push(`${e.slug}: divergencia en ${fields.join(",")}`);
       } else {
         console.log(`  [OK] ${e.slug}`);
       }
     }
     if (divergences.length > 0) {
-      console.error(`[batch1] VERIFY: ${divergences.length} divergencia(s):\n- ${divergences.join('\n- ')}`);
-      audit(dbLabel, { mode, env, ok: patch.length - divergences.length, divergences: divergences.length });
+      console.error(
+        `[batch1] VERIFY: ${divergences.length} divergencia(s):\n- ${divergences.join("\n- ")}`,
+      );
+      audit(dbLabel, {
+        mode,
+        env,
+        ok: patch.length - divergences.length,
+        divergences: divergences.length,
+      });
       await pool.end();
       process.exitCode = 1;
       return;
     }
     audit(dbLabel, { mode, env, ok: patch.length, divergences: 0 });
-    console.log(`[batch1] verify: ${patch.length} entradas coherentes con after.`);
+    console.log(
+      `[batch1] verify: ${patch.length} entradas coherentes con after.`,
+    );
     await pool.end();
     return;
   }
 
   // ── rollback ───────────────────────────────────────────────────────────
-  if (mode === 'rollback') {
-    if (!backup) throw new Error('[batch1] rollback requiere --backup <timestamp>');
+  if (mode === "rollback") {
+    if (!backup)
+      throw new Error("[batch1] rollback requiere --backup <timestamp>");
     const file = backupPath(dbLabel, backup);
-    if (!existsSync(file)) throw new Error(`[batch1] No existe backup: ${file}`);
-    let data = JSON.parse(readFileSync(file, 'utf8')) as BackupFile;
+    if (!existsSync(file))
+      throw new Error(`[batch1] No existe backup: ${file}`);
+    let data = JSON.parse(readFileSync(file, "utf8")) as BackupFile;
     if (only.length > 0) {
-      data = { ...data, entries: data.entries.filter((e) => only.includes(e.slug)) };
+      data = {
+        ...data,
+        entries: data.entries.filter((e) => only.includes(e.slug)),
+      };
     }
 
     const currentMap: Record<string, RowState> = {};
     for (const entry of data.entries) {
       const current = await readRow(db, entry.slug);
       if (!current) {
-        console.error(`[batch1] rollback: fila no encontrada para ${entry.slug}`);
+        console.error(
+          `[batch1] rollback: fila no encontrada para ${entry.slug}`,
+        );
         process.exitCode = 1;
         await pool.end();
         return;
@@ -489,7 +636,8 @@ async function main(): Promise<void> {
         continue;
       }
       await db.transaction(async (tx) => {
-        await tx.update(blogPosts)
+        await tx
+          .update(blogPosts)
           .set(update)
           .where(eq(blogPosts.slug, entry.slug));
       });
@@ -505,7 +653,10 @@ async function main(): Promise<void> {
   throw new Error(`[batch1] modo no soportado: ${mode}`);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
   main().catch((err) => {
     console.error((err as Error).message);
     process.exit(1);
