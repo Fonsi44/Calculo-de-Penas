@@ -1,0 +1,118 @@
+{
+  "generatedAt": "2026-08-04T10:15:00.000Z",
+  "batch": 6,
+  "note": "Decisiones editoriales curadas para el lote 6. Solo metadata; sin tocar contenido jurídico. En URLs sin demanda (imp=0) solo se aplican defectos inequívocos (marca, truncamientos, plantillas, CTAs).",
+  "decisions": {
+    "riesgos-profesionales-accidentes": {
+      "classification": "APPROVED_METADATA_ONLY",
+      "keepH1": true,
+      "title": "Accidentes Laborales Honduras: Cobertura Legal",
+      "meta": "Sus derechos ante accidentes y enfermedades laborales en Honduras: cobertura del IHSS, obligaciones del empleador y acciones legales.",
+      "reason": "Meta truncada ('Asesoría'). Title/H1 ya válidos.",
+      "legalNotes": "METADATA_ONLY: IHSS/obligaciones ya en el body; sin hechos nuevos."
+    },
+    "reagrupacion-familiar-hondurenos-espana": {
+      "classification": "APPROVED_METADATA_ONLY",
+      "keepH1": true,
+      "title": "Reagrupación Familiar España para Hondureños",
+      "meta": "Requisitos de ingresos, vivienda y proceso paso a paso para la reagrupación familiar en España para hondureños.",
+      "reason": "Meta con 'Guía completa' y 'Consulte a expertos'. Title/H1 ya válidos.",
+      "legalNotes": "METADATA_ONLY: requisitos ya en el body; sin hechos nuevos."
+    },
+    "jornada-laboral-horas-extra-descansos-honduras": {
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados y de calidad.",
+      "legalNotes": "Sin cambios."
+    },
+    "delitos-mas-comunes-honduras": {
+      "classification": "APPROVED_TITLE_META_H1",
+      "keepH1": false,
+      "title": "Delitos más comunes en Honduras",
+      "meta": "Cuáles son los delitos más frecuentes en Honduras, cómo se sancionan según el Código Penal y qué hacer ante una denuncia o acusación.",
+      "reason": "Title con marca y H1 con 'Guía Legal' (plantilla). Se eliminan sin tocar el body.",
+      "legalNotes": "METADATA_ONLY: el body conserva sus citas y penas intactas; la meta evita cifras nuevas."
+    },
+    "audiencia-inicial-proceso-penal-honduras": {
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados y de calidad.",
+      "legalNotes": "Sin cambios."
+    },
+    "union-de-hecho-requisitos-derechos-honduras": {
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados y de calidad.",
+      "legalNotes": "Sin cambios."
+    },
+    "asuntos-familiares-honduras-espana": {
+      "classification": "APPROVED_TITLE_META_H1",
+      "keepH1": false,
+      "title": "Asuntos familiares en Honduras desde España",
+      "meta": "Cómo resolver divorcios, herencias y pensiones en Honduras desde España con representación legal: trámites y poderes necesarios.",
+      "reason": "H1 truncado ('...en Honduras desde') y meta con '¡Consulte hoy!'.",
+      "legalNotes": "METADATA_ONLY: trámites/poderes ya en el body; sin hechos nuevos."
+    },
+    "poder-desde-espana-para-tramites-honduras": {
+      "classification": "APPROVED_TITLE_META_H1",
+      "keepH1": false,
+      "title": "Poder notarial desde España para trámites en Honduras",
+      "meta": "Cómo otorgar un poder notarial desde España para trámites en Honduras: requisitos, apostilla, traducción y validez legal.",
+      "reason": "Title con 'Guía' (plantilla), H1 sin tildes ('Espana/Tramites') y meta con '¡Asesoría experta!'.",
+      "legalNotes": "METADATA_ONLY: requisitos/apostilla ya en el body; sin hechos nuevos."
+    },
+    "hondurenos-espana-documentos": {
+      "classification": "APPROVED_METADATA_ONLY",
+      "keepH1": true,
+      "title": "Documentos Legales Hondureños desde España",
+      "meta": "Cómo tramitar documentos legales hondureños desde España: apostilla, RNP, antecedentes penales y consulados.",
+      "reason": "Meta con '¡Evite errores!'. Title/H1 ya válidos.",
+      "legalNotes": "METADATA_ONLY: trámites ya en el body; sin hechos nuevos."
+    },
+    "demanda-laboral-choluteca": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Demanda laboral en Choluteca: pasos y plazos",
+      "meta": "Cómo presentar una demanda laboral en Choluteca: plazos, artículos del Código de Trabajo y pasos para reclamar sus derechos.",
+      "reason": "Title con marca y meta truncada ('reclamar sus'). H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: Código de Trabajo ya citado en el body; sin cifras nuevas."
+    },
+    "calcular-liquidacion-laboral-honduras": {
+      "classification": "APPROVED_METADATA_ONLY",
+      "keepH1": true,
+      "title": "Liquidación Laboral Honduras: Cálculo y Derechos",
+      "meta": "Cómo calcular la liquidación laboral en Honduras: cesantía, vacaciones y derechos ante un despido injustificado.",
+      "reason": "Meta con 'Guía completa' y 'tu' (informal). Title/H1 ya válidos.",
+      "legalNotes": "METADATA_ONLY: cesantía/vacaciones ya en el body; sin cifras nuevas."
+    },
+    "divorcio-choluteca": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Divorcio en Choluteca: tipos y trámites",
+      "meta": "Los tipos de divorcio en Choluteca, Honduras: mutuo consentimiento, express y contencioso, con sus trámites y requisitos.",
+      "reason": "Title con marca. H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: tipos de divorcio ya en el body; sin hechos nuevos."
+    },
+    "medidas-sustitutivas-prision-preventiva-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Medidas sustitutivas a la prisión preventiva en Honduras",
+      "meta": "Las medidas sustitutivas a la prisión preventiva en Honduras: alternativas al encierro y cómo solicitarlas.",
+      "reason": "Title con orden atípico (sin 'a la prisión') y meta con '¡Infórmese!'. H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: medidas ya en el body; sin cifras nuevas."
+    },
+    "derechos-laborales-basicos-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Derechos laborales básicos en Honduras",
+      "meta": "Sus derechos laborales en Honduras: salario mínimo, jornada, horas extra, aguinaldo, vacaciones y despido.",
+      "reason": "Title con marca y meta con 'Cumpla la ley.' (imperativo). H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: derechos ya en el body; sin cifras nuevas."
+    },
+    "devolucion-impuestos-como-solicitarla-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Devolución de impuestos en Honduras: cómo solicitarla",
+      "meta": "Cómo solicitar la devolución de impuestos (ISR, ISV) en Honduras: plazos, requisitos y procedimientos ante el SAR.",
+      "reason": "Title con marca. H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: SAR/plazos ya en el body; sin cifras nuevas."
+    }
+  }
+}
