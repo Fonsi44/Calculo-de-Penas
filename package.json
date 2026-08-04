@@ -135,6 +135,8 @@
     "seo:growth:batch:current": "node scripts/seo-growth-batch-current.mjs",
     "seo:growth:batch:editorial": "npx tsx scripts/seo-growth-batch-editorial.ts",
     "seo:growth:batch": "npx tsx scripts/apply-seo-growth-batch1.ts",
+    "seo:growth:reconcile": "node scripts/seo-growth-final-reconcile.mjs",
+    "seo:growth:reconcile:check": "node scripts/seo-growth-final-reconcile.mjs --check",
     "seo:bing:classify": "node scripts/seo-bing-crawl-classify.mjs",
     "seo:ahrefs": "node scripts/seo-ahrefs-audit.mjs",
     "visual:baseline": "node scripts/visual-regression.cjs baseline",
