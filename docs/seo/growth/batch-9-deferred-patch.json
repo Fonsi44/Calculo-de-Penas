@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-08-04T10:39:10.711Z",
+  "source": "batch-9-current-metadata.json",
+  "status": "DEFERRED",
+  "count": 1,
+  "note": "KEEP_NO_CHANGE/INSUFFICIENT_DATA excluidos de la aplicación de producción.",
+  "patch": [
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-civil/usucapion-prescripcion-adquisitiva-honduras",
+      "slug": "usucapion-prescripcion-adquisitiva-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados y de calidad.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    }
+  ]
+}
