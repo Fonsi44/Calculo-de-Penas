@@ -144,7 +144,7 @@ Entregables técnicos (listos, sin ejecutar):
 - Sitemap `/sitemap-blog.xml`: 156 URLs (135 artículos + hubs de categoría).
 - Altas/bajas: manifiesto `sitemap-public-manifest.json` (piso 100); inventario
   actual 135 ≥ piso. Sin retiradas autorizadas declaradas.
-- Duplicados: 0. Canonical origen: 100 % `https://www.pinedayasocioshn.com`
+- Duplicados: 0. Canonical origen: 100 % `https://www.pinedayasociadoshn.com`
   (canónico). URLs inexistentes: 0 (todas verificadas contra staging).
 - Noindex excluidos: 0 landings `NOINDEX_UNTIL_UNIQUE` en sitemap/local.
 - Resultado XML: válido (content-type XML, `<urlset>/<sitemapindex>` correctos).

@@ -162,7 +162,7 @@ Entregables: `docs/seo/current/bing-crawl-error-classification.csv`,
 
 - Preview: `justicia-verdadera-ehpxn9j6g-fonsi-roiget-s-projects.vercel.app` → **Ready** (SSO-protected).
 - **Production: desplegada y verificada.** Deployment `13hl312dd` (Ready),
-  alias `https://www.pinedayasocioshn.com`, creado 3s tras el merge (rama main).
+  alias `https://www.pinedayasociadoshn.com`, creado 3s tras el merge (rama main).
 - **Smoke tests de Production (16/16 OK):** home, despacho, servicios,
   solicitar-consulta, blog, artículo, perfil, FAQ → 200 `text/html`;
   sitemap index + 5 segmentos → 200 `application/xml`; robots.txt y llms.txt

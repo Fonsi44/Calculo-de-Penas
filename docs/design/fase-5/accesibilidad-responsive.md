@@ -1,7 +1,7 @@
 # FASE 5 — Accesibilidad y responsive
 
 > **Método:** spec Playwright `e2e/fase5-design.spec.ts` (21 tests locales) +
-> 39 tests sobre producción (`https://www.pinedayasocioshn.com`, 9 rutas × 4 viewports) +
+> 39 tests sobre producción (`https://www.pinedayasociadoshn.com`, 9 rutas × 4 viewports) +
 > inspección de `app/globals.css` para WCAG/reduced-motion. Las capturas before/after
 > están en `docs/design/fase-5/{baseline,after}/{375,768,1280,1440}/`.
 

@@ -238,7 +238,7 @@ async function collect(source, days) {
     );
     const parsed =
       safeJson(out.stdout) ||
-      safeJson(readLastJson(resolve(ROOT, "data", "google", "gsc-live.json")));
+      readLastJson(resolve(ROOT, "data", "google", "gsc-live.json"));
     if (parsed && parsed.status === "ok") {
       report.status = "PASS";
       report.detail = `clicks=${parsed.summary?.clicks} impressions=${parsed.summary?.impressions}`;
@@ -256,7 +256,7 @@ async function collect(source, days) {
     ]);
     const parsed =
       safeJson(out.stdout) ||
-      safeJson(readLastJson(resolve(ROOT, "data", "google", "ga4-live.json")));
+      readLastJson(resolve(ROOT, "data", "google", "ga4-live.json"));
     if (parsed && parsed.status === "ok") {
       report.status = "PASS";
       report.detail = `users=${parsed.overview?.totalUsers ?? "?"}`;
@@ -275,7 +275,7 @@ async function collect(source, days) {
     const out = runCollector("bing-webmaster-live.mjs");
     const parsed =
       safeJson(out.stdout) ||
-      safeJson(readLastJson(resolve(ROOT, "data", "bing", "bing-live.json")));
+      readLastJson(resolve(ROOT, "data", "bing", "bing-live.json"));
     if (parsed && parsed.status === "ok") {
       report.status = "PASS";
       report.detail = "datos Bing obtenidos";
@@ -310,6 +310,9 @@ async function collect(source, days) {
 
 function safeJson(text) {
   if (!text) return null;
+  // Tolera avisos de dotenv en stdout (líneas que no comienzan con '{').
+  const start = typeof text === "string" ? text.indexOf("{") : -1;
+  if (start > 0) text = text.slice(start);
   try {
     return JSON.parse(text);
   } catch {

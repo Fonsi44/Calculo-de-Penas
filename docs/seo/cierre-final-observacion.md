@@ -43,7 +43,7 @@ Dominio canónico: `https://www.pinedayasociadoshn.com`
   308; http → https 308). Cabeceras de seguridad completas (CSP, HSTS preload,
   COOP, CORP, Permissions-Policy, X-Content-Type-Options).
 - [x] Sitemap y robots accesibles y correctos; dominio canónico único en
-  sitemap (0 ocurrencias de `pinedayasocioshn.com` sin www).
+  sitemap (0 ocurrencias de `la variante sin "da" en "asociados"` sin www).
 - [x] Sede única en Nacaome confirmada en `/despacho` (137 menciones de
   Nacaome vs 28 de Choluteca y 16 de San Lorenzo como referencias
   regionales; sin Tegucigalpa ni San Pedro Sula).

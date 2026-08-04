@@ -54,7 +54,7 @@ familia, laboral y civil-notarial como áreas dinámicas).
 | Eventos | ✓ | `trackViewService` sin PII; `/preview` y `/intranet` excluidos |
 | Móvil | ✓ | Grids responsivos (`sm:`, `md:`, `lg:`); bloques reutilizan design system |
 | Dominio correcto | ✓ | `site.url` = `https://www.pinedayasociadoshn.com`; test anti-regresión |
-| Ausencia de `pinedayasocioshn.com` | ✓ | Tests FASE 3 validan typo y dominio sin www |
+| Ausencia de `la variante sin "da" en "asociados"` | ✓ | Tests FASE 3 validan typo y dominio sin www |
 | Artefactos regenerados separados | ✓ | `public/sw.js` (build) y `docs/audits/bing-live-report.md` son artefactos regenerables, no trabajo intencional FASE 3 |
 
 ---

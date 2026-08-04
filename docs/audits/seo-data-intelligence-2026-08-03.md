@@ -36,8 +36,8 @@ Archivo de estado: `docs/seo/current/data-source-status.json` (regenerable).
 
 ## 3. Verificación del dominio canónico
 
-- Canónico: `https://www.pinedayasocioshn.com` (**con "asociados"**).
-- Variante `pinedayasocioshn.com` (typo "asocios") **no resuelve en DNS**
+- Canónico: `https://www.pinedayasociadoshn.com` (**con "asociados"**).
+- Variante `la variante sin "da" en "asociados"` (typo "asocios") **no resuelve en DNS**
   (NXDOMAIN en 8.8.8.8); se eliminaron los literales con typo del código.
 - `scripts/seo-data-config.mjs` exporta `canonicalOrigin()` (lee
   `NEXT_PUBLIC_SITE_URL` de `.env.local` con fallback a `.env.example`) y lo

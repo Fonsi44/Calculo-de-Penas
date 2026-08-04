@@ -297,7 +297,7 @@ Tests, Build` (protección de rama); quedó **verde** antes del merge.
 - **Rama de producción:** `main`; **commit desplegado:** merge `79dc9141`.
 - **Deployment Production:** `justicia-verdadera-ezgrrxbke-…vercel.app` — **Ready**
   (disparado automáticamente por el merge a `main`; no se ejecutó `vercel --prod`).
-- **Dominio:** `https://www.pinedayasocioshn.com` (raíz correcta, verificada en
+- **Dominio:** `https://www.pinedayasociadoshn.com` (raíz correcta, verificada en
   `.env.example` `NEXT_PUBLIC_SITE_URL`; registrado con Vercel hasta 2027-06-05).
 - **Smoke tests (22 URLs, todas HTTP 200):** home, despacho, servicios-juridicos,
   3 perfiles de equipo, FAQ, solicitar-consulta, blog, 2 artículos representativos,
@@ -305,7 +305,7 @@ Tests, Build` (protección de rama); quedó **verde** antes del merge.
   (pespire/choluteca/nacaome).
 - **Contenido del nuevo build verificado en producción:** título
   «Abogados en Nacaome, Valle | Pineda y Asociados», H1 «Abogados en Nacaome para
-  defensa penal y asesoría jurídica», canonical `https://www.pinedayasocioshn.com`,
+  defensa penal y asesoría jurídica», canonical `https://www.pinedayasociadoshn.com`,
   `abogados-en-pespire` → `noindex, follow`, sitemap index con 5 `<loc>`, `llms.txt`
   con `generated_at` y sin las 9 landings no aprobadas.
 - **Incidencias:** ninguna regresión crítica. Nota: las URLs de Preview de Vercel

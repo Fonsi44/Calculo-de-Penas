@@ -52,7 +52,7 @@ Todas generan sin error. `/contacto` y `/faq` siguen como **redirects 301**
 | Eventos | ✓ | Helpers nuevos sin PII; `/preview` y `/intranet` excluidos |
 | Móvil y escritorio | ✓ | Grids responsivos (`sm:`, `md:`, `lg:`); detalles/summary para condicionales |
 | Dominio correcto | ✓ | `site.url` = `https://www.pinedayasociadoshn.com`; test anti-regresión |
-| Ausencia de `pinedayasocioshn.com` | ✓ | Test en `fase2-paginas-centrales.test.ts` |
+| Ausencia de `la variante sin "da" en "asociados"` | ✓ | Test en `fase2-paginas-centrales.test.ts` |
 | Cambios automáticos de `public/sw.js` separados | ✓ | `public/sw.js` (1 línea) es artefacto de build, **no trabajo intencional FASE 2** |
 
 ---
