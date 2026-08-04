@@ -1,0 +1,45 @@
+{
+  "generatedAt": "2026-08-04T09:56:00.347Z",
+  "source": "batch-3-current-metadata.json",
+  "status": "DEFERRED",
+  "count": 3,
+  "note": "KEEP_NO_CHANGE/INSUFFICIENT_DATA excluidos de la aplicación de producción.",
+  "patch": [
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-civil/danos-perjuicios-indemnizacion-honduras",
+      "slug": "danos-perjuicios-indemnizacion-honduras",
+      "category": "",
+      "gsc_evidence": "score=29 imp=1107 ctr=4.34 pos=5.9",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados y de calidad; CTR 4.34 y posición 5.9 saludables.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derechos-ciudadanos/proteccion-datos-personales-derechos-arco-honduras",
+      "slug": "proteccion-datos-personales-derechos-arco-honduras",
+      "category": "",
+      "gsc_evidence": "score=28 imp=56 ctr=7.14 pos=6",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados y de calidad; CTR 7.14 alto. Sin cambios justificados.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/practica-legal/como-obtener-rtn-personas-empresas-honduras",
+      "slug": "como-obtener-rtn-personas-empresas-honduras",
+      "category": "",
+      "gsc_evidence": "score=28 imp=2 ctr=0 pos=18",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Datos muy bajos (2 impresiones, posición 18). Title/meta válidos. Se difiere (INSUFFICIENT_DATA).",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "generatedAt": "2026-08-04T09:55:00.000Z",
+  "batch": 3,
+  "note": "Decisiones editoriales curadas para el lote 3. Solo metadata; sin tocar contenido jurídico. METADATA_ONLY: no añade hechos legales nuevos.",
+  "decisions": {
+    "pension-alimenticia-porcentaje-honduras-2026": {
+      "classification": "APPROVED_METADATA_ONLY",
+      "keepH1": true,
+      "title": "Pensión Alimenticia en Honduras 2026: Porcentajes y Cálculo",
+      "meta": "Cómo calcula el juez la pensión alimenticia en Honduras en 2026: proporcionalidad según las necesidades del menor y los ingresos del progenitor.",
+      "reason": "Meta truncada ('y los ingresos del'). El año 2026 es parte del slug/URL (página anual de porcentajes), coherente con el contenido. Title y H1 ya válidos.",
+      "legalNotes": "METADATA_ONLY: sin cifras nuevas; proporcionalidad ya está en el body."
+    },
+    "recursos-sentencia-penal-apelacion-casacion-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Apelación y casación penal en Honduras: cómo recurrir",
+      "meta": "Guía sobre cómo recurrir una sentencia penal en Honduras. Diferencias entre apelación y casación ante la CSJ, plazos legales y errores comunes.",
+      "reason": "Title con marca '| Pineda y Asociados'. H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: apelación/casación ya presentes en el body; sin cifras nuevas."
+    },
+    "importaciones-san-lorenzo": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Importaciones en San Lorenzo: requisitos y pasos",
+      "meta": "Requisitos, impuestos (DAI, ISV) y pasos para importar por San Lorenzo, Honduras, conforme al CAUCA y la ARSA.",
+      "reason": "Title con marca y meta con 'Asesoría legal aduanera' (promocional). H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: DAI/ISV/CAUCA/ARSA ya presentes en el body; sin hechos nuevos."
+    },
+    "antejuicio-en-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Antejuicio en Honduras: qué es y cómo funciona",
+      "meta": "Entienda el antejuicio en Honduras: a quién aplica, cómo funciona el proceso y su marco legal. Protege la función pública, no la impunidad.",
+      "reason": "Title con marca y redundancia 'Proceso'. H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: sin hechos nuevos; el body ya distingue antejuicio de impunidad."
+    },
+    "danos-perjuicios-indemnizacion-honduras": {
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados y de calidad; CTR 4.34 y posición 5.9 saludables.",
+      "legalNotes": "Sin cambios."
+    },
+    "centro-conciliacion-arbitraje-ccic": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Arbitraje y conciliación en la CCIC de Honduras",
+      "meta": "Cómo resolver disputas comerciales mediante conciliación y arbitraje en el Centro de la CCIC de San Pedro Sula: proceso y ley aplicable.",
+      "reason": "Title con marca y meta truncada ('Ley aplicable y'). H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: conciliación/arbitraje CCIC ya presentes en el body; sin hechos nuevos."
+    },
+    "proteccion-datos-personales-derechos-arco-honduras": {
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados y de calidad; CTR 7.14 alto. Sin cambios justificados.",
+      "legalNotes": "Sin cambios."
+    },
+    "incumplimiento-contrato-comercial-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Incumplimiento de contrato en Honduras: qué hacer",
+      "meta": "Sepa qué hacer ante un incumplimiento de contrato en Honduras. Conozca sus derechos, plazos y acciones legales según el Código de Comercio.",
+      "reason": "Title con marca. H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: Código de Comercio ya citado en el body; sin hechos nuevos."
+    },
+    "testamentos-sucesiones-herencia-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Testamentos y sucesiones en Honduras: trámites",
+      "meta": "Conozca cómo se tramita una sucesión en Honduras, qué cambia si existe testamento y qué documentos reunir para el trámite hereditario.",
+      "reason": "Title con marca. H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: trámites hereditarios ya presentes en el body."
+    },
+    "derechos-consumidor-financiero-honduras-cnbs": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Derechos del consumidor financiero en Honduras",
+      "meta": "Conozca sus derechos como consumidor financiero en Honduras. Aprenda a reclamar ante bancos y la CNBS por cobros indebidos o prácticas abusivas.",
+      "reason": "Title con marca y orden atípico. H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: CNBS ya citada en el body; sin hechos nuevos."
+    },
+    "etapa-investigacion-proceso-penal-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Investigación penal en Honduras: plazos y derechos",
+      "meta": "Conozca los plazos, derechos y procedimientos de la investigación penal en Honduras. Abogados penalistas explican el Código Procesal Penal.",
+      "reason": "Title sin 'en' y con orden atípico frente al slug (etapa investigación). H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: Código Procesal Penal ya citado en el body; sin cifras nuevas."
+    },
+    "como-obtener-rtn-personas-empresas-honduras": {
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Datos muy bajos (2 impresiones, posición 18). Title/meta válidos. Se difiere (INSUFFICIENT_DATA).",
+      "legalNotes": "Sin cambios."
+    },
+    "reformas-legales-recientes-honduras": {
+      "classification": "APPROVED_TITLE_META_H1",
+      "keepH1": false,
+      "title": "Reformas legales recientes en Honduras",
+      "meta": "Resumen de las reformas legales en Honduras: Código Penal, Código de Familia, Ley Contra Violencia Doméstica y otras normas recientes.",
+      "reason": "Title y H1 con año obsoleto '2024' (no mantenido) y plantilla 'Guía Completa'; meta truncada. Se elimina el año sin tocar el cuerpo.",
+      "legalNotes": "METADATA_ONLY: se retira el año obsoleto de la metadata; el body conserva su contenido y fechas intactas."
+    },
+    "abogado-civil-choluteca": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Abogado civil en Choluteca",
+      "meta": "Abogados civiles en Choluteca: usucapión, compraventa de inmuebles, redacción de contratos, testamentos y demandas civiles.",
+      "reason": "Title con marca y 'Herencias' (limita la intención). H1 ya válido. Meta truncada ('demandas civiles en la').",
+      "legalNotes": "METADATA_ONLY: servicios ya presentes en el body; sin hechos nuevos."
+    },
+    "prescripcion-deudas-plazos-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Prescripción de deudas en Honduras: plazos legales",
+      "meta": "Deudas civiles (1-5 años), mercantiles (3 años) y bancarias (5 años). Cómo interrumpir la prescripción y los plazos para reclamar en Honduras.",
+      "reason": "Title truncado y atípico ('¿A los Cuántos Año'). Meta truncada ('carta formal y…'). H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: las cifras de años ya estaban en la meta/body existentes (no se añaden plazos nuevos)."
+    }
+  }
+}
