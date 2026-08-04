@@ -14,8 +14,8 @@ tenga decisión final documentada. **Veredicto final:** `SEO_GROWTH_ALL_BATCHES`
 | 1 | 18 | 13 | 5 | 5 | #28 | `818660bf` | Production (DB) | ✅ | ✅ | 2026-08-04 | 2026-09-01 |
 | 2 | 15 | 11 | 4 | 4 | #29 | `826bbc43` | Production (DB) | ✅ | ✅ | 2026-08-04 | 2026-09-01 |
 | 3 | 15 | 12 | 3 | 3 | #30 | `a9e5fa88` | Production (DB) | ✅ | ✅ | 2026-08-04 | 2026-09-01 |
-| 4 | 15 | 9 | 6 | 6 | (pendiente) | — | Production (DB) | (pendiente) | (pendiente) | 2026-08-04 | 2026-09-01 |
-| 5 | 15 | 10 | 5 | 5 | (pendiente) | — | Production (DB) | (pendiente) | (pendiente) | 2026-08-04 | 2026-09-01 |
+| 4 | 15 | 9 | 6 | 6 | #31 | (pendiente) | Production (DB) | ✅ | ✅ | 2026-08-04 | 2026-09-01 |
+| 5 | 15 | 10 | 5 | 5 | #32 | (pendiente) | Production (DB) | ✅ | ✅ | 2026-08-04 | 2026-09-01 |
 
 Nota: "Sin cambios" y "Diferidas" pueden coincidir (KEEP_NO_CHANGE → diferido).
 
@@ -52,10 +52,11 @@ Nota: "Sin cambios" y "Diferidas" pueden coincidir (KEEP_NO_CHANGE → diferido)
 - Ninguno en producción. Ciclos staging completos (apply→verify→rollback→
   re-apply→idempotencia) validados en cada lote.
 
-
 ## Próximos controles de 28 días
 
 - Lote 1 (13 URLs): medición 2026-08-04 → 2026-09-01.
 - Lote 2 (11 URLs): medición 2026-08-04 → 2026-09-01.
 - Lote 3 (12 URLs): medición 2026-08-04 → 2026-09-01.
+- Lote 4 (9 URLs): medición 2026-08-04 → 2026-09-01.
+- Lote 5 (10 URLs): medición 2026-08-04 → 2026-09-01.
 - (Se añadirán los siguientes lotes con su propia ventana.)
