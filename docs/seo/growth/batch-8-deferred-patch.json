@@ -1,0 +1,57 @@
+{
+  "generatedAt": "2026-08-04T10:36:26.870Z",
+  "source": "batch-8-current-metadata.json",
+  "status": "DEFERRED",
+  "count": 4,
+  "note": "KEEP_NO_CHANGE/INSUFFICIENT_DATA excluidos de la aplicación de producción.",
+  "patch": [
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-mercantil/contratos-franquicia-aspectos",
+      "slug": "contratos-franquicia-aspectos",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados y de calidad.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/tributario/facturacion-electronica-requisitos-sar",
+      "slug": "facturacion-electronica-requisitos-sar",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados y de calidad.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/practica-legal/lavado-activos-obligaciones",
+      "slug": "lavado-activos-obligaciones",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados y de calidad.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-aduanero/guia-aduanera-importaciones-honduras",
+      "slug": "guia-aduanera-importaciones-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados y de calidad.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    }
+  ]
+}
