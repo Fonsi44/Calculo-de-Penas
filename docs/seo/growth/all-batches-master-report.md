@@ -16,8 +16,8 @@
 | 5 | 15 | 10 | 5 | 5 | #32 | `cfcafcda` | Production (DB) | ✅ | ✅ | 2026-08-04 | 2026-09-01 |
 | 6 | 15 | 12 | 3 | 3 | #33 | `17f1e11d` | Production (DB) | ✅ | ✅ | 2026-08-04 | 2026-09-01 |
 | 7 | 15 | 15 | 0 | 0 | #34 | `8e9a1ad3` | Production (DB) | ✅ | ✅ | 2026-08-04 | 2026-09-01 |
-| 8 | 15 | 11 | 4 | 4 | #35 | `6d354f73` | Production (DB) | (pendiente) | (pendiente) | 2026-08-04 | 2026-09-01 |
-| 9 | 12 | 11 | 1 | 1 | #36 | `27ec1b59` | Production (DB) | (pendiente) | (pendiente) | 2026-08-04 | 2026-09-01 |
+| 8 | 15 | 11 | 4 | 4 | #35 | `6d354f73` | Production (DB) | ✅ | ✅ | 2026-08-04 | 2026-09-01 |
+| 9 | 12 | 11 | 1 | 1 | #36 | `27ec1b59` | Production (DB) | ✅ | ✅ | 2026-08-04 | 2026-09-01 |
 | **Total** | **135** | **104** | **31** | **31** | — | — | — | — | — | — | — |
 
 Nota: "Sin cambios" y "Diferidas" coinciden (KEEP_NO_CHANGE → diferido).
