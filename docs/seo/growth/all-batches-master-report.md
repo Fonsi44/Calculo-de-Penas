@@ -13,27 +13,29 @@ tenga decisión final documentada. **Veredicto final:** `SEO_GROWTH_ALL_BATCHES`
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 18 | 13 | 5 | 5 | #28 | `818660bf` | Production (DB) | ✅ | ✅ | 2026-08-04 | 2026-09-01 |
 | 2 | 15 | 11 | 4 | 4 | #29 | `826bbc43` | Production (DB) | ✅ | ✅ | 2026-08-04 | 2026-09-01 |
-| 3 | 15 | 12 | 3 | 3 | (pendiente) | — | Production (DB) | (pendiente) | (pendiente) | 2026-08-04 | 2026-09-01 |
+| 3 | 15 | 12 | 3 | 3 | #30 | `a9e5fa88` | Production (DB) | ✅ | ✅ | 2026-08-04 | 2026-09-01 |
+| 4 | 15 | 9 | 6 | 6 | (pendiente) | — | Production (DB) | (pendiente) | (pendiente) | 2026-08-04 | 2026-09-01 |
+| 5 | 15 | 10 | 5 | 5 | (pendiente) | — | Production (DB) | (pendiente) | (pendiente) | 2026-08-04 | 2026-09-01 |
 
 Nota: "Sin cambios" y "Diferidas" pueden coincidir (KEEP_NO_CHANGE → diferido).
 
 ## Totales acumulados (a la fecha)
 
-- URLs analizadas: 48 (de 175)
-- URLs optimizadas (metadata aplicada): 36
-- URLs conservadas (KEEP_NO_CHANGE): 12
+- URLs analizadas: 78 (de 175)
+- URLs optimizadas (metadata aplicada): 55
+- URLs conservadas (KEEP_NO_CHANGE): 23
 - URLs no publicadas identificadas: 41 (según `content-decision-final.csv`)
 - URLs diferidas acumuladas: ver `deferred-global.csv` (cola en construcción)
-- Pendientes de análisis: 127
+- Pendientes de análisis: 97
 
 ## Cambios por tipo (acumulado)
 
-| Tipo | Lote 1 | Lote 2 | Lote 3 | Total |
-|---|---|---|---|---|
-| APPROVED_TITLE_META_H1 | 8 | 2 | 1 | 11 |
-| APPROVED_TITLE_META | 4 | 7 | 10 | 21 |
-| APPROVED_METADATA_ONLY | 1 | 2 | 1 | 4 |
-| KEEP_NO_CHANGE | 5 | 4 | 3 | 12 |
+| Tipo | Lote 1 | Lote 2 | Lote 3 | Lote 4 | Lote 5 | Total |
+|---|---|---|---|---|---|---|
+| APPROVED_TITLE_META_H1 | 8 | 2 | 1 | 4 | 2 | 17 |
+| APPROVED_TITLE_META | 4 | 7 | 10 | 5 | 8 | 34 |
+| APPROVED_METADATA_ONLY | 1 | 2 | 1 | 0 | 0 | 4 |
+| KEEP_NO_CHANGE | 5 | 4 | 3 | 6 | 5 | 23 |
 
 ## Despliegues
 
@@ -42,11 +44,14 @@ Nota: "Sin cambios" y "Diferidas" pueden coincidir (KEEP_NO_CHANGE → diferido)
 | 2026-08-04T09:13:59Z | 1 | 13 posts (title/metaTitle/metaDescription) | `.secrets/backups/seo-growth-batch1-production-2026-08-04T09-13-59-029Z.json` |
 | 2026-08-04T09:46:35Z | 2 | 11 posts (title/metaTitle/metaDescription) | `.secrets/backups/seo-growth-batch2-production-2026-08-04T09-46-35-338Z.json` |
 | 2026-08-04T09:54:55Z | 3 | 12 posts (title/metaTitle/metaDescription) | `.secrets/backups/seo-growth-batch3-production-2026-08-04T09-54-55-360Z.json` |
+| 2026-08-04T10:00:43Z | 4 | 9 posts (title/metaTitle/metaDescription) | `.secrets/backups/seo-growth-batch4-production-2026-08-04T10-00-43-594Z.json` |
+| 2026-08-04T10:07:08Z | 5 | 10 posts (title/metaTitle/metaDescription) | `.secrets/backups/seo-growth-batch5-production-2026-08-04T10-07-08-715Z.json` |
 
 ## Incidentes / rollbacks
 
 - Ninguno en producción. Ciclos staging completos (apply→verify→rollback→
   re-apply→idempotencia) validados en cada lote.
+
 
 ## Próximos controles de 28 días
 

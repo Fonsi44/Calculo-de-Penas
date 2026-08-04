@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-08-04T10:08:06.842Z",
+  "source": "batch-5-current-metadata.json",
+  "status": "DEFERRED",
+  "count": 5,
+  "note": "KEEP_NO_CHANGE/INSUFFICIENT_DATA excluidos de la aplicación de producción.",
+  "patch": [
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/allanamiento-ilegal-violacion-domicilio-honduras",
+      "slug": "allanamiento-ilegal-violacion-domicilio-honduras",
+      "category": "",
+      "gsc_evidence": "score=17 imp=49 ctr=2.04 pos=0",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados con la intención y de calidad.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/hondurenos-en-espana/tributar-espana-bienes-guia",
+      "slug": "tributar-espana-bienes-guia",
+      "category": "",
+      "gsc_evidence": "score=17 imp=47 ctr=2.13 pos=0",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados (convenio de doble imposición, Modelo 720) y de calidad.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/hondurenos-en-espana/herencias-transfronterizas-bienes",
+      "slug": "herencias-transfronterizas-bienes",
+      "category": "",
+      "gsc_evidence": "score=16 imp=39 ctr=2.56 pos=0",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados (sucesión, ISD, Modelo 720) y de calidad.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/proceso-penal/sobreseimiento-definitivo-provisional",
+      "slug": "sobreseimiento-definitivo-provisional",
+      "category": "",
+      "gsc_evidence": "score=1 imp=0 ctr=0 pos=0",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados y de calidad.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/derechos-detenido-honduras-guia-constitucional",
+      "slug": "derechos-detenido-honduras-guia-constitucional",
+      "category": "",
+      "gsc_evidence": "score=1 imp=0 ctr=0 pos=0",
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados y de calidad.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "KEEP_NO_CHANGE"
+    }
+  ]
+}
