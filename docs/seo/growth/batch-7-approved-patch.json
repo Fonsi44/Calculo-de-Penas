@@ -1,0 +1,307 @@
+{
+  "generatedAt": "2026-08-04T10:32:10.955Z",
+  "source": "batch-7-current-metadata.json",
+  "status": "EDITORIAL_APPROVED",
+  "count": 15,
+  "applyPolicy": {
+    "columns": [
+      "title",
+      "metaTitle",
+      "metaDescription"
+    ],
+    "dryRunDefault": true,
+    "productionRequires": "ALLOW_PRODUCTION_SEO_BATCH1=true",
+    "noSlugChanges": true,
+    "noRedirects": true,
+    "noNoindexChanges": true
+  },
+  "patch": [
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-bancario/tarjetas-credito-intereses-cargos-defensa-honduras",
+      "slug": "tarjetas-credito-intereses-cargos-defensa-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Title en imperativo y con orden atípico. H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: Ley del Consumidor/CNBS ya citadas en el body.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Sus derechos y cómo reclamar cargos indebidos en su tarjeta de crédito en Honduras, según la Ley del Consumidor y la CNBS.",
+        "metaTitle": "Reclamar cargos indebidos en tarjeta de crédito en Honduras"
+      },
+      "contentHash": "244e53e986c95870cc3b8843d512a9e7feeca5428ede331f8bc7141cb0515402",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/practica-legal/pineda-asociados-bufete-multidisciplinario-honduras",
+      "slug": "pineda-asociados-bufete-multidisciplinario-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Marca en title (redundante en página del bufete). H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: sin hechos nuevos.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Cómo opera un bufete multidisciplinario en Honduras, sus ventajas y cuándo conviene para empresas y familias.",
+        "metaTitle": "Bufete multidisciplinario en Honduras"
+      },
+      "contentHash": "6b1c110214eb99d0c79af9b4b9a2297b8f845044da1604d9865ed6181bdb0c7d",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-aduanero/zonas-libres-zoli-beneficios-fiscales-honduras",
+      "slug": "zonas-libres-zoli-beneficios-fiscales-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_METADATA_ONLY",
+      "reason": "Meta truncada ('con exenciones'). Title/H1 ya válidos.",
+      "legal_notes": "METADATA_ONLY: sin cifras nuevas; beneficios ya en el body.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Beneficios fiscales y requisitos para operar en Zonas Libres (ZOLI) de Honduras, incluida la inversión extranjera directa.",
+        "metaTitle": "Zonas Libres (ZOLI) Honduras: Beneficios"
+      },
+      "contentHash": "913b1d7c0d117e56d32f0f99180b381611e752587105f4765b58976e8ae92d7c",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/regulacion-sanitaria/habilitacion-clinicas-hospitales",
+      "slug": "habilitacion-clinicas-hospitales",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META_H1",
+      "reason": "Title y H1 con 'Guía Completa' (plantilla) y title sin 'en'; meta truncada.",
+      "legal_notes": "METADATA_ONLY: SESAL/ARSA ya citadas en el body; sin hechos nuevos.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Requisitos y trámites para obtener la licencia sanitaria en Honduras ante SESAL y ARSA.",
+        "metaTitle": "Licencia sanitaria en Honduras: requisitos y trámites",
+        "title": "Licencia sanitaria en Honduras: requisitos y trámites"
+      },
+      "contentHash": "fd8f7962d5ee90fc7dd24648d2d65aab098b79ccfb4ba767887c7fa60ae6902e",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-mercantil/titulos-valores-cheques-sin-fondo-honduras",
+      "slug": "titulos-valores-cheques-sin-fondo-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Marca en title y meta truncada ('Proteja sus'). H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: protesto/acción cambiaria ya en el body; sin cifras nuevas.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Cómo actuar ante un cheque sin fondos en Honduras: plazos, protesto notarial, acción cambiaria y denuncia penal.",
+        "metaTitle": "Cheques sin fondos en Honduras: cómo actuar"
+      },
+      "contentHash": "5d5254bce99133c234afff97c87c7837a62d12838a72d70397f3769bedc44c5c",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-bancario/creditos-reestructuracion-deudas",
+      "slug": "creditos-reestructuracion-deudas",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Marca en title y meta con 'Aprenda... Consulte a expertos'. H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: sin cifras nuevas; opciones ya en el body.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Cómo reestructurar su deuda en Honduras: modificar plazos, tasas e intereses con el respaldo legal.",
+        "metaTitle": "Reestructuración de deuda en Honduras: cómo negociarla"
+      },
+      "contentHash": "5584a5a195655df07bb9e19e36a0f0a75edf40a5fab83141f97490c33c9f0743",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/tributario/defensa-sar-choluteca",
+      "slug": "defensa-sar-choluteca",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Marca en title y meta con 'Reciba asesoría legal experta'. H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: plazos/procedimientos ya en el body; sin cifras nuevas.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Asesoría legal para la defensa ante fiscalizaciones del SAR en Choluteca: plazos, procedimientos y sus derechos.",
+        "metaTitle": "Defensa ante el SAR en Choluteca"
+      },
+      "contentHash": "c788fca07fc60677ba28a0d491d50ad5a6554d40963b01a8ce605126e9dc46b3",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/conciliacion-arbitraje/mediacion-vs-juicio-cual-elegir",
+      "slug": "mediacion-vs-juicio-cual-elegir",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Marca en title y meta truncada ('de forma'). H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: sin hechos nuevos.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Diferencias clave entre mediación y juicio en Honduras y cuándo conviene usar cada método para resolver conflictos legales.",
+        "metaTitle": "Mediación vs juicio en Honduras: cuál elegir"
+      },
+      "contentHash": "fcfd2b7b91bcda2183abad39e93bb539956f6942ed7f606dabe719a0e6bf08e5",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/propiedad-intelectual/derechos-de-autor-proteccion-registro-honduras",
+      "slug": "derechos-de-autor-proteccion-registro-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_METADATA_ONLY",
+      "reason": "Meta informal ('Descubre... tus'). Title/H1 ya válidos.",
+      "legal_notes": "METADATA_ONLY: DIGEPIH ya citado en el body; sin hechos nuevos.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Cómo proteger sus obras literarias y artísticas en Honduras: la Ley, el registro ante DIGEPIH y sus derechos morales y patrimoniales.",
+        "metaTitle": "Derechos de Autor en Honduras: Protección"
+      },
+      "contentHash": "575645584a1d05ae98e6cc2c68ab1bac766bb18d42b16075147160a02d4e3bc9",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/conciliacion-arbitraje/mediacion-familiar-cuando-funciona-honduras",
+      "slug": "mediacion-familiar-cuando-funciona-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_METADATA_ONLY",
+      "reason": "Meta con 'Descubra... Abogados expertos'. Title/H1 ya válidos.",
+      "legal_notes": "METADATA_ONLY: sin hechos nuevos; proceso ya en el body.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Si la mediación familiar es obligatoria en Honduras antes de un juicio: proceso, cuándo aplica y cuándo no.",
+        "metaTitle": "Mediación Familiar Obligatoria en Honduras"
+      },
+      "contentHash": "bfe4fa1b3145b6334390501ee921b28e5a84a407c66f43070848a4ee0ed00e5c",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/tributario/impuestos-pequenas-empresas-guia-basica-honduras",
+      "slug": "impuestos-pequenas-empresas-guia-basica-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Title con orden atípico y 'Guía SAR'. H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: ISV/ISR/IHSS/RAP ya citados en el body; sin cifras nuevas.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Los impuestos (ISV, ISR), retenciones y aportaciones (IHSS, RAP) de las pequeñas empresas en Honduras y sus obligaciones ante el SAR.",
+        "metaTitle": "Impuestos para pequeñas empresas en Honduras"
+      },
+      "contentHash": "494e7a9ef4ac9b93ebb0d884a89311b233a53368b32594a868c64a4450dc7b1a",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/propiedad-intelectual/proteccion-marcas-competencia-desleal",
+      "slug": "proteccion-marcas-competencia-desleal",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_METADATA_ONLY",
+      "reason": "Meta con 'Descubra'. Title/H1 ya válidos.",
+      "legal_notes": "METADATA_ONLY: marco normativo ya en el body; sin hechos nuevos.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Cómo defender su marca contra la competencia desleal en Honduras: acciones legales, marco normativo e importancia del registro.",
+        "metaTitle": "Protección de Marcas vs Competencia Desleal"
+      },
+      "contentHash": "d50541585db4938803c1ddfa2bf5f0bfd1420d8a16b606ec064a784f915d3050",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/extranjeria-migracion/refugio-asilo-solicitarlo",
+      "slug": "refugio-asilo-solicitarlo",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Marca en title. H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: sin hechos nuevos; requisitos ya en el body.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "El proceso y los requisitos para solicitar refugio o asilo en Honduras: protección internacional y documentación.",
+        "metaTitle": "Refugio y asilo en Honduras: proceso y requisitos"
+      },
+      "contentHash": "946042869419a91e20275845b631f2fa202302f72a518707c726e78b94925e19",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/practica-legal/como-elegir-abogado-honduras",
+      "slug": "como-elegir-abogado-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_METADATA_ONLY",
+      "reason": "Meta con 'Descubra... ¡Consulte hoy!'. Title/H1 ya válidos.",
+      "legal_notes": "METADATA_ONLY: sin hechos nuevos.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "6 criterios esenciales para elegir un abogado en Honduras y asegurar una defensa eficaz.",
+        "metaTitle": "Elegir Abogado en Honduras: 6 Criterios Clave"
+      },
+      "contentHash": "6e8341d807ef0287b38582801015bc768e4537059e72fd1680fa3620530a7b17",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/tributario/isv-impuesto-venta-tasas-obligaciones-honduras",
+      "slug": "isv-impuesto-venta-tasas-obligaciones-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META_H1",
+      "reason": "H1 truncado ('...y cómo'). Se completa y alinea.",
+      "legal_notes": "METADATA_ONLY: tasas/obligaciones ya en el body; sin cifras nuevas.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Tasas, crédito y débito fiscal, exenciones y obligaciones de declaración del Impuesto Sobre Ventas ante el SAR de Honduras.",
+        "metaTitle": "ISV en Honduras: tasas, obligaciones y declaración",
+        "title": "ISV en Honduras: tasas, obligaciones y declaración"
+      },
+      "contentHash": "980d6f32c89de8210cb9869f0961854aa4ba7ac179a9efad3e98cb1f4e0c798d",
+      "rowVersion": 1
+    }
+  ]
+}
