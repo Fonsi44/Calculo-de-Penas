@@ -9,10 +9,15 @@ import {
   buildUpdate,
   sha256,
   ALLOWED_COLUMNS,
+  CANONICAL_HOST,
   type PatchEntry,
 } from '../scripts/apply-seo-growth-batch1';
 
-const BASE_URL = 'https://www.pinedayasocioshn.com/blog/derecho-laboral/empleador-no-paga-salario-honduras';
+// El host se deriva de la fuente única (.env.example) vía el runner: nunca se
+// hand-typea el dominio (evita reintroducir la variante sin la "da" de
+// "asociados").
+const TYPO_HOST = CANONICAL_HOST.replace('asociados', 'asocios');
+const BASE_URL = `https://${CANONICAL_HOST}/blog/derecho-laboral/empleador-no-paga-salario-honduras`;
 
 function makeEntry(overrides: Partial<PatchEntry> = {}): PatchEntry {
   const after: Record<string, string> = {
@@ -54,7 +59,12 @@ describe('apply-seo-growth-batch1: parseArgs', () => {
 
   it('parsea --mode/--env/--env-file/--backup explícitos', () => {
     const p = parseArgs(['--mode', 'apply', '--env', 'production', '--env-file', '.env', '--backup', 'ts-1']);
-    expect(p).toEqual({ mode: 'apply', env: 'production', envFile: '.env', backup: 'ts-1' });
+    expect(p).toEqual({ mode: 'apply', env: 'production', envFile: '.env', backup: 'ts-1', only: [] });
+  });
+
+  it('parsea filtros --only repetibles', () => {
+    const p = parseArgs(['--only', 'slug-a', '--only', 'slug-b', '--mode', 'verify']);
+    expect(p.only).toEqual(['slug-a', 'slug-b']);
   });
 
   it('rechaza modos y entornos inválidos', () => {
@@ -93,7 +103,7 @@ describe('apply-seo-growth-batch1: hash y duplicados', () => {
   it('rechaza slugs duplicados', () => {
     const a = makeEntry();
     const b = makeEntry();
-    b.url = 'https://www.pinedayasocioshn.com/blog/derecho-laboral/empleador-no-paga-salario-honduras';
+    b.url = BASE_URL;
     b.slug = a.slug;
     expect(() => validatePatch([a, b])).toThrow(/Slug duplicado/);
   });
@@ -109,9 +119,9 @@ describe('apply-seo-growth-batch1: canonical', () => {
   });
 
   it('rechaza dominio incorrecto (variante sin "da" o www duplicado)', () => {
-    expect(() => assertCanonicalUrl('https://www.www.pinedayasocioshn.com/blog/x')).toThrow();
-    expect(() => assertCanonicalUrl('https://pinedayasocioshn.com/blog/x')).toThrow();
-    expect(() => assertCanonicalUrl('https://www.pinedayasocioshn.com/landing')).toThrow();
+    expect(() => assertCanonicalUrl(`https://www.www.${CANONICAL_HOST}/blog/x`)).toThrow();
+    expect(() => assertCanonicalUrl(`https://${TYPO_HOST}/blog/x`)).toThrow();
+    expect(() => assertCanonicalUrl(`https://${CANONICAL_HOST}/landing`)).toThrow();
   });
 });
 

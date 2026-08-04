@@ -49,13 +49,23 @@ import {
 } from './lib/environment-guard';
 import { scanContentPolicyViolations } from '../lib/content-policy';
 import { META_TITLE_MAX } from '../lib/seo';
+import { canonicalOrigin } from './seo-data-config.mjs';
 
 const ROOT = process.cwd();
 const APPROVED_JSON = resolve(ROOT, 'docs/seo/growth/batch-1-approved-patch.json');
 const BACKUP_DIR = resolve(ROOT, '.secrets/backups');
 
 export const ALLOWED_COLUMNS: ReadonlySet<string> = new Set(['title', 'metaTitle', 'metaDescription']);
-export const CANONICAL_HOST = 'www.pinedayasocioshn.com'; // derivado de .env.example; se valida en runtime
+/**
+ * Host canónico derivado de NEXT_PUBLIC_SITE_URL (.env.example) vía
+ * seo-data-config. NUNCA se hardcodea el dominio (evita reintroducir la
+ * variante sin la "da" de "asociados").
+ */
+export const CANONICAL_HOST: string = (() => {
+  const origin = canonicalOrigin();
+  if (!origin) throw new Error('[batch1] No se pudo derivar el origen canónico desde .env.example');
+  return new URL(origin).host;
+})();
 export const META_DESC_MAX = 170;
 
 type Mode = 'dry-run' | 'capture' | 'apply' | 'verify' | 'rollback';
@@ -95,13 +105,17 @@ export function parseArgs(argv: string[]) {
   const env = (get('--env') ?? 'staging') as DeclaredEnv;
   const envFile = get('--env-file');
   const backup = get('--backup');
+  const only: string[] = [];
+  for (let i = 0; i < argv.length - 1; i++) {
+    if (argv[i] === '--only' && argv[i + 1]) only.push(argv[i + 1]);
+  }
   if (!['dry-run', 'capture', 'apply', 'verify', 'rollback'].includes(mode)) {
     throw new Error(`[batch1] --mode inválido: ${mode}`);
   }
   if (!['local', 'staging', 'production'].includes(env)) {
     throw new Error(`[batch1] --env inválido: ${env}`);
   }
-  return { mode, env, envFile, backup };
+  return { mode, env, envFile, backup, only };
 }
 
 export function sha256(text: string): string {
@@ -244,7 +258,7 @@ export function buildUpdate(row: RowState, after: RowState | Record<string, stri
 
 // ───────────────────────────── MAIN ────────────────────────────────────────
 async function main(): Promise<void> {
-  const { mode, env, envFile, backup } = parseArgs(process.argv.slice(2));
+  const { mode, env, envFile, backup, only } = parseArgs(process.argv.slice(2));
 
   if (envFile) loadEnvFile(envFile);
   const inspection = inspectEnvironment();
@@ -266,8 +280,18 @@ async function main(): Promise<void> {
   if (raw.applyPolicy.columns.some((c) => !ALLOWED_COLUMNS.has(c))) {
     throw new Error(`[batch1] applyPolicy.columns contiene columnas no permitidas`);
   }
-  const patch = raw.patch.filter((e) => e.status === 'APPROVED');
-  if (patch.length === 0) throw new Error('[batch1] No hay entradas APPROVED en el patch');
+  const patchAll = raw.patch.filter((e) => e.status === 'APPROVED');
+  if (patchAll.length === 0) throw new Error('[batch1] No hay entradas APPROVED en el patch');
+  let patch = patchAll;
+  if (only.length > 0) {
+    const allSlugs = new Set(patchAll.map((e) => e.slug));
+    const unknown = only.filter((s) => !allSlugs.has(s));
+    if (unknown.length > 0) {
+      throw new Error(`[batch1] --only con slug(s) no presentes en el patch: ${unknown.join(', ')}`);
+    }
+    patch = patchAll.filter((e) => only.includes(e.slug));
+    console.log(`[batch1] filtro --only: ${patch.length} entradas`);
+  }
   validatePatch(patch);
 
   const pool = new Pool({ connectionString: process.env.DATABASE_URL });
@@ -340,7 +364,9 @@ async function main(): Promise<void> {
         + missingBefore.map((e) => e.slug).join(', '));
     }
 
-    // Precondición global: todas las filas deben coincidir con before.
+    // Precondición global: cada fila debe estar en estado `before` (pendiente)
+    // o ya en estado `after` (idempotente). Cualquier otra divergencia ABORTA
+    // todo el lote sin escribir nada.
     const mismatches: string[] = [];
     const rowMap: Record<string, RowState> = {};
     for (const e of patch) {
@@ -350,8 +376,9 @@ async function main(): Promise<void> {
         continue;
       }
       rowMap[e.slug] = current;
-      if (!sameState(current, e.before)) {
-        mismatches.push(`${e.slug}: valores actuales != before capturado`);
+      const alreadyApplied = Object.keys(buildUpdate(current, e.after)).length === 0;
+      if (!sameState(current, e.before) && !alreadyApplied) {
+        mismatches.push(`${e.slug}: valores actuales != before capturado ni after (divergencia)`);
       }
     }
     if (mismatches.length > 0) {
@@ -436,7 +463,10 @@ async function main(): Promise<void> {
     if (!backup) throw new Error('[batch1] rollback requiere --backup <timestamp>');
     const file = backupPath(dbLabel, backup);
     if (!existsSync(file)) throw new Error(`[batch1] No existe backup: ${file}`);
-    const data = JSON.parse(readFileSync(file, 'utf8')) as BackupFile;
+    let data = JSON.parse(readFileSync(file, 'utf8')) as BackupFile;
+    if (only.length > 0) {
+      data = { ...data, entries: data.entries.filter((e) => only.includes(e.slug)) };
+    }
 
     const currentMap: Record<string, RowState> = {};
     for (const entry of data.entries) {
