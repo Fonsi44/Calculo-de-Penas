@@ -1,0 +1,100 @@
+{
+  "generatedAt": "2026-08-04T10:42:00.000Z",
+  "batch": 9,
+  "note": "Decisiones editoriales curadas para el lote 9 (último lote de URLs publicadas). Solo metadata; sin tocar contenido jurídico.",
+  "decisions": {
+    "importar-china-guia-aduanera": {
+      "classification": "APPROVED_TITLE_META_H1",
+      "keepH1": false,
+      "title": "Importar desde China a Honduras: requisitos y riesgos",
+      "meta": "Requisitos, documentación, impuestos y riesgos aduaneros para importar desde China a Honduras.",
+      "reason": "Marca en title y H1/meta con 'Guía Legal'/'Guía completa'.",
+      "legalNotes": "METADATA_ONLY: sin hechos nuevos; riesgos aduaneros ya en el body."
+    },
+    "usucapion-prescripcion-adquisitiva-honduras": {
+      "classification": "KEEP_NO_CHANGE",
+      "reason": "Title/meta/H1 alineados y de calidad.",
+      "legalNotes": "Sin cambios."
+    },
+    "compraventa-inmuebles-aspectos-legales-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Compraventa de inmuebles en Honduras: pasos y requisitos",
+      "meta": "El marco legal, pasos, impuestos y errores comunes en la compraventa de inmuebles en Honduras.",
+      "reason": "Marca en title y meta con 'Guía completa'. H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: sin cifras nuevas; marco legal ya en el body."
+    },
+    "registrar-marca-honduras-paso-a-paso": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Registrar una marca en Honduras: proceso paso a paso",
+      "meta": "El proceso, costos, duración y riesgos de no registrar su marca en Honduras ante el Instituto de la Propiedad.",
+      "reason": "Title con 'Guía Paso a Paso' (plantilla) y meta con 'Aprenda'. H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: Instituto de la Propiedad ya citado en el body; sin cifras nuevas."
+    },
+    "permiso-trabajo-extranjeros-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Permiso de trabajo para extranjeros en Honduras",
+      "meta": "Requisitos, proceso y sanciones del permiso de trabajo para extranjeros en Honduras.",
+      "reason": "Marca en title y meta con 'Conozca... Asesoría legal'. H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: sin hechos nuevos; sanciones ya en el body."
+    },
+    "proceso-consulta-legal-pineda": {
+      "classification": "APPROVED_TITLE_META_H1",
+      "keepH1": false,
+      "title": "Consulta legal en Honduras: preparación y proceso",
+      "meta": "Cómo preparar su consulta legal en Honduras: documentación, qué esperar y errores comunes.",
+      "reason": "H1 informal ('tu') y meta con 'Aprenda... garantizada'.",
+      "legalNotes": "METADATA_ONLY: sin hechos nuevos."
+    },
+    "tramites-legales-nacaome": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Trámites legales en Nacaome: poderes y contratos",
+      "meta": "Trámites legales en Nacaome, Valle: poderes, contratos, escrituras y demandas.",
+      "reason": "Marca en title y meta con 'Realice... Asesoría legal integral'. H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: sin hechos nuevos."
+    },
+    "como-preparar-demanda-guia-no-abogados-honduras": {
+      "classification": "APPROVED_TITLE_META_H1",
+      "keepH1": false,
+      "title": "Redactar una demanda en Honduras sin abogado",
+      "meta": "Cómo redactar una demanda en Honduras sin abogado: requisitos, errores comunes y cuándo es obligatorio un profesional del derecho.",
+      "reason": "H1 truncado ('(sin'). Se completa y alinea con el title.",
+      "legalNotes": "METADATA_ONLY: sin hechos nuevos; obligatoriedad ya en el body."
+    },
+    "visas-inversion-rentista-pensionado": {
+      "classification": "APPROVED_TITLE_META_H1",
+      "keepH1": false,
+      "title": "Visas de inversión, rentista y pensionado en Honduras",
+      "meta": "Residencia en Honduras mediante visas de inversionista, rentista o pensionado: requisitos y proceso ante la DGME.",
+      "reason": "H1 con 'Guía de' (plantilla). Se omiten las cifras de la meta (el body las conserva).",
+      "legalNotes": "METADATA_ONLY: se retiran montos específicos de la meta (el body los conserva intactos)."
+    },
+    "despido-empleados-publicos-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Despido de empleados públicos en Honduras",
+      "meta": "Los derechos y recursos ante el despido de empleados públicos en Honduras: Ley de Servicio Civil, plazos y procedimientos.",
+      "reason": "Marca en title y meta con 'Conozca... Abogados explican'. H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: Ley de Servicio Civil ya citada en el body; sin cifras nuevas."
+    },
+    "sanciones-administrativas-como-defenderse-honduras": {
+      "classification": "APPROVED_TITLE_META",
+      "keepH1": true,
+      "title": "Sanciones administrativas en Honduras: cómo defenderse",
+      "meta": "Los tipos de sanciones administrativas en Honduras, los plazos para impugnar y las vías de recurso.",
+      "reason": "Marca en title y meta con 'Conozca... Asesoría legal'. H1 ya válido.",
+      "legalNotes": "METADATA_ONLY: se omite la cifra de plazos de la meta (el body la conserva intacta)."
+    },
+    "servicios-legales-empresas-sur-honduras": {
+      "classification": "APPROVED_TITLE_META_H1",
+      "keepH1": false,
+      "title": "Servicios legales para empresas en el sur de Honduras",
+      "meta": "Servicios legales para empresas en el sur de Honduras: corporativo, penal, laboral y civil.",
+      "reason": "Marca en title, H1 con 'Guía de' y meta con '¡Contáctenos!'.",
+      "legalNotes": "METADATA_ONLY: sin hechos nuevos."
+    }
+  }
+}

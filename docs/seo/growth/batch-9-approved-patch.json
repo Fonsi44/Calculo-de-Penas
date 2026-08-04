@@ -1,0 +1,234 @@
+{
+  "generatedAt": "2026-08-04T10:39:10.710Z",
+  "source": "batch-9-current-metadata.json",
+  "status": "EDITORIAL_APPROVED",
+  "count": 11,
+  "applyPolicy": {
+    "columns": [
+      "title",
+      "metaTitle",
+      "metaDescription"
+    ],
+    "dryRunDefault": true,
+    "productionRequires": "ALLOW_PRODUCTION_SEO_BATCH1=true",
+    "noSlugChanges": true,
+    "noRedirects": true,
+    "noNoindexChanges": true
+  },
+  "patch": [
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-aduanero/importar-china-guia-aduanera",
+      "slug": "importar-china-guia-aduanera",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META_H1",
+      "reason": "Marca en title y H1/meta con 'Guía Legal'/'Guía completa'.",
+      "legal_notes": "METADATA_ONLY: sin hechos nuevos; riesgos aduaneros ya en el body.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Requisitos, documentación, impuestos y riesgos aduaneros para importar desde China a Honduras.",
+        "metaTitle": "Importar desde China a Honduras: requisitos y riesgos",
+        "title": "Importar desde China a Honduras: requisitos y riesgos"
+      },
+      "contentHash": "3c4165f7e34a1802cdb19948e466b97e844cb1f4d8e933cebd7fb8e517992cef",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-civil/compraventa-inmuebles-aspectos-legales-honduras",
+      "slug": "compraventa-inmuebles-aspectos-legales-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Marca en title y meta con 'Guía completa'. H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: sin cifras nuevas; marco legal ya en el body.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "El marco legal, pasos, impuestos y errores comunes en la compraventa de inmuebles en Honduras.",
+        "metaTitle": "Compraventa de inmuebles en Honduras: pasos y requisitos"
+      },
+      "contentHash": "b22240685d56ae8dd3ae51d1dea5d5462a18a5d804c2b6ec9103a239d96d9b84",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/propiedad-intelectual/registrar-marca-honduras-paso-a-paso",
+      "slug": "registrar-marca-honduras-paso-a-paso",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Title con 'Guía Paso a Paso' (plantilla) y meta con 'Aprenda'. H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: Instituto de la Propiedad ya citado en el body; sin cifras nuevas.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "El proceso, costos, duración y riesgos de no registrar su marca en Honduras ante el Instituto de la Propiedad.",
+        "metaTitle": "Registrar una marca en Honduras: proceso paso a paso"
+      },
+      "contentHash": "aad81581988a48e5c37ce2365ff18685e65eb76835c4db83e03ca774c1dc9bff",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/extranjeria-migracion/permiso-trabajo-extranjeros-honduras",
+      "slug": "permiso-trabajo-extranjeros-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Marca en title y meta con 'Conozca... Asesoría legal'. H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: sin hechos nuevos; sanciones ya en el body.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Requisitos, proceso y sanciones del permiso de trabajo para extranjeros en Honduras.",
+        "metaTitle": "Permiso de trabajo para extranjeros en Honduras"
+      },
+      "contentHash": "c2385be954271041f5d47b8ce6715cabdbe0ac30513f642109c7a8fcec301e87",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/practica-legal/proceso-consulta-legal-pineda",
+      "slug": "proceso-consulta-legal-pineda",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META_H1",
+      "reason": "H1 informal ('tu') y meta con 'Aprenda... garantizada'.",
+      "legal_notes": "METADATA_ONLY: sin hechos nuevos.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Cómo preparar su consulta legal en Honduras: documentación, qué esperar y errores comunes.",
+        "metaTitle": "Consulta legal en Honduras: preparación y proceso",
+        "title": "Consulta legal en Honduras: preparación y proceso"
+      },
+      "contentHash": "8b165b3af8463046e6141da018e3c078d77c42d79b02f43b8c43d70586657973",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/practica-legal/tramites-legales-nacaome",
+      "slug": "tramites-legales-nacaome",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Marca en title y meta con 'Realice... Asesoría legal integral'. H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: sin hechos nuevos.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Trámites legales en Nacaome, Valle: poderes, contratos, escrituras y demandas.",
+        "metaTitle": "Trámites legales en Nacaome: poderes y contratos"
+      },
+      "contentHash": "cc527e14c34bc00ba838424ea783849a8d7ca53fdaaa71c89524bf4917ac82e0",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/practica-legal/como-preparar-demanda-guia-no-abogados-honduras",
+      "slug": "como-preparar-demanda-guia-no-abogados-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META_H1",
+      "reason": "H1 truncado ('(sin'). Se completa y alinea con el title.",
+      "legal_notes": "METADATA_ONLY: sin hechos nuevos; obligatoriedad ya en el body.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Cómo redactar una demanda en Honduras sin abogado: requisitos, errores comunes y cuándo es obligatorio un profesional del derecho.",
+        "metaTitle": "Redactar una demanda en Honduras sin abogado",
+        "title": "Redactar una demanda en Honduras sin abogado"
+      },
+      "contentHash": "5e96bb8236ae43d54bfa47e67b5184260457a8828a55054d6bfd444a51a3522b",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/extranjeria-migracion/visas-inversion-rentista-pensionado",
+      "slug": "visas-inversion-rentista-pensionado",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META_H1",
+      "reason": "H1 con 'Guía de' (plantilla). Se omiten las cifras de la meta (el body las conserva).",
+      "legal_notes": "METADATA_ONLY: se retiran montos específicos de la meta (el body los conserva intactos).",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Residencia en Honduras mediante visas de inversionista, rentista o pensionado: requisitos y proceso ante la DGME.",
+        "metaTitle": "Visas de inversión, rentista y pensionado en Honduras",
+        "title": "Visas de inversión, rentista y pensionado en Honduras"
+      },
+      "contentHash": "bb06e2cee04037397666e4df6ed10bc41b1b50293fe2a89fd538e1a23d5a0384",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-administrativo/despido-empleados-publicos-honduras",
+      "slug": "despido-empleados-publicos-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Marca en title y meta con 'Conozca... Abogados explican'. H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: Ley de Servicio Civil ya citada en el body; sin cifras nuevas.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Los derechos y recursos ante el despido de empleados públicos en Honduras: Ley de Servicio Civil, plazos y procedimientos.",
+        "metaTitle": "Despido de empleados públicos en Honduras"
+      },
+      "contentHash": "6750d3d8dbe9e387cf5161231d079fad047900f8402e740b70234c43ab47393f",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-administrativo/sanciones-administrativas-como-defenderse-honduras",
+      "slug": "sanciones-administrativas-como-defenderse-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Marca en title y meta con 'Conozca... Asesoría legal'. H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: se omite la cifra de plazos de la meta (el body la conserva intacta).",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Los tipos de sanciones administrativas en Honduras, los plazos para impugnar y las vías de recurso.",
+        "metaTitle": "Sanciones administrativas en Honduras: cómo defenderse"
+      },
+      "contentHash": "260a008d42ceed6c1266548c47f2ea0f8d4d61866515b1d5622d729a809f5f72",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-civil/servicios-legales-empresas-sur-honduras",
+      "slug": "servicios-legales-empresas-sur-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META_H1",
+      "reason": "Marca en title, H1 con 'Guía de' y meta con '¡Contáctenos!'.",
+      "legal_notes": "METADATA_ONLY: sin hechos nuevos.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Servicios legales para empresas en el sur de Honduras: corporativo, penal, laboral y civil.",
+        "metaTitle": "Servicios legales para empresas en el sur de Honduras",
+        "title": "Servicios legales para empresas en el sur de Honduras"
+      },
+      "contentHash": "5efc293de7f6d0d01a611d39958e3042d2b685c2c1138980b2ec79e693fea2ec",
+      "rowVersion": 1
+    }
+  ]
+}
