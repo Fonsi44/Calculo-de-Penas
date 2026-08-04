@@ -87,15 +87,24 @@ function main() {
     );
   }
 
-  // Excluir slugs ya seleccionados en lotes previos.
+  // Excluir slugs ya procesados: de los batch-*-selection.csv locales + el
+  // registro persistente processed-slugs.json (independiente de ramas).
   const processed = new Set();
-  for (let n = 1; n < batch; n++) {
+  for (let n = 1; n < 99; n++) {
     const f = join(GROWTH, `batch-${n}-selection.csv`);
     try {
       readCsv(f).forEach((r) => processed.add(r.url.split("/").pop()));
     } catch {
-      /* lote anterior inexistente */
+      /* lote inexistente */
     }
+  }
+  try {
+    const reg = JSON.parse(
+      readFileSync(join(GROWTH, "processed-slugs.json"), "utf8"),
+    );
+    (reg.slugs ?? []).forEach((s) => processed.add(s));
+  } catch {
+    /* sin registro persistente */
   }
   // Excluir no publicados (si content-decision-final los marca).
   const decisions = (() => {

@@ -1,0 +1,251 @@
+{
+  "generatedAt": "2026-08-04T10:21:19.835Z",
+  "source": "batch-6-current-metadata.json",
+  "status": "EDITORIAL_APPROVED",
+  "count": 12,
+  "applyPolicy": {
+    "columns": [
+      "title",
+      "metaTitle",
+      "metaDescription"
+    ],
+    "dryRunDefault": true,
+    "productionRequires": "ALLOW_PRODUCTION_SEO_BATCH1=true",
+    "noSlugChanges": true,
+    "noRedirects": true,
+    "noNoindexChanges": true
+  },
+  "patch": [
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/riesgos-profesionales-accidentes",
+      "slug": "riesgos-profesionales-accidentes",
+      "category": "",
+      "gsc_evidence": "score=1 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_METADATA_ONLY",
+      "reason": "Meta truncada ('Asesoría'). Title/H1 ya válidos.",
+      "legal_notes": "METADATA_ONLY: IHSS/obligaciones ya en el body; sin hechos nuevos.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Sus derechos ante accidentes y enfermedades laborales en Honduras: cobertura del IHSS, obligaciones del empleador y acciones legales.",
+        "metaTitle": "Accidentes Laborales Honduras: Cobertura Legal"
+      },
+      "contentHash": "277379240d640297f15ccb36931ba1e230d5465d320248ef057aeb2e51c358e1",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/hondurenos-en-espana/reagrupacion-familiar-hondurenos-espana",
+      "slug": "reagrupacion-familiar-hondurenos-espana",
+      "category": "",
+      "gsc_evidence": "score=1 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_METADATA_ONLY",
+      "reason": "Meta con 'Guía completa' y 'Consulte a expertos'. Title/H1 ya válidos.",
+      "legal_notes": "METADATA_ONLY: requisitos ya en el body; sin hechos nuevos.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Requisitos de ingresos, vivienda y proceso paso a paso para la reagrupación familiar en España para hondureños.",
+        "metaTitle": "Reagrupación Familiar España para Hondureños"
+      },
+      "contentHash": "85506ff570eff7cdb679943214f214b9dc47d4ee31acfcd8e41bfca1b83a8860",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/delitos-mas-comunes-honduras",
+      "slug": "delitos-mas-comunes-honduras",
+      "category": "",
+      "gsc_evidence": "score=1 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META_H1",
+      "reason": "Title con marca y H1 con 'Guía Legal' (plantilla). Se eliminan sin tocar el body.",
+      "legal_notes": "METADATA_ONLY: el body conserva sus citas y penas intactas; la meta evita cifras nuevas.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Cuáles son los delitos más frecuentes en Honduras, cómo se sancionan según el Código Penal y qué hacer ante una denuncia o acusación.",
+        "metaTitle": "Delitos más comunes en Honduras",
+        "title": "Delitos más comunes en Honduras"
+      },
+      "contentHash": "ad1e52a3134e7b18ce79c940c491e7d968bd497a4dc4d4991f20a00713325993",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/hondurenos-en-espana/asuntos-familiares-honduras-espana",
+      "slug": "asuntos-familiares-honduras-espana",
+      "category": "",
+      "gsc_evidence": "score=1 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META_H1",
+      "reason": "H1 truncado ('...en Honduras desde') y meta con '¡Consulte hoy!'.",
+      "legal_notes": "METADATA_ONLY: trámites/poderes ya en el body; sin hechos nuevos.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Cómo resolver divorcios, herencias y pensiones en Honduras desde España con representación legal: trámites y poderes necesarios.",
+        "metaTitle": "Asuntos familiares en Honduras desde España",
+        "title": "Asuntos familiares en Honduras desde España"
+      },
+      "contentHash": "121936105aed991a4e79ad42e00cc436bd81f82bcdc4afa1e71eae2e7effb9a0",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/hondurenos-en-espana/poder-desde-espana-para-tramites-honduras",
+      "slug": "poder-desde-espana-para-tramites-honduras",
+      "category": "",
+      "gsc_evidence": "score=1 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META_H1",
+      "reason": "Title con 'Guía' (plantilla), H1 sin tildes ('Espana/Tramites') y meta con '¡Asesoría experta!'.",
+      "legal_notes": "METADATA_ONLY: requisitos/apostilla ya en el body; sin hechos nuevos.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Cómo otorgar un poder notarial desde España para trámites en Honduras: requisitos, apostilla, traducción y validez legal.",
+        "metaTitle": "Poder notarial desde España para trámites en Honduras",
+        "title": "Poder notarial desde España para trámites en Honduras"
+      },
+      "contentHash": "2cdfea784a04896f6a5b4ef108ca760288e0094a9aeab14a635c7267a35168c1",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/hondurenos-en-espana/hondurenos-espana-documentos",
+      "slug": "hondurenos-espana-documentos",
+      "category": "",
+      "gsc_evidence": "score=1 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_METADATA_ONLY",
+      "reason": "Meta con '¡Evite errores!'. Title/H1 ya válidos.",
+      "legal_notes": "METADATA_ONLY: trámites ya en el body; sin hechos nuevos.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Cómo tramitar documentos legales hondureños desde España: apostilla, RNP, antecedentes penales y consulados.",
+        "metaTitle": "Documentos Legales Hondureños desde España"
+      },
+      "contentHash": "339f8a13a9ef2e23c7cfe1eead82212cdf04734e0646744c1b9998e3b3f55e2c",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/demanda-laboral-choluteca",
+      "slug": "demanda-laboral-choluteca",
+      "category": "",
+      "gsc_evidence": "score=1 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Title con marca y meta truncada ('reclamar sus'). H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: Código de Trabajo ya citado en el body; sin cifras nuevas.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Cómo presentar una demanda laboral en Choluteca: plazos, artículos del Código de Trabajo y pasos para reclamar sus derechos.",
+        "metaTitle": "Demanda laboral en Choluteca: pasos y plazos"
+      },
+      "contentHash": "26a49c5cfdecc7e1fd853fb0e8ff9bc24b6f01a16d9055ff8f4604a4265f9650",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/calcular-liquidacion-laboral-honduras",
+      "slug": "calcular-liquidacion-laboral-honduras",
+      "category": "",
+      "gsc_evidence": "score=1 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_METADATA_ONLY",
+      "reason": "Meta con 'Guía completa' y 'tu' (informal). Title/H1 ya válidos.",
+      "legal_notes": "METADATA_ONLY: cesantía/vacaciones ya en el body; sin cifras nuevas.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Cómo calcular la liquidación laboral en Honduras: cesantía, vacaciones y derechos ante un despido injustificado.",
+        "metaTitle": "Liquidación Laboral Honduras: Cálculo y Derechos"
+      },
+      "contentHash": "78edf53325cc56665012051abbec15bbc37ff260a59a36d68043722eae877680",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-de-familia/divorcio-choluteca",
+      "slug": "divorcio-choluteca",
+      "category": "",
+      "gsc_evidence": "score=1 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Title con marca. H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: tipos de divorcio ya en el body; sin hechos nuevos.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Los tipos de divorcio en Choluteca, Honduras: mutuo consentimiento, express y contencioso, con sus trámites y requisitos.",
+        "metaTitle": "Divorcio en Choluteca: tipos y trámites"
+      },
+      "contentHash": "4082de70ed588bbf74dd04a6d5adbdb0a82cced2d42cfc46330e515495b3dedc",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/medidas-sustitutivas-prision-preventiva-honduras",
+      "slug": "medidas-sustitutivas-prision-preventiva-honduras",
+      "category": "",
+      "gsc_evidence": "score=1 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Title con orden atípico (sin 'a la prisión') y meta con '¡Infórmese!'. H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: medidas ya en el body; sin cifras nuevas.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Las medidas sustitutivas a la prisión preventiva en Honduras: alternativas al encierro y cómo solicitarlas.",
+        "metaTitle": "Medidas sustitutivas a la prisión preventiva en Honduras"
+      },
+      "contentHash": "77b14a318068e79c534ad63ce67f3fb16546fa2650beabe9edd62170858507d7",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/derechos-laborales-basicos-honduras",
+      "slug": "derechos-laborales-basicos-honduras",
+      "category": "",
+      "gsc_evidence": "score=1 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Title con marca y meta con 'Cumpla la ley.' (imperativo). H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: derechos ya en el body; sin cifras nuevas.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Sus derechos laborales en Honduras: salario mínimo, jornada, horas extra, aguinaldo, vacaciones y despido.",
+        "metaTitle": "Derechos laborales básicos en Honduras"
+      },
+      "contentHash": "a1e1ac335742d77594dff6080ef4929d8473449f7caa0af7524db03119f6913e",
+      "rowVersion": 1
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/tributario/devolucion-impuestos-como-solicitarla-honduras",
+      "slug": "devolucion-impuestos-como-solicitarla-honduras",
+      "category": "",
+      "gsc_evidence": "score=0 imp=0 ctr=0 pos=0",
+      "classification": "APPROVED_TITLE_META",
+      "reason": "Title con marca. H1 ya válido.",
+      "legal_notes": "METADATA_ONLY: SAR/plazos ya en el body; sin cifras nuevas.",
+      "legal_review": "METADATA_ONLY",
+      "legal_claims_added": "none",
+      "status": "APPROVED",
+      "before": null,
+      "after": {
+        "metaDescription": "Cómo solicitar la devolución de impuestos (ISR, ISV) en Honduras: plazos, requisitos y procedimientos ante el SAR.",
+        "metaTitle": "Devolución de impuestos en Honduras: cómo solicitarla"
+      },
+      "contentHash": "dd6db2c5281b81d6d2425b765cad567cd302b95e302976e4046c55804ba44e87",
+      "rowVersion": 1
+    }
+  ]
+}
