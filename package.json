@@ -129,6 +129,8 @@
     "seo:growth:analyze": "node scripts/seo-growth-analysis.mjs",
     "seo:growth:decisions": "node scripts/seo-growth-decisions.mjs",
     "seo:growth:onpage": "node scripts/seo-growth-onpage-patch.mjs",
+    "seo:growth:editorial": "npx tsx scripts/seo-growth-batch1-editorial.ts",
+    "seo:growth:batch1": "npx tsx scripts/apply-seo-growth-batch1.ts",
     "seo:bing:classify": "node scripts/seo-bing-crawl-classify.mjs",
     "seo:ahrefs": "node scripts/seo-ahrefs-audit.mjs",
     "visual:baseline": "node scripts/visual-regression.cjs baseline",

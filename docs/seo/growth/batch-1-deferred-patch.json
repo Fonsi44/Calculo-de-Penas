@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-08-04T09:02:08.491Z",
+  "source": "batch-1-title-meta-patch.json",
+  "status": "DEFERRED",
+  "count": 5,
+  "note": "Entradas NO_CHANGE/REMOVE_FROM_BATCH excluidas de la aplicación de producción.",
+  "patch": [
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-penal/cuando-necesito-abogado-penalista-honduras",
+      "slug": "cuando-necesito-abogado-penalista-honduras",
+      "category": "derecho-penal",
+      "gsc_evidence": "clicks=0 imp=48 ctr=0% pos=11",
+      "classification": "NO_CHANGE",
+      "reason": "Datos muy bajos (48 impresiones). Title/meta actuales de calidad. El cambio propuesto (1ª persona \"necesito\") no aporta beneficio claro. Se excluye del lote.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-de-familia/divorcio-honduras-guia-completa",
+      "slug": "divorcio-honduras-guia-completa",
+      "category": "derecho-de-familia",
+      "gsc_evidence": "clicks=7 imp=1286 ctr=0.54% pos=10.4",
+      "classification": "NO_CHANGE",
+      "reason": "Title/meta actuales de calidad (\"vías, requisitos y plazos\", H1 \"3 vías\"). Se rechaza \"tipos... (2026)\": \"vías\" coincide con el H1 del body y \"2026\" no está verificado. CTR bajo a posición 10 se explica por competencia SERP, no por metadata.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-notarial/poder-legal-honduras-cuando-se-necesita",
+      "slug": "poder-legal-honduras-cuando-se-necesita",
+      "category": "derecho-notarial",
+      "gsc_evidence": "clicks=37 imp=2205 ctr=1.68% pos=5.5",
+      "classification": "NO_CHANGE",
+      "reason": "El término jurídico correcto es \"poder notarial\" (no \"poder legal\"). El title actual es preciso y el body cubre tipos/alcance/requisitos. No se sacrifica precisión legal por match de query.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-laboral/despido-laboral-honduras-guia-completa",
+      "slug": "despido-laboral-honduras-guia-completa",
+      "category": "derecho-laboral",
+      "gsc_evidence": "clicks=4 imp=304 ctr=1.32% pos=11.4",
+      "classification": "NO_CHANGE",
+      "reason": "Title actual alineado con la URL (despido laboral/injustificado). El problema de títulos duplicados se resuelve al corregir \"empleador-no-paga-salario\". Sin cambios aquí.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "NO_CHANGE"
+    },
+    {
+      "url": "https://www.pinedayasociadoshn.com/blog/derecho-de-familia/pension-alimenticia-honduras-guia-completa",
+      "slug": "pension-alimenticia-honduras-guia-completa",
+      "category": "derecho-de-familia",
+      "gsc_evidence": "clicks=33 imp=2618 ctr=1.26% pos=6.9",
+      "classification": "NO_CHANGE",
+      "reason": "URL canibalizada por \"pension-alimenticia-porcentaje-honduras-2026\" (dominante). La propuesta introducía \"porcentaje/cálculo\" (cifras sensibles no verificadas). Metadata no corrige canibalización; mantener requisitos/pasos.",
+      "legal_notes": "Sin cambios.",
+      "legal_review": "NONE",
+      "legal_claims_added": "none",
+      "status": "NO_CHANGE"
+    }
+  ]
+}
