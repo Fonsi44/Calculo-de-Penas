@@ -234,9 +234,14 @@ export function assertNoProhibitedCopy(
   ) {
     throw new Error(`[batch1] Lenguaje de plantilla en ${slug}.${field}`);
   }
-  if (/\b20\d{2}\b/.test(text)) {
+  // Años: se rechazan los que no sean el año vigente (mantenimiento anual
+  // comprobado, p. ej. "Pensión Alimenticia ... 2026").
+  const currentYear = new Date().getFullYear();
+  const years = text.match(/\b20\d{2}\b/g) ?? [];
+  const invalid = years.filter((y) => Number(y) !== currentYear);
+  if (invalid.length > 0) {
     throw new Error(
-      `[batch1] Año no verificado en ${slug}.${field}: ${text.match(/\b20\d{2}\b/)?.[0]}`,
+      `[batch1] Año no verificado en ${slug}.${field}: ${[...new Set(invalid)].join(",")}`,
     );
   }
 }

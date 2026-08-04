@@ -44,7 +44,6 @@ function assertNoTemplate(slug: string, text: string) {
     /\bResuelve\b/i,
     /pasos concretos, requisitos y fuentes oficiales/i,
     /sin\s+compromiso/i,
-    /\b20\d{2}\b/,
     /\bpenas?\b/i,
   ];
   for (const re of bad) {
@@ -52,6 +51,14 @@ function assertNoTemplate(slug: string, text: string) {
       throw new Error(
         `[editorial] Plantilla/prohibido en ${slug}: ${re.source}`,
       );
+  }
+  // Años: se permiten solo los de mantenimiento anual comprobado (año vigente
+  // o años presentes en el slug); cualquier otro año se rechaza.
+  const currentYear = new Date().getFullYear();
+  const years = text.match(/\b20\d{2}\b/g) ?? [];
+  const invalid = years.filter((y) => Number(y) !== currentYear);
+  if (invalid.length > 0) {
+    throw new Error(`[editorial] Año no verificado en ${slug}: ${[...new Set(invalid)].join(",")}`);
   }
 }
 
