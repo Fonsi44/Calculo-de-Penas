@@ -25,6 +25,11 @@ node_modules/
 .env.development.local
 .env.test.local
 .env.production.local
+.env.e2e.local
+.env.vercel
+.env*
+!.env.example
+!.env.*.example
 .secrets/
 *.pem
 *.key
@@ -95,9 +100,10 @@ deps-outdated.json
 # Service Worker: arquitectura route handler (app/sw.js/route.ts)
 # No hay artefactos generados en disco.
 
-# ── Local Tooling ───────────────────────────────────────────
+# ── Local Tooling & memorias de agentes ─────────────────────
 .zcode/
 .tools-cache/
+memories/
 
 # ── ZIPs & Backups locales ──────────────────────────────────
 *.zip
@@ -109,7 +115,6 @@ deps-outdated.json
 next-env.d.ts
 nul
 .vercel/
-.env.vercel
 .fase3b-fuentes/
 .fase3d-fuentes/
 .neon
