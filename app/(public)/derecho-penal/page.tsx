@@ -242,7 +242,7 @@ const PRIORITY_PENAL_SLUGS = [
               <div className="absolute -inset-4 rounded-2xl bg-accent/10 blur-3xl" aria-hidden="true" />
               <div className="relative rounded-lg border border-accent/30 overflow-hidden bg-surface-alt aspect-[3/4]">
                 <Image
-                  src="/images/equipo/danilo-pineda-maradiaga-alt.webp"
+                  src="/images/equipo/danilo-pineda-maradiaga.webp"
                   alt="Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)"
                   width={400}
                   height={500}

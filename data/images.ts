@@ -85,8 +85,8 @@ const CORPORATE: Record<string, string> = {
  */
 const FOUNDER: Record<string, string> = {
   founder_portrait: '/images/equipo/danilo-pineda-maradiaga.webp',
-  founder_portrait_alt: '/images/equipo/danilo-pineda-maradiaga-alt.webp',
-  founder_portrait_penal: '/images/equipo/danilo-pineda-maradiaga-penal.webp',
+  founder_portrait_alt: '/images/equipo/danilo-pineda-maradiaga.webp',
+  founder_portrait_penal: '/images/equipo/danilo-pineda-maradiaga.webp',
 };
 
 /**
