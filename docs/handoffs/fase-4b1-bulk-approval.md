@@ -37,4 +37,4 @@
 
 - [ADR-013](../adr/ADR-013-bulk-document-approval.md)
 - [Arquitectura Fase 4B-1](../architecture/fase-4b1-bulk-approval.md)
-- [Validación staging Fase 4B-1](../ops/fase-4b1-staging-validation.md)
+- [Validación staging Fase 4B-1](../operations/fase-4b1-staging-validation.md)

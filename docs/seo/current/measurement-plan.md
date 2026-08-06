@@ -1,3 +1,12 @@
+---
+status: current
+owner: seo
+created: 2026-08-03
+last_reviewed: 2026-08-06
+review_due: 2026-11-04
+supersedes: null
+superseded_by: null
+---
 # Plan de medición SEO/GEO — Pineda y Asociados
 
 > Fuente: extracción real GA4 (property `541022095`, 90 días: 2026-05-05 → 2026-08-03).

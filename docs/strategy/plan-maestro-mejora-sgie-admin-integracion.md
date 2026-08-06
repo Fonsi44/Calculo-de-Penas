@@ -1,7 +1,7 @@
 # Plan maestro de mejora funcional SGIE + Admin + Integración
 
 **Fecha:** 9 de julio de 2026
-**Base documental:** `docs/audits/auditoria-descriptiva-intranet-sgie-admin.md`
+**Base documental:** `docs/audits/archive/2026-08-06/auditoria-descriptiva-intranet-sgie-admin.md`
 **Tipo de documento:** Estratégico, funcional y accionable. No contiene código ni diseño visual final.
 **Estado de evidencia:** Toda la base descriptiva proviene de una auditoría **NO VALIDADA en sesión autenticada**. Las afirmaciones marcadas como funcionalidad actual son estructurales (rutas, menús, controles presentes en el repositorio); su comportamiento real en producción está `PENDIENTE DE VALIDAR` salvo que se indique lo contrario.
 

@@ -1,3 +1,12 @@
+---
+status: current
+owner: seo
+created: 2026-07-03
+last_reviewed: 2026-08-06
+review_due: 2026-11-04
+supersedes: null
+superseded_by: null
+---
 # Acceso a datos LIVE de la web — Manual operativo
 
 Sistema definitivo para consultar datos reales de GSC, GA4, Bing WMT, IndexNow,

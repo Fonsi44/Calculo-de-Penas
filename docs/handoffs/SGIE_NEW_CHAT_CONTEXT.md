@@ -16,12 +16,12 @@ de la fase solicitada.
 
 ## Fuentes de verdad
 
-1. `AUDITORIA_COMPLETA_RECONSTRUCCION_INTRANET_SGIE_V2.md`.
-2. `docs/roadmap/SGIE_IMPLEMENTATION_CHECKLIST.md`.
+1. `docs/audits/archive/2026-07-27/repository/auditoria-completa-reconstruccion-intranet-sgie.md`.
+2. `docs/roadmaps/active/sgie-implementation-checklist.md`.
 3. Código, migraciones y tests actuales.
 4. `docs/handoffs/fase-1-a-fase-2.md`.
 5. `docs/architecture/fase-1-nucleo-admin-identidad-calendario.md` y
-   `docs/ops/fase-1-staging-validation.md`.
+   `docs/operations/fase-1-staging-validation.md`.
 6. `docs/handoffs/fase-1-deletion-manifest.md`.
 
 ## Fase 1
@@ -101,8 +101,8 @@ retrieval, copiloto.
 ## Prompt de arranque para un chat nuevo (Fase 4B)
 
 ```text
-Lee primero AUDITORIA_COMPLETA_RECONSTRUCCION_INTRANET_SGIE_V2.md (sección 63),
-docs/roadmap/SGIE_IMPLEMENTATION_CHECKLIST.md y
+Lee primero docs/audits/archive/2026-07-27/repository/auditoria-completa-reconstruccion-intranet-sgie.md (sección 63),
+docs/roadmaps/active/sgie-implementation-checklist.md y
 docs/handoffs/SGIE_NEW_CHAT_CONTEXT.md. Revisa el repositorio real y
 continúa únicamente con Fase 4B: aprobación en bloque (P2-07), paquete de
 firma (P2-08), firma electrónica (P2-09), calendario externo (P2-10),
@@ -113,8 +113,8 @@ ni datos reales, y no hagas commit/push/merge/despliegue.
 
 ## Referencias cruzadas
 
-- [Auditoría V2](../../AUDITORIA_COMPLETA_RECONSTRUCCION_INTRANET_SGIE_V2.md)
-- [Checklist maestro](../roadmap/SGIE_IMPLEMENTATION_CHECKLIST.md)
+- [Auditoría V2](../../docs/audits/archive/2026-07-27/repository/auditoria-completa-reconstruccion-intranet-sgie.md)
+- [Checklist maestro](../roadmaps/active/sgie-implementation-checklist.md)
 - [Handoff Fase 1 a Fase 2](fase-1-a-fase-2.md)
 - [Handoff Fase 2 a Fase 3](fase-2-a-fase-3.md)
 - [Handoff Fase 3 a Fase 4](fase-3-a-fase-4.md)
@@ -122,8 +122,8 @@ ni datos reales, y no hagas commit/push/merge/despliegue.
 - [Arquitectura Fase 1](../architecture/fase-1-nucleo-admin-identidad-calendario.md)
 - [Arquitectura Fase 2](../architecture/fase-2-nucleo-durable-documentos-comunicaciones.md)
 - [Arquitectura Fase 4A](../architecture/fase-4a-automatizacion-documental-core.md)
-- [Validación Fase 2](../ops/fase-2-staging-validation.md)
-- [Validación Fase 4A](../ops/fase-4a-staging-validation.md)
+- [Validación Fase 2](../operations/fase-2-staging-validation.md)
+- [Validación Fase 4A](../operations/fase-4a-staging-validation.md)
 - [Manifiesto de borrados](fase-1-deletion-manifest.md)
 - [ADR-010 Feature flags](../adr/ADR-010-feature-flags-and-kill-switches.md)
 - [ADR-011 Orchestrator](../adr/ADR-011-document-automation-orchestrator.md)

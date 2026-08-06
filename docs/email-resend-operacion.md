@@ -1,3 +1,12 @@
+---
+status: current
+owner: engineering
+created: 2026-07-09
+last_reviewed: 2026-08-06
+review_due: 2026-11-04
+supersedes: null
+superseded_by: null
+---
 # Email — Resend: operación y mantenimiento
 
 ## Flujo del formulario de consulta

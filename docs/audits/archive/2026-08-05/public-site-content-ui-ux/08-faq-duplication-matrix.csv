@@ -1,0 +1,19 @@
+id,question_cluster,current_locations,taxonomy,canonical_owner,allowed_elsewhere,impact,notes
+FAQ-001,¿La primera consulta tiene costo?,general/local/services,pricing policy,/preguntas-frecuentes,global only,CRITICAL,Contradictory: local Nacaome says cost depends; published services cache says free.
+FAQ-002,¿La consulta es confidencial?,general/consult/despacho,confidentiality,/preguntas-frecuentes,global only,HIGH,Service pages may link to global answer.
+FAQ-003,¿Entregan presupuesto por escrito?,general/services/despacho/consult,fees,/preguntas-frecuentes,global only,HIGH,Keep one answer and trust microcopy.
+FAQ-004,¿Cómo asignan al abogado?,services/despacho/consult,team process,/despacho,link from FAQ,MEDIUM,Detailed process belongs to Despacho.
+FAQ-005,¿Atienden fuera de Nacaome?,services/local/como-llegar,coverage,local architecture,route-specific summary,HIGH,Use canonical coverage data.
+FAQ-006,¿Atienden urgencias penales?,local/penal/consult,urgency,/derecho-penal,contextual only,HIGH,One urgent answer/callout; local pages link.
+FAQ-007,¿Qué documentos preparar?,consult/penal/service details,documents,service-specific,specific only,MEDIUM,General form safety vs substantive checklists.
+FAQ-008,¿Cuánto tarda el proceso?,service/penal/general,timing,service-specific,specific only,HIGH,Avoid global estimates.
+FAQ-009,¿Pueden atender remotamente?,services/Spain/local/consult,remote attention,/preguntas-frecuentes,global + Spain nuance,MEDIUM,"One corporate answer, transnational detail in Spain."
+FAQ-010,¿Qué áreas cubren?,services/general FAQ,catalog,/servicios-juridicos,link only,MEDIUM,Do not duplicate 14-item list in FAQ.
+FAQ-011,¿Tienen oficina en [ciudad]?,16 locals,physical office,/como-llegar,local specific,HIGH,Canonical answer: only Nacaome physical office.
+FAQ-012,¿Cómo agendo una consulta?,locals/consult/general,contact,/solicitar-consulta,link only,MEDIUM,No repeated contact instructions.
+FAQ-013,¿Manejan casos para hondureños en España?,services/global/Spain,transnational,/hondurenos-en-espana,link only,MEDIUM,Keep only summary in global FAQ.
+FAQ-014,¿Qué errores evitar?,penal urgent/service details,prevention,service-specific,specific only,MEDIUM,Avoid cards plus FAQ with same answer.
+FAQ-015,¿Qué autoridades intervienen?,service detail/local,institutions,service-specific,specific only,LOW,Not global FAQ.
+FAQ-016,¿Qué incluye el servicio?,service cards/details/FAQ,scope,service-specific,specific only,HIGH,Answer in service body; FAQ only edge cases.
+FAQ-017,¿Puedo hacer el trámite desde España?,Spain hub/subpages,remote/transnational,/hondurenos-en-espana,hub canonical,HIGH,Subpages should link or answer a narrower variant.
+FAQ-018,¿Necesito abogado en España?,Spain notice/FAQ/subpages,jurisdiction,/hondurenos-en-espana,hub canonical,HIGH,Legal review required.

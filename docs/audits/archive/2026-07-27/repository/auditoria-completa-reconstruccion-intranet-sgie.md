@@ -4689,7 +4689,7 @@ Evidencia ejecutada el 18-07-2026:
 - `git diff --check`: correcto.
 - E2E real previo en Neon aislado: invitaciones concurrentes, RBAC/SGIE,
   expediente transaccional, privacidad y concurrencia de calendario, rollback y
-  limpieza de fixtures. Procedimiento: `docs/ops/fase-1-staging-validation.md`.
+  limpieza de fixtures. Procedimiento: `docs/operations/fase-1-staging-validation.md`.
 
 | ID histórico | Estado actual | Fase | Evidencia primaria / criterio restante |
 |---|---|---|---|
@@ -4769,19 +4769,19 @@ Antes de implementar, el siguiente agente debe leer, en este orden:
 1. Esta sección 63.
 2. `docs/handoffs/fase-1-a-fase-2.md`.
 3. `docs/architecture/fase-1-nucleo-admin-identidad-calendario.md`.
-4. `docs/ops/fase-1-staging-validation.md`.
+4. `docs/operations/fase-1-staging-validation.md`.
 5. Los módulos de jobs, documentos, OCR y cron citados en P0-09…P0-14.
 
 El primer objetivo de Fase 2 es el núcleo durable de procedimientos, requisitos
 documentales, outbox y jobs. No rediseñar la web pública ni duplicar identidad,
 RBAC, scope de expediente o calendario ya existentes.
 
-Referencias: [checklist maestro](docs/roadmap/SGIE_IMPLEMENTATION_CHECKLIST.md),
-[contexto de chat](docs/handoffs/SGIE_NEW_CHAT_CONTEXT.md),
-[handoff Fase 1→2](docs/handoffs/fase-1-a-fase-2.md),
-[arquitectura Fase 1](docs/architecture/fase-1-nucleo-admin-identidad-calendario.md),
-[validación staging](docs/ops/fase-1-staging-validation.md) y
-[manifiesto de borrados](docs/handoffs/fase-1-deletion-manifest.md).
+Referencias: [checklist maestro](../../../../roadmaps/active/sgie-implementation-checklist.md),
+[contexto de chat](../../../../handoffs/SGIE_NEW_CHAT_CONTEXT.md),
+[handoff Fase 1→2](../../../../handoffs/fase-1-a-fase-2.md),
+[arquitectura Fase 1](../../../../architecture/fase-1-nucleo-admin-identidad-calendario.md),
+[validación staging](../../../../operations/fase-1-staging-validation.md) y
+[manifiesto de borrados](../../../../handoffs/fase-1-deletion-manifest.md).
 
 ## 63.7 Corte verificado: Fase 2 — Núcleo durable
 
@@ -5133,4 +5133,4 @@ código/prueba de trabajo aún no validado en un flujo real.
 | P1-KB-01…P1-KB-02 | [ ] PENDIENTE | 3 | Base de conocimiento con fuente, versionado y permisos. |
 
 El checklist maestro contiene el desglose operativo y los criterios de prueba:
-`docs/roadmap/SGIE_IMPLEMENTATION_CHECKLIST.md`.
+`docs/roadmaps/active/sgie-implementation-checklist.md`.

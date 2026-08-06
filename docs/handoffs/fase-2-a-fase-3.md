@@ -103,4 +103,4 @@ No debe haber errores de lint ni TypeScript. El E2E debe pasar completamente (to
 - [ADR-004: Outbox pattern](../adr/ADR-004-outbox-pattern.md)
 - [ADR-005: OCR strategy](../adr/ADR-005-ocr-strategy.md)
 - [ADR-006: AI router](../adr/ADR-006-ai-router.md)
-- [Checklist maestro](../roadmap/SGIE_IMPLEMENTATION_CHECKLIST.md)
+- [Checklist maestro](../roadmaps/active/sgie-implementation-checklist.md)

@@ -148,7 +148,7 @@ El repositorio `Justicia Verdadera` es un proyecto Next.js extenso con una arqui
 
 ## 20. Ejecución de limpieza - Fase 5 (Validación final y preparación de commit/release)
 - **Fecha de ejecución:** 2026-07-06
-- **Estado final de git status resumido:** 5 archivos untracked listos para commitear (`AUDIT_REPOSITORY_REPORT.md`, `data/README.md`, `scripts/README.md`, `docs/audits/re-auditoria-final.md`, `scripts/archive/`). 5 archivos desversionados (borrados del index). Múltiples limpiezas de archivos legacy (`scratch/`, `_tmp_*.mjs`, etc).
+- **Estado final de git status resumido:** 5 archivos untracked listos para commitear (`AUDIT_REPOSITORY_REPORT.md`, `data/README.md`, `scripts/README.md`, `docs/audits/archive/2026-08-06/re-auditoria-final.md`, `scripts/archive/`). 5 archivos desversionados (borrados del index). Múltiples limpiezas de archivos legacy (`scratch/`, `_tmp_*.mjs`, etc).
 - **Resumen de diff por archivos:** 38 archivos modificados en total, logrando +386 inserciones y -6154 deleciones (gran aligeramiento de deuda técnica).
 - **Validación de .gitignore:** Corroborado a prueba de fallos. Todas las exclusiones (`.env*`, `data/google/`, `data/bing/`, `scratch/`, `*.token`, etc.) están funcionando correctamente.
 - **Validación de secretos:** 0 secretos expuestos. El `check-ignore` y `ls-files` verificó que ninguna llave OAuth ni variable de entorno está subida o trackeada.

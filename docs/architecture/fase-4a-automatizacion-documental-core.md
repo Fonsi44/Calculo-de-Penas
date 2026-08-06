@@ -9,7 +9,7 @@ superseded_by: null
 ---
 # Arquitectura — Fase 4A: Automatización documental core
 
-**Fecha:** 2026-07-19 (actualizado 2026-07-20). **Estado: CERTIFICADA al 100%.** Suite unitaria/integración 1065/1065 (serial), lint/tsc/build/drizzle-kit check limpios. E2E Fase 4A con DeepSeek real **19/19** (HEAD `39f86b7`) sobre rama Neon aislada efímera `fase4a-cert-validation-20260720` (eliminada, cero residuos); regresión E2E Fase 2 9/9 y Fase 3 70/70 (DeepSeek + Resend reales) también verde. Ver [Certificación staging Fase 4A](../ops/fase-4a-staging-validation.md#certificación-real-20-07-2026--e2e-neon-aislada--deepseek--resend).
+**Fecha:** 2026-07-19 (actualizado 2026-07-20). **Estado: CERTIFICADA al 100%.** Suite unitaria/integración 1065/1065 (serial), lint/tsc/build/drizzle-kit check limpios. E2E Fase 4A con DeepSeek real **19/19** (HEAD `39f86b7`) sobre rama Neon aislada efímera `fase4a-cert-validation-20260720` (eliminada, cero residuos); regresión E2E Fase 2 9/9 y Fase 3 70/70 (DeepSeek + Resend reales) también verde. Ver [Certificación staging Fase 4A](../operations/fase-4a-staging-validation.md#certificación-real-20-07-2026--e2e-neon-aislada--deepseek--resend).
 
 ## Objetivo
 
@@ -85,5 +85,5 @@ Idempotentes, hash registrado, aplicadas vía `scripts/e2e/apply-fase4-migration
 - [ADR-010: Feature flags y kill switches](../adr/ADR-010-feature-flags-and-kill-switches.md)
 - [ADR-011: Document Automation Orchestrator](../adr/ADR-011-document-automation-orchestrator.md)
 - [ADR-012: Gobernanza IA y prompt injection](../adr/ADR-012-ai-governance-and-prompt-injection.md)
-- [Validación staging Fase 4A](../ops/fase-4a-staging-validation.md)
+- [Validación staging Fase 4A](../operations/fase-4a-staging-validation.md)
 - [Handoff Fase 4A](../handoffs/fase-4a-hardening-and-validation.md)

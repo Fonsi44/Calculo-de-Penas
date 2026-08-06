@@ -61,13 +61,37 @@ for (const entry of trackedRootFiles) {
     if (entry.endsWith('.zip') || entry.endsWith('.tar.gz') || entry.endsWith('.7z')) {
       error(`ZIP/backup versionado en raíz: ${entry}`);
     } else if (entry.endsWith('.md') && !CANONICAL_ROOT_FILES.has(entry)) {
-      warn(`Markdown no canónico versionado en raíz: ${entry}`);
+      error(`Markdown no canónico versionado en raíz: ${entry}`);
     } else if (entry.endsWith('.csv')) {
       warn(`CSV versionado en raíz: ${entry}`);
     }
   }
 }
 if (errors === 0 && warnings === 0) ok('Raíz limpia');
+
+// ── 1bis. Árboles documentales paralelos y outputs generados ─────────────
+
+console.log('\n═══ 1bis. Higiene documental ═══');
+
+const rootEntries = readdirSync(ROOT, { withFileTypes: true }).map((e) => e.name);
+const parallelDocTrees = rootEntries.filter(
+  (name) => /^docs( \d+)*$/i.test(name) && name !== 'docs',
+);
+for (const name of parallelDocTrees) {
+  error(`Árbol documental paralelo en raíz: ${name}/ (consolidar en docs/)`);
+}
+
+const BACKUP_DIR_PATTERN = /(^|\/)(backups?|_tmp|\.tmp)(\/|$)/i;
+const ARCHIVE_PATTERNS = /\.(zip|tar\.gz|7z|log|dump)$/i;
+const trackedDocs = trackedPaths.filter((p) => p.startsWith('docs/'));
+let generatedOutputs = 0;
+for (const p of trackedDocs) {
+  if (BACKUP_DIR_PATTERN.test(p) || ARCHIVE_PATTERNS.test(p)) {
+    error(`Backup/output generado versionado bajo docs/: ${p}`);
+    generatedOutputs++;
+  }
+}
+if (generatedOutputs === 0) ok('Sin backups/outputs generados versionados bajo docs/');
 
 // ── 2. Secretos hardcodeados (solo en archivos no-ignorados) ───────────
 

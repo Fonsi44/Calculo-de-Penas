@@ -1,3 +1,12 @@
+---
+status: current
+owner: analytics
+created: 2026-07-16
+last_reviewed: 2026-08-06
+review_due: 2026-11-04
+supersedes: null
+superseded_by: null
+---
 # Configuración y validación de Analytics
 
 ## Variables

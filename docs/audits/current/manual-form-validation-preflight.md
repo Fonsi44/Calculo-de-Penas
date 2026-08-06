@@ -1,3 +1,12 @@
+---
+status: current
+owner: engineering
+created: 2026-07-30
+last_reviewed: 2026-08-06
+review_due: 2026-11-04
+supersedes: null
+superseded_by: null
+---
 # Preflight — Validación manual de formularios (Paso 14Q)
 
 > **Estado:** TURNSTILE_REMOTE_WIDGET = PASS / ROOT_CAUSE = UNIQUE_DEPLOYMENT_HOST_NOT_ALLOWED_BY_TURNSTILE / STABLE_ALIAS_ON_GIT_PREVIEW = PASS
@@ -282,8 +291,8 @@ Si el endpoint no devuelve `id` → DETENERSE, no ejecutar DELETE por patrón am
 
 | Corrección | Archivo |
 |-----------|---------|
-| Typo `TURNSTITE` → `TURNSTILE` | `docs/ops/final-manual-production-checklist.md` |
-| Email: notificación interna incluye resumen (por diseño) | `docs/ops/final-manual-production-checklist.md` |
+| Typo `TURNSTITE` → `TURNSTILE` | `docs/operations/final-manual-production-checklist.md` |
+| Email: notificación interna incluye resumen (por diseño) | `docs/operations/final-manual-production-checklist.md` |
 | Payload: motivo válido (`Asesoría preventiva`) | Este documento |
 | Teléfono: `0000-0000` (sintético, no `9999-9999`) | Este documento |
 | Cleanup: por UUID exacto + marcador, no solo LIKE | Este documento |

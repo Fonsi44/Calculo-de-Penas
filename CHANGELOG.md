@@ -72,7 +72,7 @@ y este proyecto se adhiere a [Semantic Versioning 2.0.0](https://semver.org/spec
 ## [111] — 2026-07-18 — Fase 2 — Núcleo durable de procedimientos, documentos, comunicaciones, OCR e IA
 
 > **Estado:** implementado en `main` (commit `c74840d`). Migraciones 0034–0036 listas para aplicar en staging.
-> Documentación: `docs/architecture/fase-2-nucleo-durable-documentos-comunicaciones.md`, `docs/ops/fase-2-staging-validation.md`,
+> Documentación: `docs/architecture/fase-2-nucleo-durable-documentos-comunicaciones.md`, `docs/operations/fase-2-staging-validation.md`,
 > `docs/handoffs/fase-2-a-fase-3.md`, `docs/adr/ADR-003` a `ADR-006`.
 
 ### Added
@@ -119,7 +119,7 @@ autorizado; resto del protocolo respetado (URLs/slugs intactos).
 - FAQ i18n home renombrada a `FAQ_HOME_LEGACY`: rol declarado como
   structured-data (JSON-LD), no UI ni fuente canónica.
 
-> Detalle completo: [`docs/audits/transformacion-web-publica.md`](docs/audits/transformacion-web-publica.md).
+> Detalle completo: [`docs/audits/archive/2026-08-06/transformacion-web-publica.md`](docs/audits/archive/2026-08-06/transformacion-web-publica.md).
 
 ## [109] - 2026-07-04 — Ajuste de escala visual + sistema de diseño
 

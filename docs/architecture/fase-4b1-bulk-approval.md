@@ -77,5 +77,5 @@ Tras aprobar/revertir: `recalcularReadinessSiProcede(expedienteId)`, invalidar `
 ## Referencias
 
 - [ADR-013: Aprobación documental en bloque](../adr/ADR-013-bulk-document-approval.md)
-- [Validación staging Fase 4B-1](../ops/fase-4b1-staging-validation.md)
+- [Validación staging Fase 4B-1](../operations/fase-4b1-staging-validation.md)
 - [Handoff Fase 4B-1](../handoffs/fase-4b1-bulk-approval.md)

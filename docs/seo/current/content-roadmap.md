@@ -1,3 +1,12 @@
+---
+status: current
+owner: seo
+created: 2026-08-03
+last_reviewed: 2026-08-06
+review_due: 2026-11-04
+supersedes: null
+superseded_by: null
+---
 # Roadmap de contenido basado en datos — Pineda y Asociados
 
 **Fecha:** 2026-08-03

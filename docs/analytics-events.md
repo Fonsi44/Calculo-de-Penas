@@ -1,3 +1,12 @@
+---
+status: current
+owner: analytics
+created: 2026-07-04
+last_reviewed: 2026-08-06
+review_due: 2026-11-04
+supersedes: null
+superseded_by: null
+---
 # Eventos de analítica — Pineda y Asociados
 
 Inventario de eventos GA4/GTM implementados en el sitio público. Última actualización: Fase 2 (Jul 2026).
