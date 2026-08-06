@@ -3,7 +3,7 @@
  * Higiene del repositorio — validaciones pre-commit y CI.
  *
  * Verifica:
- *   1. No hay archivos prohibidos en raíz (ZIPs, backups, outputs, logs, informes .md no canónicos)
+ *   1. No hay archivos prohibidos en raíz ni outputs live versionados
  *   2. No hay secretos hardcodeados (patrones básicos)
  *   3. No hay migraciones sin tracking (journal + manifiesto)
  *   4. No hay scripts en package.json sin archivo correspondiente
@@ -91,7 +91,18 @@ for (const p of trackedDocs) {
     generatedOutputs++;
   }
 }
-if (generatedOutputs === 0) ok('Sin backups/outputs generados versionados bajo docs/');
+
+const trackedSeoLiveReports = trackedPaths.filter(
+  (p) => p.startsWith('data/seo/') && p.endsWith('.md'),
+);
+for (const p of trackedSeoLiveReports) {
+  error(`Reporte SEO live generado versionado bajo data/seo/: ${p}`);
+  generatedOutputs++;
+}
+
+if (generatedOutputs === 0) {
+  ok('Sin backups/outputs generados versionados bajo docs/ o data/seo/');
+}
 
 // ── 2. Secretos hardcodeados (solo en archivos no-ignorados) ───────────
 
