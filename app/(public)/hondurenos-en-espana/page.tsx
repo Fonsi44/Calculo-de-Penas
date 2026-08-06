@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { site, absoluteUrl } from '@/lib/site';
+import Image from 'next/image';
+import { Phone, MessageCircle } from 'lucide-react';
+import { site, absoluteUrl, THANIA_PROFILE, directTelHref, directWhatsappHref } from '@/lib/site';
 import { buildMetadata } from '@/lib/seo';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -67,7 +69,7 @@ export default async function MigrantesPage() {
         badge={contentMap['hero.badge'] || 'Asistencia transnacional'}
         title={contentMap['hero.title'] || hubMigrantes.heroTitle}
         subtitle={contentMap['hero.subtitle'] || hubMigrantes.heroSubtitle}
-        cta={<CTAGroup variant="inverse" />}
+        cta={<CTAGroup variant="inverse" message="Hola Thania, vivo en España y necesito gestionar documentación o un trámite en Honduras." phone={THANIA_PROFILE.phone} phoneDisplay={THANIA_PROFILE.phoneDisplay} contactName="Thania" />}
         bgImage="/images/hondurenos-en-espana/jorono-international-2693200.webp"
       />
 
@@ -126,6 +128,26 @@ export default async function MigrantesPage() {
           del alcance: derecho hondureño sí; España requiere profesional
           habilitado. Sin inventar colaboraciones. */}
       <SpainJurisdictionNotice />
+
+      <Section background="muted" spacing="md">
+        <Container size="lg">
+          <div className="grid gap-6 md:grid-cols-[180px_1fr] items-center rounded-lg border border-accent/30 bg-surface p-6">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-surface-alt">
+              <Image src={THANIA_PROFILE.image} alt={THANIA_PROFILE.imageAltText} fill sizes="180px" className="object-cover object-top" />
+            </div>
+            <div>
+              <p className="eyebrow-rule text-accent-dark">Su abogado para Honduras–España</p>
+              <h2 className="mt-2 font-serif text-2xl md:text-3xl font-extrabold text-primary">{THANIA_PROFILE.name}</h2>
+              <p className="mt-2 text-sm font-semibold text-text">{THANIA_PROFILE.jobTitle}</p>
+              <p className="mt-3 text-sm text-text-secondary leading-relaxed">{THANIA_PROFILE.description}</p>
+              <div className="mt-5 flex flex-col sm:flex-row gap-3">
+                <a href={directTelHref(THANIA_PROFILE.phone)} className="inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-primary text-white text-sm font-bold"><Phone size={16} /> Llamar {THANIA_PROFILE.phoneDisplay}</a>
+                <a href={directWhatsappHref(THANIA_PROFILE.phone, 'Hola Thania, vivo en España y necesito gestionar documentación o un trámite en Honduras. Llegué desde la web de Pineda y Asociados.')} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-success text-white text-sm font-bold"><MessageCircle size={16} /> WhatsApp con Thania</a>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
 
       {/* FASE 4 (§11) — Alcance por jurisdicción. Bloque autosuficiente (GEO). */}
       <Section background="default" spacing="md">

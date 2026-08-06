@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { site, absoluteUrl, whatsappHref, telHref } from '@/lib/site';
+import { site, absoluteUrl, whatsappHref, telHref, FOUNDER_PROFILE } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -95,7 +95,7 @@ export default async function AbogadoPenalistaCholutecaPage() {
             audiencia inicial hasta el juicio oral y los recursos, coordinando
             presencia en los juzgados de Choluteca.
           </p>
-          <CTAGroup variant="inverse" message={whatsappMsg} />
+          <CTAGroup variant="inverse" message={whatsappMsg} phone={FOUNDER_PROFILE.phone} phoneDisplay={FOUNDER_PROFILE.phoneDisplay} contactName="Danilo" />
         </Container>
       </section>
 

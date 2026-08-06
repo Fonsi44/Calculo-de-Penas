@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { site, absoluteUrl, whatsappHref, telHref } from '@/lib/site';
+import { site, absoluteUrl, whatsappHref, telHref, THANIA_PROFILE } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -59,7 +59,7 @@ export default async function AbogadoDeFamiliaNacaomePage() {
             Asesoría legal con sensibilidad y discreción en los juzgados de familia de Nacaome y
             la zona sur de Honduras.
           </p>
-          <CTAGroup variant="inverse" message={whatsappMsg} />
+          <CTAGroup variant="inverse" message={whatsappMsg} phone={THANIA_PROFILE.phone} phoneDisplay={THANIA_PROFILE.phoneDisplay} contactName="Thania" />
         </Container>
       </section>
 

@@ -266,6 +266,18 @@ export function telHref(): string {
   return `tel:${site.phone.replace(/\s|-/g, '')}`;
 }
 
+/** Enlace telefónico para un número directo en formato internacional. */
+export function directTelHref(phone: string): string {
+  return `tel:${phone.replace(/\D/g, '').replace(/^/, '+')}`;
+}
+
+/** WhatsApp directo para un profesional, con mensaje contextual opcional. */
+export function directWhatsappHref(phone: string, message?: string): string {
+  const digits = phone.replace(/\D/g, '');
+  const text = message ? `?text=${encodeURIComponent(message)}` : '';
+  return `https://wa.me/${digits}${text}`;
+}
+
 /** Enlace wa.me con mensaje opcional prellenado. */
 export function whatsappHref(message?: string): string {
   const text = message ? `?text=${encodeURIComponent(message)}` : '';
@@ -508,6 +520,8 @@ export const FOUNDER_PROFILE = {
   cah: process.env.NEXT_PUBLIC_CAH_DANILO || null,
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_DANILO || null,
   directorio: process.env.NEXT_PUBLIC_DIRECTORIO_DANILO || null,
+  phone: '+50495363724',
+  phoneDisplay: '+504 9536-3724',
 } as const;
 
 /**
@@ -606,6 +620,8 @@ export const THANIA_PROFILE = {
   cah: process.env.NEXT_PUBLIC_CAH_THANIA || null,
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_THANIA || null,
   directorio: process.env.NEXT_PUBLIC_DIRECTORIO_THANIA || null,
+  phone: '+50432729292',
+  phoneDisplay: '+504 3272-9292',
 } as const;
 
 /**
@@ -680,7 +696,38 @@ export const EMIL_PROFILE = {
   cah: process.env.NEXT_PUBLIC_CAH_EMIL || null,
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_EMIL || null,
   directorio: process.env.NEXT_PUBLIC_DIRECTORIO_EMIL || null,
+  phone: '+50433913383',
+  phoneDisplay: '+504 3391-3383',
 } as const;
+
+export const ALFONS_PROFILE = {
+  name: 'Alfons Roiget Giménez',
+  jobTitle: 'Consultor digital · Diseño web y redes sociales',
+  slug: 'alfons-roiget-gimenez',
+  image: '/images/equipo/alfons-roiget-gimenez.webp',
+  imageAltText: 'Alfons Roiget Giménez, consultor de diseño web y gestión de redes sociales',
+  description: 'Responsable de la estrategia digital, los contenidos, las redes sociales y la evolución tecnológica de Pineda y Asociados. También ofrece a clientes servicios profesionales de creación de páginas web corporativas, diseño y presencia digital, gestión de redes sociales y apoyo tecnológico para empresas y profesionales.',
+  specialties: ['Creación de páginas web corporativas', 'Diseño y estrategia digital', 'Gestión de redes sociales', 'Contenidos y presencia online'],
+  phone: '+34661911574',
+  phoneDisplay: '+34 661 911 574',
+} as const;
+
+export function supplementalTeamSchemas() {
+  return [
+    {
+      '@type': 'Person',
+      '@id': `${site.url}/#alfons-roiget-gimenez`,
+      url: `${site.url}/equipo/${ALFONS_PROFILE.slug}`,
+      name: ALFONS_PROFILE.name,
+      jobTitle: ALFONS_PROFILE.jobTitle,
+      description: ALFONS_PROFILE.description,
+      image: `${site.url}${ALFONS_PROFILE.image}`,
+      telephone: ALFONS_PROFILE.phone,
+      knowsAbout: ALFONS_PROFILE.specialties,
+      memberOf: { '@id': `${site.url}/#organization` },
+    },
+  ];
+}
 
 /**
  * Schema.org Person para Emil Barahona (socio del bufete).
@@ -756,6 +803,9 @@ interface LawyerProfileMeta {
   /** Path de imagen relativo (puede no existir todavía). */
   image: string;
   imageAlt: string;
+  isLawyer: boolean;
+  phone?: string;
+  phoneDisplay?: string;
 }
 
 export const LAWYER_PROFILES: readonly LawyerProfileMeta[] = [
@@ -779,6 +829,9 @@ export const LAWYER_PROFILES: readonly LawyerProfileMeta[] = [
     ],
     image: FOUNDER_PROFILE.image,
     imageAlt: FOUNDER_PROFILE.imageAltText,
+    isLawyer: true,
+    phone: FOUNDER_PROFILE.phone,
+    phoneDisplay: FOUNDER_PROFILE.phoneDisplay,
   },
   {
     slug: 'thania-marlene-paz',
@@ -799,6 +852,9 @@ export const LAWYER_PROFILES: readonly LawyerProfileMeta[] = [
     ],
     image: THANIA_PROFILE.image,
     imageAlt: THANIA_PROFILE.imageAltText,
+    isLawyer: true,
+    phone: THANIA_PROFILE.phone,
+    phoneDisplay: THANIA_PROFILE.phoneDisplay,
   },
   {
     slug: 'emil-barahona',
@@ -818,10 +874,34 @@ export const LAWYER_PROFILES: readonly LawyerProfileMeta[] = [
     ],
     image: EMIL_PROFILE.image,
     imageAlt: EMIL_PROFILE.imageAltText,
+    isLawyer: true,
+    phone: EMIL_PROFILE.phone,
+    phoneDisplay: EMIL_PROFILE.phoneDisplay,
   },
-] as const;
+];
+
+export const ADDITIONAL_TEAM_PROFILES: readonly LawyerProfileMeta[] = [
+  {
+    slug: ALFONS_PROFILE.slug,
+    personId: `${site.url}/#alfons-roiget-gimenez`,
+    name: ALFONS_PROFILE.name,
+    jobTitle: ALFONS_PROFILE.jobTitle,
+    metaTitle: 'Alfons Roiget Giménez | Diseño Web y Redes Sociales',
+    metaDescription: 'Diseño de páginas web corporativas, estrategia digital, contenidos y gestión de redes sociales con Alfons Roiget Giménez.',
+    h1: 'Alfons Roiget Giménez, diseño web y redes sociales',
+    description: ALFONS_PROFILE.description,
+    areas: ALFONS_PROFILE.specialties,
+    image: ALFONS_PROFILE.image,
+    imageAlt: ALFONS_PROFILE.imageAltText,
+    isLawyer: false,
+    phone: ALFONS_PROFILE.phone,
+    phoneDisplay: ALFONS_PROFILE.phoneDisplay,
+  },
+];
+
+export const TEAM_PROFILES: readonly LawyerProfileMeta[] = [...LAWYER_PROFILES, ...ADDITIONAL_TEAM_PROFILES];
 
 /** Resuelve un profile por slug, o undefined si no existe (R4: no inventa). */
 export function getLawyerProfileBySlug(slug: string): LawyerProfileMeta | undefined {
-  return LAWYER_PROFILES.find((p) => p.slug === slug);
+  return TEAM_PROFILES.find((p) => p.slug === slug);
 }

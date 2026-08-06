@@ -3,10 +3,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { cache } from 'react';
 import { notFound } from 'next/navigation';
-import { CheckCircle2, ArrowRight, Award } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Award, MessageCircle, Phone } from 'lucide-react';
 import { Section, Container } from '@/components/marketing/section';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
-import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { LegalDisclaimer } from '@/components/marketing/legal-disclaimer';
 import { getPublishedArticleAttributionMetadata } from '@/lib/blog-db';
 import {
@@ -18,10 +17,12 @@ import { buildMetadata } from '@/lib/seo';
 import {
   site,
   getLawyerProfileBySlug,
-  LAWYER_PROFILES,
+  TEAM_PROFILES,
   FOUNDER_PROFILE,
   THANIA_PROFILE,
   EMIL_PROFILE,
+  directTelHref,
+  directWhatsappHref,
 } from '@/lib/site';
 
 export const revalidate = 3600;
@@ -34,7 +35,7 @@ type Props = { params: Promise<{ slug: string }> };
  * generateStaticParams enumera exactamente esos tres: nada más se pre-render.
  */
 export function generateStaticParams() {
-  return LAWYER_PROFILES.map((p) => ({ slug: p.slug }));
+  return TEAM_PROFILES.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -48,8 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     canonicalPath: `/equipo/${profile.slug}`,
     keywords: [
       profile.name,
-      `${profile.name.split(' ')[0]} abogado`,
-      'abogado colegiado en Honduras',
+      ...(profile.isLawyer ? [`${profile.name.split(' ')[0]} abogado`, 'abogado colegiado en Honduras'] : ['diseño web corporativo', 'gestión de redes sociales']),
       'Pineda y Asociados',
       profile.areas[0],
     ],
@@ -87,6 +87,7 @@ export default async function LawyerProfilePage({ params }: Props) {
       linkedin: EMIL_PROFILE.linkedin,
       directorio: EMIL_PROFILE.directorio,
     },
+    'alfons-roiget-gimenez': { cah: null, linkedin: null, directorio: null },
   };
   const credentials = credentialsBySlug[profile.slug];
 
@@ -139,7 +140,7 @@ export default async function LawyerProfilePage({ params }: Props) {
           <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(280px,1fr)] lg:items-center">
             <div>
             <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-eyebrow px-3 py-1.5 rounded-full bg-primary/10 text-primary mb-5">
-              Abogado colegiado en Honduras
+              {profile.isLawyer ? 'Abogado colegiado en Honduras' : 'Equipo de Pineda y Asociados'}
             </p>
             <h1 className="font-serif font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight text-text tracking-[-0.01em]">
               {profile.h1}
@@ -150,6 +151,16 @@ export default async function LawyerProfilePage({ params }: Props) {
             <p className="mt-5 text-sm font-semibold text-text">
               {profile.jobTitle} · {site.name}
             </p>
+            {profile.phone && profile.phoneDisplay && (
+              <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                <a href={directTelHref(profile.phone)} className="inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-primary text-white text-sm font-bold">
+                  <Phone size={16} aria-hidden="true" /> Llamar {profile.phoneDisplay}
+                </a>
+                <a href={directWhatsappHref(profile.phone, `Hola ${profile.name.split(' ')[0]}, necesito orientación sobre ${profile.areas[0].toLowerCase()}. Llegué desde su perfil en la web de Pineda y Asociados.`)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-success text-white text-sm font-bold">
+                  <MessageCircle size={16} aria-hidden="true" /> WhatsApp con {profile.name.split(' ')[0]}
+                </a>
+              </div>
+            )}
 
             {/* Credenciales reales (solo si existen; R4: no placeholders) */}
             {(credentials.cah || credentials.linkedin || credentials.directorio) && (
@@ -200,7 +211,7 @@ export default async function LawyerProfilePage({ params }: Props) {
       <Section spacing="sm">
         <Container size="lg">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-xl font-bold text-text mb-4">Áreas de práctica</h2>
+            <h2 className="text-xl font-bold text-text mb-4">{profile.isLawyer ? 'Áreas de práctica' : 'Servicios digitales'}</h2>
             <ul className="grid sm:grid-cols-2 gap-3">
               {profile.areas.map((area) => (
                 <li
@@ -220,13 +231,11 @@ export default async function LawyerProfilePage({ params }: Props) {
       <Section spacing="sm">
         <Container size="lg">
           <div className="max-w-3xl mx-auto rounded-lg border border-border/40 bg-surface-alt p-6">
-            <h2 className="text-lg font-bold text-text mb-2">Atención en Nacaome, Valle</h2>
+            <h2 className="text-lg font-bold text-text mb-2">{profile.isLawyer ? 'Atención en Nacaome, Valle' : 'Servicios para empresas y profesionales'}</h2>
             <p className="text-sm text-text-secondary leading-relaxed mb-4">
-              {profile.name} forma parte de {site.name}, bufete con sede en
-              {' '}{site.address.city}, {site.address.department}. La asignación
-              de cada asunto depende del área de práctica del abogado responsable
-              y, cuando el tema es transversal, cuenta con revisión de un segundo
-              profesional del equipo.
+              {profile.isLawyer
+                ? `${profile.name} forma parte de ${site.name}, bufete con sede en ${site.address.city}, ${site.address.department}. La asignación de cada asunto depende del área de práctica del abogado responsable y, cuando el tema es transversal, cuenta con revisión de un segundo profesional del equipo.`
+                : `${profile.name} dirige la presencia digital de ${site.name} y atiende encargos de páginas web corporativas, estrategia de contenidos, gestión de redes sociales y mejora de la presencia online para empresas y profesionales.`}
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
@@ -235,12 +244,7 @@ export default async function LawyerProfilePage({ params }: Props) {
               >
                 Conocer el equipo completo <ArrowRight size={15} />
               </Link>
-              <Link
-                href={`/solicitar-consulta`}
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
-              >
-                Solicitar evaluación confidencial <ArrowRight size={15} />
-              </Link>
+              {profile.isLawyer && <Link href="/solicitar-consulta" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline">Solicitar evaluación confidencial <ArrowRight size={15} /></Link>}
             </div>
           </div>
         </Container>
@@ -295,8 +299,6 @@ export default async function LawyerProfilePage({ params }: Props) {
       </Section>
 
       <LegalDisclaimer />
-
-      <ConsultationCTA />
 
       <script
         type="application/ld+json"

@@ -10,7 +10,8 @@ import {
   Gavel,
   Award,
 } from 'lucide-react';
-import { site, FOUNDER_PROFILE, LAWYER_PROFILES } from '@/lib/site';
+import Image from 'next/image';
+import { site, FOUNDER_PROFILE, LAWYER_PROFILES, ADDITIONAL_TEAM_PROFILES, directTelHref, directWhatsappHref } from '@/lib/site';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -133,6 +134,15 @@ export default async function HomePage() {
     hubPenal,
     ...areasGenerales.filter((area) => HIGHLIGHTED_AREAS.includes(area.slug)),
   ];
+  const renderProfileCard = (profile: (typeof LAWYER_PROFILES)[number] | (typeof ADDITIONAL_TEAM_PROFILES)[number]) => (
+    <div key={profile.slug} className="group rounded-lg border border-border-light bg-surface p-5 hover:border-accent/50 transition-colors">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-surface-alt mb-4"><Image src={profile.image} alt={profile.imageAlt} fill sizes="(min-width: 1024px) 30vw, 90vw" className="object-cover object-top" /></div>
+      <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark">{profile.jobTitle}</p>
+      <h2 className="mt-2 font-serif text-xl font-extrabold text-primary">{profile.name}</h2>
+      <p className="mt-3 text-sm text-text-secondary leading-relaxed">{profile.areas.slice(0, 3).join(' · ')}</p>
+      <div className="mt-4 flex flex-wrap gap-2"><Link href={`/equipo/${profile.slug}`} className="text-sm font-semibold text-accent-dark">Ver perfil</Link>{profile.phone && profile.phoneDisplay && <><a href={directTelHref(profile.phone)} className="text-sm font-semibold text-primary">Llamar</a><a href={directWhatsappHref(profile.phone, `Hola ${profile.name.split(' ')[0]}, necesito orientación. Llegué desde la web de Pineda y Asociados.`)} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-success">WhatsApp</a></>}</div>
+    </div>
+  );
 
   return (
     <>
@@ -295,34 +305,15 @@ export default async function HomePage() {
         />
       </Section>
 
-      <Section spacing="md" ariaLabel="Equipo de abogados">
+      <Section spacing="md" ariaLabel="Equipo profesional">
         <SectionHeader
           eyebrow="Equipo"
-          title="Abogados responsables, con perfil público"
-          subtitle="Conozca quién dirige cada área y consulte su experiencia profesional antes de solicitar una valoración de su caso."
+          title="Profesionales responsables, con perfil público"
+          subtitle="Conozca a los abogados que dirigen cada área y al profesional responsable de los servicios digitales del despacho."
         />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {LAWYER_PROFILES.map((profile) => (
-            <Link
-              key={profile.slug}
-              href={`/equipo/${profile.slug}`}
-              className="group rounded-lg border border-border-light bg-surface p-5 hover:border-accent/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"
-              aria-label={`Ver perfil profesional de ${profile.name}`}
-            >
-              <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark">
-                {profile.jobTitle}
-              </p>
-              <h2 className="mt-2 font-serif text-xl font-extrabold text-primary group-hover:text-accent-dark transition-colors">
-                {profile.name}
-              </h2>
-              <p className="mt-3 text-sm text-text-secondary leading-relaxed">
-                {profile.areas.slice(0, 3).join(' · ')}
-              </p>
-              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark">
-                Ver perfil completo
-              </span>
-            </Link>
-          ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {LAWYER_PROFILES.map(renderProfileCard)}
+          {ADDITIONAL_TEAM_PROFILES.map(renderProfileCard)}
         </div>
       </Section>
 

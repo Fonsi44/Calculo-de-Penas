@@ -5,7 +5,7 @@ import { PublicFooter } from '@/components/marketing/public-footer';
 import { FloatingContactRail, MobileContactBar } from '@/components/marketing/live-widgets';
 import { ChatWidget } from '@/components/chat/chat-widget';
 import { PWARegistration } from '@/components/pwa/pwa-registration';
-import { site, legalServiceSchema, organizationSchema, websiteSchema, founderSchema, thaniaSchema, emilSchema } from '@/lib/site';
+import { site, legalServiceSchema, organizationSchema, websiteSchema, founderSchema, thaniaSchema, emilSchema, supplementalTeamSchemas } from '@/lib/site';
 import { getSeoOverrides } from '@/lib/site-config-db';
 import { AnalyticsScripts } from '@/components/analytics-scripts';
 import { AnalyticsListeners } from '@/components/marketing/analytics-listeners';
@@ -112,6 +112,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       founderSchema(),
       thaniaSchema(),
       emilSchema(),
+      ...supplementalTeamSchemas(),
     ],
   };
 
