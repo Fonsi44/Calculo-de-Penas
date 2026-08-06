@@ -22,6 +22,11 @@ Este documento detalla el procedimiento estándar y repetible para el mantenimie
 1. **Ejecutar `npm run seo:collect`**: Recopila los últimos 28 días de datos vivos desde Google Search Console, Google Analytics 4, Bing Webmaster Tools y herramientas de Health.
 2. **Ejecutar `npm run seo:snapshot`**: Congela el estado actual. Este comando automáticamente archivará el snapshot previo en el histórico y calculará las diferencias (Deltas) del periodo actual contra el anterior (crecimiento o caída).
 
+Los archivos generados bajo `data/google/`, `data/bing/` y `data/seo/` son
+outputs locales regenerables y no se versionan. Cuando una medición deba
+conservarse como evidencia histórica, se traslada de forma deliberada a
+`docs/audits/archive/YYYY-MM-DD/` con su fecha y contexto.
+
 ### 2. Análisis del Snapshot (Comparativa)
 Abre el archivo `data/seo/seo-snapshot-current.md` y revisa:
 - **Google Search Console (GSC)**: ¿Han subido o bajado los clics, las impresiones, el CTR y la posición media? Analiza las top queries y top URLs.
@@ -49,5 +54,5 @@ Con base en los datos, define acciones correctivas puntuales:
 
 ### 5. Documentación y Cierre
 1. Asegúrate de que el proyecto siga sano ejecutando `npm run lint` y `npm run build`.
-2. Documenta las decisiones clave, los deltas importantes y las redirecciones ejecutadas en el `CHANGELOG.md` o en un reporte interno de la intranet.
+2. Actualiza `docs/audits/seo-live-summary.md` con las decisiones, los deltas importantes y las redirecciones ejecutadas. `CHANGELOG.md` se actualiza únicamente cuando esos cambios formen parte de una release.
 3. Haz un commit atómico con los cambios técnicos y las nuevas configuraciones.
