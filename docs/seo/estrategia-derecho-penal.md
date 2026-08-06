@@ -1,3 +1,12 @@
+---
+status: current
+owner: seo
+created: 2026-07-02
+last_reviewed: 2026-08-06
+review_due: 2026-11-04
+supersedes: null
+superseded_by: null
+---
 # Estrategia SEO — Derecho Penal (Jul 2026)
 
 ## Fuentes de datos

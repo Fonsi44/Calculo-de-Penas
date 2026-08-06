@@ -1,0 +1,30 @@
+id,family,current_variant,source,routes,difference,impact,canonical_target,action,governance_tag
+CMP-001,Hero,Home custom,app/(public)/page.tsx,home,unique split + side panel,HIGH,PageHero home variant,standardize,WAIT_UNTIL_2026-09-01
+CMP-002,Hero,PageHero primary/muted,components/marketing/page-hero.tsx,internal hubs/legal,canonical,LOW,PageHero,keep,SAFE_BEFORE_MEASUREMENT
+CMP-003,Hero,Service detail custom,servicios-juridicos/[slug],13 services,different H1 scale/background,HIGH,PageHero service,reuse,WAIT_UNTIL_2026-09-01
+CMP-004,Hero,Local inline,landing-local.tsx,16 local,short NAP hero,MEDIUM,PageHero local,reuse,WAIT_UNTIL_2026-09-01
+CMP-005,Hero,Profile split,equipo/[slug],3 profiles,photo/credential layout,MEDIUM,ProfileHeader,standardize,WAIT_UNTIL_2026-09-01
+CMP-006,Card,ServiceCard,service-card.tsx,catalog/hubs,canonical service navigation,LOW,ServiceCard,keep,SAFE_BEFORE_MEASUREMENT
+CMP-007,Card,Problem card,problem-selector.tsx,home,navigation by situation,MEDIUM,NavCard,merge,WAIT_UNTIL_2026-09-01
+CMP-008,Card,Local service linked card,landing-local.tsx,16 local,custom icon+copy,MEDIUM,ServiceCard compact,reuse,WAIT_UNTIL_2026-09-01
+CMP-009,Card,Feature/card-premium,Card + card-premium,many,values/reasons/info mixed,HIGH,FeatureCard semantic variant,standardize,WAIT_UNTIL_2026-09-01
+CMP-010,Card,Team home,home inline Link,home,text-only compact,HIGH,TeamCard compact,replace,WAIT_UNTIL_2026-09-01
+CMP-011,Card,Team despacho,despacho custom Card,despacho,monogram/full,HIGH,TeamCard full,standardize,WAIT_UNTIL_2026-09-01
+CMP-012,Card,Contextual lawyer,penal/service detail,hubs/services,photo+CTA,HIGH,TeamReference,standardize,WAIT_UNTIL_2026-09-01
+CMP-013,Card,Profile header,equipo/[slug],profiles,split large image,MEDIUM,ProfileHeader,keep_as_canonical,WAIT_UNTIL_2026-09-01
+CMP-014,Card,Process desktop table,penal hub,penal,table rows,HIGH,Process component table variant,merge,WAIT_UNTIL_2026-09-01
+CMP-015,Card,Process mobile card,penal hub,penal,duplicate DOM content,CRITICAL,Process responsive single semantic source,redesign,WAIT_UNTIL_2026-09-01
+CMP-016,Card,FAQ detail,HubFaq + manual variants,many,accordion,MEDIUM,HubFaq,standardize,SAFE_BEFORE_MEASUREMENT
+CMP-017,Card,ContactStrip card,cta-buttons.tsx,subservices,4 mini cards,HIGH,ContactBlock compact,simplify,WAIT_UNTIL_2026-09-01
+CMP-018,Card,Location card,consultation/how-arrive,2 routes,icon+text,MEDIUM,LocationBlock,standardize,WAIT_UNTIL_2026-09-01
+CMP-019,Card,Urgency callout/card,cta-buttons + consultation,penal/consult,red/burgundy,MEDIUM,UrgencyBlock,standardize,REQUIRES_LEGAL_REVIEW
+CMP-020,Card,Blog custom card,penal/service/local,non-blog blocks,duplicates BlogCard,HIGH,BlogHighlights/BlogCard,reuse,SAFE_BEFORE_MEASUREMENT
+CMP-021,CTA,CTAGroup 4 variants,cta-buttons.tsx,sitewide,primary/inline/compact/inverse,MEDIUM,CTAGroup,reduce_to_context,WAIT_UNTIL_2026-09-01
+CMP-022,CTA,ConsultationCTA 3 variants,consultation-cta.tsx,sitewide,closing/inline/footer,MEDIUM,ConsultationCTA,keep_2,WAIT_UNTIL_2026-09-01
+CMP-023,CTA,ContextualCta,service-detail-blocks,service details,context card,HIGH,ConsultationCTA contextual,merge,WAIT_UNTIL_2026-09-01
+CMP-024,CTA,CtaSpain,cta-spain.tsx,Spain,brand-specific,HIGH,ConsultationCTA contextual,replace,WAIT_UNTIL_2026-09-01
+CMP-025,Section,Section/SectionHeader,section.tsx,sitewide,canonical,LOW,Section,keep,SAFE_BEFORE_MEASUREMENT
+CMP-026,Icon,IconBadge,icon-badge.tsx,many,canonical 44px target,LOW,IconBadge,keep,SAFE_BEFORE_MEASUREMENT
+CMP-027,Icon,Inline 36/44px boxes,many pages,many,different sizes/radii,MEDIUM,IconBadge variants,replace,WAIT_UNTIL_2026-09-01
+CMP-028,Notice,SpainJurisdictionNotice,spain-jurisdiction-notice.tsx,Spain,danger-like info,HIGH,InformationNotice,redesign,REQUIRES_LEGAL_REVIEW
+CMP-029,Dead code,coverage-city-card/grid,components/marketing,0 app uses per prior audit,duplicate dead implementations,LOW,none,retire_after_recheck,SAFE_BEFORE_MEASUREMENT

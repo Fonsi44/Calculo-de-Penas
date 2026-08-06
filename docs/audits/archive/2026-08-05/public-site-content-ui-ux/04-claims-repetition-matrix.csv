@@ -1,0 +1,16 @@
+id,claim,classification,locations,estimated_scope,assessment,canonical_owner,action,governance_tag
+CLM-001,Evaluación inicial confidencial,canonical,TrustBar; CTAGroup labels; FAQ metadata; consultation urgency microcopy,1 shared component + multiple page copies,Allowed canonical wording.,/solicitar-consulta,keep,SAFE_BEFORE_MEASUREMENT
+CLM-002,Consulta inicial sin costo,forbidden,published home/services crawl; local shared CTA eyebrow; some FAQ/local data,16 local route instances + published cached pages,Contradicts lib/marketing-policy.ts.,/solicitar-consulta,remove_or_confirm,REQUIRES_LEGAL_REVIEW|REQUIRES_CONTENT_DB_CHANGE
+CLM-003,Sin compromiso,forbidden/ambiguous,published home/services crawl; consultation guarantee; 16 local CTA subtitles,17+ route instances,Policy regex expressly prohibits consultation “sin compromiso”.,/solicitar-consulta,replace,REQUIRES_LEGAL_REVIEW|REQUIRES_CONTENT_DB_CHANGE
+CLM-004,Presupuesto por escrito,trust,TrustBar + 8+ templates,broad sitewide,Useful but overexposed.,/solicitar-consulta,shorten_elsewhere,WAIT_UNTIL_2026-09-01
+CLM-005,Abogado responsable,trust,"TrustBar, despacho, consultation, services",4+ templates,Needs one concrete explanation.,/despacho,canonicalize,WAIT_UNTIL_2026-09-01
+CLM-006,Atención directa sin intermediarios,trust,TrustBar and team/consult copy,multiple,Potential contradiction if intake is handled by staff; verify operationally.,/despacho,confirm,REQUIRES_LEGAL_REVIEW
+CLM-007,+15 años,authority,"TrustBar, home, despacho, penal, footer",5+ templates,Verify start date/evidence once; avoid repetition.,/despacho,reduce,WAIT_UNTIL_2026-09-01
+CLM-008,Presencia activa en juzgados,authority,home/footer/penal/local copy,multiple,Contextual and potentially broad; use only where evidenced.,/derecho-penal,confirm,REQUIRES_LEGAL_REVIEW
+CLM-009,Defensa penal como pilar,positioning,home/services/despacho/footer/penal,5 templates,Consistent but repetitive.,/derecho-penal,reduce,WAIT_UNTIL_2026-09-01
+CLM-010,Secreto profesional,legal trust,"CTA, consult, despacho, disclaimers",broad,Keep near form/contract; shorter elsewhere.,/solicitar-consulta,reduce,REQUIRES_LEGAL_REVIEW
+CLM-011,No prometemos resultados,ethical,home/despacho/limits,3 templates,Legitimate; avoid repeating with every disclaimer.,/despacho,canonicalize,REQUIRES_LEGAL_REVIEW
+CLM-012,Trazabilidad documental,operational,home/despacho/consult/services,4 templates,Verify SGIE/process reality before prominent marketing use.,/despacho,confirm,REQUIRES_LEGAL_REVIEW
+CLM-013,Equipo coordinado,operational,home/services/despacho/consult,4 templates,Define when second lawyer review actually occurs.,/despacho,confirm,REQUIRES_LEGAL_REVIEW
+CLM-014,Cobertura en todo Honduras,territorial,some metadata/copy vs southern habitual coverage,mixed,Potential scope inconsistency with Nacaome/south wording.,local architecture,normalize,REQUIRES_SEO_REVIEW
+CLM-015,Única sede física en Nacaome,territorial canonical,data/landings-locales.ts and local copy,16 local data records,Consistent source; preserve.,/como-llegar,keep,SAFE_BEFORE_MEASUREMENT

@@ -15,7 +15,7 @@ Trazabilidad de operaciones de auditoría y diagnóstico. Registro apéndice (no
 4. `npm run seo:health` → 13 OK / 2 warn / 0 fail.
 5. `npm run indexnow:dry` → 24 URLs / techo 223.
 6. Análisis de `data/bing/bing-live.json`, `data/google/gsc-live.json`, `data/google/ga4-live.json`.
-7. Análisis cruzado con Ahrefs CSV (4xx, orphan, titles, structured-data) y `docs/audits/indexacion-monitorizacion.md`.
+7. Análisis cruzado con Ahrefs CSV (4xx, orphan, titles, structured-data) y `docs/audits/archive/2026-08-06/indexacion-monitorizacion.md`.
 
 **Hallazgos clave (ver informe para detalle y evidencia):**
 - CRÍTICA: indexación Google prácticamente nula (solo `/` indexada; 16 URLs comerciales pendientes).
@@ -26,7 +26,7 @@ Trazabilidad de operaciones de auditoría y diagnóstico. Registro apéndice (no
 - Oportunidad: 106 impresiones page-1 en queries de pensión alimenticia con CTR 1,9 %.
 
 **Archivos generados:**
-- `docs/audits/auditoria-bing-webmaster-2026-07-08.md` (informe completo, 12 secciones).
+- `docs/audits/archive/2026-08-06/auditoria-bing-webmaster-2026-07-08.md` (informe completo, 12 secciones).
 - Regenerados por `seo:collect`: `data/bing/bing-live.json`, `data/google/gsc-live.json`, `data/google/ga4-live.json`, `data/seo/live-summary.json`, `docs/audits/bing-live-report.md`, `docs/audits/seo-live-summary.md`.
 
 **Clasificación:** `VALIDADO` (datos reales extraídos) con bloque Bing `PARCIAL` (falta OAuth).
@@ -56,7 +56,7 @@ Trazabilidad de operaciones de auditoría y diagnóstico. Registro apéndice (no
 - Queries de pensión alimenticia: 152 impresiones / 5 clics (CTR 3,3 %) en 28 días, no 106 como se estimó en la auditoría.
 
 **Archivos generados:**
-- `docs/audits/plan-accion-seo-post-auditoria-2026-07-08.md` (plan operativo de 5 bloques).
+- `docs/audits/archive/2026-08-06/plan-accion-seo-post-auditoria-2026-07-08.md` (plan operativo de 5 bloques).
 
 **No se modificó README.md ni CHANGELOG.md:** no se añadieron comandos nuevos ni se hizo release; registrar planificación en CHANGELOG sería inflar el registro sin causa real (AGENTS.md §1.9 reserva CHANGELOG para releases).
 
@@ -82,7 +82,7 @@ Trazabilidad de operaciones de auditoría y diagnóstico. Registro apéndice (no
 - Fetch live 8 páginas huérfanas → 8/8 HTTP 200, indexables, canonical self. Siguen huérfanas.
 
 **Archivos modificados:**
-- `docs/audits/cierre-ejecucion-seo-2026-07-08.md` (NUEVO — informe de cierre).
+- `docs/audits/archive/2026-08-06/cierre-ejecucion-seo-2026-07-08.md` (NUEVO — informe de cierre).
 - `auditoria-acciones.md` (este registro).
 
 **Cambios de código aplicados:** NINGUNO. No se modificó `next.config.ts`, `app/(public)`, DB ni ningún archivo fuente. README.md y CHANGELOG.md sin cambios (no procede).
@@ -130,7 +130,7 @@ Trazabilidad de operaciones de auditoría y diagnóstico. Registro apéndice (no
 **Mejoras APLICADAS:** NINGUNA. Tras revisión exhaustiva, ninguna mejora de impacto cumple todas las condiciones (no protegida + reversible + sin credencial externa). Las de alto impacto tocan DB `blog_posts` (titles) o zonas protegidas `app/(public)` / `next.config.ts`. El único archivo no protegido relevante (`data/seo/high-intent-guides.ts`) ya está correcto.
 
 **Archivos modificados:**
-- `docs/audits/revision-gsc-ga4-mejoras-2026-07-08.md` (NUEVO — informe con cruce GSC+GA4).
+- `docs/audits/archive/2026-08-06/revision-gsc-ga4-mejoras-2026-07-08.md` (NUEVO — informe con cruce GSC+GA4).
 - `auditoria-acciones.md` (este registro).
 - Regenerados por scripts: `data/google/gsc-live.json`, `data/google/ga4-live.json`, `data/bing/bing-live.json`, `data/seo/live-summary.json`, `docs/audits/*.md`, `scripts/.seo-audit.json`.
 
@@ -200,7 +200,7 @@ Trazabilidad de operaciones de auditoría y diagnóstico. Registro apéndice (no
 
 **Archivos modificados:**
 - `.env.local` (línea 20, 1 variable) — APLICADO, reversible.
-- `docs/audits/revision-final-seo-gsc-ga4-canonical-2026-07-08.md` (NUEVO).
+- `docs/audits/archive/2026-08-06/revision-final-seo-gsc-ga4-canonical-2026-07-08.md` (NUEVO).
 - `auditoria-acciones.md` (este registro).
 - Regenerados por scripts: `data/google/gsc-live.json`, `data/google/ga4-live.json`, `data/bing/bing-live.json`, `data/seo/live-summary.json`, `docs/audits/*.md`, `scripts/.seo-audit.json`.
 
@@ -242,7 +242,7 @@ Trazabilidad de operaciones de auditoría y diagnóstico. Registro apéndice (no
 - Opción B: export manual dashboard → `data/bing/exports/site-explorer-{warnings,excluded}.csv` → `npm run bing:import-dashboard`.
 
 **Archivos modificados:**
-- `docs/audits/analisis-bing-warnings-excluded-2026-07-08.md` (NUEVO).
+- `docs/audits/archive/2026-08-06/analisis-bing-warnings-excluded-2026-07-08.md` (NUEVO).
 - `auditoria-acciones.md` (este registro).
 - Regenerados: `data/bing/bing-live.json`, `docs/audits/bing-live-report.md`, `scripts/.bing-explorer.json`.
 
@@ -280,13 +280,13 @@ Trazabilidad de operaciones de auditoría y diagnóstico. Registro apéndice (no
 
 **OAuth desbloqueado:** parcialmente. El bloqueo técnico (scope inválido) está RESUELTO. Falta login humano interactivo (5 min) para generar el token. `PENDIENTE HUMANO`.
 
-**Incertidumbre documentada:** el token se emitirá para audience `api.bing.microsoft.com` pero la API está en `ssl.bing.com`. Posible rechazo 401 por audience mismatch → Plan B (flujo OAuth propio Bing WMT o export manual) documentado en `docs/audits/fix-bing-oauth-2026-07-08.md` §7.
+**Incertidumbre documentada:** el token se emitirá para audience `api.bing.microsoft.com` pero la API está en `ssl.bing.com`. Posible rechazo 401 por audience mismatch → Plan B (flujo OAuth propio Bing WMT o export manual) documentado en `docs/audits/archive/2026-08-06/fix-bing-oauth-2026-07-08.md` §7.
 
 **Warnings/excluded URL por URL:** sigue `PARCIAL` — requiere OAuth válido + posiblemente export manual (API de Bing WMT no expone Site Explorer detallado masivamente).
 
 **Archivos modificados:**
 - `scripts/bing-auth-link.mjs` (líneas 43-50 SCOPE + 94-98 mensaje error) — APLICADO, reversible.
-- `docs/audits/fix-bing-oauth-2026-07-08.md` (NUEVO).
+- `docs/audits/archive/2026-08-06/fix-bing-oauth-2026-07-08.md` (NUEVO).
 - `auditoria-acciones.md` (este registro).
 - No se modificó `.env.local`, `.env`, next.config.ts, app/(public), DB, ni API Key.
 
@@ -336,8 +336,8 @@ Trazabilidad de operaciones de auditoría y diagnóstico. Registro apéndice (no
 
 **Archivos modificados:**
 - `data/bing/exports/README.md` (NUEVO, infraestructura export).
-- `docs/audits/clasificacion-bing-site-explorer-url-por-url-2026-07-08.md` (NUEVO).
-- `docs/audits/analisis-bing-warnings-excluded-2026-07-08.md` (referencia cruzada).
+- `docs/audits/archive/2026-08-06/clasificacion-bing-site-explorer-url-por-url-2026-07-08.md` (NUEVO).
+- `docs/audits/archive/2026-08-06/analisis-bing-warnings-excluded-2026-07-08.md` (referencia cruzada).
 - `auditoria-acciones.md` (este registro).
 
 **Próximos pasos humanos:** H-Export (exportar 2 CSVs del dashboard Bing, 10 min) → re-ejecutar `npm run bing:import-dashboard` → análisis URL por URL exacto. P7/P5/P1 requieren autorización Desarrollo.
@@ -437,7 +437,7 @@ ID y los eventos son los mismos).
 
 **Archivos modificados:**
 - `components/analytics-scripts.tsx` — APLICADO, reversible.
-- `docs/audits/lighthouse-treemap-performance-2026-07-08.md` (NUEVO — informe completo, 12 secciones).
+- `docs/audits/archive/2026-08-06/lighthouse-treemap-performance-2026-07-08.md` (NUEVO — informe completo, 12 secciones).
 - `auditoria-acciones.md` (este apéndice).
 
 **No se modificó:** `next.config.ts`, `app/(public)/**`, `lib/auth.ts`,
@@ -564,7 +564,7 @@ ya que no están incluidos en la información recibida.
 
 **Hallazgos principales:** bypass lógico del challenge 2FA (Crítica), IDOR/BOLA en clientes (Alta), credenciales compartidas débiles (Alta), preview con payload en URL/HTML no sanitizado (Alta), recuperación rota (Alta), dependencias vulnerables (Alta).
 
-**Archivos generados:** `docs/auditoria/INFORME-AUDITORIA.md`, `HALLAZGOS.md`, `PLAN-ACCION.md`, `REDISENO-SGIE-ADMIN.md`, `MATRIZ-TRAZABILIDAD.md`, `RESULTADOS-PRUEBAS.md`.
+**Archivos generados:** `docs/audits/archive/2026-07-12/auditoria-sgie-admin/INFORME-AUDITORIA.md`, `docs/audits/archive/2026-07-12/auditoria-sgie-admin/HALLAZGOS.md`, `PLAN-ACCION.md`, `REDISENO-SGIE-ADMIN.md`, `MATRIZ-TRAZABILIDAD.md`, `RESULTADOS-PRUEBAS.md`.
 
 **Archivos live regenerados por protocolo SEO:** `docs/audits/seo-live-summary.md`, `docs/audits/bing-live-report.md`. No se versionaron secretos ni datos live ignorados.
 

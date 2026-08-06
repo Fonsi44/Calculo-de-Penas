@@ -2,7 +2,7 @@
 
 **Fecha:** 9 de julio de 2026
 **Estado staging:** 🚫 **NO EXISTE** — requiere creación de DB Neon + configuración de variables
-**Referencia:** `docs/ops/staging-neon-final-status.md` (8 jul 2026) — confirma staging no disponible
+**Referencia:** `docs/operations/staging-neon-final-status.md` (8 jul 2026) — confirma staging no disponible
 
 ---
 
@@ -12,7 +12,7 @@
 
 | Elemento | Estado | Evidencia |
 |---|---|---|
-| DB staging Neon | 🚫 **No existe** | `docs/ops/staging-neon-final-status.md`: "DATABASE_URL staging/preview disponible: no" |
+| DB staging Neon | 🚫 **No existe** | `docs/operations/staging-neon-final-status.md`: "DATABASE_URL staging/preview disponible: no" |
 | `CRON_SECRET` | 🚫 Ausente | `.env.local` no lo contiene; `.env.example` no lo referencia |
 | Código SGIE | ✅ Listo | 861 tests, lint/tsc/build verde |
 | Migraciones 0025–0029 | ✅ Generadas | En `drizzle/migrations/`, orden correcto en journal |

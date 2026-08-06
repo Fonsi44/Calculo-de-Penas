@@ -241,4 +241,4 @@ y `scripts/e2e/inspect-phase1-db.mjs`. Queda como deuda técnica acotada
 reconstruir una baseline de snapshots en una operación de migraciones separada.
 
 El procedimiento completo y los comandos están en
-`docs/ops/fase-1-staging-validation.md`.
+`docs/operations/fase-1-staging-validation.md`.

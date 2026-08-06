@@ -1,3 +1,12 @@
+---
+status: current
+owner: seo
+created: 2026-08-03
+last_reviewed: 2026-08-06
+review_due: 2026-11-04
+supersedes: null
+superseded_by: null
+---
 # Remediación de errores de rastreo Bing — Pineda y Asociados
 
 > Generado: 2026-08-03T19:04:55.731Z · Origen: https://www.pinedayasociadoshn.com

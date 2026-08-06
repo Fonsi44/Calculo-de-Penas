@@ -1,3 +1,12 @@
+---
+status: current
+owner: engineering
+created: 2026-08-03
+last_reviewed: 2026-08-06
+review_due: 2026-11-04
+supersedes: null
+superseded_by: null
+---
 # Decisión temporal: autoría corporativa del blog
 
 **Fecha:** 2026-08-03

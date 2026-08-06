@@ -1,3 +1,12 @@
+---
+status: historical
+owner: engineering
+created: 2026-07-18
+last_reviewed: 2026-08-06
+review_due: 2026-11-04
+supersedes: null
+superseded_by: null
+---
 # Histórico de cambios — Releases 91 a 110 (H1 2026)
 
 > Archivo de detalle histórico movido desde `CHANGELOG.md` para mantener el
@@ -815,7 +824,7 @@ Este saneamiento se separó en dos commits atómicos y semánticamente correctos
 
 > Estos releases se conservan en main con resumen; el detalle granular se mantiene aquí como referencia.
 
-- **Release 110 (2026-07-04):** Transformación coherente de la web pública. `lib/areas-unified.ts` (puente TS↔DB) y `lib/faq-unified.ts` (4 orígenes FAQ). Componentes nuevos: `EditorialBlock`, `IconBadge`, utilidades `.section-breath`, `.rhythm-tight`. Variantes en `BlogHighlights`/`ConsultationCTA`/`TrustBar`. Home 631→456 líneas (−28 %). Cierre: IconBadge aplicado, FAQ i18n home renombrada a `FAQ_HOME_LEGACY` (structured-data, no UI), fix `@id` `FAQPage` duplicado en `/derecho-penal` y `/hondurenos-en-espana`, QA visual Playwright (22 capturas), SEO validado vía HTTP local. Cierre deuda runtime: fix hidratación React #418 (`ChatWidget` con `useSyncExternalStore`). Ver `docs/audits/transformacion-web-publica.md`.
+- **Release 110 (2026-07-04):** Transformación coherente de la web pública. `lib/areas-unified.ts` (puente TS↔DB) y `lib/faq-unified.ts` (4 orígenes FAQ). Componentes nuevos: `EditorialBlock`, `IconBadge`, utilidades `.section-breath`, `.rhythm-tight`. Variantes en `BlogHighlights`/`ConsultationCTA`/`TrustBar`. Home 631→456 líneas (−28 %). Cierre: IconBadge aplicado, FAQ i18n home renombrada a `FAQ_HOME_LEGACY` (structured-data, no UI), fix `@id` `FAQPage` duplicado en `/derecho-penal` y `/hondurenos-en-espana`, QA visual Playwright (22 capturas), SEO validado vía HTTP local. Cierre deuda runtime: fix hidratación React #418 (`ChatWidget` con `useSyncExternalStore`). Ver `docs/audits/archive/2026-08-06/transformacion-web-publica.md`.
 - **Release 109b (2026-07-04):** Ajuste fuerte de escala visual v2. Tokens agresivos (`--ui-scale: 0.82`, etc.) que reducen ~30% altura de secciones. Mantiene legibilidad (16px min) y accesibilidad táctil (≥36px).
 - **Release 108 (2026-07-04):** Chat conversacional con DeepSeek v4 Flash (estado histórico, **sustituido después por motor de reglas local**). Backend `lib/chat/`, endpoint `/api/chat`, guardrails server-side, allowlist de enlaces públicos, analytics anónimos. 24 tests nuevos. *Nota: esta arquitectura fue eliminada en el release del 2026-07-07 (ver arriba).*
 - **Release 107 (2026-07-04):** Fase 2 advanced SEO/GEO/CRO/analytics. Fix factual apellidos pilar (Thania Marlene Paz, Emil Barahona). Des-canibalización landings locales. Recompresión WebP. Enlazado página pilar. GEO/LLMO AnswerBlocks en hubs. `llms.txt` con sección FAQ. CRO + analytics (`trackScrollDepth`).

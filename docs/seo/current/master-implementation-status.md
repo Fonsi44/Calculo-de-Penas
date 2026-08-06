@@ -1,3 +1,12 @@
+---
+status: current
+owner: seo
+created: 2026-07-28
+last_reviewed: 2026-08-06
+review_due: 2026-11-04
+supersedes: null
+superseded_by: null
+---
 # Estado de implementación SEO/GEO
 
 Fecha de corte: 2026-07-29

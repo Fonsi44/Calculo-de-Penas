@@ -144,7 +144,7 @@ Las tres tareas con pendientes externos (A-01, A-02, A-04) tienen su procedimien
 | Campo | Valor |
 |---|---|
 | **Objetivo** | Activar el rastreo e indexación de 8 categorías de blog y 8 servicios marcados "NEUTRAL / nunca rastreado" en la línea base GSC |
-| **URLs afectadas** | Ver lista priorizada en `docs/audits/indexacion-monitorizacion.md` (Niveles 1 y 2) |
+| **URLs afectadas** | Ver lista priorizada en `docs/audits/archive/2026-08-06/indexacion-monitorizacion.md` (Niveles 1 y 2) |
 | **Estado actual** | 16 URLs clave con estado NEUTRAL en GSC (nunca rastreadas) |
 | **Acción exacta** | 1. En GSC → URL Inspection → pegar cada URL → "Solicitar indexación". 2. Respetar la cuota de Google (~10 solicitudes/día). 3. Priorizar primero las URLs comerciales (Nivel 1: `/servicios-juridicos`, `/servicios-juridicos/derecho-laboral`, etc.) y después los hubs de blog (Nivel 2). 4. Revisar a los 7 días el estado ("Cubierta" vs "Descubierta"). 5. Paralelamente, ejecutar `npm run indexnow:core` para notificar a Bing/IndexNow. |
 | **Impacto esperado** | Indexación de 16 URLs que actualmente reciben 0 impresiones por no estar indexadas. |

@@ -1,3 +1,12 @@
+---
+status: current
+owner: seo
+created: 2026-07-03
+last_reviewed: 2026-08-06
+review_due: 2026-11-04
+supersedes: null
+superseded_by: null
+---
 # MCP SEO Connectors — Guía de configuración
 
 Conecta MCPs (OpenCode, ZCode, Cursor, etc.) a las credenciales locales de

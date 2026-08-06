@@ -41,11 +41,12 @@ Reglas de organización del código y la documentación en Justicia Verdadera.
 │   ├── blog/             # Lógica del blog
 │   └── public/           # Utilidades de la web pública
 ├── hooks/                # React hooks
+├── scripts/              # Scripts operativos (blog, SEO, RAG, IndexNow)
 ├── tools/                # Herramientas y scripts organizados
-│   ├── ci/               # CI/CD
+│   ├── audit/            # Auditorías y reconciliación de remediación
+│   ├── ci/               # Gates de CI (hygiene, docs-links, e2e)
 │   ├── db/               # Migraciones y base de datos
-│   ├── ops/              # Operaciones
-│   └── development/      # Desarrollo
+│   └── ops/              # Operaciones
 ├── tests/                # Tests
 │   ├── unit/             # Unitarios
 │   ├── integration/      # Integración
@@ -57,11 +58,20 @@ Reglas de organización del código y la documentación en Justicia Verdadera.
 │   ├── README.md         # Índice documental
 │   ├── architecture/     # Arquitectura
 │   ├── adr/              # Decisiones arquitectónicas (ADR)
-│   ├── operations/       # Operaciones
+│   ├── operations/       # Operaciones (build, deploy, staging, migraciones)
 │   ├── security/         # Seguridad
 │   ├── standards/        # Estándares
+│   ├── seo/              # SEO/GEO (operativa, current/, decisions/, fases)
+│   ├── analytics/        # Analítica
+│   ├── roadmaps/         # Planes (active/, completed/)
+│   ├── implementation/   # Especificaciones de implementación
+│   ├── handoffs/         # Handoffs técnicos entre fases
+│   ├── design/           # Auditorías de diseño
+│   ├── changelog/        # Histórico de releases
+│   ├── reference/legal/  # Referencia legal en PDF
 │   └── audits/           # Auditorías
-│       └── archive/      # Auditorías históricas
+│       ├── current/      # Auditorías y remediaciones vigentes
+│       └── archive/      # Auditorías históricas por fecha (YYYY-MM-DD/)
 ├── drizzle/              # Migraciones Drizzle
 ├── public/               # Assets estáticos públicos
 ├── data/                 # Datos canónicos (delitos, códigos legales)
@@ -93,8 +103,12 @@ Reglas de organización del código y la documentación en Justicia Verdadera.
 | Una página nueva | `app/` según su dominio (público, blog, intranet, admin) |
 | Un componente reutilizable | `components/ui/` si es genérico, `components/<dominio>/` si es específico |
 | Lógica de negocio | `lib/<dominio>/` |
-| Un script de una sola ejecución | `tools/development/` con fecha de expiración |
-| Un script operativo | `tools/ops/` con documentación |
+| Un script de una sola ejecución | `scripts/` con documentación en `scripts/README.md` |
+| Un script operativo | `tools/` (ci, db, ops, audit) con entrada en `tools/manifest.json` |
 | Una migración nueva | `drizzle/migrations/` vía `npx drizzle-kit generate` |
-| Un ADR | `docs/adr/` con número secuencial |
+| Un ADR | `docs/adr/` con número secuencial e índice en `docs/adr/README.md` |
+| Un documento SEO/GEO | `docs/seo/` (operativa) o `docs/seo/current/` (estado vigente) |
+| Un plan activo | `docs/roadmaps/active/` |
+| Un plan completado | `docs/roadmaps/completed/` |
 | Una auditoría completada | `docs/audits/archive/YYYY-MM-DD/` |
+| Una referencia legal (PDF) | `docs/reference/legal/` |

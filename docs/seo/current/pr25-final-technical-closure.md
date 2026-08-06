@@ -1,3 +1,12 @@
+---
+status: current
+owner: seo
+created: 2026-07-30
+last_reviewed: 2026-08-06
+review_due: 2026-11-04
+supersedes: null
+superseded_by: null
+---
 # PR #25 — Cierre técnico final (Paso 13, CERRADO)
 
 > Estado: **PASO 13 CERRADO — LISTO PARA AUTORIZACIÓN DEL PROPIETARIO**.
@@ -215,7 +224,7 @@ PREVIEW_VISUAL = PASS
 ## Pendientes (responsabilidad del propietario)
 
 1. **Validación manual** de Turnstile, persistencia y entrega de email
-   (checklist en `docs/ops/final-manual-production-checklist.md`).
+   (checklist en `docs/operations/final-manual-production-checklist.md`).
 2. **Cierre manual** del incidente GitGuardian `35247669` como falso positivo.
 3. **Autorización humana de merge** (la PR sigue Draft).
 4. **Despliegue Production** (no realizado).

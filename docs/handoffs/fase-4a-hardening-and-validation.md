@@ -122,7 +122,7 @@ Cleanup en `finally` del E2E: **18 filas eliminadas, 0 restantes** (assertion de
 - ADR-011: automatización documental P2-01 a P2-06.
 - ADR-012: gobernanza IA y prompt injection.
 - `docs/architecture/fase-4a-*.md`
-- `docs/ops/fase-4a-staging-validation.md`
+- `docs/operations/fase-4a-staging-validation.md`
 - Actualizar checklist maestro y `SGIE_NEW_CHAT_CONTEXT.md` y `CHANGELOG.md`.
 
 ## Pendiente para el bloque siguiente (Fase 4B)

@@ -44,8 +44,8 @@ No incluye migraciones aplicadas, cambios de produccion, secretos, cambios de di
 - `scripts/security/validate-staging-security.ps1`
 - `docs/security/staging-security-validation.md`
 - `docs/security/phase-0-pr-checklist.md`
-- `docs/ops/environment-variables.md`
-- `docs/ops/build-and-deploy.md`
+- `docs/operations/environment-variables.md`
+- `docs/operations/build-and-deploy.md`
 - `package.json`
 - `vercel.json`
 - `next.config.ts`

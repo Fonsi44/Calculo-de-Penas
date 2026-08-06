@@ -1,3 +1,12 @@
+---
+status: current
+owner: seo
+created: 2026-07-09
+last_reviewed: 2026-08-06
+review_due: 2026-11-04
+supersedes: null
+superseded_by: null
+---
 # Ciclo Mensual de Operaciones SEO (Monthly Ops)
 
 Este documento detalla el procedimiento estándar y repetible para el mantenimiento, medición y optimización mensual del SEO técnico y de contenidos en Pineda y Asociados. Cualquier desarrollador o consultor debe poder ejecutar este ciclo.

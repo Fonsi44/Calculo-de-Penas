@@ -61,7 +61,7 @@ real ni afirmación de entrega.
 | Calendario | `app/api/sgie/agenda/*`, `lib/sgie/agenda-query.ts`, `app/intranet/sgie/agenda/page.tsx` |
 | Schema y migraciones | `lib/schema.ts`, `drizzle/migrations/0032_*`, `drizzle/migrations/0033_*` |
 | E2E seguro | `scripts/e2e/guard.mjs`, `verify-neon-branch.mjs`, `apply-phase1-migration.mjs`, `fase1-integration.ts` |
-| Documentación | `docs/architecture/fase-1-nucleo-admin-identidad-calendario.md`, `docs/ops/fase-1-staging-validation.md` |
+| Documentación | `docs/architecture/fase-1-nucleo-admin-identidad-calendario.md`, `docs/operations/fase-1-staging-validation.md` |
 
 ## Deuda técnica conocida
 

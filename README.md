@@ -264,14 +264,15 @@ El repositorio está preparado para ejecutarse con OpenCode de forma segura
 | [`AGENTS.md`](AGENTS.md) | Protocolo canónico para agentes IA (modos, reglas, validación) |
 | [`CHANGELOG.md`](CHANGELOG.md) | Cambios recientes (Keep a Changelog) |
 | [`docs/changelog/archive-2026-H1.md`](docs/changelog/archive-2026-H1.md) | Histórico completo (Releases 1–110) |
+| [`docs/seo/README.md`](docs/seo/README.md) | Índice de documentación SEO/GEO |
 | [`docs/seo/live-data-access.md`](docs/seo/live-data-access.md) | Manual operativo SEO Live |
 | [`docs/audits/seo-live-summary.md`](docs/audits/seo-live-summary.md) | Reporte ejecutivo SEO |
 | [`docs/audits/seo-live-action-plan.md`](docs/audits/seo-live-action-plan.md) | Plan de mejora SEO |
-| [`docs/audits/transformacion-web-publica.md`](docs/audits/transformacion-web-publica.md) | Informe transformación web pública |
+| [`docs/audits/archive/2026-08-06/transformacion-web-publica.md`](docs/audits/archive/2026-08-06/transformacion-web-publica.md) | Informe transformación web pública |
 | [`docs/security/runbook-backup-restore.md`](docs/security/runbook-backup-restore.md) | Runbook backup/restauración |
-| [`docs/ops/build-and-deploy.md`](docs/ops/build-and-deploy.md) | Build y deploy |
-| [`docs/ops/environment-variables.md`](docs/ops/environment-variables.md) | Variables de entorno |
+| [`docs/operations/build-and-deploy.md`](docs/operations/build-and-deploy.md) | Build y deploy |
+| [`docs/operations/environment-variables.md`](docs/operations/environment-variables.md) | Variables de entorno |
 | [`docs/analytics/configuracion-y-validacion.md`](docs/analytics/configuracion-y-validacion.md) | Configuración de analítica |
 | `auditoriatotal.mc` | Línea base canónica — **solo lectura** |
-| `auditoria-acciones.md` | Registro de acciones ejecutadas |
-| `AUDIT_REPOSITORY_REPORT.md` | Informes de saneamiento |
+| [`docs/audits/archive/2026-07-27/repository/auditoria-acciones.md`](docs/audits/archive/2026-07-27/repository/auditoria-acciones.md) | Registro de acciones ejecutadas |
+| [`docs/audits/archive/2026-07-27/repository/audit-repository-report.md`](docs/audits/archive/2026-07-27/repository/audit-repository-report.md) | Informes de saneamiento |
