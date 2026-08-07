@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { ArrowRight, BookOpen, MessageCircle, Scale } from 'lucide-react';
-import { site, absoluteUrl, whatsappHref, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
+import { ArrowRight, BookOpen, MessageCircle, Phone, Scale } from 'lucide-react';
+import { site, absoluteUrl, directWhatsappHref, directTelHref, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
 import { buildServiceMetaDescription } from '@/lib/seo';
 
 function stripHtml(html: string): string {
@@ -55,19 +55,25 @@ type LawyerProfile = {
   ctaHref: string;
   ctaLabel: string;
   profileHref: string;
+  phone: string;
+  phoneDisplay: string;
+  secondary?: { name: string; phone: string; phoneDisplay: string; message: string };
 };
 
 const AREA_LAWYER: Record<string, LawyerProfile> = {
   'derecho-penal': {
     name: FOUNDER_PROFILE.name,
     jobTitle: FOUNDER_PROFILE.jobTitle,
-    image: FOUNDER_PROFILE.imageAlt,
+    image: FOUNDER_PROFILE.image,
     imageAltText: FOUNDER_PROFILE.imageAltText ?? 'Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)',
     tagline: 'Defensa penal como pilar histórico del bufete',
     description: 'Abogado penalista y socio director del despacho. Atiende asuntos penales desde las primeras diligencias, audiencias y medidas cautelares hasta los recursos y la ejecución penal.',
-    ctaHref: '/derecho-penal',
-    ctaLabel: 'Ver defensa penal',
+    ctaHref: directWhatsappHref(FOUNDER_PROFILE.phone, 'Hola Danilo, necesito consultar sobre un asunto penal. Llegué desde la web de Pineda y Asociados.'),
+    ctaLabel: 'WhatsApp con Danilo',
     profileHref: '/equipo/danilo-pineda-maradiaga',
+    phone: FOUNDER_PROFILE.phone,
+    phoneDisplay: FOUNDER_PROFILE.phoneDisplay,
+    secondary: { name: 'Emil', phone: EMIL_PROFILE.phone, phoneDisplay: EMIL_PROFILE.phoneDisplay, message: 'Hola Emil, necesito consultar sobre un asunto penal. Llegué desde la web de Pineda y Asociados.' },
   },
   'derecho-de-familia': {
     name: THANIA_PROFILE.name,
@@ -76,9 +82,11 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     imageAltText: THANIA_PROFILE.imageAltText,
     tagline: 'Derecho de Familia · Civil y Notarial · Mercantil · Administrativo',
     description: 'Socia fundadora del bufete. Atiende divorcios, custodia, pensión de alimentos, sucesiones, violencia intrafamiliar y mediación familiar en Nacaome, Valle y la zona sur.',
-    ctaHref: whatsappHref('Hola, necesito consultar sobre un caso de derecho de familia.'),
+    ctaHref: directWhatsappHref(THANIA_PROFILE.phone, 'Hola Thania, necesito consultar sobre un caso de derecho de familia. Llegué desde la web de Pineda y Asociados.'),
     ctaLabel: 'Hablar con ella por WhatsApp',
     profileHref: '/equipo/thania-marlene-paz',
+    phone: THANIA_PROFILE.phone,
+    phoneDisplay: THANIA_PROFILE.phoneDisplay,
   },
   'derecho-laboral': {
     name: EMIL_PROFILE.name,
@@ -87,9 +95,11 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     imageAltText: EMIL_PROFILE.imageAltText,
     tagline: 'Derecho Laboral · Penal · Civil y Notarial',
     description: 'Socio del bufete. Despidos injustificados, prestaciones, accidentes de trabajo, acoso laboral, juicio oral laboral y recursos de casación laboral en Valle y la zona sur.',
-    ctaHref: whatsappHref('Hola, necesito consultar sobre un caso de derecho laboral.'),
+    ctaHref: directWhatsappHref(EMIL_PROFILE.phone, 'Hola Emil, necesito consultar sobre un caso de derecho laboral. Llegué desde la web de Pineda y Asociados.'),
     ctaLabel: 'Hablar con él por WhatsApp',
     profileHref: '/equipo/emil-barahona',
+    phone: EMIL_PROFILE.phone,
+    phoneDisplay: EMIL_PROFILE.phoneDisplay,
   },
   'derecho-civil-y-notarial': {
     name: THANIA_PROFILE.name,
@@ -98,9 +108,12 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     imageAltText: THANIA_PROFILE.imageAltText,
     tagline: 'Civil y Notarial · Mercantil · Familia · Administrativo',
     description: 'Socia fundadora del bufete. Compraventas, donaciones, hipotecas, poderes notariales, sociedades civiles, fideicomisos, prescripción adquisitiva y daños y perjuicios.',
-    ctaHref: whatsappHref('Hola, necesito consultar sobre un caso de derecho civil o notarial.'),
+    ctaHref: directWhatsappHref(THANIA_PROFILE.phone, 'Hola Thania, necesito consultar sobre un caso de derecho civil o notarial. Llegué desde la web de Pineda y Asociados.'),
     ctaLabel: 'Hablar con ella por WhatsApp',
     profileHref: '/equipo/thania-marlene-paz',
+    phone: THANIA_PROFILE.phone,
+    phoneDisplay: THANIA_PROFILE.phoneDisplay,
+    secondary: { name: 'Emil', phone: EMIL_PROFILE.phone, phoneDisplay: EMIL_PROFILE.phoneDisplay, message: 'Hola Emil, necesito consultar sobre un asunto civil o notarial. Llegué desde la web de Pineda y Asociados.' },
   },
   'derecho-mercantil-empresarial': {
     name: THANIA_PROFILE.name,
@@ -109,9 +122,11 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     imageAltText: THANIA_PROFILE.imageAltText,
     tagline: 'Mercantil y Empresarial · Civil · Administrativo · Familia',
     description: 'Socia fundadora del bufete. Constitución de sociedades, contratos mercantiles, gobierno corporativo, compliance, protección al consumidor, propiedad industrial y quiebras.',
-    ctaHref: whatsappHref('Hola, necesito consultar sobre un caso de derecho mercantil o empresarial.'),
+    ctaHref: directWhatsappHref(THANIA_PROFILE.phone, 'Hola Thania, necesito consultar sobre un caso de derecho mercantil o empresarial. Llegué desde la web de Pineda y Asociados.'),
     ctaLabel: 'Hablar con ella por WhatsApp',
     profileHref: '/equipo/thania-marlene-paz',
+    phone: THANIA_PROFILE.phone,
+    phoneDisplay: THANIA_PROFILE.phoneDisplay,
   },
   'derecho-administrativo-y-servicio-civil': {
     name: THANIA_PROFILE.name,
@@ -120,9 +135,11 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     imageAltText: THANIA_PROFILE.imageAltText,
     tagline: 'Administrativo y Servicio Civil · Mercantil · Civil · Familia',
     description: 'Socia fundadora del bufete. Recursos administrativos, nulidad de actos, servicio civil, contratación del Estado, sanciones y litigio administrativo en Honduras.',
-    ctaHref: whatsappHref('Hola, necesito consultar sobre un caso de derecho administrativo.'),
+    ctaHref: directWhatsappHref(THANIA_PROFILE.phone, 'Hola Thania, necesito consultar sobre un caso de derecho administrativo. Llegué desde la web de Pineda y Asociados.'),
     ctaLabel: 'Hablar con ella por WhatsApp',
     profileHref: '/equipo/thania-marlene-paz',
+    phone: THANIA_PROFILE.phone,
+    phoneDisplay: THANIA_PROFILE.phoneDisplay,
   },
 };
 
@@ -370,6 +387,19 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
                   >
                     Ver perfil profesional <ArrowRight size={14} />
                   </Link>
+                  <a href={directTelHref(lawyer.phone)} className="inline-flex items-center gap-2 h-11 px-5 rounded-lg border border-border-light bg-surface text-text text-sm font-bold">
+                    <Phone size={16} /> Llamar {lawyer.phoneDisplay}
+                  </a>
+                  {lawyer.secondary && (
+                    <>
+                      <a href={directWhatsappHref(lawyer.secondary.phone, lawyer.secondary.message)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 h-11 px-5 rounded-lg bg-success text-white text-sm font-bold">
+                        <MessageCircle size={16} /> WhatsApp con {lawyer.secondary.name}
+                      </a>
+                      <a href={directTelHref(lawyer.secondary.phone)} className="inline-flex items-center gap-2 h-11 px-5 rounded-lg border border-border-light bg-surface text-text text-sm font-bold">
+                        <Phone size={16} /> Llamar {lawyer.secondary.phoneDisplay}
+                      </a>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

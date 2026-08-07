@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { site, absoluteUrl, whatsappHref, telHref } from '@/lib/site';
+import { site, absoluteUrl, whatsappHref, telHref, THANIA_PROFILE } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -59,7 +59,7 @@ export default async function AbogadoCivilNacaomePage() {
             Contratos seguros, compraventas de inmuebles, herencias, testamentos y poderes
             notariales. Asesoría civil y notarial con validez en todo Honduras, desde Nacaome.
           </p>
-          <CTAGroup variant="inverse" message={whatsappMsg} />
+          <CTAGroup variant="inverse" message={whatsappMsg} phone={THANIA_PROFILE.phone} phoneDisplay={THANIA_PROFILE.phoneDisplay} contactName="Thania" />
         </Container>
       </section>
 

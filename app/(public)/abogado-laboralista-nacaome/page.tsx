@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { site, absoluteUrl, whatsappHref, telHref } from '@/lib/site';
+import { site, absoluteUrl, whatsappHref, telHref, EMIL_PROFILE } from '@/lib/site';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -59,7 +59,7 @@ export default async function AbogadoLaboralistaNacaomePage() {
             un abogado laboralista puede ayudarle a reclamar lo que le corresponde conforme al
             Código de Trabajo de Honduras.
           </p>
-          <CTAGroup variant="inverse" message={whatsappMsg} />
+          <CTAGroup variant="inverse" message={whatsappMsg} phone={EMIL_PROFILE.phone} phoneDisplay={EMIL_PROFILE.phoneDisplay} contactName="Emil" />
         </Container>
       </section>
 

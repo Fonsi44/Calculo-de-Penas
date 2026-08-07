@@ -3,23 +3,30 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Phone, MessageCircle, Calendar, ShieldAlert, MapPin } from 'lucide-react';
-import { site, telHref, whatsappHref } from '@/lib/site';
+import { site, telHref, whatsappHref, directTelHref, directWhatsappHref } from '@/lib/site';
 import { trackWhatsAppClick, trackPhoneClick, trackConsultationCtaClick, trackDirectionsClick } from '@/lib/analytics';
 
 interface CTAGroupProps {
   variant?: 'primary' | 'inline' | 'compact' | 'inverse';
   message?: string;
   className?: string;
+  phone?: string;
+  phoneDisplay?: string;
+  contactName?: string;
 }
 
 const DEFAULT_MSG = 'Hola, necesito una consulta jurídica. Los contacto desde la web de Pineda y Asociados.';
 
-export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className }: CTAGroupProps) {
+export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className, phone, phoneDisplay, contactName }: CTAGroupProps) {
+  const callHref = phone ? directTelHref(phone) : telHref();
+  const waHref = phone ? directWhatsappHref(phone, message) : whatsappHref(message);
+  const display = phoneDisplay ?? site.phoneDisplay;
+  const who = contactName ? ` con ${contactName}` : '';
   if (variant === 'compact') {
     return (
       <div className={`flex flex-col sm:flex-row gap-2 ${className ?? ''}`}>
         <a
-          href={telHref()}
+          href={callHref}
           title="Llamar a Pineda y Asociados — consulta legal en Nacaome"
           onClick={() => trackPhoneClick('cta_compact')}
           className="inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-lg bg-primary text-white text-xs font-bold border border-primary-light/40 btn-shadow-primary btn-shadow-primary-hover hover:-translate-y-0.5 hover:bg-primary-light transition-all duration-200 focus-visible:outline-none"
@@ -28,7 +35,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
           Llamar ahora
         </a>
         <a
-          href={whatsappHref(message)}
+          href={waHref}
           target="_blank"
           rel="noopener noreferrer"
           title="Escribir por WhatsApp a Pineda y Asociados — atención en horario hábil"
@@ -36,7 +43,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
           className="inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-lg bg-success text-white text-xs font-bold border border-success/40 btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 hover:opacity-95 transition-all duration-200 focus-visible:outline-none"
         >
           <MessageCircle size={14} aria-hidden="true" />
-          WhatsApp
+          WhatsApp{who}
         </a>
       </div>
     );
@@ -45,13 +52,13 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
     return (
       <div className={`flex flex-col sm:flex-row gap-2 ${className ?? ''}`}>
         <a
-          href={telHref()}
+          href={callHref}
           title="Llamar a Pineda y Asociados — abogados en Nacaome"
           onClick={() => trackPhoneClick('cta_inline')}
           className="inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-primary text-white text-sm font-bold border border-primary-light/40 btn-shadow-primary btn-shadow-primary-hover hover:-translate-y-0.5 hover:bg-primary-light transition-all duration-200 focus-visible:outline-none"
         >
           <Phone size={16} aria-hidden="true" />
-          {site.phoneDisplay}
+          {display}
         </a>
         <a
           href="/solicitar-consulta#formulario"
@@ -68,23 +75,23 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
   if (variant === 'inverse') {
     return (
       <div className={`flex flex-col sm:flex-row gap-2 ${className ?? ''}`}>
+        {phone ? (
+          <a href={waHref} target="_blank" rel="noopener noreferrer" title={`Escribir por WhatsApp${who}`} onClick={() => trackWhatsAppClick('cta_inverse')} className="inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-success text-white text-sm font-bold btn-shadow-success btn-shadow-success-hover">
+            <MessageCircle size={16} aria-hidden="true" /> WhatsApp{who}
+          </a>
+        ) : (
+          <a href="/solicitar-consulta#formulario" title="Solicitar consulta legal confidencial — Pineda y Asociados" onClick={() => trackConsultationCtaClick('cta_inverse')} className="btn-shimmer inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer">
+            <Calendar size={16} aria-hidden="true" /> Solicitar evaluación confidencial
+          </a>
+        )}
         <a
-          href="/solicitar-consulta#formulario"
-          title="Solicitar consulta legal confidencial — Pineda y Asociados"
-          onClick={() => trackConsultationCtaClick('cta_inverse')}
-          className="btn-shimmer inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none cursor-pointer"
-        >
-          <Calendar size={16} aria-hidden="true" />
-          Solicitar evaluación confidencial
-        </a>
-        <a
-          href={telHref()}
+          href={callHref}
           title="Llamar a Pineda y Asociados — abogados en Nacaome, Valle"
           onClick={() => trackPhoneClick('cta_inverse')}
           className="inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg border-2 border-text-inverse/40 text-text-inverse text-sm font-bold hover:bg-text-inverse/10 hover:border-text-inverse/70 transition-colors focus-visible:outline-none cursor-pointer"
         >
           <Phone size={16} aria-hidden="true" />
-          Llamar {site.phoneDisplay}
+          Llamar {display}
         </a>
       </div>
     );
@@ -101,13 +108,13 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
         Solicitar evaluación confidencial
       </a>
       <a
-        href={telHref()}
+        href={callHref}
         title="Llamar a Pineda y Asociados — defensa penal y asesoría jurídica"
         onClick={() => trackPhoneClick('cta_primary')}
         className="inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg border-2 border-primary/25 text-primary bg-surface text-sm font-bold hover:bg-primary hover:text-text-inverse hover:border-primary transition-colors focus-visible:outline-none btn-shadow-secondary btn-shadow-secondary-hover"
       >
         <Phone size={16} aria-hidden="true" />
-        Llamar {site.phoneDisplay}
+        Llamar {display}
       </a>
     </div>
   );

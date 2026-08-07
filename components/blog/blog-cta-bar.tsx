@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Phone, MessageCircle, ArrowRight } from 'lucide-react';
-import { site, telHref, whatsappHref } from '@/lib/site';
+import { FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE, directTelHref, directWhatsappHref } from '@/lib/site';
 import { trackWhatsAppClick, trackPhoneClick, trackFormClick } from '@/lib/analytics';
 
 const CATEGORY_COPY: Record<string, { h2: string; body: string; whatsappMsg: string }> = {
@@ -114,6 +114,17 @@ interface BlogCtaBarProps {
 
 export function BlogCtaBar({ category }: BlogCtaBarProps) {
   const copy = category ? CATEGORY_COPY[category] : null;
+  const contacts = category === 'derecho-laboral'
+    ? [EMIL_PROFILE]
+    : category === 'derecho-de-familia' || category === 'derecho-mercantil' || category === 'derecho-administrativo'
+      ? [THANIA_PROFILE]
+      : category === 'derecho-civil' || category === 'derecho-notarial'
+        ? [THANIA_PROFILE, EMIL_PROFILE]
+        : category === 'derecho-penal' || category === 'proceso-penal'
+          ? [FOUNDER_PROFILE, EMIL_PROFILE]
+          : category === 'hondurenos-en-espana'
+            ? [THANIA_PROFILE]
+            : [FOUNDER_PROFILE];
 
   return (
     <div className="text-center">
@@ -127,24 +138,12 @@ export function BlogCtaBar({ category }: BlogCtaBarProps) {
         {copy?.body ?? 'Hable directamente con un abogado en Nacaome, Valle, Choluteca o San Lorenzo. Podemos revisar su situación y orientarle sobre los siguientes pasos.'}
       </p>
       <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
-        <a
-          href={telHref()}
-          onClick={() => trackPhoneClick('blog_cta')}
-          className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-light transition-colors"
-        >
-          <Phone size={18} />
-          {site.phoneDisplay}
-        </a>
-        <a
-          href={whatsappHref(copy?.whatsappMsg ?? undefined)}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackWhatsAppClick('blog_cta')}
-          className="inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-success text-white text-sm font-bold hover:opacity-90 transition-opacity"
-        >
-          <MessageCircle size={18} />
-          WhatsApp
-        </a>
+        {contacts.map((contact) => (
+          <div key={contact.slug} className="flex flex-col sm:flex-row gap-2">
+            <a href={directTelHref(contact.phone)} onClick={() => trackPhoneClick('blog_cta')} className="inline-flex items-center justify-center gap-2 h-12 px-4 rounded-lg bg-primary text-white text-sm font-bold"><Phone size={18} /> Llamar a {contact.name.split(' ')[0]}</a>
+            <a href={directWhatsappHref(contact.phone, `${copy?.whatsappMsg ?? 'Necesito orientación legal.'} Hola ${contact.name.split(' ')[0]}.`)} target="_blank" rel="noopener noreferrer" onClick={() => trackWhatsAppClick('blog_cta')} className="inline-flex items-center justify-center gap-2 h-12 px-4 rounded-lg bg-success text-white text-sm font-bold"><MessageCircle size={18} /> WhatsApp con {contact.name.split(' ')[0]}</a>
+          </div>
+        ))}
       </div>
       <Link
         href="/solicitar-consulta#formulario"

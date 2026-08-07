@@ -441,9 +441,11 @@ describe('FASE 3 — Subsistemas intactos', () => {
     expect(unexpected, `páginas locales modificadas fuera de política: ${unexpected.join(', ')}`).toHaveLength(0);
   });
 
-  it('sección España intacta (sin cambios vs HEAD)', () => {
-    const changed = gitDiffNameOnly('"app/(public)/hondurenos-en-espana"');
-    expect(changed, `España modificada: ${changed.join(', ')}`).toHaveLength(0);
+  it('la sección España dirige el contacto al abogado responsable', () => {
+    const src = readPublic('hondurenos-en-espana/page.tsx');
+    expect(src).toContain('THANIA_PROFILE');
+    expect(src).toContain('directWhatsappHref(THANIA_PROFILE.phone');
+    expect(src).toContain('directTelHref(THANIA_PROFILE.phone)');
   });
 
   it('SGIE/intranet/admin/auth/DB intactos (sin cambios vs HEAD)', () => {
