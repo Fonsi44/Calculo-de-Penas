@@ -432,7 +432,7 @@ export const landingsLocales: LandingLocal[] = [
     distanciaKm: 80,
     title: 'Abogados en San Marcos de Colón, Choluteca | Frontera Sur',
     description:
-      'Abogados en San Marcos de Colón, frontera con Nicaragua. Defensa penal, familia, laboral, civil y aduanero. Evaluación inicial confidencial. WhatsApp +504 9536-3724.',
+      'Abogados en San Marcos de Colón, frontera con Nicaragua. Defensa penal, familiar, laboral, civil y aduanera. Evaluación inicial confidencial.',
     heroEyebrow: 'Frontera sur · Choluteca, Honduras',
     heroTitle: 'Abogados en San Marcos de Colón',
     heroSubtitle:

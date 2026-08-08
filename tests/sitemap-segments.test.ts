@@ -105,6 +105,7 @@ describe('segmentos estáticos', () => {
     for (const url of authors) {
       expect(pathOf(url)).toMatch(/^\/equipo\//);
     }
+    expect(authors).toContain(`${ORIGIN}/equipo/alfons-roiget-gimenez`);
   });
 
   it('el segmento services solo contiene rutas de servicios', async () => {

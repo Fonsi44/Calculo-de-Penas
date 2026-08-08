@@ -109,7 +109,7 @@ describe('firma editorial vinculada a versión', () => {
     expect(state.signature?.name).toBe('Pineda y Asociados');
   });
 
-  it('emite reviewedBy Organization para firma institucional real', () => {
+  it('emite contributor Organization para firma institucional real', () => {
     const post: Post = {
       slug: 'institucional',
       title: 'Artículo',
@@ -122,9 +122,10 @@ describe('firma editorial vinculada a versión', () => {
       readingTime: '3 min',
       reviewStatus: 'published',
     };
-    expect(blogPostSchema(post).reviewedBy).toMatchObject({
+    expect(blogPostSchema(post).contributor).toMatchObject({
       '@type': 'Organization',
       name: 'Pineda y Asociados',
     });
+    expect(blogPostSchema(post)).not.toHaveProperty('reviewedBy');
   });
 });
