@@ -54,7 +54,7 @@ describe('contrato metadata-only del blog', () => {
 
 describe('CTA jurídico generado', () => {
   it('usa un registro mínimo de 35 slugs', () => {
-    expect(MID_POST_CTA_SLUGS.size).toBe(35);
+    expect(MID_POST_CTA_SLUGS.size).toBe(36);
     expect([...MID_POST_CTA_SLUGS].every((slug) => !/\s/.test(slug))).toBe(true);
   });
 
