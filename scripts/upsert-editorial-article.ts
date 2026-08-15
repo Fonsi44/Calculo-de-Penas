@@ -3,20 +3,31 @@
  * Dry-run por defecto. Rechaza producción (environment-guard).
  *
  *   npx tsx scripts/upsert-editorial-article.ts
+ *   npx tsx scripts/upsert-editorial-article.ts --slug audiencia-inicial-juzgados-valle
  *   npx tsx scripts/upsert-editorial-article.ts --aplicar   # solo local/staging autorizado
  */
 import { neon } from '@neondatabase/serverless';
-import { DETENCION_FAMILIAR_NACAOME_ARTICLE as article } from '@/data/blog/articles/detencion-familiar-nacaome-primeras-horas';
+import {
+  EDITORIAL_ARTICLES,
+  getEditorialArticle,
+  type EditorialArticle,
+} from '@/data/blog/articles';
 import {
   assertAllowedEnvironment,
   loadEnvFile,
 } from './lib/environment-guard';
 
 const APPLY = process.argv.includes('--aplicar');
+const slugFlag = process.argv.find((arg) => arg.startsWith('--slug='));
+const slugIndex = process.argv.indexOf('--slug');
+const requestedSlug = slugFlag
+  ? slugFlag.slice('--slug='.length)
+  : slugIndex >= 0
+    ? process.argv[slugIndex + 1]
+    : undefined;
 
-async function main() {
-  loadEnvFile(process.env.ENV_FILE);
-  const payload = {
+function toPayload(article: EditorialArticle) {
+  return {
     slug: article.slug,
     title: article.title,
     description: article.description,
@@ -34,13 +45,18 @@ async function main() {
     review_status: article.reviewStatus,
     published_at: article.publishedAt,
   };
+}
+
+async function main() {
+  loadEnvFile(process.env.ENV_FILE);
+  const articles = requestedSlug
+    ? [getEditorialArticle(requestedSlug)]
+    : [...EDITORIAL_ARTICLES];
 
   console.log(JSON.stringify({
     mode: APPLY ? 'aplicar' : 'dry-run',
-    slug: payload.slug,
-    category: payload.category,
-    title: payload.title,
-    bodyChars: payload.body.length,
+    slugs: articles.map((article) => article.slug),
+    count: articles.length,
   }, null, 2));
 
   if (!APPLY) {
@@ -52,36 +68,40 @@ async function main() {
   const url = process.env.DATABASE_URL;
   if (!url) throw new Error('DATABASE_URL ausente.');
   const sql = neon(url);
-  await sql`
-    INSERT INTO blog_posts (
-      slug, title, description, body, published_at, updated_at, category,
-      tags, author, reading_time, cover_image, featured, published,
-      meta_title, meta_description, noindex, canonical_url, review_status
-    ) VALUES (
-      ${payload.slug}, ${payload.title}, ${payload.description}, ${payload.body},
-      ${payload.published_at}, ${payload.published_at}, ${payload.category},
-      ${payload.tags}, ${payload.author}, ${payload.reading_time}, ${payload.cover_image},
-      false, ${payload.published}, ${payload.meta_title}, ${payload.meta_description},
-      ${payload.noindex}, ${payload.canonical_url}, ${payload.review_status}
-    )
-    ON CONFLICT (slug) DO UPDATE SET
-      title = EXCLUDED.title,
-      description = EXCLUDED.description,
-      body = EXCLUDED.body,
-      updated_at = EXCLUDED.updated_at,
-      category = EXCLUDED.category,
-      tags = EXCLUDED.tags,
-      author = EXCLUDED.author,
-      reading_time = EXCLUDED.reading_time,
-      cover_image = EXCLUDED.cover_image,
-      published = EXCLUDED.published,
-      meta_title = EXCLUDED.meta_title,
-      meta_description = EXCLUDED.meta_description,
-      noindex = EXCLUDED.noindex,
-      canonical_url = EXCLUDED.canonical_url,
-      review_status = EXCLUDED.review_status
-  `;
-  console.log(JSON.stringify({ applied: true, slug: payload.slug }, null, 2));
+
+  for (const article of articles) {
+    const payload = toPayload(article);
+    await sql`
+      INSERT INTO blog_posts (
+        slug, title, description, body, published_at, updated_at, category,
+        tags, author, reading_time, cover_image, featured, published,
+        meta_title, meta_description, noindex, canonical_url, review_status
+      ) VALUES (
+        ${payload.slug}, ${payload.title}, ${payload.description}, ${payload.body},
+        ${payload.published_at}, ${payload.published_at}, ${payload.category},
+        ${payload.tags}, ${payload.author}, ${payload.reading_time}, ${payload.cover_image},
+        false, ${payload.published}, ${payload.meta_title}, ${payload.meta_description},
+        ${payload.noindex}, ${payload.canonical_url}, ${payload.review_status}
+      )
+      ON CONFLICT (slug) DO UPDATE SET
+        title = EXCLUDED.title,
+        description = EXCLUDED.description,
+        body = EXCLUDED.body,
+        updated_at = EXCLUDED.updated_at,
+        category = EXCLUDED.category,
+        tags = EXCLUDED.tags,
+        author = EXCLUDED.author,
+        reading_time = EXCLUDED.reading_time,
+        cover_image = EXCLUDED.cover_image,
+        published = EXCLUDED.published,
+        meta_title = EXCLUDED.meta_title,
+        meta_description = EXCLUDED.meta_description,
+        noindex = EXCLUDED.noindex,
+        canonical_url = EXCLUDED.canonical_url,
+        review_status = EXCLUDED.review_status
+    `;
+  }
+  console.log(JSON.stringify({ applied: true, slugs: articles.map((article) => article.slug) }, null, 2));
 }
 
 void main();
