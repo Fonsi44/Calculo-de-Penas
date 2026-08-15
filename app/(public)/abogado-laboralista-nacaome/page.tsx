@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { RelatedCities } from '@/components/marketing/related-links';
+import { CargoHubBridge } from '@/components/marketing/cargo-hub-bridge';
 import { Scale, FileText, ShieldCheck, Briefcase, Phone } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -55,13 +56,22 @@ export default async function AbogadoLaboralistaNacaomePage() {
             Abogado Laboralista en Nacaome
           </h1>
           <p className="text-base md:text-lg text-text-inverse/85 max-w-3xl mb-8">
-            Si lo despidieron sin justa causa, no le pagaron sus prestaciones o sufre acoso laboral,
-            un abogado laboralista puede ayudarle a reclamar lo que le corresponde conforme al
+            Si lo despidieron, no le pagaron prestaciones o hay un conflicto en el trabajo,
+            podemos revisar documentos y decirle qué se puede reclamar conforme al
             Código de Trabajo de Honduras.
           </p>
           <CTAGroup variant="inverse" message={whatsappMsg} phone={EMIL_PROFILE.phone} phoneDisplay={EMIL_PROFILE.phoneDisplay} contactName="Emil" />
         </Container>
       </section>
+
+      <CargoHubBridge
+        hubHref="/servicios-juridicos/derecho-laboral"
+        hubLabel="Ver el servicio laboral completo"
+        title="La explicación completa del servicio está en Derecho Laboral"
+        body="Esta página orienta la búsqueda local en Nacaome. Despido, prestaciones y el recorrido del reclamo están en el hub. Emil Barahona atiende el área; el presupuesto va por escrito."
+        profileHref="/equipo/emil-barahona"
+        profileLabel="Perfil de Emil"
+      />
 
       <Section background="default" spacing="md">
         <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary mb-4">

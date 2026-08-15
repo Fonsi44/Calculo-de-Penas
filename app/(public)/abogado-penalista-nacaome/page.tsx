@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { RelatedCities } from '@/components/marketing/related-links';
+import { CargoHubBridge } from '@/components/marketing/cargo-hub-bridge';
 import { Scale, Shield, Clock, Gavel, Phone } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     'audiencia inicial Nacaome',
   ],
   openGraph: {
-    title: 'Abogado Penalista en Nacaome | Defensa Urgente 24/7 · Valle',
+    title: 'Abogado Penalista en Nacaome | Defensa urgente · Valle',
     description:
       'Abogado penalista en Nacaome, Valle. Defensa en audiencias, medidas cautelares, juicio oral y recursos. Atención urgente para detenidos.',
     url: '/abogado-penalista-nacaome',
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Abogado Penalista en Nacaome | Defensa Urgente 24/7 · Valle',
+    title: 'Abogado Penalista en Nacaome | Defensa urgente · Valle',
     description:
       'Abogado penalista en Nacaome, Valle. Defensa en audiencias, medidas cautelares, juicio oral y recursos. Atención urgente para detenidos.',
     images: ['/og/nacaome.webp'],
@@ -63,6 +64,15 @@ export default async function AbogadoPenalistaNacaomePage() {
           <CTAGroup variant="inverse" message={whatsappMsg} phone={FOUNDER_PROFILE.phone} phoneDisplay={FOUNDER_PROFILE.phoneDisplay} contactName="Danilo" />
         </Container>
       </section>
+
+      <CargoHubBridge
+        hubHref="/derecho-penal"
+        hubLabel="Ver la defensa penal completa"
+        title="La explicación completa de la defensa está en Derecho Penal"
+        body="Esta página orienta la búsqueda local en Nacaome. Etapas, documentos, errores frecuentes y la estrategia de defensa están en el hub. Danilo Pineda Maradiaga atiende el área; el presupuesto va por escrito."
+        profileHref="/equipo/danilo-pineda-maradiaga"
+        profileLabel="Perfil de Danilo"
+      />
 
       {/* Intro */}
       <Section background="default" spacing="md">
@@ -119,7 +129,7 @@ export default async function AbogadoPenalistaNacaomePage() {
           {[
             { q: '¿Qué hacer si me detienen en Nacaome?', a: `Tiene derecho a un abogado desde el primer momento. No declare sin representación legal. Contáctenos por WhatsApp al ${site.whatsappDisplay} y acudimos de inmediato.` },
             { q: '¿Cuánto cuesta un abogado penalista en Nacaome?', a: 'Ofrecemos una evaluación inicial confidencial para evaluar su caso. Tras el análisis, le entregamos un presupuesto por escrito. Los honorarios dependen de la complejidad y etapa del proceso.' },
-            { q: '¿Atienden emergencias penales 24 horas?', a: 'Sí. En caso de detención o urgencia penal, contáctenos por WhatsApp a cualquier hora. La defensa en las primeras horas es decisiva para el resultado del caso.' },
+            { q: '¿Atienden emergencias penales fuera de horario?', a: 'El horario de oficina es de lunes a sábado, de 7:00 a 20:00. Si hay una detención, escríbanos por WhatsApp indicando que es urgente: le decimos cómo proceder. No prometemos presencia inmediata las 24 horas.' },
             { q: '¿Qué delitos defienden?', a: 'Defendemos todo tipo de delitos del Código Penal hondureño: homicidio, hurto, robo, estafa, lesiones, delitos sexuales, narcotráfico, lavado de activos, extorsión, portación ilegal de armas, violencia doméstica y más.' },
             { q: '¿Cómo funciona el proceso penal en Honduras?', a: 'El proceso penal tiene tres etapas: investigación (Fiscalía), etapa intermedia (audiencia preliminar) y juicio oral. La defensa técnica puede lograr un sobreseimiento definitivo desde la etapa inicial.' },
           ].map((faq) => (
@@ -206,7 +216,7 @@ export default async function AbogadoPenalistaNacaomePage() {
               '@type': 'WebPage',
               '@id': `${url}/#webpage`,
               url,
-              name: 'Abogado Penalista en Nacaome | Defensa Urgente 24/7 · Valle',
+              name: 'Abogado Penalista en Nacaome | Defensa urgente · Valle',
               description:
                 'Defensa penal en Nacaome, Valle: detenciones y audiencias. El despacho declara más de 15 años de experiencia profesional.',
               isPartOf: { '@id': `${site.url}/#website` },
@@ -219,7 +229,7 @@ export default async function AbogadoPenalistaNacaomePage() {
               mainEntity: [
                 { '@type': 'Question', name: '¿Qué hacer si me detienen en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: `Tiene derecho a un abogado desde el primer momento. No declare sin representación legal. Contáctenos por WhatsApp al ${site.whatsappDisplay} y acudimos de inmediato.` } },
                 { '@type': 'Question', name: '¿Cuánto cuesta un abogado penalista en Nacaome?', acceptedAnswer: { '@type': 'Answer', text: 'Ofrecemos una evaluación inicial confidencial para evaluar su caso. Tras el análisis, le entregamos un presupuesto por escrito.' } },
-                { '@type': 'Question', name: '¿Atienden emergencias penales 24 horas?', acceptedAnswer: { '@type': 'Answer', text: 'Sí. En caso de detención o urgencia penal, contáctenos por WhatsApp a cualquier hora.' } },
+                { '@type': 'Question', name: '¿Atienden emergencias penales fuera de horario?', acceptedAnswer: { '@type': 'Answer', text: 'Horario de oficina: lunes a sábado, 7:00 a 20:00. Si hay detención, escriba por WhatsApp indicando que es urgente.' } },
                 { '@type': 'Question', name: '¿Qué delitos defienden?', acceptedAnswer: { '@type': 'Answer', text: 'Defendemos todo tipo de delitos del Código Penal hondureño: homicidio, hurto, robo, estafa, lesiones, delitos sexuales, narcotráfico, lavado de activos, extorsión y más.' } },
                 { '@type': 'Question', name: '¿Cómo funciona el proceso penal en Honduras?', acceptedAnswer: { '@type': 'Answer', text: 'El proceso penal tiene tres etapas: investigación (Fiscalía), etapa intermedia (audiencia preliminar) y juicio oral.' } },
               ],

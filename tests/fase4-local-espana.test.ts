@@ -253,6 +253,15 @@ describe('FASE 4 §12 — FAQ visible coincide con schema', () => {
     // Y ldSchemas ya no debe contener un FAQPage duplicado (lo emite HubFaq).
     expect(src).not.toMatch(/'@type':\s*'FAQPage'/);
   });
+
+  it('cada landing local tiene como máximo 3 FAQ (logística, no listado de servicios)', () => {
+    for (const landing of landingsLocales) {
+      expect(
+        landing.faqs.length,
+        `${landing.slug} tiene ${landing.faqs.length} FAQ (máx. 3)`,
+      ).toBeLessThanOrEqual(3);
+    }
+  });
 });
 
 // ---------------------------------------------------------------------------

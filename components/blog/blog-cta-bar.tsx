@@ -5,16 +5,20 @@ import { Phone, MessageCircle, ArrowRight } from 'lucide-react';
 import { FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE, directTelHref, directWhatsappHref } from '@/lib/site';
 import { trackWhatsAppClick, trackPhoneClick, trackFormClick } from '@/lib/analytics';
 
-const CATEGORY_COPY: Record<string, { h2: string; body: string; whatsappMsg: string }> = {
+const CATEGORY_COPY: Record<string, { h2: string; body: string; whatsappMsg: string; spokeHref?: string; spokeLabel?: string }> = {
   'derecho-penal': {
     h2: '¿Enfrenta un proceso penal en la zona sur?',
     body: 'Si hay detención, citación o audiencia cerca, no espere. Hable con un penalista en Nacaome. Le decimos qué no firmar y qué sigue, con presupuesto por escrito.',
     whatsappMsg: 'Necesito defensa penal urgente. Vi su artículo en el blog.',
+    spokeHref: '/derecho-penal',
+    spokeLabel: 'Ver la defensa penal completa',
   },
   'derecho-de-familia': {
     h2: '¿Necesita resolver un asunto de familia?',
     body: 'Divorcio, custodia o pensión: se resuelve mejor en calma y con papeles en orden. Una abogada de familia en Nacaome le escucha con discreción y le dice qué se puede pedir.',
     whatsappMsg: 'Necesito orientación en un asunto de familia. Vi su artículo en el blog.',
+    spokeHref: '/servicios-juridicos/derecho-de-familia',
+    spokeLabel: 'Ver el servicio de familia',
   },
   'derecho-laboral': {
     h2: '¿Tuvo un problema laboral?',
@@ -30,6 +34,8 @@ const CATEGORY_COPY: Record<string, { h2: string; body: string; whatsappMsg: str
     h2: '¿Enfrenta un proceso penal en la zona sur?',
     body: 'Cada etapa pide defensa técnica distinta. Hable con un penalista en Nacaome: le explicamos qué sigue y qué no firmar, con presupuesto por escrito.',
     whatsappMsg: 'Necesito defensa penal urgente. Vi su artículo en el blog.',
+    spokeHref: '/derecho-penal',
+    spokeLabel: 'Ver la defensa penal completa',
   },
   'derecho-mercantil': {
     h2: '¿Necesita asesoría para su empresa?',
@@ -145,13 +151,23 @@ export function BlogCtaBar({ category }: BlogCtaBarProps) {
           </div>
         ))}
       </div>
-      <Link
-        href="/solicitar-consulta#formulario"
-        onClick={() => trackFormClick('blog_cta')}
-        className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
-      >
-        O complete el formulario de consulta <ArrowRight size={14} />
-      </Link>
+      <div className="flex flex-col items-center gap-2">
+        {copy?.spokeHref && copy.spokeLabel ? (
+          <Link
+            href={copy.spokeHref}
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
+          >
+            {copy.spokeLabel} <ArrowRight size={14} />
+          </Link>
+        ) : null}
+        <Link
+          href="/solicitar-consulta#formulario"
+          onClick={() => trackFormClick('blog_cta')}
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
+        >
+          O complete el formulario de consulta <ArrowRight size={14} />
+        </Link>
+      </div>
     </div>
   );
 }

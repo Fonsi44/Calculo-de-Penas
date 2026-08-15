@@ -51,7 +51,7 @@ export type LandingLocal = {
   intro: string;
   /** Servicios destacados para esa ciudad */
   servicios: { titulo: string; descripcion: string }[];
-  /** FAQ local (también genera schema FAQPage) */
+  /** FAQ local (máx. 3, logística de ciudad; también genera schema FAQPage) */
   faqs: { pregunta: string; respuesta: string }[];
   /** Datos estructurados geográficos */
   geo?: { lat: number; lng: number };
@@ -149,14 +149,9 @@ export const landingsLocales: LandingLocal[] = [
           'Nuestra sede está en Nacaome, Valle: GGJ7+239, cuadra y media al este de Hondutel, contiguo a la Clínica Dental Dra. Andara. Atendemos de lunes a sábado, de 7:00 a 20:00.',
       },
       {
-        pregunta: '¿La primera consulta tiene costo?',
-        respuesta:
-          'El costo depende del tipo de evaluación y del alcance solicitado. Puede pedir las condiciones y un presupuesto por escrito por WhatsApp al +504 9536-3724 o mediante el formulario de contacto.',
-      },
-      {
         pregunta: '¿Atienden emergencias penales fuera de horario?',
         respuesta:
-          'En casos de detención o situaciones urgentes de defensa penal, contáctenos por WhatsApp indicando que es una emergencia. La Constitución de Honduras garantiza el derecho a un abogado desde el primer momento y a ser presentado ante un juez en 24 horas.',
+          'El horario de oficina es de lunes a sábado, de 7:00 a 20:00. Si hay una detención, escríbanos por WhatsApp indicando que es urgente. La Constitución de Honduras garantiza el derecho a un abogado desde el primer momento y a ser presentado ante un juez en 24 horas.',
       },
       {
         pregunta: '¿Atienden casos de San Lorenzo y Amapala?',
@@ -239,11 +234,6 @@ export const landingsLocales: LandingLocal[] = [
         respuesta:
           'Sí. Asesoramos en materia aduanera y de comercio exterior, incluyendo regímenes de importación y trámites relacionados con la frontera de Guasaule.',
       },
-      {
-        pregunta: '¿Cómo agendo una consulta siendo de Choluteca?',
-        respuesta:
-          'Puede coordinar por WhatsApp al +504 9536-3724 o por el formulario de la web. Acordamos el medio de atención (presencial en Nacaome o coordinación para diligencias en Choluteca) según su caso.',
-      },
     ],
     geo: { lat: 13.3, lng: -87.17 },
     // FASE 4 (§5) — Territorial: Choluteca se atiende DESDE Nacaome, sin sede local.
@@ -316,11 +306,6 @@ export const landingsLocales: LandingLocal[] = [
         respuesta:
           'Sí. Atendemos asuntos de derecho aduanero y comercio exterior vinculados a la actividad del puerto y las Zonas Libres de la región.',
       },
-      {
-        pregunta: '¿Cómo solicito un presupuesto por escrito?',
-        respuesta:
-          'Escríbanos por WhatsApp al +504 9536-3724 o use el formulario de contacto. Tras una primera evaluación, le entregamos un presupuesto por escrito del servicio.',
-      },
     ],
     geo: { lat: 13.42, lng: -87.45 },
     // FASE 4 (§5) — Territorial: San Lorenzo, principal puerto del sur, se
@@ -365,7 +350,6 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Tienen oficina en Goascorán?', respuesta: 'Nuestra sede está en Nacaome, a 35 km de Goascorán. Coordinamos diligencias en la zona y ofrecemos atención por WhatsApp y teléfono para casos en Goascorán y la región fronteriza.' },
       { pregunta: '¿Atienden casos penales en Goascorán?', respuesta: 'Sí. Asumimos la defensa penal en Goascorán y todo el departamento de Valle conforme al Código Penal hondureño vigente, incluyendo audiencias y medidas cautelares.' },
       { pregunta: '¿Cómo agendo una consulta desde Goascorán?', respuesta: 'Puede contactarnos por WhatsApp al +504 9536-3724 o mediante el formulario de esta web. Acordamos el medio de atención según la urgencia y tipo de caso.' },
-      { pregunta: '¿Cómo funciona la evaluación inicial?', respuesta: 'La evaluación inicial es confidencial. Puede contactarnos por WhatsApp al +504 9536-3724 o mediante el formulario de esta web; cuando se requiera representación formal, se entrega un presupuesto por escrito antes de iniciar.' },
     ],
     geo: { lat: 13.58, lng: -87.73 },
     // FASE 4 (§5) — Territorial: Goascorán, zona fronteriza con El Salvador,
@@ -414,9 +398,8 @@ export const landingsLocales: LandingLocal[] = [
     ],
     faqs: [
       { pregunta: '¿Tienen oficina en Pespire?', respuesta: 'Nuestra sede principal está en Nacaome, Valle. Atendemos a clientes de Pespire de forma remota con coordinación presencial cuando es necesario, a 70 km de distancia.' },
-      { pregunta: '¿Qué tipo de casos atienden en Pespire?', respuesta: 'Principalmente derecho de familia, laboral, penal y civil. También trámites notariales y asesoría en contratos y propiedad.' },
       { pregunta: '¿Cómo me contacto si vivo en Pespire?', respuesta: 'Por WhatsApp al +504 9536-3724 o mediante el formulario web. Podemos hacer la primera consulta por teléfono o videollamada para su comodidad.' },
-      { pregunta: '¿Cuánto cuesta una evaluación jurídica?', respuesta: 'Las condiciones de la evaluación dependen del tipo de asunto y del alcance solicitado. Tras la evaluación inicial, le entregamos un presupuesto por escrito para que decida con información antes de contratar.' },
+      { pregunta: '¿Cuánto cuesta una evaluación jurídica en Pespire?', respuesta: 'Las condiciones de la evaluación dependen del tipo de asunto y del alcance solicitado. Tras la evaluación inicial, le entregamos un presupuesto por escrito para que decida con información antes de contratar.' },
     ],
     geo: { lat: 13.59, lng: -87.36 },
     servedFrom: SEDE_CANONICA.descripcion,
@@ -449,7 +432,6 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Atienden en San Marcos de Colón?', respuesta: 'Sí. Aunque nuestra sede está en Nacaome, prestamos servicios a clientes de San Marcos de Colón con coordinación de diligencias en la zona fronteriza.' },
       { pregunta: '¿Manejan trámites aduaneros y fronterizos?', respuesta: 'Sí. Asesoramos en materia aduanera, comercio exterior y trámites relacionados con las fronteras de El Espino y Guasaule.' },
       { pregunta: '¿Ofrecen consulta a distancia?', respuesta: 'Sí. Puede iniciar su consulta por WhatsApp o teléfono. Si se requiere presencia, coordinamos el desplazamiento a San Marcos de Colón.' },
-      { pregunta: '¿Qué áreas del derecho cubren?', respuesta: 'Derecho penal, de familia, laboral, civil, mercantil y aduanero. Somos un bufete multidisciplinario del sur de Honduras.' },
     ],
     geo: { lat: 13.43, lng: -86.82 },
     // FASE 4 (§5) — Territorial: San Marcos de Colón, frontera con Nicaragua,
@@ -494,7 +476,6 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Tienen oficina en Marcovia?', respuesta: 'Nuestra sede está en Nacaome, a unos 60 km de Marcovia. Atendemos a clientes de Marcovia con coordinación remota y presencial cuando el caso lo requiere.' },
       { pregunta: '¿Atienden casos laborales en Marcovia?', respuesta: 'Sí. Reclamamos prestaciones, despidos injustificados y asesoramos a trabajadores de los sectores agrícola, camaronero y comercial de Marcovia.' },
       { pregunta: '¿Cómo inicio una evaluación legal?', respuesta: 'Contáctenos por WhatsApp al +504 9536-3724 o use el formulario web. La evaluación inicial es confidencial y, cuando se requiera representación formal, le entregamos un presupuesto por escrito.' },
-      { pregunta: '¿Cubren todo el departamento de Choluteca?', respuesta: 'Sí. Atendemos Marcovia, Choluteca, Pespire, San Marcos de Colón y demás municipios del departamento desde nuestra sede en Nacaome.' },
     ],
     geo: { lat: 13.28, lng: -87.31 },
     servedFrom: SEDE_CANONICA.descripcion,
@@ -525,9 +506,8 @@ export const landingsLocales: LandingLocal[] = [
     ],
     faqs: [
       { pregunta: '¿Tienen oficina en El Triunfo?', respuesta: 'Nuestra sede está en Nacaome, a 65 km de El Triunfo. Atendemos a clientes de El Triunfo con coordinación remota y presencial cuando es necesario.' },
-      { pregunta: '¿Qué servicios ofrecen en El Triunfo?', respuesta: 'Defensa penal, derecho de familia, laboral, civil y notarial. Somos un bufete multidisciplinario que cubre todo el sur de Honduras.' },
       { pregunta: '¿Cómo agendo una consulta desde El Triunfo?', respuesta: 'Por WhatsApp al +504 9536-3724 o mediante el formulario web. Podemos hacer la primera consulta por teléfono o videollamada.' },
-      { pregunta: '¿Cuánto cuesta una evaluación jurídica?', respuesta: 'Las condiciones de la evaluación dependen del tipo de asunto y del alcance solicitado. Tras la evaluación inicial, le entregamos un presupuesto por escrito para que decida con información antes de contratar.' },
+      { pregunta: '¿Cuánto cuesta una evaluación jurídica desde El Triunfo?', respuesta: 'Las condiciones de la evaluación dependen del tipo de asunto y del alcance solicitado. Tras la evaluación inicial, le entregamos un presupuesto por escrito para que decida con información antes de contratar.' },
     ],
     geo: { lat: 13.12, lng: -87.01 },
     // FASE 4 (§5) — Territorial: El Triunfo, sur de Choluteca cercano a la
@@ -574,9 +554,8 @@ export const landingsLocales: LandingLocal[] = [
     ],
     faqs: [
       { pregunta: '¿Tienen oficina en Namasigüe?', respuesta: 'Nuestra sede principal está en Nacaome, Valle, a 55 km de Namasigüe. Atendemos a clientes de Namasigüe de forma remota con coordinación presencial cuando es necesario.' },
-      { pregunta: '¿Qué tipo de casos atienden en Namasigüe?', respuesta: 'Principalmente derecho de familia, laboral, penal y civil. También trámites notariales y asesoría en contratos y propiedad.' },
       { pregunta: '¿Cómo me contacto si vivo en Namasigüe?', respuesta: 'Por WhatsApp al +504 9536-3724 o mediante el formulario web. Podemos hacer la primera consulta por teléfono para su comodidad.' },
-      { pregunta: '¿Cómo funciona la evaluación inicial?', respuesta: 'La evaluación inicial es confidencial. Puede contactarnos por WhatsApp al +504 9536-3724 o mediante el formulario de esta web; cuando se requiera representación formal, se entrega un presupuesto por escrito antes de iniciar.' },
+      { pregunta: '¿Cómo funciona la evaluación inicial desde Namasigüe?', respuesta: 'La evaluación inicial es confidencial. Puede contactarnos por WhatsApp al +504 9536-3724 o mediante el formulario de esta web; cuando se requiera representación formal, se entrega un presupuesto por escrito antes de iniciar.' },
     ],
     geo: { lat: 13.26, lng: -87.14 },
     servedFrom: SEDE_CANONICA.descripcion,
@@ -612,9 +591,8 @@ export const landingsLocales: LandingLocal[] = [
     ],
     faqs: [
       { pregunta: '¿Tienen oficina en Orocuina?', respuesta: 'Nuestra sede está en Nacaome, a 70 km de Orocuina. Atendemos a clientes de Orocuina de forma remota con coordinación presencial cuando es necesario.' },
-      { pregunta: '¿Qué servicios ofrecen en Orocuina?', respuesta: 'Defensa penal, derecho de familia, laboral, civil y notarial. Brindamos asesoría integral a residentes de Orocuina y todo Choluteca.' },
       { pregunta: '¿Cómo agendo una consulta desde Orocuina?', respuesta: 'Contáctenos por WhatsApp al +504 9536-3724 o use el formulario web. La evaluación inicial es confidencial y, cuando se requiera representación formal, le entregamos un presupuesto por escrito.' },
-      { pregunta: '¿Cubren todo el departamento de Choluteca?', respuesta: 'Sí. Atendemos Orocuina, Choluteca, Marcovia, El Triunfo, Namasigüe, Pespire, San Marcos de Colón y demás municipios del departamento.' },
+      { pregunta: '¿Se desplazan a Orocuina desde Nacaome?', respuesta: 'Sí. Coordinamos WhatsApp, teléfono y desplazamiento cuando el caso lo requiere. No hay sucursal en Orocuina: se atiende desde Nacaome.' },
     ],
     geo: { lat: 13.48, lng: -87.07 },
     servedFrom: SEDE_CANONICA.descripcion,
@@ -652,7 +630,6 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Tienen oficina en Amapala?', respuesta: 'Nuestra sede está en Nacaome, a unos 40 km de Amapala. Coordinamos la atención por teléfono, WhatsApp y podemos desplazarnos cuando el caso lo requiera.' },
       { pregunta: '¿Atienden casos urgentes en Amapala?', respuesta: 'Sí. Para detenciones o situaciones penales urgentes, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
       { pregunta: '¿Qué servicios ofrecen al sector pesquero?', respuesta: 'Asesoramos en derecho laboral, mercantil y civil a empresas y trabajadores del sector pesquero y portuario de Amapala y el Golfo de Fonseca.' },
-      { pregunta: '¿Cómo solicito una evaluación desde Amapala?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando que es de Amapala. La evaluación inicial es confidencial y, cuando se requiera representación formal, le entregamos un presupuesto por escrito antes de iniciar.' },
     ],
     geo: { lat: 13.3, lng: -87.65 },
     // FASE 4 (§5) — Territorial: Amapala (Isla del Tigre, Golfo de Fonseca),
@@ -695,7 +672,6 @@ export const landingsLocales: LandingLocal[] = [
     ],
     faqs: [
       { pregunta: '¿Tienen oficina en Langue?', respuesta: 'Nuestra sede principal está en Nacaome, a solo 22 km de Langue. Coordinamos diligencias en la zona y ofrecemos atención por WhatsApp y teléfono.' },
-      { pregunta: '¿Qué servicios ofrecen en Langue?', respuesta: 'Defensa penal, derecho de familia, laboral, civil y notarial. Brindamos asesoría integral a residentes de Langue y el departamento de Valle.' },
       { pregunta: '¿Cómo agendo una consulta desde Langue?', respuesta: 'Puede contactarnos por WhatsApp al +504 9536-3724 o mediante el formulario de esta web. Las condiciones de la evaluación inicial se confirman según el asunto; cuando se requiera representación formal, se entrega un presupuesto por escrito.' },
       { pregunta: '¿Atienden casos penales urgentes en Langue?', respuesta: 'Sí. Para detenciones o situaciones penales urgentes, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
     ],
@@ -739,7 +715,6 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Tienen oficina en Caridad?', respuesta: 'Nuestra sede física está en Nacaome, a unos 30 km de Caridad. Coordinamos la atención por WhatsApp y teléfono y nos desplazamos cuando el caso lo requiere.' },
       { pregunta: '¿Atienden casos penales en Caridad?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño vigente, incluyendo audiencia inicial, medidas cautelares y juicio oral.' },
       { pregunta: '¿Cómo solicito una consulta desde Caridad?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando que es de Caridad. Las condiciones de la evaluación inicial se confirman según el asunto; cuando se requiera representación formal, se entrega un presupuesto por escrito.' },
-      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones en la carretera del Litoral Pacífico o el casco urbano de Caridad, contáctenos de inmediato por WhatsApp. La Constitución de Honduras garantiza asistencia letrada desde el primer momento y a ser presentado ante un juez en 24 horas.' },
     ],
     geo: { lat: 13.74, lng: -87.46 },
     servedFrom: SEDE_CANONICA.descripcion,
@@ -775,7 +750,6 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Tienen oficina en Alianza?', respuesta: 'Nuestra sede está en Nacaome, a unos 25 km de Alianza. Coordinamos la atención por WhatsApp y teléfono y nos desplazamos cuando es necesario.' },
       { pregunta: '¿Atienden casos penales en Alianza?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño, desde la audiencia inicial hasta el juicio oral y los recursos.' },
       { pregunta: '¿Cómo solicito una consulta desde Alianza?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando que es de Alianza. Las condiciones de la evaluación inicial se confirman según el asunto; cuando se requiera representación formal, se entrega un presupuesto por escrito.' },
-      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones en la zona fronteriza de Alianza o el paso hacia Goascorán, contáctenos de inmediato por WhatsApp. La Constitución de Honduras garantiza asistencia letrada desde el primer momento y a ser presentado ante un juez en 24 horas.' },
     ],
     geo: { lat: 13.78, lng: -87.71 },
     servedFrom: SEDE_CANONICA.descripcion,
@@ -811,7 +785,6 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Tienen oficina en Concepción de María?', respuesta: 'Nuestra sede física está en Nacaome, Valle, a unos 65 km de Concepción de María. Coordinamos la atención por WhatsApp y nos desplazamos para audiencias y diligencias.' },
       { pregunta: '¿Atienden casos penales en Concepción de María?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño vigente, coordinando presencia en los juzgados de Choluteca.' },
       { pregunta: '¿Cómo solicito una consulta desde Concepción de María?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando su municipio. Las condiciones de la evaluación inicial se confirman según el asunto; cuando se requiera representación formal, se entrega un presupuesto por escrito.' },
-      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones en el sur de Choluteca o la ruta hacia San Marcos de Colón, contáctenos de inmediato por WhatsApp. La Constitución de Honduras garantiza asistencia letrada desde el primer momento y a ser presentado ante un juez en 24 horas.' },
     ],
     geo: { lat: 13.20, lng: -87.15 },
     servedFrom: SEDE_CANONICA.descripcion,
@@ -847,7 +820,6 @@ export const landingsLocales: LandingLocal[] = [
       { pregunta: '¿Tienen oficina en San Antonio de Flores?', respuesta: 'Nuestra sede física está en Nacaome, Valle, a unos 55 km de San Antonio de Flores. Coordinamos la atención por WhatsApp y nos desplazamos cuando el caso lo requiere.' },
       { pregunta: '¿Atienden casos penales en San Antonio de Flores?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño, coordinando presencia en los juzgados de Choluteca.' },
       { pregunta: '¿Cómo solicito una consulta desde San Antonio de Flores?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando su municipio. Las condiciones de la evaluación inicial se confirman según el asunto; cuando se requiera representación formal, se entrega un presupuesto por escrito.' },
-      { pregunta: '¿Atienden urgencias penales?', respuesta: 'Para detenciones en la zona oriental de Choluteca o la ruta a Pespiré, contáctenos de inmediato por WhatsApp. La Constitución de Honduras garantiza asistencia letrada desde el primer momento y a ser presentado ante un juez en 24 horas.' },
     ],
     geo: { lat: 13.45, lng: -87.30 },
     servedFrom: SEDE_CANONICA.descripcion,

@@ -52,6 +52,70 @@ const SERVICIO_SLUG_MAP: Record<string, string> = {
   'conciliación y arbitraje': '/servicios-juridicos/conciliacion-y-arbitraje',
 };
 
+function cityClosingCopy(landing: LandingLocal): {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+} {
+  switch (landing.slug) {
+    case 'nacaome':
+      return {
+        eyebrow: 'Oficina en Nacaome',
+        title: '¿Quiere visitarnos o escribirnos desde Nacaome?',
+        subtitle:
+          'Sede física y horario de lunes a sábado, de 7:00 a 20:00. Evaluación inicial confidencial y presupuesto por escrito. Si hay una detención, WhatsApp es el camino más rápido. Cómo llegar: cuadra y media al este de Hondutel.',
+      };
+    case 'choluteca':
+      return {
+        eyebrow: 'Atención desde Nacaome · Choluteca',
+        title: '¿Enfrenta un asunto penal o aduanero en Choluteca?',
+        subtitle:
+          'Coordinamos audiencias ante los juzgados de Choluteca y trámites ligados a Guasaule. No hay sucursal: se atiende desde Nacaome, con presupuesto por escrito. Si hay detención, escriba por WhatsApp.',
+      };
+    case 'san-lorenzo':
+      return {
+        eyebrow: 'Puerto y zona comercial · Valle',
+        title: '¿Necesita un abogado para un asunto en San Lorenzo?',
+        subtitle:
+          'Puerto y comercio del sur: laboral, mercantil o penal, según el caso. A unos 17 km de la sede en Nacaome. Habla con el abogado; el costo va por escrito.',
+      };
+    case 'goascoran':
+      return {
+        eyebrow: 'Zona fronteriza · Valle',
+        title: '¿Necesita un abogado cerca de Goascorán?',
+        subtitle:
+          'Atendemos desde Nacaome, a unos 35 km. Coordinamos diligencias en la zona fronteriza. Evaluación inicial confidencial y presupuesto por escrito.',
+      };
+    case 'san-marcos-de-colon':
+      return {
+        eyebrow: 'Frontera El Espino · Choluteca',
+        title: '¿Tiene un trámite fronterizo o un asunto en San Marcos de Colón?',
+        subtitle:
+          'Se atiende desde Nacaome. Coordinamos diligencias en la zona de El Espino. Evaluación inicial confidencial y presupuesto por escrito.',
+      };
+    case 'el-triunfo':
+      return {
+        eyebrow: 'Sur de Choluteca',
+        title: '¿Necesita un abogado en El Triunfo?',
+        subtitle:
+          'Se atiende desde Nacaome, a unos 65 km. Coordinamos WhatsApp, teléfono y desplazamiento cuando el caso lo pide. Presupuesto por escrito.',
+      };
+    case 'amapala':
+      return {
+        eyebrow: 'Isla y Golfo de Fonseca',
+        title: '¿Necesita un abogado en Amapala?',
+        subtitle:
+          'Se atiende desde Nacaome, a unos 40 km. Coordinamos por WhatsApp y nos desplazamos cuando el caso lo requiere. Presupuesto por escrito.',
+      };
+    default:
+      return {
+        eyebrow: `Evaluación inicial confidencial en ${landing.ciudad}`,
+        title: `¿Necesita un abogado en ${landing.ciudad}?`,
+        subtitle: `Se atiende ${landing.ciudad} desde Nacaome. Habla con el abogado, presupuesto por escrito y sin promesas de resultado.`,
+      };
+  }
+}
+
 /**
  * Renderiza una landing local de SEO ("/abogados-en-{ciudad}").
  * Es un Server Component reutilizable: cada página estática
@@ -62,6 +126,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
   const url = absoluteUrl(canonical);
   // Mensaje contextual para el CTAGroup del hero (Whats App pre-llenado).
   const whatsappMsg = whatsappMessageForCity(landing.ciudad);
+  const closing = cityClosingCopy(landing);
 
   // Schema: WebPage + Service (con areaServed por ciudad) + FAQPage +
   // BreadcrumbList específicos de la landing.
@@ -274,9 +339,9 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
           duales (WhatsApp + Llamar) los aporta el componente compartido. */}
       <ConsultationCTA
         variant="inline"
-        eyebrow={`Evaluación inicial confidencial en ${landing.ciudad}`}
-        title={`¿Necesita un abogado en ${landing.ciudad}?`}
-        subtitle={`Si hay una detención, un despido o un asunto de familia, cuéntenoslo con calma. Atendemos ${landing.ciudad}${landing.sedeFisica ? '' : ' y el resto de la zona sur'} desde Nacaome: habla con el abogado, presupuesto por escrito y sin promesas de resultado.`}
+        eyebrow={closing.eyebrow}
+        title={closing.title}
+        subtitle={closing.subtitle}
         message={whatsappMsg}
       />
 

@@ -8,6 +8,7 @@ import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { Scale, Shield, Clock, Gavel, Phone, MapPin } from 'lucide-react';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { RelatedCities } from '@/components/marketing/related-links';
+import { CargoHubBridge } from '@/components/marketing/cargo-hub-bridge';
 
 /**
  * Landing comercial — Abogado Penalista en Choluteca.
@@ -98,6 +99,15 @@ export default async function AbogadoPenalistaCholutecaPage() {
           <CTAGroup variant="inverse" message={whatsappMsg} phone={FOUNDER_PROFILE.phone} phoneDisplay={FOUNDER_PROFILE.phoneDisplay} contactName="Danilo" />
         </Container>
       </section>
+
+      <CargoHubBridge
+        hubHref="/derecho-penal"
+        hubLabel="Ver la defensa penal completa"
+        title="La explicación completa de la defensa está en Derecho Penal"
+        body="Esta página orienta la búsqueda local en Choluteca. Etapas, documentos y estrategia de defensa están en el hub. Danilo Pineda Maradiaga atiende el área; el presupuesto va por escrito."
+        profileHref="/equipo/danilo-pineda-maradiaga"
+        profileLabel="Perfil de Danilo"
+      />
 
       {/* Intro — bloque declarativo GEO */}
       <Section background="default" spacing="md">

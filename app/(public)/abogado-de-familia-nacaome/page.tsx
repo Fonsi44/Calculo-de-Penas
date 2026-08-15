@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { RelatedCities } from '@/components/marketing/related-links';
+import { CargoHubBridge } from '@/components/marketing/cargo-hub-bridge';
 import { Heart, Users, Baby, FileText, Phone } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -62,6 +63,15 @@ export default async function AbogadoDeFamiliaNacaomePage() {
           <CTAGroup variant="inverse" message={whatsappMsg} phone={THANIA_PROFILE.phone} phoneDisplay={THANIA_PROFILE.phoneDisplay} contactName="Thania" />
         </Container>
       </section>
+
+      <CargoHubBridge
+        hubHref="/servicios-juridicos/derecho-de-familia"
+        hubLabel="Ver el servicio de familia completo"
+        title="La explicación completa del servicio está en Derecho de Familia"
+        body="Esta página orienta la búsqueda local en Nacaome. Divorcio, custodia, pensión y el recorrido del trámite están en el hub. Thania Marlene Paz atiende el área; el presupuesto va por escrito."
+        profileHref="/equipo/thania-marlene-paz"
+        profileLabel="Perfil de Thania"
+      />
 
       <Section background="default" spacing="md">
         <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary mb-4">

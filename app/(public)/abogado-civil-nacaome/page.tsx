@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { RelatedCities } from '@/components/marketing/related-links';
+import { CargoHubBridge } from '@/components/marketing/cargo-hub-bridge';
 import { FileText, Home, ScrollText, Scale, Phone } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -62,6 +63,15 @@ export default async function AbogadoCivilNacaomePage() {
           <CTAGroup variant="inverse" message={whatsappMsg} phone={THANIA_PROFILE.phone} phoneDisplay={THANIA_PROFILE.phoneDisplay} contactName="Thania" />
         </Container>
       </section>
+
+      <CargoHubBridge
+        hubHref="/servicios-juridicos/derecho-civil-y-notarial"
+        hubLabel="Ver el servicio civil y notarial completo"
+        title="La explicación completa del servicio está en Derecho Civil"
+        body="Esta página orienta la búsqueda local en Nacaome. Contratos, herencias y trámites notariales están en el hub. Thania Marlene Paz atiende el área; el presupuesto va por escrito."
+        profileHref="/equipo/thania-marlene-paz"
+        profileLabel="Perfil de Thania"
+      />
 
       <Section background="default" spacing="md">
         <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary mb-4">
