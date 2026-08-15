@@ -75,6 +75,7 @@ describe('superficies públicas sin claims no confirmados', () => {
     'data/landings-locales.ts',
     'data/landings-cargo.ts',
     'data/blog/articles/detencion-familiar-nacaome-primeras-horas.ts',
+    'data/blog/articles/audiencia-inicial-juzgados-valle.ts',
     'lib/lead-magnet-pdf.tsx',
     'lib/blog-generated-cta.ts',
     'lib/page-content-db.ts',

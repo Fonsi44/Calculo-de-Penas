@@ -14,6 +14,7 @@ export const MID_POST_CTA_SLUGS: ReadonlySet<string> = new Set([
   'pension-alimenticia-honduras-como-solicitarla',
   'que-hacer-si-me-detienen-en-honduras',
   'detencion-familiar-nacaome-primeras-horas',
+  'audiencia-inicial-juzgados-valle',
   'medidas-sustitutivas-prision-preventiva-honduras',
   'derechos-detenido-honduras-guia-constitucional',
   'calcular-prestaciones-laborales-honduras',
