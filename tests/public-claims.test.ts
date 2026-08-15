@@ -14,6 +14,7 @@ const publicClaimFiles = [
   'app/(public)/derecho-penal/page.tsx',
   'app/(public)/abogado-penalista-nacaome/page.tsx',
   'app/(public)/abogado-penalista-choluteca/page.tsx',
+  'data/landings-cargo.ts',
   'app/(public)/blog/[categoria]/[slug]/page.tsx',
   'app/(public)/servicios-juridicos/[slug]/page.tsx',
   'components/marketing/public-footer.tsx',

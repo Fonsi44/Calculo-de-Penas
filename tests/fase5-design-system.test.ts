@@ -143,12 +143,15 @@ describe('FASE 5 §4 — RespuestaDirecta alineada con AnswerBlock', () => {
 // §5 LandingLocalView delega FAQ en HubFaq (sin FAQPage duplicado)
 // ---------------------------------------------------------------------------
 
-describe('FASE 5 §5 — LandingLocalView delega FAQ en HubFaq', () => {
+describe('FASE 5 §5 — LandingLocalView delega FAQ en LocalFaq → HubFaq', () => {
   const ll = readComponent('landing-local.tsx');
+  const localFaq = readComponent('local-faq.tsx');
 
-  it('importa y usa HubFaq', () => {
-    expect(ll).toMatch(/import.*HubFaq.*from.*'@\/components\/marketing\/hub-faq'/);
-    expect(ll).toMatch(/<HubFaq/);
+  it('importa y usa LocalFaq; LocalFaq delega en HubFaq', () => {
+    expect(ll).toMatch(/import.*LocalFaq.*from.*'@\/components\/marketing\/local-faq'/);
+    expect(ll).toMatch(/<LocalFaq/);
+    expect(localFaq).toMatch(/import.*HubFaq.*from.*'@\/components\/marketing\/hub-faq'/);
+    expect(localFaq).toMatch(/<HubFaq/);
   });
 
   it('NO conserva el FAQPage manual en ldSchemas (lo emite HubFaq)', () => {

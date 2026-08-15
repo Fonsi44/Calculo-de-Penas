@@ -73,6 +73,7 @@ describe('superficies públicas sin claims no confirmados', () => {
     'lib/faq-db.ts',
     'data/faqs-hubs.ts',
     'data/landings-locales.ts',
+    'data/landings-cargo.ts',
     'lib/lead-magnet-pdf.tsx',
     'lib/blog-generated-cta.ts',
     'lib/page-content-db.ts',

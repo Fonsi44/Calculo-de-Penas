@@ -6,7 +6,8 @@ import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
-import { HubFaq } from '@/components/marketing/hub-faq';
+import { LocalFaq } from '@/components/marketing/local-faq';
+import { isLandingNoindex } from '@/lib/seo/public-indexability';
 import { IconBadge } from '@/components/marketing/icon-badge';
 import { type LandingLocal } from '@/data/landings-locales';
 import { ViewLocalPageTracker } from '@/components/marketing/view-local-page-tracker';
@@ -241,6 +242,45 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
         </div>
       </Section>
 
+      {!isLandingNoindex(landing.slug) &&
+        ((landing.localContext && landing.localContext.length > 0) ||
+          (landing.institutions && landing.institutions.length > 0)) && (
+        <Section background="muted" spacing="sm">
+          <div className="max-w-3xl">
+            <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-2">
+              Contexto local verificable
+            </p>
+            <h2 className="font-serif font-extrabold text-xl md:text-2xl text-primary mb-3">
+              {`Por qué ${landing.ciudad} se atiende así`}
+            </h2>
+            {landing.localContext && landing.localContext.length > 0 && (
+              <ul className="list-disc pl-5 space-y-1 text-sm text-text-secondary">
+                {landing.localContext.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            )}
+            {landing.institutions && landing.institutions.length > 0 && (
+              <ul className="mt-3 space-y-1 text-sm text-text-secondary">
+                {landing.institutions.map((item) => (
+                  <li key={item.name}>
+                    <span className="font-semibold text-text">{item.name}.</span> {item.role}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {landing.slug === 'nacaome' && (
+              <Link
+                href="/como-llegar"
+                className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+              >
+                Cómo llegar a la oficina en Nacaome <ArrowRight size={14} />
+              </Link>
+            )}
+          </div>
+        </Section>
+      )}
+
       {/* Servicios */}
       <Section background="muted" spacing="md">
         <SectionHeader
@@ -291,15 +331,13 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
         </div>
       </Section>
 
-      {/* FAQ local — FASE 5: delega en HubFaq canónico (acordeón + JSON-LD).
-          Antes eran Cards border-l-accent siempre abiertas + FAQPage manual
-          duplicado en ldSchemas. HubFaq emite el FAQPage con mismo @id. */}
-      <HubFaq
+      {/* FAQ local — máx. 3, misma fuente visible y schema vía LocalFaq → HubFaq. */}
+      <LocalFaq
         faqs={landing.faqs}
         url={url}
         id="preguntas-frecuentes"
         eyebrow="Preguntas frecuentes"
-        title={`Dudas comunes sobre abogados en ${landing.ciudad}`}
+        title={`Dudas locales sobre abogados en ${landing.ciudad}`}
       />
 
       {/* Artículos relacionados (enlazado interno landing ↔ blog) */}
