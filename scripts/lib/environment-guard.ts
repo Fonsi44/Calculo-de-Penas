@@ -5,8 +5,9 @@
  * ABORTA cualquier operación de escritura cuando detecta producción o un
  * entorno desconocido (fail-closed). Los scripts de datos deben:
  *
- *   - rechazar producción salvo bandera de autorización explícita que NO se
- *     usa en esta intervención;
+ *   - rechazar producción salvo bandera explícita por script
+ *     (`allowProductionWriteEnv`, p. ej. ALLOW_PRODUCTION_EDITORIAL_UPSERT)
+ *     y solo si DATABASE_URL es el endpoint Neon de producción conocido;
  *   - permitir dry-run por defecto;
  *   - no revelar secretos en logs.
  *
@@ -18,6 +19,9 @@ import { config as dotenvConfig } from 'dotenv';
 import { resolve } from 'node:path';
 
 export type EnvKind = 'local' | 'staging' | 'production' | 'unknown';
+
+/** Bandera de escritura editorial en producción. Nunca se asume; debe ser `true`. */
+export const PRODUCTION_EDITORIAL_UPSERT_FLAG = 'ALLOW_PRODUCTION_EDITORIAL_UPSERT';
 
 /** Endpoints Neon conocidos (sin secretos). Se actualizan si cambian. */
 const KNOWN_ENDPOINTS: Record<string, EnvKind> = {
@@ -35,6 +39,12 @@ const LOCAL_HOSTS = new Set([
   'db',
   'postgres',
 ]);
+
+/** True solo si la URL apunta al endpoint Neon de producción conocido. */
+function isKnownProductionDatabaseUrl(url?: string): boolean {
+  const endpoint = endpointFromUrl(url);
+  return Boolean(endpoint && KNOWN_ENDPOINTS[endpoint] === 'production');
+}
 
 /** Normaliza el host sin puerto ni sufijo pooler para comparar endpoints. */
 export function endpointFromUrl(url?: string): string | null {
@@ -151,13 +161,28 @@ export function describeEnvironment(
  * Aborta si el entorno es producción o desconocido (tratado como producción).
  * `write` = true para operaciones de escritura; `read` = true para lectura
  * (solo lectura permitida en staging).
+ *
+ * Escritura en producción: solo si el caller pasa `allowProductionWriteEnv`,
+ * esa variable vale exactamente `true`, y DATABASE_URL es el endpoint conocido.
+ * Un endpoint desconocido (fail-closed como production) nunca se autoriza.
  */
 export function assertAllowedEnvironment(
   context: string,
-  opts: { write: boolean; read?: boolean } = { write: true },
+  opts: {
+    write: boolean;
+    read?: boolean;
+    allowProductionWriteEnv?: string;
+  } = { write: true },
 ): EnvInspection {
   const inspection = inspectEnvironment();
-  const blocked = inspection.kind === 'production' || inspection.kind === 'unknown';
+  const productionWriteAuthorized = Boolean(
+    opts.write
+    && opts.allowProductionWriteEnv
+    && process.env[opts.allowProductionWriteEnv] === 'true'
+    && isKnownProductionDatabaseUrl(process.env.DATABASE_URL),
+  );
+  const blocked = (inspection.kind === 'production' || inspection.kind === 'unknown')
+    && !productionWriteAuthorized;
   if (blocked) {
     throw new Error(
       `[environment-guard] Operación ${opts.write ? 'de ESCRITURA' : 'de LECTURA'} `
