@@ -14,6 +14,7 @@ export const MID_POST_CTA_SLUGS: ReadonlySet<string> = new Set([
   'pension-alimenticia-honduras-como-solicitarla',
   'que-hacer-si-me-detienen-en-honduras',
   'detencion-familiar-nacaome-primeras-horas',
+  'audiencia-inicial-juzgados-valle',
   'pension-alimenticia-nacaome-documentos',
   'custodia-visitas-juzgado-valle',
   'despido-valle-documentos-evaluacion',

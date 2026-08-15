@@ -4,7 +4,7 @@
  * Carga todos los módulos del directorio; --slug filtra uno.
  *
  *   npx tsx scripts/upsert-editorial-article.ts
- *   npx tsx scripts/upsert-editorial-article.ts --slug pension-alimenticia-nacaome-documentos
+ *   npx tsx scripts/upsert-editorial-article.ts --slug audiencia-inicial-juzgados-valle
  *   npx tsx scripts/upsert-editorial-article.ts --aplicar   # solo local/staging autorizado
  */
 import { readdirSync } from 'node:fs';

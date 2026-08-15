@@ -3,11 +3,21 @@ import { CONTRATO_COMPRAVENTA_NACAOME_REVISION_ARTICLE } from '@/data/blog/artic
 import { CUSTODIA_VISITAS_JUZGADO_VALLE_ARTICLE } from '@/data/blog/articles/custodia-visitas-juzgado-valle';
 import { DEFENSA_PENAL_CHOLUTECA_DESDE_NACAOME_ARTICLE } from '@/data/blog/articles/defensa-penal-choluteca-desde-nacaome';
 import { DESPIDO_VALLE_DOCUMENTOS_EVALUACION_ARTICLE } from '@/data/blog/articles/despido-valle-documentos-evaluacion';
+import { EDITORIAL_ARTICLES, getEditorialArticle } from '@/data/blog/articles';
 import { PENSION_ALIMENTICIA_NACAOME_DOCUMENTOS_ARTICLE } from '@/data/blog/articles/pension-alimenticia-nacaome-documentos';
 import { PREPARAR_VISITA_OFICINA_NACAOME_ARTICLE } from '@/data/blog/articles/preparar-visita-oficina-nacaome';
 import { PRESTACIONES_PUERTO_SAN_LORENZO_ARTICLE } from '@/data/blog/articles/prestaciones-puerto-san-lorenzo';
 import { TRAMITE_ADUANERO_GUASAULE_ABOGADO_ARTICLE } from '@/data/blog/articles/tramite-aduanero-guasaule-abogado';
 import { scanProhibitedClaims } from '@/lib/marketing-policy';
+
+describe('catálogo editorial Sprint 3', () => {
+  it('registra los 10 slugs del backlog', () => {
+    expect(EDITORIAL_ARTICLES).toHaveLength(10);
+    expect(getEditorialArticle('preparar-visita-oficina-nacaome').slug).toBe(
+      'preparar-visita-oficina-nacaome',
+    );
+  });
+});
 
 const CASES = [
   {
