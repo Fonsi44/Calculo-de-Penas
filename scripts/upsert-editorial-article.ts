@@ -1,21 +1,39 @@
 /**
  * Upsert de artículos editoriales versionados en data/blog/articles/.
  * Dry-run por defecto. Rechaza producción (environment-guard).
+ * Carga todos los módulos del directorio; --slug filtra uno.
  *
  *   npx tsx scripts/upsert-editorial-article.ts
  *   npx tsx scripts/upsert-editorial-article.ts --slug audiencia-inicial-juzgados-valle
  *   npx tsx scripts/upsert-editorial-article.ts --aplicar   # solo local/staging autorizado
  */
+import { readdirSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { neon } from '@neondatabase/serverless';
-import {
-  EDITORIAL_ARTICLES,
-  getEditorialArticle,
-  type EditorialArticle,
-} from '@/data/blog/articles';
 import {
   assertAllowedEnvironment,
   loadEnvFile,
 } from './lib/environment-guard';
+
+type EditorialArticle = {
+  slug: string;
+  title: string;
+  description: string;
+  body: string;
+  category: string;
+  tags: readonly string[];
+  author: string;
+  readingTime: string;
+  coverImage: string;
+  published: boolean;
+  noindex: boolean;
+  reviewStatus: string;
+  canonicalPath: string;
+  publishedAt: string;
+  metaTitle: string;
+  metaDescription: string;
+};
 
 const APPLY = process.argv.includes('--aplicar');
 const slugFlag = process.argv.find((arg) => arg.startsWith('--slug='));
@@ -25,6 +43,28 @@ const requestedSlug = slugFlag
   : slugIndex >= 0
     ? process.argv[slugIndex + 1]
     : undefined;
+
+function isArticle(value: unknown): value is EditorialArticle {
+  if (!value || typeof value !== 'object') return false;
+  const item = value as Record<string, unknown>;
+  return typeof item.slug === 'string'
+    && typeof item.body === 'string'
+    && typeof item.canonicalPath === 'string'
+    && typeof item.publishedAt === 'string';
+}
+
+async function loadArticles(): Promise<EditorialArticle[]> {
+  const dir = resolve(process.cwd(), 'data/blog/articles');
+  const files = readdirSync(dir).filter((file) => file.endsWith('.ts') && file !== 'index.ts');
+  const articles: EditorialArticle[] = [];
+  for (const file of files) {
+    const mod = await import(pathToFileURL(resolve(dir, file)).href) as Record<string, unknown>;
+    for (const value of Object.values(mod)) {
+      if (isArticle(value)) articles.push(value);
+    }
+  }
+  return articles;
+}
 
 function toPayload(article: EditorialArticle) {
   return {
@@ -49,9 +89,14 @@ function toPayload(article: EditorialArticle) {
 
 async function main() {
   loadEnvFile(process.env.ENV_FILE);
+  const loaded = await loadArticles();
   const articles = requestedSlug
-    ? [getEditorialArticle(requestedSlug)]
-    : [...EDITORIAL_ARTICLES];
+    ? loaded.filter((article) => article.slug === requestedSlug)
+    : loaded;
+
+  if (requestedSlug && articles.length === 0) {
+    throw new Error(`Artículo editorial no registrado: ${requestedSlug}`);
+  }
 
   console.log(JSON.stringify({
     mode: APPLY ? 'aplicar' : 'dry-run',
