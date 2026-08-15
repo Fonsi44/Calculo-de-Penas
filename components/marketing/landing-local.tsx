@@ -11,6 +11,7 @@ import { IconBadge } from '@/components/marketing/icon-badge';
 import { type LandingLocal } from '@/data/landings-locales';
 import { ViewLocalPageTracker } from '@/components/marketing/view-local-page-tracker';
 import { PUBLIC_SERVICE_CATALOG } from '@/lib/public-service-catalog';
+import { whatsappMessageForCity } from '@/lib/whatsapp-messages';
 
 /**
  * Mapa de títulos de servicio (en landings-locales.ts) → slug de área en
@@ -60,7 +61,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
   const canonical = landing.path ?? `/abogados-en-${landing.slug}`;
   const url = absoluteUrl(canonical);
   // Mensaje contextual para el CTAGroup del hero (Whats App pre-llenado).
-  const whatsappMsg = `Hola, soy de ${landing.ciudad} y necesito una consulta jurídica. Vi su sitio web.`;
+  const whatsappMsg = whatsappMessageForCity(landing.ciudad);
 
   // Schema: WebPage + Service (con areaServed por ciudad) + FAQPage +
   // BreadcrumbList específicos de la landing.
@@ -275,7 +276,8 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
         variant="inline"
         eyebrow={`Evaluación inicial confidencial en ${landing.ciudad}`}
         title={`¿Necesita un abogado en ${landing.ciudad}?`}
-        subtitle={`Cada caso es único. Cuéntenos el suyo y le orientamos con discreción. Atendemos en ${landing.ciudad}, Honduras${landing.sedeFisica ? '' : ', y en toda la zona sur'}, con presupuesto por escrito antes de cualquier actuación.`}
+        subtitle={`Si hay una detención, un despido o un asunto de familia, cuéntenoslo con calma. Atendemos ${landing.ciudad}${landing.sedeFisica ? '' : ' y el resto de la zona sur'} desde Nacaome: habla con el abogado, presupuesto por escrito y sin promesas de resultado.`}
+        message={whatsappMsg}
       />
 
       {ldSchemas.map((schema, i) => (

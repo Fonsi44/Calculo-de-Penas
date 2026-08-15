@@ -30,6 +30,8 @@ interface ConsultationCTAProps {
   subtitle?: string;
   /** Sobrescribe el eyebrow. */
   eyebrow?: string;
+  /** Mensaje de WhatsApp contextual (ciudad, área o página). */
+  message?: string;
   className?: string;
 }
 
@@ -38,6 +40,7 @@ export function ConsultationCTA({
   title,
   subtitle,
   eyebrow,
+  message,
   className,
 }: ConsultationCTAProps) {
   const defaultEyebrow = 'Evaluación confidencial en Nacaome, Valle';
@@ -57,7 +60,7 @@ export function ConsultationCTA({
               {subtitle ?? 'Evaluación confidencial. Presupuesto por escrito. Atención directa del abogado responsable.'}
             </p>
             <div className="mt-5 flex justify-center">
-              <CTAGroup variant="inline" />
+              <CTAGroup variant="inline" message={message} />
             </div>
           </div>
         </Container>
@@ -78,7 +81,7 @@ export function ConsultationCTA({
               {subtitle ?? 'Evaluamos su caso con rigor técnico y le explicamos las opciones legales disponibles, con presupuesto por escrito y bajo secreto profesional.'}
             </p>
             <div className="mt-6 flex justify-center">
-              <CTAGroup variant="inline" />
+              <CTAGroup variant="inline" message={message} />
             </div>
           </div>
         </Container>
@@ -109,7 +112,7 @@ export function ConsultationCTA({
               {subtitle ?? defaultSubtitle}
             </p>
             <div className="mt-7 flex justify-center">
-              <CTAGroup variant="inline" />
+              <CTAGroup variant="inline" message={message} />
             </div>
           </div>
         </div>

@@ -45,7 +45,7 @@ const PREFIX_MESSAGES: Array<{ prefix: string; message: string }> = [
   },
   {
     prefix: '/abogados-en-',
-    message: 'Hola, necesito un abogado en mi ciudad. Escribo desde una página local.',
+    message: 'Hola, necesito un abogado en mi ciudad. Quiero una evaluación inicial confidencial.',
   },
   {
     prefix: '/blog/',
@@ -57,12 +57,32 @@ const PREFIX_MESSAGES: Array<{ prefix: string; message: string }> = [
   },
 ];
 
+export function whatsappMessageForCity(ciudad: string): string {
+  const city = ciudad.trim();
+  if (!city) return DEFAULT_MESSAGE;
+  return `Hola, soy de ${city} y necesito orientación jurídica. Quiero una evaluación inicial confidencial. Vi su página de abogados en ${city}.`;
+}
+
 export function whatsappMessageForPath(pathname: string | null | undefined): string {
   if (!pathname) return DEFAULT_MESSAGE;
   const path = pathname.split('?')[0]?.split('#')[0] || '/';
   if (EXACT_MESSAGES[path]) return EXACT_MESSAGES[path];
+  const cityFromSlug = cityFromLocalPath(path);
+  if (cityFromSlug && path.startsWith('/abogados-en-')) {
+    return whatsappMessageForCity(cityFromSlug);
+  }
   const match = PREFIX_MESSAGES.find((entry) => path.startsWith(entry.prefix));
   return match?.message ?? DEFAULT_MESSAGE;
+}
+
+function cityFromLocalPath(path: string): string | null {
+  const match = path.match(/^\/(?:abogados-en|abogado-penalista)-([^/?#]+)/);
+  if (!match?.[1]) return null;
+  return match[1]
+    .split('-')
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
 }
 
 export function isPenalUrgencyPath(pathname: string | null | undefined): boolean {

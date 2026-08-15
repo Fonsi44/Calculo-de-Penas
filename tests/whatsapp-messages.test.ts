@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isPenalUrgencyPath, whatsappMessageForPath } from '@/lib/whatsapp-messages';
+import { isPenalUrgencyPath, whatsappMessageForCity, whatsappMessageForPath } from '@/lib/whatsapp-messages';
 
 describe('mensajes de WhatsApp por ruta', () => {
   it('devuelve un mensaje específico para defensa penal', () => {
@@ -9,7 +9,9 @@ describe('mensajes de WhatsApp por ruta', () => {
   });
 
   it('usa un mensaje local para landings de ciudad', () => {
-    expect(whatsappMessageForPath('/abogados-en-nacaome')).toMatch(/página local/i);
+    expect(whatsappMessageForPath('/abogados-en-nacaome')).toMatch(/nacaome/i);
+    expect(whatsappMessageForPath('/abogados-en-nacaome')).toMatch(/evaluación inicial confidencial/i);
+    expect(whatsappMessageForCity('San Lorenzo')).toMatch(/San Lorenzo/);
     expect(whatsappMessageForPath('/abogado-penalista-choluteca')).toMatch(/penalista/i);
     expect(isPenalUrgencyPath('/abogado-penalista-nacaome')).toBe(true);
   });
