@@ -176,6 +176,7 @@ export const landingsLocales: LandingLocal[] = [
     ],
     postsRelacionados: [
       { categoria: 'practica-legal', slug: 'tramites-legales-nacaome', titulo: 'Trámites legales en Nacaome, Valle' },
+      { categoria: 'derecho-penal', slug: 'detencion-familiar-nacaome-primeras-horas', titulo: 'Si detienen a un familiar en Nacaome: primeras horas' },
     ],
   },
   {
