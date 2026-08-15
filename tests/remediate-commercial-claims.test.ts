@@ -83,6 +83,42 @@ describe('guardián de entorno — rechaza producción', () => {
       expect(() => assertAllowedEnvironment('test', { write: true })).not.toThrow();
     });
   });
+
+  it('sigue bloqueando producción si la bandera editorial está activa pero el caller no la pide', () => {
+    withEnv({
+      APP_ENV: undefined,
+      ALLOW_PRODUCTION_EDITORIAL_UPSERT: 'true',
+      DATABASE_URL: 'postgresql://user:pass@ep-super-leaf-appekgbu.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require',
+    }, () => {
+      expect(() => assertAllowedEnvironment('test', { write: true })).toThrow(/producci[oó]n/i);
+    });
+  });
+
+  it('bloquea producción con bandera si el endpoint no es el conocido', () => {
+    withEnv({
+      APP_ENV: undefined,
+      ALLOW_PRODUCTION_EDITORIAL_UPSERT: 'true',
+      DATABASE_URL: 'postgresql://user:pass@ep-random-endpoint.c-1.aws.neon.tech/db',
+    }, () => {
+      expect(() => assertAllowedEnvironment('test', {
+        write: true,
+        allowProductionWriteEnv: 'ALLOW_PRODUCTION_EDITORIAL_UPSERT',
+      })).toThrow(/producci[oó]n/i);
+    });
+  });
+
+  it('permite escritura en producción conocida solo con bandera explícita del caller', () => {
+    withEnv({
+      APP_ENV: undefined,
+      ALLOW_PRODUCTION_EDITORIAL_UPSERT: 'true',
+      DATABASE_URL: 'postgresql://user:pass@ep-super-leaf-appekgbu.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require',
+    }, () => {
+      expect(() => assertAllowedEnvironment('upsert-editorial-article', {
+        write: true,
+        allowProductionWriteEnv: 'ALLOW_PRODUCTION_EDITORIAL_UPSERT',
+      })).not.toThrow();
+    });
+  });
 });
 
 // ── Comportamiento por defecto: dry-run ──────────────────────────────────────

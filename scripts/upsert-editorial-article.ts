@@ -1,17 +1,21 @@
 /**
  * Upsert de artículos editoriales versionados en data/blog/articles/.
- * Dry-run por defecto. Rechaza producción (environment-guard).
+ * Dry-run por defecto. Rechaza producción salvo ALLOW_PRODUCTION_EDITORIAL_UPSERT=true
+ * y DATABASE_URL del endpoint Neon de producción conocido.
  * Carga todos los módulos del directorio; --slug filtra uno.
  *
  *   npx tsx scripts/upsert-editorial-article.ts
  *   npx tsx scripts/upsert-editorial-article.ts --slug audiencia-inicial-juzgados-valle
- *   npx tsx scripts/upsert-editorial-article.ts --aplicar   # solo local/staging autorizado
+ *   npx tsx scripts/upsert-editorial-article.ts --aplicar   # local/staging autorizado
+ *   ALLOW_PRODUCTION_EDITORIAL_UPSERT=true ENV_FILE=.env \\
+ *     npx tsx scripts/upsert-editorial-article.ts --aplicar
  */
 import { readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { neon } from '@neondatabase/serverless';
 import {
+  PRODUCTION_EDITORIAL_UPSERT_FLAG,
   assertAllowedEnvironment,
   loadEnvFile,
 } from './lib/environment-guard';
@@ -109,7 +113,10 @@ async function main() {
     return;
   }
 
-  assertAllowedEnvironment('upsert-editorial-article', { write: true });
+  assertAllowedEnvironment('upsert-editorial-article', {
+    write: true,
+    allowProductionWriteEnv: PRODUCTION_EDITORIAL_UPSERT_FLAG,
+  });
   const url = process.env.DATABASE_URL;
   if (!url) throw new Error('DATABASE_URL ausente.');
   const sql = neon(url);
