@@ -41,7 +41,7 @@ const LOCAL_HOSTS = new Set([
 ]);
 
 /** True solo si la URL apunta al endpoint Neon de producción conocido. */
-export function isKnownProductionDatabaseUrl(url?: string): boolean {
+function isKnownProductionDatabaseUrl(url?: string): boolean {
   const endpoint = endpointFromUrl(url);
   return Boolean(endpoint && KNOWN_ENDPOINTS[endpoint] === 'production');
 }
