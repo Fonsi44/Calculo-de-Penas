@@ -6,7 +6,8 @@ import { Card } from '@/components/ui/card';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
-import { HubFaq } from '@/components/marketing/hub-faq';
+import { LocalFaq } from '@/components/marketing/local-faq';
+import { isLandingNoindex } from '@/lib/seo/public-indexability';
 import { IconBadge } from '@/components/marketing/icon-badge';
 import { type LandingLocal } from '@/data/landings-locales';
 import { ViewLocalPageTracker } from '@/components/marketing/view-local-page-tracker';
@@ -52,6 +53,70 @@ const SERVICIO_SLUG_MAP: Record<string, string> = {
   'conciliación y arbitraje': '/servicios-juridicos/conciliacion-y-arbitraje',
 };
 
+function cityClosingCopy(landing: LandingLocal): {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+} {
+  switch (landing.slug) {
+    case 'nacaome':
+      return {
+        eyebrow: 'Oficina en Nacaome',
+        title: '¿Quiere visitarnos o escribirnos desde Nacaome?',
+        subtitle:
+          'Sede física y horario de lunes a sábado, de 7:00 a 20:00. Evaluación inicial confidencial y presupuesto por escrito. Si hay una detención, WhatsApp es el camino más rápido. Cómo llegar: cuadra y media al este de Hondutel.',
+      };
+    case 'choluteca':
+      return {
+        eyebrow: 'Atención desde Nacaome · Choluteca',
+        title: '¿Enfrenta un asunto penal o aduanero en Choluteca?',
+        subtitle:
+          'Coordinamos audiencias ante los juzgados de Choluteca y trámites ligados a Guasaule. No hay sucursal: se atiende desde Nacaome, con presupuesto por escrito. Si hay detención, escriba por WhatsApp.',
+      };
+    case 'san-lorenzo':
+      return {
+        eyebrow: 'Puerto y zona comercial · Valle',
+        title: '¿Necesita un abogado para un asunto en San Lorenzo?',
+        subtitle:
+          'Puerto y comercio del sur: laboral, mercantil o penal, según el caso. A unos 17 km de la sede en Nacaome. Habla con el abogado; el costo va por escrito.',
+      };
+    case 'goascoran':
+      return {
+        eyebrow: 'Zona fronteriza · Valle',
+        title: '¿Necesita un abogado cerca de Goascorán?',
+        subtitle:
+          'Atendemos desde Nacaome, a unos 35 km. Coordinamos diligencias en la zona fronteriza. Evaluación inicial confidencial y presupuesto por escrito.',
+      };
+    case 'san-marcos-de-colon':
+      return {
+        eyebrow: 'Frontera El Espino · Choluteca',
+        title: '¿Tiene un trámite fronterizo o un asunto en San Marcos de Colón?',
+        subtitle:
+          'Se atiende desde Nacaome. Coordinamos diligencias en la zona de El Espino. Evaluación inicial confidencial y presupuesto por escrito.',
+      };
+    case 'el-triunfo':
+      return {
+        eyebrow: 'Sur de Choluteca',
+        title: '¿Necesita un abogado en El Triunfo?',
+        subtitle:
+          'Se atiende desde Nacaome, a unos 65 km. Coordinamos WhatsApp, teléfono y desplazamiento cuando el caso lo pide. Presupuesto por escrito.',
+      };
+    case 'amapala':
+      return {
+        eyebrow: 'Isla y Golfo de Fonseca',
+        title: '¿Necesita un abogado en Amapala?',
+        subtitle:
+          'Se atiende desde Nacaome, a unos 40 km. Coordinamos por WhatsApp y nos desplazamos cuando el caso lo requiere. Presupuesto por escrito.',
+      };
+    default:
+      return {
+        eyebrow: `Evaluación inicial confidencial en ${landing.ciudad}`,
+        title: `¿Necesita un abogado en ${landing.ciudad}?`,
+        subtitle: `Se atiende ${landing.ciudad} desde Nacaome. Habla con el abogado, presupuesto por escrito y sin promesas de resultado.`,
+      };
+  }
+}
+
 /**
  * Renderiza una landing local de SEO ("/abogados-en-{ciudad}").
  * Es un Server Component reutilizable: cada página estática
@@ -62,6 +127,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
   const url = absoluteUrl(canonical);
   // Mensaje contextual para el CTAGroup del hero (Whats App pre-llenado).
   const whatsappMsg = whatsappMessageForCity(landing.ciudad);
+  const closing = cityClosingCopy(landing);
 
   // Schema: WebPage + Service (con areaServed por ciudad) + FAQPage +
   // BreadcrumbList específicos de la landing.
@@ -176,6 +242,45 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
         </div>
       </Section>
 
+      {!isLandingNoindex(landing.slug) &&
+        ((landing.localContext && landing.localContext.length > 0) ||
+          (landing.institutions && landing.institutions.length > 0)) && (
+        <Section background="muted" spacing="sm">
+          <div className="max-w-3xl">
+            <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-2">
+              Contexto local verificable
+            </p>
+            <h2 className="font-serif font-extrabold text-xl md:text-2xl text-primary mb-3">
+              {`Por qué ${landing.ciudad} se atiende así`}
+            </h2>
+            {landing.localContext && landing.localContext.length > 0 && (
+              <ul className="list-disc pl-5 space-y-1 text-sm text-text-secondary">
+                {landing.localContext.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            )}
+            {landing.institutions && landing.institutions.length > 0 && (
+              <ul className="mt-3 space-y-1 text-sm text-text-secondary">
+                {landing.institutions.map((item) => (
+                  <li key={item.name}>
+                    <span className="font-semibold text-text">{item.name}.</span> {item.role}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {landing.slug === 'nacaome' && (
+              <Link
+                href="/como-llegar"
+                className="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
+              >
+                Cómo llegar a la oficina en Nacaome <ArrowRight size={14} />
+              </Link>
+            )}
+          </div>
+        </Section>
+      )}
+
       {/* Servicios */}
       <Section background="muted" spacing="md">
         <SectionHeader
@@ -226,15 +331,13 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
         </div>
       </Section>
 
-      {/* FAQ local — FASE 5: delega en HubFaq canónico (acordeón + JSON-LD).
-          Antes eran Cards border-l-accent siempre abiertas + FAQPage manual
-          duplicado en ldSchemas. HubFaq emite el FAQPage con mismo @id. */}
-      <HubFaq
+      {/* FAQ local — máx. 3, misma fuente visible y schema vía LocalFaq → HubFaq. */}
+      <LocalFaq
         faqs={landing.faqs}
         url={url}
         id="preguntas-frecuentes"
         eyebrow="Preguntas frecuentes"
-        title={`Dudas comunes sobre abogados en ${landing.ciudad}`}
+        title={`Dudas locales sobre abogados en ${landing.ciudad}`}
       />
 
       {/* Artículos relacionados (enlazado interno landing ↔ blog) */}
@@ -274,9 +377,9 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
           duales (WhatsApp + Llamar) los aporta el componente compartido. */}
       <ConsultationCTA
         variant="inline"
-        eyebrow={`Evaluación inicial confidencial en ${landing.ciudad}`}
-        title={`¿Necesita un abogado en ${landing.ciudad}?`}
-        subtitle={`Si hay una detención, un despido o un asunto de familia, cuéntenoslo con calma. Atendemos ${landing.ciudad}${landing.sedeFisica ? '' : ' y el resto de la zona sur'} desde Nacaome: habla con el abogado, presupuesto por escrito y sin promesas de resultado.`}
+        eyebrow={closing.eyebrow}
+        title={closing.title}
+        subtitle={closing.subtitle}
         message={whatsappMsg}
       />
 

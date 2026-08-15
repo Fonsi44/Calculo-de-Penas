@@ -244,14 +244,23 @@ describe('FASE 4 §9-11 — Unicidad y riesgo doorway', () => {
 // §22.12 FAQ visible == schema (mismo número y texto).
 // ---------------------------------------------------------------------------
 describe('FASE 4 §12 — FAQ visible coincide con schema', () => {
-  it('LandingLocalView pasa landing.faqs a HubFaq (una sola fuente visible==schema)', () => {
+  it('LandingLocalView pasa landing.faqs a LocalFaq (una sola fuente visible==schema)', () => {
     const src = readRoot('components/marketing/landing-local.tsx');
     // FASE 5: el JSON-LD FAQPage lo emite ahora <HubFaq> (no ldSchemas manual).
     // La garantía de "una sola fuente" se mantiene: landing.faqs se pasa a HubFaq,
     // que renderiza tanto el acordeón visible como el schema FAQPage.
-    expect(src).toMatch(/<HubFaq[\s\S]*?faqs=\{landing\.faqs\}/);
+    expect(src).toMatch(/<LocalFaq[\s\S]*?faqs=\{landing\.faqs\}/);
     // Y ldSchemas ya no debe contener un FAQPage duplicado (lo emite HubFaq).
     expect(src).not.toMatch(/'@type':\s*'FAQPage'/);
+  });
+
+  it('cada landing local tiene como máximo 3 FAQ (logística, no listado de servicios)', () => {
+    for (const landing of landingsLocales) {
+      expect(
+        landing.faqs.length,
+        `${landing.slug} tiene ${landing.faqs.length} FAQ (máx. 3)`,
+      ).toBeLessThanOrEqual(3);
+    }
   });
 });
 
