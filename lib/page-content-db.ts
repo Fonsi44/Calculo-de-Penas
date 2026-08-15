@@ -361,10 +361,10 @@ export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
       sections: [
         {
           key: 'hero', label: 'Hero', fields: [
-            { key: 'badge', label: 'Badge', type: 'text', default: 'Asesoría integral' },
+            { key: 'badge', label: 'Badge', type: 'text', default: 'Atención directa en Nacaome' },
             { key: 'title_line1', label: 'Título línea 1', type: 'text', default: 'Defensa penal y asesoría jurídica en Nacaome y Honduras' },
             { key: 'title_line2', label: 'Título línea 2', type: 'text', default: '' },
-            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Defensa penal y asesoría jurídica integral de la mano de abogados con presencia activa en los juzgados de Nacaome, Valle y todo Honduras. En Pineda y Asociados recibirá comunicación clara y un equipo coordinado en cada rama del derecho.' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Si un familiar está detenido, le citaron a audiencia o necesita orientar un asunto de familia, laboral o civil, hable con abogados de Pineda y Asociados. Defensa penal y asesoría jurídica en Nacaome, Valle y el sur de Honduras: le explicamos qué procede, qué no, y cuánto cuesta, por escrito.' },
             { key: 'check1', label: 'Check 1', type: 'text', default: 'Evaluación inicial confidencial' },
             { key: 'check2', label: 'Check 2', type: 'text', default: 'Atención directa de abogados en Nacaome' },
           ],
@@ -399,7 +399,7 @@ export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
         {
           key: 'specialties', label: 'Especialidades principales', fields: [
             { key: 'title', label: 'Título', type: 'text', default: 'Cuatro áreas con presencia constante' },
-            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Derecho penal, familia, laboral y civil son nuestras áreas de mayor demanda. Cada una con equipo y experiencia dedicados.' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Penal, familia, laboral y civil: las consultas que más llegan al despacho. En cada una hay un abogado responsable, no un intermediario.' },
           ],
         },
         {
@@ -427,33 +427,33 @@ export const getEditablePagesMeta = cache(async (): Promise<PageDef[]> => {
         {
           key: 'process', label: 'Cómo trabajamos', fields: [
             { key: 'title', label: 'Título', type: 'text', default: 'Cinco pasos, sin importar el área' },
-            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Un método claro y trazable para cada caso, desde la evaluación inicial hasta el cierre.' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Primero le escuchamos. Después le decimos, con honestidad, qué se puede hacer y qué no. El presupuesto llega por escrito, antes de actuar.' },
             { key: 'step1_title', label: 'Paso 1 — título', type: 'text', default: 'Evaluación inicial' },
-            { key: 'step1_desc', label: 'Paso 1 — descripción', type: 'textarea', default: 'Evaluamos su caso de forma confidencial y le explicamos las opciones reales con honestidad.' },
+            { key: 'step1_desc', label: 'Paso 1 — descripción', type: 'textarea', default: 'Conversación confidencial. Nos cuenta lo que ocurrió; nosotros le decimos si hay margen legal y qué urgencia tiene.' },
             { key: 'step2_title', label: 'Paso 2 — título', type: 'text', default: 'Diagnóstico jurídico' },
-            { key: 'step2_desc', label: 'Paso 2 — descripción', type: 'textarea', default: 'Analizamos pruebas, normativa aplicable y le explicamos las opciones reales, los riesgos y los plazos.' },
+            { key: 'step2_desc', label: 'Paso 2 — descripción', type: 'textarea', default: 'Revisamos documentos, plazos y riesgos. Le explicamos las opciones reales, no un escenario idealizado.' },
             { key: 'step3_title', label: 'Paso 3 — título', type: 'text', default: 'Propuesta por escrito' },
-            { key: 'step3_desc', label: 'Paso 3 — descripción', type: 'textarea', default: 'Definimos alcance, honorarios y actuaciones por escrito antes de iniciar.' },
+            { key: 'step3_desc', label: 'Paso 3 — descripción', type: 'textarea', default: 'Alcance, honorarios y actuaciones, por escrito, antes de iniciar. Usted decide con información clara.' },
             { key: 'step4_title', label: 'Paso 4 — título', type: 'text', default: 'Gestión y seguimiento' },
-            { key: 'step4_desc', label: 'Paso 4 — descripción', type: 'textarea', default: 'Documentamos las actuaciones y le mantenemos informado en cada etapa.' },
+            { key: 'step4_desc', label: 'Paso 4 — descripción', type: 'textarea', default: 'El abogado responsable lleva el expediente y le informa en cada etapa, sin intermediarios.' },
             { key: 'step5_title', label: 'Paso 5 — título', type: 'text', default: 'Cierre' },
-            { key: 'step5_desc', label: 'Paso 5 — descripción', type: 'textarea', default: 'Le entregamos un resumen del resultado y de los pasos posteriores cuando sean necesarios.' },
+            { key: 'step5_desc', label: 'Paso 5 — descripción', type: 'textarea', default: 'Le entregamos un resumen de lo actuado y de los pasos posteriores, si los hay.' },
           ],
         },
         {
           key: 'why_us', label: 'Por qué elegirnos', fields: [
-            { key: 'title', label: 'Título', type: 'text', default: 'Cinco razones que marcan la diferencia' },
-            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'Nuestra práctica se sostiene sobre principios técnicos, no sobre promesas.' },
-            { key: 'reason1_title', label: 'Razón 1 — título', type: 'text', default: 'Presencia local en Nacaome' },
-            { key: 'reason1_desc', label: 'Razón 1 — descripción', type: 'textarea', default: 'Conocemos el sistema de justicia del departamento de Valle y los juzgados de la zona sur.' },
-            { key: 'reason2_title', label: 'Razón 2 — título', type: 'text', default: 'Enfoque ético y prudente' },
-            { key: 'reason2_desc', label: 'Razón 2 — descripción', type: 'textarea', default: 'Nunca prometemos resultados. Le decimos lo que procede y lo que no, con honestidad.' },
-            { key: 'reason3_title', label: 'Razón 3 — título', type: 'text', default: 'Defensa penal especializada' },
-            { key: 'reason3_desc', label: 'Razón 3 — descripción', type: 'textarea', default: 'Experiencia en derecho penal, desde asistencias a detenidos hasta recursos de casación.' },
-            { key: 'reason4_title', label: 'Razón 4 — título', type: 'text', default: 'Lenguaje claro' },
-            { key: 'reason4_desc', label: 'Razón 4 — descripción', type: 'textarea', default: 'Le explicamos el proceso en términos comprensibles, sin tecnicismos innecesarios.' },
-            { key: 'reason5_title', label: 'Razón 5 — título', type: 'text', default: 'Metodología documentada' },
-            { key: 'reason5_desc', label: 'Razón 5 — descripción', type: 'textarea', default: 'Cada actuación queda registrada y trazable. Trabajamos con procesos internos auditables.' },
+            { key: 'title', label: 'Título', type: 'text', default: 'Por qué las familias del sur nos buscan' },
+            { key: 'subtitle', label: 'Subtítulo', type: 'textarea', default: 'No vendemos milagros. Ofrecemos un abogado responsable, sede en Nacaome y más de 15 años de ejercicio en los juzgados de Valle y Choluteca.' },
+            { key: 'reason1_title', label: 'Razón 1 — título', type: 'text', default: 'Estamos en Nacaome, no de visita' },
+            { key: 'reason1_desc', label: 'Razón 1 — descripción', type: 'textarea', default: 'Sede física en Nacaome. Atendemos con regularidad en Valle, San Lorenzo, Choluteca y municipios vecinos. Conocemos la práctica local, no solo la ley en abstracto.' },
+            { key: 'reason2_title', label: 'Razón 2 — título', type: 'text', default: 'Le decimos la verdad del caso' },
+            { key: 'reason2_desc', label: 'Razón 2 — descripción', type: 'textarea', default: 'Si el asunto es débil, se lo decimos. Si hay margen, se lo explicamos. Nunca prometemos el resultado de un juez.' },
+            { key: 'reason3_title', label: 'Razón 3 — título', type: 'text', default: 'Defensa penal desde el primer minuto' },
+            { key: 'reason3_desc', label: 'Razón 3 — descripción', type: 'textarea', default: 'Detenciones, audiencias iniciales, medidas cautelares, juicio y recursos. La defensa temprana suele ser la que más protege.' },
+            { key: 'reason4_title', label: 'Razón 4 — título', type: 'text', default: 'Habla con el abogado, no con un filtro' },
+            { key: 'reason4_desc', label: 'Razón 4 — descripción', type: 'textarea', default: 'Danilo, Thania o Emil toman el asunto. Usted sabe quién lleva su expediente y cómo contactarlo.' },
+            { key: 'reason5_title', label: 'Razón 5 — título', type: 'text', default: 'Presupuesto por escrito, antes de actuar' },
+            { key: 'reason5_desc', label: 'Razón 5 — descripción', type: 'textarea', default: 'Honorarios, alcance y siguientes pasos, documentados. La evaluación inicial es confidencial; contratar es una decisión suya.' },
           ],
         },
         {

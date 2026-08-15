@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Scale, ShieldCheck, Briefcase, BookOpen,
   HeartHandshake, ArrowRight, Award,
@@ -234,7 +235,9 @@ export default async function DespachoPage() {
               className="absolute inset-0 z-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             />
             <div className="flex items-center gap-4">
-              <span className="team-monogram" aria-hidden="true">DP</span>
+              <span className="relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-lg border border-accent/30 bg-surface-alt">
+                <Image src={FOUNDER_PROFILE.image} alt={FOUNDER_PROFILE.imageAltText} fill sizes="80px" className="object-cover object-top" />
+              </span>
               <div>
                 <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
                   Dirección y defensa penal
@@ -255,10 +258,10 @@ export default async function DespachoPage() {
               </div>
             )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
-              Abogado penalista y socio director del despacho. Atiende asuntos penales
-              desde las primeras diligencias, audiencias y medidas cautelares hasta los
-              recursos y la ejecución penal. La defensa penal es el pilar histórico del
-              despacho.
+              Socio director. Si hay una detención o una audiencia cerca, Danilo entra
+              al caso: le explica qué no firmar, qué viene y cómo se prepara la sala.
+              Más de 15 años en los juzgados del sur. No promete el fallo; sí presencia
+              y una estrategia por escrito.
             </p>
             <div className="flex flex-wrap items-center gap-2 mt-3">
               <Link
@@ -285,7 +288,9 @@ export default async function DespachoPage() {
               className="absolute inset-0 z-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             />
             <div className="flex items-center gap-4">
-              <span className="team-monogram" aria-hidden="true">TP</span>
+              <span className="relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-lg border border-accent/30 bg-surface-alt">
+                <Image src={THANIA_PROFILE.image} alt={THANIA_PROFILE.imageAltText} fill sizes="80px" className="object-cover object-top" />
+              </span>
               <div>
                 <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
                   Familia · Mercantil · Administrativo
@@ -306,9 +311,10 @@ export default async function DespachoPage() {
               </div>
             )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
-              Abogada socia fundadora del bufete. Su práctica se concentra en derecho
-              administrativo, familia, civil y notarial, y mercantil y empresarial.
-              Atiende casos en Nacaome, Valle y la zona sur de Honduras.
+              Socia fundadora. Thania atiende familia, civil, notarial, mercantil y
+              administrativo con el mismo criterio: escuchar primero, ordenar el
+              expediente y decirle con claridad qué se puede pedir. Discreción de
+              despacho, no de mostrador.
             </p>
             <div className="flex flex-wrap items-center gap-2 mt-3">
               <Link
@@ -334,7 +340,9 @@ export default async function DespachoPage() {
               className="absolute inset-0 z-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             />
             <div className="flex items-center gap-4">
-              <span className="team-monogram" aria-hidden="true">EB</span>
+              <span className="relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-lg border border-accent/30 bg-surface-alt">
+                <Image src={EMIL_PROFILE.image} alt={EMIL_PROFILE.imageAltText} fill sizes="80px" className="object-cover object-top" />
+              </span>
               <div>
                 <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-1">
                   Laboral · Civil y Notarial
@@ -355,8 +363,9 @@ export default async function DespachoPage() {
               </div>
             )}
             <p className="text-sm text-text-secondary mt-4 leading-relaxed text-pretty flex-1">
-              Abogado socio del bufete. Su práctica se concentra en derecho laboral, civil y
-              notarial. Atiende casos en Nacaome, Valle y la zona sur de Honduras.
+              Socio. Emil lleva laboral, civil y apoyo penal: despidos, prestaciones,
+              contratos y audiencias. Revisa documentos antes de hablar de cifras.
+              Usted sabe quién tiene su expediente.
             </p>
             <div className="flex flex-wrap items-center gap-2 mt-3">
               <Link

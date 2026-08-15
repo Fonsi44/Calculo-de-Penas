@@ -14,7 +14,8 @@ import Image from 'next/image';
 import { site, FOUNDER_PROFILE, LAWYER_PROFILES, ADDITIONAL_TEAM_PROFILES, directTelHref, directWhatsappHref } from '@/lib/site';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
-import { CTAGroup } from '@/components/marketing/cta-buttons';
+import { CTAGroup, UrgencyCallout } from '@/components/marketing/cta-buttons';
+import { TrustCredentials } from '@/components/marketing/trust-credentials';
 import { areasGenerales, hubPenal } from '@/data/areas-juridicas';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
@@ -152,14 +153,17 @@ export default async function HomePage() {
         {/* Foto de fondo translúcida (litigio / tribunal) sobre el gradiente
             azul del hero: aporta profundidad y textura sin competir con el
             texto. Opacidad baja para mantener la legibilidad del contenido. */}
-        <div
-          className="absolute inset-0 pointer-events-none bg-no-repeat bg-cover bg-center"
-          style={{
-            backgroundImage: "url('/images/penal/litigio-complejo.webp')",
-            opacity: 0.22,
-          }}
-          aria-hidden="true"
-        />
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <Image
+            src="/images/penal/litigio-complejo.webp"
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            sizes="100vw"
+            className="object-cover object-center opacity-[0.22]"
+          />
+        </div>
         {/* Veladura azul que preserva el contraste del texto inverso sobre la
             foto: más densa a la izquierda (donde va el copy, col-span-7) y
             algo más abierta en el centro para que se aprecie la textura. */}
@@ -189,7 +193,7 @@ export default async function HomePage() {
                 </span>
               </div>
               <h1 className="font-serif font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight text-text-inverse text-balance">
-                Abogados en Nacaome para defensa penal y asesoría jurídica
+                {t('hero.title_line1') || 'Defensa penal y asesoría jurídica en Nacaome y Honduras'}
               </h1>
               <p className="mt-4 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-2xl text-pretty">
                 {t('hero.subtitle')}
@@ -200,6 +204,9 @@ export default async function HomePage() {
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-sm text-text-inverse/85">
                   <CheckCircle2 size={13} className="text-accent" /> {t('hero.check2')}
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-sm text-text-inverse/85">
+                  <CheckCircle2 size={13} className="text-accent" /> +15 años de ejercicio · Abogados colegiados
                 </span>
               </div>
               <CTAGroup variant="inverse" className="mt-6" />
@@ -251,6 +258,12 @@ export default async function HomePage() {
           </div>
         </Container>
       </section>
+
+      <div className="bg-surface px-4 py-4 md:px-6">
+        <div className="max-w-7xl mx-auto">
+          <UrgencyCallout />
+        </div>
+      </div>
 
       {/* TRUST BAR — sellos de autoridad (strip compacto) */}
       <TrustBar background="light" />
@@ -316,6 +329,8 @@ export default async function HomePage() {
           {ADDITIONAL_TEAM_PROFILES.map(renderProfileCard)}
         </div>
       </Section>
+
+      <TrustCredentials />
 
       {/* CÓMO TRABAJAMOS — proceso de atención (stepper) */}
       <Section spacing="md" ariaLabel="Proceso de atención">

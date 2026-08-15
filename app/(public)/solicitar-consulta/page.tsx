@@ -54,7 +54,7 @@ export default async function SolicitarConsultaPage() {
 
   const GUARANTEES = [
     { icon: ShieldCheck, title: 'Secreto profesional', desc: 'La información que comparta se trata conforme al deber de confidencialidad profesional.' },
-    { icon: CheckCircle2, title: content['guarantees.g2_title'] || 'Sin compromiso', desc: content['guarantees.g2_desc'] || 'La consulta inicial no le obliga a contratar nuestros servicios.' },
+    { icon: CheckCircle2, title: content['guarantees.g2_title'] || 'Sin obligación de contratar', desc: content['guarantees.g2_desc'] || 'La evaluación inicial no le obliga a contratar nuestros servicios.' },
     { icon: Calendar, title: 'Atención en horario hábil', desc: 'Revisamos cada solicitud y respondemos por el canal indicado durante el horario de atención.' },
   ];
   return (
@@ -76,9 +76,9 @@ export default async function SolicitarConsultaPage() {
             <Card id="formulario" padding="md" className="border-l-4 border-l-accent">
               <h2 className="font-bold text-base text-primary">Formulario de consulta</h2>
               <p className="text-sm text-text-secondary mt-1 mb-5">
-                Los campos marcados con * son obligatorios. No envíe confesiones,
-                contraseñas ni documentos sensibles hasta que el despacho confirme el
-                canal adecuado.
+                Nombre y teléfono bastan para contactarle. El resto es opcional.
+                No envíe confesiones ni documentos sensibles hasta que el despacho
+                confirme el canal. Sus datos quedan cubiertos por el secreto profesional.
               </p>
               <SolicitarConsultaForm />
             </Card>

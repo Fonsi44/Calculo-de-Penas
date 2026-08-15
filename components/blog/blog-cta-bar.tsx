@@ -8,27 +8,27 @@ import { trackWhatsAppClick, trackPhoneClick, trackFormClick } from '@/lib/analy
 const CATEGORY_COPY: Record<string, { h2: string; body: string; whatsappMsg: string }> = {
   'derecho-penal': {
     h2: '¿Enfrenta un proceso penal en la zona sur?',
-    body: 'Las decisiones tempranas definen el resultado. Hable con un abogado penalista en Nacaome, Valle. Defensa desde la detención hasta la audiencia.',
+    body: 'Si hay detención, citación o audiencia cerca, no espere. Hable con un penalista en Nacaome. Le decimos qué no firmar y qué sigue, con presupuesto por escrito.',
     whatsappMsg: 'Necesito defensa penal urgente. Vi su artículo en el blog.',
   },
   'derecho-de-familia': {
     h2: '¿Necesita resolver un asunto de familia?',
-    body: 'Divorcio, custodia, pensión alimenticia. Un abogado de familia en Nacaome puede orientarle con discreción y eficacia.',
+    body: 'Divorcio, custodia o pensión: se resuelve mejor en calma y con papeles en orden. Una abogada de familia en Nacaome le escucha con discreción y le dice qué se puede pedir.',
     whatsappMsg: 'Necesito orientación en un asunto de familia. Vi su artículo en el blog.',
   },
   'derecho-laboral': {
     h2: '¿Tuvo un problema laboral?',
-    body: 'Despido injustificado, prestaciones impagas, acoso laboral. Un abogado laboralista en Nacaome puede ayudarle a reclamar lo que le corresponde.',
+    body: 'Despido, prestaciones o un conflicto en el trabajo. Traiga planilla, contrato y carta de despido. Emil le dice qué se puede reclamar y el costo, por escrito.',
     whatsappMsg: 'Necesito un abogado laboralista. Vi su artículo en el blog.',
   },
   'derecho-civil': {
-    h2: '¿Necesita seguridad jurídica en sus trámites?',
-    body: 'Contratos, compraventas, herencias o poderes notariales. Un abogado civil en Nacaome le garantiza documentos seguros y válidos.',
+    h2: '¿Necesita ordenar un trámite civil o notarial?',
+    body: 'Contratos, compraventas, herencias o poderes. Le explicamos el recorrido y el costo por escrito, para que el trámite no quede a medias.',
     whatsappMsg: 'Necesito un abogado civil para contratos o herencias. Vi su artículo en el blog.',
   },
   'proceso-penal': {
     h2: '¿Enfrenta un proceso penal en la zona sur?',
-    body: 'Cada etapa del proceso penal requiere defensa técnica. Hable hoy con un abogado penalista en Nacaome.',
+    body: 'Cada etapa pide defensa técnica distinta. Hable con un penalista en Nacaome: le explicamos qué sigue y qué no firmar, con presupuesto por escrito.',
     whatsappMsg: 'Necesito defensa penal urgente. Vi su artículo en el blog.',
   },
   'derecho-mercantil': {
@@ -63,7 +63,7 @@ const CATEGORY_COPY: Record<string, { h2: string; body: string; whatsappMsg: str
   },
   'practica-legal': {
     h2: '¿Necesita aplicar esta información a su caso?',
-    body: 'Cada situación legal es distinta. Un abogado en Nacaome, Valle puede analizar su caso concreto y recomendarle el mejor camino.',
+    body: 'Cada situación es distinta. Un abogado en Nacaome, Valle puede revisar su caso y decirle, con honestidad, qué procede y qué no.',
     whatsappMsg: 'Necesito orientación legal sobre mi caso. Vi su artículo en el blog.',
   },
   'derechos-ciudadanos': {

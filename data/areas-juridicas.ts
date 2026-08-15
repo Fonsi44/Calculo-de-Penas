@@ -149,13 +149,13 @@ export const areasGenerales: AreaStandalone[] = [
     titulo: 'Derecho de Familia',
     resumen: 'Abogado de familia en Nacaome y Honduras: divorcios, custodia, pensión de alimentos, sucesiones, violencia intrafamiliar y protección de menores con atención personalizada.',
     descripcion:
-      `Defendemos sus <strong>derechos familiares</strong> en divorcios, custodia, pensión de alimentos, sucesiones y violencia intrafamiliar en Nacaome, San Lorenzo, Choluteca y la zona sur de Honduras. Actuamos ante los <strong>Juzgados de Familia</strong> y en el <strong>Centro de Mediación del Poder Judicial</strong> cuando conviene una solución pactada. Le acompañamos desde la primera consulta confidencial hasta la ejecución de la sentencia, con comunicación directa del abogado responsable, plazos claros y un presupuesto por escrito.`,
+      `Cuando una familia se rompe, o hay que proteger a un hijo, el miedo y la prisa suelen empeorar el caso. Le escuchamos con discreción y le explicamos, en palabras claras, qué se puede pedir y qué no. Defendemos <strong>derechos familiares</strong> en divorcios, custodia, pensión de alimentos, sucesiones y violencia intrafamiliar en Nacaome, San Lorenzo, Choluteca y la zona sur. Actuamos ante los <strong>Juzgados de Familia</strong> y en el <strong>Centro de Mediación del Poder Judicial</strong> cuando conviene un acuerdo. Atención directa de la abogada responsable, plazos honestos y presupuesto por escrito.`,
     icono: 'users',
     color: 'primary',
     heroEyebrow: 'Área legal',
     heroTitle: 'Abogado de Familia en Nacaome',
     heroSubtitle:
-      'Divorcio, custodia, régimen de comunicación, pensión de alimentos, reconocimiento, protección de menores y violencia intrafamiliar en Nacaome, Valle y el sur de Honduras. Atención humana, estrategia legal clara y defensa técnica ante Juzgados de Familia y Centros de Mediación. Cada caso se valora según sus circunstancias concretas.',
+      'Si está ante un divorcio, una disputa de custodia o una pensión impaga, no tiene que resolverlo solo. Le atendemos en Nacaome, Valle y el sur de Honduras con discreción, estrategia clara y defensa técnica ante Juzgados de Familia y centros de mediación. Cada caso se valora según sus hechos; no prometemos el resultado del juez.',
     // §5 — respuesta directa citable (GEO/AEO). Sin cifras P01/P02: se describe
     // el alcance y se remite el cálculo al análisis individual del caso.
     respuestaDirecta:
@@ -185,7 +185,7 @@ export const areasGenerales: AreaStandalone[] = [
       intro:
         'El recorrido varía según el tipo de asunto (mutuo acuerdo o contencioso) y la carga judicial. Estos pasos son orientativos.',
       pasos: [
-        { titulo: 'Contacto inicial', descripcion: 'Conversación confidencial para entender su situación y prioridades, sin compromiso.' },
+        { titulo: 'Contacto inicial', descripcion: 'Conversación confidencial para entender su situación y prioridades, sin obligación de contratar.' },
         { titulo: 'Revisión preliminar', descripcion: 'Análisis de los hechos, la documentación disponible y las opciones viables.' },
         { titulo: 'Solicitud de documentación', descripcion: 'Le indicamos qué documentos específicos necesitamos para evaluar el caso.' },
         { titulo: 'Explicación de opciones', descripcion: 'Le exponemos las alternativas (acuerdo, mediación o litigio) con sus riesgos y beneficios.' },
@@ -213,10 +213,10 @@ export const areasGenerales: AreaStandalone[] = [
       'Decisión final del juez o autoridad competente según la legislación vigente.',
     ],
     erroresFrecuentes: [
-      'Postergar la consulta hasta que el conflicto se agrava y se pierden opciones tempranas.',
-      'Firmar acuerdos sin revisión técnica, renunciando a derechos sin saberlo.',
-      'Presentar pruebas desordenadas o incompletas que debilitan la posición.',
-      'Confundir acuerdo privado con resolución con efectos jurídicos plenos.',
+      'Esperar a que el conflicto “se calme solo”: los plazos corren y las pruebas se pierden.',
+      'Firmar un acuerdo “para quitarse el problema” sin que un abogado lo revise.',
+      'Llevar papeles sueltos o incompletos a la primera audiencia.',
+      'Creer que un pacto de palabra o un chat tiene el mismo valor que una resolución.',
       'Esperar a recopilar toda la documentación antes de buscar orientación.',
     ],
     fuentesGenerales: [
@@ -274,13 +274,13 @@ export const areasGenerales: AreaStandalone[] = [
     titulo: 'Derecho Laboral',
     resumen: 'Abogado laboralista en Nacaome y Honduras: despidos injustificados, cálculo de prestaciones, aguinaldo, riesgos profesionales, acoso laboral y asesoría preventiva a empresas.',
     descripcion:
-      `Reclamamos <strong>preaviso, cesantía, vacaciones, aguinaldo y décimo tercer mes</strong> en despidos injustificados. Defendemos trabajadores en riesgos profesionales y accidentes laborales ante el <strong><a href="https://www.ihss.hn" target="_blank" rel="noopener noreferrer">IHSS</a></strong>, y representamos a empresas en cumplimiento normativo, contratos y reglamentos internos. Actuamos ante <strong>Inspecciones del Trabajo, Tribunales de Conciliación y Juzgados del Trabajo</strong> en la zona sur de Honduras. Le entregamos un presupuesto por escrito y le explicamos cada etapa del proceso.`,
+      `Si lo despidieron o no le liquidaron, no adivine montos: traiga planilla, contrato y carta de despido. Revisamos <strong>preaviso, cesantía, vacaciones, aguinaldo y décimo tercer mes</strong> y le decimos qué se puede reclamar. También defendemos trabajadores en riesgos profesionales ante el <strong><a href="https://www.ihss.hn" target="_blank" rel="noopener noreferrer">IHSS</a></strong>, y a empresas en contratos y reglamentos. Actuamos ante <strong>Inspección del Trabajo, conciliación y Juzgados del Trabajo</strong> en Nacaome y el sur. Presupuesto por escrito; los importes dependen de su expediente, no de una tabla genérica.`,
     icono: 'briefcase',
     color: 'primary',
     heroEyebrow: 'Área legal',
     heroTitle: 'Abogado Laboral en Nacaome',
     heroSubtitle:
-      'Despidos, prestaciones, salario, vacaciones, riesgos profesionales y acoso laboral para trabajadores, y contratos, reglamentos y prevención de conflictos para empleadores. Defensa técnica ante Inspecciones del Trabajo, Tribunales de Conciliación y Juzgados del Trabajo en el sur de Honduras. Los importes y plazos dependen de cada relación laboral y de la documentación disponible.',
+      'Si lo despidieron, no le pagaron prestaciones o necesita defender a su empresa, le decimos con claridad qué se puede reclamar y qué documentos hacen falta. Trabajadores y empleadores, en Nacaome y el sur de Honduras, ante Inspección del Trabajo, conciliación y juzgados laborales. Los montos y plazos dependen de su contrato y de la prueba; no hay una cifra universal.',
     // §5 — respuesta directa citable. Diferencia décimo tercer mes (aguinaldo)
     // de décimo cuarto mes SIN añadir fechas o reglas sustantivas nuevas.
     respuestaDirecta:
@@ -418,13 +418,13 @@ export const areasGenerales: AreaStandalone[] = [
     titulo: 'Derecho Civil y Notarial',
     resumen: 'Abogado civil y servicios notariales en Nacaome y Honduras: contratos, compraventas, arrendamientos, hipotecas, sucesiones, protocolización, cobros judiciales y derecho de daños.',
     descripcion:
-      `Brindamos <strong>asesoría civil y notarial</strong> para personas, empresas y familias en la zona sur de Honduras. Redactamos contratos de compraventa, arrendamiento, hipoteca y fideicomiso; tramitamos protocolizaciones, poderes notariales, testamentos y declaratorias de herederos ante el <strong><a href="https://www.ip.gob.hn" target="_blank" rel="noopener noreferrer">Instituto de la Propiedad</a></strong>. Litigamos acciones posesorias, prescripción adquisitiva, cobros judiciales por vía ejecutiva o monitoria, y reclamaciones por responsabilidad civil. Trabajamos con notarios en Nacaome, San Lorenzo y Choluteca, con presupuesto por escrito y trazabilidad de cada actuación.`,
+      `Un contrato mal redactado o un trámite a medias suele costar más que hacerlo bien la primera vez. Ordenamos <strong>asesoría civil y notarial</strong> para personas, empresas y familias en Nacaome y el sur: compraventa, arrendamiento, hipoteca, poderes, testamentos y declaratorias de herederos, con seguimiento ante el <strong><a href="https://www.ip.gob.hn" target="_blank" rel="noopener noreferrer">Instituto de la Propiedad</a></strong> cuando corresponde. También litigamos cobros, posesión y daños. Coordinamos con notarios en Nacaome, San Lorenzo y Choluteca. Recorrido y costo, por escrito, antes de empezar.`,
     icono: 'file-text',
     color: 'primary',
     heroEyebrow: 'Área legal',
     heroTitle: 'Derecho Civil y Servicios Notariales en Nacaome',
     heroSubtitle:
-      'Asesoría y litigación civil, actuaciones notariales y actuaciones registrales para personas, familias y empresas en el sur de Honduras. Contratos, propiedad, sucesiones, poderes, cobros judiciales y daños y perjuicios. Algunos trámites requieren notario, tribunal y registro de forma coordinada; le explicamos el recorrido completo según su caso.',
+      'Un contrato mal hecho o un trámite a medias sale más caro después. Le acompañamos en contratos, propiedad, sucesiones, poderes, cobros y daños, y coordinamos lo notarial y registral cuando hace falta. En Nacaome y el sur de Honduras le explicamos el recorrido completo —y el costo por escrito— antes de empezar.',
     // §5 — respuesta directa. No afirma capacidad notarial del despacho (no
     // confirmada); se coordina con notarios cuando procede.
     respuestaDirecta:
@@ -1098,11 +1098,11 @@ export const hubPenal: HubPenal = {
   titulo: 'Derecho Penal',
   resumen: 'Abogados penalistas en Nacaome, Valle, San Lorenzo y Choluteca: defensa penal estratégica en cualquier etapa del proceso, asistencia a detenidos, juicios orales, casación y ejecución penal en la zona sur de Honduras.',
   descripcion:
-    `Defensa penal técnica en todas las etapas del proceso penal hondureño, con sede en Nacaome y cobertura en la zona sur de Honduras: Valle, San Lorenzo, Choluteca y municipios aledaños. Conocemos el <strong>Código Penal (Decreto 130-2017)</strong> y sus reformas, la jurisprudencia de la <strong><a href="https://www.poderjudicial.gob.hn" target="_blank" rel="noopener noreferrer">Sala de lo Penal de la CSJ</a></strong> y la práctica forense en Juzgados de Letras, Tribunales de Sentencia y Cortes de Apelaciones. Si enfrenta una imputación, investigación fiscal u orden de captura, consúltenos: <strong>la defensa temprana es determinante</strong>.`,
+    `Si detuvieron a un familiar o le acaba de llegar una citación, las primeras horas importan. Le atendemos con calma y con técnica: le decimos qué no debe declarar, qué documentos guardar y qué viene después. Defensa penal en todas las etapas del proceso hondureño, con sede en Nacaome y cobertura en Valle, San Lorenzo, Choluteca y municipios aledaños. Trabajamos con el <strong>Código Penal (Decreto 130-2017)</strong> y sus reformas, y con la práctica de Juzgados de Letras, Tribunales de Sentencia y Cortes de Apelaciones. <strong>La defensa temprana es determinante</strong>; el resultado, nunca lo prometemos.`,
   heroEyebrow: 'Área principal',
   heroTitle: 'Abogados Penalistas en Nacaome, Valle — Defensa Penal Técnica',
   heroSubtitle:
-    'Atendemos casos penales en la zona sur de Honduras, desde nuestro despacho en Nacaome, Valle. Cubrimos San Lorenzo, Choluteca y municipios aledaños. Trabajamos desde la primera actuación procesal (asistencia a detenidos, audiencias iniciales, revisión de medidas cautelares) hasta la ejecución penal, beneficios de ley, recursos de casación y cumplimiento de penas. Defensa técnica, comunicación directa y presupuesto por escrito.',
+    'Si hay una detención, una citación o una audiencia cerca, no espere a “ver qué pasa”. Desde Nacaome atendemos el sur de Honduras —Valle, San Lorenzo, Choluteca y municipios vecinos— desde la primera diligencia hasta el juicio, los recursos y la ejecución penal. Habla con el abogado. Presupuesto por escrito. Evaluación inicial confidencial.',
   // §5 — respuesta directa. Sin plazos cerrados, sin tabla de prescripción/penas,
   // sin reutilizar P09/P14/P15 (que viven en /derecho-penal/[slug]).
   respuestaDirecta:
@@ -1160,11 +1160,11 @@ export const hubPenal: HubPenal = {
     'Las resoluciones de los tribunales en cada instancia.',
   ],
   erroresFrecuentes: [
-    'Declarar o firmar documentos sin asistencia letrada.',
-    'Esperar a buscar abogado hasta que la situación se agrava.',
-    'Eliminar o alterar información que puede ser prueba.',
-    'Discutir el caso en redes sociales o con terceros.',
-    'Ignorar una citación o una orden judicial conocida.',
+    'Declarar o firmar “para salir más rápido” sin un abogado al lado.',
+    'Esperar a que “se aclare solo”: la audiencia y las medidas no esperan.',
+    'Borrar chats, videos o mensajes que después harán falta como prueba.',
+    'Contar el caso en redes, en el barrio o en el trabajo.',
+    'Dejar vencer una citación o una orden que ya conoce.',
   ],
   fuentesGenerales: [
     { titulo: 'Código Penal de Honduras (Decreto 130-2017) y reformas', institucion: 'Poder Judicial de Honduras / Tribunal Supremo de Justicia', url: 'https://www.tsc.gob.hn/web/leyes/Decreto_130-2017.pdf' },
@@ -1180,7 +1180,7 @@ export const hubPenal: HubPenal = {
     { pregunta: '¿Cuánto cuesta una defensa penal en Honduras?', respuesta: 'Depende de la complejidad. Ofrecemos consulta inicial confidencial para evaluar el caso y emitir un presupuesto claro por escrito; no se garantiza un importe fijo sin conocer el asunto.' },
     { pregunta: '¿En qué zonas trabajan?', respuesta: 'Nuestra sede está en Nacaome, Valle, y cubrimos principalmente la zona sur de Honduras: San Lorenzo, Choluteca y municipios aledaños. Para casos que requieran desplazamiento fuera de esta zona, consúltenos y valoramos la viabilidad.' },
     { pregunta: '¿Atienden casos graves (homicidio, narcotráfico, delitos sexuales)?', respuesta: 'Sí, con la misma dedicación y un equipo preparado. La gravedad no reduce la defensa: la aumenta. El enfoque y la estrategia se adaptan al caso concreto.' },
-    { pregunta: '¿Pueden acturar si me citan a una audiencia?', respuesta: 'Sí. Tras revisar la citación y los antecedentes, preparamos la comparecencia y la estrategia de defensa para la audiencia. Conviene contactar con la mayor antelación posible.' },
+    { pregunta: '¿Pueden actuar si me citan a una audiencia?', respuesta: 'Sí. Tras revisar la citación y los antecedentes, preparamos la comparecencia y la estrategia de defensa para la audiencia. Conviene contactar con la mayor antelación posible.' },
     { pregunta: '¿Qué pasa si hay una orden de captura o investigación en curso?', respuesta: 'Conviene actuar de forma planificada: revisar la situación, preparar la defensa y, cuando proceda, gestionar la comparecencia. Cada supuesto es distinto; le orientamos tras evaluar el caso.' },
     { pregunta: '¿Atienden también a los familiares de la persona investigada o detenida?', respuesta: 'Sí. Acompañamos a las familias en la comprensión del proceso, la gestión de documentación y las decisiones que correspondan, respetando los límites de confidencialidad y de contratación formal del servicio.' },
     { pregunta: '¿Garantizan un resultado determinado?', respuesta: 'No. Nadie puede garantizar un resultado en un proceso penal, que depende de hechos, pruebas y resoluciones de autoridad competente. Lo que sí ofrecemos es defensa técnica, estrategia documentada y comunicación clara.' },
