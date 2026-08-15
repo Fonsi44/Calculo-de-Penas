@@ -284,9 +284,13 @@ for (const vp of VIEWPORTS) {
     test('CookieConsent trap e inert en widgets', async ({ page }) => {
       await page.goto('/');
       await page.waitForLoadState('networkidle');
-      await page.waitForTimeout(1000);
+      await page.waitForTimeout(3500);
+
+      const configureBtn = page.getByRole('button', { name: 'Configurar' });
+      await expect(configureBtn).toBeVisible();
+      await configureBtn.click();
       
-      // Widgets flotantes deben tener inert y aria-hidden="true"
+      // Widgets flotantes deben tener inert y aria-hidden="true" en modo modal
       const floatingWidgets = page.locator('[data-floating-widget]');
       const count = await floatingWidgets.count();
       for (let i = 0; i < count; i++) {

@@ -19,12 +19,27 @@ describe('diálogo de consentimiento', () => {
     delete document.body.dataset.consentDialogOpen;
   });
 
-  it('mueve el foco al diálogo y desactiva widgets flotantes', async () => {
+  it('muestra un aviso inferior no modal y no bloquea los widgets', async () => {
     const floating = document.createElement('div');
     floating.dataset.floatingWidget = '';
     document.body.appendChild(floating);
 
     render(<CookieConsent />);
+
+    expect(screen.getByRole('region', { name: 'Preferencias de privacidad' })).toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(document.body.dataset.consentDialogOpen).toBeUndefined();
+    expect(floating).not.toHaveAttribute('inert');
+  });
+
+  it('al configurar mueve el foco al diálogo y desactiva widgets flotantes', async () => {
+    const user = userEvent.setup();
+    const floating = document.createElement('div');
+    floating.dataset.floatingWidget = '';
+    document.body.appendChild(floating);
+
+    render(<CookieConsent />);
+    await user.click(screen.getByRole('button', { name: 'Configurar' }));
 
     expect(screen.getByRole('dialog')).toHaveAttribute('aria-modal', 'true');
     await waitFor(() =>

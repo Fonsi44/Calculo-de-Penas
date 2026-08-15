@@ -2,11 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Activity, Calendar, Download, MessageCircle, Phone, Share, X } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import { site, telHref, whatsappHref } from '@/lib/site';
 import { formatHondurasTime, getHondurasClock } from '@/lib/datetime';
 import { trackWhatsAppClick, trackPhoneClick } from '@/lib/analytics';
 import { useInstallPrompt } from '@/hooks/use-install-prompt';
 import { useConsentObserver } from '@/hooks/use-consent-observer';
+import { isPenalUrgencyPath, whatsappMessageForPath } from '@/lib/whatsapp-messages';
 
 export function LiveClock() {
   const [now, setNow] = useState<Date | null>(() => new Date());
@@ -116,6 +118,9 @@ export function LiveOfficeStatus() {
 }
 
 export function FloatingContactRail() {
+  const pathname = usePathname();
+  const waMessage = whatsappMessageForPath(pathname);
+  const penalUrgent = isPenalUrgencyPath(pathname);
   const { showButton, isIOS, promptInstall, dismiss } = useInstallPrompt();
   const [iosPanelOpen, setIosPanelOpen] = useState(false);
   const installButtonRef = useRef<HTMLButtonElement>(null);
@@ -156,23 +161,26 @@ export function FloatingContactRail() {
   return (
     <div
       data-floating-widget
+      role="region"
       inert={consentOpen}
       aria-hidden={consentOpen ? 'true' : undefined}
       aria-label="Acceso rápido de contacto"
-      className={`fixed bottom-20 md:bottom-4 right-4 z-30 flex-col gap-2 print:hidden safe-bottom ${
-        showButton ? 'flex' : 'hidden md:flex'
-      }`}
+      className="fixed bottom-20 right-3 z-30 flex flex-col gap-2 print:hidden safe-bottom md:bottom-4 md:right-4"
     >
       <a
-        href={whatsappHref('Hola, necesito orientación jurídica.')}
+        href={whatsappHref(waMessage)}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => trackWhatsAppClick('floating_button')}
-        className="group w-12 h-12 rounded-full bg-success text-white flex items-center justify-center btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-transform focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
-        aria-label="Contactar por WhatsApp"
+        className={`group relative flex items-center justify-center rounded-full bg-success text-white btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-transform focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none ${
+          penalUrgent
+            ? 'h-16 w-16 md:h-14 md:w-14'
+            : 'h-14 w-14 md:h-12 md:w-12'
+        }`}
+        aria-label={penalUrgent ? 'WhatsApp urgente — defensa penal' : 'Contactar por WhatsApp'}
         title="WhatsApp"
       >
-        <MessageCircle size={20} aria-hidden="true" />
+        <MessageCircle size={penalUrgent ? 26 : 22} aria-hidden="true" />
         <span className="absolute right-full mr-2 whitespace-nowrap rounded-md bg-text text-text-inverse text-xxs font-semibold px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
           WhatsApp
         </span>
@@ -257,6 +265,9 @@ export function FloatingContactRail() {
 }
 
 export function MobileContactBar() {
+  const pathname = usePathname();
+  const waMessage = whatsappMessageForPath(pathname);
+  const penalUrgent = isPenalUrgencyPath(pathname);
   const consentOpen = useConsentObserver();
   return (
     <nav
@@ -264,29 +275,30 @@ export function MobileContactBar() {
       inert={consentOpen}
       aria-hidden={consentOpen ? 'true' : undefined}
       aria-label="Contacto rápido"
-      className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 gap-px border-t border-border bg-surface/95 px-2 py-2 shadow-lg backdrop-blur-md md:hidden print:hidden safe-bottom"
+      className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 gap-1 border-t border-border bg-surface/95 px-2 py-2 shadow-lg backdrop-blur-md md:hidden print:hidden safe-bottom"
     >
       <a
         href={telHref()}
         onClick={() => trackPhoneClick('mobile_contact_bar')}
-        className="inline-flex h-11 items-center justify-center gap-2 rounded-lg text-xs font-bold text-primary hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg text-xs font-bold text-primary hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
       >
         <Phone size={18} aria-hidden="true" />
         Llamar
       </a>
       <a
-        href={whatsappHref('Hola, necesito orientación jurídica.')}
+        href={whatsappHref(waMessage)}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => trackWhatsAppClick('mobile_contact_bar')}
-        className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-success text-xs font-bold text-white btn-shadow-success focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-success text-xs font-bold text-white btn-shadow-success focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+        aria-label={penalUrgent ? 'WhatsApp urgente — defensa penal' : 'Contactar por WhatsApp'}
       >
         <MessageCircle size={18} aria-hidden="true" />
         WhatsApp
       </a>
       <a
         href="/solicitar-consulta#formulario"
-        className="inline-flex h-11 items-center justify-center gap-2 rounded-lg text-xs font-bold text-primary hover:bg-accent/10 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg text-xs font-bold text-primary hover:bg-accent/10 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
       >
         <Calendar size={18} aria-hidden="true" />
         Consulta

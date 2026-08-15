@@ -511,6 +511,38 @@ export function ContextualCta({
 }
 
 /* -------------------------------------------------------------------------- */
+/* AreaTrustBlock — por qué confiar en esta área (sin testimonios ficticios)  */
+/* -------------------------------------------------------------------------- */
+
+export function AreaTrustBlock({
+  title,
+  points,
+  eyebrow = 'Por qué confiar en esta área',
+}: {
+  title: string;
+  points: readonly { title: string; body: string }[];
+  eyebrow?: string;
+}) {
+  if (!points.length) return null;
+  return (
+    <Section background="warm" spacing="md" ariaLabel={eyebrow}>
+      <SectionHeader eyebrow={eyebrow} title={title} />
+      <div className="grid gap-4 md:grid-cols-3">
+        {points.map((point) => (
+          <article key={point.title} className="rounded-lg border border-border-light bg-surface p-5 h-full">
+            <div className="w-11 h-11 rounded-lg bg-primary/8 text-primary flex items-center justify-center border border-primary/15">
+              <ShieldAlert size={20} aria-hidden="true" />
+            </div>
+            <h3 className="mt-3 font-serif text-lg font-extrabold text-primary">{point.title}</h3>
+            <p className="mt-2 text-sm text-text-secondary leading-relaxed">{point.body}</p>
+          </article>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
 /* ViewServiceTracker — dispara view_service al montar (§19)                  */
 /* -------------------------------------------------------------------------- */
 

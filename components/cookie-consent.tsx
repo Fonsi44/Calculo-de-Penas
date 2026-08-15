@@ -13,17 +13,24 @@ import {
   updateGoogleConsent,
 } from '@/lib/cookie-consent';
 
+/** En tests el banner aparece al instante; en producción se retrasa para no tapar el LCP. */
+export const CONSENT_REVEAL_DELAY_MS =
+  process.env.NODE_ENV === 'test' || process.env.VITEST ? 0 : 2500;
+
 export function CookieConsent() {
   const [reopened, setReopened] = useState(false);
   const [configure, setConfigure] = useState(false);
   const [analytics, setAnalytics] = useState(false);
   const [functionality, setFunctionality] = useState(false);
+  const [delayElapsed, setDelayElapsed] = useState(CONSENT_REVEAL_DELAY_MS === 0);
   const dialogRef = useRef<HTMLElement>(null);
   const initialFocusRef = useRef<HTMLButtonElement>(null);
 
   const snapshot = useSyncExternalStore(subscribeConsent, getConsentSnapshot, () => null);
   const consent = useMemo(() => parseConsentSnapshot(snapshot), [snapshot]);
-  const isOpen = !consent || reopened;
+  const needsDecision = !consent || reopened;
+  const isModal = configure || reopened;
+  const isOpen = needsDecision && (delayElapsed || reopened);
 
   useEffect(() => {
     if (consent) updateGoogleConsent(consent);
@@ -40,7 +47,13 @@ export function CookieConsent() {
   }, [consent]);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (consent || delayElapsed) return;
+    const timer = window.setTimeout(() => setDelayElapsed(true), CONSENT_REVEAL_DELAY_MS);
+    return () => window.clearTimeout(timer);
+  }, [consent, delayElapsed]);
+
+  useEffect(() => {
+    if (!isOpen || !isModal) return;
 
     const previousFocus =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -92,7 +105,7 @@ export function CookieConsent() {
       });
       previousFocus?.focus();
     };
-  }, [isOpen, reopened]);
+  }, [isOpen, isModal, reopened]);
 
   function save(choice: ConsentChoice) {
     const previous = readConsent();
@@ -107,10 +120,91 @@ export function CookieConsent() {
 
   if (!isOpen) return null;
 
+  const actions = (
+    <div className="mt-4 flex flex-wrap gap-2">
+      <button
+        ref={initialFocusRef}
+        type="button"
+        onClick={() => save({ analytics: true, functionality: true })}
+        className="min-h-11 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white focus-visible:outline-none"
+      >
+        Aceptar opcionales
+      </button>
+      <button
+        type="button"
+        onClick={() => save({ analytics: false, functionality: false })}
+        className="min-h-11 rounded-lg border border-border px-4 py-2 text-sm font-semibold text-primary focus-visible:outline-none"
+      >
+        Rechazar opcionales
+      </button>
+      {configure ? (
+        <button
+          type="button"
+          onClick={() => save({ analytics, functionality })}
+          className="min-h-11 rounded-lg border border-primary px-4 py-2 text-sm font-semibold text-primary focus-visible:outline-none"
+        >
+          Guardar preferencias
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setConfigure(true)}
+          className="min-h-11 rounded-lg px-4 py-2 text-sm font-semibold text-primary underline focus-visible:outline-none"
+        >
+          Configurar
+        </button>
+      )}
+    </div>
+  );
+
+  const copy = (
+    <>
+      <h2 id="cookie-consent-title" className="pr-14 text-base font-bold text-primary md:text-lg">
+        Preferencias de privacidad
+      </h2>
+      <p className="mt-2 text-sm text-text-muted">
+        Las cookies analíticas son opcionales. No usamos almacenamiento publicitario. Puede cambiar su elección en el pie de página. La decisión caduca en {CONSENT_MAX_AGE_DAYS} días.{' '}
+        <Link href="/politica-cookies" rel="nofollow" className="underline">Política de cookies</Link>.
+      </p>
+      {configure && (
+        <fieldset className="mt-4 space-y-3">
+          <legend className="sr-only">Configurar consentimiento</legend>
+          <label className="flex items-start gap-3">
+            <input type="checkbox" checked disabled className="mt-1" />
+            <span><strong>Necesarias</strong><span className="block text-sm text-text-muted">Seguridad y funcionamiento básico. Siempre activas.</span></span>
+          </label>
+          <label className="flex items-start gap-3">
+            <input aria-label="Cookies analíticas" type="checkbox" checked={analytics} onChange={(e) => setAnalytics(e.target.checked)} className="mt-1" />
+            <span><strong>Analítica</strong><span className="block text-sm text-text-muted">GA4 y Microsoft Clarity para medir uso y mejorar el sitio.</span></span>
+          </label>
+          <label className="flex items-start gap-3">
+            <input aria-label="Cookies funcionales" type="checkbox" checked={functionality} onChange={(e) => setFunctionality(e.target.checked)} className="mt-1" />
+            <span><strong>Funcionalidad opcional</strong><span className="block text-sm text-text-muted">Preferencias no esenciales. Actualmente no activa publicidad.</span></span>
+          </label>
+        </fieldset>
+      )}
+      {actions}
+    </>
+  );
+
+  if (!isModal) {
+    return (
+      <aside
+        role="region"
+        aria-labelledby="cookie-consent-title"
+        className="pointer-events-none fixed inset-x-0 bottom-16 z-[10000] px-3 md:bottom-3 print:hidden"
+      >
+        <div className="pointer-events-auto mx-auto w-full max-w-2xl rounded-lg border border-border bg-surface/95 p-4 shadow-lg backdrop-blur-md">
+          {copy}
+        </div>
+      </aside>
+    );
+  }
+
   return (
     <div
       data-cookie-consent-overlay
-      className="fixed inset-0 z-[10000] flex items-end justify-center overflow-y-auto bg-black/20 p-3"
+      className="fixed inset-0 z-[10000] flex items-end justify-center overflow-y-auto bg-black/10 p-3 pb-[4.75rem] md:items-end md:pb-3"
     >
       <section
         ref={dialogRef}
@@ -118,7 +212,7 @@ export function CookieConsent() {
         aria-modal="true"
         aria-labelledby="cookie-consent-title"
         tabIndex={-1}
-        className="relative w-full max-w-2xl max-h-[calc(100dvh-1.5rem)] overflow-y-auto rounded-lg border border-border bg-surface p-5 shadow-xl"
+        className="relative w-full max-w-2xl max-h-[calc(100dvh-5.5rem)] overflow-y-auto rounded-lg border border-border bg-surface p-5 shadow-xl md:max-h-[calc(100dvh-1.5rem)]"
       >
         {reopened && (
           <button
@@ -127,45 +221,13 @@ export function CookieConsent() {
               setReopened(false);
               setConfigure(false);
             }}
-            className="absolute top-3 right-3 rounded-md px-2 py-1 text-xs font-semibold text-text-muted hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="absolute top-3 right-3 min-h-11 min-w-11 rounded-md px-2 py-1 text-xs font-semibold text-text-muted hover:text-primary focus-visible:outline-none"
             aria-label="Cerrar preferencias de privacidad"
           >
             Cerrar
           </button>
         )}
-        <h2 id="cookie-consent-title" className="pr-14 text-lg font-bold text-primary">Preferencias de privacidad</h2>
-        <p className="mt-2 text-sm text-text-muted">
-          Las cookies analíticas son opcionales. No usamos almacenamiento publicitario. Puede cambiar su elección en el pie de página. La decisión caduca en {CONSENT_MAX_AGE_DAYS} días.{' '}
-          <Link href="/politica-cookies" rel="nofollow" className="underline">Política de cookies</Link>.
-        </p>
-
-        {configure && (
-          <fieldset className="mt-4 space-y-3">
-            <legend className="sr-only">Configurar consentimiento</legend>
-            <label className="flex items-start gap-3">
-              <input type="checkbox" checked disabled className="mt-1" />
-              <span><strong>Necesarias</strong><span className="block text-sm text-text-muted">Seguridad y funcionamiento básico. Siempre activas.</span></span>
-            </label>
-            <label className="flex items-start gap-3">
-              <input aria-label="Cookies analíticas" type="checkbox" checked={analytics} onChange={(e) => setAnalytics(e.target.checked)} className="mt-1" />
-              <span><strong>Analítica</strong><span className="block text-sm text-text-muted">GA4 y Microsoft Clarity para medir uso y mejorar el sitio.</span></span>
-            </label>
-            <label className="flex items-start gap-3">
-              <input aria-label="Cookies funcionales" type="checkbox" checked={functionality} onChange={(e) => setFunctionality(e.target.checked)} className="mt-1" />
-              <span><strong>Funcionalidad opcional</strong><span className="block text-sm text-text-muted">Preferencias no esenciales. Actualmente no activa publicidad.</span></span>
-            </label>
-          </fieldset>
-        )}
-
-        <div className="mt-5 flex flex-wrap gap-2">
-          <button ref={initialFocusRef} type="button" onClick={() => save({ analytics: true, functionality: true })} className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white">Aceptar opcionales</button>
-          <button type="button" onClick={() => save({ analytics: false, functionality: false })} className="rounded-lg border border-border px-4 py-2 text-sm font-semibold text-primary">Rechazar opcionales</button>
-          {configure ? (
-            <button type="button" onClick={() => save({ analytics, functionality })} className="rounded-lg border border-primary px-4 py-2 text-sm font-semibold text-primary">Guardar preferencias</button>
-          ) : (
-            <button type="button" onClick={() => setConfigure(true)} className="rounded-lg px-4 py-2 text-sm font-semibold text-primary underline">Configurar</button>
-          )}
-        </div>
+        {copy}
       </section>
     </div>
   );
