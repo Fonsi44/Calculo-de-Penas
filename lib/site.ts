@@ -376,8 +376,17 @@ export function legalServiceSchema() {
           closes: h.closes,
         })),
       },
+      {
+        '@type': 'ContactPoint',
+        contactType: 'customer service',
+        url: `https://wa.me/${site.whatsapp}`,
+        telephone: `+${site.whatsapp}`,
+        areaServed: ['HN'],
+        availableLanguage: ['es-HN', 'es-ES'],
+      },
     ],
     hasOfferCatalog: publicServiceOfferCatalog(site.url),
+    hasMap: site.googleBusiness,
     employee: [
       { '@id': `${site.url}/#danilo-pineda-maradiaga` },
       { '@id': `${site.url}/#thania-marlene-paz` },

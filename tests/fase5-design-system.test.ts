@@ -158,6 +158,12 @@ describe('FASE 5 §5 — LandingLocalView delega FAQ en HubFaq', () => {
     expect(faqPageMatches.length).toBe(0);
   });
 
+  it('NO duplica BreadcrumbList en ldSchemas (lo emite <Breadcrumbs>)', () => {
+    const breadcrumbMatches = ll.match(/'@type':\s*'BreadcrumbList'/g) ?? [];
+    expect(breadcrumbMatches.length).toBe(0);
+    expect(ll).toMatch(/<Breadcrumbs/);
+  });
+
   it('usa IconBadge en servicios y blog (no badges inline w-11 h-11)', () => {
     expect(ll).toMatch(/import.*IconBadge.*from.*'@\/components\/marketing\/icon-badge'/);
     expect(ll).toMatch(/<IconBadge\s+icon=\{Scale\}/);

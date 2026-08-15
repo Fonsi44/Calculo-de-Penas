@@ -11,6 +11,7 @@ import { IconBadge } from '@/components/marketing/icon-badge';
 import { type LandingLocal } from '@/data/landings-locales';
 import { ViewLocalPageTracker } from '@/components/marketing/view-local-page-tracker';
 import { PUBLIC_SERVICE_CATALOG } from '@/lib/public-service-catalog';
+import { whatsappMessageForCity } from '@/lib/whatsapp-messages';
 
 /**
  * Mapa de títulos de servicio (en landings-locales.ts) → slug de área en
@@ -60,7 +61,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
   const canonical = landing.path ?? `/abogados-en-${landing.slug}`;
   const url = absoluteUrl(canonical);
   // Mensaje contextual para el CTAGroup del hero (Whats App pre-llenado).
-  const whatsappMsg = `Hola, soy de ${landing.ciudad} y necesito una consulta jurídica. Vi su sitio web.`;
+  const whatsappMsg = whatsappMessageForCity(landing.ciudad);
 
   // Schema: WebPage + Service (con areaServed por ciudad) + FAQPage +
   // BreadcrumbList específicos de la landing.
@@ -95,21 +96,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
       provider: { '@id': `${site.url}/#legal-service` },
       url,
     },
-    // FASE 5: el schema FAQPage (@id `${url}#faqpage`) lo emite ahora <HubFaq>
-    // más abajo en el JSX. Antes se duplicaba aquí y en el componente manual.
-    {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Inicio', item: absoluteUrl('/') },
-        {
-          '@type': 'ListItem',
-          position: 2,
-          name: `Abogados en ${landing.ciudad}`,
-          item: url,
-        },
-      ],
-    },
+    // FAQPage lo emite <HubFaq>. BreadcrumbList lo emite <Breadcrumbs>.
   ];
 
   return (
@@ -287,9 +274,10 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
           duales (WhatsApp + Llamar) los aporta el componente compartido. */}
       <ConsultationCTA
         variant="inline"
-        eyebrow={`Consulta confidencial sin costo en ${landing.ciudad}`}
+        eyebrow={`Evaluación inicial confidencial en ${landing.ciudad}`}
         title={`¿Necesita un abogado en ${landing.ciudad}?`}
-        subtitle={`Cada caso es único. Cuéntenos el suyo y le orientamos sin compromiso. Atendemos en ${landing.ciudad}, Honduras${landing.sedeFisica ? '' : ', y en toda la zona sur'}, con presupuesto por escrito antes de cualquier actuación.`}
+        subtitle={`Si hay una detención, un despido o un asunto de familia, cuéntenoslo con calma. Atendemos ${landing.ciudad}${landing.sedeFisica ? '' : ' y el resto de la zona sur'} desde Nacaome: habla con el abogado, presupuesto por escrito y sin promesas de resultado.`}
+        message={whatsappMsg}
       />
 
       {ldSchemas.map((schema, i) => (

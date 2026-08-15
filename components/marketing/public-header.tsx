@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { Menu, X, Phone, MessageCircle, Calendar, ChevronDown } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
 import { trackFormClick, trackPhoneClick, trackWhatsAppClick } from '@/lib/analytics';
+import { whatsappMessageForPath } from '@/lib/whatsapp-messages';
 
 const NAV = [
   { label: 'El Despacho', title: 'Conozca el bufete Pineda y Asociados en Nacaome, Valle', href: '/despacho' },
@@ -26,6 +27,7 @@ function isActive(pathname: string, href: string): boolean {
 
 export function PublicHeader() {
   const pathname = usePathname();
+  const waMessage = whatsappMessageForPath(pathname);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -80,8 +82,12 @@ export function PublicHeader() {
           : 'bg-primary border-b border-primary-light/60'
       }`}
     >
-      {/* Barra superior con datos de contacto */}
-      <div className="hidden md:block bg-primary-dark/80 border-b border-primary-light/20">
+      {/* Barra superior con datos de contacto — se pliega al hacer scroll */}
+      <div
+        className={`hidden md:block bg-primary-dark/80 border-b border-primary-light/20 overflow-hidden transition-all duration-200 ${
+          scrolled ? 'max-h-0 opacity-0 border-b-0' : 'max-h-10 opacity-100'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-6 py-1.5 flex items-center justify-between text-xs">
           <div className="flex items-center gap-4 text-text-inverse/80">
             <a
@@ -162,11 +168,11 @@ export function PublicHeader() {
 
         <div className="hidden xl:flex items-center gap-2">
           <a
-            href={whatsappHref('Hola, necesito una consulta jurídica.')}
+            href={whatsappHref(waMessage)}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackWhatsAppClick('header_desktop')}
-            className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-success text-white btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+            className="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-success text-white btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
             aria-label="Contactar por WhatsApp"
             title="Escribir por WhatsApp a Pineda y Asociados — atención en horario hábil"
           >
@@ -238,7 +244,7 @@ export function PublicHeader() {
               {site.phoneDisplay}
             </a>
             <a
-              href={whatsappHref('Hola, necesito una consulta jurídica.')}
+              href={whatsappHref(waMessage)}
               target="_blank"
               rel="noopener noreferrer"
               title="Escribir por WhatsApp a Pineda y Asociados"
@@ -246,7 +252,7 @@ export function PublicHeader() {
                 trackWhatsAppClick('header_mobile');
                 setOpen(false);
               }}
-              className="px-3 h-11 inline-flex items-center gap-2 text-sm font-semibold text-text-inverse/85 hover:text-accent focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg"
+              className="px-3 min-h-12 inline-flex items-center justify-center gap-2 text-sm font-bold text-white bg-success rounded-lg btn-shadow-success focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
             >
               <MessageCircle size={16} />
               WhatsApp

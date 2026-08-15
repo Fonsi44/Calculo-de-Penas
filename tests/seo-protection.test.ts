@@ -244,6 +244,9 @@ describe('lib/site.ts — JSON-LD principal válido', () => {
     expect((s.sameAs as unknown[]).length).toBeGreaterThan(0);
     // Verifica que Google Business Profile esté incluido
     expect(s.sameAs).toContain(site.googleBusiness);
+    expect(s.hasMap).toBe(site.googleBusiness);
+    const points = s.contactPoint as Array<Record<string, unknown>>;
+    expect(points.some((point) => String(point.url ?? '').includes('wa.me'))).toBe(true);
   });
 
   it('los 6 schemas del @graph global no incluyen @context (lo aporta el wrapper)', () => {
@@ -265,7 +268,7 @@ describe('lib/site.ts — JSON-LD principal válido', () => {
 describe('SEO on-page — home page (página raíz)', () => {
   // Valores por defecto definidos en getEditablePagesMeta() de lib/page-content-db.ts.
   const H1_DEFAULT = 'Defensa penal y asesoría jurídica en Nacaome y Honduras';
-  const SUBTITLE_DEFAULT = 'Defensa penal y asesoría jurídica integral de la mano de abogados con presencia activa en los juzgados de Nacaome, Valle y todo Honduras. En Pineda y Asociados recibirá comunicación clara y un equipo coordinado en cada rama del derecho.';
+  const SUBTITLE_DEFAULT = 'Si un familiar está detenido, le citaron a audiencia o necesita orientar un asunto de familia, laboral o civil, hable con abogados de Pineda y Asociados. Defensa penal y asesoría jurídica en Nacaome, Valle y el sur de Honduras: le explicamos qué procede, qué no, y cuánto cuesta, por escrito.';
   const CHECK2_DEFAULT = 'Atención directa de abogados en Nacaome';
 
   it('el H1 por defecto contiene "defensa penal" y "asesoría jurídica" de forma natural', () => {

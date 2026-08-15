@@ -1,12 +1,13 @@
 {
   "schema_version": 1,
   "environment": "staging",
-  "generated_at": "2026-08-03T15:26:07.719Z",
+  "generated_at": "2026-08-11T16:04:40.528Z",
   "tool": "seo:internal-links:patch",
   "dry_run": true,
   "total_cases": 53,
   "states": {
-    "REQUIRES_HUMAN_DECISION": 53
+    "RESOLVED_IN_CODE": 1,
+    "REQUIRES_HUMAN_DECISION": 52
   },
   "preconditions": {
     "not_production": true,
@@ -14,18 +15,6 @@
     "in_body_links_require_human_content_review": true
   },
   "operations": [
-    {
-      "url": "/blog/tributario/devolucion-impuestos-como-solicitarla-honduras",
-      "slug": "devolucion-impuestos-como-solicitarla-honduras",
-      "category": "tributario",
-      "primary_service": "/servicios-juridicos/tributario-fiscal",
-      "related_articles_proposed": [
-        "defensa-sar-choluteca"
-      ],
-      "official_sources": [],
-      "before_body_hash": "98e7ace1e5ca5e5d",
-      "requires_human_content_review": true
-    },
     {
       "url": "/blog/regulacion-sanitaria/registro-medicamentos-productos-farmaceuticos-honduras",
       "slug": "registro-medicamentos-productos-farmaceuticos-honduras",
@@ -37,44 +26,6 @@
       ],
       "official_sources": [],
       "before_body_hash": "988408db629739fd",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/hondurenos-en-espana/arraigo-social-laboral-hondurenos-espana",
-      "slug": "arraigo-social-laboral-hondurenos-espana",
-      "category": "hondurenos-en-espana",
-      "primary_service": "/hondurenos-en-espana",
-      "related_articles_proposed": [
-        "asuntos-familiares-honduras-espana"
-      ],
-      "official_sources": [],
-      "before_body_hash": "71af9b246cc0d941",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/derecho-aduanero/zonas-libres-zoli-beneficios-fiscales-honduras",
-      "slug": "zonas-libres-zoli-beneficios-fiscales-honduras",
-      "category": "derecho-aduanero",
-      "primary_service": "/servicios-juridicos/derecho-aduanero-y-comercio-exterior",
-      "related_articles_proposed": [
-        "codigo-aduanero-centroamericano",
-        "importaciones-san-lorenzo"
-      ],
-      "official_sources": [],
-      "before_body_hash": "16e1b846e2e5adb8",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/regulacion-sanitaria/habilitacion-clinicas-hospitales",
-      "slug": "habilitacion-clinicas-hospitales",
-      "category": "regulacion-sanitaria",
-      "primary_service": "/servicios-juridicos/regulacion-sanitaria",
-      "related_articles_proposed": [
-        "registro-sanitario-alimentos-arsa-paso-a-paso-honduras",
-        "responsabilidad-medica-mala-praxis-honduras"
-      ],
-      "official_sources": [],
-      "before_body_hash": "ec431f7c43b5c9f0",
       "requires_human_content_review": true
     },
     {
@@ -153,18 +104,6 @@
       "requires_human_content_review": true
     },
     {
-      "url": "/blog/tributario/impuestos-pequenas-empresas-guia-basica-honduras",
-      "slug": "impuestos-pequenas-empresas-guia-basica-honduras",
-      "category": "tributario",
-      "primary_service": "/servicios-juridicos/tributario-fiscal",
-      "related_articles_proposed": [
-        "defensa-sar-choluteca"
-      ],
-      "official_sources": [],
-      "before_body_hash": "8a6e55f005358ca9",
-      "requires_human_content_review": true
-    },
-    {
       "url": "/blog/derecho-mercantil/incumplimiento-contrato-comercial-honduras",
       "slug": "incumplimiento-contrato-comercial-honduras",
       "category": "derecho-mercantil",
@@ -191,18 +130,6 @@
       "requires_human_content_review": true
     },
     {
-      "url": "/blog/extranjeria-migracion/refugio-asilo-solicitarlo",
-      "slug": "refugio-asilo-solicitarlo",
-      "category": "extranjeria-migracion",
-      "primary_service": "/servicios-juridicos/extranjeria-en-honduras",
-      "related_articles_proposed": [
-        "residencia-temporal-requisitos-plazos-honduras"
-      ],
-      "official_sources": [],
-      "before_body_hash": "9390d0f2738c5c36",
-      "requires_human_content_review": true
-    },
-    {
       "url": "/blog/derecho-notarial/poder-notarial-honduras-tipos-requisitos",
       "slug": "poder-notarial-honduras-tipos-requisitos",
       "category": "derecho-notarial",
@@ -225,30 +152,6 @@
       ],
       "official_sources": [],
       "before_body_hash": "8f4fe78855ae0f8c",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/tributario/isv-impuesto-venta-tasas-obligaciones-honduras",
-      "slug": "isv-impuesto-venta-tasas-obligaciones-honduras",
-      "category": "tributario",
-      "primary_service": "/servicios-juridicos/tributario-fiscal",
-      "related_articles_proposed": [
-        "defensa-sar-choluteca"
-      ],
-      "official_sources": [],
-      "before_body_hash": "7dba0b1c7c203905",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/derecho-ambiental/evaluacion-impacto-ambiental-honduras",
-      "slug": "evaluacion-impacto-ambiental-honduras",
-      "category": "derecho-ambiental",
-      "primary_service": "/servicios-juridicos/ambiental-regulatorio",
-      "related_articles_proposed": [
-        "derecho-ambiental-honduras"
-      ],
-      "official_sources": [],
-      "before_body_hash": "191d509168a5791e",
       "requires_human_content_review": true
     },
     {
@@ -278,55 +181,6 @@
       "requires_human_content_review": true
     },
     {
-      "url": "/blog/tributario/facturacion-electronica-requisitos-sar",
-      "slug": "facturacion-electronica-requisitos-sar",
-      "category": "tributario",
-      "primary_service": "/servicios-juridicos/tributario-fiscal",
-      "related_articles_proposed": [
-        "defensa-sar-choluteca"
-      ],
-      "official_sources": [],
-      "before_body_hash": "ed827aa2a56aa23b",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/hondurenos-en-espana/reagrupacion-familiar-hondurenos-espana",
-      "slug": "reagrupacion-familiar-hondurenos-espana",
-      "category": "hondurenos-en-espana",
-      "primary_service": "/hondurenos-en-espana",
-      "related_articles_proposed": [
-        "asuntos-familiares-honduras-espana"
-      ],
-      "official_sources": [],
-      "before_body_hash": "8a0940ea8b1335bb",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/derecho-ambiental/delitos-ambientales-como-denunciarlos-honduras",
-      "slug": "delitos-ambientales-como-denunciarlos-honduras",
-      "category": "derecho-ambiental",
-      "primary_service": "/servicios-juridicos/ambiental-regulatorio",
-      "related_articles_proposed": [
-        "derecho-ambiental-honduras"
-      ],
-      "official_sources": [],
-      "before_body_hash": "cf7b1dcf7394b63e",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/derecho-bancario/central-riesgos-honduras-consultar-impugnar",
-      "slug": "central-riesgos-honduras-consultar-impugnar",
-      "category": "derecho-bancario",
-      "primary_service": "/servicios-juridicos/derecho-bancario-y-financiero",
-      "related_articles_proposed": [
-        "tarjetas-credito-intereses-cargos-defensa-honduras",
-        "derechos-consumidor-financiero-honduras-cnbs"
-      ],
-      "official_sources": [],
-      "before_body_hash": "2360140fcf23f97d",
-      "requires_human_content_review": true
-    },
-    {
       "url": "/blog/derecho-de-familia/custodia-hijos-honduras-juez",
       "slug": "custodia-hijos-honduras-juez",
       "category": "derecho-de-familia",
@@ -337,19 +191,6 @@
       ],
       "official_sources": [],
       "before_body_hash": "4be33fee9d83d4fa",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/derecho-laboral/jornada-laboral-horas-extra-descansos-honduras",
-      "slug": "jornada-laboral-horas-extra-descansos-honduras",
-      "category": "derecho-laboral",
-      "primary_service": "/servicios-juridicos/derecho-laboral",
-      "related_articles_proposed": [
-        "contratos-empleadas-domesticas-obligaciones-honduras",
-        "contratos-trabajo-tipos-clausulas-honduras"
-      ],
-      "official_sources": [],
-      "before_body_hash": "a51a669450a0a6ef",
       "requires_human_content_review": true
     },
     {
@@ -374,19 +215,6 @@
       ],
       "official_sources": [],
       "before_body_hash": "7655c989774d9564",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/derecho-de-familia/union-de-hecho-requisitos-derechos-honduras",
-      "slug": "union-de-hecho-requisitos-derechos-honduras",
-      "category": "derecho-de-familia",
-      "primary_service": "/servicios-juridicos/derecho-de-familia",
-      "related_articles_proposed": [
-        "pension-alimenticia-choluteca",
-        "pension-alimenticia-porcentaje-honduras-2026"
-      ],
-      "official_sources": [],
-      "before_body_hash": "63dba72fafa9700f",
       "requires_human_content_review": true
     },
     {
@@ -440,19 +268,6 @@
       "requires_human_content_review": true
     },
     {
-      "url": "/blog/derecho-bancario/banco-demanda-deuda-defensa-opciones-honduras",
-      "slug": "banco-demanda-deuda-defensa-opciones-honduras",
-      "category": "derecho-bancario",
-      "primary_service": "/servicios-juridicos/derecho-bancario-y-financiero",
-      "related_articles_proposed": [
-        "tarjetas-credito-intereses-cargos-defensa-honduras",
-        "derechos-consumidor-financiero-honduras-cnbs"
-      ],
-      "official_sources": [],
-      "before_body_hash": "d23071217db748e6",
-      "requires_human_content_review": true
-    },
-    {
       "url": "/blog/derecho-mercantil/competencia-desleal-como-denunciar-honduras",
       "slug": "competencia-desleal-como-denunciar-honduras",
       "category": "derecho-mercantil",
@@ -463,32 +278,6 @@
       ],
       "official_sources": [],
       "before_body_hash": "e49e658c3a01c355",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/derecho-aduanero/importar-china-guia-aduanera",
-      "slug": "importar-china-guia-aduanera",
-      "category": "derecho-aduanero",
-      "primary_service": "/servicios-juridicos/derecho-aduanero-y-comercio-exterior",
-      "related_articles_proposed": [
-        "codigo-aduanero-centroamericano",
-        "importaciones-san-lorenzo"
-      ],
-      "official_sources": [],
-      "before_body_hash": "7169de277b587636",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/derecho-civil/usucapion-prescripcion-adquisitiva-honduras",
-      "slug": "usucapion-prescripcion-adquisitiva-honduras",
-      "category": "derecho-civil",
-      "primary_service": "/servicios-juridicos/derecho-civil-y-notarial",
-      "related_articles_proposed": [
-        "abogado-civil-choluteca",
-        "cobro-deudas-choluteca"
-      ],
-      "official_sources": [],
-      "before_body_hash": "a2f2c667b1db9745",
       "requires_human_content_review": true
     },
     {
@@ -518,18 +307,6 @@
       "requires_human_content_review": true
     },
     {
-      "url": "/blog/extranjeria-migracion/permiso-trabajo-extranjeros-honduras",
-      "slug": "permiso-trabajo-extranjeros-honduras",
-      "category": "extranjeria-migracion",
-      "primary_service": "/servicios-juridicos/extranjeria-en-honduras",
-      "related_articles_proposed": [
-        "residencia-temporal-requisitos-plazos-honduras"
-      ],
-      "official_sources": [],
-      "before_body_hash": "7c33f7f67c31cf8d",
-      "requires_human_content_review": true
-    },
-    {
       "url": "/blog/derechos-ciudadanos/libertad-expresion-redes-sociales-honduras",
       "slug": "libertad-expresion-redes-sociales-honduras",
       "category": "derechos-ciudadanos",
@@ -539,18 +316,6 @@
       ],
       "official_sources": [],
       "before_body_hash": "bd70ac76692753a5",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/hondurenos-en-espana/poder-desde-espana-para-tramites-honduras",
-      "slug": "poder-desde-espana-para-tramites-honduras",
-      "category": "hondurenos-en-espana",
-      "primary_service": "/hondurenos-en-espana",
-      "related_articles_proposed": [
-        "asuntos-familiares-honduras-espana"
-      ],
-      "official_sources": [],
-      "before_body_hash": "db5ec85e0ae0e16c",
       "requires_human_content_review": true
     },
     {
@@ -567,18 +332,6 @@
       "requires_human_content_review": true
     },
     {
-      "url": "/blog/hondurenos-en-espana/hondurenos-espana-documentos",
-      "slug": "hondurenos-espana-documentos",
-      "category": "hondurenos-en-espana",
-      "primary_service": "/hondurenos-en-espana",
-      "related_articles_proposed": [
-        "asuntos-familiares-honduras-espana"
-      ],
-      "official_sources": [],
-      "before_body_hash": "a51e050713b36807",
-      "requires_human_content_review": true
-    },
-    {
       "url": "/blog/derecho-penal/defensa-penal-menores-edad-honduras",
       "slug": "defensa-penal-menores-edad-honduras",
       "category": "derecho-penal",
@@ -589,19 +342,6 @@
       ],
       "official_sources": [],
       "before_body_hash": "80322667de1cd233",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/practica-legal/proceso-consulta-legal-pineda",
-      "slug": "proceso-consulta-legal-pineda",
-      "category": "practica-legal",
-      "primary_service": "/despacho",
-      "related_articles_proposed": [
-        "pineda-asociados-bufete-multidisciplinario-honduras",
-        "como-elegir-abogado-honduras"
-      ],
-      "official_sources": [],
-      "before_body_hash": "cff41c29688ec8b5",
       "requires_human_content_review": true
     },
     {
@@ -629,18 +369,6 @@
       "requires_human_content_review": true
     },
     {
-      "url": "/blog/extranjeria-migracion/visas-inversion-rentista-pensionado",
-      "slug": "visas-inversion-rentista-pensionado",
-      "category": "extranjeria-migracion",
-      "primary_service": "/servicios-juridicos/extranjeria-en-honduras",
-      "related_articles_proposed": [
-        "residencia-temporal-requisitos-plazos-honduras"
-      ],
-      "official_sources": [],
-      "before_body_hash": "31dca718f3fb7e3b",
-      "requires_human_content_review": true
-    },
-    {
       "url": "/blog/hondurenos-en-espana/nacionalidad-espanola-para-hondurenos-residencia-plazos",
       "slug": "nacionalidad-espanola-para-hondurenos-residencia-plazos",
       "category": "hondurenos-en-espana",
@@ -650,32 +378,6 @@
       ],
       "official_sources": [],
       "before_body_hash": "070ad1686b503086",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/derecho-administrativo/despido-empleados-publicos-honduras",
-      "slug": "despido-empleados-publicos-honduras",
-      "category": "derecho-administrativo",
-      "primary_service": "/servicios-juridicos/derecho-administrativo-y-servicio-civil",
-      "related_articles_proposed": [
-        "expropiacion-forzosa-derechos-propietario-honduras",
-        "recurso-de-amparo-honduras-guia-completa"
-      ],
-      "official_sources": [],
-      "before_body_hash": "04982b73e6ee13b4",
-      "requires_human_content_review": true
-    },
-    {
-      "url": "/blog/derecho-administrativo/sanciones-administrativas-como-defenderse-honduras",
-      "slug": "sanciones-administrativas-como-defenderse-honduras",
-      "category": "derecho-administrativo",
-      "primary_service": "/servicios-juridicos/derecho-administrativo-y-servicio-civil",
-      "related_articles_proposed": [
-        "expropiacion-forzosa-derechos-propietario-honduras",
-        "recurso-de-amparo-honduras-guia-completa"
-      ],
-      "official_sources": [],
-      "before_body_hash": "69297044e11eac75",
       "requires_human_content_review": true
     }
   ]

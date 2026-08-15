@@ -6,6 +6,9 @@ import { Phone, MessageCircle, Calendar, ShieldAlert, MapPin } from 'lucide-reac
 import { site, telHref, whatsappHref, directTelHref, directWhatsappHref } from '@/lib/site';
 import { trackWhatsAppClick, trackPhoneClick, trackConsultationCtaClick, trackDirectionsClick } from '@/lib/analytics';
 
+const URGENCY_WA_MSG =
+  'Emergencia penal: necesito asistencia legal inmediata. Escribo desde la web de Pineda y Asociados.';
+
 interface CTAGroupProps {
   variant?: 'primary' | 'inline' | 'compact' | 'inverse';
   message?: string;
@@ -29,7 +32,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
           href={callHref}
           title="Llamar a Pineda y Asociados — consulta legal en Nacaome"
           onClick={() => trackPhoneClick('cta_compact')}
-          className="inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-lg bg-primary text-white text-xs font-bold border border-primary-light/40 btn-shadow-primary btn-shadow-primary-hover hover:-translate-y-0.5 hover:bg-primary-light transition-all duration-200 focus-visible:outline-none"
+          className="inline-flex items-center justify-center gap-2 min-h-11 px-3.5 rounded-lg bg-primary text-white text-xs font-bold border border-primary-light/40 btn-shadow-primary btn-shadow-primary-hover hover:-translate-y-0.5 hover:bg-primary-light transition-all duration-200 focus-visible:outline-none"
         >
           <Phone size={14} aria-hidden="true" />
           Llamar ahora
@@ -40,7 +43,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
           rel="noopener noreferrer"
           title="Escribir por WhatsApp a Pineda y Asociados — atención en horario hábil"
           onClick={() => trackWhatsAppClick('cta_compact')}
-          className="inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-lg bg-success text-white text-xs font-bold border border-success/40 btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 hover:opacity-95 transition-all duration-200 focus-visible:outline-none"
+          className="inline-flex items-center justify-center gap-2 min-h-11 px-3.5 rounded-lg bg-success text-white text-xs font-bold border border-success/40 btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 hover:opacity-95 transition-all duration-200 focus-visible:outline-none"
         >
           <MessageCircle size={14} aria-hidden="true" />
           WhatsApp{who}
@@ -146,7 +149,28 @@ export function UrgencyCallout({
           <p className="text-sm text-text-secondary mt-1 leading-relaxed">{description}</p>
         </div>
       </div>
-      <CTAGroup variant="compact" className="md:flex-shrink-0" />
+      <div className="flex flex-col sm:flex-row gap-2 md:flex-shrink-0">
+        <a
+          href={whatsappHref(URGENCY_WA_MSG)}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="WhatsApp urgente — detención o citación penal"
+          onClick={() => trackWhatsAppClick('cta_urgency')}
+          className="inline-flex min-h-12 items-center justify-center gap-2 px-4 rounded-lg bg-success text-white text-sm font-bold border border-success/40 btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 hover:opacity-95 transition-all duration-200 focus-visible:outline-none"
+        >
+          <MessageCircle size={18} aria-hidden="true" />
+          WhatsApp urgente
+        </a>
+        <a
+          href={telHref()}
+          title="Llamar ahora — urgencia penal"
+          onClick={() => trackPhoneClick('cta_urgency')}
+          className="inline-flex min-h-12 items-center justify-center gap-2 px-4 rounded-lg bg-primary text-white text-sm font-bold border border-primary-light/40 btn-shadow-primary btn-shadow-primary-hover hover:-translate-y-0.5 hover:bg-primary-light transition-all duration-200 focus-visible:outline-none"
+        >
+          <Phone size={18} aria-hidden="true" />
+          Llamar ahora
+        </a>
+      </div>
     </div>
   );
 }

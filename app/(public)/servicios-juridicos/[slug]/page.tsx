@@ -27,6 +27,7 @@ import { RelatedCities } from '@/components/marketing/related-links';
 import {
   RespuestaDirecta,
   SituacionesHabituales,
+  AreaTrustBlock,
   SeparacionAudiencias,
   DocumentChecklist,
   ProcessList,
@@ -67,7 +68,7 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     image: FOUNDER_PROFILE.image,
     imageAltText: FOUNDER_PROFILE.imageAltText ?? 'Danilo Pineda Maradiaga, abogado penalista en Nacaome, Valle (Honduras)',
     tagline: 'Defensa penal como pilar histórico del bufete',
-    description: 'Abogado penalista y socio director del despacho. Atiende asuntos penales desde las primeras diligencias, audiencias y medidas cautelares hasta los recursos y la ejecución penal.',
+    description: 'Si hay una detención o una audiencia cerca, Danilo toma el expediente. Más de 15 años en los juzgados del sur: le dice qué no firmar, qué viene después y cuánto cuesta, por escrito.',
     ctaHref: directWhatsappHref(FOUNDER_PROFILE.phone, 'Hola Danilo, necesito consultar sobre un asunto penal. Llegué desde la web de Pineda y Asociados.'),
     ctaLabel: 'WhatsApp con Danilo',
     profileHref: '/equipo/danilo-pineda-maradiaga',
@@ -81,7 +82,7 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     image: THANIA_PROFILE.image,
     imageAltText: THANIA_PROFILE.imageAltText,
     tagline: 'Derecho de Familia · Civil y Notarial · Mercantil · Administrativo',
-    description: 'Socia fundadora del bufete. Atiende divorcios, custodia, pensión de alimentos, sucesiones, violencia intrafamiliar y mediación familiar en Nacaome, Valle y la zona sur.',
+    description: 'Thania escucha primero y después ordena el caso: divorcio, custodia, pensión o violencia intrafamiliar. Discreción, plazos claros y presupuesto por escrito. No hay dos familias iguales.',
     ctaHref: directWhatsappHref(THANIA_PROFILE.phone, 'Hola Thania, necesito consultar sobre un caso de derecho de familia. Llegué desde la web de Pineda y Asociados.'),
     ctaLabel: 'Hablar con ella por WhatsApp',
     profileHref: '/equipo/thania-marlene-paz',
@@ -94,7 +95,7 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     image: EMIL_PROFILE.image,
     imageAltText: EMIL_PROFILE.imageAltText,
     tagline: 'Derecho Laboral · Penal · Civil y Notarial',
-    description: 'Socio del bufete. Despidos injustificados, prestaciones, accidentes de trabajo, acoso laboral, juicio oral laboral y recursos de casación laboral en Valle y la zona sur.',
+    description: 'Si lo despidieron o no le pagaron, Emil revisa planillas, prestaciones y plazos. Le dice qué se puede reclamar y qué documentos hacen falta, sin inventar montos.',
     ctaHref: directWhatsappHref(EMIL_PROFILE.phone, 'Hola Emil, necesito consultar sobre un caso de derecho laboral. Llegué desde la web de Pineda y Asociados.'),
     ctaLabel: 'Hablar con él por WhatsApp',
     profileHref: '/equipo/emil-barahona',
@@ -107,7 +108,7 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     image: THANIA_PROFILE.image,
     imageAltText: THANIA_PROFILE.imageAltText,
     tagline: 'Civil y Notarial · Mercantil · Familia · Administrativo',
-    description: 'Socia fundadora del bufete. Compraventas, donaciones, hipotecas, poderes notariales, sociedades civiles, fideicomisos, prescripción adquisitiva y daños y perjuicios.',
+    description: 'Thania ordena el trámite civil o notarial para que no quede a medias: contratos, propiedad, sucesiones y poderes, con el recorrido y el costo por escrito.',
     ctaHref: directWhatsappHref(THANIA_PROFILE.phone, 'Hola Thania, necesito consultar sobre un caso de derecho civil o notarial. Llegué desde la web de Pineda y Asociados.'),
     ctaLabel: 'Hablar con ella por WhatsApp',
     profileHref: '/equipo/thania-marlene-paz',
@@ -140,6 +141,33 @@ const AREA_LAWYER: Record<string, LawyerProfile> = {
     profileHref: '/equipo/thania-marlene-paz',
     phone: THANIA_PROFILE.phone,
     phoneDisplay: THANIA_PROFILE.phoneDisplay,
+  },
+};
+
+const AREA_TRUST: Record<string, { title: string; points: { title: string; body: string }[] }> = {
+  'derecho-de-familia': {
+    title: 'Por qué confiar en nosotros en familia',
+    points: [
+      { title: 'Discreción de verdad', body: 'Estos asuntos se cuentan en voz baja. La evaluación es confidencial y la abogada responsable atiende de forma directa.' },
+      { title: 'Interés del menor, no del ego', body: 'En custodia y pensión priorizamos lo que la ley y el menor necesitan, no una pelea inútil. Si hay margen de acuerdo, se lo decimos.' },
+      { title: 'Números honestos', body: 'No publicamos “porcentajes de pensión” universales. Cada cifra depende del caso y de la autoridad. El presupuesto de honorarios sí va por escrito.' },
+    ],
+  },
+  'derecho-laboral': {
+    title: 'Por qué confiar en nosotros en laboral',
+    points: [
+      { title: 'Documentos primero', body: 'Planilla, contrato, carta de despido. Sin eso, cualquier cifra es adivinanza. Emil le dice qué traer y qué se puede reclamar.' },
+      { title: 'Trabajador o empleador', body: 'Atendemos ambos lados con el mismo rigor. No hay un guion único: hay un expediente.' },
+      { title: 'Presupuesto antes de demandar', body: 'Honorarios y siguientes pasos, por escrito. La evaluación inicial es confidencial.' },
+    ],
+  },
+  'derecho-civil-y-notarial': {
+    title: 'Por qué confiar en nosotros en civil y notarial',
+    points: [
+      { title: 'El trámite completo, no a pedazos', body: 'Contrato, notario y registro suelen ir juntos. Le explicamos el recorrido para no pagar dos veces el mismo error.' },
+      { title: 'Sin capacidad notarial inventada', body: 'Coordinamos con notarios cuando el acto lo exige. No afirmamos lo que el despacho no tiene confirmado.' },
+      { title: 'Costo por escrito', body: 'Antes de protocolizar o demandar, usted sabe alcance y honorarios.' },
+    ],
   },
 };
 
@@ -290,6 +318,10 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
             .slice(0, 8)
             .map((service) => `${service.titulo}: ${service.descripcion}`)}
         />
+      ) : null}
+
+      {AREA_TRUST[slug] ? (
+        <AreaTrustBlock title={AREA_TRUST[slug].title} points={AREA_TRUST[slug].points} />
       ) : null}
 
       {area.separacionAudiencias && area.separacionAudiencias.length > 0 ? (

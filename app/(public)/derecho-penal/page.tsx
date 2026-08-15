@@ -23,6 +23,7 @@ import { ServiceSearch } from '@/components/blog/service-search';
 // FASE 3 — bloques de detalle para el hub penal.
 import {
   SituacionesHabituales,
+  AreaTrustBlock,
   DocumentChecklist,
   ProcessList,
   InstitutionsBlock,
@@ -261,9 +262,10 @@ const PRIORITY_PENAL_SLUGS = [
               Abogado penalista · Sur de Honduras
             </p>
             <p className="mt-4 text-sm md:text-base text-text-secondary leading-relaxed text-pretty max-w-xl">
-              Más de 15 años de ejercicio profesional. Colegiado en Honduras. Atención
-              personal en audiencias iniciales, preliminares, de sobreseimiento,
-              juicio oral y recursos de casación en el departamento de Valle y la zona sur.
+              Más de 15 años en los juzgados del sur. Colegiado en Honduras. Si hay
+              una detención o una audiencia cerca, Danilo toma el caso: le explica
+              qué viene, qué no debe firmar y cómo se prepara la defensa. Sin
+              promesas de resultado; con presencia en sala.
             </p>
             <div className="mt-6 flex flex-wrap gap-3 justify-center lg:justify-start">
               <a
@@ -296,6 +298,15 @@ const PRIORITY_PENAL_SLUGS = [
           title="Situaciones en las que intervenimos"
         />
       ) : null}
+
+      <AreaTrustBlock
+        title="Por qué confiar en nuestra defensa penal"
+        points={[
+          { title: 'Estamos cerca del juzgado', body: 'Sede en Nacaome y presencia habitual en Valle, San Lorenzo y Choluteca. No improvisamos el terreno el día de la audiencia.' },
+          { title: 'Usted habla con el penalista', body: 'Danilo Pineda Maradiaga dirige el área. Atención directa, no un filtro comercial. Emil apoya cuando el caso lo requiere.' },
+          { title: 'Honestidad antes que esperanza falsa', body: 'Le decimos si el asunto es grave, si hay margen y qué riesgos ve. El presupuesto llega por escrito; el resultado nunca se garantiza.' },
+        ]}
+      />
 
       {hubPenal.documentosIniciales && hubPenal.documentosIniciales.items.length > 0 ? (
         <DocumentChecklist

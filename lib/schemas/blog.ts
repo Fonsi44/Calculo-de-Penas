@@ -25,11 +25,13 @@ export function blogPostSchema(post: Post) {
         name: site.name,
       };
 
-  // E-E-A-T: Añadimos reviewedBy si el post ha sido revisado jurídicamente por un humano canónico.
+  // E-E-A-T: Conservamos la atribución del revisor como contributor, propiedad
+  // válida de CreativeWork/BlogPosting. Schema.org no reconoce reviewedBy en
+  // BlogPosting y Ahrefs la marca como propiedad inesperada.
   const editorial = resolveArticleEditorialState(post);
   const reviewerSchema = editorial.signatureValid && editorial.signature
     ? {
-        reviewedBy: {
+        contributor: {
           '@type': editorial.signature.type === 'lawyer' ? 'Person' : 'Organization',
           '@id': editorial.signature.type === 'lawyer'
             ? validLawyersMap[editorial.signature.name] ?? `${site.url}/#organization`

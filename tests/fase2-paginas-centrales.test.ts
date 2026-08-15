@@ -66,6 +66,8 @@ describe('FASE 2 — Página de inicio', () => {
 
   it('incluye una única franja de confianza, sin repetir el bloque de límites', () => {
     expect(home).toContain('TrustBar');
+    expect(home).toContain('TrustCredentials');
+    expect(home).toContain('UrgencyCallout');
     expect(home).not.toContain('TrustLimits');
   });
 
@@ -92,6 +94,13 @@ describe('FASE 2 — /despacho', () => {
 
   it('incluye el bloque de confianza y límites (TrustLimits)', () => {
     expect(despacho).toContain('TrustLimits');
+  });
+
+  it('usa retratos del equipo, no monogramas', () => {
+    expect(despacho).toContain('FOUNDER_PROFILE.image');
+    expect(despacho).toContain('THANIA_PROFILE.image');
+    expect(despacho).toContain('EMIL_PROFILE.image');
+    expect(despacho).not.toContain('team-monogram');
   });
 
   it('incluye el bloque de asignación/presupuesto FASE 2', () => {

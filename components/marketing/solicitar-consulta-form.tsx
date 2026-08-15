@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Send, Loader2, CheckCircle2, AlertCircle, User, Phone, Mail, PhoneCall, MessageCircle, AlertTriangle } from 'lucide-react';
+import { Send, Loader2, CheckCircle2, AlertCircle, User, Phone, Mail, PhoneCall, MessageCircle, AlertTriangle, ShieldCheck } from 'lucide-react';
 import {
   trackContactFormSubmit,
   trackLeadGenerated,
@@ -324,10 +324,18 @@ export function SolicitarConsultaForm() {
 
   return (
     <form onSubmit={submit} className="space-y-3">
+      <div className="rounded-lg border border-primary/15 bg-primary/5 p-3 flex items-start gap-2.5">
+        <ShieldCheck size={18} className="text-primary flex-shrink-0 mt-0.5" aria-hidden="true" />
+        <p className="text-sm text-text leading-relaxed">
+          <strong className="text-primary">Secreto profesional.</strong> Solo pedimos lo imprescindible
+          para devolverle el contacto. No envíe confesiones, documentos originales ni datos bancarios.
+          La evaluación inicial es confidencial.
+        </p>
+      </div>
       <fieldset className="grid sm:grid-cols-2 gap-3 border-0 p-0 m-0">
         <legend className="sr-only">Datos de contacto</legend>
         <Field
-          label="Nombre completo"
+          label="Nombre"
           icon={User}
           value={form.nombre}
           onChange={onText('nombre')}
@@ -335,7 +343,7 @@ export function SolicitarConsultaForm() {
           autoComplete="given-name"
         />
         <Field
-          label="Teléfono"
+          label="Teléfono de contacto"
           icon={Phone}
           type="tel"
           value={form.telefono}
@@ -352,8 +360,8 @@ export function SolicitarConsultaForm() {
         onChange={onText('email')}
         autoComplete="email"
       />
-      <p className="text-xxs text-text-muted -mt-1">
-        El teléfono es necesario para devolverle el contacto. El correo es opcional y se utiliza también para enviar confirmaciones.
+      <p className="text-xs text-text-muted -mt-1">
+        Obligatorio: nombre y teléfono. El correo es opcional y solo se usa para confirmar la recepción.
       </p>
 
       <div className="grid sm:grid-cols-2 gap-3">
@@ -479,7 +487,7 @@ export function SolicitarConsultaForm() {
           value={form.resumen}
           onChange={onText('resumen')}
           rows={6}
-          placeholder="Describa brevemente los hechos. NO incluya documentos, números de tarjeta ni datos de identidad completos."
+          placeholder="Ej.: citación, detención, despido o trámite. Sin documentos ni datos bancarios."
           className="input-refined w-full px-3 py-2.5 rounded-lg border border-border-light bg-surface text-sm text-text leading-relaxed focus:outline-none"
           required
           minLength={15}

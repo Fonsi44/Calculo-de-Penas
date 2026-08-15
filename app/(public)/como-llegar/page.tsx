@@ -107,8 +107,7 @@ export default function ComoLlegarPage() {
             <p className="text-sm md:text-base text-text-secondary leading-relaxed mt-3">
               Recomendamos agendar su visita con antelación para garantizar la disponibilidad del
               abogado responsable de su caso. Si prefiere no desplazarse, también ofrecemos consulta
-              telefónica y por videollamada. En cualquier caso, la primera consulta es confidencial
-              y sin costo.
+              telefónica y por videollamada. En cualquier caso, la evaluación inicial es confidencial.
             </p>
             {/* Matiz de distancias aproximadas (FASE 2): las distancias y tiempos
                 listados abajo son aproximados por carretera y pueden variar según

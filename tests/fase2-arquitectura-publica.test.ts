@@ -17,7 +17,7 @@ describe('Fase 2 — contratos de arquitectura pública', () => {
     expect(site.description).toBe(
       'Abogados en Nacaome para defensa penal y asuntos de familia, laborales, civiles y mercantiles. Atención directa y presupuesto por escrito.',
     );
-    expect(home).toContain('Abogados en Nacaome para defensa penal y asesoría jurídica');
+    expect(home).toContain('Defensa penal y asesoría jurídica en Nacaome y Honduras');
   });
 
   it('separa la intención comercial de la guía informativa sobre elegir abogado', () => {
@@ -88,10 +88,8 @@ describe('Fase 2 — contratos de arquitectura pública', () => {
 
   it('el formulario advierte contra el envío de información sensible', () => {
     const contact = read('app/(public)/solicitar-consulta/page.tsx');
-    expect(contact).toContain(
-      'No envíe confesiones,',
-    );
-    expect(contact).toContain('contraseñas ni documentos sensibles');
+    expect(contact).toContain('No envíe confesiones ni documentos sensibles');
+    expect(contact).toContain('secreto profesional');
     expect(contact).not.toMatch(/Legal Gratuita|Confidencial · Sin costo/);
   });
 

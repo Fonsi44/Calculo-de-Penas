@@ -1,7 +1,7 @@
 {
   "_comment": "Relaciones SEO canónicas por artículo (enlazado interno). Validadas por lib/seo/article-relations.ts. relatedArticles máx 2; officialSources solo verificadas (vacías hasta decisión jurídica).",
   "schema_version": 1,
-  "updated_at": "2026-08-03",
+  "updated_at": "2026-08-11",
   "relations": [
     {
       "slug": "antejuicio-en-honduras",
