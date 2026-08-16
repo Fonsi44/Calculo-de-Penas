@@ -79,7 +79,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
     return (
       <div className={`flex flex-col sm:flex-row gap-2 ${className ?? ''}`}>
         {phone ? (
-          <a href={waHref} target="_blank" rel="noopener noreferrer" title={`Escribir por WhatsApp${who}`} onClick={() => trackWhatsAppClick('cta_inverse')} className="inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-success text-white text-sm font-bold btn-shadow-success btn-shadow-success-hover">
+          <a href={waHref} target="_blank" rel="noopener noreferrer" title={`Escribir por WhatsApp${who}`} onClick={() => trackWhatsAppClick('cta_inverse')} className="inline-flex items-center justify-center gap-2 min-h-11 px-4 rounded-lg bg-success text-white text-sm font-bold btn-shadow-success btn-shadow-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
             <MessageCircle size={16} aria-hidden="true" /> WhatsApp{who}
           </a>
         ) : (

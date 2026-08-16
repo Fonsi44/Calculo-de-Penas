@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { PublicHeader } from '@/components/marketing/public-header';
 import { PublicFooter } from '@/components/marketing/public-footer';
@@ -99,6 +99,11 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+export const viewport: Viewport = {
+  themeColor: '#0F1D3A',
+  colorScheme: 'light',
+};
+
 export default function PublicLayout({ children }: { children: ReactNode }) {
   // JSON-LD unificado en un único `@graph` central. Antes se emitían 6 scripts
   // separados lo cual es válido pero fragmenta el grafo para Knowledge Graph.
@@ -118,14 +123,6 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex flex-col min-h-screen bg-background pb-16 md:pb-0">
-      {/* Skip link: salta a #main (contenido principal) sin pasar por la
-          navegación. Visible solo al recibir foco (WCAG 2.4.1). */}
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[9999] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-text-inverse"
-      >
-        Ir al contenido principal
-      </a>
       <PublicHeader />
       <main id="main" className="flex-1">
         {children}

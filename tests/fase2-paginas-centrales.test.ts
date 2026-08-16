@@ -66,7 +66,7 @@ describe('FASE 2 — Página de inicio', () => {
 
   it('incluye una única franja de confianza, sin repetir el bloque de límites', () => {
     expect(home).toContain('TrustBar');
-    expect(home).toContain('TrustCredentials');
+    expect(home).not.toContain('TrustCredentials');
     expect(home).toContain('UrgencyCallout');
     expect(home).not.toContain('TrustLimits');
   });

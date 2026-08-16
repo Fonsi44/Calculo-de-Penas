@@ -7,6 +7,8 @@ import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { LocalFaq } from '@/components/marketing/local-faq';
+import { LocalCitySnapshot } from '@/components/marketing/local-context-blocks';
+import { MapEmbed } from '@/components/marketing/map-embed';
 import { isLandingNoindex } from '@/lib/seo/public-indexability';
 import { IconBadge } from '@/components/marketing/icon-badge';
 import { type LandingLocal } from '@/data/landings-locales';
@@ -239,6 +241,12 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
           >
             Guía para contratar abogado en Honduras <ArrowRight size={14} />
           </Link>
+          <LocalCitySnapshot landing={landing} />
+          {landing.sedeFisica && (
+            <div className="mt-6 overflow-hidden rounded-lg border border-border-light min-h-[280px]">
+              <MapEmbed />
+            </div>
+          )}
         </div>
       </Section>
 

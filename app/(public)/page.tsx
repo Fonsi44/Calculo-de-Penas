@@ -11,11 +11,11 @@ import {
   Award,
 } from 'lucide-react';
 import Image from 'next/image';
-import { site, FOUNDER_PROFILE, LAWYER_PROFILES, ADDITIONAL_TEAM_PROFILES, directTelHref, directWhatsappHref } from '@/lib/site';
+import { site, FOUNDER_PROFILE, LAWYER_PROFILES, directTelHref, directWhatsappHref } from '@/lib/site';
+import { getCorporateImage } from '@/data/images';
 import { getPageContent, getEditablePagesMeta } from '@/lib/page-content-db';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup, UrgencyCallout } from '@/components/marketing/cta-buttons';
-import { TrustCredentials } from '@/components/marketing/trust-credentials';
 import { areasGenerales, hubPenal } from '@/data/areas-juridicas';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
@@ -135,11 +135,11 @@ export default async function HomePage() {
     hubPenal,
     ...areasGenerales.filter((area) => HIGHLIGHTED_AREAS.includes(area.slug)),
   ];
-  const renderProfileCard = (profile: (typeof LAWYER_PROFILES)[number] | (typeof ADDITIONAL_TEAM_PROFILES)[number]) => (
+  const renderProfileCard = (profile: (typeof LAWYER_PROFILES)[number]) => (
     <div key={profile.slug} className="group rounded-lg border border-border-light bg-surface p-5 hover:border-accent/50 transition-colors">
       <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-surface-alt mb-4"><Image src={profile.image} alt={profile.imageAlt} fill sizes="(min-width: 1024px) 30vw, 90vw" className="object-cover object-top" /></div>
       <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark">{profile.jobTitle}</p>
-      <h2 className="mt-2 font-serif text-xl font-extrabold text-primary">{profile.name}</h2>
+      <h3 className="mt-2 font-serif text-xl font-bold text-primary">{profile.name}</h3>
       <p className="mt-3 text-sm text-text-secondary leading-relaxed">{profile.areas.slice(0, 3).join(' · ')}</p>
       <div className="mt-4 flex flex-wrap gap-2"><Link href={`/equipo/${profile.slug}`} className="text-sm font-semibold text-accent-dark">Ver perfil</Link>{profile.phone && profile.phoneDisplay && <><a href={directTelHref(profile.phone)} className="text-sm font-semibold text-primary">Llamar</a><a href={directWhatsappHref(profile.phone, `Hola ${profile.name.split(' ')[0]}, necesito orientación. Llegué desde la web de Pineda y Asociados.`)} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-success">WhatsApp</a></>}</div>
     </div>
@@ -155,7 +155,7 @@ export default async function HomePage() {
             texto. Opacidad baja para mantener la legibilidad del contenido. */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           <Image
-            src="/images/penal/litigio-complejo.webp"
+            src={getCorporateImage('hero_home') ?? '/images/corporate/hero_home.webp'}
             alt=""
             fill
             priority
@@ -192,7 +192,7 @@ export default async function HomePage() {
                   <span className="text-xxs font-bold tracking-wider">{t('hero.badge')}</span>
                 </span>
               </div>
-              <h1 className="font-serif font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight text-text-inverse text-balance">
+              <h1 className="font-serif font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight text-text-inverse text-balance">
                 {t('hero.title_line1') || 'Defensa penal y asesoría jurídica en Nacaome y Honduras'}
               </h1>
               <p className="mt-4 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-2xl text-pretty">
@@ -275,9 +275,9 @@ export default async function HomePage() {
       <Section background="muted" spacing="lg" ariaLabel="Orientación y especialidades">
         <ProblemSelector />
 
-        <div className="divider-soft my-8 md:my-10" aria-hidden="true" />
+        <div className="mt-10 md:mt-14">
         <SectionHeader
-          eyebrow="Especialidades principales"
+          eyebrow="Especialidades"
           title="Cuatro áreas con presencia constante"
           subtitle={t('specialties.subtitle')}
         />
@@ -299,6 +299,7 @@ export default async function HomePage() {
                 </Reveal>
               );
             })}
+        </div>
         </div>
       </Section>
 
@@ -326,11 +327,13 @@ export default async function HomePage() {
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {LAWYER_PROFILES.map(renderProfileCard)}
-          {ADDITIONAL_TEAM_PROFILES.map(renderProfileCard)}
         </div>
+        <p className="mt-6 text-center">
+          <Link href="/despacho" className="text-sm font-semibold text-accent-dark hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg">
+            Conozca el despacho y el equipo completo
+          </Link>
+        </p>
       </Section>
-
-      <TrustCredentials />
 
       {/* CÓMO TRABAJAMOS — proceso de atención (stepper) */}
       <Section spacing="md" ariaLabel="Proceso de atención">
@@ -361,7 +364,7 @@ export default async function HomePage() {
           visual completa FAQ que duplicaba el hub FAQ canónico). */}
       <ConsultationCTA
         variant="closing"
-        subtitle="Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones legales disponibles. Atendemos en Nacaome, San Lorenzo, Amapala, Goascorán, Choluteca, San Marcos de Colón y El Triunfo. Presupuesto por escrito antes de cualquier actuación. Sus datos están protegidos por el secreto profesional del abogado."
+        subtitle="Le explicamos las opciones reales y el presupuesto por escrito, antes de actuar."
       />
 
     </>

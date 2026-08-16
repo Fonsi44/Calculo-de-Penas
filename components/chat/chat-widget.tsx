@@ -255,8 +255,7 @@ export function ChatWidget() {
   // del server (null) y evitar el mismatch de hidratación (#418).
   if (!chatConfig.enabled || isPrivateRoute || !mounted) return null;
 
-  // Flujo conversacional natural: solo saludo inicial y respuestas del usuario.
-  // Sin sugerencias ni quick replies — el cliente escribe libremente.
+  // Quick replies solo al inicio; se ocultan tras el primer mensaje del usuario.
 
   // Portal a document.body para evitar stacking contexts complejos.
   // WRAPPER ÚNICO con position:fixed y z-index alto para mantener el chat
@@ -320,7 +319,7 @@ export function ChatWidget() {
               type="button"
               onClick={close}
               aria-label="Cerrar chat"
-              className="relative p-1.5 rounded-lg hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"
+              className="relative min-h-11 min-w-11 inline-flex items-center justify-center rounded-lg hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"
             >
               <X size={15} aria-hidden="true" />
             </button>
@@ -452,22 +451,20 @@ export function ChatWidget() {
               type="submit"
               disabled={loading || !input.trim()}
               aria-label="Enviar mensaje"
-              className="flex-shrink-0 w-9 h-9 rounded-lg bg-accent text-primary flex items-center justify-center hover:bg-accent-light disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1 transition-colors btn-shadow-accent"
+              className="flex-shrink-0 min-h-11 min-w-11 rounded-lg bg-accent text-primary flex items-center justify-center hover:bg-accent-light disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1 transition-colors btn-shadow-accent"
             >
               <Send size={15} aria-hidden="true" />
             </button>
           </form>
 
           {/* Disclaimer discreto */}
-          <p className="px-3 pb-2 pt-0.5 text-[9px] leading-tight text-text-muted bg-surface text-center">
+          <p className="px-3 pb-2 pt-0.5 text-xxs leading-tight text-text-muted bg-surface text-center">
             {chatConfig.assistant.disclaimer}
           </p>
         </div>
       )}
 
-      {/* Botón flotante — premium con halo dorado.
-          Cuando está cerrado: animación de atención (vibración sutil cada ~3s)
-          para invitar al click. Al abrir: quieto para no molestar. */}
+      {/* Botón flotante. Sin animación de atención: el movimiento continuo distrae. */}
       <button
         ref={openBtnRef}
         type="button"

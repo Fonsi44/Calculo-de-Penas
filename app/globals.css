@@ -28,8 +28,8 @@
 :root {
   --ui-scale: 0.95;
   --font-scale: 1;
-  --space-scale: 0.90;
-  --section-scale: 0.90;
+  --space-scale: 0.95;
+  --section-scale: 0.98;
   --component-scale: 0.95;
   --chat-scale: 0.85;
 }
@@ -384,6 +384,11 @@ body {
   font-family: var(--font-serif), Georgia, 'Times New Roman', serif;
   font-feature-settings: "lnum", "pnum";
 }
+/* Cormorant Garamond solo llega a 700. font-extrabold (800) produce negrita sintética. */
+.font-serif.font-extrabold,
+.font-serif.font-black {
+  font-weight: 700;
+}
 
 /* Foco visible accesible — anillo dorado consistente */
 *:focus-visible {
@@ -512,7 +517,10 @@ input[type="checkbox"] {
     box-shadow var(--duration-normal) var(--ease-spring),
     border-color var(--duration-normal) var(--ease-spring);
 }
-.card-premium:hover {
+a.card-premium:hover,
+button.card-premium:hover,
+.group.card-premium:hover,
+.group:hover > .card-premium {
   transform: translateY(-2px);
   box-shadow: var(--shadow-card-hover);
   border-color: rgba(212, 175, 55, 0.35);
@@ -580,7 +588,7 @@ input[type="checkbox"] {
 /* Título de sección estándar (font-serif, extrabold, responsive, tracking ajustado) */
 .section-title {
   font-family: var(--font-serif), Georgia, 'Times New Roman', serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 24px;
   line-height: 1.2;
   letter-spacing: -0.01em;

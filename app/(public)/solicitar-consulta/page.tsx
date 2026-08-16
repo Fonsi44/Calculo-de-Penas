@@ -68,6 +68,7 @@ export default async function SolicitarConsultaPage() {
         badge="Evaluación confidencial"
         title={heroTitle}
         subtitle={<>{heroSubtitle}</>}
+        compact
       />
 
       <Section spacing="lg">
