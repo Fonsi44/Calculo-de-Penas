@@ -115,11 +115,11 @@ export const landingsLocales: LandingLocal[] = [
     description:
       'Dirección, referencia de llegada, horario y modalidades de atención de la oficina de Pineda y Asociados en Nacaome, Valle.',
     heroEyebrow: 'Ubicación de la oficina · Valle, Honduras',
-    heroTitle: 'Cómo visitar nuestra oficina en Nacaome',
+    heroTitle: 'Sede en Nacaome: dirección, horario y visita',
     heroSubtitle:
       'Consulte la ubicación, el horario y cómo preparar una atención presencial o remota con el despacho.',
     intro:
-      'Nacaome, cabecera del departamento de Valle, concentra gran parte de la actividad judicial y comercial del sur de Honduras. Nuestra sede está ubicada en el centro de la ciudad, cuadra y media al este de Hondutel, contiguo a la Clínica Dental Dra. Andara. Atendemos particulares, familias y empresas de Nacaome, San Lorenzo, Amapala y toda la zona sur.',
+      'Nacaome, cabecera del departamento de Valle, concentra gran parte de la actividad judicial y comercial del sur de Honduras. Nuestra sede está ubicada en el centro de la ciudad, cuadra y media al este de Hondutel, contiguo a la Clínica Dental Dra. Andara. Atendemos particulares, familias y empresas de Nacaome, San Lorenzo, Amapala y toda la zona sur. Indicaciones de ruta, mapa y accesos desde Tegucigalpa, Choluteca y San Lorenzo están en /como-llegar. Para contratar defensa o asesoría, use la página principal / o solicite una evaluación inicial confidencial.',
     servicios: [
       {
         titulo: 'Defensa penal',

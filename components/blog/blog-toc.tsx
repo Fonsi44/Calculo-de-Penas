@@ -11,11 +11,10 @@ import { ListTree } from 'lucide-react';
  * (#section-1) ni el TOC visible para crawlers/LLMs. Ahora:
  *   - Los IDs se asignan en el servidor (lib/blog-toc.ts injectHeadingIds).
  *   - Este componente recibe `headings` como prop y se renderiza en SSR.
- *   - El smooth-scroll al hacer clic se mantiene como enhancement progresivo.
+ *   - El smooth-scroll al hacer clic no escribe `#` en el historial (A.2).
  *
  * El componente sigue siendo `'use client'` porque necesita `onClick` para el
- * scroll suave y el pushState, pero el HTML inicial (el que ven crawlers y
- * LLMs) ya contiene el TOC completo con los anchors correctos.
+ * scroll suave. Los `id` de los H2 siguen en el HTML servidor (lib/blog-toc.ts).
  *
  * Solo se muestra si hay ≥2 H2.
  */
@@ -39,21 +38,19 @@ export function BlogTOC({ headings }: BlogTOCProps) {
         <ul className="space-y-1.5">
           {h2s.map((h) => (
             <li key={h.id}>
-              <a
-                href={`#${h.id}`}
-                className="text-sm text-text-secondary hover:text-primary transition-colors no-underline border-b border-dotted border-border/30 hover:border-accent/50"
-                onClick={(e) => {
-                  e.preventDefault();
+              <button
+                type="button"
+                className="text-sm text-text-secondary hover:text-primary transition-colors text-left w-full border-b border-dotted border-border/30 hover:border-accent/50"
+                onClick={() => {
                   const el = document.getElementById(h.id);
                   if (el) {
                     const top = el.getBoundingClientRect().top + window.scrollY - 100;
                     window.scrollTo({ top, behavior: 'smooth' });
-                    history.pushState(null, '', `#${h.id}`);
                   }
                 }}
               >
                 {h.text}
-              </a>
+              </button>
             </li>
           ))}
         </ul>

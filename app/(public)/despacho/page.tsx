@@ -24,10 +24,9 @@ import { EditorialBlock } from '@/components/marketing/editorial-block';
 import { TrustLimits } from '@/components/marketing/trust-limits';
 
 export const metadata: Metadata = buildMetadata({
-  // 50 chars. Plan maestro §6.1: "Bufete de Abogados en Nacaome | Nuestro Equipo"
-  title: `Bufete de Abogados en ${site.address.city} | Nuestro Equipo`,
-  // 155 chars. Plan §6.1
-  description: `Conozca a los abogados colegiados de ${site.name}, sus áreas de práctica y la metodología de atención del bufete en ${site.address.city} y la zona sur de Honduras.`,
+  // CHANGED A.1 — 46 chars. Desambiguación Nacaome vs Tegucigalpa.
+  title: 'Abogados colegiados en Nacaome, Valle | Equipo',
+  description: 'Equipo del bufete en Nacaome, Valle, no Tegucigalpa: áreas de práctica, método de atención y evaluación inicial confidencial.',
   canonicalPath: '/despacho',
   keywords: ['abogados Nacaome', 'bufete jurídico Valle Honduras', 'abogados Nacaome Valle', 'despacho jurídico sur Honduras', 'equipo legal Nacaome', 'consulta confidencial Valle', 'bufete jurídico Nacaome', 'bufete jurídico sur Honduras', 'abogados Goascorán', 'abogados Amapala', 'abogados Pespire', 'abogados San Marcos de Colón', 'abogados Marcovia'],
   ogImage: `/api/og?tag=El+Despacho&title=${encodeURIComponent(`Bufete en ${site.address.city}, ${site.address.department}`)}&subtitle=${encodeURIComponent('Compromiso legal, rigor técnico y visión de vanguardia. Más de 15 años de ejercicio profesional.')}`,

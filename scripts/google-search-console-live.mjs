@@ -28,7 +28,7 @@ import { runGcloud } from "./gcloud-cli.mjs";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 config({ path: resolve(ROOT, ".env") });
-config({ path: resolve(ROOT, ".env.local"), override: true });
+config({ path: resolve(ROOT, ".env.local"), override: false });
 
 const GOOGLE_DATA_DIR = resolve(ROOT, "data", "google");
 const OUT_FILE = resolve(GOOGLE_DATA_DIR, "gsc-live.json");

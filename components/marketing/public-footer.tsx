@@ -88,6 +88,10 @@ export function PublicFooter() {
               con más de 15 años de ejercicio profesional y <strong className="font-semibold text-accent">defensa penal</strong> como
               pilar fundacional. Atención directa con presencia activa en juzgados del sur de Honduras.
             </p>
+            <p className="text-xs text-text-inverse/70 leading-relaxed mt-2 text-pretty">
+              Sede en {site.address.city}, {site.address.department}. No tenemos oficina en
+              Tegucigalpa ni relación con despachos homónimos.
+            </p>
             <p className="text-xs text-text-inverse/80 leading-relaxed mt-2 text-pretty">
               Aplicación rigurosa del {LEGAL_FRAME_BADGE}.
             </p>

@@ -32,7 +32,7 @@ import fs from 'node:fs';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 config({ path: resolve(ROOT, '.env') });
-config({ path: resolve(ROOT, '.env.local'), override: true });
+config({ path: resolve(ROOT, '.env.local'), override: false });
 
 const SEO_DATA_DIR = resolve(ROOT, 'data', 'seo');
 const AUDITS_DIR = resolve(ROOT, 'docs', 'audits');
@@ -49,7 +49,7 @@ function run(cmd) {
       encoding: 'utf-8',
       stdio: 'pipe',
       cwd: ROOT,
-      timeout: 120_000,
+      timeout: 180_000,
       windowsHide: true,
     }).trim();
     return { ok: true, output: out };

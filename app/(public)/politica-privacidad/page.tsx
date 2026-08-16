@@ -53,13 +53,18 @@ export default async function PoliticaPrivacidadPage() {
           electrónico {site.email}.
         </p>
         <p>
-          A la fecha de publicación de esta política, la República de
-          Honduras no cuenta con una autoridad regulatoria independiente
-          de protección de datos personales. El bufete aplica de forma
-          voluntaria los principios generales del derecho a la intimidad
-          reconocidos en los <strong className="font-semibold text-primary">Arts. 76 a 80 de la Constitución de la República</strong>{' '}
-          y en los tratados internacionales en materia de derechos humanos
-          ratificados por Honduras.
+          A la fecha de esta política, la República de Honduras no cuenta con
+          una autoridad administrativa independiente de protección de datos
+          personales equivalente a las agencias de otros países. El bufete
+          aplica de forma voluntaria los principios del derecho a la intimidad,
+          al honor y a la propia imagen reconocidos en los{' '}
+          <strong className="font-semibold text-primary">Arts. 76 a 80 de la Constitución de la República</strong>,
+          el deber de secreto profesional del abogado conforme a la Ley Orgánica
+          del Colegio de Abogados de Honduras, y las reglas generales del Código
+          Civil sobre responsabilidad por el uso ilícito de datos e imagen. Esta
+          política no afirma la vigencia de una ley general de protección de
+          datos personales que no esté identificada por decreto en el cuerpo
+          del documento.
         </p>
       </LegalSection>
 
