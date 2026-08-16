@@ -18,6 +18,7 @@ import { Section, SectionHeader, Container } from '@/components/marketing/sectio
 import { CTAGroup, UrgencyCallout } from '@/components/marketing/cta-buttons';
 import { areasGenerales, hubPenal } from '@/data/areas-juridicas';
 import { TrustBar } from '@/components/marketing/trust-bar';
+import { TrustCredentials } from '@/components/marketing/trust-credentials';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { HeroOfficeBadge } from '@/components/marketing/live-widgets';
 import { ProcessStepper } from '@/components/marketing/process-stepper';
@@ -334,6 +335,8 @@ export default async function HomePage() {
           </Link>
         </p>
       </Section>
+
+      <TrustCredentials />
 
       {/* CÓMO TRABAJAMOS — proceso de atención (stepper) */}
       <Section spacing="md" ariaLabel="Proceso de atención">
