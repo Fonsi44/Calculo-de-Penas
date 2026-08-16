@@ -77,8 +77,20 @@ export const BLOG_METADATA_OVERRIDES: Readonly<
     description: 'Límites de la jornada laboral en Honduras, horas extra, recargos, descansos obligatorios y derechos del trabajador según el Código de Trabajo.',
   },
   'pension-alimenticia-honduras-guia-completa': {
-    title: 'Pensión Alimenticia en Honduras: Requisitos y Pasos',
-    description: 'Requisitos y procedimiento para solicitar pensión alimenticia en Honduras. Montos, plazos, documentos y ejecución ante incumplimiento.',
+    title: 'Pensión alimenticia Honduras: requisitos y pasos',
+    description: 'Cómo solicitar pensión alimenticia en Honduras: documentos, demanda, plazos y cobro ante incumplimiento. Guía de procedimiento. Nacaome.',
+  },
+  'pension-alimenticia-porcentaje-honduras-2026': {
+    title: 'Pensión alimenticia Honduras 2026: porcentaje',
+    description: 'Cómo estima el juez el porcentaje de pensión alimenticia en Honduras en 2026: ingresos, necesidades del menor y tope de embargo. Nacaome.',
+  },
+  'divorcio-honduras-guia-completa': {
+    title: 'Divorcio en Honduras: mutuo acuerdo, causal y plazos',
+    description: 'Tres vías de divorcio en Honduras: mutuo consentimiento, causal y separación. Documentos, hijos y pensión. Bufete en Nacaome.',
+  },
+  'nacionalidad-espanola-para-hondurenos-residencia-plazos': {
+    title: 'Nacionalidad española para hondureños: plazos',
+    description: 'Requisitos generales de nacionalidad española por residencia. El bufete en Nacaome orienta trámites hondureños; no ejerce derecho español.',
   },
   'poder-legal-honduras-cuando-se-necesita': {
     title: 'Poder notarial en Honduras: tipos, alcance y requisitos',
@@ -89,8 +101,8 @@ export const BLOG_METADATA_OVERRIDES: Readonly<
     description: 'Derechos de acceso, rectificación, cancelación y oposición (ARCO) en Honduras. Cómo solicitar información y proteger sus datos personales.',
   },
   'que-hacer-si-me-detienen-en-honduras': {
-    title: '¿Qué hacer si me detienen en Honduras? Guía práctica',
-    description: 'Recomendaciones generales para actuar con prudencia ante una detención y solicitar asistencia jurídica sin interferir con la actuación de la autoridad.',
+    title: 'Detención en Honduras: derechos, 24 h y qué no firmar',
+    description: 'Si lo detienen en Honduras: pida el motivo, no declare sin defensor y no firme lo que no entienda. Plazo de 24 horas ante el juez.',
   },
   'union-de-hecho-requisitos-derechos-honduras': {
     title: 'Unión de Hecho en Honduras: Requisitos y Derechos',

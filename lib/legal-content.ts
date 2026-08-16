@@ -22,9 +22,9 @@ const DEFAULTS: Record<string, LegalPageData> = {
   },
   'politica-privacidad': {
     title: 'Política de Privacidad',
-    subtitle: 'Compromiso con la protección de sus datos personales conforme a la Ley de Protección de Datos de Honduras.',
-    version: '0.5',
-    lastUpdated: 'Julio 2026',
+    subtitle: 'Protección de datos personales conforme a la Constitución de Honduras (Arts. 76 a 80).',
+    version: '0.6',
+    lastUpdated: 'Agosto 2026',
   },
   'politica-cookies': {
     title: 'Política de Cookies',

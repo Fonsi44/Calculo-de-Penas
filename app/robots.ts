@@ -21,11 +21,17 @@ export function buildRobots(noindex = site.noindex): MetadataRoute.Robots {
 
   return {
     rules: [
-      ...ALLOWED_CRAWLER_USER_AGENTS.map((userAgent) => ({
+      ...ALLOWED_CRAWLER_USER_AGENTS.filter((userAgent) => userAgent !== 'Bingbot').map((userAgent) => ({
         userAgent,
         allow: '/',
         disallow: [...PUBLIC_CRAWLER_DISALLOW_PATHS],
       })),
+      {
+        userAgent: 'Bingbot',
+        allow: '/',
+        disallow: [...PUBLIC_CRAWLER_DISALLOW_PATHS],
+        crawlDelay: 2,
+      },
       ...FULLY_BLOCKED_USER_AGENTS.map((userAgent) => ({
         userAgent,
         disallow: '/',

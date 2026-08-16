@@ -37,7 +37,7 @@ describe('Fase 2 — contratos de arquitectura pública', () => {
   it('mantiene la landing de Nacaome como información operativa secundaria', () => {
     const landing = landingsLocales.find((item) => item.slug === 'nacaome');
     expect(landing?.title).toBe('Oficina en Nacaome | Ubicación y Atención Presencial');
-    expect(landing?.heroTitle).toBe('Cómo visitar nuestra oficina en Nacaome');
+    expect(landing?.heroTitle).toBe('Sede en Nacaome: dirección, horario y visita');
     expect(landing?.description).toMatch(/Dirección, referencia de llegada, horario/);
     expect(landing?.title).not.toMatch(/^Abogados en Nacaome/i);
     expect(landing?.heroTitle).not.toMatch(/^Abogados en Nacaome/i);

@@ -71,18 +71,18 @@ export async function generateMetadata(): Promise<Metadata> {
   const categoriasFaq = await getCorporateFaqsForPublicPage();
   const total = categoriasFaq.reduce((acc, c) => acc + c.preguntas.length, 0);
   return {
-    title: 'Preguntas frecuentes sobre consultas y honorarios',
-    description: `${total} respuestas sobre evaluación inicial confidencial, documentación, honorarios, presupuesto y atención de ${site.name}.`,
+    title: { absolute: 'Honorarios y primera consulta | FAQ' },
+    description: `${total} respuestas sobre evaluación inicial confidencial, documentación, honorarios, presupuesto y atención de ${site.name} en Nacaome.`,
     alternates: { canonical: '/preguntas-frecuentes' },
     keywords: ['evaluación inicial confidencial', 'honorarios abogados Honduras', 'presupuesto legal', 'confidencialidad abogado', 'documentos primera consulta'],
     twitter: {
       card: 'summary_large_image',
-      title: 'Preguntas frecuentes sobre consultas y honorarios',
+      title: 'Honorarios y primera consulta | FAQ',
       description: `${total} respuestas sobre evaluación inicial confidencial, documentación, honorarios, presupuesto y atención.`,
       images: [`${site.url}/og/faq.webp`],
     },
     openGraph: {
-      title: 'Preguntas frecuentes sobre consultas y honorarios',
+      title: 'Honorarios y primera consulta | FAQ',
       description: `${total} respuestas sobre evaluación inicial confidencial, documentación, honorarios, presupuesto y atención de ${site.name}.`,
       url: `${site.url}/preguntas-frecuentes`,
       siteName: site.name,

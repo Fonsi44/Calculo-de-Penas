@@ -25,7 +25,7 @@ describe('contrato FAQ público', () => {
   });
 
   it('la metadata y el Hero reflejan el alcance corporativo', () => {
-    expect(faqPageSource).toContain('Preguntas frecuentes sobre consultas y honorarios');
+    expect(faqPageSource).toContain('Honorarios y primera consulta | FAQ');
     expect(faqPageSource).toContain('Información del bufete');
     expect(faqPageSource).toContain('Antes de su primera consulta');
     expect(faqPageSource).not.toContain('Todas las ramas legales');

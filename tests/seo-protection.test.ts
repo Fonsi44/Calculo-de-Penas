@@ -39,6 +39,7 @@ interface RobotsRule {
   userAgent: string;
   allow?: string | string[];
   disallow?: string | string[];
+  crawlDelay?: number;
 }
 
 describe('proxy.ts — clasificación de rutas', () => {
@@ -148,6 +149,7 @@ describe('app/robots.ts — bloquea rutas privadas con reglas granulares por bot
     expect(rule).toBeDefined();
     expect(rule!.allow).toBe('/');
     expect(asArray(rule!.disallow)).toContain('/intranet/');
+    expect(rule!.crawlDelay).toBe(2);
   });
 
   it('GPTBot tiene regla con Allow: / y Disallow: /intranet/', () => {

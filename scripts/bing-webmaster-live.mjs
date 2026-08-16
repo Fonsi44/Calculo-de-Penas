@@ -32,7 +32,7 @@ import {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 config({ path: resolve(ROOT, ".env") });
-config({ path: resolve(ROOT, ".env.local"), override: true });
+config({ path: resolve(ROOT, ".env.local"), override: false });
 
 const BING_DATA_DIR = resolve(ROOT, "data", "bing");
 const OUT_JSON = resolve(BING_DATA_DIR, "bing-live.json");
