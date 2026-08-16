@@ -39,6 +39,7 @@ interface RobotsRule {
   userAgent: string;
   allow?: string | string[];
   disallow?: string | string[];
+  crawlDelay?: number;
 }
 
 describe('proxy.ts — clasificación de rutas', () => {
