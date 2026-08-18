@@ -1,3 +1,4 @@
 {
-  "ignoreBinaries": ["opencode"]
+  "ignoreBinaries": ["opencode"],
+  "ignore": ["scripts/patch-utils.js"]
 }

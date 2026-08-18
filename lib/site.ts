@@ -128,7 +128,7 @@ const analyticsProviderConfig = resolveAnalyticsProviderConfig(
  */
 export const GENERAL_CONTACT_E164 = '+50432729292';
 export const GENERAL_CONTACT_WHATSAPP = '50432729292';
-export const GENERAL_CONTACT_DISPLAY = '+504 3272-9292';
+const GENERAL_CONTACT_DISPLAY = '+504 3272-9292';
 
 /**
  * Formatea un número E.164 (+50432729292) a display legible (+504 3272-9292).
