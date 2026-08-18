@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, BookOpen, MessageCircle, ShieldAlert, Gavel, FileSearch, Scale, FolderOpen, type LucideIcon } from 'lucide-react';
-import { site, absoluteUrl, whatsappHref } from '@/lib/site';
+import { site, absoluteUrl, FOUNDER_PROFILE, directWhatsappHref } from '@/lib/site';
 import { buildMetadata } from '@/lib/seo';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { AnswerBlock } from '@/components/marketing/answer-block';
@@ -269,7 +269,7 @@ const PRIORITY_PENAL_SLUGS = [
             </p>
             <div className="mt-6 flex flex-wrap gap-3 justify-center lg:justify-start">
               <a
-                href={whatsappHref('Hola, necesito consultar con el abogado penalista sobre mi caso.')}
+                href={directWhatsappHref(FOUNDER_PROFILE.phone, 'Hola, necesito consultar con el abogado penalista sobre mi caso.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 h-11 px-5 rounded-lg bg-success text-white text-sm font-bold hover:opacity-90 transition-opacity"

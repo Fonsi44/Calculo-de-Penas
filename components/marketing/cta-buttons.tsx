@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Phone, MessageCircle, Calendar, ShieldAlert, MapPin } from 'lucide-react';
-import { site, telHref, whatsappHref, directTelHref, directWhatsappHref } from '@/lib/site';
+import { site, telHref, whatsappHref, directTelHref, directWhatsappHref, FOUNDER_PROFILE } from '@/lib/site';
 import { trackWhatsAppClick, trackPhoneClick, trackConsultationCtaClick, trackDirectionsClick } from '@/lib/analytics';
 
 const URGENCY_WA_MSG =
@@ -151,7 +151,7 @@ export function UrgencyCallout({
       </div>
       <div className="flex flex-col sm:flex-row gap-2 md:flex-shrink-0">
         <a
-          href={whatsappHref(URGENCY_WA_MSG)}
+          href={directWhatsappHref(FOUNDER_PROFILE.phone, URGENCY_WA_MSG)}
           target="_blank"
           rel="noopener noreferrer"
           title="WhatsApp urgente — detención o citación penal"
@@ -162,7 +162,7 @@ export function UrgencyCallout({
           WhatsApp urgente
         </a>
         <a
-          href={telHref()}
+          href={directTelHref(FOUNDER_PROFILE.phone)}
           title="Llamar ahora — urgencia penal"
           onClick={() => trackPhoneClick('cta_urgency')}
           className="inline-flex min-h-12 items-center justify-center gap-2 px-4 rounded-lg bg-primary text-white text-sm font-bold border border-primary-light/40 btn-shadow-primary btn-shadow-primary-hover hover:-translate-y-0.5 hover:bg-primary-light transition-all duration-200 focus-visible:outline-none"

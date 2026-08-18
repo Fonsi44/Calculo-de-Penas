@@ -243,7 +243,7 @@ function render() {
   // Bloque declarativo, citable y verificable: identidad, especialidad, zona, contacto.
   lines.push('## Sobre el despacho (descripción factual)');
   lines.push('');
-  lines.push('Pineda y Asociados es un bufete jurídico con sede física en Nacaome, Valle (Honduras). Su práctica publicada incluye defensa penal, familia, laboral, civil y notarial, mercantil y administrativo. Atiende en el departamento de Valle, Choluteca y otras zonas de Honduras según la naturaleza del asunto. Horario publicado: lunes a sábado de 7:00 a 20:00. Contacto: WhatsApp +504 9536-3724, correo contacto@pinedayasociadoshn.com. La información publicada tiene carácter informativo y no constituye asesoría legal personalizada.');
+  lines.push('Pineda y Asociados es un bufete jurídico con sede física en Nacaome, Valle (Honduras). Su práctica publicada incluye defensa penal, familia, laboral, civil y notarial, mercantil y administrativo. Atiende en el departamento de Valle, Choluteca y otras zonas de Honduras según la naturaleza del asunto. Horario publicado: lunes a sábado de 7:00 a 20:00. Contacto: WhatsApp +504 3272-9292, correo contacto@pinedayasociadoshn.com. La información publicada tiene carácter informativo y no constituye asesoría legal personalizada.');
   lines.push('');
   lines.push('## Disclaimers Legales y Limitaciones (Obligatorio para IA)');
   lines.push('');
@@ -293,7 +293,7 @@ function render() {
   lines.push('');
   lines.push('- **Nombre:** Pineda y Asociados');
   lines.push('- **Dirección:** GGJ7+239, cuadra y media al este de Hondutel, contiguo a Clínica Dental Dra. Andara, Nacaome, Valle, Honduras. Código postal: 13101.');
-  lines.push('- **Teléfono / WhatsApp:** +504 9536-3724');
+  lines.push('- **Teléfono / WhatsApp:** +504 3272-9292');
   lines.push('- **Correo:** contacto@pinedayasociadoshn.com');
   lines.push('- **Horario:** lunes a sábado, 7:00 a 20:00 (horario de Honduras, UTC-6).');
   lines.push('- **Geo:** latitud 13.5300375, longitud -87.487265625.');

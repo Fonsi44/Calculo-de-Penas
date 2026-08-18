@@ -22,7 +22,7 @@ import {
   LEGAL_REVIEW_REGISTRY,
   type LegalReview,
 } from '@/lib/legal-review';
-import { site, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
+import { site, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE, GENERAL_CONTACT_E164, GENERAL_CONTACT_WHATSAPP } from '@/lib/site';
 
 describe('Infraestructura LegalReview — validación de estados', () => {
   it('rechaza verified sin revisor', () => {
@@ -128,10 +128,23 @@ describe('Coherencia de variantes del equipo profesional', () => {
 
 describe('Coherencia NAP (Name Address Phone) visible vs JSON-LD', () => {
   it('phoneDisplay y whatsappDisplay derivan del mismo número (no hardcodeados divergentes)', () => {
-    // Ambos deben representar el mismo número HN +504 9536-3724 salvo override por env.
     const digits = (s: string) => s.replace(/\D/g, '');
     expect(digits(site.phoneDisplay)).toBe(digits(site.phone));
     expect(digits(site.whatsappDisplay)).toBe(site.whatsapp);
+  });
+
+  it('el contacto general coincide con el teléfono de Thania (salvo override por env)', () => {
+    expect(THANIA_PROFILE.phone).toBe(GENERAL_CONTACT_E164);
+    expect(GENERAL_CONTACT_E164).toBe('+50432729292');
+    expect(GENERAL_CONTACT_WHATSAPP).toBe('50432729292');
+    const envPhoneDigits = (process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '').replace(/\D/g, '');
+    const envWaDigits = (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? '').replace(/\D/g, '');
+    const envOverridesToOtherNumber =
+      (envPhoneDigits.length > 0 && envPhoneDigits !== '50432729292') ||
+      (envWaDigits.length > 0 && envWaDigits !== '50432729292');
+    if (envOverridesToOtherNumber) return;
+    expect(site.phone.replace(/\D/g, '')).toBe('50432729292');
+    expect(site.whatsapp).toBe('50432729292');
   });
 
   it('la dirección del sitio es única y coherente', () => {

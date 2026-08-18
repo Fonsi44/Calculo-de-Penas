@@ -529,6 +529,12 @@ describe('FASE 3 — NAP coherente con site', () => {
     expect(slug).not.toMatch(phoneLiteral);
   });
 
+  it('UrgencyCallout usa el teléfono de Danilo, no el contacto general', () => {
+    const cta = readRoot('components/marketing/cta-buttons.tsx');
+    expect(cta).toContain('directWhatsappHref(FOUNDER_PROFILE.phone');
+    expect(cta).toContain('directTelHref(FOUNDER_PROFILE.phone)');
+  });
+
   it('site.url es el dominio canónico con www', () => {
     expect(site.url).toMatch(/^https:\/\/www\.pinedayasociadoshn\.com$/);
   });
