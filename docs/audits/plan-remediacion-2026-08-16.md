@@ -29,7 +29,7 @@ Este archivo **no** debe mezclarse en el PR `fix/allow-production-editorial-upse
 **Solución ejecutable**
 
 Archivo de overrides del blog (fuente única, no editar el body en DB): [`data/blog/blog-metadata-overrides.ts`](../../data/blog/blog-metadata-overrides.ts).  
-Páginas pilar: [`app/(public)/despacho/page.tsx`](../../app/(public)/despacho/page.tsx) (`buildMetadata` ya emite `title.absolute`) y [`app/(public)/preguntas-frecuentes/page.tsx`](../../app/(public)/preguntas-frecuentes/page.tsx).
+Páginas pilar: [`app/(public)/despacho/page.tsx`](../../app/%28public%29/despacho/page.tsx) (`buildMetadata` ya emite `title.absolute`) y [`app/(public)/preguntas-frecuentes/page.tsx`](../../app/%28public%29/preguntas-frecuentes/page.tsx).
 
 Ruta real de nacionalidad española (no `extranjeria-migracion`):  
 `/blog/hondurenos-en-espana/nacionalidad-espanola-para-hondurenos-residencia-plazos`.
@@ -130,7 +130,7 @@ Quitar `history.pushState(null, '', `#${h.id}`)`.
 
 **Problema:** «Medición contaminada a 365 días por rutas `/intranet/*`»; `landingPage = (not set)` 30 sesiones / 28d y 132 / 365d.
 
-**Causa raíz:** el layout público **ya excluye** `/intranet` (`ANALYTICS_EXCLUDED_PREFIXES` en [`lib/analytics.ts`](../../lib/analytics.ts); `AnalyticsScripts` solo en [`app/(public)/layout.tsx`](../../app/(public)/layout.tsx)). Los hits de intranet en 365d son históricos o de otro stream. `(not set)` encaja con el retraso de consentimiento (`CONSENT_REVEAL_DELAY_MS = 2500` en [`components/cookie-consent.tsx`](../../components/cookie-consent.tsx)): `session_start` puede registrarse sin `page_location`.
+**Causa raíz:** el layout público **ya excluye** `/intranet` (`ANALYTICS_EXCLUDED_PREFIXES` en [`lib/analytics.ts`](../../lib/analytics.ts); `AnalyticsScripts` solo en [`app/(public)/layout.tsx`](../../app/%28public%29/layout.tsx)). Los hits de intranet en 365d son históricos o de otro stream. `(not set)` encaja con el retraso de consentimiento (`CONSENT_REVEAL_DELAY_MS = 2500` en [`components/cookie-consent.tsx`](../../components/cookie-consent.tsx)): `session_start` puede registrarse sin `page_location`.
 
 GA4 no tiene vistas con filtro como Universal Analytics. No hay que «filtrar en el tag» lo que ya no se envía. Hay que **filtrar informes** y, si se usa BigQuery, las consultas.
 
@@ -320,7 +320,7 @@ heroTitle: 'Sede en Nacaome: dirección, horario y visita',
 
 **Problema:** «home 1/11» imágenes sin alt.
 
-**Causa raíz:** el parser de la auditoría contó `alt=""` como missing. En [`app/(public)/page.tsx`](../../app/(public)/page.tsx) líneas 156–165 la foto `/images/penal/litigio-complejo.webp` es **fondo decorativo** dentro de `aria-hidden="true"`. WCAG 1.1.1 exige `alt=""` en imágenes decorativas. Un alt descriptivo haría que algunos AT anunciaran una imagen marcada como hidden.
+**Causa raíz:** el parser de la auditoría contó `alt=""` como missing. En [`app/(public)/page.tsx`](../../app/%28public%29/page.tsx) líneas 156–165 la foto `/images/penal/litigio-complejo.webp` es **fondo decorativo** dentro de `aria-hidden="true"`. WCAG 1.1.1 exige `alt=""` en imágenes decorativas. Un alt descriptivo haría que algunos AT anunciaran una imagen marcada como hidden.
 
 **Solución ejecutable:** **no cambiar el alt.** Dejar:
 
@@ -430,7 +430,7 @@ Los JSON/HTML de Lighthouse en `docs/audits/` son artefactos regenerables; no co
 
 **Problema:** el cuerpo dice que Honduras no tiene autoridad independiente (Arts. 76–80 Constitución); el default del hero cita «Ley de Protección de Datos de Honduras».
 
-**Causa raíz:** [`lib/legal-content.ts`](../../lib/legal-content.ts) `DEFAULTS['politica-privacidad'].subtitle`. El HTML de [`app/(public)/politica-privacidad/page.tsx`](../../app/(public)/politica-privacidad/page.tsx) §1 ya es preciso. Si `page_content` tiene `hero.subtitle`, gana sobre el default.
+**Causa raíz:** [`lib/legal-content.ts`](../../lib/legal-content.ts) `DEFAULTS['politica-privacidad'].subtitle`. El HTML de [`app/(public)/politica-privacidad/page.tsx`](../../app/%28public%29/politica-privacidad/page.tsx) §1 ya es preciso. Si `page_content` tiene `hero.subtitle`, gana sobre el default.
 
 **Solución ejecutable**
 
