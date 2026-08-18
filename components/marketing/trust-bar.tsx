@@ -77,8 +77,8 @@ export function TrustBar({
   // Icono-contenedor canónico de la web pública: w-11 h-11 rounded-lg con
   // borde + tint (R16). Antes era rounded-full, único outlier de forma.
   const iconBoxCls = isDark
-    ? 'w-9 h-9 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30'
-    : 'w-9 h-9 rounded-lg bg-primary/8 text-primary flex items-center justify-center flex-shrink-0 border border-primary/15';
+    ? 'w-11 h-11 rounded-lg bg-accent/15 text-accent flex items-center justify-center flex-shrink-0 border border-accent/30'
+    : 'w-11 h-11 rounded-lg bg-primary/8 text-primary flex items-center justify-center flex-shrink-0 border border-primary/15';
   const titleCls = isDark
     ? 'text-sm font-bold text-text-inverse leading-tight mt-2'
     : 'text-sm font-bold text-text leading-tight mt-2';

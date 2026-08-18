@@ -23,6 +23,8 @@ interface PageHeroProps {
    * home. undefined = sin foto (comportamiento previo).
    */
   bgImage?: string;
+  /** Hero más bajo para páginas de conversión (formulario primero). */
+  compact?: boolean;
 }
 
 /**
@@ -42,6 +44,7 @@ export function PageHero({
   variant = 'primary',
   badge,
   bgImage,
+  compact = false,
 }: PageHeroProps) {
   const isPrimary = variant !== 'muted';
   const containerCls = isPrimary
@@ -53,8 +56,8 @@ export function PageHero({
     : 'eyebrow-rule text-accent-dark';
 
   const titleCls = isPrimary
-    ? 'font-serif font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight text-text-inverse text-balance'
-    : 'font-serif font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight text-primary text-balance';
+    ? 'font-serif font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight text-text-inverse text-balance'
+    : 'font-serif font-bold text-3xl sm:text-4xl lg:text-5xl leading-tight text-primary text-balance';
 
   const subtitleCls = isPrimary
     ? 'mt-3 text-base md:text-lg text-text-inverse/90 leading-relaxed max-w-3xl text-pretty'
@@ -94,7 +97,7 @@ export function PageHero({
         className={`absolute inset-0 pointer-events-none ${isPrimary ? 'bg-radial-accent' : 'bg-radial-accent-light'}`}
         aria-hidden="true"
       />
-      <Container size="lg" className="relative py-8 md:py-12 lg:py-16">
+      <Container size="lg" className={compact ? 'relative py-5 md:py-8' : 'relative py-8 md:py-12 lg:py-16'}>
         <div className={alignCls}>
           <div className="flex flex-wrap items-center gap-2 mb-3">
             <span className={eyebrowCls}>{eyebrow}</span>

@@ -196,7 +196,7 @@ export const landingsLocales: LandingLocal[] = [
     // NO incluye nombre del bufete: el layout añade "| Pineda y Asociados".
     title: 'Abogados en Choluteca | Sur de Honduras',
     description:
-      'Abogados en Choluteca, Honduras. Defensa penal, familia, laboral y aduanero. Evaluación inicial confidencial. WhatsApp +504 9536-3724. Bufete del sur.',
+      'Abogados en Choluteca, Honduras. Defensa penal, familia, laboral y aduanero. Evaluación inicial confidencial. WhatsApp +504 3272-9292. Bufete del sur.',
     heroEyebrow: 'Zona sur · Choluteca, Honduras',
     heroTitle: 'Abogados en Choluteca',
     heroSubtitle:
@@ -272,7 +272,7 @@ export const landingsLocales: LandingLocal[] = [
     // NO incluye nombre del bufete: el layout añade "| Pineda y Asociados".
     title: 'Abogados en San Lorenzo, Valle | Puerto Sur · Asesoría Legal',
     description:
-      'Abogados en San Lorenzo, Valle. Puerto y zona comercial. Defensa penal, mercantil, laboral y aduanero. Evaluación inicial confidencial. WhatsApp +504 9536-3724.',
+      'Abogados en San Lorenzo, Valle. Puerto y zona comercial. Defensa penal, mercantil, laboral y aduanero. Evaluación inicial confidencial. WhatsApp +504 3272-9292.',
     heroEyebrow: 'Puerto y zona comercial · Valle, Honduras',
     heroTitle: 'Abogados en San Lorenzo, Valle',
     heroSubtitle:
@@ -347,7 +347,7 @@ export const landingsLocales: LandingLocal[] = [
     distanciaKm: 35,
     title: 'Abogados en Goascorán, Valle | Frontera El Salvador · Consulta',
     description:
-      'Abogados en Goascorán, zona fronteriza de Valle. Defensa penal, familia, laboral y civil. Evaluación inicial confidencial. WhatsApp +504 9536-3724.',
+      'Abogados en Goascorán, zona fronteriza de Valle. Defensa penal, familia, laboral y civil. Evaluación inicial confidencial. WhatsApp +504 3272-9292.',
     heroEyebrow: 'Zona fronteriza · Valle, Honduras',
     heroTitle: 'Abogados en Goascorán, Valle',
     heroSubtitle:
@@ -363,7 +363,7 @@ export const landingsLocales: LandingLocal[] = [
     faqs: [
       { pregunta: '¿Tienen oficina en Goascorán?', respuesta: 'Nuestra sede está en Nacaome, a 35 km de Goascorán. Coordinamos diligencias en la zona y ofrecemos atención por WhatsApp y teléfono para casos en Goascorán y la región fronteriza.' },
       { pregunta: '¿Atienden casos penales en Goascorán?', respuesta: 'Sí. Asumimos la defensa penal en Goascorán y todo el departamento de Valle conforme al Código Penal hondureño vigente, incluyendo audiencias y medidas cautelares.' },
-      { pregunta: '¿Cómo agendo una consulta desde Goascorán?', respuesta: 'Puede contactarnos por WhatsApp al +504 9536-3724 o mediante el formulario de esta web. Acordamos el medio de atención según la urgencia y tipo de caso.' },
+      { pregunta: '¿Cómo agendo una consulta desde Goascorán?', respuesta: 'Puede contactarnos por WhatsApp al +504 3272-9292 o mediante el formulario de esta web. Acordamos el medio de atención según la urgencia y tipo de caso.' },
     ],
     geo: { lat: 13.58, lng: -87.73 },
     // FASE 4 (§5) — Territorial: Goascorán, zona fronteriza con El Salvador,
@@ -412,7 +412,7 @@ export const landingsLocales: LandingLocal[] = [
     ],
     faqs: [
       { pregunta: '¿Tienen oficina en Pespire?', respuesta: 'Nuestra sede principal está en Nacaome, Valle. Atendemos a clientes de Pespire de forma remota con coordinación presencial cuando es necesario, a 70 km de distancia.' },
-      { pregunta: '¿Cómo me contacto si vivo en Pespire?', respuesta: 'Por WhatsApp al +504 9536-3724 o mediante el formulario web. Podemos hacer la primera consulta por teléfono o videollamada para su comodidad.' },
+      { pregunta: '¿Cómo me contacto si vivo en Pespire?', respuesta: 'Por WhatsApp al +504 3272-9292 o mediante el formulario web. Podemos hacer la primera consulta por teléfono o videollamada para su comodidad.' },
       { pregunta: '¿Cuánto cuesta una evaluación jurídica en Pespire?', respuesta: 'Las condiciones de la evaluación dependen del tipo de asunto y del alcance solicitado. Tras la evaluación inicial, le entregamos un presupuesto por escrito para que decida con información antes de contratar.' },
     ],
     geo: { lat: 13.59, lng: -87.36 },
@@ -489,7 +489,7 @@ export const landingsLocales: LandingLocal[] = [
     faqs: [
       { pregunta: '¿Tienen oficina en Marcovia?', respuesta: 'Nuestra sede está en Nacaome, a unos 60 km de Marcovia. Atendemos a clientes de Marcovia con coordinación remota y presencial cuando el caso lo requiere.' },
       { pregunta: '¿Atienden casos laborales en Marcovia?', respuesta: 'Sí. Reclamamos prestaciones, despidos injustificados y asesoramos a trabajadores de los sectores agrícola, camaronero y comercial de Marcovia.' },
-      { pregunta: '¿Cómo inicio una evaluación legal?', respuesta: 'Contáctenos por WhatsApp al +504 9536-3724 o use el formulario web. La evaluación inicial es confidencial y, cuando se requiera representación formal, le entregamos un presupuesto por escrito.' },
+      { pregunta: '¿Cómo inicio una evaluación legal?', respuesta: 'Contáctenos por WhatsApp al +504 3272-9292 o use el formulario web. La evaluación inicial es confidencial y, cuando se requiera representación formal, le entregamos un presupuesto por escrito.' },
     ],
     geo: { lat: 13.28, lng: -87.31 },
     servedFrom: SEDE_CANONICA.descripcion,
@@ -520,7 +520,7 @@ export const landingsLocales: LandingLocal[] = [
     ],
     faqs: [
       { pregunta: '¿Tienen oficina en El Triunfo?', respuesta: 'Nuestra sede está en Nacaome, a 65 km de El Triunfo. Atendemos a clientes de El Triunfo con coordinación remota y presencial cuando es necesario.' },
-      { pregunta: '¿Cómo agendo una consulta desde El Triunfo?', respuesta: 'Por WhatsApp al +504 9536-3724 o mediante el formulario web. Podemos hacer la primera consulta por teléfono o videollamada.' },
+      { pregunta: '¿Cómo agendo una consulta desde El Triunfo?', respuesta: 'Por WhatsApp al +504 3272-9292 o mediante el formulario web. Podemos hacer la primera consulta por teléfono o videollamada.' },
       { pregunta: '¿Cuánto cuesta una evaluación jurídica desde El Triunfo?', respuesta: 'Las condiciones de la evaluación dependen del tipo de asunto y del alcance solicitado. Tras la evaluación inicial, le entregamos un presupuesto por escrito para que decida con información antes de contratar.' },
     ],
     geo: { lat: 13.12, lng: -87.01 },
@@ -568,8 +568,8 @@ export const landingsLocales: LandingLocal[] = [
     ],
     faqs: [
       { pregunta: '¿Tienen oficina en Namasigüe?', respuesta: 'Nuestra sede principal está en Nacaome, Valle, a 55 km de Namasigüe. Atendemos a clientes de Namasigüe de forma remota con coordinación presencial cuando es necesario.' },
-      { pregunta: '¿Cómo me contacto si vivo en Namasigüe?', respuesta: 'Por WhatsApp al +504 9536-3724 o mediante el formulario web. Podemos hacer la primera consulta por teléfono para su comodidad.' },
-      { pregunta: '¿Cómo funciona la evaluación inicial desde Namasigüe?', respuesta: 'La evaluación inicial es confidencial. Puede contactarnos por WhatsApp al +504 9536-3724 o mediante el formulario de esta web; cuando se requiera representación formal, se entrega un presupuesto por escrito antes de iniciar.' },
+      { pregunta: '¿Cómo me contacto si vivo en Namasigüe?', respuesta: 'Por WhatsApp al +504 3272-9292 o mediante el formulario web. Podemos hacer la primera consulta por teléfono para su comodidad.' },
+      { pregunta: '¿Cómo funciona la evaluación inicial desde Namasigüe?', respuesta: 'La evaluación inicial es confidencial. Puede contactarnos por WhatsApp al +504 3272-9292 o mediante el formulario de esta web; cuando se requiera representación formal, se entrega un presupuesto por escrito antes de iniciar.' },
     ],
     geo: { lat: 13.26, lng: -87.14 },
     servedFrom: SEDE_CANONICA.descripcion,
@@ -605,7 +605,7 @@ export const landingsLocales: LandingLocal[] = [
     ],
     faqs: [
       { pregunta: '¿Tienen oficina en Orocuina?', respuesta: 'Nuestra sede está en Nacaome, a 70 km de Orocuina. Atendemos a clientes de Orocuina de forma remota con coordinación presencial cuando es necesario.' },
-      { pregunta: '¿Cómo agendo una consulta desde Orocuina?', respuesta: 'Contáctenos por WhatsApp al +504 9536-3724 o use el formulario web. La evaluación inicial es confidencial y, cuando se requiera representación formal, le entregamos un presupuesto por escrito.' },
+      { pregunta: '¿Cómo agendo una consulta desde Orocuina?', respuesta: 'Contáctenos por WhatsApp al +504 3272-9292 o use el formulario web. La evaluación inicial es confidencial y, cuando se requiera representación formal, le entregamos un presupuesto por escrito.' },
       { pregunta: '¿Se desplazan a Orocuina desde Nacaome?', respuesta: 'Sí. Coordinamos WhatsApp, teléfono y desplazamiento cuando el caso lo requiere. No hay sucursal en Orocuina: se atiende desde Nacaome.' },
     ],
     geo: { lat: 13.48, lng: -87.07 },
@@ -627,7 +627,7 @@ export const landingsLocales: LandingLocal[] = [
     distanciaKm: 40,
     title: 'Abogados en Amapala, Valle — Defensa Legal en el Sur',
     description:
-      'Abogados en Amapala, Valle (Honduras). Defensa penal, familia, laboral y asesoría portuaria. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+      'Abogados en Amapala, Valle (Honduras). Defensa penal, familia, laboral y asesoría portuaria. Atención desde Nacaome. WhatsApp: +504 3272-9292.',
     heroEyebrow: 'Isla y puerto · Valle, Honduras',
     heroTitle: 'Abogados en Amapala, Valle',
     heroSubtitle:
@@ -671,7 +671,7 @@ export const landingsLocales: LandingLocal[] = [
     distanciaKm: 22,
     title: 'Abogados en Langue, Valle — Consulta Legal',
     description:
-      'Abogados en Langue, Valle (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome a 22 km. WhatsApp: +504 9536-3724.',
+      'Abogados en Langue, Valle (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome a 22 km. WhatsApp: +504 3272-9292.',
     heroEyebrow: 'Valle, Honduras',
     heroTitle: 'Abogados en Langue, Valle',
     heroSubtitle:
@@ -686,7 +686,7 @@ export const landingsLocales: LandingLocal[] = [
     ],
     faqs: [
       { pregunta: '¿Tienen oficina en Langue?', respuesta: 'Nuestra sede principal está en Nacaome, a solo 22 km de Langue. Coordinamos diligencias en la zona y ofrecemos atención por WhatsApp y teléfono.' },
-      { pregunta: '¿Cómo agendo una consulta desde Langue?', respuesta: 'Puede contactarnos por WhatsApp al +504 9536-3724 o mediante el formulario de esta web. Las condiciones de la evaluación inicial se confirman según el asunto; cuando se requiera representación formal, se entrega un presupuesto por escrito.' },
+      { pregunta: '¿Cómo agendo una consulta desde Langue?', respuesta: 'Puede contactarnos por WhatsApp al +504 3272-9292 o mediante el formulario de esta web. Las condiciones de la evaluación inicial se confirman según el asunto; cuando se requiera representación formal, se entrega un presupuesto por escrito.' },
       { pregunta: '¿Atienden casos penales urgentes en Langue?', respuesta: 'Sí. Para detenciones o situaciones penales urgentes, contáctenos de inmediato por WhatsApp. La ley garantiza el derecho a un abogado desde el primer momento.' },
     ],
     geo: { lat: 13.62, lng: -87.65 },
@@ -712,7 +712,7 @@ export const landingsLocales: LandingLocal[] = [
     distanciaKm: 30,
     title: 'Abogados en Caridad, Valle — Consulta Legal · Sur de Honduras',
     description:
-      'Abogados en Caridad, Valle (Honduras). Defensa penal, familia, laboral y civil. Atención coordinada desde Nacaome. WhatsApp: +504 9536-3724.',
+      'Abogados en Caridad, Valle (Honduras). Defensa penal, familia, laboral y civil. Atención coordinada desde Nacaome. WhatsApp: +504 3272-9292.',
     heroEyebrow: 'Valle, Honduras',
     heroTitle: 'Abogados en Caridad, Valle',
     heroSubtitle:
@@ -728,7 +728,7 @@ export const landingsLocales: LandingLocal[] = [
     faqs: [
       { pregunta: '¿Tienen oficina en Caridad?', respuesta: 'Nuestra sede física está en Nacaome, a unos 30 km de Caridad. Coordinamos la atención por WhatsApp y teléfono y nos desplazamos cuando el caso lo requiere.' },
       { pregunta: '¿Atienden casos penales en Caridad?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño vigente, incluyendo audiencia inicial, medidas cautelares y juicio oral.' },
-      { pregunta: '¿Cómo solicito una consulta desde Caridad?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando que es de Caridad. Las condiciones de la evaluación inicial se confirman según el asunto; cuando se requiera representación formal, se entrega un presupuesto por escrito.' },
+      { pregunta: '¿Cómo solicito una consulta desde Caridad?', respuesta: 'Escríbanos por WhatsApp al +504 3272-9292 indicando que es de Caridad. Las condiciones de la evaluación inicial se confirman según el asunto; cuando se requiera representación formal, se entrega un presupuesto por escrito.' },
     ],
     geo: { lat: 13.74, lng: -87.46 },
     servedFrom: SEDE_CANONICA.descripcion,
@@ -747,7 +747,7 @@ export const landingsLocales: LandingLocal[] = [
     distanciaKm: 25,
     title: 'Abogados en Alianza, Valle — Asesoría Jurídica',
     description:
-      'Abogados en Alianza, Valle (Honduras). Defensa penal, familia, laboral y civil. Atención coordinada desde Nacaome. WhatsApp: +504 9536-3724.',
+      'Abogados en Alianza, Valle (Honduras). Defensa penal, familia, laboral y civil. Atención coordinada desde Nacaome. WhatsApp: +504 3272-9292.',
     heroEyebrow: 'Valle, Honduras',
     heroTitle: 'Abogados en Alianza, Valle',
     heroSubtitle:
@@ -763,7 +763,7 @@ export const landingsLocales: LandingLocal[] = [
     faqs: [
       { pregunta: '¿Tienen oficina en Alianza?', respuesta: 'Nuestra sede está en Nacaome, a unos 25 km de Alianza. Coordinamos la atención por WhatsApp y teléfono y nos desplazamos cuando es necesario.' },
       { pregunta: '¿Atienden casos penales en Alianza?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño, desde la audiencia inicial hasta el juicio oral y los recursos.' },
-      { pregunta: '¿Cómo solicito una consulta desde Alianza?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando que es de Alianza. Las condiciones de la evaluación inicial se confirman según el asunto; cuando se requiera representación formal, se entrega un presupuesto por escrito.' },
+      { pregunta: '¿Cómo solicito una consulta desde Alianza?', respuesta: 'Escríbanos por WhatsApp al +504 3272-9292 indicando que es de Alianza. Las condiciones de la evaluación inicial se confirman según el asunto; cuando se requiera representación formal, se entrega un presupuesto por escrito.' },
     ],
     geo: { lat: 13.78, lng: -87.71 },
     servedFrom: SEDE_CANONICA.descripcion,
@@ -782,7 +782,7 @@ export const landingsLocales: LandingLocal[] = [
     distanciaKm: 65,
     title: 'Abogados en Concepción de María, Choluteca — Consulta Legal',
     description:
-      'Abogados en Concepción de María, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+      'Abogados en Concepción de María, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 3272-9292.',
     heroEyebrow: 'Choluteca, Honduras',
     heroTitle: 'Abogados en Concepción de María',
     heroSubtitle:
@@ -798,7 +798,7 @@ export const landingsLocales: LandingLocal[] = [
     faqs: [
       { pregunta: '¿Tienen oficina en Concepción de María?', respuesta: 'Nuestra sede física está en Nacaome, Valle, a unos 65 km de Concepción de María. Coordinamos la atención por WhatsApp y nos desplazamos para audiencias y diligencias.' },
       { pregunta: '¿Atienden casos penales en Concepción de María?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño vigente, coordinando presencia en los juzgados de Choluteca.' },
-      { pregunta: '¿Cómo solicito una consulta desde Concepción de María?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando su municipio. Las condiciones de la evaluación inicial se confirman según el asunto; cuando se requiera representación formal, se entrega un presupuesto por escrito.' },
+      { pregunta: '¿Cómo solicito una consulta desde Concepción de María?', respuesta: 'Escríbanos por WhatsApp al +504 3272-9292 indicando su municipio. Las condiciones de la evaluación inicial se confirman según el asunto; cuando se requiera representación formal, se entrega un presupuesto por escrito.' },
     ],
     geo: { lat: 13.20, lng: -87.15 },
     servedFrom: SEDE_CANONICA.descripcion,
@@ -817,7 +817,7 @@ export const landingsLocales: LandingLocal[] = [
     distanciaKm: 55,
     title: 'Abogados en San Antonio de Flores, Choluteca — Asesoría Legal',
     description:
-      'Abogados en San Antonio de Flores, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 9536-3724.',
+      'Abogados en San Antonio de Flores, Choluteca (Honduras). Defensa penal, familia, laboral y civil. Atención desde Nacaome. WhatsApp: +504 3272-9292.',
     heroEyebrow: 'Choluteca, Honduras',
     heroTitle: 'Abogados en San Antonio de Flores',
     heroSubtitle:
@@ -833,7 +833,7 @@ export const landingsLocales: LandingLocal[] = [
     faqs: [
       { pregunta: '¿Tienen oficina en San Antonio de Flores?', respuesta: 'Nuestra sede física está en Nacaome, Valle, a unos 55 km de San Antonio de Flores. Coordinamos la atención por WhatsApp y nos desplazamos cuando el caso lo requiere.' },
       { pregunta: '¿Atienden casos penales en San Antonio de Flores?', respuesta: 'Sí. Asumimos la defensa penal conforme al Código Penal hondureño, coordinando presencia en los juzgados de Choluteca.' },
-      { pregunta: '¿Cómo solicito una consulta desde San Antonio de Flores?', respuesta: 'Escríbanos por WhatsApp al +504 9536-3724 indicando su municipio. Las condiciones de la evaluación inicial se confirman según el asunto; cuando se requiera representación formal, se entrega un presupuesto por escrito.' },
+      { pregunta: '¿Cómo solicito una consulta desde San Antonio de Flores?', respuesta: 'Escríbanos por WhatsApp al +504 3272-9292 indicando su municipio. Las condiciones de la evaluación inicial se confirman según el asunto; cuando se requiera representación formal, se entrega un presupuesto por escrito.' },
     ],
     geo: { lat: 13.45, lng: -87.30 },
     servedFrom: SEDE_CANONICA.descripcion,

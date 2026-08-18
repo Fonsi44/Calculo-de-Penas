@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
 import { formatHondurasDateTime } from '@/lib/datetime';
+import { site } from '@/lib/site';
 
 let _client: Resend | null = null;
 
@@ -334,14 +335,14 @@ function buildAutoReplyHtml(payload: AutoReplyPayload): string {
                     <td style="padding:0 8px;">
                       <table role="presentation" cellpadding="0" cellspacing="0">
                         <tr><td style="background-color:#0F1D3A;border-radius:6px;padding:12px 20px;text-align:center;">
-                          <a href="tel:+50495363724" style="color:#FFFFFF;text-decoration:none;font-size:14px;font-weight:600;white-space:nowrap;">📞 +504 9536-3724</a>
+                          <a href="tel:${site.phone}" style="color:#FFFFFF;text-decoration:none;font-size:14px;font-weight:600;white-space:nowrap;">📞 ${site.phoneDisplay}</a>
                         </td></tr>
                       </table>
                     </td>
                     <td style="padding:0 8px;">
                       <table role="presentation" cellpadding="0" cellspacing="0">
                         <tr><td style="background-color:#25D366;border-radius:6px;padding:12px 20px;text-align:center;">
-                          <a href="https://wa.me/50495363724?text=Hola%2C%20necesito%20asistencia%20legal%20inmediata." style="color:#FFFFFF;text-decoration:none;font-size:14px;font-weight:600;white-space:nowrap;">💬 WhatsApp</a>
+                          <a href="https://wa.me/${site.whatsapp}?text=Hola%2C%20necesito%20asistencia%20legal%20inmediata." style="color:#FFFFFF;text-decoration:none;font-size:14px;font-weight:600;white-space:nowrap;">💬 WhatsApp</a>
                         </td></tr>
                       </table>
                     </td>
@@ -356,7 +357,7 @@ function buildAutoReplyHtml(payload: AutoReplyPayload): string {
                 <p style="margin:0 0 10px;font-size:12px;font-weight:700;color:#0F1D3A;letter-spacing:3px;text-transform:uppercase;">Datos del bufete</p>
                 <table role="presentation" cellpadding="0" cellspacing="0">
                   <tr><td style="padding:3px 0;font-size:13px;color:#5F6368;vertical-align:top;padding-right:8px;">📍</td><td style="padding:3px 0;font-size:13px;color:#5F6368;">GGJ7+239, Nacaome, Valle, Honduras</td></tr>
-                  <tr><td style="padding:3px 0;font-size:13px;color:#5F6368;vertical-align:top;padding-right:8px;">📞</td><td style="padding:3px 0;font-size:13px;color:#5F6368;"><a href="tel:+50495363724" style="color:#0F1D3A;text-decoration:none;">+504 9536-3724</a></td></tr>
+                  <tr><td style="padding:3px 0;font-size:13px;color:#5F6368;vertical-align:top;padding-right:8px;">📞</td><td style="padding:3px 0;font-size:13px;color:#5F6368;"><a href="tel:${site.phone}" style="color:#0F1D3A;text-decoration:none;">${site.phoneDisplay}</a></td></tr>
                   <tr><td style="padding:3px 0;font-size:13px;color:#5F6368;vertical-align:top;padding-right:8px;">📧</td><td style="padding:3px 0;font-size:13px;color:#5F6368;"><a href="mailto:contacto@pinedayasociadoshn.com" style="color:#0F1D3A;text-decoration:none;">contacto@pinedayasociadoshn.com</a></td></tr>
                   <tr><td style="padding:3px 0;font-size:13px;color:#5F6368;vertical-align:top;padding-right:8px;">🕐</td><td style="padding:3px 0;font-size:13px;color:#5F6368;">Lun–sáb 7:00 – 20:00</td></tr>
                 </table>
@@ -402,12 +403,12 @@ function buildAutoReplyText(payload: AutoReplyPayload): string {
     payload.tipo === 'contacto' && payload.asunto ? `Asunto: ${payload.asunto}` : null,
     ``,
     `¿EMERGENCIA? Si su situación requiere atención inmediata:`,
-    `Teléfono: +504 9536-3724`,
-    `WhatsApp: https://wa.me/50495363724`,
+    `Teléfono: ${site.phoneDisplay}`,
+    `WhatsApp: https://wa.me/${site.whatsapp}`,
     ``,
     `Datos del bufete:`,
     `Dirección: GGJ7+239, Nacaome, Valle, Honduras`,
-    `Teléfono: +504 9536-3724`,
+    `Teléfono: ${site.phoneDisplay}`,
     `Email: contacto@pinedayasociadoshn.com`,
     `Horario: Lun-sáb 7:00 - 20:00`,
     ``,

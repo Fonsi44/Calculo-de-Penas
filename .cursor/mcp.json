@@ -1,0 +1,47 @@
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "chrome-devtools-mcp@1.6.0",
+        "--slim",
+        "--headless",
+        "--isolated",
+        "--no-usage-statistics",
+        "--no-performance-crux"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["--yes", "@playwright/mcp@latest"]
+    },
+    "context7": {
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "github": {
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "X-MCP-Toolsets": "repos,issues,pull_requests,actions,code_security,dependabot,secret_protection",
+        "X-MCP-Readonly": "true",
+        "X-MCP-Lockdown": "true"
+      }
+    },
+    "neon": {
+      "url": "https://mcp.neon.tech/mcp?readonly=true",
+      "headers": {
+        "x-read-only": "true"
+      }
+    },
+    "vercel": {
+      "url": "https://mcp.vercel.com"
+    },
+    "resend": {
+      "url": "https://mcp.resend.com/mcp"
+    },
+    "semgrep": {
+      "command": "semgrep",
+      "args": ["mcp"]
+    }
+  }
+}

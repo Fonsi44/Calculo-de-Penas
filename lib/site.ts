@@ -122,7 +122,16 @@ const analyticsProviderConfig = resolveAnalyticsProviderConfig(
 );
 
 /**
- * Formatea un número E.164 (+50495363724) a display legible (+504 9536-3724).
+ * Contacto general del bufete (header, footer, WhatsApp flotante, landings).
+ * Coincide con el teléfono de Thania Marlene Paz. Los perfiles individuales
+ * (Danilo, Emil) conservan su número propio en páginas de equipo y urgencia penal.
+ */
+export const GENERAL_CONTACT_E164 = '+50432729292';
+export const GENERAL_CONTACT_WHATSAPP = '50432729292';
+const GENERAL_CONTACT_DISPLAY = '+504 3272-9292';
+
+/**
+ * Formatea un número E.164 (+50432729292) a display legible (+504 3272-9292).
  * Fuente única para phoneDisplay y whatsappDisplay → NAP coherente en todo el
  * sitio (visible, tel:, JSON-LD). Si el número no encaja en el patrón HN
  * conocido, devuelve el original sin alterar (no inventa formato).
@@ -153,16 +162,16 @@ export const site = {
   keywords:
     (process.env.NEXT_PUBLIC_SITE_KEYWORDS ??
       'abogados Nacaome, bufete jurídico Valle Honduras, abogado penalista Nacaome, defensa penal sur Honduras, abogados San Lorenzo, abogados Choluteca, abogados Goascorán, abogados Amapala, abogados Pespire, abogados San Marcos de Colón, abogados Marcovia, abogado de familia Valle, abogado laboral Nacaome, derecho civil sur Honduras, abogado mercantil Nacaome, evaluación legal confidencial Nacaome, bufete jurídico sur Honduras, Código Penal Decreto 130-2017 y reformas vigentes').split(',').map((k) => k.trim()),
-  phone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '+50495363724',
+  phone: process.env.NEXT_PUBLIC_CONTACT_PHONE ?? GENERAL_CONTACT_E164,
   /** Formato legible del teléfono. Deriva del mismo número que `phone` para
    *  garantizar NAP coherente (un solo dato). Si se cambia NEXT_PUBLIC_CONTACT_PHONE,
    *  el display sigue siendo consistente; solo se sobrescribe con env explícito. */
   phoneDisplay: process.env.NEXT_PUBLIC_CONTACT_PHONE_DISPLAY
-    ?? formatPhoneDisplay(process.env.NEXT_PUBLIC_CONTACT_PHONE ?? '+50495363724'),
-  whatsapp: (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? '50495363724').replace(/\D/g, ''),
+    ?? formatPhoneDisplay(process.env.NEXT_PUBLIC_CONTACT_PHONE ?? GENERAL_CONTACT_E164),
+  whatsapp: (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? GENERAL_CONTACT_WHATSAPP).replace(/\D/g, ''),
   /** WhatsApp legible. Misma lógica que phoneDisplay: deriva de `whatsapp`. */
   whatsappDisplay: process.env.NEXT_PUBLIC_CONTACT_WHATSAPP_DISPLAY
-    ?? formatPhoneDisplay('+' + (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? '50495363724').replace(/\D/g, '')),
+    ?? formatPhoneDisplay('+' + (process.env.NEXT_PUBLIC_CONTACT_WHATSAPP ?? GENERAL_CONTACT_WHATSAPP).replace(/\D/g, '')),
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'contacto@pinedayasociadoshn.com',
   address: {
     line1: 'GGJ7+239',
@@ -629,8 +638,8 @@ export const THANIA_PROFILE = {
   cah: process.env.NEXT_PUBLIC_CAH_THANIA || null,
   linkedin: process.env.NEXT_PUBLIC_LINKEDIN_THANIA || null,
   directorio: process.env.NEXT_PUBLIC_DIRECTORIO_THANIA || null,
-  phone: '+50432729292',
-  phoneDisplay: '+504 3272-9292',
+  phone: GENERAL_CONTACT_E164,
+  phoneDisplay: GENERAL_CONTACT_DISPLAY,
 } as const;
 
 /**

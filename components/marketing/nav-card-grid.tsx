@@ -49,6 +49,8 @@ export interface NavCardGridProps {
   variant: 'problems' | 'services';
   /** Columnas en desktop. Default 3. */
   columns?: 2 | 3 | 4;
+  /** Primera tarjeta a ancho doble (bento). */
+  featuredFirst?: boolean;
 }
 
 const COLS_PROBLEMS: Record<2 | 3 | 4, string> = {
@@ -63,7 +65,7 @@ const COLS_SERVICES: Record<2 | 3 | 4, string> = {
   4: 'md:grid-cols-2 lg:grid-cols-4',
 };
 
-export function NavCardGrid({ items, variant, columns = 3 }: NavCardGridProps) {
+export function NavCardGrid({ items, variant, columns = 3, featuredFirst = false }: NavCardGridProps) {
   if (variant === 'services') {
     return (
       <ul
@@ -82,13 +84,16 @@ export function NavCardGrid({ items, variant, columns = 3 }: NavCardGridProps) {
     <ul
       className={`grid grid-cols-1 ${COLS_PROBLEMS[columns]} gap-4 list-none p-0 m-0`}
     >
-      {items.map((item) => {
+      {items.map((item, index) => {
         const Icon = item.icon;
+        const featured = featuredFirst && index === 0;
         return (
-          <li key={`${item.href}-${item.title}`} className="h-full">
+          <li key={`${item.href}-${item.title}`} className={`h-full ${featured ? 'sm:col-span-2' : ''}`}>
             <Link
               href={item.href}
-              className="group flex items-start gap-3.5 rounded-lg border border-border-light bg-surface p-4 hover:border-accent/40 hover:shadow-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 h-full"
+              className={`group flex items-start gap-3.5 rounded-lg border bg-surface p-4 hover:border-accent/40 hover:shadow-md transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 h-full ${
+                featured ? 'border-accent/35 p-5 md:p-6' : 'border-border-light'
+              }`}
             >
               <IconBadge icon={Icon} />
               <span className="min-w-0 flex-1">

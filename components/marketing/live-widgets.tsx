@@ -1,12 +1,11 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Activity, Calendar, Download, MessageCircle, Phone, Share, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Activity, Calendar, MessageCircle, Phone } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { site, telHref, whatsappHref } from '@/lib/site';
 import { formatHondurasTime, getHondurasClock } from '@/lib/datetime';
 import { trackWhatsAppClick, trackPhoneClick } from '@/lib/analytics';
-import { useInstallPrompt } from '@/hooks/use-install-prompt';
 import { useConsentObserver } from '@/hooks/use-consent-observer';
 import { isPenalUrgencyPath, whatsappMessageForPath } from '@/lib/whatsapp-messages';
 
@@ -121,42 +120,7 @@ export function FloatingContactRail() {
   const pathname = usePathname();
   const waMessage = whatsappMessageForPath(pathname);
   const penalUrgent = isPenalUrgencyPath(pathname);
-  const { showButton, isIOS, promptInstall, dismiss } = useInstallPrompt();
-  const [iosPanelOpen, setIosPanelOpen] = useState(false);
-  const installButtonRef = useRef<HTMLButtonElement>(null);
   const consentOpen = useConsentObserver();
-
-  // Cierra el panel de instrucciones iOS con Escape (accesibilidad teclado).
-  useEffect(() => {
-    if (!iosPanelOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIosPanelOpen(false);
-        installButtonRef.current?.focus();
-      }
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [iosPanelOpen]);
-
-  const handleInstallClick = useCallback(() => {
-    if (isIOS) {
-      setIosPanelOpen((v) => !v);
-    } else {
-      void promptInstall();
-    }
-  }, [isIOS, promptInstall]);
-
-  const closeIosPanel = useCallback(() => {
-    setIosPanelOpen(false);
-    installButtonRef.current?.focus();
-  }, []);
-
-  const handleIosGotIt = useCallback(() => {
-    dismiss();
-    setIosPanelOpen(false);
-    installButtonRef.current?.focus();
-  }, [dismiss]);
 
   return (
     <div
@@ -165,7 +129,7 @@ export function FloatingContactRail() {
       inert={consentOpen}
       aria-hidden={consentOpen ? 'true' : undefined}
       aria-label="Acceso rápido de contacto"
-      className="fixed bottom-20 right-3 z-30 flex flex-col gap-2 print:hidden safe-bottom md:bottom-4 md:right-4"
+      className="hidden md:flex fixed bottom-4 right-4 z-30 flex-col gap-2 print:hidden"
     >
       <a
         href={whatsappHref(waMessage)}
@@ -173,93 +137,16 @@ export function FloatingContactRail() {
         rel="noopener noreferrer"
         onClick={() => trackWhatsAppClick('floating_button')}
         className={`group relative flex items-center justify-center rounded-full bg-success text-white btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-transform focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none ${
-          penalUrgent
-            ? 'h-16 w-16 md:h-14 md:w-14'
-            : 'h-14 w-14 md:h-12 md:w-12'
+          penalUrgent ? 'h-14 w-14' : 'h-12 w-12'
         }`}
         aria-label={penalUrgent ? 'WhatsApp urgente — defensa penal' : 'Contactar por WhatsApp'}
         title="WhatsApp"
       >
-        <MessageCircle size={penalUrgent ? 26 : 22} aria-hidden="true" />
+        <MessageCircle size={penalUrgent ? 24 : 22} aria-hidden="true" />
         <span className="absolute right-full mr-2 whitespace-nowrap rounded-md bg-text text-text-inverse text-xxs font-semibold px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
           WhatsApp
         </span>
       </a>
-      {/* Botón "Instalar app" (PWA): visible cuando el navegador permite
-          instalar (beforeinstallprompt) o en iOS (instrucciones manuales).
-          Oculto si ya está instalada o si el usuario lo descartó (<30 días). */}
-      {showButton && (
-        <button
-          ref={installButtonRef}
-          type="button"
-          onClick={handleInstallClick}
-          className="group w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 transition-transform focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
-          aria-label="Instalar como aplicación"
-          title="Instalar esta web como aplicación"
-          aria-expanded={iosPanelOpen}
-          aria-controls={isIOS ? "ios-install-instructions" : undefined}
-        >
-          <Download size={20} aria-hidden="true" />
-          <span className="absolute right-full mr-2 whitespace-nowrap rounded-md bg-text text-text-inverse text-xxs font-semibold px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-            Instalar app
-          </span>
-        </button>
-      )}
-
-      {/* Panel de instrucciones para iOS: Safari no dispara
-          beforeinstallprompt, la instalación es manual vía Compartir. */}
-      {iosPanelOpen && (
-        <>
-          {/* Overlay clic-fuera para cerrar. */}
-          <div role="presentation" onClick={closeIosPanel} className="fixed inset-0 z-40" />
-          <div
-            id="ios-install-instructions"
-            role="region"
-            aria-label="Cómo instalar en iPhone o iPad"
-            className="absolute bottom-full right-0 mb-2 z-50 w-64 rounded-lg border border-accent/30 bg-surface text-text shadow-xl p-4"
-          >
-            <div className="flex items-start justify-between gap-2 mb-3">
-              <p className="text-sm font-bold leading-tight">Instalar en iPhone o iPad</p>
-              <button
-                type="button"
-                onClick={closeIosPanel}
-                aria-label="Cerrar instrucciones"
-                className="-mr-1 -mt-1 p-1 rounded text-text-secondary hover:text-text focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
-              >
-                <X size={14} aria-hidden="true" />
-              </button>
-            </div>
-            <ol className="space-y-2 text-xs text-text-secondary leading-relaxed">
-              <li className="flex items-start gap-2">
-                <span className="flex-shrink-0 w-4 h-4 rounded-full bg-primary/10 text-primary text-xxs font-bold flex items-center justify-center mt-0.5">1</span>
-                <span>
-                  Toca <strong className="text-text">Compartir</strong>{' '}
-                  <Share size={11} className="inline -mt-0.5 text-accent-dark" aria-hidden="true" /> en Safari.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="flex-shrink-0 w-4 h-4 rounded-full bg-primary/10 text-primary text-xxs font-bold flex items-center justify-center mt-0.5">2</span>
-                <span>
-                  Selecciona <strong className="text-text">«Añadir a pantalla de inicio»</strong>.
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="flex-shrink-0 w-4 h-4 rounded-full bg-primary/10 text-primary text-xxs font-bold flex items-center justify-center mt-0.5">3</span>
-                <span>
-                  Pulsa <strong className="text-text">«Añadir»</strong>.
-                </span>
-              </li>
-            </ol>
-            <button
-              type="button"
-              onClick={handleIosGotIt}
-              className="mt-3 w-full h-9 rounded-md bg-accent text-primary text-xs font-bold hover:bg-accent-light transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
-            >
-              Entendido
-            </button>
-          </div>
-        </>
-      )}
     </div>
   );
 }

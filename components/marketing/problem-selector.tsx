@@ -7,7 +7,6 @@ import {
   HelpCircle,
   type LucideIcon,
 } from 'lucide-react';
-import { Container } from '@/components/marketing/section';
 import { NavCardGrid, type NavCardItem } from '@/components/marketing/nav-card-grid';
 
 /**
@@ -86,22 +85,20 @@ const ITEMS: NavCardItem[] = PROBLEM_ENTRIES.map((e) => ({
 
 export function ProblemSelector() {
   return (
-    <nav aria-label="Seleccione su problema jurídico" className="py-2">
-      <Container size="lg">
-        <div className="text-center mb-6">
-          <p className="eyebrow-rule text-accent-dark text-xs font-bold uppercase tracking-eyebrow mb-2">
-            ¿Cuál es su situación?
-          </p>
-          <h2 className="font-serif font-extrabold text-2xl md:text-3xl text-primary text-balance">
-            Empiece por su problema, no por la rama del derecho
-          </h2>
-          <p className="mt-3 text-sm md:text-base text-text-secondary max-w-2xl mx-auto text-pretty">
-            No necesita conocer el nombre técnico del área. Seleccione la opción
-            que mejor describa su situación y le llevamos a la información correcta.
-          </p>
-        </div>
-        <NavCardGrid items={ITEMS} variant="problems" columns={3} />
-      </Container>
+    <nav aria-label="Seleccione su problema jurídico">
+      <div className="mb-6 md:mb-8">
+        <p className="eyebrow-rule text-accent-dark mb-2">
+          ¿Cuál es su situación?
+        </p>
+        <h2 className="font-serif font-bold text-2xl md:text-3xl lg:text-4xl text-primary text-balance">
+          Empiece por su problema, no por la rama del derecho
+        </h2>
+        <p className="mt-3 text-sm md:text-base text-text-secondary max-w-2xl text-pretty">
+          No necesita conocer el nombre técnico del área. Seleccione la opción
+          que mejor describa su situación y le llevamos a la información correcta.
+        </p>
+      </div>
+      <NavCardGrid items={ITEMS} variant="problems" columns={3} featuredFirst />
     </nav>
   );
 }

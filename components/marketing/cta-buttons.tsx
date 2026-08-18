@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Phone, MessageCircle, Calendar, ShieldAlert, MapPin } from 'lucide-react';
-import { site, telHref, whatsappHref, directTelHref, directWhatsappHref } from '@/lib/site';
+import { site, telHref, whatsappHref, directTelHref, directWhatsappHref, FOUNDER_PROFILE } from '@/lib/site';
 import { trackWhatsAppClick, trackPhoneClick, trackConsultationCtaClick, trackDirectionsClick } from '@/lib/analytics';
 
 const URGENCY_WA_MSG =
@@ -79,7 +79,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
     return (
       <div className={`flex flex-col sm:flex-row gap-2 ${className ?? ''}`}>
         {phone ? (
-          <a href={waHref} target="_blank" rel="noopener noreferrer" title={`Escribir por WhatsApp${who}`} onClick={() => trackWhatsAppClick('cta_inverse')} className="inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-success text-white text-sm font-bold btn-shadow-success btn-shadow-success-hover">
+          <a href={waHref} target="_blank" rel="noopener noreferrer" title={`Escribir por WhatsApp${who}`} onClick={() => trackWhatsAppClick('cta_inverse')} className="inline-flex items-center justify-center gap-2 min-h-11 px-4 rounded-lg bg-success text-white text-sm font-bold btn-shadow-success btn-shadow-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
             <MessageCircle size={16} aria-hidden="true" /> WhatsApp{who}
           </a>
         ) : (
@@ -151,7 +151,7 @@ export function UrgencyCallout({
       </div>
       <div className="flex flex-col sm:flex-row gap-2 md:flex-shrink-0">
         <a
-          href={whatsappHref(URGENCY_WA_MSG)}
+          href={directWhatsappHref(FOUNDER_PROFILE.phone, URGENCY_WA_MSG)}
           target="_blank"
           rel="noopener noreferrer"
           title="WhatsApp urgente — detención o citación penal"
@@ -162,7 +162,7 @@ export function UrgencyCallout({
           WhatsApp urgente
         </a>
         <a
-          href={telHref()}
+          href={directTelHref(FOUNDER_PROFILE.phone)}
           title="Llamar ahora — urgencia penal"
           onClick={() => trackPhoneClick('cta_urgency')}
           className="inline-flex min-h-12 items-center justify-center gap-2 px-4 rounded-lg bg-primary text-white text-sm font-bold border border-primary-light/40 btn-shadow-primary btn-shadow-primary-hover hover:-translate-y-0.5 hover:bg-primary-light transition-all duration-200 focus-visible:outline-none"

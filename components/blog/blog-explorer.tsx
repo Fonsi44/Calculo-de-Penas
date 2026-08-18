@@ -138,7 +138,7 @@ export function BlogExplorer({
   return (
     <div className="space-y-6">
       {/* ── Buscador ── */}
-      <div className="relative">
+      <div id="buscar" className="relative">
         <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-accent-dark pointer-events-none" />
         <label htmlFor="blog-search" className="sr-only">Buscar artículos del blog jurídico</label>
         <input

@@ -46,6 +46,18 @@ const COBERTURA = [
   { label: 'Abogados en Amapala', title: 'Abogados en Amapala, Valle — isla y puerto del Golfo de Fonseca', href: '/abogados-en-amapala' },
 ];
 
+function FooterFold({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <details className="md:pointer-events-none" open>
+      <summary className="flex items-center justify-between gap-2 mb-3 pb-2 border-b border-accent/20 cursor-pointer list-none md:cursor-default [&::-webkit-details-marker]:hidden">
+        <h3 className="text-xxs font-bold uppercase tracking-footer text-accent">{title}</h3>
+        <span className="md:hidden text-accent text-sm leading-none" aria-hidden="true">+</span>
+      </summary>
+      {children}
+    </details>
+  );
+}
+
 const LEGALES = [
   { label: 'Aviso Legal', href: '/aviso-legal' },
   { label: 'Política Editorial', href: '/politica-editorial' },
@@ -113,11 +125,7 @@ export function PublicFooter() {
 
           {/* Servicios */}
           <div>
-            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-accent/20">
-              <h3 className="text-xxs font-extrabold uppercase tracking-footer text-accent">
-                Servicios Jurídicos
-              </h3>
-            </div>
+            <FooterFold title="Servicios Jurídicos">
             <ul className="space-y-1.5">
               {AREAS.map((a) => (
                 <li key={a.href}>
@@ -127,15 +135,12 @@ export function PublicFooter() {
                 </li>
               ))}
             </ul>
+            </FooterFold>
           </div>
 
           {/* Despacho */}
           <div>
-            <div className="flex items-center gap-2 mb-3 pb-2 border-b border-accent/20">
-              <h3 className="text-xxs font-extrabold uppercase tracking-footer text-accent">
-                El Despacho
-              </h3>
-            </div>
+            <FooterFold title="El Despacho">
             <ul className="space-y-1.5">
               {DESPACHO.map((d) => (
                 <li key={d.href}>
@@ -152,15 +157,12 @@ export function PublicFooter() {
                 </li>
               ))}
             </ul>
+            </FooterFold>
           </div>
 
           {/* Cobertura (SEO local) */}
           <div>
-            <div className="flex items-center gap-2 mb-3.5 pb-2 border-b border-accent/20">
-              <h3 className="text-xxs font-extrabold uppercase tracking-footer text-accent">
-                Cobertura
-              </h3>
-            </div>
+            <FooterFold title="Cobertura">
             <ul className="space-y-1.5">
               {COBERTURA.map((c) => (
                 <li key={c.href}>
@@ -170,15 +172,12 @@ export function PublicFooter() {
                 </li>
               ))}
             </ul>
+            </FooterFold>
           </div>
 
           {/* Contacto */}
           <div>
-            <div className="flex items-center gap-2 mb-3.5 pb-2 border-b border-accent/20">
-              <h3 className="text-xxs font-extrabold uppercase tracking-footer text-accent">
-                Contacto
-              </h3>
-            </div>
+            <FooterFold title="Contacto">
             <ul className="space-y-2.5 text-sm">
               <li>
                 <a
@@ -268,6 +267,7 @@ export function PublicFooter() {
                 <span className="text-text-inverse/80 leading-relaxed">{site.hours}</span>
               </li>
             </ul>
+            </FooterFold>
           </div>
         </div>
 

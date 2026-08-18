@@ -2,7 +2,7 @@
 status: current
 owner: engineering
 created: 2026-07-09
-last_reviewed: 2026-08-06
+last_reviewed: 2026-08-17
 review_due: 2026-11-04
 supersedes: null
 superseded_by: null
@@ -60,6 +60,7 @@ El sistema funciona como **catch-all**: cualquier dirección `*@pinedayasociados
 1. Alguien envía email a **cualquier** dirección `@pinedayasociadoshn.com` (ej: `info@`, `admin@`, `clientes@`, `random@`)
 2. Resend recibe via inbound MX (`inbound-smtp.eu-west-1.amazonaws.com`)
 3. Resend dispara webhook `email.received` a `https://www.pinedayasociadoshn.com/api/email/inbound`
+   (URL exacta; un host sin la sílaba «ad» de «asociados» no recibe el webhook)
 4. El endpoint verifica la firma Svix (Ed25519) usando `RESEND_WEBHOOK_SECRET`
 5. Si la firma es inválida: HTTP 401
 6. Si la firma es válida:
@@ -214,6 +215,7 @@ Los logs **no exponen** secretos (API keys, tokens, etc.). Los errores se regist
 | `INBOUND_FORWARD_TO` | ✅ `alfonsroiget@gmail.com` |
 | `INBOUND_ALLOWED_DOMAIN` | ✅ `pinedayasociadoshn.com` |
 | `RESEND_WEBHOOK_SECRET` | ✅ Rotado |
+| Webhook inbound (`b7b21031-…`) | ✅ `enabled` (2026-08-17): endpoint canónico `/api/email/inbound`, evento `email.received`. Antes estaba `disabled` y apuntaba a un host con el typo (falta «ad» en «asociados») |
 | `TURNSTILE_SECRET_KEY` | ✅ Configurada |
 | `TURNSTILE_SITE_KEY` | ✅ Configurada |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | ✅ Configurada |

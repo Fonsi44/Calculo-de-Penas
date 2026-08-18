@@ -84,6 +84,56 @@ export function LocalInstitutionsBlock({ landing }: { landing: LandingLocal }) {
   );
 }
 
+/** Ficha única por ciudad: sede o distancia, institución y acceso. */
+export function LocalCitySnapshot({ landing }: { landing: LandingLocal }) {
+  const institution = landing.institutions?.[0];
+  const contextLead = landing.localContext?.[0];
+
+  return (
+    <aside className="mt-6 rounded-lg border border-border-light bg-surface p-5 md:p-6">
+      <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark">
+        {landing.sedeFisica ? 'Sede física' : `Atención a ${landing.ciudad}`}
+      </p>
+      <p className="mt-2 font-serif text-lg font-bold text-primary">
+        {landing.sedeFisica
+          ? `${site.address.line1}, ${landing.ciudad}`
+          : `Desde Nacaome · ${landing.distanciaKm} km`}
+      </p>
+      {!landing.sedeFisica && landing.approximateTravelTime && (
+        <p className="mt-1 text-sm text-text-secondary">
+          Tiempo aproximado de viaje: {landing.approximateTravelTime}.
+        </p>
+      )}
+      {contextLead && (
+        <p className="mt-3 text-sm text-text-secondary leading-relaxed">{contextLead}</p>
+      )}
+      {institution && (
+        <p className="mt-3 text-sm text-text-secondary leading-relaxed">
+          <span className="font-semibold text-text">{institution.name}.</span> {institution.role}
+        </p>
+      )}
+      <div className="mt-4 flex flex-wrap gap-3">
+        <Link
+          href="/como-llegar"
+          className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary"
+        >
+          Cómo llegar a Nacaome <MapPin size={14} aria-hidden="true" />
+        </Link>
+        {landing.sedeFisica && (
+          <a
+            href={site.googleBusiness}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center text-sm font-semibold text-primary hover:text-accent-dark"
+          >
+            Ver en Google Maps
+          </a>
+        )}
+      </div>
+    </aside>
+  );
+}
+
 /** Cuándo es necesario acudir presencialmente y cómo enviar documentación.
  *  Contenido genérico, prudente y reutilizable (FASE 4 §7.8/§7.7). */
 export function LocalDocumentLogistics({ landing }: { landing: LandingLocal }) {

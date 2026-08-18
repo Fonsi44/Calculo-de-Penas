@@ -237,8 +237,11 @@ Guía operativa completa en `.opencode/README.md`.
   completado), `vercel` (OAuth; escritura denegada por patrón), `resend`
   (deny-by-default de envíos) y `semgrep` (CLI local) habilitados; `github`
   (read-only server-side `X-MCP-Readonly`; autenticación vía PAT del entorno,
-  no OAuth por incompatibilidad DCR). Tools de github/neon/vercel/resend/
-  semgrep ocultas globalmente y habilitadas solo por agente (`tools` en
+  no OAuth por incompatibilidad DCR). En **Cursor** el mismo inventario vive
+  en `.cursor/mcp.json` (OAuth nativo de Cursor para github/neon/vercel/resend;
+  sin secretos en el archivo). No duplicar servidores comunitarios. Tools de
+  github/neon/vercel/resend/semgrep ocultas globalmente y habilitadas solo por
+  agente (`tools` en
   `.opencode/agents/*.md`; matriz en `.opencode/README.md`). Sin secretos
   literales y sin dependencias MCP en `package.json`.
 - **LSP:** built-ins de TypeScript y ESLint habilitados (dependencias del

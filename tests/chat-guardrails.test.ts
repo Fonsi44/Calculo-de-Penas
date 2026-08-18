@@ -218,8 +218,10 @@ describe('knowledge-base — allowlist de enlaces', () => {
   });
 
   it('permite canales oficiales (tel/mailto/wa.me)', () => {
-    expect(isAllowedPublicLink('tel:+50495363724')).toBe(true);
+    expect(isAllowedPublicLink('tel:+50432729292')).toBe(true);
     expect(isAllowedPublicLink('mailto:x@y.com')).toBe(true);
+    expect(isAllowedPublicLink('https://wa.me/50432729292')).toBe(true);
+    expect(isAllowedPublicLink('tel:+50495363724')).toBe(true);
     expect(isAllowedPublicLink('https://wa.me/50495363724')).toBe(true);
   });
 
