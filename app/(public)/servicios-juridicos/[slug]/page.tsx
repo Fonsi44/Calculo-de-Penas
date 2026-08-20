@@ -508,6 +508,15 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
                 <Scale size={10} className="text-accent-dark" aria-hidden="true" />
                 Abogado especialista en Nacaome
               </Link>
+              {slug === 'derecho-de-familia' ? (
+                <Link
+                  href="/derecho-penal/menores-justicia-juvenil"
+                  className="focus-ring chip-specialty inline-flex items-center"
+                >
+                  <Scale size={10} className="text-accent-dark" aria-hidden="true" />
+                  Justicia juvenil y protección de menores
+                </Link>
+              ) : null}
             </div>
           </Container>
         </Section>

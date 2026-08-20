@@ -240,6 +240,7 @@ export function getRelatedServices(serviceSlug: string, limit = 4): PracticeArea
   }
 
   // Resolver cada slug relacionado contra PRACTICE_AREAS.
+  // No rellenar con el catálogo: un área no relacionada diluye el cluster.
   const resolved: PracticeArea[] = [];
   for (const relSlug of source.areasRelacionadas) {
     const area = PRACTICE_AREAS.find((a) => a.slug === relSlug);
@@ -247,18 +248,6 @@ export function getRelatedServices(serviceSlug: string, limit = 4): PracticeArea
       resolved.push(area);
     }
     if (resolved.length >= limit) break;
-  }
-
-  // Si no hay suficientes, completar con áreas populares (no duplicadas).
-  if (resolved.length < limit) {
-    const existing = new Set([serviceSlug, ...resolved.map((r) => r.slug)]);
-    for (const area of PRACTICE_AREAS) {
-      if (resolved.length >= limit) break;
-      if (!existing.has(area.slug)) {
-        resolved.push(area);
-        existing.add(area.slug);
-      }
-    }
   }
 
   return resolved.slice(0, limit);

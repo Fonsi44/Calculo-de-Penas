@@ -5,7 +5,7 @@ import {
   Scale, ShieldCheck, Briefcase, BookOpen,
   HeartHandshake, ArrowRight, Award,
 } from 'lucide-react';
-import { site, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE } from '@/lib/site';
+import { site, FOUNDER_PROFILE, THANIA_PROFILE, EMIL_PROFILE, ALFONS_PROFILE } from '@/lib/site';
 import { buildMetadata } from '@/lib/seo';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { CTAGroup } from '@/components/marketing/cta-buttons';
@@ -382,6 +382,16 @@ export default async function DespachoPage() {
             </div>
           </Card>
         </div>
+        <p className="mt-6 text-sm text-text-secondary leading-relaxed max-w-3xl">
+          La presencia digital del despacho está a cargo de{' '}
+          <Link
+            href={`/equipo/${ALFONS_PROFILE.slug}`}
+            className="font-semibold text-accent-dark hover:text-primary transition-colors"
+          >
+            {ALFONS_PROFILE.name}
+          </Link>
+          , consultor de diseño web y redes sociales. No forma parte del equipo de abogados responsables de los expedientes.
+        </p>
       </Section>
 
       {/* CÓMO TRABAJAMOS */}

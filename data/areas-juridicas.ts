@@ -1260,7 +1260,7 @@ export const hubPenal: HubPenal = {
       faqs: [
         { pregunta: '¿Qué pasa si la acusación es débil?', respuesta: 'Trabajamos la estrategia procesal desde la primera audiencia para atacar la prueba de cargo y, si es posible, lograr la absolución en juicio.' },
       ],
-      areasRelacionadas: ['estrategia-penal-y-litigio', 'recursos-y-defensa-avanzada'],
+      areasRelacionadas: ['estrategia-penal-y-litigio', 'recursos-y-defensa-avanzada', 'menores-justicia-juvenil'],
       keywords: [
         'defensa penal Nacaome',
         'abogado penalista sur Honduras',
@@ -1363,7 +1363,7 @@ export const hubPenal: HubPenal = {
       faqs: [
         { pregunta: '¿Cuánto dura un proceso penal en Honduras?', respuesta: 'Depende de la complejidad. Los casos simples pueden resolverse en 6-12 meses, los complejos pueden extenderse a 3-5 años entre primera declaración y sentencia firme.' },
       ],
-      areasRelacionadas: ['recursos-y-defensa-avanzada', 'estrategia-penal-y-litigio'],
+      areasRelacionadas: ['recursos-y-defensa-avanzada', 'estrategia-penal-y-litigio', 'ejecucion-penal-y-beneficios'],
       keywords: ['juicio oral Honduras', 'audiencia inicial', 'prisión preventiva Honduras'],
     },
     {
@@ -1395,7 +1395,7 @@ export const hubPenal: HubPenal = {
       faqs: [
         { pregunta: '¿Se puede recurrir una sentencia condenatoria?', respuesta: 'Sí. Contra la sentencia de primera instancia procede apelación ante la Corte de Apelaciones, y contra la de segunda, casación ante la CSJ.' },
       ],
-      areasRelacionadas: ['proceso-penal-completo', 'estrategia-penal-y-litigio'],
+      areasRelacionadas: ['proceso-penal-completo', 'estrategia-penal-y-litigio', 'ejecucion-penal-y-beneficios'],
       keywords: ['casación penal Honduras', 'recurso de apelación', 'habeas corpus Honduras'],
     },
     {

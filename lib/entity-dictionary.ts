@@ -39,12 +39,7 @@ const cityEntities: LinkableEntity[] = [
   { pattern: /\bGoascor[aá]n\b/g, href: '/abogados-en-goascoran', anchor: 'Goascorán', weight: 7 },
   { pattern: /\bSan Marcos de Col[oó]n\b/g, href: '/abogados-en-san-marcos-de-colon', anchor: 'San Marcos de Colón', weight: 7 },
   { pattern: /\bEl Triunfo\b/g, href: '/abogados-en-el-triunfo', anchor: 'El Triunfo', weight: 6 },
-  { pattern: /\bMarcovia\b/g, href: '/abogados-en-marcovia', anchor: 'Marcovia', weight: 6 },
-  { pattern: /\bPespire\b/g, href: '/abogados-en-pespire', anchor: 'Pespire', weight: 6 },
-  { pattern: /\bNamasig[uü]e\b/g, href: '/abogados-en-namasigue', anchor: 'Namasigüe', weight: 6 },
-  { pattern: /\bOrocuina\b/g, href: '/abogados-en-orocuina', anchor: 'Orocuina', weight: 6 },
   { pattern: /\bAmapala\b/g, href: '/abogados-en-amapala', anchor: 'Amapala', weight: 5 },
-  { pattern: /\bLangue\b/g, href: '/abogados-en-langue', anchor: 'Langue', weight: 5 },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────

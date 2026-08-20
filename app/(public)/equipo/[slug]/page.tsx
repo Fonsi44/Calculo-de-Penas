@@ -219,7 +219,16 @@ export default async function LawyerProfilePage({ params }: Props) {
                   className="flex items-start gap-2 text-sm text-text-secondary"
                 >
                   <CheckCircle2 size={16} className="flex-shrink-0 mt-0.5 text-accent-dark" />
-                  <span>{area}</span>
+                  {profile.slug === 'danilo-pineda-maradiaga' && area === 'Ejecución penal' ? (
+                    <Link
+                      href="/derecho-penal/ejecucion-penal-y-beneficios"
+                      className="font-semibold text-primary hover:underline"
+                    >
+                      {area}
+                    </Link>
+                  ) : (
+                    <span>{area}</span>
+                  )}
                 </li>
               ))}
             </ul>

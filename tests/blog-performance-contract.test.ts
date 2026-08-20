@@ -120,6 +120,13 @@ describe('contrato de rendimiento de lecturas del blog', () => {
       ['a'],
       3,
     ).map((post) => post.slug)).toEqual(['a', 'b', 'c']);
+    expect(getRelatedPostsFromSummaries(
+      summaries,
+      'actual',
+      'penal',
+      ['sin-solape'],
+      3,
+    )).toEqual([]);
     expect(detailPageSource).not.toContain('async function getRelatedPosts(');
     expect(detailPageSource.match(/getAllPosts\(\)/g)).toHaveLength(1);
   });

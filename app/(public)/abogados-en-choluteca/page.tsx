@@ -12,14 +12,15 @@ export const metadata: Metadata = landingMetadata(landing);
 
 export default async function AbogadosEnCholutecaPage() {
   const casosPrioritarios = [
-    'Defensa penal y audiencias de urgencia',
-    'Despidos, prestaciones y reclamaciones laborales',
-    'Divorcios, custodia y pensión alimenticia',
-    'Contratos civiles y conflictos mercantiles',
-    'Trámites notariales y documentales con seguimiento',
+    { text: 'Defensa penal y audiencias de urgencia', href: '/abogado-penalista-choluteca' },
+    { text: 'Despidos, prestaciones y reclamaciones laborales' },
+    { text: 'Divorcios, custodia y pensión alimenticia' },
+    { text: 'Contratos civiles y conflictos mercantiles' },
+    { text: 'Trámites notariales y documentales con seguimiento' },
   ];
 
   const enlacesServicio = [
+    { href: '/abogado-penalista-choluteca', label: 'Penalista en Choluteca' },
     { href: '/derecho-penal', label: 'Defensa penal' },
     { href: '/servicios-juridicos/derecho-laboral', label: 'Derecho laboral' },
     { href: '/servicios-juridicos/derecho-de-familia', label: 'Derecho de familia' },
@@ -64,7 +65,16 @@ export default async function AbogadosEnCholutecaPage() {
             <h3 className="font-bold text-sm text-text">Tipos de casos atendidos en Choluteca</h3>
             <ul className="mt-2 space-y-2 text-sm text-text-secondary">
               {casosPrioritarios.map((caso) => (
-                <li key={caso} className="leading-relaxed">- {caso}</li>
+                <li key={caso.text} className="leading-relaxed">
+                  -{' '}
+                  {caso.href ? (
+                    <Link href={caso.href} className="font-semibold text-primary hover:text-accent-dark">
+                      {caso.text}
+                    </Link>
+                  ) : (
+                    caso.text
+                  )}
+                </li>
               ))}
             </ul>
           </Card>
@@ -90,11 +100,11 @@ export default async function AbogadosEnCholutecaPage() {
 
       <BlogHighlights
         slugs={[
-          'divorcio-tipos-requisitos-tiempos-honduras',
-          'calcular-prestaciones-laborales-honduras',
+          'divorcio-honduras-guia-completa',
+          'calcular-liquidacion-laboral-honduras',
           'contratos-trabajo-tipos-clausulas-honduras',
           'compraventa-inmuebles-aspectos-legales-honduras',
-          'constitucion-empresas-honduras-pasos-legales',
+          'contratos-mercantiles-esenciales-empresas-honduras',
           'pension-alimenticia-honduras-guia-completa',
         ]}
         eyebrow="Guías para Choluteca"
