@@ -129,6 +129,8 @@ describe('contrato de rendimiento de lecturas del blog', () => {
     )).toEqual([]);
     expect(detailPageSource).not.toContain('async function getRelatedPosts(');
     expect(detailPageSource.match(/getAllPosts\(\)/g)).toHaveLength(1);
+    expect(detailPageSource).toContain('loadArticleSeoRelations(articleSeoRelationsData)');
+    expect(detailPageSource).toContain('relationsBySlug.has(slug)');
   });
 
   it('hub, categoría, sidebar, RSS y sitemap consumen summaries', () => {

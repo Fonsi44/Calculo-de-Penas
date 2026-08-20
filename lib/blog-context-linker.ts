@@ -185,7 +185,7 @@ export function injectContextLinks(html: string, options?: ContextLinkOptions): 
   const usedHrefs = new Set<string>();
 
   for (let i = 0; i < tokens.length && linksInserted < maxLinks; i++) {
-    let token = tokens[i];
+    const token = tokens[i];
 
     // Si es una etiqueta, actualizar el stack y continuar.
     if (token.startsWith('<')) {
@@ -206,18 +206,23 @@ export function injectContextLinks(html: string, options?: ContextLinkOptions): 
     // Es un text node. Si está dentro de un tag protegido, no enlazar.
     if (isInsideProtectedTag(tagStack)) continue;
 
-    // Intentar enlazar entidades en este text node.
-    // Solo insertamos UN enlace por text node para no saturar un párrafo.
+    // Un enlace por pasada; el nodo se re-tokeniza para proteger el <a>
+    // y permitir otras entidades en el texto restante del mismo párrafo.
     for (const entity of catalog) {
       if (linksInserted >= maxLinks) break;
       if (usedHrefs.has(entity.href)) continue;
 
       const { result, linked } = linkFirstOccurrence(token, entity);
       if (linked) {
-        tokens[i] = result;
-        token = result;
+        // Re-tokenizar el nodo para que el <a> recién insertado quede
+        // protegido y no se anide otra entidad (p. ej. ciudad dentro de
+        // «penalista en Choluteca»).
+        const nested = tokenizeHtml(result);
+        tokens.splice(i, 1, ...nested);
         usedHrefs.add(entity.href);
         linksInserted++;
+        i -= 1;
+        break;
       }
     }
   }

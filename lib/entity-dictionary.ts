@@ -48,6 +48,72 @@ const cityEntities: LinkableEntity[] = [
 
 const practiceAreaEntities: LinkableEntity[] = [
   {
+    pattern: /\b(?:abogado )?penalista en Choluteca\b/gi,
+    href: '/abogado-penalista-choluteca',
+    anchor: 'penalista en Choluteca',
+    weight: 13,
+  },
+  {
+    pattern: /\b(?:abogado )?penalista en Nacaome\b/gi,
+    href: '/abogado-penalista-nacaome',
+    anchor: 'penalista en Nacaome',
+    weight: 13,
+  },
+  {
+    pattern: /\bdefensa penal en Choluteca\b/gi,
+    href: '/abogado-penalista-choluteca',
+    anchor: 'defensa penal en Choluteca',
+    weight: 13,
+  },
+  {
+    pattern: /\babogado laboralista en Nacaome\b/gi,
+    href: '/abogado-laboralista-nacaome',
+    anchor: 'abogado laboralista en Nacaome',
+    weight: 12,
+  },
+  {
+    pattern: /\bejecuci[oó]n penal\b/gi,
+    href: '/derecho-penal/ejecucion-penal-y-beneficios',
+    anchor: 'ejecución penal',
+    weight: 12,
+  },
+  {
+    pattern: /\bjusticia juvenil\b/gi,
+    href: '/derecho-penal/menores-justicia-juvenil',
+    anchor: 'justicia juvenil',
+    weight: 12,
+  },
+  {
+    pattern: /\bjusticia penal juvenil\b/gi,
+    href: '/derecho-penal/menores-justicia-juvenil',
+    anchor: 'justicia penal juvenil',
+    weight: 12,
+  },
+  {
+    pattern: /\bdefensa penal juvenil\b/gi,
+    href: '/derecho-penal/menores-justicia-juvenil',
+    anchor: 'defensa penal juvenil',
+    weight: 12,
+  },
+  {
+    pattern: /\blibertad condicional\b/gi,
+    href: '/derecho-penal/ejecucion-penal-y-beneficios',
+    anchor: 'libertad condicional',
+    weight: 11,
+  },
+  {
+    pattern: /\bbeneficios penitenciarios\b/gi,
+    href: '/derecho-penal/ejecucion-penal-y-beneficios',
+    anchor: 'beneficios penitenciarios',
+    weight: 11,
+  },
+  {
+    pattern: /\bproceso penal completo\b/gi,
+    href: '/derecho-penal/proceso-penal-completo',
+    anchor: 'proceso penal completo',
+    weight: 11,
+  },
+  {
     pattern: /\bdefensa penal\b/gi,
     href: '/derecho-penal',
     anchor: 'defensa penal',
@@ -256,7 +322,8 @@ const legalConceptEntities: LinkableEntity[] = [
 
 /**
  * Catálogo completo de entidades, ordenado por peso descendente.
- * El linker procesa primero las entidades de mayor peso (ciudades > áreas > conceptos).
+ * El linker procesa primero las entidades de mayor peso
+ * (frases de cargo/subpágina > ciudades > áreas genéricas > conceptos).
  */
 export const ENTITY_CATALOG: LinkableEntity[] = [
   ...cityEntities,
