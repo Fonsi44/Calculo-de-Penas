@@ -87,6 +87,49 @@ describe('injectContextLinks', () => {
       '/blog/derecho-laboral/derechos-trabajadora-embarazada-honduras',
     ]));
   });
+
+  it('prioriza el cargo local sobre la ciudad y el hub genérico', () => {
+    const choluteca = injectContextLinks(
+      '<p>Un abogado penalista en Choluteca puede asumir la defensa.</p>',
+    );
+    const nacaome = injectContextLinks(
+      '<p>Un abogado penalista en Nacaome puede asumir la defensa.</p>',
+    );
+
+    expect(extractBlogInternalHrefs(choluteca)).toContain('/abogado-penalista-choluteca');
+    expect(choluteca).not.toContain('href="/abogados-en-choluteca"');
+    expect(choluteca).not.toMatch(/<a href="\/abogado-penalista-choluteca"[^>]*>[\s\S]*<a /);
+    expect(extractBlogInternalHrefs(nacaome)).toContain('/abogado-penalista-nacaome');
+    expect(nacaome).not.toContain('href="/abogados-en-nacaome"');
+  });
+
+  it('enlaza subpáginas penales cuando el cuerpo las nombra', () => {
+    const html = [
+      '<p>Tras la sentencia cabe ejecución penal y libertad condicional.</p>',
+      '<p>El caso de justicia penal juvenil se tramita aparte.</p>',
+      '<p>El proceso penal completo incluye la apelación.</p>',
+    ].join('');
+    const result = injectContextLinks(html);
+    const hrefs = extractBlogInternalHrefs(result);
+
+    expect(hrefs).toEqual(expect.arrayContaining([
+      '/derecho-penal/ejecucion-penal-y-beneficios',
+      '/derecho-penal/menores-justicia-juvenil',
+      '/derecho-penal/proceso-penal-completo',
+    ]));
+    expect(hrefs.filter((href) => href === '/derecho-penal/ejecucion-penal-y-beneficios'))
+      .toHaveLength(1);
+  });
+
+  it('enlaza defensa penal juvenil al hub de menores, no al hub penal genérico', () => {
+    const result = injectContextLinks(
+      '<p>La defensa penal juvenil tiene reglas propias.</p>',
+    );
+    expect(extractBlogInternalHrefs(result)).toContain(
+      '/derecho-penal/menores-justicia-juvenil',
+    );
+    expect(result).not.toContain('href="/derecho-penal"');
+  });
 });
 
 describe('analyzeBlogBodyLinks', () => {

@@ -180,14 +180,27 @@ export function getCanonicalRelatedSummaries<T extends { slug: string; category:
   return picks;
 }
 
-/** Acceso de solo lectura al registro versionado (carga lazy para scripts y app). */
+function isArticleSeoRelation(value: unknown): value is ArticleSeoRelations {
+  if (!value || typeof value !== 'object') return false;
+  const row = value as Partial<ArticleSeoRelations>;
+  return typeof row.slug === 'string' && Array.isArray(row.relatedArticles);
+}
+
+/**
+ * Acceso de solo lectura al registro versionado.
+ * Acepta el array crudo o el envoltorio `{ relations: [...] }` del JSON canónico.
+ * Un objeto no-array sin `relations` no es un registro vacío a medias: es un
+ * no-load (evita que el suppress YMYL quede en silencio).
+ */
 export function loadArticleSeoRelations(
   data: unknown,
 ): ArticleSeoRelations[] {
-  if (!Array.isArray(data)) return [];
-  return (data as ArticleSeoRelations[]).filter(
-    (r) => r && typeof r.slug === 'string' && Array.isArray(r.relatedArticles),
-  );
+  const rows = Array.isArray(data)
+    ? data
+    : data && typeof data === 'object' && Array.isArray((data as { relations?: unknown }).relations)
+      ? (data as { relations: unknown[] }).relations
+      : [];
+  return rows.filter(isArticleSeoRelation);
 }
 
 /** Helper: servicio esperado de un artículo por categoría (misma fuente que el render). */

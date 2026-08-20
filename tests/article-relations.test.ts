@@ -3,6 +3,7 @@
  * (lib/seo/article-relations.ts) — PROMPT 2 §6.2/§6.3.
  */
 import { describe, expect, it } from 'vitest';
+import articleSeoRelationsData from '@/data/seo/article-seo-relations.json';
 import {
   MAX_RELATED_ARTICLES,
   validateArticleSeoRelations,
@@ -10,6 +11,7 @@ import {
   getCanonicalRelatedSummaries,
   expectedServicePathForCategory,
   isPrivatePath,
+  loadArticleSeoRelations,
   type ArticleSeoRelations,
   type ArticleCatalog,
 } from '@/lib/seo/article-relations';
@@ -149,5 +151,30 @@ describe('expectedServicePathForCategory', () => {
     expect(expectedServicePathForCategory('derecho-penal')).toBe('/derecho-penal');
     expect(expectedServicePathForCategory('hondurenos-en-espana')).toBe('/hondurenos-en-espana');
     expect(expectedServicePathForCategory('inexistente')).toBeNull();
+  });
+});
+
+describe('loadArticleSeoRelations', () => {
+  it('acepta el array crudo', () => {
+    const rows = loadArticleSeoRelations([
+      { slug: 'a', primaryService: '/derecho-penal', relatedArticles: [], officialSources: [] },
+    ]);
+    expect(rows).toHaveLength(1);
+    expect(rows[0]?.slug).toBe('a');
+  });
+
+  it('desenvuelve el JSON canónico { relations: [...] }', () => {
+    const loaded = loadArticleSeoRelations(articleSeoRelationsData);
+    expect(loaded.length).toBe(articleSeoRelationsData.relations.length);
+    expect(loaded.length).toBeGreaterThan(0);
+    expect(loaded.map((row) => row.slug)).toEqual(
+      expect.arrayContaining(['estafas-fraudes-tipos-penales-honduras']),
+    );
+  });
+
+  it('devuelve [] si el objeto no trae relations', () => {
+    expect(loadArticleSeoRelations({ schema_version: 1 })).toEqual([]);
+    expect(loadArticleSeoRelations(null)).toEqual([]);
+    expect(loadArticleSeoRelations(undefined)).toEqual([]);
   });
 });
