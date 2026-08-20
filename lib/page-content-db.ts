@@ -1,4 +1,5 @@
 import { db } from '@/lib/db';
+import { isUsableDatabaseUrl } from '@/lib/database-url';
 import { pageContent } from '@/lib/schema';
 import { eq, and, sql } from 'drizzle-orm';
 import { cache } from 'react';
@@ -8,6 +9,7 @@ export type PageContentRow = typeof pageContent.$inferSelect;
 export type PageContentInsert = typeof pageContent.$inferInsert;
 
 export async function getPageContent(page: string, options?: { includeUnpublished?: boolean }): Promise<Record<string, string>> {
+  if (!isUsableDatabaseUrl(process.env.DATABASE_URL)) return {};
   // If the page is not published and we're not explicitly including unpublished, return empty
   if (!options?.includeUnpublished) {
     try {
@@ -17,8 +19,6 @@ export async function getPageContent(page: string, options?: { includeUnpublishe
       }
     } catch {}
   }
-
-  if (!process.env.DATABASE_URL || process.env.DATABASE_URL.includes('placeholder') || process.env.DATABASE_URL.includes('localhost:5432/placeholder')) return {};
   const rows = await db.select().from(pageContent)
     .where(and(eq(pageContent.page, page), eq(pageContent.lang, 'es-HN')));
   const map: Record<string, string> = {};
@@ -29,7 +29,7 @@ export async function getPageContent(page: string, options?: { includeUnpublishe
 }
 
 export async function getPageContentBySection(page: string, section: string): Promise<Record<string, string>> {
-  if (!process.env.DATABASE_URL || process.env.DATABASE_URL.includes('placeholder') || process.env.DATABASE_URL.includes('localhost:5432/placeholder')) return {};
+  if (!isUsableDatabaseUrl(process.env.DATABASE_URL)) return {};
   const rows = await db.select().from(pageContent)
     .where(and(eq(pageContent.page, page), eq(pageContent.section, section), eq(pageContent.lang, 'es-HN')));
   const map: Record<string, string> = {};
@@ -157,6 +157,7 @@ export async function pageHasContent(page: string): Promise<boolean> {
  *  NEVER auto-publishes — status changes only happen via explicit PATCH set-status.
  */
 export async function getPageMeta(page: string): Promise<PageMetaData> {
+  if (!isUsableDatabaseUrl(process.env.DATABASE_URL)) return { ...DEFAULT_PAGE_META };
   const rows = await db.select().from(pageContent)
     .where(and(
       eq(pageContent.page, page),

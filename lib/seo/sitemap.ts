@@ -19,6 +19,7 @@
  * `data/seo/sitemap-public-manifest.json` en lugar de un conteo rígido.
  */
 import type { MetadataRoute } from 'next';
+import { isUsableDatabaseUrl } from '@/lib/database-url';
 import { site, absoluteUrl } from '@/lib/site';
 import { getAllPosts } from '@/lib/blog';
 import { blogCategories } from '@/data/blog/categories';
@@ -56,11 +57,7 @@ export const INDEXNOW_SAFETY_CAP: number = canonicalPathsData.indexnow_safety_ca
 export function isDatabaseConfiguredAtRuntime(
   value = process.env.DATABASE_URL,
 ): boolean {
-  return Boolean(
-    value
-    && !value.includes('placeholder')
-    && !value.includes('localhost:5432/placeholder'),
-  );
+  return isUsableDatabaseUrl(value);
 }
 
 // Posts con contenido thin/plantilla. Depriorización, no exclusión (ver

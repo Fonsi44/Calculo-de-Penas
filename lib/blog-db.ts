@@ -1,4 +1,5 @@
 import { db } from '@/lib/db';
+import { isUsableDatabaseUrl } from '@/lib/database-url';
 import { blogPosts } from '@/lib/schema';
 import { eq, and, desc, sql } from 'drizzle-orm';
 import {
@@ -129,10 +130,7 @@ function shouldThrowOnDbError(): boolean {
  * y diverja del runtime serverless.
  */
 function isDbReachable(): boolean {
-  const url = process.env.DATABASE_URL;
-  return Boolean(
-    url && !url.includes('placeholder') && !url.includes('localhost:5432/placeholder'),
-  );
+  return isUsableDatabaseUrl(process.env.DATABASE_URL);
 }
 
 function filterSnapshotPosts<T extends {
@@ -306,12 +304,20 @@ export async function getPublishedPostParams() {
     }
     return [];
   }
-  const rows = await db.select(publicBlogPostParamsSelection)
-    .from(blogPosts)
-    .where(eq(blogPosts.published, true))
-    .orderBy(desc(blogPosts.publishedAt));
-  assertCanonicalPreviewInventory(rows.length);
-  return rows;
+  try {
+    const rows = await db.select(publicBlogPostParamsSelection)
+      .from(blogPosts)
+      .where(eq(blogPosts.published, true))
+      .orderBy(desc(blogPosts.publishedAt));
+    assertCanonicalPreviewInventory(rows.length);
+    return rows;
+  } catch (err) {
+    console.error('[blog-db] getPublishedPostParams falló.', err);
+    if (shouldThrowOnDbError()) {
+      throw new Error('Error al conectar con la base de datos en getPublishedPostParams');
+    }
+    return [];
+  }
 }
 
 export async function getPublishedPostRouteBySlug(slug: string) {
@@ -330,11 +336,19 @@ export async function getPublishedPostRouteBySlug(slug: string) {
     }
     return null;
   }
-  const [row] = await db.select(publicBlogPostParamsSelection)
-    .from(blogPosts)
-    .where(and(eq(blogPosts.slug, slug), eq(blogPosts.published, true)))
-    .limit(1);
-  return row ?? null;
+  try {
+    const [row] = await db.select(publicBlogPostParamsSelection)
+      .from(blogPosts)
+      .where(and(eq(blogPosts.slug, slug), eq(blogPosts.published, true)))
+      .limit(1);
+    return row ?? null;
+  } catch (err) {
+    console.error('[blog-db] getPublishedPostRouteBySlug falló.', err);
+    if (shouldThrowOnDbError()) {
+      throw new Error('Error al conectar con la base de datos en getPublishedPostRouteBySlug');
+    }
+    return null;
+  }
 }
 
 const attributionSelection = {
@@ -399,15 +413,23 @@ export async function getPublishedArticleAttributionMetadata() {
     }
     return [];
   }
-  const rows = await db.select(attributionSelection)
-    .from(blogPosts)
-    .where(eq(blogPosts.published, true))
-    .orderBy(desc(blogPosts.publishedAt));
-  assertCanonicalPreviewInventory(rows.length);
-  return rows.map((row) => projectPublicAttribution(
-    { ...row, redirected: false },
-    editorialSignatureSchemaMode(),
-  ));
+  try {
+    const rows = await db.select(attributionSelection)
+      .from(blogPosts)
+      .where(eq(blogPosts.published, true))
+      .orderBy(desc(blogPosts.publishedAt));
+    assertCanonicalPreviewInventory(rows.length);
+    return rows.map((row) => projectPublicAttribution(
+      { ...row, redirected: false },
+      editorialSignatureSchemaMode(),
+    ));
+  } catch (err) {
+    console.error('[blog-db] getPublishedArticleAttributionMetadata falló.', err);
+    if (shouldThrowOnDbError()) {
+      throw new Error('Error al conectar con la base de datos en getPublishedArticleAttributionMetadata');
+    }
+    return [];
+  }
 }
 
 export async function getPublishedPostDetailBySlug(slug: string) {

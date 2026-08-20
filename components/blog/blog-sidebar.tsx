@@ -22,12 +22,14 @@ export function BlogSidebar({
   recent,
   archive,
   tags,
+  showTags = true,
 }: {
   categories: BlogCategoryWithCount[];
   popular: BlogCardData[];
   recent: BlogCardData[];
   archive: BlogArchiveMonth[];
   tags: string[];
+  showTags?: boolean;
 }) {
   // Categorías: top 8 por conteo de posts (las más activas editorialmente).
   // El índice completo de 20 categorías vive en /blog (hub SSR).
@@ -97,8 +99,9 @@ export function BlogSidebar({
         </SidebarBlock>
       )}
 
-      {/* Etiquetas — 10 máximo, nofollow (páginas noindex) */}
-      {topTags.length > 0 && (
+      {/* Etiquetas — 10 máximo, nofollow (páginas noindex).
+          En el detalle del artículo se ocultan: el post ya lista sus tags. */}
+      {showTags && topTags.length > 0 && (
         <SidebarBlock title="Etiquetas" as="h2">
           <div className="flex flex-wrap gap-1.5">
             {topTags.map((tag) => (

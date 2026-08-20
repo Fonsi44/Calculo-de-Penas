@@ -1,5 +1,6 @@
 import { Pool } from '@neondatabase/serverless';
 import { drizzle, type NeonDatabase } from 'drizzle-orm/neon-serverless';
+import { isUsableDatabaseUrl } from '@/lib/database-url';
 
 let _pool: Pool | null = null;
 let _db: NeonDatabase<Record<string, never>> | null = null;
@@ -7,7 +8,7 @@ let _db: NeonDatabase<Record<string, never>> | null = null;
 function getDb() {
   if (_db) return _db;
   const dbUrl = process.env.DATABASE_URL;
-  if (!dbUrl) {
+  if (!isUsableDatabaseUrl(dbUrl)) {
     throw new Error('DATABASE_URL environment variable is required at runtime');
   }
   _pool = new Pool({ connectionString: dbUrl });
@@ -24,7 +25,7 @@ export const db = new Proxy({} as NeonDatabase<Record<string, never>>, {
 });
 
 export function isDbConfigured(): boolean {
-  return Boolean(process.env.DATABASE_URL);
+  return isUsableDatabaseUrl(process.env.DATABASE_URL);
 }
 
 export async function closeDb(): Promise<void> {

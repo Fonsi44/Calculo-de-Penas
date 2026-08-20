@@ -4,7 +4,7 @@ export const TOP_ORGANIC_GUIDE_SLUGS = [
   'custodia-hijos-honduras-juez',
   'poder-legal-honduras-cuando-se-necesita',
   'contratos-mercantiles-esenciales-empresas-honduras',
-  'naturalizacion-obtener-nacionalidad-hondurena',
+  'naturalizacion-nacionalidad-hondurena',
   'que-hacer-si-me-detienen-en-honduras',
   'jornada-laboral-horas-extra-descansos-honduras',
 ] as const;

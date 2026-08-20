@@ -207,16 +207,19 @@ export function getRelatedPostsFromSummaries(
   slug: string,
   category: string,
   tags: readonly string[],
-  limit = 6,
+  limit = 3,
 ): BlogPostSummary[] {
   return summaries
     .filter((post) => post.slug !== slug)
-    .map((post) => ({
-      post,
-      score: (post.category === category ? 3 : 0)
-        + post.tags.filter((tag) => tags.includes(tag)).length,
-    }))
-    .filter(({ score }) => score > 0)
+    .map((post) => {
+      const tagOverlap = post.tags.filter((tag) => tags.includes(tag)).length;
+      return {
+        post,
+        tagOverlap,
+        score: (post.category === category ? 3 : 0) + tagOverlap,
+      };
+    })
+    .filter(({ tagOverlap }) => tagOverlap >= 1)
     .sort((a, b) => (
       b.score - a.score
       || new Date(b.post.publishedAt).getTime() - new Date(a.post.publishedAt).getTime()

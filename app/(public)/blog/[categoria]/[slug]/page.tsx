@@ -130,21 +130,31 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
   // Relaciones canónicas (lib/seo/article-relations.ts): si el artículo tiene
   // relación definida y validada, se usan targets deterministas; si no, se
   // mantiene el fallback por similitud (categoría + tags).
+  const editorial = resolveArticleEditorialState(post);
   const relationsBySlug = new Map<string, ArticleSeoRelations>(
     loadArticleSeoRelations(articleSeoRelationsData).map((r) => [r.slug, r]),
   );
-  const canonicalRelation = relationsBySlug.get(slug);
+  // El registro article-seo-relations.json cubre hoy los 53 ACTION_REQUIRED.
+  // No se usa como cluster público hasta revisión jurídica (NO_SAFE_CLUSTER_TARGET).
+  const suppressUnsafeRelated =
+    editorial.publicationState === 'pending_resignature'
+    || editorial.publicationState === 'draft'
+    || relationsBySlug.has(slug);
+  const canonicalRelation = suppressUnsafeRelated ? undefined : relationsBySlug.get(slug);
   const canonicalRelated = canonicalRelation
     ? getCanonicalRelatedSummaries(allPosts, canonicalRelation)
     : [];
-  const relatedPosts = canonicalRelated.length > 0
-    ? canonicalRelated
-    : getRelatedPostsFromSummaries(
-      allPosts,
-      slug,
-      post.category,
-      post.tags,
-    );
+  // PASS: máximo 3 y solo si hay overlap real de tags (no basta la categoría).
+  const relatedPosts = suppressUnsafeRelated
+    ? []
+    : canonicalRelated.length > 0
+      ? canonicalRelated
+      : getRelatedPostsFromSummaries(
+        allPosts,
+        slug,
+        post.category,
+        post.tags,
+      );
   const categoryName = getCategoryName(post.category) ?? post.category;
 
   const postUrl = `/blog/${post.category}/${post.slug}`;
@@ -154,8 +164,6 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
     'Thania Marlene Paz': 'thania-marlene-paz',
     'Emil Barahona': 'emil-barahona',
   };
-
-  const editorial = resolveArticleEditorialState(post);
   const validSignature = editorial.signatureValid ? editorial.signature : null;
   const individualSignature = validSignature?.type === 'lawyer';
   const showPreviewResignatureNotice =
@@ -338,7 +346,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
                   }
                 />
 
-                <RelatedService category={post.category} />
+                <RelatedService category={post.category} slug={post.slug} />
 
                 {/* Author Box */}
                 <div className="mt-10 pt-6 border-t border-border/30">
@@ -426,6 +434,7 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
               recent={recentSidebar}
               archive={archive}
               tags={allTags}
+              showTags={false}
             />
           </div>
         </Container>
@@ -467,21 +476,24 @@ export default async function BlogPostByCategoryPage({ params }: Props) {
         </Section>
       )}
 
-      {/* CLUSTER CONTEXTUAL (Jul 2026): ciudades + categorías relacionadas.
-          Cierra el silo: post → geo, post → taxonomía. Si el post menciona
-          una ciudad, se prioriza primera en el bloque geográfico. */}
+      {/* CLUSTER CONTEXTUAL: solo geo si el cuerpo menciona una ciudad.
+          Sin mención, el footer ya cubre las 7 landings indexables. */}
+      {(mentionedCities[0] || post.category) && (
       <Section background="muted" spacing="sm">
         <Container size="md">
           <div className="flex flex-col gap-6">
-            <RelatedCities
-              mentionedCitySlug={mentionedCities[0] ?? null}
-              limit={6}
-              eyebrow="Atendemos en el sur de Honduras"
-            />
-            <RelatedCategories current={post.category} limit={8} />
+            {mentionedCities[0] ? (
+              <RelatedCities
+                mentionedCitySlug={mentionedCities[0]}
+                limit={2}
+                eyebrow="Atendemos en el sur de Honduras"
+              />
+            ) : null}
+            <RelatedCategories current={post.category} limit={2} />
           </div>
         </Container>
       </Section>
+      )}
 
       {/* ── FINAL CTA ── */}
       {/* Un único CTA de cierre por post. LocalConsultForm eliminado: era

@@ -2,7 +2,10 @@ import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
 import { readFileSync } from 'node:fs';
 import nextConfig from '../next.config';
 import { GET as getFeed } from '../app/(public)/blog/feed.xml/route';
-import { getPublishedPostSummaries } from '../lib/blog-db';
+import {
+  getPublishedPostParams,
+  getPublishedPostSummaries,
+} from '../lib/blog-db';
 import { getTotalPages, getPostsByPage } from '../lib/blog';
 
 // Mock de base de datos para simular caídas de Neon
@@ -164,6 +167,20 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
       
       delete process.env.NEXT_PHASE;
       delete process.env.TEST_SIMULATE_DB_DOWN;
+    });
+
+    it('no tumba generateStaticParams si DATABASE_URL no es una URL postgres parseable', async () => {
+      const originalPhase = process.env.NEXT_PHASE;
+      const originalUrl = process.env.DATABASE_URL;
+      process.env.NEXT_PHASE = 'phase-production-build';
+      process.env.DATABASE_URL = '[SENSITIVE]';
+
+      await expect(getPublishedPostParams()).resolves.toEqual([]);
+
+      if (originalPhase) process.env.NEXT_PHASE = originalPhase;
+      else delete process.env.NEXT_PHASE;
+      if (originalUrl === undefined) delete process.env.DATABASE_URL;
+      else process.env.DATABASE_URL = originalUrl;
     });
   });
 });

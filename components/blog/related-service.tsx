@@ -30,14 +30,23 @@ const CATEGORY_SERVICE_MAP: Record<string, { name: string; href: string }> = {
   'noticias-legales': { name: 'Blog Jurídico', href: '/blog' },
 };
 
-type Props = {
-  category: string;
+const SLUG_EXTRA_SERVICE: Record<string, { name: string; href: string }> = {
+  'defensa-penal-menores-edad-honduras': {
+    name: 'Justicia juvenil y protección de menores',
+    href: '/derecho-penal/menores-justicia-juvenil',
+  },
 };
 
-export function RelatedService({ category }: Props) {
+type Props = {
+  category: string;
+  slug?: string;
+};
+
+export function RelatedService({ category, slug }: Props) {
   const service = CATEGORY_SERVICE_MAP[category];
   const fallback = { name: 'El Despacho', href: '/despacho' };
   const resolved = service ?? fallback;
+  const extra = slug ? SLUG_EXTRA_SERVICE[slug] : undefined;
 
   return (
     <div className="mt-8 p-5 rounded-lg border border-accent/30 bg-white">
@@ -45,12 +54,22 @@ export function RelatedService({ category }: Props) {
       <p className="text-sm text-text leading-relaxed">
         Este artículo pertenece al área de <strong>{resolved.name}</strong>.
       </p>
-      <Link
-        href={resolved.href}
-        className="inline-flex items-center gap-1.5 mt-2 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
-      >
-        Ver {resolved.name.toLowerCase()} <ArrowRight size={14} />
-      </Link>
+      <div className="mt-2 flex flex-col items-start gap-1.5">
+        <Link
+          href={resolved.href}
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
+        >
+          Ver {resolved.name.toLowerCase()} <ArrowRight size={14} />
+        </Link>
+        {extra ? (
+          <Link
+            href={extra.href}
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-accent-dark transition-colors"
+          >
+            Ver {extra.name.toLowerCase()} <ArrowRight size={14} />
+          </Link>
+        ) : null}
+      </div>
     </div>
   );
 }

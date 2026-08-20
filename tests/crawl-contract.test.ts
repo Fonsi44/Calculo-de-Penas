@@ -139,6 +139,9 @@ describe('fuente runtime segura', () => {
     ['postgresql://placeholder:placeholder@localhost/db', false],
     ['postgresql://x:x@localhost:5432/placeholder', false],
     ['postgresql://readonly@example.test/db', true],
+    ['[SENSITIVE]', false],
+    ['not-a-url', false],
+    ['https://example.test/db', false],
   ])('clasifica DATABASE_URL sin congelarla: %s', (value, expected) => {
     expect(isDatabaseConfiguredAtRuntime(value)).toBe(expected);
   });

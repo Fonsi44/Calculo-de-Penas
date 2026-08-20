@@ -131,7 +131,7 @@ export function CargoLandingView({ cargo }: { cargo: CargoLanding }) {
           />
           <RelatedCities
             mentionedCitySlug={cargo.citySlug}
-            limit={6}
+            limit={2}
             eyebrow="Atendemos en el sur de Honduras"
           />
         </Container>

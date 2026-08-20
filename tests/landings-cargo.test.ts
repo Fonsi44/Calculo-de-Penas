@@ -50,4 +50,17 @@ describe('landings de cargo data-driven', () => {
       expect(src).toContain('getCargoByPath');
     }
   });
+
+  it('ciudades indexables enlazan el cargo penalista correspondiente y Nacaome no empuja NOINDEX', () => {
+    const choluteca = readFileSync(resolve(ROOT, 'app/(public)/abogados-en-choluteca/page.tsx'), 'utf8');
+    const nacaome = readFileSync(resolve(ROOT, 'app/(public)/abogados-en-nacaome/page.tsx'), 'utf8');
+    const elTriunfo = readFileSync(resolve(ROOT, 'app/(public)/abogados-en-el-triunfo/page.tsx'), 'utf8');
+    const goascoran = readFileSync(resolve(ROOT, 'app/(public)/abogados-en-goascoran/page.tsx'), 'utf8');
+    expect(choluteca).toContain("href: '/abogado-penalista-choluteca'");
+    expect(elTriunfo).toContain("href=\"/abogado-penalista-choluteca\"");
+    expect(goascoran).toContain("href=\"/abogado-penalista-nacaome\"");
+    expect(nacaome).not.toContain('/abogados-en-langue');
+    expect(nacaome).not.toContain('/abogados-en-caridad');
+    expect(nacaome).not.toContain('/abogados-en-alianza');
+  });
 });
