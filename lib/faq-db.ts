@@ -1,5 +1,6 @@
 import { cache } from 'react';
 import { db } from '@/lib/db';
+import { isUsableDatabaseUrl } from '@/lib/database-url';
 import { faqEntries } from '@/lib/schema';
 import { eq, asc } from 'drizzle-orm';
 import { faqCategoriesMeta } from '@/data/faq-categories';
@@ -69,15 +70,23 @@ export function preparePublicFaqQuestions(questions: FaqQuestion[]): PublicFaqQu
   });
 }
 
-const IS_DB_REACHABLE = Boolean(
-  process.env.DATABASE_URL && !process.env.DATABASE_URL.includes('placeholder') && !process.env.DATABASE_URL.includes('localhost:5432/placeholder'),
-);
+function isDbReachable(): boolean {
+  return isUsableDatabaseUrl(process.env.DATABASE_URL);
+}
 
 export async function getPublishedFaqs() {
-  if (!IS_DB_REACHABLE) return [];
-  return db.select().from(faqEntries)
-    .where(eq(faqEntries.published, true))
-    .orderBy(asc(faqEntries.sortOrder), asc(faqEntries.creadoEn));
+  if (!isDbReachable()) return [];
+  try {
+    return await db.select().from(faqEntries)
+      .where(eq(faqEntries.published, true))
+      .orderBy(asc(faqEntries.sortOrder), asc(faqEntries.creadoEn));
+  } catch (err) {
+    if (process.env.NEXT_PHASE === 'phase-production-build') {
+      console.error('[faq-db] getPublishedFaqs falló.', err);
+      return [];
+    }
+    throw err;
+  }
 }
 
 export async function getFaqsGrouped() {
@@ -150,7 +159,7 @@ export const getCorporateFaqsForPublicPage = cache(async (): Promise<CorporateFa
 });
 
 export async function getFaqCategories() {
-  if (!IS_DB_REACHABLE) return [];
+  if (!isDbReachable()) return [];
   const rows = await db.selectDistinct({ category: faqEntries.category })
     .from(faqEntries)
     .where(eq(faqEntries.published, true))
