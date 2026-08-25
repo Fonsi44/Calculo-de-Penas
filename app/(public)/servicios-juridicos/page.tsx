@@ -5,7 +5,6 @@ import { ArrowRight, BookOpen } from 'lucide-react';
 import { site, absoluteUrl } from '@/lib/site';
 import { buildMetadata } from '@/lib/seo';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
-import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { AnswerBlock } from '@/components/marketing/answer-block';
@@ -67,19 +66,17 @@ export default async function AreasJuridicasPage() {
         badge={contentMap['hero.badge'] || 'Catálogo de áreas'}
         title={contentMap['hero.title'] || `Servicios jurídicos para personas, familias y empresas`}
         subtitle={contentMap['hero.subtitle'] || 'Desde Nacaome, Valle, prestamos atención en las áreas publicadas en este catálogo. La defensa penal es el pilar histórico del bufete y cada consulta se asigna según su materia y circunstancias.'}
-        cta={<CTAGroup variant="inverse" />}
+        align="center"
         bgImage="/images/servicios/servicios-bg.webp"
-      />
-
-      <div className="bg-background py-6 md:py-8">
-        <div className="mx-auto px-4 sm:px-6 max-w-7xl">
+        search={
           <ServiceSearch
             entries={catalog.entries}
             placeholder='Buscar servicio jurídico: "divorcio", "despido", "contrato"…'
             domain="servicios-juridicos"
+            placement="hero"
           />
-        </div>
-      </div>
+        }
+      />
 
       <TrustBar background="light" />
 
