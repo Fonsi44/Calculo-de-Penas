@@ -412,8 +412,25 @@ body {
   text-decoration: none;
   transition: top 0.15s;
 }
-.skip-link:focus {
+.skip-link:focus,
+.skip-link:focus-visible {
   top: 8px;
+}
+
+/* Anclas bajo el header sticky */
+#main,
+#formulario,
+#buscar,
+#contenido {
+  scroll-margin-top: 6.5rem;
+}
+:where(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: 5.5rem;
+}
+
+/* Evita el retardo de doble toque en móviles */
+a, button, input, select, textarea, summary, [role="button"] {
+  touch-action: manipulation;
 }
 
 /* Reduced motion */
@@ -1514,6 +1531,10 @@ details.faq-anim:not([open]) > summary:hover {
     background var(--duration-fast) var(--ease-soft);
 }
 .input-refined:focus {
+  outline: none;
+}
+.input-refined:focus-visible {
+  outline: none;
   border-color: rgba(212, 175, 55, 0.50);
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.14);
 }

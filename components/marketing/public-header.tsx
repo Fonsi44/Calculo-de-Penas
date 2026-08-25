@@ -9,6 +9,8 @@ import { site, telHref, whatsappHref } from '@/lib/site';
 import { trackFormClick, trackPhoneClick, trackWhatsAppClick } from '@/lib/analytics';
 import { whatsappMessageForPath } from '@/lib/whatsapp-messages';
 import { useInstallPrompt } from '@/hooks/use-install-prompt';
+import { HeaderServiceSearch } from '@/components/marketing/header-service-search';
+import type { ServiceSearchEntry } from '@/lib/service-search-index';
 
 const NAV = [
   { label: 'Despacho', title: 'Conozca el bufete Pineda y Asociados en Nacaome, Valle', href: '/despacho' },
@@ -26,10 +28,15 @@ function isActive(pathname: string, href: string): boolean {
   return pathname === hrefPath || pathname.startsWith(hrefPath + '/');
 }
 
-export function PublicHeader() {
+export function PublicHeader({
+  searchEntries,
+}: {
+  readonly searchEntries: readonly ServiceSearchEntry[];
+}) {
   const pathname = usePathname();
   const waMessage = whatsappMessageForPath(pathname);
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const installButtonRef = useRef<HTMLButtonElement>(null);
@@ -43,16 +50,21 @@ export function PublicHeader() {
       const id = requestAnimationFrame(() => {
         setOpen(false);
         setIosPanelOpen(false);
+        setSearchOpen(false);
       });
       return () => cancelAnimationFrame(id);
     }
   }, [pathname]);
 
   useEffect(() => {
-    if (!iosPanelOpen && !open) return;
+    if (!iosPanelOpen && !open && !searchOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         e.preventDefault();
+        if (searchOpen) {
+          setSearchOpen(false);
+          return;
+        }
         if (iosPanelOpen) {
           setIosPanelOpen(false);
           installButtonRef.current?.focus();
@@ -64,7 +76,7 @@ export function PublicHeader() {
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [open, iosPanelOpen]);
+  }, [open, iosPanelOpen, searchOpen]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4);
@@ -180,68 +192,76 @@ export function PublicHeader() {
           })}
         </nav>
 
-        <div className="hidden lg:flex items-center gap-2">
-          <Link
-            href="/blog#buscar"
-            title="Buscar guías jurídicas en el blog"
-            className="inline-flex items-center justify-center min-h-11 min-w-11 rounded-lg text-text-inverse/85 hover:text-accent hover:bg-primary-light/30 transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
-            aria-label="Buscar en el blog jurídico"
-          >
-            <Search size={16} aria-hidden="true" />
-          </Link>
-          <a
-            href={whatsappHref(waMessage)}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackWhatsAppClick('header_desktop')}
-            className="inline-flex items-center justify-center min-h-11 min-w-11 rounded-lg bg-success text-white btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
-            aria-label="Contactar por WhatsApp"
-            title="Escribir por WhatsApp a Pineda y Asociados — atención en horario hábil"
-          >
-            <MessageCircle size={15} aria-hidden="true" />
-          </a>
-          <Link
-            href="/solicitar-consulta#formulario"
-            title="Solicitar consulta legal confidencial — Pineda y Asociados"
-            onClick={() => trackFormClick('header_desktop')}
-            className="inline-flex items-center gap-2 min-h-11 px-3.5 rounded-lg bg-accent text-primary text-xs font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
-          >
-            <Calendar size={13} aria-hidden="true" />
-            Solicitar consulta
-          </Link>
-        </div>
+        <div className="ml-auto flex items-center gap-2">
+          <HeaderServiceSearch
+            entries={searchEntries}
+            open={searchOpen}
+            onOpenChange={(next) => {
+              if (next) {
+                setOpen(false);
+                setIosPanelOpen(false);
+              }
+              setSearchOpen(next);
+            }}
+          />
+          <div className="hidden lg:flex items-center gap-2">
+            <a
+              href={whatsappHref(waMessage)}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackWhatsAppClick('header_desktop')}
+              className="inline-flex items-center justify-center min-h-11 min-w-11 rounded-lg bg-success text-white btn-shadow-success btn-shadow-success-hover hover:-translate-y-0.5 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+              aria-label="Contactar por WhatsApp"
+              title="Escribir por WhatsApp a Pineda y Asociados — atención en horario hábil"
+            >
+              <MessageCircle size={15} aria-hidden="true" />
+            </a>
+            <Link
+              href="/solicitar-consulta#formulario"
+              title="Solicitar consulta legal confidencial — Pineda y Asociados"
+              onClick={() => trackFormClick('header_desktop')}
+              className="inline-flex items-center gap-2 min-h-11 px-3.5 rounded-lg bg-accent text-primary text-xs font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+            >
+              <Calendar size={13} aria-hidden="true" />
+              Solicitar consulta
+            </Link>
+          </div>
 
-        {showInstall && (
+          {showInstall && (
+            <button
+              ref={installButtonRef}
+              type="button"
+              onClick={() => {
+                if (isIOS) {
+                  setIosPanelOpen((v) => !v);
+                } else {
+                  void promptInstall();
+                }
+              }}
+              className="lg:hidden min-h-11 min-w-11 inline-flex items-center justify-center rounded-lg text-accent hover:bg-primary-light/40 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+              aria-label="Instalar como aplicación"
+              title="Instalar esta web como aplicación"
+              aria-expanded={iosPanelOpen}
+              aria-controls={isIOS ? 'ios-install-instructions' : undefined}
+            >
+              <Download size={18} aria-hidden="true" />
+            </button>
+          )}
           <button
-            ref={installButtonRef}
+            ref={menuButtonRef}
             type="button"
             onClick={() => {
-              if (isIOS) {
-                setIosPanelOpen((v) => !v);
-              } else {
-                void promptInstall();
-              }
+              setSearchOpen(false);
+              setOpen((v) => !v);
             }}
-            className="lg:hidden ml-auto min-h-11 min-w-11 inline-flex items-center justify-center rounded-lg text-accent hover:bg-primary-light/40 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
-            aria-label="Instalar como aplicación"
-            title="Instalar esta web como aplicación"
-            aria-expanded={iosPanelOpen}
-            aria-controls={isIOS ? 'ios-install-instructions' : undefined}
+            className="lg:hidden min-h-11 min-w-11 inline-flex items-center justify-center rounded-lg bg-primary-light/40 hover:bg-primary-light/60 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none transition-colors"
+            aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={open}
+            aria-controls="public-mobile-navigation"
           >
-            <Download size={18} aria-hidden="true" />
+            {open ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
           </button>
-        )}
-        <button
-          ref={menuButtonRef}
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className={`${showInstall ? '' : 'ml-auto '}lg:hidden min-h-11 min-w-11 inline-flex items-center justify-center rounded-lg bg-primary-light/40 hover:bg-primary-light/60 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none transition-colors`}
-          aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
-          aria-expanded={open}
-          aria-controls="public-mobile-navigation"
-        >
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        </div>
       </div>
 
       {iosPanelOpen && (
@@ -312,7 +332,7 @@ export function PublicHeader() {
           />
           <div
             id="public-mobile-navigation"
-            className="fixed inset-y-0 right-0 z-[46] w-[min(22rem,90vw)] bg-primary border-l border-primary-light/40 shadow-xl overflow-y-auto safe-bottom"
+            className="fixed inset-y-0 right-0 z-[46] w-[min(22rem,90vw)] bg-primary border-l border-primary-light/40 shadow-xl overflow-y-auto overscroll-contain safe-bottom"
           >
             <nav aria-label="Navegación móvil" className="px-3 py-4 flex flex-col gap-1">
               {NAV.map((item) => {
@@ -339,14 +359,17 @@ export function PublicHeader() {
                   </Link>
                 );
               })}
-              <Link
-                href="/blog#buscar"
-                onClick={() => setOpen(false)}
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  setSearchOpen(true);
+                }}
                 className="px-3 min-h-11 inline-flex items-center gap-2 text-sm font-semibold text-text-inverse/85 hover:text-accent focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg"
               >
                 <Search size={16} aria-hidden="true" />
-                Buscar en el blog
-              </Link>
+                Buscar servicios
+              </button>
               <div className="border-t border-primary-light/40 my-2" />
               <a
                 href={telHref()}

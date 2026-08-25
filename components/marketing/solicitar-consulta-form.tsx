@@ -385,7 +385,7 @@ export function SolicitarConsultaForm() {
         label="Localidad o país"
         value={form.localidad}
         onChange={onText('localidad')}
-        placeholder="Ej.: Nacaome, Valle · Choluteca · Madrid, España"
+        placeholder="Ej.: Nacaome, Valle · Choluteca · Madrid, España…"
         autoComplete="address-level2"
       />
 
@@ -395,6 +395,7 @@ export function SolicitarConsultaForm() {
         </label>
         <select
           id="consulta-motivo"
+          name="consulta-motivo"
           value={form.motivo}
           onChange={onText('motivo')}
           className="input-refined w-full h-11 px-3 rounded-lg border border-border-light bg-surface text-sm text-text focus:outline-none"
@@ -422,7 +423,7 @@ export function SolicitarConsultaForm() {
                 label="Fecha de audiencia o citación (si la tiene)"
                 value={form.fechaAudiencia}
                 onChange={onText('fechaAudiencia')}
-                placeholder="Ej.: 30 de julio de 2026"
+                placeholder="Ej.: 30 de julio de 2026…"
               />
               <SelectField
                 id="consulta-detencion"
@@ -443,7 +444,7 @@ export function SolicitarConsultaForm() {
                 label="Fecha de despido (si la conoce)"
                 value={form.fechaDespido}
                 onChange={onText('fechaDespido')}
-                placeholder="Ej.: 15 de junio de 2026"
+                placeholder="Ej.: 15 de junio de 2026…"
               />
             )}
             {/* España: residencia */}
@@ -484,10 +485,11 @@ export function SolicitarConsultaForm() {
         </label>
         <textarea
           id="consulta-resumen"
+          name="consulta-resumen"
           value={form.resumen}
           onChange={onText('resumen')}
           rows={6}
-          placeholder="Ej.: citación, detención, despido o trámite. Sin documentos ni datos bancarios."
+          placeholder="Ej.: citación, detención, despido o trámite. Sin documentos ni datos bancarios…"
           className="input-refined w-full px-3 py-2.5 rounded-lg border border-border-light bg-surface text-sm text-text leading-relaxed focus:outline-none"
           required
           minLength={15}
@@ -500,6 +502,7 @@ export function SolicitarConsultaForm() {
       <label htmlFor="consulta-acepta" className="flex items-start gap-2 text-xs text-text-secondary">
         <input
           id="consulta-acepta"
+          name="consulta-acepta"
           type="checkbox"
           checked={form.acepta}
           onChange={(e) => setForm((f) => ({ ...f, acepta: e.target.checked }))}
@@ -540,19 +543,25 @@ export function SolicitarConsultaForm() {
       </div>
 
       <TurnstileWidget onToken={setTurnstileToken} onStatusChange={setTurnstileStatus} />
+      {turnstileStatus !== 'unconfigured' && !turnstileToken ? (
+        <p id="consulta-captcha-hint" className="text-xxs text-text-muted text-center">
+          Complete la verificación para enviar la solicitud.
+        </p>
+      ) : null}
 
       <button
         type="submit"
         disabled={status === 'sending' || (turnstileStatus !== 'unconfigured' && !turnstileToken)}
+        aria-describedby={turnstileStatus !== 'unconfigured' && !turnstileToken ? 'consulta-captcha-hint' : undefined}
         className="focus-ring cta-primary-refined w-full h-12 inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-white text-base font-bold btn-shadow-primary btn-shadow-primary-hover hover:bg-primary-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'sending' ? (
           <>
-            <Loader2 size={16} className="animate-spin" /> Enviando…
+            <Loader2 size={16} className="animate-spin" aria-hidden="true" /> Enviando…
           </>
         ) : (
           <>
-            <Send size={16} /> Enviar solicitud
+            <Send size={16} aria-hidden="true" /> Enviar solicitud
           </>
         )}
       </button>
@@ -596,10 +605,11 @@ function Field({
       </label>
       <div className="relative">
         {Icon && (
-          <Icon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none transition-colors" />
+          <Icon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none transition-colors" aria-hidden="true" />
         )}
         <input
           id={fieldId}
+          name={fieldId}
           type={type}
           value={value}
           onChange={onChange}
@@ -607,6 +617,9 @@ function Field({
           required={required}
           autoComplete={autoComplete}
           placeholder={placeholder}
+          inputMode={type === 'tel' ? 'tel' : undefined}
+          spellCheck={type === 'email' ? false : undefined}
+          autoCapitalize={type === 'email' ? 'none' : undefined}
           aria-required={required || undefined}
           aria-invalid={invalid || undefined}
           aria-describedby={descId}
@@ -640,6 +653,7 @@ function SelectField({
       </label>
       <select
         id={id}
+        name={id}
         value={value}
         onChange={onChange}
         className="input-refined w-full h-11 px-3 rounded-lg border border-border-light bg-surface text-sm text-text focus:outline-none"

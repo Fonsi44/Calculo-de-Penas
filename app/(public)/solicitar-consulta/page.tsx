@@ -74,7 +74,7 @@ export default async function SolicitarConsultaPage() {
       <Section spacing="lg">
         <div className="grid lg:grid-cols-5 gap-6">
           <div className="lg:col-span-3">
-            <Card id="formulario" padding="md" className="border-l-4 border-l-accent">
+            <Card id="formulario" padding="md" className="border-l-4 border-l-accent scroll-mt-28">
               <h2 className="font-bold text-base text-primary">Formulario de consulta</h2>
               <p className="text-sm text-text-secondary mt-1 mb-5">
                 Nombre y teléfono bastan para contactarle. El resto es opcional.
