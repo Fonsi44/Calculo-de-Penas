@@ -9,7 +9,6 @@ import {
   type ServiceSearchEntry,
 } from '@/lib/service-search-index';
 import { getIcon } from '@/lib/icon-map';
-import { IconBadge } from '@/components/marketing/icon-badge';
 
 type ServiceItem = {
   href: string;
@@ -175,13 +174,12 @@ export function ServiceSearch({
                   return (
                     <section key={group.areaSlug} className="py-3 first:pt-0 last:pb-0">
                       <div className="flex items-center gap-2.5 mb-2">
-                        <IconBadge
-                          icon={AreaIcon}
-                          variant="muted"
-                          size="sm"
-                          iconSize={16}
-                          className="rounded-full"
-                        />
+                        <span
+                          className="inline-flex w-9 h-9 items-center justify-center rounded-full bg-primary/10 text-primary flex-shrink-0"
+                          aria-hidden="true"
+                        >
+                          <AreaIcon size={16} strokeWidth={1.75} />
+                        </span>
                         <p className="text-xs font-bold uppercase tracking-wide text-primary">
                           {group.areaLabel}
                         </p>
