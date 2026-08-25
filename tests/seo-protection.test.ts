@@ -359,6 +359,24 @@ describe('lib/schemas/legal-page.ts — structured data de áreas (auditoría Ju
     expect(service).not.toHaveProperty('inLanguage');
   });
 
+  it('serviceSchema incluye hasOfferCatalog cuando hay ofertas de subservicio', () => {
+    const schemas = areaSchemas({
+      service: {
+        slug: 'test',
+        name: 'Test',
+        description: 'desc',
+        serviceType: 'Derecho de Familia',
+        url: `${site.url}/test`,
+        offers: [{ name: 'Pensión de alimentos' }, { name: 'Divorcio contencioso' }],
+      },
+      url: `${site.url}/test`,
+    });
+    const service = schemas.find((s: Record<string, unknown>) => s['@type'] === 'Service') as Record<string, unknown>;
+    const catalog = service.hasOfferCatalog as Record<string, unknown>;
+    expect(catalog['@type']).toBe('OfferCatalog');
+    expect(catalog.itemListElement).toHaveLength(2);
+  });
+
   it('faqPageSchema sanitiza HTML en acceptedAnswer.text (Google exige texto plano)', () => {
     const s = faqPageSchema(
       [{ pregunta: '¿<b>Pregunta</b>?', respuesta: 'Respuesta <a href="x">con link</a> & ampersand' }],

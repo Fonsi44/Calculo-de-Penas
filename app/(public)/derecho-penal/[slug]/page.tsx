@@ -14,8 +14,9 @@ import { areaSchemas, penalHubHref } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { HubFaq } from '@/components/marketing/hub-faq';
+import { RespuestaDirecta } from '@/components/marketing/service-detail-blocks';
 import { sanitizeHtml } from '@/lib/sanitize';
-import { getPostsByCategory, formatDate } from '@/lib/blog';
+import { getPostsByCategoryOrEmpty, formatDate } from '@/lib/blog';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 
 export function generateStaticParams() {
@@ -83,6 +84,7 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
       serviceType: `Derecho Penal — ${grupo.titulo}`,
       keywords: grupo.keywords,
       url: grupoUrl,
+      offers: grupo.subservicios.map((service) => ({ name: service.titulo })),
     },
     faqs: grupo.faqs,
     breadcrumbs: [
@@ -93,7 +95,7 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
     url: grupoUrl,
   });
 
-  const blogPosts = (await getPostsByCategory('derecho-penal')).slice(0, 3);
+  const blogPosts = (await getPostsByCategoryOrEmpty('derecho-penal')).slice(0, 3);
 
   return (
     <>
@@ -110,6 +112,10 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
       />
 
       <TrustBar background="light" />
+
+      {grupo.respuestaDirecta ? (
+        <RespuestaDirecta texto={grupo.respuestaDirecta} />
+      ) : null}
 
       <Section background="default" spacing="md">
         <div className="max-w-3xl">
@@ -128,7 +134,7 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
           {grupo.subservicios.map((s, i) => (
             <div key={i} className="flex items-start gap-4 bg-surface rounded-lg border border-border-light p-5 hover:border-accent/40 transition-colors">
               <span className="w-11 h-11 rounded-lg border border-accent/30 bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Icon size={20} className="text-accent-dark" />
+                <Icon size={20} className="text-accent-dark" aria-hidden="true" />
               </span>
               <div className="min-w-0 flex-1">
                 <h3 className="font-bold text-sm md:text-base text-primary leading-snug">
@@ -161,7 +167,7 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
           {related.map((r) => {
             const RIcon = getIcon(r.icono);
             return (
-              <Link key={r.slug} href={`/derecho-penal/${r.slug}`} className="group block focus-visible:outline-none">
+              <Link key={r.slug} href={`/derecho-penal/${r.slug}`} className="group block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
                 <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
                   <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3 border border-primary/15">
                     <RIcon size={20} aria-hidden="true" />
@@ -179,7 +185,7 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
               </Link>
             );
           })}
-          <Link href="/derecho-penal" className="group block focus-visible:outline-none">
+          <Link href="/derecho-penal" className="group block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
             <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
               <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3 border border-primary/15">
                 <span className="font-extrabold text-lg">+</span>
@@ -226,7 +232,7 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {blogPosts.map((post) => (
-              <Link key={post.slug} href={`/blog/${post.category}/${post.slug}`} className="group block focus-visible:outline-none">
+              <Link key={post.slug} href={`/blog/${post.category}/${post.slug}`} className="group block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
                 <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
                   <div className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center mb-3 border border-accent/20">
                     <BookOpen size={20} aria-hidden="true" />

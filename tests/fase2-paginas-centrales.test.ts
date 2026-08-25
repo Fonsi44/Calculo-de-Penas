@@ -64,6 +64,12 @@ describe('FASE 2 — Página de inicio', () => {
     expect(home).toContain('ProblemSelector');
   });
 
+  it('el grid de problemas es uniforme, sin tarjeta a doble ancho', () => {
+    const selector = readRoot('components/marketing/problem-selector.tsx');
+    expect(selector).toContain("variant=\"problems\"");
+    expect(selector).not.toContain('featuredFirst');
+  });
+
   it('incluye una única franja de confianza, sin repetir el bloque de límites', () => {
     expect(home).toContain('TrustBar');
     expect(home).toContain('TrustCredentials');
@@ -121,6 +127,7 @@ describe('FASE 2 — /servicios-juridicos', () => {
   it('ofrece búsqueda y catálogo unificado sin bloques redundantes', () => {
     expect(servicios).toContain('ServiceSearch');
     expect(servicios).toContain('ServiceCard');
+    expect(servicios).toContain('buildJuridicosCatalog');
     expect(servicios).not.toContain('ServiceBlocks');
   });
 

@@ -1,0 +1,1421 @@
+{
+  "source": "docs/imagenes/barra-busqueda/CATÁLOGO MAESTRO DE SERVICIOS.docx",
+  "items": [
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Homicidio simple y homicidio agravado",
+      "query": "homicidio simple"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Asesinato, parricidio y femicidio",
+      "query": "asesinato parricidio"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Tentativa de homicidio y tentativa de asesinato",
+      "query": "tentativa de homicidio"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Homicidio imprudente y accidentes de tránsito con fatalidades",
+      "query": "homicidio imprudente"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Lesiones leves, graves y gravísimas",
+      "query": "lesiones leves graves"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Lesiones culposas por accidentes de tránsito o laborales",
+      "query": "lesiones culposas"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Maltrato familiar habitual agravado",
+      "query": "maltrato familiar habitual"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Abuso sexual, agresión sexual y violación",
+      "query": "abuso sexual agresión"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Acoso sexual (laboral, educativo o civil)",
+      "query": "acoso sexual"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Estupro, explotación sexual comercial y pornografía infantil",
+      "query": "estupro explotación sexual"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Maltrato infantil, descuido, omisión y abandono de menores",
+      "query": "maltrato infantil descuido"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Sustracción, retención o secuestro ilegal de niños por familiares",
+      "query": "sustracción retención"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Contrabando de mercancías, cigarrillos, licores, combustible y ropa",
+      "query": "contrabando de mercancías"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Defraudación fiscal aduanera, facturas falsas y subvaluación arancelaria",
+      "query": "defraudación fiscal aduanera"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Robo con violencia o asalto a mano armada (personas, comercios, vehículos)",
+      "query": "robo con violencia"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Robo con fuerza en las cosas (rompimiento de puertas, ventanas, candados)",
+      "query": "robo con fuerza"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Tráfico y robo de vehículos automotores, motocicletas y equipo pesado",
+      "query": "tráfico y robo"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Hurto simple, carterismo y hurtos por descuidos",
+      "query": "hurto simple carterismo"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Hurto agravado y robos domésticos por abuso de confianza de empleados",
+      "query": "hurto agravado"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Receptación de bienes (compra, venta o posesión de objetos robados)",
+      "query": "receptación de bienes"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Extorsión digital and chantaje con publicación de fotos o videos íntimos",
+      "query": "extorsión digital"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Amenazas de muerte, coacciones e intimidaciones personales o virtuales",
+      "query": "amenazas de muerte"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Estafas inmobiliarias, venta de terrenos fantasmas o dobles escrituras",
+      "query": "estafas inmobiliarias venta"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Estafas comerciales, engaños contractuales y fraude de agencias de viajes",
+      "query": "estafas comerciales engaños"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Fraude por emisión de cheques sin fondos o cuentas cerradas",
+      "query": "fraude por emisión"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Fraudes corporativos, piramidales y esquemas Ponzi",
+      "query": "fraudes corporativos piramidales"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Clonación de tarjetas de crédito o débito y robo de datos financieros",
+      "query": "clonación de tarjetas"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Narcotráfico y tráfico ilícito de drogas, estupefacientes o sustancias psicotrópicas",
+      "query": "narcotráfico y tráfico"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Posesión de drogas para el consumo personal vs. posesión para el tráfico",
+      "query": "posesión de drogas"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Facilitación de locales, viviendas o vehículos para el tráfico o consumo de sustancias",
+      "query": "facilitación de locales"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Tráfico de precursores químicos y contrabando de medicamentos sin registro",
+      "query": "tráfico de precursores"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Lavado de activos y posesión de grandes sumas de dinero en efectivo sin justificar",
+      "query": "lavado de activos"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Testaferrato (compra de propiedades, vehículos o empresas a nombre de terceros)",
+      "query": "testaferrato"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Casos de privación de dominio de bienes y congelamiento de cuentas bancarias",
+      "query": "casos de privación"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Quiebra fraudulenta de empresas y sociedades mercantiles",
+      "query": "quiebra fraudulenta"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Delitos societarios y desvío de fondos por administradores en perjuicio de socios",
+      "query": "delitos societarios"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Cohecho, sobornos a autoridades y violación de los deberes de los funcionarios",
+      "query": "cohecho sobornos a"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Prevaricato y emisión de resoluciones judiciales manifiestamente injustas",
+      "query": "prevaricato y emisión"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Abuso de autoridad, usurpación de funciones públicas y tortura",
+      "query": "abuso de autoridad"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Querellas por calumnia (imputación falsa de un delito)",
+      "query": "querellas por calumnia"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Querellas por injuria (ofensas graves y menoscabo a la reputación)",
+      "query": "querellas por injuria"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Difamación a través de medios de comunicación, periódicos o radiofónicos",
+      "query": "difamación a través"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Linchamientos digitales, difamaciones y ataques al honor en redes sociales",
+      "query": "linchamientos digitales difamaciones"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Allanamiento de morada e ingreso violento o clandestino de particulares a viviendas",
+      "query": "allanamiento de morada"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Intrusión ilegal en oficinas comerciales, despachos profesionales o locales cerrados",
+      "query": "intrusión ilegal"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Tráfico ilícito de armas, municiones y explosivos",
+      "query": "tráfico ilícito"
+    },
+    {
+      "areaSlug": "atencion-casos-penales-litigiosos",
+      "areaHref": "/derecho-penal/atencion-casos-penales-litigiosos",
+      "title": "Trata de personas",
+      "query": "trata de personas"
+    },
+    {
+      "areaSlug": "mediacion-conflictos-penales-y-multas",
+      "areaHref": "/derecho-penal/mediacion-conflictos-penales-y-multas",
+      "title": "Gestión de salidas alternas al proceso",
+      "query": "gestión de salidas"
+    },
+    {
+      "areaSlug": "mediacion-conflictos-penales-y-multas",
+      "areaHref": "/derecho-penal/mediacion-conflictos-penales-y-multas",
+      "title": "Sustitución y reemplazo de penas",
+      "query": "sustitución y reemplazo"
+    },
+    {
+      "areaSlug": "mediacion-conflictos-penales-y-multas",
+      "areaHref": "/derecho-penal/mediacion-conflictos-penales-y-multas",
+      "title": "Defensa y reducción de multas penales",
+      "query": "defensa y reducción"
+    },
+    {
+      "areaSlug": "mediacion-conflictos-penales-y-multas",
+      "areaHref": "/derecho-penal/mediacion-conflictos-penales-y-multas",
+      "title": "Acuerdos de reparación civil",
+      "query": "acuerdos de reparación"
+    },
+    {
+      "areaSlug": "mediacion-conflictos-penales-y-multas",
+      "areaHref": "/derecho-penal/mediacion-conflictos-penales-y-multas",
+      "title": "Representación en infracciones menores",
+      "query": "representación en infracciones"
+    },
+    {
+      "areaSlug": "menores-justicia-juvenil",
+      "areaHref": "/derecho-penal/menores-justicia-juvenil",
+      "title": "Defensa de menores infractores",
+      "query": "defensa de menores"
+    },
+    {
+      "areaSlug": "menores-justicia-juvenil",
+      "areaHref": "/derecho-penal/menores-justicia-juvenil",
+      "title": "Menores como víctimas",
+      "query": "menores como víctimas"
+    },
+    {
+      "areaSlug": "menores-justicia-juvenil",
+      "areaHref": "/derecho-penal/menores-justicia-juvenil",
+      "title": "Aplicación y vigilancia del principio del interés superior del niño",
+      "query": "aplicación y vigilancia"
+    },
+    {
+      "areaSlug": "proceso-penal-completo",
+      "areaHref": "/derecho-penal/proceso-penal-completo",
+      "title": "Acompañamiento en detención policial inmediata 24/7",
+      "query": "acompañamiento en detención"
+    },
+    {
+      "areaSlug": "proceso-penal-completo",
+      "areaHref": "/derecho-penal/proceso-penal-completo",
+      "title": "Declaraciones e interrogatorios iniciales",
+      "query": "declaraciones e interrogatorios"
+    },
+    {
+      "areaSlug": "proceso-penal-completo",
+      "areaHref": "/derecho-penal/proceso-penal-completo",
+      "title": "Declaraciones ante la autoridad judicial",
+      "query": "declaraciones ante la"
+    },
+    {
+      "areaSlug": "proceso-penal-completo",
+      "areaHref": "/derecho-penal/proceso-penal-completo",
+      "title": "Audiencia de declaración de imputado",
+      "query": "audiencia de declaración"
+    },
+    {
+      "areaSlug": "proceso-penal-completo",
+      "areaHref": "/derecho-penal/proceso-penal-completo",
+      "title": "Audiencia inicial",
+      "query": "audiencia inicial"
+    },
+    {
+      "areaSlug": "proceso-penal-completo",
+      "areaHref": "/derecho-penal/proceso-penal-completo",
+      "title": "Audiencia preliminar",
+      "query": "audiencia preliminar"
+    },
+    {
+      "areaSlug": "proceso-penal-completo",
+      "areaHref": "/derecho-penal/proceso-penal-completo",
+      "title": "Audiencia de juicio oral y público",
+      "query": "audiencia de juicio"
+    },
+    {
+      "areaSlug": "proceso-penal-completo",
+      "areaHref": "/derecho-penal/proceso-penal-completo",
+      "title": "Solicitud de medidas sustitutivas a la prisión preventiva",
+      "query": "solicitud de medidas"
+    },
+    {
+      "areaSlug": "proceso-penal-completo",
+      "areaHref": "/derecho-penal/proceso-penal-completo",
+      "title": "Defensa técnica contra la imposición de prisión preventiva",
+      "query": "defensa técnica contra"
+    },
+    {
+      "areaSlug": "proceso-penal-completo",
+      "areaHref": "/derecho-penal/proceso-penal-completo",
+      "title": "Planteamiento de incidentes procesales y excepciones legales",
+      "query": "planteamiento de incidentes"
+    },
+    {
+      "areaSlug": "proceso-penal-completo",
+      "areaHref": "/derecho-penal/proceso-penal-completo",
+      "title": "Vigilancia de garantías constitucionales en registros domiciliarios y capturas",
+      "query": "vigilancia de garantías"
+    },
+    {
+      "areaSlug": "recursos-y-defensa-avanzada",
+      "areaHref": "/derecho-penal/recursos-y-defensa-avanzada",
+      "title": "Recursos de apelación penal",
+      "query": "recursos de apelación"
+    },
+    {
+      "areaSlug": "recursos-y-defensa-avanzada",
+      "areaHref": "/derecho-penal/recursos-y-defensa-avanzada",
+      "title": "Recursos de casación penal",
+      "query": "recursos de casación"
+    },
+    {
+      "areaSlug": "recursos-y-defensa-avanzada",
+      "areaHref": "/derecho-penal/recursos-y-defensa-avanzada",
+      "title": "Acciones de Habeas Corpus (Exhibición personal)",
+      "query": "acciones de habeas"
+    },
+    {
+      "areaSlug": "recursos-y-defensa-avanzada",
+      "areaHref": "/derecho-penal/recursos-y-defensa-avanzada",
+      "title": "Habeas Data",
+      "query": "habeas data"
+    },
+    {
+      "areaSlug": "recursos-y-defensa-avanzada",
+      "areaHref": "/derecho-penal/recursos-y-defensa-avanzada",
+      "title": "Recursos de amparo constitucional en materia penal",
+      "query": "recursos de amparo"
+    },
+    {
+      "areaSlug": "estrategia-penal-y-litigio",
+      "areaHref": "/derecho-penal/estrategia-penal-y-litigio",
+      "title": "Preparación, análisis y fiscalización de carga probatoria",
+      "query": "preparación análisis"
+    },
+    {
+      "areaSlug": "estrategia-penal-y-litigio",
+      "areaHref": "/derecho-penal/estrategia-penal-y-litigio",
+      "title": "Diseño de defensa estratégica personalizada",
+      "query": "diseño de defensa"
+    },
+    {
+      "areaSlug": "estrategia-penal-y-litigio",
+      "areaHref": "/derecho-penal/estrategia-penal-y-litigio",
+      "title": "Análisis profundo y auditoría de expedientes judiciales",
+      "query": "análisis profundo"
+    },
+    {
+      "areaSlug": "estrategia-penal-y-litigio",
+      "areaHref": "/derecho-penal/estrategia-penal-y-litigio",
+      "title": "Constitución de acusador privado",
+      "query": "constitución de acusador"
+    },
+    {
+      "areaSlug": "estrategia-penal-y-litigio",
+      "areaHref": "/derecho-penal/estrategia-penal-y-litigio",
+      "title": "Gestión de salidas alternas al proceso",
+      "query": "gestión de salidas"
+    },
+    {
+      "areaSlug": "ejecucion-penal-y-beneficios",
+      "areaHref": "/derecho-penal/ejecucion-penal-y-beneficios",
+      "title": "Solicitud y tramitación de libertad condicional",
+      "query": "solicitud y tramitación"
+    },
+    {
+      "areaSlug": "ejecucion-penal-y-beneficios",
+      "areaHref": "/derecho-penal/ejecucion-penal-y-beneficios",
+      "title": "Gestión de beneficios penitenciarios",
+      "query": "gestión de beneficios"
+    },
+    {
+      "areaSlug": "ejecucion-penal-y-beneficios",
+      "areaHref": "/derecho-penal/ejecucion-penal-y-beneficios",
+      "title": "Solicitud de reducción de pena",
+      "query": "solicitud de reducción"
+    },
+    {
+      "areaSlug": "ejecucion-penal-y-beneficios",
+      "areaHref": "/derecho-penal/ejecucion-penal-y-beneficios",
+      "title": "Tramitación de la extinción de la responsabilidad penal",
+      "query": "tramitación de la"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Divorcio por mutuo acuerdo (vía notarial o judicial) y contencioso (por causales legales)",
+      "query": "divorcio por mutuo"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Separaciones de cuerpos y de bienes",
+      "query": "separación de cuerpos"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Custodia, cuidado personal de menores de edad y régimen de visitas",
+      "query": "custodia cuidado personal"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Régimen de comunicación, visitas y convivencia familiar",
+      "query": "régimen de comunicación"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Pensiones alimenticias (fijación inicial de la cuantía, aumento, reducción y reclamos de atrasos)",
+      "query": "pensiones alimenticias"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Ejecución de pensiones alimenticias",
+      "query": "ejecución de pensiones"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Demandas de aumento de pensión alimenticia",
+      "query": "demandas de aumento"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Demandas de reducción de pensión alimenticia",
+      "query": "demandas de reducción"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Procesos penales y civiles por violencia intrafamiliar y doméstica",
+      "query": "procesos penales"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Demandas de reconocimiento de paternidad (juicios de filiación y pruebas de ADN)",
+      "query": "demandas de reconocimiento"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Demandas de impugnación de paternidad",
+      "query": "impugnación de paternidad"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Adopciones nacionales e internacionales",
+      "query": "adopciones nacionales e"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Procesos de tutela, curatela y protección de menores en riesgo o abandono",
+      "query": "procesos de tutela"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Reconocimiento, declaración e inscripción de la unión de hecho",
+      "query": "reconocimiento declaración e"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Constitución de patrimonio familiar sobre bienes inmuebles (bienes inembargables)",
+      "query": "patrimonio familiar"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Autorizaciones judiciales para la salida de menores del país",
+      "query": "autorizaciones judiciales para"
+    },
+    {
+      "areaSlug": "derecho-de-familia",
+      "areaHref": "/servicios-juridicos/derecho-de-familia",
+      "title": "Autorizaciones notariales de viaje para menores de edad",
+      "query": "autorizaciones notariales"
+    },
+    {
+      "areaSlug": "derecho-laboral",
+      "areaHref": "/servicios-juridicos/derecho-laboral",
+      "title": "Demandas por despido injustificado y acoso laboral (mobbing)",
+      "query": "demandas por despido"
+    },
+    {
+      "areaSlug": "derecho-laboral",
+      "areaHref": "/servicios-juridicos/derecho-laboral",
+      "title": "Cálculo, revisión y auditoría de liquidaciones laborales",
+      "query": "cálculo revisión"
+    },
+    {
+      "areaSlug": "derecho-laboral",
+      "areaHref": "/servicios-juridicos/derecho-laboral",
+      "title": "Reclamo de prestaciones laborales acumuladas (cesantía, preaviso, proporcionales y horas extras)",
+      "query": "reclamo de prestaciones"
+    },
+    {
+      "areaSlug": "derecho-laboral",
+      "areaHref": "/servicios-juridicos/derecho-laboral",
+      "title": "Reclamos salariales, salarios caídos y pago de horas extras",
+      "query": "salarios caídos"
+    },
+    {
+      "areaSlug": "derecho-laboral",
+      "areaHref": "/servicios-juridicos/derecho-laboral",
+      "title": "Demandas por discriminación en el trabajo",
+      "query": "demandas por discriminación"
+    },
+    {
+      "areaSlug": "derecho-laboral",
+      "areaHref": "/servicios-juridicos/derecho-laboral",
+      "title": "Reclamaciones por accidentes de trabajo y enfermedades profesionales",
+      "query": "reclamaciones por accidentes"
+    },
+    {
+      "areaSlug": "derecho-laboral",
+      "areaHref": "/servicios-juridicos/derecho-laboral",
+      "title": "Redacción, revisión y blindaje de contratos laborales (por tiempo indefinido, determinado, por obra)",
+      "query": "redacción revisión"
+    },
+    {
+      "areaSlug": "derecho-laboral",
+      "areaHref": "/servicios-juridicos/derecho-laboral",
+      "title": "Elaboración y aprobación de reglamentos internos de trabajo ante la autoridad competente",
+      "query": "reglamentos internos"
+    },
+    {
+      "areaSlug": "derecho-laboral",
+      "areaHref": "/servicios-juridicos/derecho-laboral",
+      "title": "Auditoría laboral preventiva para evitar demandas de trabajadores",
+      "query": "auditoría laboral"
+    },
+    {
+      "areaSlug": "derecho-laboral",
+      "areaHref": "/servicios-juridicos/derecho-laboral",
+      "title": "Cumplimiento laboral normativo general (seguridad social, leyes de alivio de deuda, etc.)",
+      "query": "cumplimiento laboral normativo"
+    },
+    {
+      "areaSlug": "derecho-laboral",
+      "areaHref": "/servicios-juridicos/derecho-laboral",
+      "title": "Asesoría legal en la implementación de teletrabajo y jornadas mixtas",
+      "query": "teletrabajo"
+    },
+    {
+      "areaSlug": "derecho-laboral",
+      "areaHref": "/servicios-juridicos/derecho-laboral",
+      "title": "Interposición y contestación de demandas laborales en juzgados de letras del trabajo",
+      "query": "interposición y contestación"
+    },
+    {
+      "areaSlug": "derecho-laboral",
+      "areaHref": "/servicios-juridicos/derecho-laboral",
+      "title": "Comparecencia en audiencias de conciliación laboral previa",
+      "query": "comparecencia en audiencias"
+    },
+    {
+      "areaSlug": "derecho-laboral",
+      "areaHref": "/servicios-juridicos/derecho-laboral",
+      "title": "Tramitación de reclamos administrativos ante la Secretaría de Trabajo (SETRACO)",
+      "query": "setraco"
+    },
+    {
+      "areaSlug": "derecho-laboral",
+      "areaHref": "/servicios-juridicos/derecho-laboral",
+      "title": "Mediación y resolución de conflictos colectivos con sindicatos",
+      "query": "conflictos colectivos"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Redacción, revisión y firma de todo tipo de contratos civiles",
+      "query": "redacción revisión"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Demandas judiciales por incumplimiento de contratos",
+      "query": "demandas judiciales"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Procesos judiciales para la resolución o rescisión contractual",
+      "query": "procesos judiciales para"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Redacción y ejecución de contratos de arrendamiento (locación)",
+      "query": "redacción y ejecución"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Procesos de inquilinato (desahucios por falta de pago, desalojos y recuperación de inmuebles)",
+      "query": "procesos de inquilinato"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Redacción y formalización de contratos de comodato (préstamo de uso)",
+      "query": "comodato"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Redacción de contratos de permuta de bienes",
+      "query": "redacción de contratos"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Elaboración de contratos de transacción para evitar litigios judiciales",
+      "query": "elaboración de contratos"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Redacción y formalización de escrituras públicas de Compraventa de bienes inmuebles (terrenos, casas, edificios y vehículos)",
+      "query": "redacción y formalización"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Compraventa de bienes muebles registrados (vehículos, maquinaria, etc.)",
+      "query": "compraventa de bienes"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Escrituras públicas de Donación de bienes inmuebles en vida (ceder propiedades a familiares o terceros)",
+      "query": "escrituras públicas"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Constitución, regulación y extinción del derecho de Usufructo (uso y disfrute de una propiedad manteniendo la nuda propiedad, ej. asegurar la vivienda de los padres de por vida)",
+      "query": "usufructo"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Trámite de conversión de dominio útil a Dominio Pleno ante corporaciones municipales (alcaldías)",
+      "query": "trámite de conversión"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Inscripción y registro de Títulos de Dominio Pleno ante el Instituto de la Propiedad (IP)",
+      "query": "inscripción y registro"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Saneamiento legal de propiedades con problemas registrales o catastrales",
+      "query": "saneamiento legal"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Demandas de Títulos Supletorios para registrar propiedades sin antecedente inscrito",
+      "query": "títulos supletorios"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Procesos de Deslinde y Amojonamiento (fijación de límites exactos entre terrenos vecinos)",
+      "query": "procesos de deslinde"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Rectificación de áreas, medidas y colindancias ante el Instituto de la Propiedad (IP)",
+      "query": "rectificación de áreas"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Demandas interdictales para retener la posesión de un inmueble ante perturbaciones",
+      "query": "demandas interdictales para"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Demandas de reivindicación de la propiedad (juicios reivinicioatorios contra poseedores ilegales)",
+      "query": "demandas de reivindicación"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Constitución de servidumbres de paso, de acueducto o de luces y vistas",
+      "query": "constitución de servidumbres"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Extinción o cancelación de servidumbres",
+      "query": "extinción o cancelación"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Interposición de procesos ejecutivos (con base en títulos ejecutivos)",
+      "query": "interposición de procesos"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Solicitud, ejecución y levantamiento de embargos preventivos y definitivos sobre bienes y salarios",
+      "query": "solicitud ejecución"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Ejecución forzosa de sentencias judiciales",
+      "query": "ejecución forzosa"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Demandas por daños y perjuicios (indemnizaciones de responsabilidad civil)",
+      "query": "demandas por daños"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Procesos de responsabilidad civil contractual",
+      "query": "procesos de responsabilidad"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Resolución de conflictos civiles generales entre particulares (vecindad, linderos)",
+      "query": "resolución de conflictos"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Procesos de herencias (abintestato/sin testamento y testamentarias)",
+      "query": "procesos de herencias"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Redacción, estructuración y autorización notarial de Testamentos (abiertos y cerrados)",
+      "query": "redacción estructuración"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Partición judicial de bienes hereditarios entre coherederos",
+      "query": "partición judicial"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Partición extrajudicial o amigable de bienes hereditarios",
+      "query": "partición extrajudicial"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Renuncia o repudiación de herencias de forma legal",
+      "query": "renuncia o repudiación"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Autorización y protocolo de escrituras públicas de toda índole",
+      "query": "autorización y protocolo"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Autenticaciones notariales de firmas en documentos privados",
+      "query": "autenticaciones notariales"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Elaboración de actas notariales de fe de hechos, notificaciones o requerimientos",
+      "query": "elaboración de actas"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Celebración, formalización e inscripción de matrimonios civiles ante notario",
+      "query": "celebración formalización e"
+    },
+    {
+      "areaSlug": "derecho-civil-y-notarial",
+      "areaHref": "/servicios-juridicos/derecho-civil-y-notarial",
+      "title": "Constitución, inscripción y cancelación de hipotecas y garantías",
+      "query": "constitución inscripción"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Constitución de Sociedades de Responsabilidad Limitada (S. de R.L.)",
+      "query": "constitución de sociedades"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Formalización y constitución de Comerciante Individual",
+      "query": "comerciante individual"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Constitución de Sociedades Unipersonales (sociedades de capital con un solo accionista gracias a las reformas mercantiles vigentes)",
+      "query": "sociedades unipersonales"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Tramitación, obtención y actualización del Registro Tributario Nacional (RTN) de la empresa en la Cámara de Comercio",
+      "query": "tramitación obtención"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Inscripción de empresas en el Registro Mercantil de la Cámara de Comercio correspondiente",
+      "query": "inscripción de empresas"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Constitución de empresas bajo el Régimen Mipyme (para gozar de beneficios de exención y beneficios fiscales)",
+      "query": "régimen mipyme"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Redacción y revisión de contratos mercantiles nacionales e internacionales",
+      "query": "redacción y revisión"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Elaboración de acuerdos, pactos de socios y alianzas comerciales (Joint Ventures)",
+      "query": "elaboración de acuerdos"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Redacción de actas de asambleas ordinarias y extraordinarias de socios o accionistas",
+      "query": "redacción de actas"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Procesos de modificación de estatutos sociales (aumento o reducción de capital, cambio de objeto social)",
+      "query": "procesos de modificación"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Asesoría en Gobierno Corporativo y diseño de políticas de cumplimiento interno",
+      "query": "asesoría en gobierno"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Ejecución de Due Diligence (auditoría e investigación legal profunda de empresas para compra o fusión)",
+      "query": "ejecución de due"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Redacción de contratos de franquicias comerciales",
+      "query": "redacción de contratos"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Asesoría jurídica para comercio electrónico, redacción de términos y condiciones y políticas de privacidad web",
+      "query": "comercio electrónico"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Defensa legal en disputas y litigios entre socios o accionistas",
+      "query": "defensa legal"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Procesos de disolución de sociedades mercantiles",
+      "query": "procesos de disolución"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Procesos de liquidación de empresas y reparto de haber social",
+      "query": "procesos de liquidación"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Cobro judicial y extrajudicial de cartera morosa corporativa",
+      "query": "cobro judicial"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Gestión, cobro y defense basados en títulos valores",
+      "query": "gestión cobro"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Redacción, endoso y ejecución judicial de pagarés",
+      "query": "redacción endoso"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Redacción, aceptación y ejecución judicial de letras de cambio",
+      "query": "redacción aceptación"
+    },
+    {
+      "areaSlug": "derecho-mercantil-empresarial",
+      "areaHref": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "title": "Estructuración de contratos de fideicomiso comerciales y de administración",
+      "query": "estructuración de contratos"
+    },
+    {
+      "areaSlug": "derecho-bancario-y-financiero",
+      "areaHref": "/servicios-juridicos/derecho-bancario-y-financiero",
+      "title": "Estructuración y revisión de contratos de créditos bancarios comerciales y corporativos",
+      "query": "estructuración y revisión"
+    },
+    {
+      "areaSlug": "derecho-bancario-y-financiero",
+      "areaHref": "/servicios-juridicos/derecho-bancario-y-financiero",
+      "title": "Estructuración de garantías",
+      "query": "garantías prendarias"
+    },
+    {
+      "areaSlug": "derecho-bancario-y-financiero",
+      "areaHref": "/servicios-juridicos/derecho-bancario-y-financiero",
+      "title": "Negociación y reestructuración de deudas, líneas de crédito, préstamos y refinanciamientos con la banca privada hondureña",
+      "query": "negociación y reestructuración"
+    },
+    {
+      "areaSlug": "derecho-bancario-y-financiero",
+      "areaHref": "/servicios-juridicos/derecho-bancario-y-financiero",
+      "title": "Defensa legal del consumidor financiero ante cobros abusivos, cláusulas leoninas o penalizaciones ilegales",
+      "query": "defensa legal"
+    },
+    {
+      "areaSlug": "derecho-bancario-y-financiero",
+      "areaHref": "/servicios-juridicos/derecho-bancario-y-financiero",
+      "title": "Interposición de denuncias y recursos ante la Comisión Nacional de Bancos y Seguros (CNBS)",
+      "query": "interposición de denuncias"
+    },
+    {
+      "areaSlug": "derecho-bancario-y-financiero",
+      "areaHref": "/servicios-juridicos/derecho-bancario-y-financiero",
+      "title": "Estructuración de contratos de fideicomiso, leasing y factoring bancarios",
+      "query": "estructuración de contratos"
+    },
+    {
+      "areaSlug": "derecho-administrativo-y-servicio-civil",
+      "areaHref": "/servicios-juridicos/derecho-administrativo-y-servicio-civil",
+      "title": "Interposición de recursos administrativos de reposición y apelación ante resoluciones del Estado",
+      "query": "interposición de recursos"
+    },
+    {
+      "areaSlug": "derecho-administrativo-y-servicio-civil",
+      "areaHref": "/servicios-juridicos/derecho-administrativo-y-servicio-civil",
+      "title": "Impugnaciones de actos administrativos estatales y juicios de lo Contencioso-Administrativo emitidos por ministerios, alcaldías o entes autónomos",
+      "query": "impugnaciones de actos"
+    },
+    {
+      "areaSlug": "derecho-administrativo-y-servicio-civil",
+      "areaHref": "/servicios-juridicos/derecho-administrativo-y-servicio-civil",
+      "title": "Defensa en procedimientos sancionadores y multas aplicadas por entes reguladores estatales o administrativas",
+      "query": "defensa en procedimientos"
+    },
+    {
+      "areaSlug": "derecho-administrativo-y-servicio-civil",
+      "areaHref": "/servicios-juridicos/derecho-administrativo-y-servicio-civil",
+      "title": "Trámites, gestiones y cabildeo legal ante instituciones públicas, ministerios del gobierno y licitaciones de contratación pública",
+      "query": "trámites gestiones"
+    },
+    {
+      "areaSlug": "derecho-administrativo-y-servicio-civil",
+      "areaHref": "/servicios-juridicos/derecho-administrativo-y-servicio-civil",
+      "title": "Obtención de licencias, permisos de operación municipales y registros estatales diversos",
+      "query": "obtención de licencias"
+    },
+    {
+      "areaSlug": "derecho-administrativo-y-servicio-civil",
+      "areaHref": "/servicios-juridicos/derecho-administrativo-y-servicio-civil",
+      "title": "Asesoría, preparación de ofertas y defensa en procesos de contratación pública (licitaciones del Estado)",
+      "query": "asesoría preparación"
+    },
+    {
+      "areaSlug": "derecho-administrativo-y-servicio-civil",
+      "areaHref": "/servicios-juridicos/derecho-administrativo-y-servicio-civil",
+      "title": "Interposición de juicios de lo Contencioso-Administrativo ante los tribunales de justicia",
+      "query": "interposición de juicios"
+    },
+    {
+      "areaSlug": "derecho-administrativo-y-servicio-civil",
+      "areaHref": "/servicios-juridicos/derecho-administrativo-y-servicio-civil",
+      "title": "Defensa del valor real de propiedades expropiadas en procesos de expropiaciones forzosas del Estado",
+      "query": "defensa del valor"
+    },
+    {
+      "areaSlug": "derecho-administrativo-y-servicio-civil",
+      "areaHref": "/servicios-juridicos/derecho-administrativo-y-servicio-civil",
+      "title": "Defensa legal de empleados públicos bajo el régimen y estatuto de Servicio Civil ante despidos o suspensiones",
+      "query": "defensa legal"
+    },
+    {
+      "areaSlug": "derecho-aduanero-y-comercio-exterior",
+      "areaHref": "/servicios-juridicos/derecho-aduanero-y-comercio-exterior",
+      "title": "Asesoría técnica en clasificación arancelaria y procesos de valoración aduanera de mercancías",
+      "query": "asesoría técnica"
+    },
+    {
+      "areaSlug": "derecho-aduanero-y-comercio-exterior",
+      "areaHref": "/servicios-juridicos/derecho-aduanero-y-comercio-exterior",
+      "title": "Defensa legal directa ante la Administración Aduanera de Honduras (Aduanas Honduras)",
+      "query": "defensa legal directa"
+    },
+    {
+      "areaSlug": "derecho-aduanero-y-comercio-exterior",
+      "areaHref": "/servicios-juridicos/derecho-aduanero-y-comercio-exterior",
+      "title": "Impugnación de reparos fiscales aduaneros, ajustes de valor y multas por declaraciones erróneas o procesos de decomiso",
+      "query": "impugnación de reparos"
+    },
+    {
+      "areaSlug": "derecho-aduanero-y-comercio-exterior",
+      "areaHref": "/servicios-juridicos/derecho-aduanero-y-comercio-exterior",
+      "title": "Defensa legal y recursos contra procesos de decomiso de mercancías en aduanas terrestres, marítimas o aéreas",
+      "query": "defensa legal"
+    },
+    {
+      "areaSlug": "derecho-aduanero-y-comercio-exterior",
+      "areaHref": "/servicios-juridicos/derecho-aduanero-y-comercio-exterior",
+      "title": "Defensa penal y administrativa ante presuntos delitos de contrabando y defraudación fiscal aduanera",
+      "query": "defensa penal"
+    },
+    {
+      "areaSlug": "derecho-aduanero-y-comercio-exterior",
+      "areaHref": "/servicios-juridicos/derecho-aduanero-y-comercio-exterior",
+      "title": "Tramitación y gestión de regímenes aduaneros especiales (Régimen de Importación Temporal - RIT, Zonas Libres) y asesoría a agencias aduaneras",
+      "query": "tramitación y gestión"
+    },
+    {
+      "areaSlug": "derecho-aduanero-y-comercio-exterior",
+      "areaHref": "/servicios-juridicos/derecho-aduanero-y-comercio-exterior",
+      "title": "Asesoría legal integral para agencias aduaneras, consolidadoras de carga y transportistas internacionales",
+      "query": "asesoría legal integral"
+    },
+    {
+      "areaSlug": "regulacion-sanitaria",
+      "areaHref": "/servicios-juridicos/regulacion-sanitaria",
+      "title": "Tramitación y renovación de Licencias Sanitarias para el funcionamiento de establecimientos comerciales e industriales",
+      "query": "tramitación y renovación"
+    },
+    {
+      "areaSlug": "regulacion-sanitaria",
+      "areaHref": "/servicios-juridicos/regulacion-sanitaria",
+      "title": "Gestión y obtención de Registros Sanitarios para la importación y comercialización de productos de consumo",
+      "query": "gestión y obtención"
+    },
+    {
+      "areaSlug": "regulacion-sanitaria",
+      "areaHref": "/servicios-juridicos/regulacion-sanitaria",
+      "title": "Licencias y registros específicos para el sector de Alimentos y Bebidas",
+      "query": "licencias y registros"
+    },
+    {
+      "areaSlug": "regulacion-sanitaria",
+      "areaHref": "/servicios-juridicos/regulacion-sanitaria",
+      "title": "Tramitación del Certificado de Buenas Prácticas de Manufactura (BPM), Almacenamiento y Distribución",
+      "query": "tramitación del certificado"
+    },
+    {
+      "areaSlug": "regulacion-sanitaria",
+      "areaHref": "/servicios-juridicos/regulacion-sanitaria",
+      "title": "Obtención del Certificado de Libre Venta (CLV) requerido para la exportación de productos hondureños al extranjero",
+      "query": "libre venta"
+    },
+    {
+      "areaSlug": "extranjeria-en-honduras",
+      "areaHref": "/servicios-juridicos/extranjeria-en-honduras",
+      "title": "Gestión de residencias legales en el país (bajo categorías de inversionistas, rentistas, pensionados o vínculo familiar) y permisos migratorios",
+      "query": "gestión de residencias"
+    },
+    {
+      "areaSlug": "extranjeria-en-honduras",
+      "areaHref": "/servicios-juridicos/extranjeria-en-honduras",
+      "title": "Obtención de permisos migratorios de permanencia temporal y prórrogas de estadía",
+      "query": "obtención de permisos"
+    },
+    {
+      "areaSlug": "extranjeria-en-honduras",
+      "areaHref": "/servicios-juridicos/extranjeria-en-honduras",
+      "title": "Trámites generales de regularización para ciudadanos extranjeros radicados en Honduras",
+      "query": "trámites generales"
+    },
+    {
+      "areaSlug": "extranjeria-en-honduras",
+      "areaHref": "/servicios-juridicos/extranjeria-en-honduras",
+      "title": "Procesos de naturalización para la obtención de la ciudadanía y nacionalidad hondureña",
+      "query": "procesos de naturalización"
+    },
+    {
+      "areaSlug": "extranjeria-en-honduras",
+      "areaHref": "/servicios-juridicos/extranjeria-en-honduras",
+      "title": "Gestión, tramitación y defensa de visas consultadas para ciudadanos de países con restricciones de ingreso",
+      "query": "visas consultadas"
+    },
+    {
+      "areaSlug": "propiedad-intelectual",
+      "areaHref": "/servicios-juridicos/propiedad-intelectual",
+      "title": "Registro de marcas de fábrica, lema comerciales, nombres comerciales, patentes de invención, derechos de autor (software, libros) y logotipos",
+      "query": "registro de marcas"
+    },
+    {
+      "areaSlug": "propiedad-intelectual",
+      "areaHref": "/servicios-juridicos/propiedad-intelectual",
+      "title": "Registro de patentes de invención, modelos de utilidad y diseños industriales",
+      "query": "registro de patentes"
+    },
+    {
+      "areaSlug": "propiedad-intelectual",
+      "areaHref": "/servicios-juridicos/propiedad-intelectual",
+      "title": "Defensa judicial de marcas y administrativa (interposición de oposiciones, nulidades y cancelaciones) y litigios por piratería o competencia desleal",
+      "query": "defensa judicial"
+    },
+    {
+      "areaSlug": "propiedad-intelectual",
+      "areaHref": "/servicios-juridicos/propiedad-intelectual",
+      "title": "Registro de derechos de autor para protección de software, libros, música y obras artísticas",
+      "query": "registro de derechos"
+    },
+    {
+      "areaSlug": "propiedad-intelectual",
+      "areaHref": "/servicios-juridicos/propiedad-intelectual",
+      "title": "Redacción de acuerdos de confidencialidad, no competencia y protección de secretos industriales (NDA)",
+      "query": "secretos industriales"
+    },
+    {
+      "areaSlug": "propiedad-intelectual",
+      "areaHref": "/servicios-juridicos/propiedad-intelectual",
+      "title": "Litigios mercantiles y penales por piratería, falsificación de productos y competencia desleal de marca",
+      "query": "litigios mercantiles"
+    },
+    {
+      "areaSlug": "tributario-fiscal",
+      "areaHref": "/servicios-juridicos/tributario-fiscal",
+      "title": "Asesoría fiscal integral preventiva para la optimización del pago de tributos o impugnación de reparos ante el SAR y exoneraciones fiscales",
+      "query": "asesoría fiscal integral"
+    },
+    {
+      "areaSlug": "tributario-fiscal",
+      "areaHref": "/servicios-juridicos/tributario-fiscal",
+      "title": "Impugnación de reparos fiscales, auditorías e imposición de impuestos ante el Servicio de Administración de Rentas (SAR)",
+      "query": "impugnación de reparos"
+    },
+    {
+      "areaSlug": "tributario-fiscal",
+      "areaHref": "/servicios-juridicos/tributario-fiscal",
+      "title": "Tramitación de exoneraciones fiscales, créditos comerciales y beneficios tributarios ante la Secretaría de Finanzas",
+      "query": "tramitación de exoneraciones"
+    },
+    {
+      "areaSlug": "tributario-fiscal",
+      "areaHref": "/servicios-juridicos/tributario-fiscal",
+      "title": "Planificación fiscal corporativa para empresas nacionales y corporaciones extranjeras y regímenes especiales (ZOLI / RIT)",
+      "query": "planificación fiscal corporativa"
+    },
+    {
+      "areaSlug": "tributario-fiscal",
+      "areaHref": "/servicios-juridicos/tributario-fiscal",
+      "title": "Gestión legal en regímenes de incentivo fiscal especiales como ZOLI (Zonas Libres) y RIT (Régimen de Importación Temporal)",
+      "query": "zonas libres"
+    },
+    {
+      "areaSlug": "ambiental-regulatorio",
+      "areaHref": "/servicios-juridicos/ambiental-regulatorio",
+      "title": "Obtención de dictámenes y licencias ambientales ante la Secretaría de MiAmbiente (Categorías 1 a 4) y auditorías verdes",
+      "query": "obtención de dictámenes"
+    },
+    {
+      "areaSlug": "ambiental-regulatorio",
+      "areaHref": "/servicios-juridicos/ambiental-regulatorio",
+      "title": "Auditorías verdes y de cumplimiento normativo legal ambiental para proyectos constructivos e industrias",
+      "query": "auditorías verdes"
+    },
+    {
+      "areaSlug": "ambiental-regulatorio",
+      "areaHref": "/servicios-juridicos/ambiental-regulatorio",
+      "title": "Gestión de permisos regulatorios para el manejo de desechos sólidos, sustancias peligrosas y concesiones de recursos hídricos",
+      "query": "gestión de permisos"
+    },
+    {
+      "areaSlug": "conciliacion-y-arbitraje",
+      "areaHref": "/servicios-juridicos/conciliacion-y-arbitraje",
+      "title": "Redacción de cláusulas compromisorias y convenios arbitrales para contratos comerciales de alto valor",
+      "query": "cláusulas compromisorias"
+    },
+    {
+      "areaSlug": "conciliacion-y-arbitraje",
+      "areaHref": "/servicios-juridicos/conciliacion-y-arbitraje",
+      "title": "Representación legal y defensa en procesos de arbitraje ante los Centros de Conciliación y Arbitraje de las Cámaras de Comercio (CCIT / CCIC)",
+      "query": "representación legal"
+    },
+    {
+      "areaSlug": "conciliacion-y-arbitraje",
+      "areaHref": "/servicios-juridicos/conciliacion-y-arbitraje",
+      "title": "Negociación, mediación y formalización de acuerdos extrajudiciales para la solución pacífica de conflictos sin ir a juicio",
+      "query": "negociación mediación"
+    },
+    {
+      "areaSlug": "gestion-documental-y-legalizacion",
+      "areaHref": "/hondurenos-en-espana/gestion-documental-y-legalizacion",
+      "title": "Certificados de Antecedentes Penales de Honduras",
+      "query": "certificados de antecedentes"
+    },
+    {
+      "areaSlug": "gestion-documental-y-legalizacion",
+      "areaHref": "/hondurenos-en-espana/gestion-documental-y-legalizacion",
+      "title": "Certificaciones de Estudios y Títulos de Educación Media",
+      "query": "educación media"
+    },
+    {
+      "areaSlug": "gestion-documental-y-legalizacion",
+      "areaHref": "/hondurenos-en-espana/gestion-documental-y-legalizacion",
+      "title": "Títulos Universitarios y Certificaciones de Calificaciones",
+      "query": "títulos universitarios"
+    },
+    {
+      "areaSlug": "gestion-documental-y-legalizacion",
+      "areaHref": "/hondurenos-en-espana/gestion-documental-y-legalizacion",
+      "title": "Certificados del Registro Nacional de las Personas (RNP)",
+      "query": "certificados del registro"
+    },
+    {
+      "areaSlug": "actos-notariales-internacionales",
+      "areaHref": "/hondurenos-en-espana/actos-notariales-internacionales",
+      "title": "Redacción y formalización de Poderes Especiales y Generales para que un familiar o abogado de confianza en Honduras actúe en su representación",
+      "query": "redacción y formalización"
+    },
+    {
+      "areaSlug": "actos-notariales-internacionales",
+      "areaHref": "/hondurenos-en-espana/actos-notariales-internacionales",
+      "title": "Gestión a distancia mediante poder para la compra o Venta de propiedades, terrenos y casas en Honduras",
+      "query": "gestión a distancia"
+    },
+    {
+      "areaSlug": "actos-notariales-internacionales",
+      "areaHref": "/hondurenos-en-espana/actos-notariales-internacionales",
+      "title": "Trámites bancarios a distancia, apertura, retiro y manejo de cuentas en la banca hondureña desde España",
+      "query": "trámites bancarios a"
+    },
+    {
+      "areaSlug": "actos-notariales-internacionales",
+      "areaHref": "/hondurenos-en-espana/actos-notariales-internacionales",
+      "title": "Cobro y aceptación de herencias, legados y partición de bienes familiares en Honduras sin necesidad de viajar",
+      "query": "cobro y aceptación"
+    },
+    {
+      "areaSlug": "actos-notariales-internacionales",
+      "areaHref": "/hondurenos-en-espana/actos-notariales-internacionales",
+      "title": "Autorizaciones de viaje a distancia para menores de edad (permisos de salida de Honduras para reunificación familiar)",
+      "query": "autorizaciones de viaje"
+    },
+    {
+      "areaSlug": "actos-notariales-internacionales",
+      "areaHref": "/hondurenos-en-espana/actos-notariales-internacionales",
+      "title": "Reconocimientos de paternidad internacionales tramitados a distancia ante el RNP de Honduras",
+      "query": "reconocimientos de paternidad"
+    },
+    {
+      "areaSlug": "actos-notariales-internacionales",
+      "areaHref": "/hondurenos-en-espana/actos-notariales-internacionales",
+      "title": "Matrimonios civiles gestionados o preparados para la comunidad en el exterior",
+      "query": "matrimonios civiles gestionados"
+    },
+    {
+      "areaSlug": "actos-notariales-internacionales",
+      "areaHref": "/hondurenos-en-espana/actos-notariales-internacionales",
+      "title": "Unión de hecho formalizada o tramitada a distancia",
+      "query": "unión de hecho"
+    },
+    {
+      "areaSlug": "asuntos-civiles-y-familiares-desde-el-extranjero",
+      "areaHref": "/hondurenos-en-espana/asuntos-civiles-y-familiares-desde-el-extranjero",
+      "title": "Tramitación completa de divorcios (por mutuo acuerdo o contenciosos) en los juzgados de Honduras mediante representación por poder, sin que el cliente deba salir de España",
+      "query": "tramitación completa"
+    },
+    {
+      "areaSlug": "asuntos-civiles-y-familiares-desde-el-extranjero",
+      "areaHref": "/hondurenos-en-espana/asuntos-civiles-y-familiares-desde-el-extranjero",
+      "title": "Demandas de alimentos internacionales contra progenitores que residen en Honduras para asegurar la manutención de los hijos",
+      "query": "alimentos internacionales"
+    },
+    {
+      "areaSlug": "asuntos-civiles-y-familiares-desde-el-extranjero",
+      "areaHref": "/hondurenos-en-espana/asuntos-civiles-y-familiares-desde-el-extranjero",
+      "title": "Asesoría legal para la inscripción consular de matrimonios celebrados en España y registro de hijos de hondureños nacidos en territorio español para asegurar su doble nacionalidad",
+      "query": "asesoría legal para"
+    }
+  ]
+}

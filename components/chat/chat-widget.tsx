@@ -288,7 +288,7 @@ export function ChatWidget() {
           role="dialog"
           aria-modal="false"
           aria-label="Asistente virtual"
-          className="flex flex-col rounded-lg border border-accent/30 bg-surface text-text overflow-hidden shadow-xl"
+          className="flex flex-col rounded-lg border border-accent/30 bg-surface text-text overflow-hidden shadow-xl overscroll-contain"
           style={{
             pointerEvents: 'auto',
             width: 'calc(100vw - 2rem)',
@@ -328,7 +328,7 @@ export function ChatWidget() {
           {/* Mensajes (scroll interno) — fondo cálido sutil */}
           <div
             ref={scrollRef}
-            className="flex-1 overflow-y-auto px-3 py-3 space-y-2.5 bg-page-warm"
+            className="flex-1 overflow-y-auto overscroll-contain px-3 py-3 space-y-2.5 bg-page-warm"
             aria-live="polite"
             aria-label="Conversación"
           >

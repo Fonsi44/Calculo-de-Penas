@@ -98,7 +98,7 @@ export function ProblemSelector() {
           que mejor describa su situación y le llevamos a la información correcta.
         </p>
       </div>
-      <NavCardGrid items={ITEMS} variant="problems" columns={3} featuredFirst />
+      <NavCardGrid items={ITEMS} variant="problems" columns={3} />
     </nav>
   );
 }

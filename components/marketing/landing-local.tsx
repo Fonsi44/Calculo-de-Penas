@@ -361,7 +361,7 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
               <Link
                 key={`${p.categoria}/${p.slug}`}
                 href={`/blog/${p.categoria}/${p.slug}`}
-                className="group block focus-visible:outline-none"
+                className="group block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
                   <IconBadge icon={BookOpen} variant="accent" className="mb-3" />

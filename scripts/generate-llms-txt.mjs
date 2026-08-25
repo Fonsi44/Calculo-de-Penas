@@ -304,14 +304,6 @@ function render() {
   lines.push('## Áreas de práctica');
   lines.push('');
   for (const a of SERVICE_AREAS) {
-    const confirmed = new Set([
-      'derecho-de-familia',
-      'derecho-laboral',
-      'derecho-civil-y-notarial',
-      'derecho-mercantil-empresarial',
-      'derecho-administrativo-y-servicio-civil',
-    ]);
-    if (!confirmed.has(a.slug)) continue;
     lines.push(`- [${a.label}](${url(`/servicios-juridicos/${a.slug}`)}): ${a.desc}`);
   }
   lines.push('');

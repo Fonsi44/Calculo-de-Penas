@@ -20,7 +20,7 @@ import { HubFaq } from '@/components/marketing/hub-faq';
 import { sanitizeHtml } from '@/lib/sanitize';
 import { LeadMagnetCTA } from '@/components/marketing/lead-magnet-cta';
 import { getLeadMagnetByArea } from '@/lib/lead-magnets';
-import { getPostsByCategory, formatDate } from '@/lib/blog';
+import { getPostsByCategoryOrEmpty, formatDate } from '@/lib/blog';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { RelatedCities } from '@/components/marketing/related-links';
 // FASE 3 — bloques de detalle para servicios prioritarios.
@@ -259,6 +259,7 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
       serviceType: area.titulo,
       keywords: area.keywords,
       url,
+      offers: area.subservicios.map((service) => ({ name: service.titulo })),
     },
     // HubFaq renderiza la colección visible y emite el único FAQPage.
     // No duplicar el mismo schema desde areaSchemas.
@@ -271,7 +272,7 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
   });
 
   const blogCategory = SERVICE_TO_BLOG_CATEGORY[slug];
-  const blogPosts = blogCategory ? (await getPostsByCategory(blogCategory)).slice(0, 3) : [];
+  const blogPosts = blogCategory ? (await getPostsByCategoryOrEmpty(blogCategory)).slice(0, 3) : [];
 
   return (
     <>
@@ -456,12 +457,12 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
           {area.subservicios.map((s, i) => (
             <div key={i} className="flex items-start gap-4 bg-surface rounded-lg border border-border-light p-5 hover:border-accent/40 transition-colors">
               <span className="w-11 h-11 rounded-lg border border-accent/30 bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Icon size={20} className="text-accent-dark" />
+                <Icon size={20} className="text-accent-dark" aria-hidden="true" />
               </span>
               <div className="min-w-0 flex-1">
-                <h4 className="font-bold text-sm md:text-base text-primary leading-snug">
+                <h3 className="font-bold text-sm md:text-base text-primary leading-snug">
                   {s.titulo}
-                </h4>
+                </h3>
                 <p className="text-sm text-text-secondary leading-relaxed mt-1">
                   {s.descripcion}
                 </p>
@@ -533,7 +534,7 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
             {related.map((r) => {
               const RIcon = getIcon(r.icono);
               return (
-                <Link key={r.slug} href={areaHref(r.slug)} className="group block focus-visible:outline-none">
+                <Link key={r.slug} href={areaHref(r.slug)} className="group block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
                   <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
                     <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3 border border-primary/15">
                       <RIcon size={20} aria-hidden="true" />
@@ -564,7 +565,7 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {blogPosts.map((post) => (
-              <Link key={post.slug} href={`/blog/${post.category}/${post.slug}`} className="group block focus-visible:outline-none">
+              <Link key={post.slug} href={`/blog/${post.category}/${post.slug}`} className="group block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
                 <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
                   <div className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center mb-3 border border-accent/20">
                     <BookOpen size={20} aria-hidden="true" />

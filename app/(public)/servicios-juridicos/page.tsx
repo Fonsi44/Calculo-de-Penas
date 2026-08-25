@@ -22,6 +22,7 @@ import { RelatedCities } from '@/components/marketing/related-links';
 import { HubFaq } from '@/components/marketing/hub-faq';
 import { FAQ_SERVICIOS_JURIDICOS } from '@/data/faqs-hubs';
 import { PUBLIC_SERVICE_CATALOG } from '@/lib/public-service-catalog';
+import { buildJuridicosCatalog } from '@/lib/service-search-catalog';
 
 const CTA_BY_AREA: Record<string, string> = {
   'derecho-penal': 'Ver servicios de defensa penal',
@@ -53,6 +54,7 @@ export const metadata: Metadata = buildMetadata({
 export default async function AreasJuridicasPage() {
   const areas = PUBLIC_SERVICE_CATALOG;
   const contentMap = await getPageContent('servicios-juridicos');
+  const catalog = buildJuridicosCatalog();
 
   return (
     <>
@@ -72,12 +74,8 @@ export default async function AreasJuridicasPage() {
       <div className="bg-background py-6 md:py-8">
         <div className="mx-auto px-4 sm:px-6 max-w-7xl">
           <ServiceSearch
-            items={areas.map((a) => ({
-              href: a.href,
-              title: a.name,
-              description: a.shortDescription,
-            }))}
-            placeholder='Buscar servicio jurídico: "divorcio", "despido", "contrato"...'
+            entries={catalog.entries}
+            placeholder='Buscar servicio jurídico: "divorcio", "despido", "contrato"…'
             domain="servicios-juridicos"
           />
         </div>
