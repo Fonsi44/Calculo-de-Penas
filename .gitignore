@@ -104,6 +104,8 @@ deps-outdated.json
 .zcode/
 .tools-cache/
 memories/
+.omo/
+.playwright-mcp/
 
 # ── ZIPs & Backups locales ──────────────────────────────────
 *.zip

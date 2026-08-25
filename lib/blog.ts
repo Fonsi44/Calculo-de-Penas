@@ -84,6 +84,21 @@ export const getPostsByCategory = cache(async (
   return posts.map(mapToSummary);
 });
 
+/** Bloques relacionados en hubs: si la DB no está, la página sigue renderizando. */
+export async function getPostsByCategoryOrEmpty(
+  categorySlug: string,
+): Promise<BlogPostSummary[]> {
+  try {
+    return await getPostsByCategory(categorySlug);
+  } catch (err) {
+    console.warn('[blog] getPostsByCategory degradado sin tumbar la página.', {
+      categorySlug,
+      error: err instanceof Error ? err.message : 'error desconocido',
+    });
+    return [];
+  }
+}
+
 export const getFeaturedPosts = cache(async (): Promise<BlogPostSummary[]> => {
   const posts = await getPublishedPostSummaries({ featured: true });
   return posts.map(mapToSummary);

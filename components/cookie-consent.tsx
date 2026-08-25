@@ -126,14 +126,14 @@ export function CookieConsent() {
         ref={initialFocusRef}
         type="button"
         onClick={() => save({ analytics: true, functionality: true })}
-        className="min-h-11 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white focus-visible:outline-none"
+        className="min-h-11 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
         Aceptar opcionales
       </button>
       <button
         type="button"
         onClick={() => save({ analytics: false, functionality: false })}
-        className="min-h-11 rounded-lg border border-border px-4 py-2 text-sm font-semibold text-primary focus-visible:outline-none"
+        className="min-h-11 rounded-lg border border-border px-4 py-2 text-sm font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
         Rechazar opcionales
       </button>
@@ -141,7 +141,7 @@ export function CookieConsent() {
         <button
           type="button"
           onClick={() => save({ analytics, functionality })}
-          className="min-h-11 rounded-lg border border-primary px-4 py-2 text-sm font-semibold text-primary focus-visible:outline-none"
+          className="min-h-11 rounded-lg border border-primary px-4 py-2 text-sm font-semibold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           Guardar preferencias
         </button>
@@ -149,7 +149,7 @@ export function CookieConsent() {
         <button
           type="button"
           onClick={() => setConfigure(true)}
-          className="min-h-11 rounded-lg px-4 py-2 text-sm font-semibold text-primary underline focus-visible:outline-none"
+          className="min-h-11 rounded-lg px-4 py-2 text-sm font-semibold text-primary underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           Configurar
         </button>
@@ -204,7 +204,7 @@ export function CookieConsent() {
   return (
     <div
       data-cookie-consent-overlay
-      className="fixed inset-0 z-[10000] flex items-end justify-center overflow-y-auto bg-black/10 p-3 pb-[4.75rem] md:items-end md:pb-3"
+      className="fixed inset-0 z-[10000] flex items-end justify-center overflow-y-auto overscroll-contain bg-black/10 p-3 pb-[4.75rem] md:items-end md:pb-3"
     >
       <section
         ref={dialogRef}
@@ -212,7 +212,7 @@ export function CookieConsent() {
         aria-modal="true"
         aria-labelledby="cookie-consent-title"
         tabIndex={-1}
-        className="relative w-full max-w-2xl max-h-[calc(100dvh-5.5rem)] overflow-y-auto rounded-lg border border-border bg-surface p-5 shadow-xl md:max-h-[calc(100dvh-1.5rem)]"
+        className="relative w-full max-w-2xl max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain rounded-lg border border-border bg-surface p-5 shadow-xl md:max-h-[calc(100dvh-1.5rem)]"
       >
         {reopened && (
           <button
@@ -221,7 +221,7 @@ export function CookieConsent() {
               setReopened(false);
               setConfigure(false);
             }}
-            className="absolute top-3 right-3 min-h-11 min-w-11 rounded-md px-2 py-1 text-xs font-semibold text-text-muted hover:text-primary focus-visible:outline-none"
+            className="absolute top-3 right-3 min-h-11 min-w-11 rounded-md px-2 py-1 text-xs font-semibold text-text-muted hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             aria-label="Cerrar preferencias de privacidad"
           >
             Cerrar
@@ -234,5 +234,5 @@ export function CookieConsent() {
 }
 
 export function CookiePreferencesButton() {
-  return <button type="button" onClick={() => window.dispatchEvent(new Event('pineda:open-consent'))} className="text-xs text-text-inverse/70 hover:text-accent transition-colors py-1">Preferencias de cookies</button>;
+  return <button type="button" onClick={() => window.dispatchEvent(new Event('pineda:open-consent'))} className="text-xs text-text-inverse/70 hover:text-accent transition-colors py-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">Preferencias de cookies</button>;
 }

@@ -10,6 +10,7 @@ import { getSeoOverrides } from '@/lib/site-config-db';
 import { AnalyticsScripts } from '@/components/analytics-scripts';
 import { AnalyticsListeners } from '@/components/marketing/analytics-listeners';
 import { CookieConsent } from '@/components/cookie-consent';
+import { buildPublicCatalog } from '@/lib/service-search-catalog';
 
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSeoOverrides();
@@ -120,10 +121,11 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
       ...supplementalTeamSchemas(),
     ],
   };
+  const { entries } = buildPublicCatalog();
 
   return (
     <div className="flex flex-col min-h-screen bg-background pb-16 md:pb-0">
-      <PublicHeader />
+      <PublicHeader searchEntries={entries} />
       <main id="main" className="flex-1">
         {children}
       </main>

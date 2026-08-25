@@ -51,7 +51,7 @@ export function BlogSearch({ posts, scope }: Props) {
   return (
     <div className="rounded-lg border border-accent/30 bg-gradient-to-br from-white to-accent/[0.04] p-4 shadow-md">
       <div className="relative">
-        <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-accent-dark pointer-events-none" />
+        <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-accent-dark pointer-events-none" aria-hidden="true" />
         <label htmlFor="blog-search" className="sr-only">Buscar artículos del blog jurídico</label>
         <input
           id="blog-search"
@@ -61,15 +61,15 @@ export function BlogSearch({ posts, scope }: Props) {
           onChange={(e) => setQuery(e.target.value)}
           placeholder={placeholder}
           autoComplete="off"
-          className="w-full pl-12 pr-10 py-3.5 rounded-lg border border-accent/25 bg-white text-sm text-text placeholder:text-text-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all font-medium shadow-sm"
+          className="w-full pl-12 pr-10 py-3.5 rounded-lg border border-accent/25 bg-white text-sm text-text placeholder:text-text-muted focus:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/20 transition-[border-color,box-shadow] font-medium shadow-sm"
         />
         {query && (
           <button
             onClick={() => setQuery('')}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-accent-dark bg-white/80 rounded-full p-1 transition-colors"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-accent-dark bg-white/80 rounded-full p-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             aria-label="Limpiar búsqueda"
           >
-            <X size={16} />
+            <X size={16} aria-hidden="true" />
           </button>
         )}
       </div>
