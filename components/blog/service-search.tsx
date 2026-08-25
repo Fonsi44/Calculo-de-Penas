@@ -2,12 +2,14 @@
 
 import { useDeferredValue, useMemo, useState, type ReactNode } from 'react';
 import Link from 'next/link';
-import { Search, X, ArrowRight } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import {
   groupSearchResults,
   searchServiceIndex,
   type ServiceSearchEntry,
 } from '@/lib/service-search-index';
+import { getIcon } from '@/lib/icon-map';
+import { IconBadge } from '@/components/marketing/icon-badge';
 
 type ServiceItem = {
   href: string;
@@ -21,6 +23,11 @@ type Props = {
   entries?: readonly ServiceSearchEntry[];
   placeholder?: string;
   domain: string;
+  /**
+   * - "inline": card con borde bajo el hero (legacy).
+   * - "hero": barra blanca redondeada dentro del PageHero; resultados en panel absolute.
+   */
+  placement?: 'inline' | 'hero';
 };
 
 function toEllipsis(value: string): string {
@@ -53,12 +60,19 @@ function toEntries(items: ServiceItem[]): ServiceSearchEntry[] {
   }));
 }
 
-export function ServiceSearch({ items, entries, placeholder, domain }: Props) {
+export function ServiceSearch({
+  items,
+  entries,
+  placeholder,
+  domain,
+  placement = 'inline',
+}: Props) {
   const [query, setQuery] = useState('');
   const deferredQuery = useDeferredValue(query);
   const catalog = entries ?? toEntries(items ?? []);
   const searchId = `service-search-${domain}`;
   const resultsId = `${searchId}-results`;
+  const isHero = placement === 'hero';
   const label =
     domain === 'derecho-penal'
       ? 'Buscar servicios de derecho penal'
@@ -80,14 +94,30 @@ export function ServiceSearch({ items, entries, placeholder, domain }: Props) {
     [hits],
   );
 
+  const rootCls = isHero
+    ? 'relative z-20 text-left'
+    : 'rounded-lg border border-accent/30 bg-gradient-to-br from-white to-accent/[0.04] p-4 shadow-md';
+
+  const inputCls = isHero
+    ? 'w-full pl-12 pr-12 py-3.5 sm:py-4 rounded-2xl border-0 bg-white text-sm sm:text-base text-text placeholder:text-text-muted/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 transition-[box-shadow] font-medium shadow-lg'
+    : 'w-full pl-12 pr-10 py-3.5 rounded-lg border border-accent/25 bg-white text-sm text-text placeholder:text-text-muted/50 focus:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/20 transition-[border-color,box-shadow] font-medium shadow-sm';
+
+  const iconCls = isHero
+    ? 'absolute left-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none'
+    : 'absolute left-4 top-1/2 -translate-y-1/2 text-accent-dark pointer-events-none';
+
+  const clearCls = isHero
+    ? 'absolute right-3 top-1/2 -translate-y-1/2 min-h-11 min-w-11 inline-flex items-center justify-center text-text-muted hover:text-text rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent'
+    : 'absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text bg-white/80 rounded-full p-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent';
+
+  const resultsCls = isHero
+    ? 'absolute left-0 right-0 top-full z-20 mt-2 rounded-lg border border-border/30 bg-white max-h-80 overflow-y-auto overscroll-contain shadow-lg text-left'
+    : 'mt-3 rounded-lg border border-border/30 bg-white max-h-80 overflow-y-auto overscroll-contain shadow-sm';
+
   return (
-    <div className="rounded-lg border border-accent/30 bg-gradient-to-br from-white to-accent/[0.04] p-4 shadow-md">
+    <div className={rootCls}>
       <div className="relative">
-        <Search
-          size={20}
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-accent-dark pointer-events-none"
-          aria-hidden="true"
-        />
+        <Search size={20} className={iconCls} aria-hidden="true" />
         <label htmlFor={searchId} className="sr-only">
           {label}
         </label>
@@ -103,13 +133,13 @@ export function ServiceSearch({ items, entries, placeholder, domain }: Props) {
           autoComplete="off"
           aria-controls={resultsId}
           aria-expanded={Boolean(query.trim())}
-          className="w-full pl-12 pr-10 py-3.5 rounded-lg border border-accent/25 bg-white text-sm text-text placeholder:text-text-muted/50 focus:outline-none focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/20 transition-[border-color,box-shadow] font-medium shadow-sm"
+          className={inputCls}
         />
         {query && (
           <button
             type="button"
             onClick={() => setQuery('')}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text bg-white/80 rounded-full p-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className={clearCls}
             aria-label="Limpiar búsqueda"
           >
             <X size={16} aria-hidden="true" />
@@ -122,14 +152,14 @@ export function ServiceSearch({ items, entries, placeholder, domain }: Props) {
           id={resultsId}
           role="listbox"
           aria-label="Resultados de búsqueda"
-          className="mt-3 rounded-lg border border-border/30 bg-white max-h-80 overflow-y-auto overscroll-contain shadow-sm"
+          className={resultsCls}
         >
           {hits.length === 0 ? (
             <p className="p-4 text-sm text-text-muted text-center" role="status" aria-live="polite">
               No se encontraron resultados para <strong>&quot;{query}&quot;</strong> en {domain}
             </p>
           ) : (
-            <div className="p-3">
+            <div className="p-3 sm:p-4">
               <p className="text-xs font-bold uppercase tracking-wide text-primary">
                 Resultados: &laquo;{query.trim()}&raquo;
               </p>
@@ -139,40 +169,44 @@ export function ServiceSearch({ items, entries, placeholder, domain }: Props) {
                 {' · '}
                 {groups.length} {groups.length === 1 ? 'área jurídica' : 'áreas jurídicas'}
               </p>
-              <div className="mt-3 space-y-3">
-                {groups.map((group) => (
-                  <section key={group.areaSlug}>
-                    <p className="text-xs font-bold uppercase tracking-wide text-primary mb-1">
-                      {group.areaLabel}
-                    </p>
-                    <ul className="divide-y divide-border/20">
-                      {group.items.map((item) => (
-                        <li key={`${group.areaSlug}-${item.title}`}>
-                          <Link
-                            href={item.areaHref}
-                            className="flex items-start gap-3 p-2.5 hover:bg-accent/5 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md"
-                          >
-                            <div className="min-w-0 flex-1">
-                              <p className="text-sm font-semibold text-text leading-snug group-hover:text-primary transition-colors">
+              <div className="mt-3 divide-y divide-border/25">
+                {groups.map((group) => {
+                  const AreaIcon = getIcon(group.icon);
+                  return (
+                    <section key={group.areaSlug} className="py-3 first:pt-0 last:pb-0">
+                      <div className="flex items-center gap-2.5 mb-2">
+                        <IconBadge
+                          icon={AreaIcon}
+                          variant="muted"
+                          size="sm"
+                          iconSize={16}
+                          className="rounded-full"
+                        />
+                        <p className="text-xs font-bold uppercase tracking-wide text-primary">
+                          {group.areaLabel}
+                        </p>
+                      </div>
+                      <ul className="space-y-1.5 pl-0.5">
+                        {group.items.map((item) => (
+                          <li key={`${group.areaSlug}-${item.title}`}>
+                            <Link
+                              href={item.areaHref}
+                              className="flex items-start gap-2.5 py-1 px-1.5 -mx-1.5 rounded-md hover:bg-accent/5 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                            >
+                              <span
+                                aria-hidden="true"
+                                className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0"
+                              />
+                              <span className="min-w-0 flex-1 text-sm text-text leading-snug group-hover:text-primary transition-colors">
                                 {highlightMatch(item.title, query.trim(), highlightMatcher)}
-                              </p>
-                              {item.description ? (
-                                <p className="text-xs text-text-muted mt-0.5 line-clamp-2">
-                                  {item.description}
-                                </p>
-                              ) : null}
-                            </div>
-                            <ArrowRight
-                              size={14}
-                              className="flex-shrink-0 mt-1 text-text-muted group-hover:text-accent-dark transition-colors"
-                              aria-hidden="true"
-                            />
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                ))}
+                              </span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  );
+                })}
               </div>
             </div>
           )}

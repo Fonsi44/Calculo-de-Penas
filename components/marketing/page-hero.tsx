@@ -6,6 +6,12 @@ interface PageHeroProps {
   title: ReactNode;
   subtitle?: ReactNode;
   cta?: ReactNode;
+  /**
+   * Slot para buscador u otra acción primaria bajo el subtítulo.
+   * Cuando está presente, el section no recorta overflow para que un
+   * dropdown (p. ej. ServiceSearch) pueda superponerse al contenido inferior.
+   */
+  search?: ReactNode;
   align?: 'left' | 'center';
   /**
    * Variante visual:
@@ -40,6 +46,7 @@ export function PageHero({
   title,
   subtitle,
   cta,
+  search,
   align = 'left',
   variant = 'primary',
   badge,
@@ -47,9 +54,10 @@ export function PageHero({
   compact = false,
 }: PageHeroProps) {
   const isPrimary = variant !== 'muted';
+  const overflowCls = search ? 'overflow-visible' : 'overflow-hidden';
   const containerCls = isPrimary
-    ? 'relative bg-hero-gradient text-text-inverse overflow-hidden'
-    : 'relative bg-page-warm text-text overflow-hidden border-b border-border-light';
+    ? `relative bg-hero-gradient text-text-inverse ${overflowCls}`
+    : `relative bg-page-warm text-text ${overflowCls} border-b border-border-light`;
 
   const eyebrowCls = isPrimary
     ? 'eyebrow-rule text-accent'
@@ -64,42 +72,50 @@ export function PageHero({
     : 'mt-3 text-base md:text-lg text-text-secondary leading-relaxed max-w-3xl text-pretty';
 
   const alignCls = align === 'center' ? 'text-center mx-auto' : 'max-w-3xl';
+  const eyebrowRowCls =
+    align === 'center' ? 'flex flex-wrap items-center justify-center gap-2 mb-3' : 'flex flex-wrap items-center gap-2 mb-3';
+  const ruleCls =
+    align === 'center'
+      ? `mt-4 h-[3px] w-14 rounded-full mx-auto ${isPrimary ? 'bg-accent/80' : 'bg-accent'}`
+      : `mt-4 h-[3px] w-14 rounded-full ${isPrimary ? 'bg-accent/80' : 'bg-accent'}`;
+  const subtitleAlignCls =
+    align === 'center' ? `${subtitleCls} mt-4 mx-auto` : `${subtitleCls} mt-4`;
 
   return (
     <section className={containerCls}>
       {/* Foto de fondo translúcida (variante primary con bgImage): aporta
           profundidad y textura sin competir con el texto. Opacidad baja para
-          mantener la legibilidad. Mismo tratamiento que el hero de la home. */}
+          mantener la legibilidad. Mismo tratamiento que el hero de la home.
+          overflow-hidden en capas de fondo para no filtrar la foto fuera del hero
+          cuando el section es overflow-visible por el slot search. */}
       {isPrimary && bgImage && (
-        <>
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
           <div
-            className="absolute inset-0 pointer-events-none bg-no-repeat bg-cover bg-center"
+            className="absolute inset-0 bg-no-repeat bg-cover bg-center"
             style={{ backgroundImage: `url('${bgImage}')`, opacity: 0.22 }}
-            aria-hidden="true"
           />
           {/* Veladura azul que preserva el contraste del texto inverso sobre
               la foto: más densa a la izquierda (donde va el copy) y algo más
               abierta en el centro para que se aprecie la textura. */}
           <div
-            className="absolute inset-0 pointer-events-none"
+            className="absolute inset-0"
             style={{ background: 'linear-gradient(100deg, rgba(13,27,62,0.80) 0%, rgba(13,27,62,0.42) 55%, rgba(13,27,62,0.66) 100%)' }}
-            aria-hidden="true"
           />
-        </>
+        </div>
       )}
       {/* Texturas no fotográficas: grid sutil + acentos radiales.
           Mantiene el "sello visual" sin imágenes. */}
       <div
-        className={`absolute inset-0 pointer-events-none ${isPrimary ? (bgImage ? 'bg-grid opacity-40' : 'bg-grid opacity-60') : 'bg-grid-soft opacity-70'}`}
+        className={`absolute inset-0 overflow-hidden pointer-events-none ${isPrimary ? (bgImage ? 'bg-grid opacity-40' : 'bg-grid opacity-60') : 'bg-grid-soft opacity-70'}`}
         aria-hidden="true"
       />
       <div
-        className={`absolute inset-0 pointer-events-none ${isPrimary ? 'bg-radial-accent' : 'bg-radial-accent-light'}`}
+        className={`absolute inset-0 overflow-hidden pointer-events-none ${isPrimary ? 'bg-radial-accent' : 'bg-radial-accent-light'}`}
         aria-hidden="true"
       />
       <Container size="lg" className={compact ? 'relative py-5 md:py-8' : 'relative py-8 md:py-12 lg:py-16'}>
         <div className={alignCls}>
-          <div className="flex flex-wrap items-center gap-2 mb-3">
+          <div className={eyebrowRowCls}>
             <span className={eyebrowCls}>{eyebrow}</span>
             {badge && (
               <span
@@ -116,11 +132,13 @@ export function PageHero({
           <h1 className={titleCls}>{title}</h1>
           {/* Línea dorada decorativa bajo el título: aporta jerarquía
               visual y un "sello" premium común a todas las páginas. */}
-          <div
-            className={`mt-4 h-[3px] w-14 rounded-full ${isPrimary ? 'bg-accent/80' : 'bg-accent'}`}
-            aria-hidden="true"
-          />
-          {subtitle && <p className={`${subtitleCls} mt-4`}>{subtitle}</p>}
+          <div className={ruleCls} aria-hidden="true" />
+          {subtitle && <p className={subtitleAlignCls}>{subtitle}</p>}
+          {search && (
+            <div className={`mt-6 ${align === 'center' ? 'mx-auto max-w-3xl' : 'max-w-3xl'}`}>
+              {search}
+            </div>
+          )}
           {cta && <div className="mt-5">{cta}</div>}
         </div>
       </Container>

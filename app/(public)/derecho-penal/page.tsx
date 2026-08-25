@@ -8,7 +8,7 @@ import { Section, SectionHeader, Container } from '@/components/marketing/sectio
 import { AnswerBlock } from '@/components/marketing/answer-block';
 import { getPostsByCategoryOrEmpty, formatDate } from '@/lib/blog';
 import { Card } from '@/components/ui/card';
-import { CTAGroup, UrgencyCallout } from '@/components/marketing/cta-buttons';
+import { UrgencyCallout } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
 import { TrustBar } from '@/components/marketing/trust-bar';
 import { ServiceCard } from '@/components/marketing/service-card';
@@ -190,19 +190,17 @@ const PRIORITY_PENAL_SLUGS = [
         badge={contentMap['hero.badge'] || 'Especialidad destacada'}
         title={contentMap['hero.title'] || hubPenal.heroTitle}
         subtitle={contentMap['hero.subtitle'] || hubPenal.heroSubtitle}
-        cta={<CTAGroup variant="inverse" />}
+        align="center"
         bgImage="/images/derecho-penal/pexels-ekaterina-bolovtsova-6077861.webp"
-      />
-
-      <div className="bg-background py-6 md:py-8">
-        <div className="mx-auto px-4 sm:px-6 max-w-7xl">
+        search={
           <ServiceSearch
             entries={catalog.entries}
             placeholder='Buscar en derecho penal: "defensa", "detención", "audiencia"…'
             domain="derecho-penal"
+            placement="hero"
           />
-        </div>
-      </div>
+        }
+      />
 
       <TrustBar background="light" />
 
