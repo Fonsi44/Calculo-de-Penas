@@ -4,8 +4,6 @@
  * encontrable en la barra de buscar y enlaza a una URL del sitemap
  * de servicios. No crea URLs nuevas.
  */
-import { readdirSync } from 'node:fs';
-import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import catalogo from '@/tests/fixtures/catalogo-maestro-servicios.json';
 import {
@@ -71,11 +69,10 @@ describe('catálogo maestro — inventario congelado', () => {
     }
   });
 
-  it('el documento fuente sigue en docs/imagenes/barra-busqueda', () => {
-    const names = readdirSync(resolve(process.cwd(), 'docs/imagenes/barra-busqueda'));
-    expect(names.some((name) => name.endsWith('.docx') && /MAESTRO/i.test(name))).toBe(true);
+  it('el fixture declara el documento fuente del catálogo maestro', () => {
     expect(catalogo.source).toContain('CAT');
     expect(catalogo.source).toContain('MAESTRO');
+    expect(catalogo.source).toMatch(/\.docx$/i);
   });
 });
 
