@@ -98,8 +98,9 @@ describe('contrato de claims públicos y entidades', () => {
 
   it('la UI, buscador e ItemList consumen la fuente canónica', () => {
     expect(hubSource).toContain('const areas = PUBLIC_SERVICE_CATALOG');
-    expect(hubSource).toContain('areas.map((a)');
+    expect(hubSource).toContain('areas.map((area');
     expect(hubSource).toContain('itemListElement: areas.map');
+    expect(hubSource).toContain('buildJuridicosCatalog');
     expect(hubSource).not.toContain('getAreasUnified');
   });
 

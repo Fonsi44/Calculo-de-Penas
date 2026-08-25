@@ -14,8 +14,9 @@ import { areaSchemas, migrantesHubHref } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { HubFaq } from '@/components/marketing/hub-faq';
+import { RespuestaDirecta } from '@/components/marketing/service-detail-blocks';
 import { sanitizeHtml } from '@/lib/sanitize';
-import { getPostsByCategory, formatDate } from '@/lib/blog';
+import { getPostsByCategoryOrEmpty, formatDate } from '@/lib/blog';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { SpainJurisdictionNotice } from '@/components/marketing/spain-jurisdiction-notice';
 import { ViewSpainServiceTracker } from '@/components/marketing/view-spain-service-tracker';
@@ -85,6 +86,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
       serviceType: `Hondureños en España — ${subarea.titulo}`,
       keywords: subarea.keywords,
       url: subareaUrl,
+      offers: subarea.subservicios.map((service) => ({ name: service.titulo })),
     },
     faqs: subarea.faqs,
     breadcrumbs: [
@@ -95,7 +97,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
     url: subareaUrl,
   });
 
-  const blogPosts = (await getPostsByCategory('hondurenos-en-espana')).slice(0, 3);
+  const blogPosts = (await getPostsByCategoryOrEmpty('hondurenos-en-espana')).slice(0, 3);
 
   return (
     <>
@@ -113,6 +115,10 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
       />
 
       <TrustBar background="light" />
+
+      {subarea.respuestaDirecta ? (
+        <RespuestaDirecta texto={subarea.respuestaDirecta} />
+      ) : null}
 
       {/* FASE 4 (§10) — Aviso jurisdiccional visible en cada subpágina. */}
       <SpainJurisdictionNotice />
@@ -165,7 +171,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
             {related.map((r) => {
               const RIcon = getIcon(r.icono);
               return (
-                <Link key={r.slug} href={`/hondurenos-en-espana/${r.slug}`} className="group block focus-visible:outline-none">
+                <Link key={r.slug} href={`/hondurenos-en-espana/${r.slug}`} className="group block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
                   <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
                     <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3 border border-primary/15">
                       <RIcon size={20} aria-hidden="true" />
@@ -183,7 +189,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
                 </Link>
               );
             })}
-            <Link href="/hondurenos-en-espana" className="group block focus-visible:outline-none">
+            <Link href="/hondurenos-en-espana" className="group block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
               <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
                 <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3 border border-primary/15">
                   <span className="font-extrabold text-lg">+</span>
@@ -231,7 +237,7 @@ export default async function MigranteSubareaPage({ params }: { params: Promise<
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {blogPosts.map((post) => (
-              <Link key={post.slug} href={`/blog/${post.category}/${post.slug}`} className="group block focus-visible:outline-none">
+              <Link key={post.slug} href={`/blog/${post.category}/${post.slug}`} className="group block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
                 <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
                   <div className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center mb-3 border border-accent/20">
                     <BookOpen size={20} aria-hidden="true" />

@@ -25,6 +25,7 @@ export type ServiceSchemaInput = {
   areaServed?: string[];
   keywords?: string[];
   url: string;
+  offers?: readonly { readonly name: string }[];
 };
 
 export function serviceSchema(input: ServiceSchemaInput) {
@@ -47,6 +48,23 @@ export function serviceSchema(input: ServiceSchemaInput) {
       name,
     })),
     url: input.url,
+    ...(input.offers && input.offers.length > 0
+      ? {
+          hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: `Servicios de ${input.serviceType}`,
+            itemListElement: input.offers.map((offer) => ({
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Service',
+                name: offer.name,
+                url: input.url,
+              },
+              url: input.url,
+            })),
+          },
+        }
+      : {}),
   };
 }
 

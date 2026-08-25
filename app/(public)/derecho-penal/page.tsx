@@ -6,7 +6,7 @@ import { site, absoluteUrl, FOUNDER_PROFILE, directWhatsappHref } from '@/lib/si
 import { buildMetadata } from '@/lib/seo';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { AnswerBlock } from '@/components/marketing/answer-block';
-import { getPostsByCategory, formatDate } from '@/lib/blog';
+import { getPostsByCategoryOrEmpty, formatDate } from '@/lib/blog';
 import { Card } from '@/components/ui/card';
 import { CTAGroup, UrgencyCallout } from '@/components/marketing/cta-buttons';
 import { PageHero } from '@/components/marketing/page-hero';
@@ -20,6 +20,7 @@ import { getAreasUnified } from '@/lib/areas-unified';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { getPageContent } from '@/lib/page-content-db';
 import { ServiceSearch } from '@/components/blog/service-search';
+import { buildPenalCatalog } from '@/lib/service-search-catalog';
 // FASE 3 — bloques de detalle para el hub penal.
 import {
   SituacionesHabituales,
@@ -63,6 +64,7 @@ export default async function DerechoPenalPage() {
   const url = penalHubHref();
   const penalGroups = await getAreasUnified('penal');
   const contentMap = await getPageContent('derecho-penal');
+  const catalog = buildPenalCatalog();
 
   // FAQs urgentes (acciones inmediatas ante detención/citación). Se renderizan
   // como contenido visible Y se incluyen en el FAQPage schema (antes quedaban
@@ -106,6 +108,7 @@ export default async function DerechoPenalPage() {
       serviceType: 'Defensa Penal',
       keywords: hubPenal.keywords,
       url,
+      offers: hubPenal.grupos.map((grupo) => ({ name: grupo.titulo })),
     },
     breadcrumbs: [
       { name: 'Inicio', url: absoluteUrl('/') },
@@ -127,7 +130,7 @@ const PRIORITY_PENAL_SLUGS = [
     'defensa-penal-honduras',
     'delitos-mas-comunes-honduras',
   ];
-  const allPenalPosts = await getPostsByCategory('derecho-penal');
+  const allPenalPosts = await getPostsByCategoryOrEmpty('derecho-penal');
   const penalStages: { etapa: string; riesgo: string; plazo: string; accion: string; icon: LucideIcon; num: number }[] = [
     {
       etapa: 'Detención o citación',
@@ -194,12 +197,8 @@ const PRIORITY_PENAL_SLUGS = [
       <div className="bg-background py-6 md:py-8">
         <div className="mx-auto px-4 sm:px-6 max-w-7xl">
           <ServiceSearch
-            items={penalGroups.map((g) => ({
-              href: `/derecho-penal/${g.slug}`,
-              title: g.titulo,
-              description: g.descripcionCorta || '',
-            }))}
-            placeholder='Buscar en derecho penal: "defensa", "detención", "audiencia"...'
+            entries={catalog.entries}
+            placeholder='Buscar en derecho penal: "defensa", "detención", "audiencia"…'
             domain="derecho-penal"
           />
         </div>
@@ -508,7 +507,7 @@ const PRIORITY_PENAL_SLUGS = [
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {blogPosts.map((post) => (
-              <Link key={post.slug} href={`/blog/${post.category}/${post.slug}`} className="group block focus-visible:outline-none">
+              <Link key={post.slug} href={`/blog/${post.category}/${post.slug}`} className="group block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
                 <Card padding="md" className="h-full group-hover:border-accent group-hover:shadow-md transition-all">
                   <div className="w-11 h-11 rounded-lg bg-accent/10 text-accent-dark flex items-center justify-center mb-3">
                     <BookOpen size={20} aria-hidden="true" />

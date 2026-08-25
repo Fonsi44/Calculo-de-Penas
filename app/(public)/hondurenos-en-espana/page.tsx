@@ -50,6 +50,7 @@ export default async function MigrantesPage() {
       serviceType: 'Asistencia Legal a Hondureños en España',
       keywords: hubMigrantes.keywords,
       url,
+      offers: hubMigrantes.subareas.map((subarea) => ({ name: subarea.titulo })),
     },
     breadcrumbs: [
       { name: 'Inicio', url: absoluteUrl('/') },
