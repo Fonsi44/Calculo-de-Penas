@@ -1,0 +1,25 @@
+{
+  "_comment": "Fuente de verdad versionada de la clasificación de indexabilidad de las landings locales (16 municipios). Los .mjs (IndexNow, llms.txt) y los módulos TS la consumen para mantener coherencia entre metadata, sitemap, IndexNow y llms.txt. La clasificación procede de docs/seo/current/local-landing-classification.csv (auditoría 2026-08-02): 7 landings conservan indexación (KEEP_SECONDARY_OPERATIONAL o KEEP_AND_IMPROVE) y 9 son NOINDEX_UNTIL_UNIQUE (sin valor local único demostrable). NO modificar salvo nueva decisión editorial documentada en Search Console.",
+  "schema_version": 1,
+  "updated_at": "2026-08-03",
+  "indexable": [
+    "nacaome",
+    "choluteca",
+    "san-lorenzo",
+    "goascoran",
+    "san-marcos-de-colon",
+    "el-triunfo",
+    "amapala"
+  ],
+  "noindex_until_unique": [
+    "pespire",
+    "marcovia",
+    "namasigue",
+    "orocuina",
+    "langue",
+    "caridad",
+    "alianza",
+    "concepcion-de-maria",
+    "san-antonio-de-flores"
+  ]
+}

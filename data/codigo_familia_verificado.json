@@ -1,0 +1,17 @@
+[
+  {"articulo":"Art. 194 CF","texto":"De no mediar acuerdo de los padres sobre la guarda y cuidado de los hijos, la cuestión se decidirá por el tribunal competente guiándose por lo más beneficioso para los menores.","tema":"custodia","verificado":true},
+  {"articulo":"Art. 198-C CF","texto":"El juez procederá para estas resoluciones sumariamente, oyendo a los parientes.","tema":"custodia","verificado":true},
+  {"articulo":"Art. 207 CF","texto":"Los alimentos deben ser proporcionales a los recursos de quien los debe y a las circunstancias de quien los recibe.","tema":"alimentos","verificado":true},
+  {"articulo":"Art. 207-F CF","texto":"Mientras el deudor alimentario no cumpla su obligación respecto de un niño, no será escuchado en reclamaciones de custodia, cuidado personal ni en el ejercicio de derechos sobre aquel.","tema":"alimentos_custodia","verificado":true},
+  {"articulo":"Art. 218 CF","texto":"Cuando recaiga sobre dos o más personas la obligación de dar alimentos, el pago se repartirá en cantidad proporcional a su respectivo patrimonio.","tema":"alimentos","verificado":true},
+  {"articulo":"Art. 217 CF","texto":"Regula las causas por las que termina la obligación de dar alimentos.","tema":"alimentos","verificado":true},
+  {"articulo":"Art. 219 CF","texto":"El juez determina la cuantía y la forma en que deben prestarse los alimentos.","tema":"alimentos","verificado":true},
+  {"articulo":"Art. 220 CF","texto":"La cuantía de los alimentos puede modificarse si cambian las circunstancias que la determinaron.","tema":"alimentos","verificado":true},
+  {"articulo":"Art. 225 CF","texto":"Prescriben en un año las pensiones alimenticias mensuales ya decretadas y no cobradas.","tema":"alimentos","verificado":true},
+  {"articulo":"Art. 236 CF","texto":"El divorcio disuelve el vínculo matrimonial y produce los efectos previstos por la ley.","tema":"divorcio","verificado":true},
+  {"articulo":"Art. 237 CF","texto":"El divorcio debe declararse mediante sentencia judicial.","tema":"divorcio","verificado":true},
+  {"articulo":"Art. 238 CF","texto":"Establece las causas legales de divorcio, entre ellas la separación o abandono injustificado por más de dos años.","tema":"divorcio","verificado":true},
+  {"articulo":"Art. 239 CF","texto":"Regula aspectos del ejercicio de la acción de divorcio.","tema":"divorcio","verificado":true},
+  {"articulo":"Art. 243 CF","texto":"Los cónyuges mayores de edad pueden divorciarse por mutuo consentimiento después de dos años de matrimonio.","tema":"divorcio_mutuo_consentimiento","verificado":true},
+  {"articulo":"Art. 244 CF","texto":"Regula los requisitos de la solicitud de divorcio por mutuo consentimiento.","tema":"divorcio_mutuo_consentimiento","verificado":true}
+]

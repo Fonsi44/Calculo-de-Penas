@@ -1,0 +1,459 @@
+{
+  "_comment": "Relaciones SEO canónicas por artículo (enlazado interno). Validadas por lib/seo/article-relations.ts. relatedArticles máx 2; officialSources solo verificadas (vacías hasta decisión jurídica).",
+  "schema_version": 1,
+  "updated_at": "2026-08-11",
+  "relations": [
+    {
+      "slug": "antejuicio-en-honduras",
+      "primaryService": "/derecho-penal",
+      "relatedArticles": [
+        "cuando-prescribe-delito-en-honduras",
+        "derechos-detenido-honduras-guia-constitucional"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "arraigo-social-laboral-hondurenos-espana",
+      "primaryService": "/hondurenos-en-espana",
+      "relatedArticles": [
+        "asuntos-familiares-honduras-espana"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "banco-demanda-deuda-defensa-opciones-honduras",
+      "primaryService": "/servicios-juridicos/derecho-bancario-y-financiero",
+      "relatedArticles": [
+        "tarjetas-credito-intereses-cargos-defensa-honduras",
+        "derechos-consumidor-financiero-honduras-cnbs"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "central-riesgos-honduras-consultar-impugnar",
+      "primaryService": "/servicios-juridicos/derecho-bancario-y-financiero",
+      "relatedArticles": [
+        "tarjetas-credito-intereses-cargos-defensa-honduras",
+        "derechos-consumidor-financiero-honduras-cnbs"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "clausulas-abusivas-contratos-como-detectar-honduras",
+      "primaryService": "/servicios-juridicos/derecho-civil-y-notarial",
+      "relatedArticles": [
+        "abogado-civil-choluteca",
+        "cobro-deudas-choluteca"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "competencia-desleal-como-denunciar-honduras",
+      "primaryService": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "relatedArticles": [
+        "titulos-valores-cheques-sin-fondo-honduras",
+        "contratos-franquicia-aspectos"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "constituir-empresa-guia-paso-a-paso-honduras",
+      "primaryService": "/despacho",
+      "relatedArticles": [
+        "pineda-asociados-bufete-multidisciplinario-honduras",
+        "como-elegir-abogado-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "contratacion-publica-licitaciones",
+      "primaryService": "/servicios-juridicos/derecho-administrativo-y-servicio-civil",
+      "relatedArticles": [
+        "expropiacion-forzosa-derechos-propietario-honduras",
+        "recurso-de-amparo-honduras-guia-completa"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "contratos-arrendamiento-derechos-obligaciones-honduras",
+      "primaryService": "/servicios-juridicos/derecho-civil-y-notarial",
+      "relatedArticles": [
+        "abogado-civil-choluteca",
+        "cobro-deudas-choluteca"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "creditos-reestructuracion-deudas",
+      "primaryService": "/servicios-juridicos/derecho-bancario-y-financiero",
+      "relatedArticles": [
+        "tarjetas-credito-intereses-cargos-defensa-honduras",
+        "derechos-consumidor-financiero-honduras-cnbs"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "custodia-hijos-honduras-juez",
+      "primaryService": "/servicios-juridicos/derecho-de-familia",
+      "relatedArticles": [
+        "pension-alimenticia-choluteca",
+        "pension-alimenticia-porcentaje-honduras-2026"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "defensa-penal-menores-edad-honduras",
+      "primaryService": "/derecho-penal",
+      "relatedArticles": [
+        "cuando-prescribe-delito-en-honduras",
+        "derechos-detenido-honduras-guia-constitucional"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "delitos-ambientales-como-denunciarlos-honduras",
+      "primaryService": "/servicios-juridicos/ambiental-regulatorio",
+      "relatedArticles": [
+        "derecho-ambiental-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "derechos-indigenas-consulta-previa-honduras",
+      "primaryService": "/servicios-juridicos/ambiental-regulatorio",
+      "relatedArticles": [
+        "derecho-ambiental-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "despido-empleados-publicos-honduras",
+      "primaryService": "/servicios-juridicos/derecho-administrativo-y-servicio-civil",
+      "relatedArticles": [
+        "expropiacion-forzosa-derechos-propietario-honduras",
+        "recurso-de-amparo-honduras-guia-completa"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "devolucion-impuestos-como-solicitarla-honduras",
+      "primaryService": "/servicios-juridicos/tributario-fiscal",
+      "relatedArticles": [
+        "defensa-sar-choluteca"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "ejecucion-hipotecaria-honduras-que-hacer",
+      "primaryService": "/servicios-juridicos/derecho-bancario-y-financiero",
+      "relatedArticles": [
+        "tarjetas-credito-intereses-cargos-defensa-honduras",
+        "derechos-consumidor-financiero-honduras-cnbs"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "estafas-fraudes-tipos-penales-honduras",
+      "primaryService": "/derecho-penal",
+      "relatedArticles": [
+        "cuando-prescribe-delito-en-honduras",
+        "derechos-detenido-honduras-guia-constitucional"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "evaluacion-impacto-ambiental-honduras",
+      "primaryService": "/servicios-juridicos/ambiental-regulatorio",
+      "relatedArticles": [
+        "derecho-ambiental-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "facturacion-electronica-requisitos-sar",
+      "primaryService": "/servicios-juridicos/tributario-fiscal",
+      "relatedArticles": [
+        "defensa-sar-choluteca"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "habilitacion-clinicas-hospitales",
+      "primaryService": "/servicios-juridicos/regulacion-sanitaria",
+      "relatedArticles": [
+        "registro-sanitario-alimentos-arsa-paso-a-paso-honduras",
+        "responsabilidad-medica-mala-praxis-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "herencias-transfronterizas-bienes",
+      "primaryService": "/hondurenos-en-espana",
+      "relatedArticles": [
+        "asuntos-familiares-honduras-espana"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "hondurenos-espana-documentos",
+      "primaryService": "/hondurenos-en-espana",
+      "relatedArticles": [
+        "asuntos-familiares-honduras-espana"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "importar-china-guia-aduanera",
+      "primaryService": "/servicios-juridicos/derecho-aduanero-y-comercio-exterior",
+      "relatedArticles": [
+        "codigo-aduanero-centroamericano",
+        "importaciones-san-lorenzo"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "impuesto-renta-personas-fisicas-honduras",
+      "primaryService": "/servicios-juridicos/tributario-fiscal",
+      "relatedArticles": [
+        "defensa-sar-choluteca"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "impuestos-pequenas-empresas-guia-basica-honduras",
+      "primaryService": "/servicios-juridicos/tributario-fiscal",
+      "relatedArticles": [
+        "defensa-sar-choluteca"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "incumplimiento-contrato-comercial-honduras",
+      "primaryService": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "relatedArticles": [
+        "titulos-valores-cheques-sin-fondo-honduras",
+        "contratos-franquicia-aspectos"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "isv-impuesto-venta-tasas-obligaciones-honduras",
+      "primaryService": "/servicios-juridicos/tributario-fiscal",
+      "relatedArticles": [
+        "defensa-sar-choluteca"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "jornada-laboral-horas-extra-descansos-honduras",
+      "primaryService": "/servicios-juridicos/derecho-laboral",
+      "relatedArticles": [
+        "contratos-empleadas-domesticas-obligaciones-honduras",
+        "contratos-trabajo-tipos-clausulas-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "libertad-expresion-redes-sociales-honduras",
+      "primaryService": "/servicios-juridicos",
+      "relatedArticles": [
+        "derecho-de-peticion-instituciones-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "licencia-ambiental-categorias-plazos-honduras",
+      "primaryService": "/servicios-juridicos/ambiental-regulatorio",
+      "relatedArticles": [
+        "derecho-ambiental-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "nacionalidad-espanola-para-hondurenos-residencia-plazos",
+      "primaryService": "/hondurenos-en-espana",
+      "relatedArticles": [
+        "asuntos-familiares-honduras-espana"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "naturalizacion-nacionalidad-hondurena",
+      "primaryService": "/servicios-juridicos/extranjeria-en-honduras",
+      "relatedArticles": [
+        "residencia-temporal-requisitos-plazos-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "permiso-trabajo-extranjeros-honduras",
+      "primaryService": "/servicios-juridicos/extranjeria-en-honduras",
+      "relatedArticles": [
+        "residencia-temporal-requisitos-plazos-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "poder-desde-espana-para-tramites-honduras",
+      "primaryService": "/hondurenos-en-espana",
+      "relatedArticles": [
+        "asuntos-familiares-honduras-espana"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "poder-notarial-honduras-tipos-requisitos",
+      "primaryService": "/servicios-juridicos/derecho-civil-y-notarial",
+      "relatedArticles": [
+        "poder-legal-honduras-cuando-se-necesita"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "presentar-denuncia-conadeh-honduras",
+      "primaryService": "/servicios-juridicos",
+      "relatedArticles": [
+        "derecho-de-peticion-instituciones-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "proceso-consulta-legal-pineda",
+      "primaryService": "/despacho",
+      "relatedArticles": [
+        "pineda-asociados-bufete-multidisciplinario-honduras",
+        "como-elegir-abogado-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "proteccion-datos-personales-derechos-arco-honduras",
+      "primaryService": "/servicios-juridicos",
+      "relatedArticles": [
+        "derecho-de-peticion-instituciones-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "reagrupacion-familiar-hondurenos-espana",
+      "primaryService": "/hondurenos-en-espana",
+      "relatedArticles": [
+        "asuntos-familiares-honduras-espana"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "reclamar-deuda-legalmente-honduras",
+      "primaryService": "/servicios-juridicos/derecho-civil-y-notarial",
+      "relatedArticles": [
+        "abogado-civil-choluteca",
+        "cobro-deudas-choluteca"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "refugio-asilo-solicitarlo",
+      "primaryService": "/servicios-juridicos/extranjeria-en-honduras",
+      "relatedArticles": [
+        "residencia-temporal-requisitos-plazos-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "registrar-marca-honduras-paso-a-paso",
+      "primaryService": "/servicios-juridicos/propiedad-intelectual",
+      "relatedArticles": [
+        "derechos-de-autor-proteccion-registro-honduras",
+        "proteccion-marcas-competencia-desleal"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "registro-medicamentos-productos-farmaceuticos-honduras",
+      "primaryService": "/servicios-juridicos/regulacion-sanitaria",
+      "relatedArticles": [
+        "registro-sanitario-alimentos-arsa-paso-a-paso-honduras",
+        "responsabilidad-medica-mala-praxis-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "sanciones-administrativas-como-defenderse-honduras",
+      "primaryService": "/servicios-juridicos/derecho-administrativo-y-servicio-civil",
+      "relatedArticles": [
+        "expropiacion-forzosa-derechos-propietario-honduras",
+        "recurso-de-amparo-honduras-guia-completa"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "sar-notifica-fiscalizacion-que-hacer-honduras",
+      "primaryService": "/servicios-juridicos/tributario-fiscal",
+      "relatedArticles": [
+        "defensa-sar-choluteca"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "testamentos-sucesiones-herencia-honduras",
+      "primaryService": "/servicios-juridicos/derecho-civil-y-notarial",
+      "relatedArticles": [
+        "abogado-civil-choluteca",
+        "cobro-deudas-choluteca"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "tipos-sociedad-mercantil-honduras",
+      "primaryService": "/servicios-juridicos/derecho-mercantil-empresarial",
+      "relatedArticles": [
+        "titulos-valores-cheques-sin-fondo-honduras",
+        "contratos-franquicia-aspectos"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "tributar-espana-bienes-guia",
+      "primaryService": "/hondurenos-en-espana",
+      "relatedArticles": [
+        "asuntos-familiares-honduras-espana"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "union-de-hecho-requisitos-derechos-honduras",
+      "primaryService": "/servicios-juridicos/derecho-de-familia",
+      "relatedArticles": [
+        "pension-alimenticia-choluteca",
+        "pension-alimenticia-porcentaje-honduras-2026"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "usucapion-prescripcion-adquisitiva-honduras",
+      "primaryService": "/servicios-juridicos/derecho-civil-y-notarial",
+      "relatedArticles": [
+        "abogado-civil-choluteca",
+        "cobro-deudas-choluteca"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "visas-inversion-rentista-pensionado",
+      "primaryService": "/servicios-juridicos/extranjeria-en-honduras",
+      "relatedArticles": [
+        "residencia-temporal-requisitos-plazos-honduras"
+      ],
+      "officialSources": []
+    },
+    {
+      "slug": "zonas-libres-zoli-beneficios-fiscales-honduras",
+      "primaryService": "/servicios-juridicos/derecho-aduanero-y-comercio-exterior",
+      "relatedArticles": [
+        "codigo-aduanero-centroamericano",
+        "importaciones-san-lorenzo"
+      ],
+      "officialSources": []
+    }
+  ]
+}

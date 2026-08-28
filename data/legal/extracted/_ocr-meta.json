@@ -1,0 +1,80 @@
+{
+  "updated": "2026-08-28",
+  "engine": "rapidocr-onnxruntime",
+  "dpi": 200,
+  "HN-LPC-24-2008": {
+    "path": "data/legal/extracted/HN-LPC-24-2008.txt",
+    "pdf": "leyes/ley_proteccion_consumidor_honduras.pdf",
+    "method": "ocr"
+  },
+  "HN-LJCA": {
+    "path": "data/legal/extracted/HN-LJCA.txt",
+    "pdf": "leyes/ley_jurisdiccion_contencioso_admin_honduras.pdf",
+    "method": "ocr"
+  },
+  "HN-LFE-EDU": {
+    "path": "data/legal/extracted/HN-LFE-EDU.txt",
+    "pdf": "leyes/ley_fundamental_educacion_honduras.pdf",
+    "method": "ocr"
+  },
+  "HN-LTP": {
+    "path": "data/legal/extracted/HN-LTP.txt",
+    "pdf": "leyes/ley_trata_personas_honduras.pdf",
+    "method": "ocr"
+  },
+  "HN-LFT": {
+    "path": "data/legal/extracted/HN-LFT.txt",
+    "pdf": "leyes/ley_financiamiento_terrorismo_honduras.pdf",
+    "method": "ocr"
+  },
+  "HN-LTC": {
+    "path": "data/legal/extracted/HN-LTC.txt",
+    "pdf": "leyes/ley_tarjetas_credito_honduras.pdf",
+    "method": "ocr"
+  },
+  "HN-LFAPVS": {
+    "path": "data/legal/extracted/HN-LFAPVS.txt",
+    "pdf": "leyes/ley_forestal_areas_protegidas_honduras.pdf",
+    "method": "ocr"
+  },
+  "HN-LLA": {
+    "path": "data/legal/extracted/HN-LLA.txt",
+    "pdf": "leyes/ley_lavado_activos_honduras.pdf",
+    "method": "ocr"
+  },
+  "HN-LMV": {
+    "path": "data/legal/extracted/HN-LMV.txt",
+    "pdf": "leyes/ley_mercado_valores_honduras.pdf",
+    "method": "ocr"
+  },
+  "HN-RLP": {
+    "path": "data/legal/extracted/HN-RLP.txt",
+    "pdf": "reglamentos/reglamento_ley_propiedad_honduras.pdf",
+    "method": "ocr"
+  },
+  "HN-RPEN": {
+    "path": "data/legal/extracted/HN-RPEN.txt",
+    "pdf": "reglamentos/reglamento_papel_especial_notarial_honduras.pdf",
+    "method": "ocr"
+  },
+  "HN-RCN": {
+    "path": "data/legal/extracted/HN-RCN.txt",
+    "pdf": "reglamentos/reglamento_codigo_notariado_honduras.pdf",
+    "method": "ocr"
+  },
+  "HN-LICP-243-2011": {
+    "path": "data/legal/extracted/HN-LICP-243-2011.txt",
+    "pdf": "leyes/ley_intervencion_comunicaciones_privadas_honduras.pdf",
+    "method": "ocr"
+  },
+  "HN-LFONG-249": {
+    "path": "data/legal/extracted/HN-LFONG-249.txt",
+    "pdf": "leyes/ley_fomento_ong_desarrollo_honduras.pdf",
+    "method": "ocr"
+  },
+  "HN-LMUN": {
+    "path": "data/legal/extracted/HN-LMUN.txt",
+    "pdf": "leyes/ley_municipalidades_honduras.pdf",
+    "method": "ocr"
+  }
+}

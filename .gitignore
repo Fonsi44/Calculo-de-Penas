@@ -50,7 +50,6 @@ Thumbs.db
 # ── Solo local (no subir a GitHub) ───────────────────────────
 /docs/
 /scripts/
-/data/
 .agents/skills/legal-notebooklm/
 .cursor/mcp.local.json
 
@@ -80,6 +79,17 @@ yarn-error.log*
 /reports/
 /generated/
 /.backups/
+/data/backups/
+/data/google/
+/data/bing/
+/data/seo/*
+!/data/seo/canonical-paths.json
+!/data/seo/editorial-cutover.json
+!/data/seo/preview-blog-fixtures.json
+!/data/seo/phase3-editorial-overrides.json
+!/data/seo/local-landing-indexability.json
+!/data/seo/sitemap-public-manifest.json
+!/data/seo/article-seo-relations.json
 *.tmp
 *.dump
 *.sql.gz

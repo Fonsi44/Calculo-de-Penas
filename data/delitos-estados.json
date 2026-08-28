@@ -1,0 +1,3391 @@
+{
+  "generado_en": "2026-06-11T11:37:39.407Z",
+  "fuente": "data/delitos-validacion.json",
+  "total_registros": 483,
+  "verificados": 483,
+  "pendientes_revision": 0,
+  "rechazados": 0,
+  "entradas": {
+    "Trato degradante__Art. 214 CP": {
+      "nombre": "Trato degradante",
+      "articulo": "Art. 214 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Amenaza para obtener confesión__Art. 215 CP": {
+      "nombre": "Amenaza para obtener confesión",
+      "articulo": "Art. 215 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Tortura (modalidad 1)__Art. 216 CP": {
+      "nombre": "Tortura (modalidad 1)",
+      "articulo": "Art. 216 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Tortura (modalidad 2)__Art. 216 CP": {
+      "nombre": "Tortura (modalidad 2)",
+      "articulo": "Art. 216 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Tortura (modalidad 3)__Art. 216 CP": {
+      "nombre": "Tortura (modalidad 3)",
+      "articulo": "Art. 216 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Tratos crueles, inhumanos o degradantes por funcionario público__Art. 217 CP": {
+      "nombre": "Tratos crueles, inhumanos o degradantes por funcionario público",
+      "articulo": "Art. 217 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Concursos__Art. 218 CP": {
+      "nombre": "Concursos",
+      "articulo": "Art. 218 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Trata de personas__Art. 219 CP": {
+      "nombre": "Trata de personas",
+      "articulo": "Art. 219 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 220 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 220 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Explotación en condiciones de esclavitud o servidumbre (modalidad 1)__Art. 221 CP": {
+      "nombre": "Explotación en condiciones de esclavitud o servidumbre (modalidad 1)",
+      "articulo": "Art. 221 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Explotación en condiciones de esclavitud o servidumbre (modalidad 2)__Art. 221 CP": {
+      "nombre": "Explotación en condiciones de esclavitud o servidumbre (modalidad 2)",
+      "articulo": "Art. 221 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Explotación de la mendicidad__Art. 222 CP": {
+      "nombre": "Explotación de la mendicidad",
+      "articulo": "Art. 222 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Inseminación artificial y otras técnicas de reproducción asistida no consentidas__Art. 223 CP": {
+      "nombre": "Inseminación artificial y otras técnicas de reproducción asistida no consentidas",
+      "articulo": "Art. 223 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Experimentación sin consentimiento__Art. 224 CP": {
+      "nombre": "Experimentación sin consentimiento",
+      "articulo": "Art. 224 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 225 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 225 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Concursos__Art. 226 CP": {
+      "nombre": "Concursos",
+      "articulo": "Art. 226 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Reincidencia internacional__Art. 227 CP": {
+      "nombre": "Reincidencia internacional",
+      "articulo": "Art. 227 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Abandono de menores de edad personas con discapacidad, ancianos o enfermos__Art. 228 CP": {
+      "nombre": "Abandono de menores de edad personas con discapacidad, ancianos o enfermos",
+      "articulo": "Art. 228 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Injuria__Art. 229 CP": {
+      "nombre": "Injuria",
+      "articulo": "Art. 229 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Calumnia__Art. 230 CP": {
+      "nombre": "Calumnia",
+      "articulo": "Art. 230 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Injurias y calumnias sobre institución supervisada__Art. 231 CP": {
+      "nombre": "Injurias y calumnias sobre institución supervisada",
+      "articulo": "Art. 231 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Concepto de publicidad__Art. 232 CP": {
+      "nombre": "Concepto de publicidad",
+      "articulo": "Art. 232 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad civil__Art. 233 CP": {
+      "nombre": "Responsabilidad civil",
+      "articulo": "Art. 233 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Procedibilidad y perdón__Art. 234 CP": {
+      "nombre": "Procedibilidad y perdón",
+      "articulo": "Art. 234 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Privación ilegal de libertad__Art. 235 CP": {
+      "nombre": "Privación ilegal de libertad",
+      "articulo": "Art. 235 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Privación ilegal de libertad agravada__Art. 236 CP": {
+      "nombre": "Privación ilegal de libertad agravada",
+      "articulo": "Art. 236 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Privación ilegal de libertad atenuada__Art. 237 CP": {
+      "nombre": "Privación ilegal de libertad atenuada",
+      "articulo": "Art. 237 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Privación ilegal de libertad realizada por funcionario o empleado público__Art. 238 CP": {
+      "nombre": "Privación ilegal de libertad realizada por funcionario o empleado público",
+      "articulo": "Art. 238 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Secuestro__Art. 239 CP": {
+      "nombre": "Secuestro",
+      "articulo": "Art. 239 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Secuestro agravado (modalidad 1)__Art. 240 CP": {
+      "nombre": "Secuestro agravado (modalidad 1)",
+      "articulo": "Art. 240 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Secuestro agravado (modalidad 2)__Art. 240 CP": {
+      "nombre": "Secuestro agravado (modalidad 2)",
+      "articulo": "Art. 240 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Secuestro agravado (modalidad 3)__Art. 240 CP": {
+      "nombre": "Secuestro agravado (modalidad 3)",
+      "articulo": "Art. 240 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Secuestro atenuado__Art. 241 CP": {
+      "nombre": "Secuestro atenuado",
+      "articulo": "Art. 241 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Secuestro realizado por funcionario o empleado público nacional o extranjero__Art. 242 CP": {
+      "nombre": "Secuestro realizado por funcionario o empleado público nacional o extranjero",
+      "articulo": "Art. 242 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Punibilidad de actos preparatorios__Art. 243 CP": {
+      "nombre": "Punibilidad de actos preparatorios",
+      "articulo": "Art. 243 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Concursos__Art. 244 CP": {
+      "nombre": "Concursos",
+      "articulo": "Art. 244 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Coacciones__Art. 245 CP": {
+      "nombre": "Coacciones",
+      "articulo": "Art. 245 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Amenazas__Art. 246 CP": {
+      "nombre": "Amenazas",
+      "articulo": "Art. 246 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Chantaje__Art. 247 CP": {
+      "nombre": "Chantaje",
+      "articulo": "Art. 247 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Desplazamiento forzado__Art. 248 CP": {
+      "nombre": "Desplazamiento forzado",
+      "articulo": "Art. 248 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Allanamiento de domicilio__Art. 270 CP": {
+      "nombre": "Allanamiento de domicilio",
+      "articulo": "Art. 270 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Allanamiento por funcionario o empleado público__Art. 271 CP": {
+      "nombre": "Allanamiento por funcionario o empleado público",
+      "articulo": "Art. 271 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Descubrimiento y revelación de secretos (modalidad 1)__Art. 272 CP": {
+      "nombre": "Descubrimiento y revelación de secretos (modalidad 1)",
+      "articulo": "Art. 272 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Descubrimiento y revelación de secretos (modalidad 2)__Art. 272 CP": {
+      "nombre": "Descubrimiento y revelación de secretos (modalidad 2)",
+      "articulo": "Art. 272 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Responsabilidad del funcionario o empleado público__Art. 273 CP": {
+      "nombre": "Responsabilidad del funcionario o empleado público",
+      "articulo": "Art. 273 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Revelación de secreto profesional__Art. 274 CP": {
+      "nombre": "Revelación de secreto profesional",
+      "articulo": "Art. 274 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 275 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 275 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 276 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 276 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Disposiciones comunes__Art. 277 CP": {
+      "nombre": "Disposiciones comunes",
+      "articulo": "Art. 277 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Bigamia__Art. 278 CP": {
+      "nombre": "Bigamia",
+      "articulo": "Art. 278 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Celebración de matrimonio inválido__Art. 279 CP": {
+      "nombre": "Celebración de matrimonio inválido",
+      "articulo": "Art. 279 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Autorización de matrimonio inválido__Art. 280 CP": {
+      "nombre": "Autorización de matrimonio inválido",
+      "articulo": "Art. 280 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Suposición de parto y ocultación o sustitución de menor (modalidad 1)__Art. 281 CP": {
+      "nombre": "Suposición de parto y ocultación o sustitución de menor (modalidad 1)",
+      "articulo": "Art. 281 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Suposición de parto y ocultación o sustitución de menor (modalidad 2)__Art. 281 CP": {
+      "nombre": "Suposición de parto y ocultación o sustitución de menor (modalidad 2)",
+      "articulo": "Art. 281 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Suposición de parto y ocultación o sustitución de menor (modalidad 3)__Art. 281 CP": {
+      "nombre": "Suposición de parto y ocultación o sustitución de menor (modalidad 3)",
+      "articulo": "Art. 281 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Adopción, acogida o guarda fraudulenta__Art. 282 CP": {
+      "nombre": "Adopción, acogida o guarda fraudulenta",
+      "articulo": "Art. 282 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Disposiciones comunes__Art. 283 CP": {
+      "nombre": "Disposiciones comunes",
+      "articulo": "Art. 283 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "No presentación o entrega de menores o personas con discapacidad__Art. 284 CP": {
+      "nombre": "No presentación o entrega de menores o personas con discapacidad",
+      "articulo": "Art. 284 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Inducción al abandono de hogar__Art. 285 CP": {
+      "nombre": "Inducción al abandono de hogar",
+      "articulo": "Art. 285 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Sustracción de menores o discapacitados necesitados de especial protección__Art. 286 CP": {
+      "nombre": "Sustracción de menores o discapacitados necesitados de especial protección",
+      "articulo": "Art. 286 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Atenuante específica__Art. 287 CP": {
+      "nombre": "Atenuante específica",
+      "articulo": "Art. 287 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Incumplimiento del deber de asistencia y sustento__Art. 288 CP": {
+      "nombre": "Incumplimiento del deber de asistencia y sustento",
+      "articulo": "Art. 288 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Maltrato familiar__Art. 289 CP": {
+      "nombre": "Maltrato familiar",
+      "articulo": "Art. 289 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Disposición común__Art. 290 CP": {
+      "nombre": "Disposición común",
+      "articulo": "Art. 290 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Delito contra la seguridad de los trabajadores__Art. 291 CP": {
+      "nombre": "Delito contra la seguridad de los trabajadores",
+      "articulo": "Art. 291 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Explotación laboral ilícita__Art. 292 CP": {
+      "nombre": "Explotación laboral ilícita",
+      "articulo": "Art. 292 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Explotación laboral infantil__Art. 293 CP": {
+      "nombre": "Explotación laboral infantil",
+      "articulo": "Art. 293 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Acoso laboral vertical__Art. 294 CP": {
+      "nombre": "Acoso laboral vertical",
+      "articulo": "Art. 294 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Delito de discriminación laboral__Art. 295 CP": {
+      "nombre": "Delito de discriminación laboral",
+      "articulo": "Art. 295 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 296 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 296 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Tráfico ilícito de personas (modalidad 1)__Art. 297 CP": {
+      "nombre": "Tráfico ilícito de personas (modalidad 1)",
+      "articulo": "Art. 297 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Tráfico ilícito de personas (modalidad 2)__Art. 297 CP": {
+      "nombre": "Tráfico ilícito de personas (modalidad 2)",
+      "articulo": "Art. 297 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Elaboración y comercio ilegal de medicamentos__Art. 298 CP": {
+      "nombre": "Elaboración y comercio ilegal de medicamentos",
+      "articulo": "Art. 298 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Imitación de alimentos, productos o sustancias__Art. 299 CP": {
+      "nombre": "Imitación de alimentos, productos o sustancias",
+      "articulo": "Art. 299 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Delito de dopaje__Art. 300 CP": {
+      "nombre": "Delito de dopaje",
+      "articulo": "Art. 300 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Elaboración no autorizada de sustancias nocivas__Art. 301 CP": {
+      "nombre": "Elaboración no autorizada de sustancias nocivas",
+      "articulo": "Art. 301 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Despacho o suministro ilegales de sustancias nocivas__Art. 302 CP": {
+      "nombre": "Despacho o suministro ilegales de sustancias nocivas",
+      "articulo": "Art. 302 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Falsificación de documentación preceptiva en la comercialización de medicamentos__Art. 303 CP": {
+      "nombre": "Falsificación de documentación preceptiva en la comercialización de medicamentos",
+      "articulo": "Art. 303 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 304 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 304 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Adulteración de agua potable y alimentos__Art. 305 CP": {
+      "nombre": "Adulteración de agua potable y alimentos",
+      "articulo": "Art. 305 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Suministración peligrosa de sustancias__Art. 306 CP": {
+      "nombre": "Suministración peligrosa de sustancias",
+      "articulo": "Art. 306 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Propagación de epidemias y de enfermedades infecto-contagiosas (modalidad 1)__Art. 307 CP": {
+      "nombre": "Propagación de epidemias y de enfermedades infecto-contagiosas (modalidad 1)",
+      "articulo": "Art. 307 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Propagación de epidemias y de enfermedades infecto-contagiosas (modalidad 2)__Art. 307 CP": {
+      "nombre": "Propagación de epidemias y de enfermedades infecto-contagiosas (modalidad 2)",
+      "articulo": "Art. 307 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Propagación de epidemias y de enfermedades infecto-contagiosas (modalidad 3)__Art. 307 CP": {
+      "nombre": "Propagación de epidemias y de enfermedades infecto-contagiosas (modalidad 3)",
+      "articulo": "Art. 307 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Inhabilitación__Art. 308 CP": {
+      "nombre": "Inhabilitación",
+      "articulo": "Art. 308 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de la personas jurídicas__Art. 309 CP": {
+      "nombre": "Responsabilidad de la personas jurídicas",
+      "articulo": "Art. 309 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Delito imprudente contra la salud pública y agravante especial__Art. 310 CP": {
+      "nombre": "Delito imprudente contra la salud pública y agravante especial",
+      "articulo": "Art. 310 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Tráfico de drogas__Art. 311 CP": {
+      "nombre": "Tráfico de drogas",
+      "articulo": "Art. 311 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas del tráfico de drogas__Art. 312 CP": {
+      "nombre": "Agravantes específicas del tráfico de drogas",
+      "articulo": "Art. 312 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Atenuantes específicas de tráfico de drogas__Art. 313 CP": {
+      "nombre": "Atenuantes específicas de tráfico de drogas",
+      "articulo": "Art. 313 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Tráfico de precursores__Art. 314 CP": {
+      "nombre": "Tráfico de precursores",
+      "articulo": "Art. 314 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas del tráfico de precursores__Art. 315 CP": {
+      "nombre": "Agravantes específicas del tráfico de precursores",
+      "articulo": "Art. 315 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Atenuantes específicas del tráfico de precursores__Art. 316 CP": {
+      "nombre": "Atenuantes específicas del tráfico de precursores",
+      "articulo": "Art. 316 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 317 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 317 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Punibilidad de actos preparatorios__Art. 318 CP": {
+      "nombre": "Punibilidad de actos preparatorios",
+      "articulo": "Art. 318 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Penas privativas de derechos__Art. 319 CP": {
+      "nombre": "Penas privativas de derechos",
+      "articulo": "Art. 319 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Reincidencia internacional__Art. 320 CP": {
+      "nombre": "Reincidencia internacional",
+      "articulo": "Art. 320 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Definiciones__Art. 321 CP": {
+      "nombre": "Definiciones",
+      "articulo": "Art. 321 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Criterio para la determinación de la cantidad de droga aprehendida__Art. 322 CP": {
+      "nombre": "Criterio para la determinación de la cantidad de droga aprehendida",
+      "articulo": "Art. 322 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Conducción temeraria__Art. 323 CP": {
+      "nombre": "Conducción temeraria",
+      "articulo": "Art. 323 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Contaminación del aire, las aguas o los suelos__Art. 324 CP": {
+      "nombre": "Contaminación del aire, las aguas o los suelos",
+      "articulo": "Art. 324 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Explotación ilegal de recursos naturales__Art. 325 CP": {
+      "nombre": "Explotación ilegal de recursos naturales",
+      "articulo": "Art. 325 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Manejo ilegal de desechos peligrosos__Art. 326 CP": {
+      "nombre": "Manejo ilegal de desechos peligrosos",
+      "articulo": "Art. 326 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Incendio forestal (modalidad 1)__Art. 327 CP": {
+      "nombre": "Incendio forestal (modalidad 1)",
+      "articulo": "Art. 327 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Incendio forestal (modalidad 2)__Art. 327 CP": {
+      "nombre": "Incendio forestal (modalidad 2)",
+      "articulo": "Art. 327 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Introducción de especies exógenas__Art. 328 CP": {
+      "nombre": "Introducción de especies exógenas",
+      "articulo": "Art. 328 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Propagación de plagas o enfermedades__Art. 329 CP": {
+      "nombre": "Propagación de plagas o enfermedades",
+      "articulo": "Art. 329 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Daños a especies amenazadas__Art. 330 CP": {
+      "nombre": "Daños a especies amenazadas",
+      "articulo": "Art. 330 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Captura ilegal de especímenes__Art. 331 CP": {
+      "nombre": "Captura ilegal de especímenes",
+      "articulo": "Art. 331 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas de los delitos contra la diversidad biológica__Art. 332 CP": {
+      "nombre": "Agravantes específicas de los delitos contra la diversidad biológica",
+      "articulo": "Art. 332 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Agravantes comunes a los delitos contra el medio ambiente__Art. 333 CP": {
+      "nombre": "Agravantes comunes a los delitos contra el medio ambiente",
+      "articulo": "Art. 333 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Privaciones de derechos__Art. 334 CP": {
+      "nombre": "Privaciones de derechos",
+      "articulo": "Art. 334 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Delito ambiental imprudente__Art. 335 CP": {
+      "nombre": "Delito ambiental imprudente",
+      "articulo": "Art. 335 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de funcionario o empleado público__Art. 336 CP": {
+      "nombre": "Responsabilidad de funcionario o empleado público",
+      "articulo": "Art. 336 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 337 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 337 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Atenuantes específicas__Art. 338 CP": {
+      "nombre": "Atenuantes específicas",
+      "articulo": "Art. 338 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Restauración del equilibrio ecológico__Art. 339 CP": {
+      "nombre": "Restauración del equilibrio ecológico",
+      "articulo": "Art. 339 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Reincidencia internacional__Art. 340 CP": {
+      "nombre": "Reincidencia internacional",
+      "articulo": "Art. 340 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Maltrato de animales__Art. 341 CP": {
+      "nombre": "Maltrato de animales",
+      "articulo": "Art. 341 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Abandono de animales__Art. 342 CP": {
+      "nombre": "Abandono de animales",
+      "articulo": "Art. 342 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Urbanización ilegal__Art. 343 CP": {
+      "nombre": "Urbanización ilegal",
+      "articulo": "Art. 343 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Aprobación irregular por parte de funcionario público__Art. 344 CP": {
+      "nombre": "Aprobación irregular por parte de funcionario público",
+      "articulo": "Art. 344 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad del funcionario público por omisión__Art. 345 CP": {
+      "nombre": "Responsabilidad del funcionario público por omisión",
+      "articulo": "Art. 345 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 346 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 346 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Demolición de lo ilícitamente construido__Art. 347 CP": {
+      "nombre": "Demolición de lo ilícitamente construido",
+      "articulo": "Art. 347 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Tráfico ilícito de bienes del patrimonio cultural__Art. 348 CP": {
+      "nombre": "Tráfico ilícito de bienes del patrimonio cultural",
+      "articulo": "Art. 348 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Alteración de inmuebles pertenecientes al patrimonio cultural__Art. 349 CP": {
+      "nombre": "Alteración de inmuebles pertenecientes al patrimonio cultural",
+      "articulo": "Art. 349 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Expolio de zonas arqueológicas__Art. 350 CP": {
+      "nombre": "Expolio de zonas arqueológicas",
+      "articulo": "Art. 350 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 351 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 351 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad del funcionario o empleado público__Art. 352 CP": {
+      "nombre": "Responsabilidad del funcionario o empleado público",
+      "articulo": "Art. 352 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 353 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 353 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Atenuantes específicas__Art. 354 CP": {
+      "nombre": "Atenuantes específicas",
+      "articulo": "Art. 354 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Restauración del patrimonio cultural__Art. 355 CP": {
+      "nombre": "Restauración del patrimonio cultural",
+      "articulo": "Art. 355 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Reincidencia internacional__Art. 356 CP": {
+      "nombre": "Reincidencia internacional",
+      "articulo": "Art. 356 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Hurto simple__Art. 357 CP": {
+      "nombre": "Hurto simple",
+      "articulo": "Art. 357 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Hurto de ganado o cosechas (modalidad 1)__Art. 358 CP": {
+      "nombre": "Hurto de ganado o cosechas (modalidad 1)",
+      "articulo": "Art. 358 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Hurto de ganado o cosechas (modalidad 2)__Art. 358 CP": {
+      "nombre": "Hurto de ganado o cosechas (modalidad 2)",
+      "articulo": "Art. 358 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Hurto de ganado o cosechas (modalidad 3)__Art. 358 CP": {
+      "nombre": "Hurto de ganado o cosechas (modalidad 3)",
+      "articulo": "Art. 358 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Hurto de ganado o cosechas (modalidad 4)__Art. 358 CP": {
+      "nombre": "Hurto de ganado o cosechas (modalidad 4)",
+      "articulo": "Art. 358 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Hurto de posesión__Art. 359 CP": {
+      "nombre": "Hurto de posesión",
+      "articulo": "Art. 359 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Robo con fuerza__Art. 360 CP": {
+      "nombre": "Robo con fuerza",
+      "articulo": "Art. 360 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Robo con violencia o intimidación__Art. 361 CP": {
+      "nombre": "Robo con violencia o intimidación",
+      "articulo": "Art. 361 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Robo de ganado (modalidad 1)__Art. 362 CP": {
+      "nombre": "Robo de ganado (modalidad 1)",
+      "articulo": "Art. 362 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Robo de ganado (modalidad 2)__Art. 362 CP": {
+      "nombre": "Robo de ganado (modalidad 2)",
+      "articulo": "Art. 362 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Robo de ganado (modalidad 3)__Art. 362 CP": {
+      "nombre": "Robo de ganado (modalidad 3)",
+      "articulo": "Art. 362 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 363 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 363 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Hurto y robo de uso de vehículo automotor (modalidad 1)__Art. 364 CP": {
+      "nombre": "Hurto y robo de uso de vehículo automotor (modalidad 1)",
+      "articulo": "Art. 364 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Hurto y robo de uso de vehículo automotor (modalidad 2)__Art. 364 CP": {
+      "nombre": "Hurto y robo de uso de vehículo automotor (modalidad 2)",
+      "articulo": "Art. 364 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Estafa__Art. 365 CP": {
+      "nombre": "Estafa",
+      "articulo": "Art. 365 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 366 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 366 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Estafas impropias__Art. 367 CP": {
+      "nombre": "Estafas impropias",
+      "articulo": "Art. 367 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 368 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 368 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Defraudaciones de energía, fluidos y telecomunicaciones__Art. 369 CP": {
+      "nombre": "Defraudaciones de energía, fluidos y telecomunicaciones",
+      "articulo": "Art. 369 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Administración fraudulenta__Art. 370 CP": {
+      "nombre": "Administración fraudulenta",
+      "articulo": "Art. 370 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Apropiación y retención indebidas__Art. 371 CP": {
+      "nombre": "Apropiación y retención indebidas",
+      "articulo": "Art. 371 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Apropiación irregular__Art. 372 CP": {
+      "nombre": "Apropiación irregular",
+      "articulo": "Art. 372 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Extorsión__Art. 373 CP": {
+      "nombre": "Extorsión",
+      "articulo": "Art. 373 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 374 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 374 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Atenuantes específicas__Art. 375 CP": {
+      "nombre": "Atenuantes específicas",
+      "articulo": "Art. 375 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Punición de actos preparatorios__Art. 376 CP": {
+      "nombre": "Punición de actos preparatorios",
+      "articulo": "Art. 376 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Reincidencia internacional__Art. 377 CP": {
+      "nombre": "Reincidencia internacional",
+      "articulo": "Art. 377 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Usurpación__Art. 378 CP": {
+      "nombre": "Usurpación",
+      "articulo": "Art. 378 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Alteración de términos o límites__Art. 379 CP": {
+      "nombre": "Alteración de términos o límites",
+      "articulo": "Art. 379 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Usurpación de aguas__Art. 380 CP": {
+      "nombre": "Usurpación de aguas",
+      "articulo": "Art. 380 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Daños__Art. 381 CP": {
+      "nombre": "Daños",
+      "articulo": "Art. 381 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Daños agravados__Art. 382 CP": {
+      "nombre": "Daños agravados",
+      "articulo": "Art. 382 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Daños a infraestructuras o equipamientos__Art. 383 CP": {
+      "nombre": "Daños a infraestructuras o equipamientos",
+      "articulo": "Art. 383 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Daños imprudentes__Art. 384 CP": {
+      "nombre": "Daños imprudentes",
+      "articulo": "Art. 384 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Perdón del ofendido__Art. 385 CP": {
+      "nombre": "Perdón del ofendido",
+      "articulo": "Art. 385 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Usura__Art. 386 CP": {
+      "nombre": "Usura",
+      "articulo": "Art. 386 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Loterías y juegos no autorizados__Art. 387 CP": {
+      "nombre": "Loterías y juegos no autorizados",
+      "articulo": "Art. 387 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Exención de responsabilidad__Art. 388 CP": {
+      "nombre": "Exención de responsabilidad",
+      "articulo": "Art. 388 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Delitos contra el derecho de autor y los derechos conexos__Art. 389 CP": {
+      "nombre": "Delitos contra el derecho de autor y los derechos conexos",
+      "articulo": "Art. 389 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 390 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 390 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Disfrute ilícito de servicios de acceso condicional (modalidad 1)__Art. 391 CP": {
+      "nombre": "Disfrute ilícito de servicios de acceso condicional (modalidad 1)",
+      "articulo": "Art. 391 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Disfrute ilícito de servicios de acceso condicional (modalidad 2)__Art. 391 CP": {
+      "nombre": "Disfrute ilícito de servicios de acceso condicional (modalidad 2)",
+      "articulo": "Art. 391 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Elusión de medidas tecnológicas__Art. 392 CP": {
+      "nombre": "Elusión de medidas tecnológicas",
+      "articulo": "Art. 392 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Uso ilegítimo de patente__Art. 393 CP": {
+      "nombre": "Uso ilegítimo de patente",
+      "articulo": "Art. 393 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Uso ilegítimo de distintivos o marcas registradas (modalidad 1)__Art. 394 CP": {
+      "nombre": "Uso ilegítimo de distintivos o marcas registradas (modalidad 1)",
+      "articulo": "Art. 394 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Uso ilegítimo de distintivos o marcas registradas (modalidad 2)__Art. 394 CP": {
+      "nombre": "Uso ilegítimo de distintivos o marcas registradas (modalidad 2)",
+      "articulo": "Art. 394 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Uso ilegítimo de distintivos o marcas registradas (modalidad 3)__Art. 394 CP": {
+      "nombre": "Uso ilegítimo de distintivos o marcas registradas (modalidad 3)",
+      "articulo": "Art. 394 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Uso ilegítimo de distintivos o marcas registradas (modalidad 4)__Art. 394 CP": {
+      "nombre": "Uso ilegítimo de distintivos o marcas registradas (modalidad 4)",
+      "articulo": "Art. 394 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Descubrimiento y revelación de secreto industrial o comercial (modalidad 1)__Art. 395 CP": {
+      "nombre": "Descubrimiento y revelación de secreto industrial o comercial (modalidad 1)",
+      "articulo": "Art. 395 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Descubrimiento y revelación de secreto industrial o comercial (modalidad 2)__Art. 395 CP": {
+      "nombre": "Descubrimiento y revelación de secreto industrial o comercial (modalidad 2)",
+      "articulo": "Art. 395 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 396 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 396 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 397 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 397 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Acceso no autorizado a sistemas informáticos__Art. 398 CP": {
+      "nombre": "Acceso no autorizado a sistemas informáticos",
+      "articulo": "Art. 398 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Daños a datos y sistemas informáticos (modalidad 1)__Art. 399 CP": {
+      "nombre": "Daños a datos y sistemas informáticos (modalidad 1)",
+      "articulo": "Art. 399 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Daños a datos y sistemas informáticos (modalidad 2)__Art. 399 CP": {
+      "nombre": "Daños a datos y sistemas informáticos (modalidad 2)",
+      "articulo": "Art. 399 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Daños a datos y sistemas informáticos (modalidad 3)__Art. 399 CP": {
+      "nombre": "Daños a datos y sistemas informáticos (modalidad 3)",
+      "articulo": "Art. 399 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Abuso de dispositivos__Art. 400 CP": {
+      "nombre": "Abuso de dispositivos",
+      "articulo": "Art. 400 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Suplantación de identidad__Art. 401 CP": {
+      "nombre": "Suplantación de identidad",
+      "articulo": "Art. 401 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Circunstancias agravantes__Art. 402 CP": {
+      "nombre": "Circunstancias agravantes",
+      "articulo": "Art. 402 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 403 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 403 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Reglas especiales de jurisdicción__Art. 404 CP": {
+      "nombre": "Reglas especiales de jurisdicción",
+      "articulo": "Art. 404 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Definiciones legales__Art. 405 CP": {
+      "nombre": "Definiciones legales",
+      "articulo": "Art. 405 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Delito de quiebra fraudulenta__Art. 406 CP": {
+      "nombre": "Delito de quiebra fraudulenta",
+      "articulo": "Art. 406 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 407 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 407 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Alzamiento de bienes__Art. 408 CP": {
+      "nombre": "Alzamiento de bienes",
+      "articulo": "Art. 408 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Insolvencia fraudulenta__Art. 409 CP": {
+      "nombre": "Insolvencia fraudulenta",
+      "articulo": "Art. 409 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Liquidación forzosa de instituciones financieras__Art. 410 CP": {
+      "nombre": "Liquidación forzosa de instituciones financieras",
+      "articulo": "Art. 410 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 411 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 411 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Detracción de materias primas u otros productos__Art. 412 CP": {
+      "nombre": "Detracción de materias primas u otros productos",
+      "articulo": "Art. 412 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Difusión de noticias o rumores falsos y abuso de información privilegiada__Art. 413 CP": {
+      "nombre": "Difusión de noticias o rumores falsos y abuso de información privilegiada",
+      "articulo": "Art. 413 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Agiotaje__Art. 414 CP": {
+      "nombre": "Agiotaje",
+      "articulo": "Art. 414 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Acuerdos y prácticas restrictivas de la competencia__Art. 415 CP": {
+      "nombre": "Acuerdos y prácticas restrictivas de la competencia",
+      "articulo": "Art. 415 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Obstaculización de procesos de licitación o subastas__Art. 416 CP": {
+      "nombre": "Obstaculización de procesos de licitación o subastas",
+      "articulo": "Art. 416 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 417 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 417 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Corrupción en los negocios entre particulares__Art. 418 CP": {
+      "nombre": "Corrupción en los negocios entre particulares",
+      "articulo": "Art. 418 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Corrupción en el deporte__Art. 419 CP": {
+      "nombre": "Corrupción en el deporte",
+      "articulo": "Art. 419 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Punición de actos preparatorios__Art. 420 CP": {
+      "nombre": "Punición de actos preparatorios",
+      "articulo": "Art. 420 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Atenuantes específicas__Art. 421 CP": {
+      "nombre": "Atenuantes específicas",
+      "articulo": "Art. 421 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Falsedad de cuentas, información financiera u otros__Art. 422 CP": {
+      "nombre": "Falsedad de cuentas, información financiera u otros",
+      "articulo": "Art. 422 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Gestión abusiva__Art. 423 CP": {
+      "nombre": "Gestión abusiva",
+      "articulo": "Art. 423 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Obtención de acuerdo mediante mayoría ficticia__Art. 424 CP": {
+      "nombre": "Obtención de acuerdo mediante mayoría ficticia",
+      "articulo": "Art. 424 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Negativa o impedimento del control de entidades supervisoras__Art. 425 CP": {
+      "nombre": "Negativa o impedimento del control de entidades supervisoras",
+      "articulo": "Art. 425 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Procedibilidad__Art. 426 CP": {
+      "nombre": "Procedibilidad",
+      "articulo": "Art. 426 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Concepto de sociedad__Art. 427 CP": {
+      "nombre": "Concepto de sociedad",
+      "articulo": "Art. 427 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Contrabando__Art. 428 CP": {
+      "nombre": "Contrabando",
+      "articulo": "Art. 428 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Penalidad del delito de contrabando__Art. 429 CP": {
+      "nombre": "Penalidad del delito de contrabando",
+      "articulo": "Art. 429 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 430 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 430 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Defraudación fiscal__Art. 431 CP": {
+      "nombre": "Defraudación fiscal",
+      "articulo": "Art. 431 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Fraude de subvenciones y ayudas__Art. 432 CP": {
+      "nombre": "Fraude de subvenciones y ayudas",
+      "articulo": "Art. 432 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Delito contable__Art. 433 CP": {
+      "nombre": "Delito contable",
+      "articulo": "Art. 433 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 434 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 434 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Fraude a la Seguridad Social o al Sistema de Pensiones__Art. 435 CP": {
+      "nombre": "Fraude a la Seguridad Social o al Sistema de Pensiones",
+      "articulo": "Art. 435 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Apropiación indebida de cuotas o aportaciones__Art. 436 CP": {
+      "nombre": "Apropiación indebida de cuotas o aportaciones",
+      "articulo": "Art. 436 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 437 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 437 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Receptación__Art. 438 CP": {
+      "nombre": "Receptación",
+      "articulo": "Art. 438 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Lavado de activos__Art. 439 CP": {
+      "nombre": "Lavado de activos",
+      "articulo": "Art. 439 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Lavado de activos imprudente__Art. 440 CP": {
+      "nombre": "Lavado de activos imprudente",
+      "articulo": "Art. 440 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Punición de actos preparatorios__Art. 441 CP": {
+      "nombre": "Punición de actos preparatorios",
+      "articulo": "Art. 441 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Testaferrato__Art. 442 CP": {
+      "nombre": "Testaferrato",
+      "articulo": "Art. 442 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Infidencia__Art. 443 CP": {
+      "nombre": "Infidencia",
+      "articulo": "Art. 443 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 444 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 444 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Extensión de la jurisdicción__Art. 445 CP": {
+      "nombre": "Extensión de la jurisdicción",
+      "articulo": "Art. 445 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Penalidad__Art. 446 CP": {
+      "nombre": "Penalidad",
+      "articulo": "Art. 446 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Falsificación de moneda__Art. 447 CP": {
+      "nombre": "Falsificación de moneda",
+      "articulo": "Art. 447 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Tráfico de monedas falsas__Art. 448 CP": {
+      "nombre": "Tráfico de monedas falsas",
+      "articulo": "Art. 448 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Tenencia de moneda falsa para su puesta en circulación__Art. 449 CP": {
+      "nombre": "Tenencia de moneda falsa para su puesta en circulación",
+      "articulo": "Art. 449 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Fabricación o tenencia de instrumentos para la falsificación de moneda__Art. 450 CP": {
+      "nombre": "Fabricación o tenencia de instrumentos para la falsificación de moneda",
+      "articulo": "Art. 450 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 451 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 451 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Reincidencia internacional__Art. 452 CP": {
+      "nombre": "Reincidencia internacional",
+      "articulo": "Art. 452 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Falsificación de sellos y otros efectos timbrados__Art. 453 CP": {
+      "nombre": "Falsificación de sellos y otros efectos timbrados",
+      "articulo": "Art. 453 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Tráfico de sellos y otros efectos timbrados falsos__Art. 454 CP": {
+      "nombre": "Tráfico de sellos y otros efectos timbrados falsos",
+      "articulo": "Art. 454 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 455 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 455 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Falsificación de documentos públicos y mercantiles__Art. 456 CP": {
+      "nombre": "Falsificación de documentos públicos y mercantiles",
+      "articulo": "Art. 456 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de ministros religiosos__Art. 457 CP": {
+      "nombre": "Responsabilidad de ministros religiosos",
+      "articulo": "Art. 457 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de funcionario o empleado público__Art. 458 CP": {
+      "nombre": "Responsabilidad de funcionario o empleado público",
+      "articulo": "Art. 458 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Uso de documento falso__Art. 459 CP": {
+      "nombre": "Uso de documento falso",
+      "articulo": "Art. 459 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Tráfico de documentos de identidad falsos__Art. 460 CP": {
+      "nombre": "Tráfico de documentos de identidad falsos",
+      "articulo": "Art. 460 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Falsificación de documentos privados__Art. 461 CP": {
+      "nombre": "Falsificación de documentos privados",
+      "articulo": "Art. 461 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Uso de documentos privados falsos__Art. 462 CP": {
+      "nombre": "Uso de documentos privados falsos",
+      "articulo": "Art. 462 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Falsificación de tarjetas bancarias y cheques de viaje__Art. 463 CP": {
+      "nombre": "Falsificación de tarjetas bancarias y cheques de viaje",
+      "articulo": "Art. 463 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Tráfico de tarjetas bancarias o cheques de viaje falsos__Art. 464 CP": {
+      "nombre": "Tráfico de tarjetas bancarias o cheques de viaje falsos",
+      "articulo": "Art. 464 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Tenencia de tarjetas bancarias o cheques de viaje falsos para su puesta en circulación__Art. 465 CP": {
+      "nombre": "Tenencia de tarjetas bancarias o cheques de viaje falsos para su puesta en circulación",
+      "articulo": "Art. 465 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Fabricación o tenencia de instrumentos para la falsificación de tarjetas bancarias y cheques de viaje__Art. 466 CP": {
+      "nombre": "Fabricación o tenencia de instrumentos para la falsificación de tarjetas bancarias y cheques de viaje",
+      "articulo": "Art. 466 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Falsedad en instrumentos financieros__Art. 467 CP": {
+      "nombre": "Falsedad en instrumentos financieros",
+      "articulo": "Art. 467 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 468 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 468 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 469 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 469 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Usurpación de la personalidad de otro__Art. 470 CP": {
+      "nombre": "Usurpación de la personalidad de otro",
+      "articulo": "Art. 470 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Usurpación de funciones públicas__Art. 471 CP": {
+      "nombre": "Usurpación de funciones públicas",
+      "articulo": "Art. 471 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Intrusismo profesional__Art. 472 CP": {
+      "nombre": "Intrusismo profesional",
+      "articulo": "Art. 472 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Uso indebido de uniforme, insignias y equipo policial o militar__Art. 473 CP": {
+      "nombre": "Uso indebido de uniforme, insignias y equipo policial o militar",
+      "articulo": "Art. 473 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Malversación por apropiación__Art. 474 CP": {
+      "nombre": "Malversación por apropiación",
+      "articulo": "Art. 474 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Malversación por uso__Art. 475 CP": {
+      "nombre": "Malversación por uso",
+      "articulo": "Art. 475 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Malversación por aplicación oficial diferente__Art. 476 CP": {
+      "nombre": "Malversación por aplicación oficial diferente",
+      "articulo": "Art. 476 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Administración desleal del patrimonio público__Art. 477 CP": {
+      "nombre": "Administración desleal del patrimonio público",
+      "articulo": "Art. 477 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 478 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 478 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Atenuantes específicas__Art. 479 CP": {
+      "nombre": "Atenuantes específicas",
+      "articulo": "Art. 479 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Malversación imprudente__Art. 480 CP": {
+      "nombre": "Malversación imprudente",
+      "articulo": "Art. 480 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Disposiciones generales__Art. 481 CP": {
+      "nombre": "Disposiciones generales",
+      "articulo": "Art. 481 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Fraude__Art. 482 CP": {
+      "nombre": "Fraude",
+      "articulo": "Art. 482 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Exacciones ilegales__Art. 483 CP": {
+      "nombre": "Exacciones ilegales",
+      "articulo": "Art. 483 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Enriquecimiento ilícito__Art. 484 CP": {
+      "nombre": "Enriquecimiento ilícito",
+      "articulo": "Art. 484 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Negociaciones incompatibles de funcionario o empleado público__Art. 485 CP": {
+      "nombre": "Negociaciones incompatibles de funcionario o empleado público",
+      "articulo": "Art. 485 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Negociaciones incompatibles de perito, árbitro y contadores__Art. 486 CP": {
+      "nombre": "Negociaciones incompatibles de perito, árbitro y contadores",
+      "articulo": "Art. 486 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Asesoramiento ilegal__Art. 487 CP": {
+      "nombre": "Asesoramiento ilegal",
+      "articulo": "Art. 487 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Uso de información privilegiada__Art. 488 CP": {
+      "nombre": "Uso de información privilegiada",
+      "articulo": "Art. 488 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Solicitud de actos de contenido sexual__Art. 489 CP": {
+      "nombre": "Solicitud de actos de contenido sexual",
+      "articulo": "Art. 489 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Tráfico de influencias cometido por funcionario público__Art. 490 CP": {
+      "nombre": "Tráfico de influencias cometido por funcionario público",
+      "articulo": "Art. 490 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Tráfico de influencias cometido por particular__Art. 491 CP": {
+      "nombre": "Tráfico de influencias cometido por particular",
+      "articulo": "Art. 491 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Cohecho propio__Art. 492 CP": {
+      "nombre": "Cohecho propio",
+      "articulo": "Art. 492 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Cohecho impropio__Art. 493 CP": {
+      "nombre": "Cohecho impropio",
+      "articulo": "Art. 493 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Cohecho posterior al acto__Art. 494 CP": {
+      "nombre": "Cohecho posterior al acto",
+      "articulo": "Art. 494 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Cohecho por consideración al cargo__Art. 495 CP": {
+      "nombre": "Cohecho por consideración al cargo",
+      "articulo": "Art. 495 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Cohecho cometido por particular__Art. 496 CP": {
+      "nombre": "Cohecho cometido por particular",
+      "articulo": "Art. 496 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Concusión__Art. 497 CP": {
+      "nombre": "Concusión",
+      "articulo": "Art. 497 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Prevaricato administrativo__Art. 498 CP": {
+      "nombre": "Prevaricato administrativo",
+      "articulo": "Art. 498 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Abuso de autoridad__Art. 499 CP": {
+      "nombre": "Abuso de autoridad",
+      "articulo": "Art. 499 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Anticipación, prolongación y abandono de funciones públicas__Art. 500 CP": {
+      "nombre": "Anticipación, prolongación y abandono de funciones públicas",
+      "articulo": "Art. 500 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Sustracción, destrucción, ocultación o inutilización de documento en custodia__Art. 501 CP": {
+      "nombre": "Sustracción, destrucción, ocultación o inutilización de documento en custodia",
+      "articulo": "Art. 501 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Facilitar destrucción de documento en custodia__Art. 502 CP": {
+      "nombre": "Facilitar destrucción de documento en custodia",
+      "articulo": "Art. 502 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Acceso a documentos secretos__Art. 503 CP": {
+      "nombre": "Acceso a documentos secretos",
+      "articulo": "Art. 503 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de los particulares__Art. 504 CP": {
+      "nombre": "Responsabilidad de los particulares",
+      "articulo": "Art. 504 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Revelación de secretos (modalidad 1)__Art. 505 CP": {
+      "nombre": "Revelación de secretos (modalidad 1)",
+      "articulo": "Art. 505 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Revelación de secretos (modalidad 2)__Art. 505 CP": {
+      "nombre": "Revelación de secretos (modalidad 2)",
+      "articulo": "Art. 505 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Revelación de secretos (modalidad 3)__Art. 505 CP": {
+      "nombre": "Revelación de secretos (modalidad 3)",
+      "articulo": "Art. 505 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Aprovechamiento de secreto o información privilegiada__Art. 506 CP": {
+      "nombre": "Aprovechamiento de secreto o información privilegiada",
+      "articulo": "Art. 506 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Usurpación de funciones y simulación de cargo por particular__Art. 507 CP": {
+      "nombre": "Usurpación de funciones y simulación de cargo por particular",
+      "articulo": "Art. 507 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 508 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 508 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Punición de actos preparatorios__Art. 509 CP": {
+      "nombre": "Punición de actos preparatorios",
+      "articulo": "Art. 509 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Colaboración eficaz con las autoridades__Art. 510 CP": {
+      "nombre": "Colaboración eficaz con las autoridades",
+      "articulo": "Art. 510 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 511 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 511 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Reincidencia internacional__Art. 512 CP": {
+      "nombre": "Reincidencia internacional",
+      "articulo": "Art. 512 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Encubrimiento__Art. 513 CP": {
+      "nombre": "Encubrimiento",
+      "articulo": "Art. 513 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Eximente de responsabilidad__Art. 514 CP": {
+      "nombre": "Eximente de responsabilidad",
+      "articulo": "Art. 514 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Omisión del deber de perseguir delitos__Art. 515 CP": {
+      "nombre": "Omisión del deber de perseguir delitos",
+      "articulo": "Art. 515 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Prevaricato judicial__Art. 516 CP": {
+      "nombre": "Prevaricato judicial",
+      "articulo": "Art. 516 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Denegación de justicia__Art. 517 CP": {
+      "nombre": "Denegación de justicia",
+      "articulo": "Art. 517 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Realización arbitraria del propio derecho__Art. 518 CP": {
+      "nombre": "Realización arbitraria del propio derecho",
+      "articulo": "Art. 518 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Falso testimonio__Art. 519 CP": {
+      "nombre": "Falso testimonio",
+      "articulo": "Art. 519 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Intimidación a testigos y otros intervinientes en el proceso penal__Art. 520 CP": {
+      "nombre": "Intimidación a testigos y otros intervinientes en el proceso penal",
+      "articulo": "Art. 520 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Revelación de identidad de testigo protegido__Art. 521 CP": {
+      "nombre": "Revelación de identidad de testigo protegido",
+      "articulo": "Art. 521 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Delito de falta de registro de clientes y su identificación__Art. 522 CP": {
+      "nombre": "Delito de falta de registro de clientes y su identificación",
+      "articulo": "Art. 522 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Coacción judicial__Art. 523 CP": {
+      "nombre": "Coacción judicial",
+      "articulo": "Art. 523 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Cohecho a sujetos procesales__Art. 524 CP": {
+      "nombre": "Cohecho a sujetos procesales",
+      "articulo": "Art. 524 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Desobediencia a mandato fiscal o judicial__Art. 525 CP": {
+      "nombre": "Desobediencia a mandato fiscal o judicial",
+      "articulo": "Art. 525 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Quebrantamiento de condena o medida__Art. 526 CP": {
+      "nombre": "Quebrantamiento de condena o medida",
+      "articulo": "Art. 526 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Favorecimiento de la evasión (modalidad 1)__Art. 527 CP": {
+      "nombre": "Favorecimiento de la evasión (modalidad 1)",
+      "articulo": "Art. 527 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Favorecimiento de la evasión (modalidad 2)__Art. 527 CP": {
+      "nombre": "Favorecimiento de la evasión (modalidad 2)",
+      "articulo": "Art. 527 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Favorecimiento de la evasión (modalidad 3)__Art. 527 CP": {
+      "nombre": "Favorecimiento de la evasión (modalidad 3)",
+      "articulo": "Art. 527 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Falsa denuncia o acusación__Art. 528 CP": {
+      "nombre": "Falsa denuncia o acusación",
+      "articulo": "Art. 528 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Simulación de infracción inexistente__Art. 529 CP": {
+      "nombre": "Simulación de infracción inexistente",
+      "articulo": "Art. 529 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Deslealtad profesional__Art. 530 CP": {
+      "nombre": "Deslealtad profesional",
+      "articulo": "Art. 530 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Delitos contra la administración de justicia de la Corte Penal Internacional__Art. 531 CP": {
+      "nombre": "Delitos contra la administración de justicia de la Corte Penal Internacional",
+      "articulo": "Art. 531 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Rebelión (modalidad 1)__Art. 532 CP": {
+      "nombre": "Rebelión (modalidad 1)",
+      "articulo": "Art. 532 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Rebelión (modalidad 2)__Art. 532 CP": {
+      "nombre": "Rebelión (modalidad 2)",
+      "articulo": "Art. 532 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Punición de actos preparatorios__Art. 533 CP": {
+      "nombre": "Punición de actos preparatorios",
+      "articulo": "Art. 533 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Infracción del deber de resistencia__Art. 534 CP": {
+      "nombre": "Infracción del deber de resistencia",
+      "articulo": "Art. 534 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Sedición__Art. 535 CP": {
+      "nombre": "Sedición",
+      "articulo": "Art. 535 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Punición de actos preparatorios__Art. 536 CP": {
+      "nombre": "Punición de actos preparatorios",
+      "articulo": "Art. 536 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Disposiciones comunes__Art. 537 CP": {
+      "nombre": "Disposiciones comunes",
+      "articulo": "Art. 537 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Ultraje a los símbolos nacionales__Art. 538 CP": {
+      "nombre": "Ultraje a los símbolos nacionales",
+      "articulo": "Art. 538 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Muerte, lesiones o secuestro del Presidente de la República__Art. 539 CP": {
+      "nombre": "Muerte, lesiones o secuestro del Presidente de la República",
+      "articulo": "Art. 539 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Punición de actos preparatorios__Art. 540 CP": {
+      "nombre": "Punición de actos preparatorios",
+      "articulo": "Art. 540 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Perturbación ilícita del funcionamiento de las instituciones (modalidad 1)__Art. 541 CP": {
+      "nombre": "Perturbación ilícita del funcionamiento de las instituciones (modalidad 1)",
+      "articulo": "Art. 541 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Perturbación ilícita del funcionamiento de las instituciones (modalidad 2)__Art. 541 CP": {
+      "nombre": "Perturbación ilícita del funcionamiento de las instituciones (modalidad 2)",
+      "articulo": "Art. 541 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Perturbación ilícita del funcionamiento de las instituciones (modalidad 3)__Art. 541 CP": {
+      "nombre": "Perturbación ilícita del funcionamiento de las instituciones (modalidad 3)",
+      "articulo": "Art. 541 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Coacción y amenaza electoral__Art. 542 CP": {
+      "nombre": "Coacción y amenaza electoral",
+      "articulo": "Art. 542 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Falsificación de documentos electorales__Art. 543 CP": {
+      "nombre": "Falsificación de documentos electorales",
+      "articulo": "Art. 543 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Otros delitos electorales__Art. 544 CP": {
+      "nombre": "Otros delitos electorales",
+      "articulo": "Art. 544 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Pena adicional a los extranjeros__Art. 545 CP": {
+      "nombre": "Pena adicional a los extranjeros",
+      "articulo": "Art. 545 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Suplantación de identidad hondureña para ejercer sufragio__Art. 546 CP": {
+      "nombre": "Suplantación de identidad hondureña para ejercer sufragio",
+      "articulo": "Art. 546 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Destrucción de propaganda__Art. 547 CP": {
+      "nombre": "Destrucción de propaganda",
+      "articulo": "Art. 547 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Limitación o Impedimento de determinados derechos fundamentales__Art. 548 CP": {
+      "nombre": "Limitación o Impedimento de determinados derechos fundamentales",
+      "articulo": "Art. 548 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Impedimento del ejercicio de otros derechos reconocidos en la Constitución__Art. 549 CP": {
+      "nombre": "Impedimento del ejercicio de otros derechos reconocidos en la Constitución",
+      "articulo": "Art. 549 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Obstaculización del ejercicio de la libertad religiosa y sus manifestaciones__Art. 550 CP": {
+      "nombre": "Obstaculización del ejercicio de la libertad religiosa y sus manifestaciones",
+      "articulo": "Art. 550 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Ofensas a los sentimientos religiosos__Art. 551 CP": {
+      "nombre": "Ofensas a los sentimientos religiosos",
+      "articulo": "Art. 551 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Violación de sepulturas y profanación de cadáveres__Art. 552 CP": {
+      "nombre": "Violación de sepulturas y profanación de cadáveres",
+      "articulo": "Art. 552 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Reuniones y manifestaciones ilícitas__Art. 553 CP": {
+      "nombre": "Reuniones y manifestaciones ilícitas",
+      "articulo": "Art. 553 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Asociación para delinquir__Art. 554 CP": {
+      "nombre": "Asociación para delinquir",
+      "articulo": "Art. 554 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Traición a la patria__Art. 555 CP": {
+      "nombre": "Traición a la patria",
+      "articulo": "Art. 555 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Inducción a actos de agresión contra la nación__Art. 556 CP": {
+      "nombre": "Inducción a actos de agresión contra la nación",
+      "articulo": "Art. 556 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Ataque a señales fronterizas__Art. 557 CP": {
+      "nombre": "Ataque a señales fronterizas",
+      "articulo": "Art. 557 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Levantamiento ilegal de planos de fortificaciones u otras obras__Art. 558 CP": {
+      "nombre": "Levantamiento ilegal de planos de fortificaciones u otras obras",
+      "articulo": "Art. 558 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Declaratoria ilegal de guerra o de paz__Art. 559 CP": {
+      "nombre": "Declaratoria ilegal de guerra o de paz",
+      "articulo": "Art. 559 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Delitos que comprometen la neutralidad__Art. 560 CP": {
+      "nombre": "Delitos que comprometen la neutralidad",
+      "articulo": "Art. 560 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Punición de actos preparatorios__Art. 561 CP": {
+      "nombre": "Punición de actos preparatorios",
+      "articulo": "Art. 561 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Pena de pérdida de la ciudadanía y nacionalidad__Art. 562 CP": {
+      "nombre": "Pena de pérdida de la ciudadanía y nacionalidad",
+      "articulo": "Art. 562 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Espionaje__Art. 563 CP": {
+      "nombre": "Espionaje",
+      "articulo": "Art. 563 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Incitación a la guerra o a la represalia__Art. 564 CP": {
+      "nombre": "Incitación a la guerra o a la represalia",
+      "articulo": "Art. 564 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Reclutamiento de tropas, utilización del territorio nacional y reclutamiento de mercenarios__Art. 565 CP": {
+      "nombre": "Reclutamiento de tropas, utilización del territorio nacional y reclutamiento de mercenarios",
+      "articulo": "Art. 565 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Violación de tregua o pacto, salvoconducto o tratado__Art. 566 CP": {
+      "nombre": "Violación de tregua o pacto, salvoconducto o tratado",
+      "articulo": "Art. 566 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Incumplimiento de contratos relativos a la seguridad de la Nación__Art. 567 CP": {
+      "nombre": "Incumplimiento de contratos relativos a la seguridad de la Nación",
+      "articulo": "Art. 567 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Sabotaje__Art. 568 CP": {
+      "nombre": "Sabotaje",
+      "articulo": "Art. 568 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 569 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 569 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Atentado__Art. 570 CP": {
+      "nombre": "Atentado",
+      "articulo": "Art. 570 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Punición de actos preparatorios__Art. 571 CP": {
+      "nombre": "Punición de actos preparatorios",
+      "articulo": "Art. 571 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Desobediencia__Art. 572 CP": {
+      "nombre": "Desobediencia",
+      "articulo": "Art. 572 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Desórdenes públicos__Art. 573 CP": {
+      "nombre": "Desórdenes públicos",
+      "articulo": "Art. 573 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Perturbación del orden__Art. 574 CP": {
+      "nombre": "Perturbación del orden",
+      "articulo": "Art. 574 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Disparo de arma de fuego__Art. 575 CP": {
+      "nombre": "Disparo de arma de fuego",
+      "articulo": "Art. 575 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Impedimento de tránsito a equipos de socorro o a centros de asistencia__Art. 576 CP": {
+      "nombre": "Impedimento de tránsito a equipos de socorro o a centros de asistencia",
+      "articulo": "Art. 576 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Abuso de llamadas de emergencia__Art. 577 CP": {
+      "nombre": "Abuso de llamadas de emergencia",
+      "articulo": "Art. 577 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Construcción o facilitación de pistas de aterrizaje__Art. 578 CP": {
+      "nombre": "Construcción o facilitación de pistas de aterrizaje",
+      "articulo": "Art. 578 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Introducción de objetos prohibidos__Art. 579 CP": {
+      "nombre": "Introducción de objetos prohibidos",
+      "articulo": "Art. 579 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Tenencia o porte ilegal de armas de fuego__Art. 580 CP": {
+      "nombre": "Tenencia o porte ilegal de armas de fuego",
+      "articulo": "Art. 580 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Depósito de armas de fuego, municiones o explosivos__Art. 581 CP": {
+      "nombre": "Depósito de armas de fuego, municiones o explosivos",
+      "articulo": "Art. 581 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Fabricación y tráfico ilícito de armas, municiones o explosivos__Art. 582 CP": {
+      "nombre": "Fabricación y tráfico ilícito de armas, municiones o explosivos",
+      "articulo": "Art. 582 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Facilitación de armas a terceros__Art. 583 CP": {
+      "nombre": "Facilitación de armas a terceros",
+      "articulo": "Art. 583 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agravantes específicas__Art. 584 CP": {
+      "nombre": "Agravantes específicas",
+      "articulo": "Art. 584 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Atenuantes específicas__Art. 585 CP": {
+      "nombre": "Atenuantes específicas",
+      "articulo": "Art. 585 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Penas privativas de derechos__Art. 586 CP": {
+      "nombre": "Penas privativas de derechos",
+      "articulo": "Art. 586 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Asociación terrorista__Art. 587 CP": {
+      "nombre": "Asociación terrorista",
+      "articulo": "Art. 587 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Colaboración sin pertenencia a la asociación terrorista (modalidad 1)__Art. 588 CP": {
+      "nombre": "Colaboración sin pertenencia a la asociación terrorista (modalidad 1)",
+      "articulo": "Art. 588 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Colaboración sin pertenencia a la asociación terrorista (modalidad 2)__Art. 588 CP": {
+      "nombre": "Colaboración sin pertenencia a la asociación terrorista (modalidad 2)",
+      "articulo": "Art. 588 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Delitos de terrorismo en particular__Art. 589 CP": {
+      "nombre": "Delitos de terrorismo en particular",
+      "articulo": "Art. 589 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Atenuantes específicas__Art. 590 CP": {
+      "nombre": "Atenuantes específicas",
+      "articulo": "Art. 590 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Asistencia a campos de entrenamiento__Art. 591 CP": {
+      "nombre": "Asistencia a campos de entrenamiento",
+      "articulo": "Art. 591 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Ciberterrorismo o terrorismo electrónico__Art. 592 CP": {
+      "nombre": "Ciberterrorismo o terrorismo electrónico",
+      "articulo": "Art. 592 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Punición de actos preparatorios__Art. 593 CP": {
+      "nombre": "Punición de actos preparatorios",
+      "articulo": "Art. 593 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Penas privativas de derechos__Art. 594 CP": {
+      "nombre": "Penas privativas de derechos",
+      "articulo": "Art. 594 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Reincidencia internacional__Art. 595 CP": {
+      "nombre": "Reincidencia internacional",
+      "articulo": "Art. 595 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Responsabilidad de las personas jurídicas__Art. 596 CP": {
+      "nombre": "Responsabilidad de las personas jurídicas",
+      "articulo": "Art. 596 CP",
+      "estado": "verificado",
+      "nota": "Verificado: los datos de pena existen en delitos.json y son consistentes.",
+      "articulo_sugerido": null
+    },
+    "Aborto__Art. 196 CP": {
+      "nombre": "Aborto",
+      "articulo": "Art. 196 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Asesinato__Art. 193 CP": {
+      "nombre": "Asesinato",
+      "articulo": "Art. 193 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Crimen de lesa humanidad__Art. 146 CP": {
+      "nombre": "Crimen de lesa humanidad",
+      "articulo": "Art. 146 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Desaparición forzada__Art. 141 CP": {
+      "nombre": "Desaparición forzada",
+      "articulo": "Art. 141 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Espionaje__Art. 151 CP": {
+      "nombre": "Espionaje",
+      "articulo": "Art. 151 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Estupro__Art. 252 CP": {
+      "nombre": "Estupro",
+      "articulo": "Art. 252 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Femicidio__Art. 208 CP": {
+      "nombre": "Femicidio",
+      "articulo": "Art. 208 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Genocidio__Art. 145 CP": {
+      "nombre": "Genocidio",
+      "articulo": "Art. 145 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Homicidio__Art. 192 CP": {
+      "nombre": "Homicidio",
+      "articulo": "Art. 192 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Homicidio imprudente__Art. 213 CP": {
+      "nombre": "Homicidio imprudente",
+      "articulo": "Art. 213 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Lesiones__Art. 199 CP": {
+      "nombre": "Lesiones",
+      "articulo": "Art. 199 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Lesiones graves__Art. 201 CP": {
+      "nombre": "Lesiones graves",
+      "articulo": "Art. 201 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Omisión del deber de socorro__Art. 204 CP": {
+      "nombre": "Omisión del deber de socorro",
+      "articulo": "Art. 204 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Parricidio__Art. 194 CP": {
+      "nombre": "Parricidio",
+      "articulo": "Art. 194 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Pedofilia__Art. 261 CP": {
+      "nombre": "Pedofilia",
+      "articulo": "Art. 261 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Piratería__Art. 161 CP": {
+      "nombre": "Piratería",
+      "articulo": "Art. 161 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Pornografía infantil__Art. 262 CP": {
+      "nombre": "Pornografía infantil",
+      "articulo": "Art. 262 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Proxenetismo__Art. 266 CP": {
+      "nombre": "Proxenetismo",
+      "articulo": "Art. 266 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Trata de personas__Art. 264 CP": {
+      "nombre": "Trata de personas",
+      "articulo": "Art. 264 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Trata de personas agravada__Art. 264 CP": {
+      "nombre": "Trata de personas agravada",
+      "articulo": "Art. 264 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Violación__Art. 249 CP": {
+      "nombre": "Violación",
+      "articulo": "Art. 249 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Violación agravada__Art. 250 CP": {
+      "nombre": "Violación agravada",
+      "articulo": "Art. 250 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Homicidio simple__Art. 192 CP": {
+      "nombre": "Homicidio simple",
+      "articulo": "Art. 192 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Homicidio agravado__Art. 193 CP": {
+      "nombre": "Homicidio agravado",
+      "articulo": "Art. 193 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Homicidio preterintencional__Art. 192 CP": {
+      "nombre": "Homicidio preterintencional",
+      "articulo": "Art. 192 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Inducción al suicidio__Art. 195 CP": {
+      "nombre": "Inducción al suicidio",
+      "articulo": "Art. 195 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Aborto consentido__Art. 196 CP": {
+      "nombre": "Aborto consentido",
+      "articulo": "Art. 196 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Aborto forzado__Art. 196 CP": {
+      "nombre": "Aborto forzado",
+      "articulo": "Art. 196 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Aborto imprudente__Art. 196 CP": {
+      "nombre": "Aborto imprudente",
+      "articulo": "Art. 196 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Lesiones leves__Art. 199 CP": {
+      "nombre": "Lesiones leves",
+      "articulo": "Art. 199 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Lesiones imprudentes__Art. 202 CP": {
+      "nombre": "Lesiones imprudentes",
+      "articulo": "Art. 202 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Mutilar__Art. 201 CP": {
+      "nombre": "Mutilar",
+      "articulo": "Art. 201 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Participación en riña__Art. 205 CP": {
+      "nombre": "Participación en riña",
+      "articulo": "Art. 205 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Lesiones al feto__Art. 203 CP": {
+      "nombre": "Lesiones al feto",
+      "articulo": "Art. 203 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agresión sexual__Art. 254 CP": {
+      "nombre": "Agresión sexual",
+      "articulo": "Art. 254 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Abuso sexual a menor impúber__Art. 261 CP": {
+      "nombre": "Abuso sexual a menor impúber",
+      "articulo": "Art. 261 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Corrupción de menores__Art. 260 CP": {
+      "nombre": "Corrupción de menores",
+      "articulo": "Art. 260 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Atentado contra la libertad de expresión__Art. 125 CP": {
+      "nombre": "Atentado contra la libertad de expresión",
+      "articulo": "Art. 125 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Atentado contra la libertad de culto__Art. 127 CP": {
+      "nombre": "Atentado contra la libertad de culto",
+      "articulo": "Art. 127 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Discriminación__Art. 124 CP": {
+      "nombre": "Discriminación",
+      "articulo": "Art. 124 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Traición__Art. 149 CP": {
+      "nombre": "Traición",
+      "articulo": "Art. 149 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Atentado contra la libertad de información__Art. 125 CP": {
+      "nombre": "Atentado contra la libertad de información",
+      "articulo": "Art. 125 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Atentado contra la libertad de reunión__Art. 126 CP": {
+      "nombre": "Atentado contra la libertad de reunión",
+      "articulo": "Art. 126 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Atentado al derecho de petición__Art. 129 CP": {
+      "nombre": "Atentado al derecho de petición",
+      "articulo": "Art. 129 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Crimen de guerra__Art. 148 CP": {
+      "nombre": "Crimen de guerra",
+      "articulo": "Art. 148 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Ejecución extrajudicial__Art. 192 CP": {
+      "nombre": "Ejecución extrajudicial",
+      "articulo": "Art. 192 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Tráfico ilegal de mano de obra__Art. 264 CP": {
+      "nombre": "Tráfico ilegal de mano de obra",
+      "articulo": "Art. 264 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Omisión del deber de socorro por profesional__Art. 204 CP": {
+      "nombre": "Omisión del deber de socorro por profesional",
+      "articulo": "Art. 204 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Contagio venéreo__Art. 207 CP": {
+      "nombre": "Contagio venéreo",
+      "articulo": "Art. 207 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Participación en riña tumultuaria__Art. 205 CP": {
+      "nombre": "Participación en riña tumultuaria",
+      "articulo": "Art. 205 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agresión sexual con penetración de objetos__Art. 254 CP": {
+      "nombre": "Agresión sexual con penetración de objetos",
+      "articulo": "Art. 254 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Exhibicionismo__Art. 269 CP": {
+      "nombre": "Exhibicionismo",
+      "articulo": "Art. 269 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Rufianería__Art. 268 CP": {
+      "nombre": "Rufianería",
+      "articulo": "Art. 268 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Atentado contra jefe de Estado extranjero__Art. 158 CP": {
+      "nombre": "Atentado contra jefe de Estado extranjero",
+      "articulo": "Art. 158 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Piratería aérea__Art. 161 CP": {
+      "nombre": "Piratería aérea",
+      "articulo": "Art. 161 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Lesiones con deformidad__Art. 201 CP": {
+      "nombre": "Lesiones con deformidad",
+      "articulo": "Art. 201 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Lesiones con pérdida de órgano__Art. 201 CP": {
+      "nombre": "Lesiones con pérdida de órgano",
+      "articulo": "Art. 201 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Lesiones con pérdida de sentido__Art. 201 CP": {
+      "nombre": "Lesiones con pérdida de sentido",
+      "articulo": "Art. 201 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Riña con resultado de muerte__Art. 206 CP": {
+      "nombre": "Riña con resultado de muerte",
+      "articulo": "Art. 206 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Contagio de ETS__Art. 207 CP": {
+      "nombre": "Contagio de ETS",
+      "articulo": "Art. 207 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Abuso sexual con penetración digital__Art. 260 CP": {
+      "nombre": "Abuso sexual con penetración digital",
+      "articulo": "Art. 260 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Violación de persona en estado de inconsciencia__Art. 249 CP": {
+      "nombre": "Violación de persona en estado de inconsciencia",
+      "articulo": "Art. 249 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agresión sexual con penetración de objetos agravada__Art. 255 CP": {
+      "nombre": "Agresión sexual con penetración de objetos agravada",
+      "articulo": "Art. 255 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Exhibicionismo ante menores__Art. 269 CP": {
+      "nombre": "Exhibicionismo ante menores",
+      "articulo": "Art. 269 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Pornografía infantil agravada__Art. 262 CP": {
+      "nombre": "Pornografía infantil agravada",
+      "articulo": "Art. 262 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Proxenetismo agravado__Art. 267 CP": {
+      "nombre": "Proxenetismo agravado",
+      "articulo": "Art. 267 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Turismo sexual infantil__Art. 264 CP": {
+      "nombre": "Turismo sexual infantil",
+      "articulo": "Art. 264 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Trata con fines de esclavitud__Art. 264 CP": {
+      "nombre": "Trata con fines de esclavitud",
+      "articulo": "Art. 264 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Discriminación racial__Art. 124 CP": {
+      "nombre": "Discriminación racial",
+      "articulo": "Art. 124 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Discriminación por orientación sexual__Art. 124 CP": {
+      "nombre": "Discriminación por orientación sexual",
+      "articulo": "Art. 124 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Atentado contra la libertad ideológica__Art. 124 CP": {
+      "nombre": "Atentado contra la libertad ideológica",
+      "articulo": "Art. 124 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Omisión del deber de socorro en accidente__Art. 204 CP": {
+      "nombre": "Omisión del deber de socorro en accidente",
+      "articulo": "Art. 204 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Aborto sin consentimiento agravado__Art. 196 CP": {
+      "nombre": "Aborto sin consentimiento agravado",
+      "articulo": "Art. 196 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Lesiones culposas graves__Art. 202 CP": {
+      "nombre": "Lesiones culposas graves",
+      "articulo": "Art. 202 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Riña con arma blanca__Art. 205 CP": {
+      "nombre": "Riña con arma blanca",
+      "articulo": "Art. 205 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Trata de menores__Art. 264 CP": {
+      "nombre": "Trata de menores",
+      "articulo": "Art. 264 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Agresión sexual a persona con discapacidad__Art. 256 CP": {
+      "nombre": "Agresión sexual a persona con discapacidad",
+      "articulo": "Art. 256 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Violación de persona con discapacidad__Art. 250 CP": {
+      "nombre": "Violación de persona con discapacidad",
+      "articulo": "Art. 250 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Abuso sexual con penetración digital a menor__Art. 261 CP": {
+      "nombre": "Abuso sexual con penetración digital a menor",
+      "articulo": "Art. 261 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Posesión de pornografía infantil__Art. 262 CP": {
+      "nombre": "Posesión de pornografía infantil",
+      "articulo": "Art. 262 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Distribución de pornografía infantil__Art. 262 CP": {
+      "nombre": "Distribución de pornografía infantil",
+      "articulo": "Art. 262 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Prostitución forzada__Art. 263 CP": {
+      "nombre": "Prostitución forzada",
+      "articulo": "Art. 263 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Explotación sexual de persona vulnerable__Art. 263 CP": {
+      "nombre": "Explotación sexual de persona vulnerable",
+      "articulo": "Art. 263 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Discriminación por enfermedad__Art. 124 CP": {
+      "nombre": "Discriminación por enfermedad",
+      "articulo": "Art. 124 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Discriminación por discapacidad__Art. 124 CP": {
+      "nombre": "Discriminación por discapacidad",
+      "articulo": "Art. 124 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Atentado contra la libertad de empresa__Art. 131 CP": {
+      "nombre": "Atentado contra la libertad de empresa",
+      "articulo": "Art. 131 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Atentado contra el derecho a la educación__Art. 130 CP": {
+      "nombre": "Atentado contra el derecho a la educación",
+      "articulo": "Art. 130 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    },
+    "Inutilización de buques o aeronaves__Art. 161 CP": {
+      "nombre": "Inutilización de buques o aeronaves",
+      "articulo": "Art. 161 CP",
+      "estado": "verificado",
+      "nota": null,
+      "articulo_sugerido": null
+    }
+  }
+}
