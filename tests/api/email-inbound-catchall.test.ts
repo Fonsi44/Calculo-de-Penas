@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Usamos vi.hoisted para setear env vars ANTES de que cualquier módulo se evalúe.
 vi.hoisted(() => {
-  process.env.INBOUND_FORWARD_TO = 'alfonsroiget@gmail.com';
+  process.env.INBOUND_FORWARD_TO = 'notifications@example.test';
   process.env.INBOUND_ALLOWED_DOMAIN = 'pinedayasociadoshn.com';
   process.env.RESEND_FROM_EMAIL = 'contacto@pinedayasociadoshn.com';
 });

@@ -24,12 +24,16 @@ describe('Sprint 3 — detención familiar en Nacaome', () => {
     expect(article.body).toContain('href="/equipo/danilo-pineda-maradiaga"');
   });
 
-  it('cubre qué no firmar, derecho a abogado, plazo constitucional y cuándo llamar', () => {
+  it('cubre qué no firmar, derecho a abogado, plazos constitucionales e intermedios, y cuándo llamar', () => {
     expect(article.body).toMatch(/no firme/i);
     expect(article.body).toMatch(/art\.\s*82/i);
     expect(article.body).toMatch(/art\.\s*84/i);
     expect(article.body).toMatch(/art\.\s*71/i);
+    expect(article.body).toMatch(/art\.\s*283 CPP/i);
+    expect(article.body).toMatch(/art\.\s*282 CPP/i);
+    expect(article.body).toMatch(/numeral 8/i);
     expect(article.body).toMatch(/veinticuatro horas/i);
+    expect(article.body).toMatch(/seis \(6\) horas/i);
     expect(article.body).toMatch(/lunes a sábado, de 7:00 a 20:00/);
     expect(article.body).toMatch(/WhatsApp/);
   });

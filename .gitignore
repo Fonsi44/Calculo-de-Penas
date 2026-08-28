@@ -51,6 +51,8 @@ Thumbs.db
 /docs/
 /scripts/
 /data/
+.agents/skills/legal-notebooklm/
+.cursor/mcp.local.json
 
 # ── Testing ─────────────────────────────────────────────────
 /coverage/

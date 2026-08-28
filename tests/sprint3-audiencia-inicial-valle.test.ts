@@ -25,12 +25,15 @@ describe('Sprint 3 — audiencia inicial en Juzgados de Letras de Valle', () => 
     expect(article.body).toContain('href="/equipo/danilo-pineda-maradiaga"');
   });
 
-  it('cita solo CPP verificado y no atribuye el art. 296 a la audiencia inicial', () => {
+  it('cita solo CPP verificado y refleja el sistema acusatorio vigente', () => {
     expect(article.body).toMatch(/art\.\s*264 CPP/i);
     expect(article.body).toMatch(/art\.\s*294 CPP/i);
     expect(article.body).toMatch(/art\.\s*285 CPP/i);
     expect(article.body).toMatch(/art\.\s*101 CPP/i);
     expect(article.body).toMatch(/art\.\s*289 CPP/i);
+    expect(article.body).toMatch(/art\.\s*447 CPP/i);
+    expect(article.body).toMatch(/acusatorio/i);
+    expect(article.body).not.toMatch(/inquisitiv/i);
     expect(article.body).not.toMatch(/art\.\s*296 CPP/i);
     expect(article.body).toMatch(/dependen del caso/i);
     expect(article.body).toMatch(/lunes a sábado, de 7:00 a 20:00/);

@@ -113,6 +113,9 @@ describe('isPublicApiPath — route classification', () => {
       '/api/revalidate',
       '/api/cron/sgie/procesar',
       '/api/cron/anything',
+      '/api/legal/corpus',
+      '/api/legal/search',
+      '/api/legal/context',
     ])('classifies %s as public (non-session)', (route) => {
       expect(isPublicApiPath(route)).toBe(true);
       expect(isSessionApiPath(route)).toBe(false);

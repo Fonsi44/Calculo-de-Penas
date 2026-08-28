@@ -96,13 +96,14 @@ const WEBHOOK_AUTH_API_PREFIXES = [
   '/api/email/inbound',
 ];
 
-// ── Categoría 5: APIs con CRON_SECRET ──
+// ── Categoría 5: APIs con CRON_SECRET o API key dedicada ──
 const CRON_AUTH_API_EXACT = new Set<string>([
   '/api/revalidate',
 ]);
 
 const CRON_AUTH_API_PREFIXES = [
   '/api/cron',
+  '/api/legal',
 ];
 
 const PUBLIC_PAGE_EXACT = new Set<string>([

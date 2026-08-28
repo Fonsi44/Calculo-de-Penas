@@ -30,19 +30,19 @@ const CASES = [
     article: CUSTODIA_VISITAS_JUZGADO_VALLE_ARTICLE,
     spoke: '/servicios-juridicos/derecho-de-familia',
     lawyer: '/equipo/thania-marlene-paz',
-    cites: [] as RegExp[],
+    cites: [/art\.\s*194 CF/i, /art\.\s*207-F CF/i, /art\.\s*68/i],
   },
   {
     article: DESPIDO_VALLE_DOCUMENTOS_EVALUACION_ARTICLE,
     spoke: '/servicios-juridicos/derecho-laboral',
     lawyer: '/equipo/emil-barahona',
-    cites: [/art\.\s*116 CT/i, /art\.\s*117 CT/i],
+    cites: [/art\.\s*116 CT/i, /art\.\s*117 CT/i, /art\.\s*113 CT/i, /art\.\s*21 CT/i, /art\.\s*39 CT/i],
   },
   {
     article: PRESTACIONES_PUERTO_SAN_LORENZO_ARTICLE,
     spoke: '/servicios-juridicos/derecho-laboral',
     lawyer: '/equipo/emil-barahona',
-    cites: [/art\.\s*116 CT/i],
+    cites: [/art\.\s*116 CT/i, /art\.\s*123 CT/i, /65-1966/i],
   },
   {
     article: DEFENSA_PENAL_CHOLUTECA_DESDE_NACAOME_ARTICLE,
@@ -54,13 +54,13 @@ const CASES = [
     article: TRAMITE_ADUANERO_GUASAULE_ABOGADO_ARTICLE,
     spoke: '/servicios-juridicos/derecho-aduanero-y-comercio-exterior',
     lawyer: undefined,
-    cites: [] as RegExp[],
+    cites: [/art\.\s*144/i],
   },
   {
     article: CONTRATO_COMPRAVENTA_NACAOME_REVISION_ARTICLE,
     spoke: '/servicios-juridicos/derecho-civil-y-notarial',
     lawyer: '/equipo/thania-marlene-paz',
-    cites: [/art\.\s*713 CC/i],
+    cites: [/art\.\s*713 CC/i, /art\.\s*15/i],
   },
   {
     article: PREPARAR_VISITA_OFICINA_NACAOME_ARTICLE,
