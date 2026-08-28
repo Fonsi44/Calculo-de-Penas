@@ -1,3 +1,0 @@
-"url","expected_status","actual_status","expected_location","actual_location","canonical","robots","in_sitemap","title","result"
-"/blog/derecho-civil/herencias-honduras-fallece-familiar","308","VALIDATE_AFTER_DEPLOY","/blog/derecho-civil/testamentos-sucesiones-herencia-honduras","","","","false","","PENDING_RUNTIME"
-"/blog/derecho-civil/testamentos-sucesiones-herencia-honduras","200","VALIDATE_AFTER_DEPLOY","","","https://www.pinedayasociadoshn.com/blog/derecho-civil/testamentos-sucesiones-herencia-honduras","index,follow","true","Testamentos y sucesiones en Honduras","PENDING_RUNTIME"

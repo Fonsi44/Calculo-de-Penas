@@ -1,9 +1,0 @@
-# Generado por scripts/audit-blog-table-cards-contract.ts (fase estática)
-# head=b829fe0752a0ee3718d45176e5f293f05161db7c date=2026-07-30T12:08:43.282Z
-tested_code_sha,slug,table_index,classification,source_rows,source_columns,source_cells,represented_source_cells,render_pattern,cards_generated,rendered_title_fields,rendered_value_fields,source_text_hash,rendered_text_hash,text_equivalent,links_before,links_after,links_equivalent,final_table_tags,information_loss,warnings,result
-b829fe0752a0ee3718d45176e5f293f05161db7c,banco-demanda-deuda-defensa-opciones-honduras,0,TWO_COLUMN_DEFINITION,4,2,8,8,CARDS,4,4,4,c96a73a0aec7,c96a73a0aec7,true,0,0,true,0,0,,PASS
-b829fe0752a0ee3718d45176e5f293f05161db7c,cuando-necesito-abogado-penalista-honduras,0,THREE_COLUMN_COMPARISON,5,3,15,15,CARDS,5,5,10,63aefb7d6d38,63aefb7d6d38,true,0,0,true,0,0,,PASS
-b829fe0752a0ee3718d45176e5f293f05161db7c,despido-laboral-honduras-guia-completa,0,THREE_COLUMN_COMPARISON,4,3,12,12,CARDS,4,4,8,22aaff8b0858,22aaff8b0858,true,0,0,true,0,0,,PASS
-b829fe0752a0ee3718d45176e5f293f05161db7c,divorcio-honduras-guia-completa,0,MULTI_COLUMN_COMPARISON,7,4,28,28,CARDS,7,7,21,5ca006d92180,5ca006d92180,true,0,0,true,0,0,,PASS
-b829fe0752a0ee3718d45176e5f293f05161db7c,habeas-corpus-cuando-interponer-honduras,0,THREE_COLUMN_COMPARISON,5,3,15,15,CARDS,5,5,10,674425a409a6,674425a409a6,true,0,0,true,0,0,,PASS
-b829fe0752a0ee3718d45176e5f293f05161db7c,mediacion-vs-juicio-cual-elegir,0,THREE_COLUMN_COMPARISON,5,3,15,15,CARDS,5,5,10,3f9d413a1836,3f9d413a1836,true,0,0,true,0,0,,PASS

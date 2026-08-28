@@ -1,4 +1,0 @@
-"source","target","decision","evidence","production_action","rollback"
-"https://www.pinedayasociadoshn.com/","","KEEP_PRIMARY_COMMERCIAL","7 impresiones GSC; contrato maestro de intención","NONE","n/a"
-"https://www.pinedayasociadoshn.com/abogados-en-nacaome","","KEEP_SECONDARY_OPERATIONAL","1 impresiones GSC; dirección, mapa, horario y modalidades de atención","NONE","n/a"
-"https://www.pinedayasociadoshn.com/blog/practica-legal/abogados-en-nacaome","","KEEP_INFORMATIONAL_REORIENTED","0 impresiones GSC; título informativo y enlace a home","REMOVE_EXISTING_REDIRECT_IN_PREVIEW","restaurar regla si la validación SERP demuestra solapamiento"
