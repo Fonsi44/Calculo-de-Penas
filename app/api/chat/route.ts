@@ -16,6 +16,7 @@ import { chatConfig } from '@/lib/chat/config';
 import { evaluateBlockingGuardrails, sanitizeReply, detectUrgency } from '@/lib/chat/guardrails';
 import { procesarMensajeLocal } from '@/lib/chat/rules-engine';
 import { routeChatMessage } from '@/lib/chat/router';
+import { buildChatLinks, buildChatSuggestions } from '@/lib/chat/suggestions';
 import {
   buildChatLegalPrompt,
   finalizeNlmAnswerForChat,
@@ -38,6 +39,9 @@ import {
   NotebookLmChatError,
 } from '@/lib/notebooklm/chat-client';
 
+/** Consultas NLM pueden tardar 1–2 min; Vercel debe esperar al proxy. */
+export const maxDuration = 300;
+
 export const runtime = 'nodejs';
 
 export async function POST(request: Request) {
@@ -54,7 +58,7 @@ export async function POST(request: Request) {
   if (!parsed.success) {
     return jsonError(parsed.error, 400);
   }
-  const { message, sessionId, conversationId } = parsed.data;
+  const { message, sessionId, conversationId, history, pageContext } = parsed.data;
 
   const ipRl = await rateLimit(ip, {
     keyPrefix: 'chat_ip',
@@ -174,11 +178,19 @@ export async function POST(request: Request) {
     }
   }
 
-  const result = procesarMensajeLocal(message);
+  const result = procesarMensajeLocal(message, {
+    history,
+    pageContext: pageContext ?? 'general',
+  });
+  const suggestions = buildChatSuggestions(result, pageContext ?? 'general');
+  const links = buildChatLinks(result);
   return Response.json({
     reply: sanitizeReply(result.reply),
     source: 'rules',
     urgent: result.urgent,
+    suggestions,
+    links,
+    whatsappDraft: result.whatsappDraft ?? undefined,
   });
 }
 

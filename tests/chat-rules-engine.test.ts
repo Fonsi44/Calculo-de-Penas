@@ -82,11 +82,9 @@ describe('rules-engine — límites legales', () => {
   });
 
   it('la respuesta de no_entendido deriva a contacto humano', () => {
-    // Mensaje ambiguo que no encaja en ninguna intención
     const r = procesarMensajeLocal('xyz qwerty asdf');
     expect(r.intencion).toBe('no_entendido');
-    expect(r.reply.toLowerCase()).toContain('contactar');
-    expect(r.reply.toLowerCase()).toMatch(/whatsapp|teléfono|despacho/);
+    expect(r.reply.toLowerCase()).toMatch(/whatsapp|despacho|preparar consulta/);
   });
 });
 
@@ -130,7 +128,7 @@ describe('rules-engine — checklists', () => {
     expect(r.intencion).toBe('checklist');
     expect(r.area).toBe('laboral');
     expect(r.reply.toLowerCase()).toContain('contrato');
-    expect(r.reply.toLowerCase()).toContain('orientativa');
+    expect(r.reply.toLowerCase()).toContain('orientativo');
   });
 
   it('pide aclarar área si no puede detectarla', () => {

@@ -40,6 +40,19 @@ export const chatRequestSchema = z.object({
     .max(128)
     .regex(/^[a-zA-Z0-9_-]+$/, 'conversationId inválido')
     .optional(),
+  /** Contexto de página pública para personalizar respuestas (sin PII). */
+  pageContext: z
+    .enum([
+      'home',
+      'migrantes',
+      'servicios',
+      'blog',
+      'faq',
+      'contacto',
+      'penal',
+      'general',
+    ])
+    .optional(),
 });
 
 export type ChatRequest = z.infer<typeof chatRequestSchema>;

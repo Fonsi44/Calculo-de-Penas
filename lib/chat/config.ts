@@ -48,6 +48,11 @@ export const chatConfig = {
     enabled: boolEnv('CHAT_NOTEBOOKLM_ENABLED', false),
     timeoutMs: numEnv('CHAT_NOTEBOOKLM_TIMEOUT_MS', 180_000),
     rateLimitPerSession: numEnv('CHAT_NOTEBOOKLM_RATE_LIMIT_PER_SESSION', 6),
+    /** Margen cliente > timeout servidor para consultas «una pregunta:». */
+    clientFetchTimeoutMs: numEnv('CHAT_NOTEBOOKLM_TIMEOUT_MS', 180_000) + 20_000,
+    clientNetworkErrorReply:
+      'La consulta al corpus legal se interrumpió o tardó demasiado en llegar al navegador. ' +
+      'Inténtelo de nuevo (puede tardar 1–2 minutos). Si cambia de pestaña, le avisaremos al terminar.',
   },
 
   /** Identidad del asistente mostrada en el widget (client). */

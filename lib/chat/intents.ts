@@ -16,6 +16,7 @@ export type Intencion =
   | 'formulario'
   | 'privacidad'
   | 'migrantes'
+  | 'consulta_juridica'
   | 'no_entendido';
 
 /** Intenciones que el router trata como consultas sobre el sitio/despacho. */

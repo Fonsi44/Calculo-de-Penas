@@ -30,6 +30,22 @@ import { usePathname } from 'next/navigation';
 import { Bot, Send, X, MessageCircle, Phone, ArrowRight, Zap } from 'lucide-react';
 import { telHref, whatsappHref } from '@/lib/site';
 import { chatConfig } from '@/lib/chat/config';
+import {
+  advanceConsultationFlow,
+  isActiveConsultationFlow,
+  isConsultationFlowStart,
+  startConsultationFlow,
+} from '@/lib/chat/consultation-flow';
+import { hasLawyerNotebookShortcut } from '@/lib/chat/lawyer-shortcut';
+import {
+  buildInitialQuickReplies,
+  getChatPageHint,
+  resolveChatPageContext,
+} from '@/lib/chat/page-context';
+import {
+  notifyChatResponseReady,
+  requestChatBrowserNotificationPermission,
+} from '@/lib/chat/notify-response-ready';
 import { sugerirAreaLegal } from '@/lib/chat/preconsulta';
 import {
   defaultChatSessionSnapshot,
@@ -46,10 +62,17 @@ import {
   trackChatWhatsAppClicked,
   trackChatContactClicked,
   trackChatServiceSuggested,
+  trackChatFeedback,
 } from './chat-analytics';
 
 import { useConsentObserver } from '@/hooks/use-consent-observer';
+import { useToast } from '@/components/ui/toast';
 import { ChatMessageBody } from './chat-message-body';
+import { ChatCopyResponseButton } from './chat-copy-response';
+import { ChatCopyWhatsappButton } from './chat-copy-whatsapp';
+import { ChatSuggestionChips } from './chat-suggestion-chips';
+import { ChatMessageLinks } from './chat-message-links';
+import { ChatFeedbackPrompt } from './chat-feedback-prompt';
 
 type Msg = ChatSessionMessage;
 
@@ -107,10 +130,14 @@ function whatsappContextual(topic?: string): string {
 export function ChatWidget() {
   const pathname = usePathname();
   const consentOpen = useConsentObserver();
+  const toast = useToast();
 
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [loadingLegal, setLoadingLegal] = useState(false);
+  const [hasUnreadResponse, setHasUnreadResponse] = useState(false);
+  const [showFeedbackPrompt, setShowFeedbackPrompt] = useState(false);
   const [error, setError] = useState(false);
   const chatSession = useSyncExternalStore(
     subscribeChatSessionStore,
@@ -120,6 +147,10 @@ export function ChatWidget() {
   const messages = chatSession.messages;
   const showQuickReplies = chatSession.showQuickReplies;
   const urgent = chatSession.urgent;
+  const consultationFlow = chatSession.consultationFlow;
+  const pageContext = resolveChatPageContext(pathname);
+  const initialQuickReplies = buildInitialQuickReplies(pathname, chatConfig.assistant.quickReplies);
+  const lastAssistantIndex = messages.reduce((acc, m, i) => (m.role === 'assistant' ? i : acc), -1);
   // `mounted` garantiza que el primer render del cliente coincida con el del
   // server (null). Antes se usaba `typeof document === 'undefined'`, lo que
   // provocaba un mismatch de hidratación (#418): el server renderizaba null y
@@ -135,6 +166,39 @@ export function ChatWidget() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const openBtnRef = useRef<HTMLButtonElement>(null);
+  const openRef = useRef(open);
+  useEffect(() => {
+    openRef.current = open;
+  }, [open]);
+
+  const openChat = useCallback(() => {
+    setHasUnreadResponse(false);
+    setOpen(true);
+  }, []);
+
+  const finishClose = useCallback(() => {
+    setShowFeedbackPrompt(false);
+    setOpen(false);
+    trackChatClosed();
+  }, []);
+
+  const close = useCallback(() => {
+    const hasUserMessages = messages.some((m) => m.role === 'user');
+    if (hasUserMessages && !chatSession.feedbackGiven && !showFeedbackPrompt) {
+      setShowFeedbackPrompt(true);
+      return;
+    }
+    finishClose();
+  }, [messages, chatSession.feedbackGiven, showFeedbackPrompt, finishClose]);
+
+  const submitFeedback = useCallback(
+    (helpful: boolean) => {
+      trackChatFeedback(helpful);
+      patchChatSessionStore({ feedbackGiven: true });
+      finishClose();
+    },
+    [finishClose],
+  );
 
   const isPrivateRoute =
     !pathname ||
@@ -149,6 +213,21 @@ export function ChatWidget() {
     if (!open) return;
     trackChatOpened();
   }, [open]);
+
+  useEffect(() => {
+    if (!open || chatSession.pageGreetingApplied) return;
+    const hint = getChatPageHint(pathname);
+    if (!hint.greeting) {
+      patchChatSessionStore({ pageGreetingApplied: true });
+      return;
+    }
+    const first = messages[0];
+    if (first?.role !== 'assistant') return;
+    patchChatSessionStore({
+      pageGreetingApplied: true,
+      messages: [{ ...first, content: `${hint.greeting}\n\n${first.content}` }],
+    });
+  }, [open, pathname, chatSession.pageGreetingApplied, messages]);
 
   useEffect(() => {
     if (!open) return;
@@ -170,13 +249,17 @@ export function ChatWidget() {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setOpen(false);
+        if (showFeedbackPrompt) {
+          finishClose();
+        } else {
+          close();
+        }
         openBtnRef.current?.focus();
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [open]);
+  }, [open, showFeedbackPrompt, close, finishClose]);
 
   // Bloquea scroll del body en móvil mientras el panel está abierto.
   useEffect(() => {
@@ -196,6 +279,12 @@ export function ChatWidget() {
       if (!content || loading) return;
       if (content.length > chatConfig.limits.maxMessageLength) return;
 
+      const isLegalQuery = hasLawyerNotebookShortcut(content);
+      if (isLegalQuery) {
+        void requestChatBrowserNotificationPermission();
+      }
+
+      const startedAt = Date.now();
       const sessionId = getOrCreateSessionId();
       const conversationId = getNlmConversationId();
       const userMsg: Msg = { role: 'user', content };
@@ -209,9 +298,47 @@ export function ChatWidget() {
         showQuickReplies: false,
       });
       setInput('');
-      setLoading(true);
-      setError(false);
       trackChatMessageSent();
+
+      if (isConsultationFlowStart(content)) {
+        const started = startConsultationFlow();
+        patchChatSessionStore({
+          messages: [
+            ...withUser,
+            {
+              role: 'assistant',
+              content: started.reply,
+              source: 'rules',
+              suggestions: started.suggestions,
+            },
+          ],
+          consultationFlow: started.flow,
+        });
+        return;
+      }
+
+      if (isActiveConsultationFlow(consultationFlow)) {
+        const result = advanceConsultationFlow(consultationFlow, content);
+        patchChatSessionStore({
+          messages: [
+            ...withUser,
+            {
+              role: 'assistant',
+              content: result.reply,
+              source: 'rules',
+              suggestions: result.suggestions,
+              links: result.kind === 'continue' ? result.links : result.links,
+              whatsappDraft: result.kind === 'complete' ? result.whatsappDraft : undefined,
+            },
+          ],
+          consultationFlow: result.kind === 'complete' ? null : result.flow,
+        });
+        return;
+      }
+
+      setLoading(true);
+      setLoadingLegal(isLegalQuery);
+      setError(false);
 
       // Detección de urgencia client-side (refuerzo del backend).
       const areaSugerida = sugerirAreaLegal(content);
@@ -227,11 +354,24 @@ export function ChatWidget() {
       const analyticsArea = areaSugerida ? AREA_TO_ANALYTICS[areaSugerida] ?? 'general' : null;
       if (analyticsArea) trackChatServiceSuggested(analyticsArea);
 
+      const fetchTimeoutMs = isLegalQuery
+        ? chatConfig.notebooklm.clientFetchTimeoutMs
+        : 45_000;
+      const controller = new AbortController();
+      const fetchTimer = window.setTimeout(() => controller.abort(), fetchTimeoutMs);
+
       try {
         const res = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: content, sessionId, history, conversationId }),
+          body: JSON.stringify({
+            message: content,
+            sessionId,
+            history,
+            conversationId,
+            pageContext,
+          }),
+          signal: controller.signal,
         });
 
         if (res.status === 429) {
@@ -257,6 +397,9 @@ export function ChatWidget() {
           source?: string;
           urgent?: boolean;
           conversationId?: string;
+          suggestions?: Msg['suggestions'];
+          links?: Msg['links'];
+          whatsappDraft?: string;
         };
         const reply = data.reply?.trim() || chatConfig.fallbackReply;
 
@@ -280,7 +423,14 @@ export function ChatWidget() {
         patchChatSessionStore({
           messages: [
             ...withUser,
-            { role: 'assistant', content: reply, source: data.source },
+            {
+              role: 'assistant',
+              content: reply,
+              source: data.source,
+              suggestions: data.suggestions,
+              links: data.links,
+              whatsappDraft: data.whatsappDraft,
+            },
           ],
           showQuickReplies: false,
         });
@@ -293,30 +443,63 @@ export function ChatWidget() {
         else if (lower.includes('migrante') || lower.includes('españa'))
           trackChatServiceSuggested('migrantes');
       } catch {
-        setError(true);
-        patchChatSessionStore({
-          messages: [
-            ...withUser,
-            { role: 'assistant', content: chatConfig.fallbackReply },
-          ],
-          showQuickReplies: false,
-        });
-        trackChatFallbackUsed('fallback_provider_error');
+        if (isLegalQuery) {
+          setError(false);
+          patchChatSessionStore({
+            messages: [
+              ...withUser,
+              {
+                role: 'assistant',
+                content: chatConfig.notebooklm.clientNetworkErrorReply,
+                source: 'fallback_provider_error',
+                suggestions: [
+                  { id: 'retry-legal', label: 'Reintentar consulta', message: content },
+                  { id: 'wa-legal', label: 'Enviar WhatsApp', message: 'Enviar WhatsApp' },
+                ],
+              },
+            ],
+            showQuickReplies: false,
+          });
+          trackChatFallbackUsed('fallback_provider_error');
+        } else {
+          setError(true);
+          patchChatSessionStore({
+            messages: [
+              ...withUser,
+              { role: 'assistant', content: chatConfig.fallbackReply },
+            ],
+            showQuickReplies: false,
+          });
+          trackChatFallbackUsed('fallback_provider_error');
+        }
       } finally {
+        window.clearTimeout(fetchTimer);
         setLoading(false);
+        setLoadingLegal(false);
+
+        const notify = notifyChatResponseReady({
+          startedAt,
+          question: content,
+          chatOpen: openRef.current,
+          onOpenChat: openChat,
+        });
+        if (notify.shouldMarkUnread) {
+          setHasUnreadResponse(true);
+        }
+        if (notify.shouldShowInAppToast) {
+          toast.success(
+            'Respuesta lista',
+            'Abra el chat para leer la respuesta del asistente.',
+          );
+        }
       }
     },
-    [loading, messages],
+    [loading, messages, consultationFlow, pageContext, openChat, toast],
   );
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     void sendMessage(input);
-  };
-
-  const close = () => {
-    setOpen(false);
-    trackChatClosed();
   };
 
   // Salvaguarda anti-rutas-privadas (defensa en profundidad). La protección
@@ -415,7 +598,19 @@ export function ChatWidget() {
                 {m.role === 'user' ? (
                   m.content
                 ) : (
-                  <ChatMessageBody content={m.content} source={m.source} />
+                  <>
+                    <ChatMessageBody content={m.content} source={m.source} />
+                    {m.whatsappDraft && <ChatCopyWhatsappButton text={m.whatsappDraft} />}
+                    <ChatCopyResponseButton text={m.content} />
+                    {m.links && m.links.length > 0 && <ChatMessageLinks links={m.links} />}
+                    {i === lastAssistantIndex && m.suggestions && m.suggestions.length > 0 && (
+                      <ChatSuggestionChips
+                        suggestions={m.suggestions}
+                        disabled={loading}
+                        onSelect={(msg) => void sendMessage(msg)}
+                      />
+                    )}
+                  </>
                 )}
                 {m.role === 'assistant' && m.source === 'notebooklm' && (
                   <p className="mt-3 text-xs text-text-muted border-t border-border-light/60 pt-2 md:mt-1.5 md:text-xxs md:pt-1.5">
@@ -432,7 +627,11 @@ export function ChatWidget() {
                   <span className="w-1.5 h-1.5 rounded-full bg-accent/60 animate-pulse" style={{ animationDelay: '0.15s' }} />
                   <span className="w-1.5 h-1.5 rounded-full bg-accent/60 animate-pulse" style={{ animationDelay: '0.3s' }} />
                 </span>
-                <span>Consultando corpus legal (puede tardar 1–2 min)…</span>
+                <span>
+                  {loadingLegal
+                    ? 'Consultando corpus legal (puede tardar 1–2 min). Si cambia de pestaña, le avisaremos al terminar…'
+                    : 'Consultando…'}
+                </span>
               </div>
             )}
 
@@ -458,7 +657,7 @@ export function ChatWidget() {
             {/* Quick replies: solo al inicio, ocultas tras el primer mensaje */}
             {showQuickReplies && (
               <div className="flex flex-wrap gap-2 md:gap-1.5 md:mr-auto md:max-w-[92%]">
-                {chatConfig.assistant.quickReplies.map((qr) => {
+                {initialQuickReplies.map((qr) => {
                   const isUrgent = qr === 'Caso urgente';
                   return (
                     <button
@@ -479,6 +678,13 @@ export function ChatWidget() {
               </div>
             )}
           </div>
+
+          {showFeedbackPrompt && (
+            <ChatFeedbackPrompt
+              onFeedback={submitFeedback}
+              onDismiss={finishClose}
+            />
+          )}
 
           {/* Contacto rápido — compacto en móvil para dejar espacio al texto */}
           <div className="flex items-center gap-2 px-4 py-2 md:px-3 border-t border-border-light bg-surface-alt/50 shrink-0">
@@ -557,13 +763,19 @@ export function ChatWidget() {
       <button
         ref={openBtnRef}
         type="button"
-        onClick={() => setOpen(true)}
-        aria-label="Abrir asistente virtual"
+        onClick={openChat}
+        aria-label={hasUnreadResponse ? 'Abrir asistente virtual (respuesta lista)' : 'Abrir asistente virtual'}
         aria-expanded={false}
         aria-controls="chat-asistente-virtual"
-        className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-4 z-[9998] w-14 h-14 sm:w-12 sm:h-12 rounded-full bg-primary text-text-inverse flex items-center justify-center btn-shadow-primary btn-shadow-primary-hover active:scale-95 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+        className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-4 z-[9998] w-14 h-14 sm:w-12 sm:h-12 rounded-full bg-primary text-text-inverse flex items-center justify-center btn-shadow-primary btn-shadow-primary-hover active:scale-95 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 relative"
         style={{ pointerEvents: 'auto' }}
       >
+        {hasUnreadResponse && (
+          <span
+            className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-accent border-2 border-primary"
+            aria-hidden="true"
+          />
+        )}
         <MessageCircle size={22} className="sm:w-5 sm:h-5" aria-hidden="true" />
         <span className="sr-only">Asistente virtual de Pineda y Asociados</span>
       </button>

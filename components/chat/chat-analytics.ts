@@ -41,3 +41,7 @@ export function trackChatServiceSuggested(
 ) {
   trackEvent('chat_service_suggested', { area });
 }
+
+export function trackChatFeedback(helpful: boolean) {
+  trackEvent('chat_feedback', { helpful });
+}
