@@ -47,8 +47,8 @@ const COBERTURA = [
 
 function FooterFold({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <details className="md:pointer-events-none" open>
-      <summary className="flex items-center justify-between gap-2 mb-3 pb-2 border-b border-accent/20 cursor-pointer list-none md:cursor-default [&::-webkit-details-marker]:hidden">
+    <details open>
+      <summary className="flex items-center justify-between gap-2 mb-3 pb-2 border-b border-accent/20 cursor-pointer list-none md:cursor-default md:pointer-events-none [&::-webkit-details-marker]:hidden">
         <h3 className="text-xxs font-bold uppercase tracking-footer text-accent">{title}</h3>
         <span className="md:hidden text-accent text-sm leading-none" aria-hidden="true">+</span>
       </summary>
