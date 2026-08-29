@@ -3,6 +3,7 @@ import path from 'path';
 import { existsSync } from 'node:fs';
 
 const hasScripts = existsSync(path.resolve(__dirname, 'scripts'));
+const hasDocs = existsSync(path.resolve(__dirname, 'docs'));
 
 /** Tests que importan o leen `scripts/` (gitignored en checkout público). */
 const SCRIPT_DEPENDENT_TESTS = [
@@ -21,6 +22,24 @@ const SCRIPT_DEPENDENT_TESTS = [
   'tests/seo-data-cli.test.ts',
   'tests/seo-growth-final-reconciliation.test.ts',
   'tests/seo-phase3-editorial.test.ts',
+];
+
+/** Tests que leen fixtures bajo `docs/` (gitignored en checkout público). */
+const DOCS_DEPENDENT_TESTS = [
+  'tests/blog-inventory-recovery.test.ts',
+  'tests/blog-performance-contract.test.ts',
+  'tests/blog-route-contract.test.ts',
+  'tests/fase2-arquitectura-publica.test.ts',
+  'tests/fase3d-claims-reconstruidos.test.ts',
+  'tests/fase3d-integridad.test.ts',
+  'tests/fase4a-feature-flags.test.ts',
+  'tests/fase4a-pipeline.test.ts',
+  'tests/fase4b-integridad.test.ts',
+  'tests/fase4-local-espana.test.ts',
+  'tests/fase5a-lote3-pipeline.test.ts',
+  'tests/fase5b-cierre-integridad-lote3.test.ts',
+  'tests/fase5-design-system.test.ts',
+  'tests/fase7-inventario.test.ts',
 ];
 
 export default defineConfig({
@@ -42,6 +61,7 @@ export default defineConfig({
       '.opencode/**',
       '.kilo/**',
       ...(hasScripts ? [] : SCRIPT_DEPENDENT_TESTS),
+      ...(hasDocs ? [] : DOCS_DEPENDENT_TESTS),
     ],
     coverage: {
       provider: 'v8',
