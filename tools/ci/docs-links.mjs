@@ -22,8 +22,9 @@ import { dirname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
+const HAS_DOCS = existsSync(resolve(ROOT, 'docs'));
 const PUBLIC_ROOT_DOCS = ['README.md', 'AGENTS.md', 'CHANGELOG.md', 'CONTRIBUTING.md'];
-const LIVE_ROOT_FILES = existsSync(resolve(ROOT, 'docs'))
+const LIVE_ROOT_FILES = HAS_DOCS
   ? [...PUBLIC_ROOT_DOCS, 'docs/README.md']
   : PUBLIC_ROOT_DOCS;
 const FRONTMATTER_DIRS = [
@@ -110,6 +111,7 @@ for (const file of files) {
       failures.push(`${file}: enlace con codificación inválida: ${match[1]}`);
       continue;
     }
+    if (!HAS_DOCS && !file.startsWith('docs/') && target.startsWith('docs/')) continue;
     const relativeTarget = resolve(ROOT, dirname(file), target);
     const rootTarget = resolve(ROOT, target);
     if (!existsSync(relativeTarget) && !existsSync(rootTarget)) {
@@ -122,6 +124,7 @@ for (const file of files) {
       const token = match[1].trim();
       const bare = token.split('#')[0].split('?')[0].trim();
       if (!bare.startsWith('docs/') || GLOB_CHARS.test(bare) || !BACKTICK_EXT.test(bare)) continue;
+      if (!HAS_DOCS && !file.startsWith('docs/')) continue;
       if (!exists(bare) && !exists(resolve(ROOT, dirname(file), bare))) {
         failures.push(`${file}: referencia entre backticks inexistente: ${token}`);
       }
@@ -135,4 +138,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log(`Documentación viva: ${files.length} archivos, 0 enlaces/backticks/metadatos rotos`);
+console.log(`Documentación viva: ${files.length} archivos, 0 enlaces/backticks/metadatos rotos${HAS_DOCS ? '' : ' (checkout público: refs docs/ en raíz omitidas)'}`);
