@@ -69,7 +69,7 @@ jobs:
 
       - name: TypeScript
         id: typescript
-        run: npx tsc --noEmit
+        run: npx tsc --noEmit -p tsconfig.ci.json
 
       - name: Tests
         id: tests

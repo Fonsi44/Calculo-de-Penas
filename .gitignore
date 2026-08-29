@@ -95,6 +95,7 @@ yarn-error.log*
 !/data/seo/local-landing-indexability.json
 !/data/seo/sitemap-public-manifest.json
 !/data/seo/article-seo-relations.json
+!/data/seo/high-intent-guides.ts
 *.tmp
 *.dump
 *.sql.gz

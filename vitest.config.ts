@@ -1,5 +1,27 @@
 import { defineConfig } from 'vitest/config';
 import path from 'path';
+import { existsSync } from 'node:fs';
+
+const hasScripts = existsSync(path.resolve(__dirname, 'scripts'));
+
+/** Tests que importan o leen `scripts/` (gitignored en checkout público). */
+const SCRIPT_DEPENDENT_TESTS = [
+  'tests/apply-seo-growth-batch1.test.ts',
+  'tests/audit-a11y-public-contract.test.ts',
+  'tests/blog-claims-extract.test.ts',
+  'tests/blog-notebooklm-contract.test.ts',
+  'tests/blog-notebooklm-editorial-gate.test.ts',
+  'tests/blog-notebooklm-review.test.ts',
+  'tests/blog-verify-fix.test.ts',
+  'tests/canonical-domain-enforce.test.ts',
+  'tests/llms-txt.test.ts',
+  'tests/meta-seo-auditor.test.ts',
+  'tests/remediate-commercial-claims.test.ts',
+  'tests/seo-content-audit.test.ts',
+  'tests/seo-data-cli.test.ts',
+  'tests/seo-growth-final-reconciliation.test.ts',
+  'tests/seo-phase3-editorial.test.ts',
+];
 
 export default defineConfig({
   resolve: {
@@ -17,11 +39,9 @@ export default defineConfig({
       'e2e/**',
       'tests/e2e/**',
       'playwright-report/**',
-      // Excluir tooling local con sus propios node_modules (OpenCode crea
-      // .opencode/node_modules con tests internos de dependencias como zod
-      // que rompen la colección de tests del proyecto).
       '.opencode/**',
       '.kilo/**',
+      ...(hasScripts ? [] : SCRIPT_DEPENDENT_TESTS),
     ],
     coverage: {
       provider: 'v8',
