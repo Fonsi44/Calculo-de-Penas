@@ -36,7 +36,13 @@ import {
   isConsultationFlowStart,
   startConsultationFlow,
 } from '@/lib/chat/consultation-flow';
-import { hasLawyerNotebookShortcut } from '@/lib/chat/lawyer-shortcut';
+import { hasLawyerNotebookShortcut, stripLawyerNotebookShortcut } from '@/lib/chat/lawyer-shortcut';
+import {
+  buildLegalErrorChatSuggestions,
+  buildPendingLegalWhatsappDraft,
+} from '@/lib/chat/whatsapp-share';
+import { fetchChatApi, ChatApiError } from '@/lib/chat/fetch-chat-api';
+import { resolveLegalRetryQuery } from '@/lib/chat/legal-retry';
 import {
   buildInitialQuickReplies,
   getChatPageHint,
@@ -167,6 +173,8 @@ export function ChatWidget() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const openBtnRef = useRef<HTMLButtonElement>(null);
   const openRef = useRef(open);
+  const chatFetchAbortRef = useRef<AbortController | null>(null);
+  const chatFetchGenRef = useRef(0);
   useEffect(() => {
     openRef.current = open;
   }, [open]);
@@ -198,6 +206,198 @@ export function ChatWidget() {
       finishClose();
     },
     [finishClose],
+  );
+
+  const openWhatsappDraft = useCallback((draft: string) => {
+    trackChatWhatsAppClicked();
+    trackChatContactClicked('whatsapp');
+    if (typeof window !== 'undefined') {
+      window.open(whatsappHref(draft), '_blank', 'noopener,noreferrer');
+    }
+  }, []);
+
+  const buildLegalNetworkErrorAssistant = useCallback((legalQuery: string): Msg => {
+    const legalQuestion = stripLawyerNotebookShortcut(legalQuery);
+    return {
+      role: 'assistant',
+      content: chatConfig.notebooklm.clientNetworkErrorReply,
+      source: 'fallback_provider_error',
+      whatsappDraft: buildPendingLegalWhatsappDraft(legalQuestion),
+      legalRetryQuery: legalQuery,
+      suggestions: buildLegalErrorChatSuggestions(),
+    };
+  }, []);
+
+  const runChatApiRequest = useCallback(
+    async (params: {
+      content: string;
+      baseMessages: Msg[];
+      isLegalQuery: boolean;
+      startedAt: number;
+      gen: number;
+    }) => {
+      const { content, baseMessages, isLegalQuery, startedAt, gen } = params;
+
+      chatFetchAbortRef.current?.abort();
+      const controller = new AbortController();
+      chatFetchAbortRef.current = controller;
+
+      setLoading(true);
+      setLoadingLegal(isLegalQuery);
+      setError(false);
+
+      const sessionId = getOrCreateSessionId();
+      const conversationId = getNlmConversationId();
+      const history = baseMessages
+        .slice(0, -1)
+        .slice(-7)
+        .map((m) => ({ role: m.role, content: m.content }));
+
+      const fetchTimeoutMs = isLegalQuery
+        ? chatConfig.notebooklm.clientFetchTimeoutMs
+        : 45_000;
+
+      let requestSucceeded = false;
+      try {
+        const data = await fetchChatApi({
+          content,
+          sessionId,
+          conversationId,
+          history,
+          pageContext,
+          signal: controller.signal,
+          timeoutMs: fetchTimeoutMs,
+        });
+
+        if (gen !== chatFetchGenRef.current) return;
+
+        if (data.conversationId) {
+          setNlmConversationId(data.conversationId);
+        }
+
+        if (data.urgent === true) {
+          patchChatSessionStore({ urgent: true });
+        }
+
+        if (data.source?.startsWith('fallback')) {
+          trackChatFallbackUsed(
+            data.source === 'fallback_provider_error'
+              ? 'fallback_provider_error'
+              : 'fallback_no_config',
+          );
+        }
+
+        const needsLegalRetry = isLegalQuery && Boolean(data.source?.startsWith('fallback'));
+
+        patchChatSessionStore({
+          messages: [
+            ...baseMessages,
+            {
+              role: 'assistant',
+              content: data.reply,
+              source: data.source,
+              suggestions: data.suggestions,
+              links: data.links,
+              whatsappDraft: data.whatsappDraft,
+              legalRetryQuery: needsLegalRetry ? content : undefined,
+            },
+          ],
+          showQuickReplies: false,
+        });
+        requestSucceeded = true;
+
+        const lower = data.reply.toLowerCase();
+        if (lower.includes('penal')) trackChatServiceSuggested('penal');
+        else if (lower.includes('familia')) trackChatServiceSuggested('familia');
+        else if (lower.includes('laboral')) trackChatServiceSuggested('laboral');
+        else if (lower.includes('migrante') || lower.includes('españa'))
+          trackChatServiceSuggested('migrantes');
+      } catch (err) {
+        if (gen !== chatFetchGenRef.current) return;
+
+        if (err instanceof ChatApiError && err.code === 'rate_limit') {
+          patchChatSessionStore({
+            messages: [
+              ...baseMessages,
+              {
+                role: 'assistant',
+                content:
+                  'Ha enviado muchos mensajes en poco tiempo. Espere unos minutos o contacte directamente por WhatsApp para atención inmediata.',
+              },
+            ],
+            showQuickReplies: false,
+          });
+          return;
+        }
+
+        if (isLegalQuery) {
+          setError(false);
+          patchChatSessionStore({
+            messages: [...baseMessages, buildLegalNetworkErrorAssistant(content)],
+            showQuickReplies: false,
+          });
+          trackChatFallbackUsed('fallback_provider_error');
+        } else {
+          setError(true);
+          patchChatSessionStore({
+            messages: [
+              ...baseMessages,
+              { role: 'assistant', content: chatConfig.fallbackReply },
+            ],
+            showQuickReplies: false,
+          });
+          trackChatFallbackUsed('fallback_provider_error');
+        }
+      } finally {
+        if (gen === chatFetchGenRef.current) {
+          setLoading(false);
+          setLoadingLegal(false);
+          chatFetchAbortRef.current = null;
+        }
+
+        if (requestSucceeded) {
+          const notify = notifyChatResponseReady({
+            startedAt,
+            question: content,
+            chatOpen: openRef.current,
+            onOpenChat: openChat,
+          });
+          if (notify.shouldMarkUnread) {
+            setHasUnreadResponse(true);
+          }
+          if (notify.shouldShowInAppToast) {
+            toast.success(
+              'Respuesta lista',
+              'Abra el chat para leer la respuesta del asistente.',
+            );
+          }
+        }
+      }
+    },
+    [pageContext, openChat, toast, buildLegalNetworkErrorAssistant],
+  );
+
+  const retryLegalQuery = useCallback(
+    async (legalQuery: string, errorAssistantIndex: number) => {
+      const content = legalQuery.trim();
+      if (!content || !hasLawyerNotebookShortcut(content)) return;
+
+      void requestChatBrowserNotificationPermission();
+
+      const snapshot = getChatSessionStoreSnapshot(INITIAL_MESSAGE);
+      const baseMessages = snapshot.messages.slice(0, errorAssistantIndex);
+      const gen = ++chatFetchGenRef.current;
+      const startedAt = Date.now();
+
+      await runChatApiRequest({
+        content,
+        baseMessages,
+        isLegalQuery: true,
+        startedAt,
+        gen,
+      });
+    },
+    [runChatApiRequest],
   );
 
   const isPrivateRoute =
@@ -285,12 +485,7 @@ export function ChatWidget() {
       }
 
       const startedAt = Date.now();
-      const sessionId = getOrCreateSessionId();
-      const conversationId = getNlmConversationId();
       const userMsg: Msg = { role: 'user', content };
-      const history = messages
-        .slice(-7, -1)
-        .map((m) => ({ role: m.role, content: m.content }));
       const withUser = [...messages, userMsg];
 
       patchChatSessionStore({
@@ -336,13 +531,8 @@ export function ChatWidget() {
         return;
       }
 
-      setLoading(true);
-      setLoadingLegal(isLegalQuery);
-      setError(false);
-
       // Detección de urgencia client-side (refuerzo del backend).
       const areaSugerida = sugerirAreaLegal(content);
-      // Mapea el enum AreaLegal (más amplio) al subset que acepta analytics.
       const AREA_TO_ANALYTICS: Record<string, 'penal' | 'familia' | 'laboral' | 'civil' | 'mercantil' | 'migrantes' | 'general'> = {
         penal: 'penal',
         familia: 'familia',
@@ -354,147 +544,16 @@ export function ChatWidget() {
       const analyticsArea = areaSugerida ? AREA_TO_ANALYTICS[areaSugerida] ?? 'general' : null;
       if (analyticsArea) trackChatServiceSuggested(analyticsArea);
 
-      const fetchTimeoutMs = isLegalQuery
-        ? chatConfig.notebooklm.clientFetchTimeoutMs
-        : 45_000;
-      const controller = new AbortController();
-      const fetchTimer = window.setTimeout(() => controller.abort(), fetchTimeoutMs);
-
-      try {
-        const res = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            message: content,
-            sessionId,
-            history,
-            conversationId,
-            pageContext,
-          }),
-          signal: controller.signal,
-        });
-
-        if (res.status === 429) {
-          patchChatSessionStore({
-            messages: [
-              ...withUser,
-              {
-                role: 'assistant',
-                content:
-                  'Ha enviado muchos mensajes en poco tiempo. Espere unos minutos o contacte directamente por WhatsApp para atención inmediata.',
-              },
-            ],
-            showQuickReplies: false,
-          });
-          return;
-        }
-        if (!res.ok) {
-          throw new Error('chat_error');
-        }
-
-        const data = (await res.json()) as {
-          reply?: string;
-          source?: string;
-          urgent?: boolean;
-          conversationId?: string;
-          suggestions?: Msg['suggestions'];
-          links?: Msg['links'];
-          whatsappDraft?: string;
-        };
-        const reply = data.reply?.trim() || chatConfig.fallbackReply;
-
-        if (data.conversationId) {
-          setNlmConversationId(data.conversationId);
-        }
-
-        // Marca urgencia si el backend lo señala (resalta CTAs de contacto).
-        if (data.urgent === true) {
-          patchChatSessionStore({ urgent: true });
-        }
-
-        if (data.source && data.source.startsWith('fallback')) {
-          trackChatFallbackUsed(
-            data.source === 'fallback_provider_error'
-              ? 'fallback_provider_error'
-              : 'fallback_no_config',
-          );
-        }
-
-        patchChatSessionStore({
-          messages: [
-            ...withUser,
-            {
-              role: 'assistant',
-              content: reply,
-              source: data.source,
-              suggestions: data.suggestions,
-              links: data.links,
-              whatsappDraft: data.whatsappDraft,
-            },
-          ],
-          showQuickReplies: false,
-        });
-
-        // Heurística simple para evento service_suggested (categoría fija).
-        const lower = reply.toLowerCase();
-        if (lower.includes('penal')) trackChatServiceSuggested('penal');
-        else if (lower.includes('familia')) trackChatServiceSuggested('familia');
-        else if (lower.includes('laboral')) trackChatServiceSuggested('laboral');
-        else if (lower.includes('migrante') || lower.includes('españa'))
-          trackChatServiceSuggested('migrantes');
-      } catch {
-        if (isLegalQuery) {
-          setError(false);
-          patchChatSessionStore({
-            messages: [
-              ...withUser,
-              {
-                role: 'assistant',
-                content: chatConfig.notebooklm.clientNetworkErrorReply,
-                source: 'fallback_provider_error',
-                suggestions: [
-                  { id: 'retry-legal', label: 'Reintentar consulta', message: content },
-                  { id: 'wa-legal', label: 'Enviar WhatsApp', message: 'Enviar WhatsApp' },
-                ],
-              },
-            ],
-            showQuickReplies: false,
-          });
-          trackChatFallbackUsed('fallback_provider_error');
-        } else {
-          setError(true);
-          patchChatSessionStore({
-            messages: [
-              ...withUser,
-              { role: 'assistant', content: chatConfig.fallbackReply },
-            ],
-            showQuickReplies: false,
-          });
-          trackChatFallbackUsed('fallback_provider_error');
-        }
-      } finally {
-        window.clearTimeout(fetchTimer);
-        setLoading(false);
-        setLoadingLegal(false);
-
-        const notify = notifyChatResponseReady({
-          startedAt,
-          question: content,
-          chatOpen: openRef.current,
-          onOpenChat: openChat,
-        });
-        if (notify.shouldMarkUnread) {
-          setHasUnreadResponse(true);
-        }
-        if (notify.shouldShowInAppToast) {
-          toast.success(
-            'Respuesta lista',
-            'Abra el chat para leer la respuesta del asistente.',
-          );
-        }
-      }
+      const gen = ++chatFetchGenRef.current;
+      await runChatApiRequest({
+        content,
+        baseMessages: withUser,
+        isLegalQuery,
+        startedAt,
+        gen,
+      });
     },
-    [loading, messages, consultationFlow, pageContext, openChat, toast],
+    [loading, messages, consultationFlow, runChatApiRequest],
   );
 
   const onSubmit = (e: React.FormEvent) => {
@@ -600,14 +659,29 @@ export function ChatWidget() {
                 ) : (
                   <>
                     <ChatMessageBody content={m.content} source={m.source} />
-                    {m.whatsappDraft && <ChatCopyWhatsappButton text={m.whatsappDraft} />}
+                    {m.whatsappDraft && (
+                      <ChatCopyWhatsappButton
+                        text={m.whatsappDraft}
+                        onOpenWhatsApp={() => {
+                          trackChatWhatsAppClicked();
+                          trackChatContactClicked('whatsapp');
+                        }}
+                      />
+                    )}
                     <ChatCopyResponseButton text={m.content} />
                     {m.links && m.links.length > 0 && <ChatMessageLinks links={m.links} />}
                     {i === lastAssistantIndex && m.suggestions && m.suggestions.length > 0 && (
                       <ChatSuggestionChips
                         suggestions={m.suggestions}
+                        whatsappDraft={m.whatsappDraft}
+                        canRetryLegal={Boolean(resolveLegalRetryQuery(messages, i))}
                         disabled={loading}
                         onSelect={(msg) => void sendMessage(msg)}
+                        onOpenWhatsApp={openWhatsappDraft}
+                        onRetryLegal={() => {
+                          const query = resolveLegalRetryQuery(messages, i);
+                          if (query) void retryLegalQuery(query, i);
+                        }}
                       />
                     )}
                   </>

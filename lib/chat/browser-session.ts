@@ -13,6 +13,8 @@ export type ChatSessionMessage = {
   suggestions?: ChatSuggestion[];
   links?: ChatLink[];
   whatsappDraft?: string;
+  /** Consulta «una pregunta:» a reenviar al pulsar Reintentar. */
+  legalRetryQuery?: string;
 };
 
 export type ChatSessionSnapshot = {
@@ -39,10 +41,18 @@ function sanitizeSuggestion(raw: unknown): ChatSuggestion | null {
   if (typeof obj.id !== 'string' || typeof obj.label !== 'string' || typeof obj.message !== 'string') {
     return null;
   }
+  const action =
+    obj.action === 'whatsapp'
+      ? 'whatsapp'
+      : obj.action === 'retry_legal'
+        ? 'retry_legal'
+        : undefined;
+  if (!obj.message.trim() && action !== 'whatsapp' && action !== 'retry_legal') return null;
   return {
     id: obj.id.slice(0, 64),
     label: obj.label.slice(0, 80),
     message: obj.message.slice(0, 600),
+    action,
   };
 }
 
@@ -63,13 +73,15 @@ function sanitizeMessage(raw: unknown): ChatSessionMessage | null {
   const source = typeof obj.source === 'string' ? obj.source.slice(0, 64) : undefined;
   const whatsappDraft =
     typeof obj.whatsappDraft === 'string' ? obj.whatsappDraft.slice(0, 2000) : undefined;
+  const legalRetryQuery =
+    typeof obj.legalRetryQuery === 'string' ? obj.legalRetryQuery.slice(0, 600) : undefined;
   const suggestions = Array.isArray(obj.suggestions)
     ? obj.suggestions.map(sanitizeSuggestion).filter((s): s is ChatSuggestion => s !== null).slice(0, 6)
     : undefined;
   const links = Array.isArray(obj.links)
     ? obj.links.map(sanitizeLink).filter((l): l is ChatLink => l !== null).slice(0, 4)
     : undefined;
-  return { role: obj.role, content, source, suggestions, links, whatsappDraft };
+  return { role: obj.role, content, source, suggestions, links, whatsappDraft, legalRetryQuery };
 }
 
 function sanitizeFlow(raw: unknown): ConsultationFlowState | null {

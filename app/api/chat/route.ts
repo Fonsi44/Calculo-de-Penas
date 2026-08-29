@@ -24,6 +24,12 @@ import {
   NLM_REPLY_MAX_CHARS,
 } from '@/lib/chat/notebooklm-prompt';
 import {
+  buildLegalErrorChatSuggestions,
+  buildNlmChatSuggestions,
+  buildNlmWhatsappDraft,
+  buildPendingLegalWhatsappDraft,
+} from '@/lib/chat/whatsapp-share';
+import {
   hasLawyerNotebookShortcut,
   stripLawyerNotebookShortcut,
 } from '@/lib/chat/lawyer-shortcut';
@@ -161,6 +167,8 @@ export async function POST(request: Request) {
         source: 'notebooklm',
         urgent,
         conversationId: nlm.conversationId,
+        whatsappDraft: buildNlmWhatsappDraft({ question: legalMessage, answer: reply }),
+        suggestions: buildNlmChatSuggestions(),
       });
     } catch (err) {
       const code = err instanceof NotebookLmChatError ? err.code : 'unknown';
@@ -174,6 +182,8 @@ export async function POST(request: Request) {
         reply,
         source: 'fallback_provider_error',
         urgent,
+        whatsappDraft: buildPendingLegalWhatsappDraft(legalMessage),
+        suggestions: buildLegalErrorChatSuggestions(),
       });
     }
   }
