@@ -28,7 +28,7 @@ export const PRESTACIONES_PUERTO_SAN_LORENZO_ARTICLE = {
   canonicalPath: '/blog/derecho-laboral/prestaciones-puerto-san-lorenzo',
   publishedAt: '2026-08-15T18:00:00.000Z',
   body: `<h2>Respuesta directa</h2>
-<p>Si trabaja o trabajó en el puerto de San Lorenzo —carga, pesca, comercio, zona libre o servicios al muelle— y le deben salario, vacaciones o una liquidación, el punto de partida es la documentación, no una cifra de pasillo. Esta nota no crea un cargo “laboralista San Lorenzo”. Se atiende desde Nacaome. No sustituye al servicio de <a href="/servicios-juridicos/derecho-laboral">derecho laboral</a> ni a la guía de <a href="/blog/derecho-laboral/calcular-prestaciones-laborales-honduras">cálculo de prestaciones en Honduras</a>.</p>
+<p>Si trabaja o trabajó en el puerto de San Lorenzo —carga, pesca, comercio, zona libre o servicios al muelle— y le deben salario, vacaciones o una liquidación, el punto de partida es la documentación, no una cifra de pasillo. Esta nota no crea un cargo “laboralista San Lorenzo”. Se atiende desde Nacaome. No sustituye al servicio de <a href="/servicios-juridicos/derecho-laboral">derecho laboral</a> ni a la guía de <a href="/blog/derecho-laboral/calcular-liquidacion-laboral-honduras">cálculo de prestaciones en Honduras</a>.</p>
 <p>San Lorenzo es el puerto del sur de Valle, a unos 17 km de la sede. La landing de <a href="/abogados-en-san-lorenzo">abogados en San Lorenzo</a> explica esa logística. Aquí va el ángulo económico: qué guardar si el trabajo es portuario o comercial de esa zona.</p>
 
 <h2>Qué documentos importan en el puerto</h2>

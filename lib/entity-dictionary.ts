@@ -72,6 +72,18 @@ const practiceAreaEntities: LinkableEntity[] = [
     weight: 12,
   },
   {
+    pattern: /\babogado de familia en Nacaome\b/gi,
+    href: '/abogado-de-familia-nacaome',
+    anchor: 'abogado de familia en Nacaome',
+    weight: 12,
+  },
+  {
+    pattern: /\babogado civil en Nacaome\b/gi,
+    href: '/abogado-civil-nacaome',
+    anchor: 'abogado civil en Nacaome',
+    weight: 12,
+  },
+  {
     pattern: /\bejecuci[oó]n penal\b/gi,
     href: '/derecho-penal/ejecucion-penal-y-beneficios',
     anchor: 'ejecución penal',

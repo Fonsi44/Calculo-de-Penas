@@ -5,7 +5,7 @@ import { CTAGroup } from '@/components/marketing/cta-buttons';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { CargoHubBridge } from '@/components/marketing/cargo-hub-bridge';
 import { LocalFaq } from '@/components/marketing/local-faq';
-import { RelatedCities, RelatedServices } from '@/components/marketing/related-links';
+import { RelatedCities, RelatedServices, RelatedBlogArticles } from '@/components/marketing/related-links';
 import {
   CARGO_HUB,
   CARGO_LAWYER,
@@ -124,6 +124,9 @@ export function CargoLandingView({ cargo }: { cargo: CargoLanding }) {
 
       <Section spacing="sm">
         <Container size="lg" className="space-y-6">
+          {cargo.relatedBlogLinks && cargo.relatedBlogLinks.length > 0 ? (
+            <RelatedBlogArticles links={cargo.relatedBlogLinks} />
+          ) : null}
           <RelatedServices
             currentSlug={AREA_SERVICE_SLUG[cargo.area]}
             limit={3}

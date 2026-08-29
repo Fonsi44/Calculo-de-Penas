@@ -40,6 +40,8 @@ export type CargoLanding = {
   whatsappMsg: string;
   ctaTitle: string;
   ctaSubtitle: string;
+  /** Guías del blog enlazadas desde la landing (SEO contextual, no hub duplicado). */
+  relatedBlogLinks?: { href: string; label: string }[];
 };
 
 export const CARGO_HUB: Record<
@@ -136,6 +138,20 @@ export const landingsCargo: CargoLanding[] = [
     ctaTitle: '¿Necesita defensa penal en Nacaome?',
     ctaSubtitle:
       'Si hay detención o citación, hable con Danilo. Presupuesto por escrito, sin promesas de resultado.',
+    relatedBlogLinks: [
+      {
+        href: '/blog/proceso-penal/audiencia-inicial-juzgados-valle',
+        label: 'Audiencia inicial en Juzgados de Valle',
+      },
+      {
+        href: '/blog/derecho-penal/detencion-familiar-nacaome-primeras-horas',
+        label: 'Primeras horas si detienen a un familiar',
+      },
+      {
+        href: '/blog/derecho-penal/defensa-penal-choluteca-desde-nacaome',
+        label: 'Defensa penal en Choluteca desde Nacaome',
+      },
+    ],
   },
   {
     path: '/abogado-penalista-choluteca',
@@ -236,6 +252,20 @@ export const landingsCargo: CargoLanding[] = [
     ctaTitle: '¿Necesita orientación en un asunto de familia?',
     ctaSubtitle:
       'Divorcio, custodia o pensión: hable con Thania. Evaluación inicial confidencial y presupuesto por escrito.',
+    relatedBlogLinks: [
+      {
+        href: '/blog/derecho-de-familia/pension-alimenticia-nacaome-documentos',
+        label: 'Pensión alimenticia en Nacaome: documentos',
+      },
+      {
+        href: '/blog/derecho-de-familia/abogado-familia-choluteca',
+        label: 'Abogado de familia en Choluteca',
+      },
+      {
+        href: '/blog/derecho-de-familia/pension-alimenticia-choluteca',
+        label: 'Pensión alimenticia en Choluteca',
+      },
+    ],
   },
   {
     path: '/abogado-laboralista-nacaome',
@@ -286,6 +316,20 @@ export const landingsCargo: CargoLanding[] = [
     ctaTitle: '¿Tuvo un problema laboral en Nacaome?',
     ctaSubtitle:
       'Despido o prestaciones: hable con Emil. Evaluación inicial confidencial y presupuesto por escrito.',
+    relatedBlogLinks: [
+      {
+        href: '/blog/derecho-laboral/prestaciones-puerto-san-lorenzo',
+        label: 'Prestaciones en el puerto de San Lorenzo',
+      },
+      {
+        href: '/blog/derecho-laboral/abogado-laboral-choluteca',
+        label: 'Abogado laboral en Choluteca',
+      },
+      {
+        href: '/blog/derecho-laboral/demanda-laboral-choluteca',
+        label: 'Demanda laboral en Choluteca',
+      },
+    ],
   },
   {
     path: '/abogado-civil-nacaome',
@@ -336,6 +380,20 @@ export const landingsCargo: CargoLanding[] = [
     ctaTitle: '¿Necesita un trámite civil o notarial en Nacaome?',
     ctaSubtitle:
       'Contrato, herencia o poder: hable con Thania. Evaluación inicial confidencial y presupuesto por escrito.',
+    relatedBlogLinks: [
+      {
+        href: '/blog/derecho-civil/contrato-compraventa-nacaome-revision',
+        label: 'Contrato o compraventa en Nacaome',
+      },
+      {
+        href: '/blog/derecho-civil/abogado-civil-choluteca',
+        label: 'Abogado civil en Choluteca',
+      },
+      {
+        href: '/blog/derecho-civil/cobro-deudas-choluteca',
+        label: 'Cobro de deudas en Choluteca',
+      },
+    ],
   },
 ];
 

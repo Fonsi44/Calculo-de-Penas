@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { MapPin, Scale, FolderOpen } from 'lucide-react';
+import { MapPin, Scale, FolderOpen, BookOpen } from 'lucide-react';
 import {
   getRelatedServices,
   getRelatedCitiesForContent,
@@ -132,6 +132,38 @@ export function RelatedCategories({
           >
             <FolderOpen size={10} className="text-accent-dark" aria-hidden="true" />
             {c.nombre}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+interface RelatedBlogArticlesProps {
+  links: { href: string; label: string }[];
+  eyebrow?: string;
+}
+
+export function RelatedBlogArticles({
+  links,
+  eyebrow = 'Guías relacionadas',
+}: RelatedBlogArticlesProps) {
+  if (links.length === 0) return null;
+
+  return (
+    <div>
+      <p className="text-xxs font-bold uppercase tracking-widest text-accent-dark mb-3">
+        {eyebrow}
+      </p>
+      <div className="flex flex-wrap gap-2">
+        {links.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className="focus-ring chip-specialty inline-flex items-center"
+          >
+            <BookOpen size={10} className="text-accent-dark" aria-hidden="true" />
+            {link.label}
           </Link>
         ))}
       </div>
