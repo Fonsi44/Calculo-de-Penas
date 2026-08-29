@@ -32,6 +32,8 @@ const NON_CSRF_MUTATION_CONTRACTS: Record<string, RegExp> = {
   'app/api/cron/sgie/procesar/route.ts': /function autorizado/,
   'app/api/descargar/route.ts': /verifyTurnstile/,
   'app/api/email/inbound/route.ts': /verifyResendWebhook/,
+  'app/api/legal/context/route.ts': /requireLegalCorpusApiKey/,
+  'app/api/legal/search/route.ts': /requireLegalCorpusApiKey/,
   'app/api/public/cargar/[token]/route.ts': /reservarEnlaceAtomicamente/,
   'app/api/revalidate/route.ts': /timingSafeEqual/,
   'app/api/subscribe/route.ts': /verifyTurnstileToken/,

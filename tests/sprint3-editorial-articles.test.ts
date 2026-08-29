@@ -30,13 +30,13 @@ const CASES = [
     article: CUSTODIA_VISITAS_JUZGADO_VALLE_ARTICLE,
     spoke: '/servicios-juridicos/derecho-de-familia',
     lawyer: '/equipo/thania-marlene-paz',
-    cites: [/art\.\s*194 CF/i, /art\.\s*207-F CF/i, /art\.\s*68/i],
+    cites: [/art\.\s*194 CF/i, /art\.\s*207-F CF/i, /198-B|198-C/i],
   },
   {
     article: DESPIDO_VALLE_DOCUMENTOS_EVALUACION_ARTICLE,
     spoke: '/servicios-juridicos/derecho-laboral',
     lawyer: '/equipo/emil-barahona',
-    cites: [/art\.\s*116 CT/i, /art\.\s*117 CT/i, /art\.\s*113 CT/i, /art\.\s*21 CT/i, /art\.\s*39 CT/i],
+    cites: [/art\.\s*116 CT/i, /art\.\s*117 CT/i, /art\.\s*113 CT/i, /art\.\s*21 CT/i, /art\.\s*120 CT/i],
   },
   {
     article: PRESTACIONES_PUERTO_SAN_LORENZO_ARTICLE,

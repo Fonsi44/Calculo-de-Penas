@@ -29,8 +29,9 @@ describe('Sprint 3 — detención familiar en Nacaome', () => {
     expect(article.body).toMatch(/art\.\s*82/i);
     expect(article.body).toMatch(/art\.\s*84/i);
     expect(article.body).toMatch(/art\.\s*71/i);
-    expect(article.body).toMatch(/art\.\s*283 CPP/i);
+    expect(article.body).toMatch(/art\.\s*175 CPP/i);
     expect(article.body).toMatch(/art\.\s*282 CPP/i);
+    expect(article.body).toMatch(/art\.\s*285 CPP/i);
     expect(article.body).toMatch(/numeral 8/i);
     expect(article.body).toMatch(/veinticuatro horas/i);
     expect(article.body).toMatch(/seis \(6\) horas/i);

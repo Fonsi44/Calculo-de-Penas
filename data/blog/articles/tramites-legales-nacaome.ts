@@ -46,7 +46,7 @@ export const TRAMITES_LEGALES_NACAOME_ARTICLE = {
 </ul>
 
 <h2>Marco legal de los trámites en Honduras</h2>
-<p>Los poderes y escrituras se rigen por el <strong>Código del Notariado (Decreto 353-2005)</strong> y el <strong>Código Civil (Decreto 116-87)</strong>. Los contratos mercantiles, por el <strong>Código de Comercio (Decreto 79-2000)</strong>. Los procesos judiciales, por el <strong>Código Procesal Civil (Decreto 211-2006)</strong> y el <strong>Código Procesal Penal (Decreto 9-99-E)</strong>, según la materia. Los <strong>Juzgados de Letras Departamentales de Valle</strong>, con sede en Nacaome, conocen la mayoría de estos asuntos en el ámbito departamental.</p>
+<p>Los poderes y escrituras se rigen por el <strong>Código del Notariado (Decreto 353-2005)</strong> y el <strong>Código Civil (Decreto 76-1906)</strong>. Los contratos mercantiles, por el <strong>Código de Comercio (Decreto 73-50)</strong>. Los procesos judiciales, por el <strong>Código Procesal Civil (Decreto 211-2006)</strong> y el <strong>Código Procesal Penal (Decreto 9-99-E)</strong>, según la materia. Los <strong>Juzgados de Letras Departamentales de Valle</strong>, con sede en Nacaome, conocen la mayoría de estos asuntos en el ámbito departamental.</p>
 
 <h2>Errores frecuentes con poderes</h2>
 <ol>
