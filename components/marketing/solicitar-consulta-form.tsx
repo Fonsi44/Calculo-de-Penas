@@ -43,11 +43,26 @@ const MOTIVOS = [
  */
 const MOTIVO_FROM_QUERY: Record<string, string> = {
   'derecho-penal': 'Citaciones o audiencias',
+  'atencion-casos-penales-litigiosos': 'Citaciones o audiencias',
+  'mediacion-conflictos-penales-y-multas': 'Asesoría preventiva',
+  'menores-justicia-juvenil': 'Citaciones o audiencias',
+  'proceso-penal-completo': 'Citaciones o audiencias',
+  'recursos-y-defensa-avanzada': 'Recurso o apelación',
+  'estrategia-penal-y-litigio': 'Investigación en curso',
+  'ejecucion-penal-y-beneficios': 'Familiar detenido',
   'derecho-de-familia': 'Divorcio, custodia o pensión de alimentos',
   'derecho-laboral': 'Despido o prestaciones laborales',
   'derecho-civil-y-notarial': 'Contrato, propiedad, sucesión o trámite notarial',
   'derecho-mercantil-empresarial': 'Otro asunto',
   'derecho-administrativo-y-servicio-civil': 'Otro asunto',
+  'derecho-bancario-y-financiero': 'Otro asunto',
+  'derecho-aduanero-y-comercio-exterior': 'Otro asunto',
+  'regulacion-sanitaria': 'Otro asunto',
+  'extranjeria-en-honduras': 'Otro asunto',
+  'propiedad-intelectual': 'Otro asunto',
+  'tributario-fiscal': 'Otro asunto',
+  'ambiental-regulatorio': 'Otro asunto',
+  'conciliacion-y-arbitraje': 'Otro asunto',
   'hondurenos-en-espana': 'Asunto desde España',
 };
 

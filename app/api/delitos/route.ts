@@ -1,10 +1,7 @@
 import { db } from '@/lib/db';
 import { delitos } from '@/lib/schema';
 import { and, or, ilike, sql } from 'drizzle-orm';
-import { delitoCreateSchema, validate } from '@/lib/validation';
-import { requireAdmin, authFailureResponse } from '@/lib/auth';
 import { getEstadoDelito } from '@/lib/estados-delitos';
-import { validateCsrf } from '@/lib/csrf';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -69,43 +66,4 @@ export async function GET(request: Request) {
     offset: skip,
     hasMore: skip + rows.length < totalRow[0].count,
   });
-}
-
-export async function POST(request: Request) {
-  try {
-    await requireAdmin(request);
-    validateCsrf(request);
-    let body: unknown;
-    try {
-      body = await request.json();
-    } catch {
-      return Response.json({ error: 'JSON inválido' }, { status: 400 });
-    }
-
-    const parsed = validate(delitoCreateSchema, body);
-    if (!parsed.success) {
-      return Response.json({ error: parsed.error }, { status: 400 });
-    }
-
-    const result = await db.insert(delitos).values({
-      nombre: parsed.data.nombre,
-      articulo: parsed.data.articulo,
-      conducta: parsed.data.conducta || '',
-      clasificacion: parsed.data.clasificacion || '',
-      ramaId: parsed.data.rama_id,
-      constitucionArticuloId: parsed.data.constitucion_articulo_id,
-      penaMinimaMeses: parsed.data.pena_minima_meses,
-      penaMaximaMeses: parsed.data.pena_maxima_meses,
-      tienePenaAlternativa: parsed.data.tiene_pena_alternativa,
-      penaAlternativaMin: parsed.data.pena_alternativa_min,
-      penaAlternativaMax: parsed.data.pena_alternativa_max,
-      penasAccesorias: parsed.data.penas_accesorias || [],
-      observaciones: parsed.data.observaciones,
-      esGrave: parsed.data.pena_maxima_meses >= 60,
-    }).returning({ id: delitos.id });
-
-    return Response.json({ message: 'Delito creado', id: result[0].id }, { status: 201 });
-  } catch (e) {
-    return authFailureResponse(e);
-  }
 }

@@ -2,12 +2,10 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "./auth-context";
 import { ThemeProvider } from '@/components/providers/theme-context';
 import { ToastProvider } from "@/components/ui/toast";
 import { ConfirmProvider } from "@/components/ui/confirm";
 import { PromptDialogProvider } from "@/components/ui/prompt-dialog";
-import { GlobalShortcuts } from "@/components/layout/global-shortcuts";
 import { GlobalErrorBoundary } from "./global-error-boundary";
 import { RootShell } from "@/components/layout/root-shell";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
@@ -118,13 +116,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ToastProvider>
               <ConfirmProvider>
                 <PromptDialogProvider>
-                <AuthProvider>
-                  <GlobalShortcuts />
                   <Suspense fallback={null}>
                     <ScrollToTop />
                   </Suspense>
                   <RootShell>{children}</RootShell>
-                </AuthProvider>
                 </PromptDialogProvider>
               </ConfirmProvider>
             </ToastProvider>

@@ -10,6 +10,7 @@
   ],
   "ignoreDependencies": [
     "@google/genai",
+    "dotenv",
     "pixelmatch",
     "pngjs",
     "sharp"

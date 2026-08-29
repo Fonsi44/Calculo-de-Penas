@@ -2,7 +2,7 @@
 
 ## Alcance
 
-Este repositorio contiene la plataforma web e intranet de Pineda y Asociados.
+Este repositorio contiene la plataforma web pública de Pineda y Asociados.
 Reporte vulnerabilidades relacionadas con el código versionado aquí.
 
 ## Cómo reportar

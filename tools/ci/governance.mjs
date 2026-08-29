@@ -39,7 +39,7 @@ const hashes = new Map();
 for (const file of files) {
   const source = readFileSync(resolve(ROOT, file), 'utf8');
   const lineCount = source.split('\n').length;
-  const limit = file === 'lib/db/schema/sgie.ts' ? 2_600 : 1_000;
+  const limit = 1_000;
   if (lineCount > limit) failures.push(`${file}: ${lineCount} líneas supera presupuesto ${limit}`);
   if (file.startsWith('components/') && /(?:from\s+|import\s*\()['"]@\/app\//.test(source)) {
     failures.push(`${file}: components no puede importar app`);
@@ -84,23 +84,9 @@ const forbiddenTracked = tracked.filter((file) =>
   || /\.(?:log|dump|sql\.gz)$/.test(file));
 if (forbiddenTracked.length) failures.push(`artefactos locales versionados: ${forbiddenTracked.join(', ')}`);
 
-const manifest = JSON.parse(readFileSync(resolve(ROOT, 'tools/ci/feature-flags-manifest.json'), 'utf8'));
-const flagSource = readFileSync(resolve(ROOT, 'lib/sgie/feature-flags.ts'), 'utf8');
-const sourceKeys = [...flagSource.matchAll(/^\s*'(sgie\.[^']+)',?$/gm)].map((match) => match[1]);
-const manifestKeys = manifest.flags.map((flag) => flag.key);
-if (JSON.stringify(sourceKeys) !== JSON.stringify(manifestKeys)) failures.push('feature flags: código y manifiesto divergen');
-const requiredDefaults = ['owner', 'created', 'expiresAt', 'default', 'environments', 'cleanupIssue'];
-for (const field of requiredDefaults) {
-  if (!(field in manifest.defaults)) failures.push(`feature flags: falta default ${field}`);
-}
-for (const flag of manifest.flags) {
-  if (!flag.purpose) failures.push(`feature flag ${flag.key}: falta purpose`);
-}
-if (Date.parse(manifest.defaults.expiresAt) < Date.now()) failures.push('feature flags: manifiesto vencido');
-
 if (failures.length) {
   console.error(`Gobernanza: ${failures.length} fallo(s)`);
   failures.forEach((failure) => console.error(`  ✗ ${failure}`));
   process.exit(1);
 }
-console.log(`Gobernanza: ${files.length} fuentes, 0 ciclos, límites/imports/flags/artefactos verdes`);
+console.log(`Gobernanza: ${files.length} fuentes, 0 ciclos, límites/imports/artefactos verdes`);

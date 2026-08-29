@@ -595,10 +595,10 @@ const PRIORITY_PENAL_SLUGS = [
         <ContextualCta
           href={hubPenal.ctaContextual.href}
           label={hubPenal.ctaContextual.label}
-          eyebrow="Atención penal"
-          title="¿Necesita defensa penal? Cuéntenos su caso"
-          secondaryHref="/despacho"
-          secondaryLabel="Conozca el despacho"
+          eyebrow={hubPenal.ctaContextual.eyebrow}
+          title={hubPenal.ctaContextual.title}
+          secondaryHref={hubPenal.ctaContextual.secondaryHref ?? '/despacho'}
+          secondaryLabel={hubPenal.ctaContextual.secondaryLabel ?? 'Conozca el despacho'}
         />
       ) : (
         <ConsultationCTA />

@@ -243,6 +243,17 @@
       "checksum": "e7e8aaeb665d57d0757771f9e48dd1077a8198fe2ead2a0f072b429e41c35c4b",
       "transactional": true,
       "applied": false
+    },
+    {
+      "id": "manual-0060",
+      "file": "drizzle/migrations/0060_drop_intranet_sgie_rag.sql",
+      "description": "Drop intranet, SGIE, auth, calculator and RAG tables",
+      "dependsOn": [
+        "manual-0059"
+      ],
+      "checksum": "b4d3dcdf6eee4a4d1654a71fbfde1a400925a7dc8d391b1262115159216ff39b",
+      "transactional": true,
+      "applied": true
     }
   ]
 }

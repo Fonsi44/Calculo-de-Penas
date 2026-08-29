@@ -18,9 +18,9 @@ de la tarea y respetarse hasta el final.
 | **`VERIFICACIÓN`**   | Sí                      | No                                        | No                                        | Solo comprobaciones de solo lectura | No                            |
 
 **Ningún archivo, subsistema o directorio queda excluido de lectura durante una
-auditoría.** La lectura es siempre libre. Las restricciones de la §7 (auth,
-proxy, schema DB, motor de cálculo, datos legales, redirects, web pública) se
-aplican **únicamente a modificaciones no autorizadas**, nunca a la inspección.
+auditoría.** La lectura es siempre libre. Las restricciones de la §7 (proxy,
+schema DB, datos legales, redirects, web pública) se aplican **únicamente a
+modificaciones no autorizadas**, nunca a la inspección.
 
 Los agentes pueden **detectar, documentar y recomendar** problemas
 arquitectónicos en cualquier archivo, aunque no puedan corregirlos sin
@@ -50,7 +50,7 @@ autorización. La capacidad de observación es total; la de modificación, acota
 ## 2. Fuentes de verdad
 
 Una fuente de verdad por subsistema. El contenido original vive en estas
-fuentes; los índices derivados (como `embeddings`) no son fuente primaria.
+fuentes.
 
 | Subsistema               | Fuente                                                                                                                                                          |
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -70,7 +70,6 @@ fuentes; los índices derivados (como `embeddings`) no son fuente primaria.
 | Indexabilidad pública    | `lib/seo/public-indexability.ts` + `data/seo/local-landing-indexability.json` (clasificación de landings) + `data/seo/canonical-paths.json` (catálogo estático) |
 | Manifiesto sitemap       | `data/seo/sitemap-public-manifest.json`                                                                                                                         |
 | SEO Live                 | `data/google/`, `data/bing/`, `data/seo/` (regenerable)                                                                                                         |
-| RAG / Búsqueda semántica | DB `embeddings` vía `lib/rag/` (índice vectorial pgvector)                                                                                                      |
 
 ---
 
@@ -83,7 +82,7 @@ fuentes; los índices derivados (como `embeddings`) no son fuente primaria.
 | R3  | No usar datos mock como solución final. Persistencia = DB.                                                                                                                                                                                                                                                                                                                           |
 | R4  | No inventar datos legales. Citas verificables contra CP de Honduras.                                                                                                                                                                                                                                                                                                                 |
 | R5  | No rediseñar la web pública (`app/(public)/**`). SEO sí; visual no.                                                                                                                                                                                                                                                                                                                  |
-| R6  | No exponer la intranet. `/intranet/*`, `/admin/*` son PRIVADAS.                                                                                                                                                                                                                                                                                                                      |
+| R6  | No exponer rutas internas residuales. `/intranet/*`, `/admin/*` y `/api/*` (salvo endpoints públicos documentados) no son indexables.                                                                                                                                                                                                                                                  |
 | R7  | Un cambio lógico por commit. Commits atómicos en español con prefijo.                                                                                                                                                                                                                                                                                                                |
 | R8  | Validar según la matriz de la §4 (no siempre suite completa).                                                                                                                                                                                                                                                                                                                        |
 | R9  | No cambiar arquitectura sin justificación técnica.                                                                                                                                                                                                                                                                                                                                   |
@@ -99,7 +98,7 @@ fuentes; los índices derivados (como `embeddings`) no son fuente primaria.
 | R19 | No borrar código muerto sin comprobar imports, rutas dinámicas, scripts, tests, cron, webhooks y despliegues.                                                                                                                                                                                                                                                                        |
 | R20 | No ocultar errores con `try/catch` vacíos, casts inseguros, desactivación de reglas o exclusión de tests.                                                                                                                                                                                                                                                                            |
 | R21 | No declarar una tarea completada sin ejecutar las validaciones correspondientes.                                                                                                                                                                                                                                                                                                     |
-| R22 | Mantener aislados la web pública, el blog, la intranet, SGIE y administración cuando el cambio no afecte a todos.                                                                                                                                                                                                                                                                    |
+| R22 | Mantener aislados la web pública y el blog cuando el cambio no afecte a ambos.                                                                                                                                                                                                                                                                                                       |
 | R23 | Autoría del blog: vigente excepción temporal de autoría corporativa (ver `docs/seo/decisions/temporary-corporate-blog-authorship.md`). PROHIBIDO cambiar `author`, `reviewedBy`, firmas o estados editoriales por motivos de autoría sin autorización expresa del propietario. No usar la marca como autor humano en contenidos que requieran autor individual sin esa autorización. |
 | R24 | Política comercial: única formulación «Evaluación inicial confidencial» (`lib/marketing-policy.ts`). PROHIBIDO publicar variantes de consulta gratuita/sin costo/sin compromiso no confirmadas. Validación obligatoria al escribir contenido administrable.                                                                                                                          |
 
@@ -137,8 +136,6 @@ Comandos base: `npm run lint`, `npm run typecheck` (`tsc --noEmit`),
 | Contrato del blog (datos dinámicos)  | `npm run seo:blog-contract -- --env-file <local                                                               | staging>`                               |
 | Sitemap en runtime                   | `npm run seo:sitemap:validate-runtime -- --base-url <app>` (requiere app con base local/staging)              |
 | Gate SEO/GEO runtime unificado       | `npm run seo:runtime-contract -- --env-file <local                                                            | staging> [--run-e2e] [--run-a11y]`      |
-| RAG / Indexación vectorial           | `npm run rag:indexar` (dry-run) → `:aplicar`                                                                  |
-| RAG / Extraer PDFs                   | `npm run rag:extraer-pdfs` (dry-run) → `:aplicar`                                                             |
 
 ---
 
@@ -164,16 +161,14 @@ Comandos base: `npm run lint`, `npm run typecheck` (`tsc --noEmit`),
 
 ## 6. Seguridad
 
-- **Auth:** JWT con propósito explícito + bcrypt + 2FA TOTP. Cookies
-  `__Host-token` (HttpOnly, Secure, SameSite=Lax). Ver `lib/auth.ts`.
-- **Proxy:** `proxy.ts` protege `/intranet/*` y `/api/*`. Rol admin para
-  `/api/admin/*`. Corre en Node runtime (verifica firma HS256).
-- **Rate limiting:** login (5/60s), contacto (10/15min), calcular (30/min).
+- **Proxy:** `proxy.ts` añade correlation ID y deja pasar APIs/páginas públicas.
+  Cada handler mantiene su propia validación (`CRON_SECRET`, firma webhook, etc.).
+- **Rate limiting:** contacto y formularios públicos (p. ej. contacto 10/15min).
 - **Sanitización:** `sanitize-html` en todo HTML de entrada.
 - **Validación:** Zod en todas las rutas POST/PATCH/PUT.
 - **NUNCA hardcodear** secretos: `OAUTH_CLIENT_SECRET`, `RESEND_API_KEY`,
-  `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`, `JWT_SECRET`, `ENCRYPTION_KEY`,
-  `INDEXNOW_KEY`, `DEEPSEEK_API_KEY`, `IA_DOCUMENTAL_API_KEY`, `CRON_SECRET`.
+  `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`, `ENCRYPTION_KEY`,
+  `INDEXNOW_KEY`, `DEEPSEEK_API_KEY`, `CRON_SECRET`.
 - **NUNCA commitear:** `.env.local`, `.env`, `.secrets/`, `data/google/`,
   `data/bing/`, tokens, checkpoints, dumps y outputs live generados (p. ej.
   reportes bajo `data/seo/`, aunque allí sí se permiten fuentes canónicas como
@@ -192,9 +187,8 @@ archivos está restringida por su criticidad; cualquier cambio requiere
 autorización explícita y validación completa (suite + build):
 
 - Web pública visual (`app/(public)/**/*.tsx`) — salvo SEO.
-- Motor de cálculo (`lib/rules/v1/`).
 - Schema DB (`lib/schema.ts`).
-- Auth (`lib/auth.ts`), Proxy (`proxy.ts`).
+- Proxy (`proxy.ts`).
 - Datos de delitos (`data/delitos.json`, `data/delitos-estados.json`).
 - Redirects 301 de `next.config.ts`.
 - `auditoriatotal.mc` — **solo lectura**, copia local en `docs/audits/archive/` (no versionado en Git público).
@@ -272,11 +266,6 @@ Los manuales operativos extensos viven bajo `docs/`, no en este protocolo.
   `seo:doctor`, `seo:collect`, `seo:gsc:live`, `seo:ga4:live`, `seo:bing:live`.
   Datos generados (no versionar): `data/google/`, `data/bing/`, `data/seo/`.
   Reportes: `docs/audits/seo-live-summary.md`, `docs/audits/seo-live-action-plan.md`.
-- **RAG** (búsqueda semántica): índice en DB `embeddings` (pgvector) vía
-  `lib/rag/` (`config.ts`, `embeddings.ts`, `chunking.ts`, `retrieval.ts`).
-  Proveedor de embeddings configurado en `.env.example` (`EMBEDDINGS_*`).
-  Scripts: `rag:indexar` (dry-run) → `:aplicar`, `rag:extraer-pdfs`. Dry-run por
-  defecto; la tabla `embeddings` es índice, no fuente primaria (R2).
 - **Analítica pública:** fuente cliente `components/analytics-scripts.tsx`;
   helpers de eventos `lib/analytics.ts`; configuración `lib/site.ts`. GA4 directo
   y GTM son **mutuamente excluyentes**. No duplicar etiquetas ni enviar PII,

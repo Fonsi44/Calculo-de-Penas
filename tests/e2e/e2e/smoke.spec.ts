@@ -26,16 +26,9 @@ test.describe('Smoke — rutas públicas', () => {
     expect(consoleErrors, 'no debe haber errores de consola reales').toEqual([]);
   });
 
-  test('login page carga y permite alternar modo', async ({ page }) => {
-    await page.goto('/intranet/login');
-    await expect(page).toHaveTitle(/Pineda y Asociados|LEX/i);
-    await expect(page.getByLabel(/email/i)).toBeVisible();
-
-    const registerToggle = page.getByRole('button', { name: /registr/i }).first();
-    if (await registerToggle.isVisible()) {
-      await registerToggle.click();
-      await expect(page.getByLabel(/nombre/i)).toBeVisible();
-    }
+  test('intranet retirada responde 404', async ({ page }) => {
+    const res = await page.goto('/intranet/login');
+    expect(res?.status()).toBe(404);
   });
 
   test('atajos page es privada (404 público)', async ({ page }) => {
@@ -43,14 +36,12 @@ test.describe('Smoke — rutas públicas', () => {
     expect(res?.status()).toBe(404);
   });
 
-  test('calculadora es privada (404 público)', async ({ page }) => {
+  test('calculadora retirada responde 404', async ({ page }) => {
     const res = await page.goto('/calculadora');
     expect(res?.status()).toBe(404);
   });
 
-  test('/login ya no es una ruta pública (404 correcto)', async ({ page }) => {
-    // `/login` fue eliminado como ruta pública; solo existe `/intranet/login`.
-    // Ver proxy.ts: PUBLIC_PAGE_EXACT no incluye '/login'.
+  test('/login no es una ruta pública (404 correcto)', async ({ page }) => {
     const res = await page.goto('/login');
     expect(res?.status()).toBe(404);
   });
@@ -100,15 +91,15 @@ test.describe('Smoke — rutas públicas', () => {
     expect(res?.status()).toBe(200);
     const content = await page.content();
     expect(content).toMatch(/Cookies/i);
-    expect(content).toMatch(/__Host-token/);
+    expect(content).toMatch(/__Host-theme/);
   });
 
   test('disclaimer page carga y muestra secciones legales', async ({ page }) => {
     const res = await page.goto('/disclaimer');
     expect(res?.status()).toBe(200);
     const content = await page.content();
-    expect(content).toMatch(/Disclaimer/i);
-    expect(content).toMatch(/calculadora de penas/i);
+    expect(content).toMatch(/Disclaimer|Exención/i);
+    expect(content).toMatch(/estrictamente orientativo/i);
   });
 
   test('redirect /privacidad → /politica-privacidad', async ({ page }) => {
@@ -118,7 +109,7 @@ test.describe('Smoke — rutas públicas', () => {
   });
 
   test('dark mode: clase .dark aplica variables CSS correctas', async ({ page }) => {
-    await page.goto('/intranet/login');
+    await page.goto('/');
     const html = page.locator('html');
 
     const lightBg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);

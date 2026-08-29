@@ -34,13 +34,6 @@ export const LEAD_MAGNETS: LeadMagnet[] = [
     source: 'descarga-derecho-civil',
   },
   {
-    area: 'derecho-mercantil-empresarial',
-    titulo: 'Guía legal: Derecho Mercantil y Empresarial',
-    descripcion: 'Constitución de sociedades, contratos mercantiles y cumplimiento normativo en Honduras.',
-    archivo: '/descargas/guia-derecho-mercantil.pdf',
-    source: 'descarga-derecho-mercantil',
-  },
-  {
     area: 'tributario-fiscal',
     titulo: 'Guía legal: Derecho Tributario y Fiscal',
     descripcion: 'Obligaciones tributarias, declaraciones y régimen sancionador en Honduras.',

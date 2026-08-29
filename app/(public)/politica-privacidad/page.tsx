@@ -76,16 +76,14 @@ export default async function PoliticaPrivacidadPage() {
               <>Correo electrónico de contacto.</>,
               <>Número de teléfono (cuando se solicita consulta).</>,
               <>Descripción del caso o consulta jurídica.</>,
-              <>Información del expediente, cuando el usuario decide crear una cuenta en la intranet.</>,
             ]}
           />
         </LegalSubsection>
         <LegalSubsection title="2.2. Datos generados por el uso del servicio">
           <LegalList
             items={[
-              'Cálculos de pena realizados y resultados generados.',
-              'Fecha y hora de acceso, dirección IP y agente de usuario (navegador, sistema operativo).',
-              'Registros de auditoría de las acciones críticas (tabla `auditoria_eventos`).',
+              'Fecha y hora de acceso, dirección IP y agente de usuario (navegador, sistema operativo), cuando proceda para seguridad o rate limiting.',
+              'Registros técnicos asociados a formularios públicos (contacto, consulta, suscripción).',
             ]}
           />
         </LegalSubsection>
@@ -105,10 +103,9 @@ export default async function PoliticaPrivacidadPage() {
         <p>Los datos personales recabados se utilizan exclusivamente para:</p>
         <LegalList
           items={[
-            'Prestar el servicio de cálculo estimado de penas y, en su caso, atender las solicitudes de consulta.',
-            'Gestionar el alta, autenticación y seguridad de la cuenta del usuario en la intranet del bufete.',
+            'Atender las solicitudes de consulta y contacto recibidas a través del sitio web.',
             'Cumplir con las obligaciones legales y fiscales del bufete (SAR, RTN, Colegio de Abogados).',
-            'Auditoría interna, prevención del fraude y mejora del servicio sobre datos agregados, no individuales.',
+            'Prevención del abuso técnico (rate limiting) y mejora del servicio sobre datos agregados, no individuales.',
             'Atender eventuales requerimientos de autoridades judiciales o administrativas hondureñas competentes.',
           ]}
         />
@@ -182,10 +179,9 @@ export default async function PoliticaPrivacidadPage() {
         <LegalList
           items={[
             'Cifrado HTTPS obligatorio en producción (HSTS habilitado).',
-            'Contraseñas almacenadas con bcrypt (10 rounds) y nunca en texto plano.',
-            'Sesiones mediante cookies `__Host-token` con atributos httpOnly, secure y sameSite=strict.',
             'Cabeceras de seguridad: CSP estricta, X-Content-Type-Options, X-Frame-Options, Referrer-Policy y Permissions-Policy.',
-            'Backups cifrados en reposo y rotación periódica de claves.',
+            'Rate limiting en formularios públicos y chat.',
+            'Validación de entrada (Zod) y sanitización de HTML en contenidos administrables.',
           ]}
         />
       </LegalSection>
@@ -199,9 +195,8 @@ export default async function PoliticaPrivacidadPage() {
           items={[
             'Acceso a sus datos personales.',
             'Rectificación de datos inexactos o incompletos.',
-            'Supresión (cancelación) de su cuenta y datos asociados.',
+            'Supresión (cancelación) de datos asociados a solicitudes de contacto o consulta, cuando proceda.',
             'Oposición al tratamiento.',
-            'Portabilidad, mediante exportación en formato JSON.',
           ]}
         />
         <p>

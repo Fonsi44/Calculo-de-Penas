@@ -3,8 +3,6 @@ export {
   articulosConstitucion,
   articulosCp,
   delitos,
-  casos,
-  calculos,
   tipoPenaEnum,
   supuestosPenales,
   agravantesEspecificas,

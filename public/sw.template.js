@@ -6,8 +6,7 @@
  * versionada: para renovar estrategias o blocklist, basta con cambiar CACHE.
  *
  * SEGURIDAD (R6, AGENTS.md): el fetch handler NUNCA intercepta ni cachea las
- * rutas privadas. Esas pasan siempre a red. Esta lista es la salvaguarda que
- * impide filtraciones de la intranet a través del service worker.
+ * rutas de API ni rutas obsoletas privadas. Esas pasan siempre a red.
  */
 
 // CACHE se versiona por build. Esto fuerza `install→activate` en cada deploy y
@@ -32,18 +31,12 @@ const CACHE = 'pineda-pwa-' + ('__BUILD_ID__' === '__BUILD_ID__'
   : '__BUILD_ID__');
 const PRECACHE = ['/', '/manifest.json'];
 
-// Rutas PRIVADAS (R6): el SW no debe tocarlas. Coincidencia exacta o prefijo
-// con barra (p.ej. '/intranet' y '/intranet/...'). /preview es pública pero
-// se accede por token: no debe cachearse (filtraría contenido del post).
+// Rutas que el SW no debe tocar (API y restos de rutas privadas eliminadas).
 const PRIVATE_ROUTES = [
-  '/intranet',
   '/api',
-  '/calculadora',
-  '/casos',
-  '/cp',
-  '/delitos',
-  '/atajos',
+  '/intranet',
   '/admin',
+  '/cargar',
   '/preview',
 ];
 
