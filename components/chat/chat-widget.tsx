@@ -42,8 +42,9 @@ import {
 } from './chat-analytics';
 
 import { useConsentObserver } from '@/hooks/use-consent-observer';
+import { ChatMessageBody } from './chat-message-body';
 
-type Msg = { role: 'assistant' | 'user'; content: string };
+type Msg = { role: 'assistant' | 'user'; content: string; source?: string };
 
 const PRIVATE_PREFIXES = [
   '/intranet', '/admin', '/login', '/dashboard',
@@ -51,6 +52,7 @@ const PRIVATE_PREFIXES = [
 ];
 
 const SESSION_KEY = 'pya_chat_sid';
+const NLM_CONVERSATION_KEY = 'pya_chat_nlm_cid';
 
 /** Genera/recupera un sessionId estable en localStorage (sin conversación). */
 function getOrCreateSessionId(): string {
@@ -66,6 +68,25 @@ function getOrCreateSessionId(): string {
     return sid;
   } catch {
     return `sid-${Date.now()}`;
+  }
+}
+
+function getNlmConversationId(): string | undefined {
+  if (typeof window === 'undefined') return undefined;
+  try {
+    const cid = window.localStorage.getItem(NLM_CONVERSATION_KEY);
+    return cid && cid.length >= 8 ? cid : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function setNlmConversationId(conversationId: string): void {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(NLM_CONVERSATION_KEY, conversationId.slice(0, 128));
+  } catch {
+    // ignore
   }
 }
 
@@ -104,7 +125,7 @@ export function ChatWidget() {
   );
 
   const scrollRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const openBtnRef = useRef<HTMLButtonElement>(null);
 
   const isPrivateRoute =
@@ -149,6 +170,18 @@ export function ChatWidget() {
     return () => window.removeEventListener('keydown', onKey);
   }, [open]);
 
+  // Bloquea scroll del body en móvil mientras el panel está abierto.
+  useEffect(() => {
+    if (!open) return;
+    const mq = window.matchMedia('(max-width: 767px)');
+    if (!mq.matches) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   const sendMessage = useCallback(
     async (text: string) => {
       const content = text.trim();
@@ -156,6 +189,7 @@ export function ChatWidget() {
       if (content.length > chatConfig.limits.maxMessageLength) return;
 
       const sessionId = getOrCreateSessionId();
+      const conversationId = getNlmConversationId();
       const userMsg: Msg = { role: 'user', content };
       const history = messages
         .slice(-7, -1)
@@ -186,7 +220,7 @@ export function ChatWidget() {
         const res = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: content, sessionId, history }),
+          body: JSON.stringify({ message: content, sessionId, history, conversationId }),
         });
 
         if (res.status === 429) {
@@ -204,8 +238,17 @@ export function ChatWidget() {
           throw new Error('chat_error');
         }
 
-        const data = (await res.json()) as { reply?: string; source?: string; urgent?: boolean };
+        const data = (await res.json()) as {
+          reply?: string;
+          source?: string;
+          urgent?: boolean;
+          conversationId?: string;
+        };
         const reply = data.reply?.trim() || chatConfig.fallbackReply;
+
+        if (data.conversationId) {
+          setNlmConversationId(data.conversationId);
+        }
 
         // Marca urgencia si el backend lo señala (resalta CTAs de contacto).
         if (data.urgent === true) setUrgent(true);
@@ -218,7 +261,10 @@ export function ChatWidget() {
           );
         }
 
-        setMessages((prev) => [...prev, { role: 'assistant', content: reply }]);
+        setMessages((prev) => [
+          ...prev,
+          { role: 'assistant', content: reply, source: data.source },
+        ]);
 
         // Heurística simple para evento service_suggested (categoría fija).
         const lower = reply.toLowerCase();
@@ -266,38 +312,29 @@ export function ChatWidget() {
       data-floating-widget
       inert={consentOpen}
       aria-hidden={consentOpen ? 'true' : undefined}
-      className="hidden md:flex print:hidden safe-bottom"
-      style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        zIndex: 9999,
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        gap: '0.5rem',
-        padding: '0 0 1rem 1rem',
-        pointerEvents: 'none',
-      }}
+      className={`flex flex-col print:hidden fixed left-0 z-[9999] items-start gap-2 ${
+        open
+          ? 'max-md:inset-0 max-md:z-[10000] max-md:bg-surface max-md:items-stretch max-md:justify-stretch bottom-0 pb-0 pl-0 md:bottom-0 md:pl-4 md:pb-[max(1rem,env(safe-area-inset-bottom))]'
+          : 'safe-bottom bottom-0 pl-4 pb-[max(1rem,env(safe-area-inset-bottom))]'
+      }`}
+      style={{ pointerEvents: open ? 'auto' : 'none' }}
+      onClick={undefined}
+      role={open ? 'presentation' : undefined}
     >
-      {/* Panel del chat — premium, elegante, proporcional.
-          Usa los mismos tokens de diseño que el resto de la web
-          (card-premium, shadows, accent, radius-lg). */}
       {open && (
         <div
           id="chat-asistente-virtual"
           role="dialog"
-          aria-modal="false"
+          aria-modal="true"
           aria-label="Asistente virtual"
-          className="flex flex-col rounded-lg border border-accent/30 bg-surface text-text overflow-hidden shadow-xl overscroll-contain"
-          style={{
-            pointerEvents: 'auto',
-            width: 'calc(100vw - 2rem)',
-            maxWidth: 'clamp(22rem, 38vw, 32rem)',
-            maxHeight: 'min(640px, calc(100dvh - 4rem))',
-          }}
+          className="flex flex-col min-h-0 flex-1 bg-surface text-text overflow-hidden overscroll-contain
+            max-md:w-full max-md:h-dvh max-md:max-h-dvh max-md:rounded-none max-md:border-0 max-md:shadow-none
+            md:rounded-lg md:border md:border-accent/30 md:shadow-xl
+            md:w-[min(calc(100vw-2rem),28rem)] lg:w-[min(calc(100vw-2rem),32rem)]
+            md:max-h-[min(720px,calc(100dvh-5.5rem))]"
         >
-          {/* Cabecera — gradiente navy con acento dorado */}
-          <div className="relative flex items-center justify-between gap-2 px-4 py-2.5 border-b border-accent/20 bg-primary text-text-inverse">
+          {/* Cabecera — compacta en móvil con safe-area superior */}
+          <div className="relative flex items-center justify-between gap-2 px-4 py-3 max-md:pt-[max(0.75rem,env(safe-area-inset-top))] border-b border-accent/20 bg-primary text-text-inverse shrink-0">
             <div
               className="absolute inset-0 pointer-events-none bg-radial-accent opacity-60"
               aria-hidden="true"
@@ -325,34 +362,52 @@ export function ChatWidget() {
             </button>
           </div>
 
-          {/* Mensajes (scroll interno) — fondo cálido sutil */}
+          {/* Mensajes — lectura a pantalla completa en móvil/tablet */}
           <div
             ref={scrollRef}
-            className="flex-1 overflow-y-auto overscroll-contain px-3 py-3 space-y-2.5 bg-page-warm"
+            className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 py-4 md:px-3.5 md:py-3 space-y-4 md:space-y-3 bg-page-warm"
             aria-live="polite"
             aria-label="Conversación"
           >
             {messages.map((m, i) => (
-              <div
+              <article
                 key={i}
                 className={
                   m.role === 'user'
-                    ? 'ml-auto max-w-[82%] rounded-lg bg-primary text-text-inverse px-3.5 py-2 text-sm leading-relaxed shadow-sm break-words overflow-hidden'
-                    : 'mr-auto max-w-[88%] rounded-lg bg-surface text-text px-3.5 py-2 text-sm leading-relaxed border border-border-light shadow-sm break-words overflow-hidden'
+                    ? 'w-full rounded-xl md:rounded-lg border-l-4 border-l-accent bg-surface px-4 py-3.5 md:ml-auto md:max-w-[82%] md:border-l-0 md:bg-primary md:text-text-inverse md:px-3.5 md:py-2.5 text-base leading-[1.65] md:text-sm md:leading-relaxed shadow-sm break-words'
+                    : 'w-full rounded-xl md:rounded-lg bg-surface text-text px-4 py-4 md:mr-auto md:max-w-[95%] md:px-3.5 md:py-3 text-base leading-[1.65] md:text-sm md:leading-relaxed border border-border-light shadow-sm break-words'
                 }
               >
-                {m.content}
-              </div>
+                <p
+                  className={
+                    m.role === 'user'
+                      ? 'mb-1.5 text-xs font-semibold uppercase tracking-wide text-accent-dark md:sr-only'
+                      : 'mb-2 text-xs font-semibold uppercase tracking-wide text-primary md:sr-only'
+                  }
+                >
+                  {m.role === 'user' ? 'Su consulta' : 'Respuesta'}
+                </p>
+                {m.role === 'user' ? (
+                  m.content
+                ) : (
+                  <ChatMessageBody content={m.content} source={m.source} />
+                )}
+                {m.role === 'assistant' && m.source === 'notebooklm' && (
+                  <p className="mt-3 text-xs text-text-muted border-t border-border-light/60 pt-2 md:mt-1.5 md:text-xxs md:pt-1.5">
+                    {chatConfig.assistant.notebooklmBadge}
+                  </p>
+                )}
+              </article>
             ))}
 
             {loading && (
-              <div className="mr-auto flex items-center gap-2 text-text-secondary text-xs px-2 py-1">
+              <div className="flex items-center gap-2 text-text-secondary text-sm md:text-xs px-1 py-1">
                 <span className="flex gap-0.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent/60 animate-pulse" />
                   <span className="w-1.5 h-1.5 rounded-full bg-accent/60 animate-pulse" style={{ animationDelay: '0.15s' }} />
                   <span className="w-1.5 h-1.5 rounded-full bg-accent/60 animate-pulse" style={{ animationDelay: '0.3s' }} />
                 </span>
-                <span>Escribiendo…</span>
+                <span>Consultando corpus legal (puede tardar 1–2 min)…</span>
               </div>
             )}
 
@@ -377,7 +432,7 @@ export function ChatWidget() {
 
             {/* Quick replies: solo al inicio, ocultas tras el primer mensaje */}
             {showQuickReplies && (
-              <div className="flex flex-wrap gap-1.5 mr-auto max-w-[92%]">
+              <div className="flex flex-wrap gap-2 md:gap-1.5 md:mr-auto md:max-w-[92%]">
                 {chatConfig.assistant.quickReplies.map((qr) => {
                   const isUrgent = qr === 'Caso urgente';
                   return (
@@ -385,7 +440,7 @@ export function ChatWidget() {
                       key={qr}
                       type="button"
                       onClick={() => void sendMessage(qr)}
-                      className={`text-xs font-medium px-2.5 py-1.5 rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                      className={`text-sm md:text-xs font-medium min-h-11 md:min-h-10 px-4 md:px-3 py-2.5 md:py-2 rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                         isUrgent
                           ? 'border-danger/40 bg-danger/10 text-danger hover:bg-danger/15'
                           : 'border-border bg-surface-alt text-text-secondary hover:border-accent/40 hover:text-accent-dark'
@@ -400,8 +455,8 @@ export function ChatWidget() {
             )}
           </div>
 
-          {/* Barra de contacto rápida */}
-          <div className="flex items-center gap-2 px-3 py-2 border-t border-border-light bg-surface-alt/50">
+          {/* Contacto rápido — compacto en móvil para dejar espacio al texto */}
+          <div className="flex items-center gap-2 px-4 py-2 md:px-3 border-t border-border-light bg-surface-alt/50 shrink-0">
             <a
               href={whatsappHref(whatsappContextual())}
               target="_blank"
@@ -410,42 +465,50 @@ export function ChatWidget() {
                 trackChatWhatsAppClicked();
                 trackChatContactClicked('whatsapp');
               }}
-              className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-success text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-opacity ${urgent ? 'ring-2 ring-danger/40 animate-pulse' : ''}`}
+              className={`flex flex-1 md:flex-none items-center justify-center gap-1.5 text-sm md:text-xs font-semibold min-h-11 px-3 py-2 rounded-lg bg-success text-white hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-opacity ${urgent ? 'ring-2 ring-danger/40' : ''}`}
             >
-              <MessageCircle size={12} aria-hidden="true" /> WhatsApp
+              <MessageCircle size={16} aria-hidden="true" />
+              <span>WhatsApp</span>
             </a>
             <a
               href={telHref()}
               onClick={() => trackChatContactClicked('phone')}
-              className={`flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-primary text-text-inverse hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-opacity ${urgent ? 'ring-2 ring-danger/40 animate-pulse' : ''}`}
+              className={`flex flex-1 md:flex-none items-center justify-center gap-1.5 text-sm md:text-xs font-semibold min-h-11 px-3 py-2 rounded-lg bg-primary text-text-inverse hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-opacity ${urgent ? 'ring-2 ring-danger/40' : ''}`}
             >
-              <Phone size={12} aria-hidden="true" /> Llamar
+              <Phone size={16} aria-hidden="true" />
+              <span>Llamar</span>
             </a>
             <a
               href="/solicitar-consulta"
               onClick={() => trackChatContactClicked('consulta')}
-              className="ml-auto flex items-center gap-1 text-xs font-semibold text-accent-dark hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg px-2 py-1.5 transition-colors"
+              className="hidden md:flex items-center gap-1 text-xs font-semibold text-accent-dark hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg px-2 py-1.5 min-h-11 transition-colors"
             >
               Consulta <ArrowRight size={11} aria-hidden="true" />
             </a>
           </div>
 
-          {/* Input */}
-          <form onSubmit={onSubmit} className="flex items-center gap-2 px-3 py-2.5 border-t border-border-light bg-surface">
+          {/* Input — área táctil amplia */}
+          <form onSubmit={onSubmit} className="flex items-end gap-2 px-4 py-3 md:px-3 md:py-2.5 border-t border-border-light bg-surface shrink-0">
             <label htmlFor="chat-input" className="sr-only">
               Escriba su mensaje
             </label>
-            <input
+            <textarea
               ref={inputRef}
               id="chat-input"
-              type="text"
+              rows={1}
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  void sendMessage(input);
+                }
+              }}
               maxLength={chatConfig.limits.maxMessageLength}
-              placeholder="Escriba su mensaje…"
+              placeholder="Escriba su consulta jurídica…"
               autoComplete="off"
               disabled={loading}
-              className="flex-1 min-w-0 rounded-lg border border-border bg-background px-3 py-2 text-sm placeholder:text-text-muted focus-visible:outline-none focus-visible:border-accent/50 focus-visible:ring-2 focus-visible:ring-accent/20 disabled:opacity-50 transition-colors"
+              className="flex-1 min-w-0 min-h-12 max-h-32 resize-none rounded-lg border border-border bg-background px-3.5 py-3 text-base md:text-sm placeholder:text-text-muted focus-visible:outline-none focus-visible:border-accent/50 focus-visible:ring-2 focus-visible:ring-accent/20 disabled:opacity-50 transition-colors"
             />
             <button
               type="submit"
@@ -458,30 +521,28 @@ export function ChatWidget() {
           </form>
 
           {/* Disclaimer discreto */}
-          <p className="px-3 pb-2 pt-0.5 text-xxs leading-tight text-text-muted bg-surface text-center">
+          <p className="px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-1.5 text-xs md:text-xxs leading-snug text-text-muted bg-surface text-center shrink-0">
             {chatConfig.assistant.disclaimer}
           </p>
         </div>
       )}
 
-      {/* Botón flotante. Sin animación de atención: el movimiento continuo distrae. */}
+      {/* Botón flotante — oculto en móvil cuando el panel está abierto */}
+      {!open && (
       <button
         ref={openBtnRef}
         type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-label={open ? 'Cerrar asistente virtual' : 'Abrir asistente virtual'}
-        aria-expanded={open}
+        onClick={() => setOpen(true)}
+        aria-label="Abrir asistente virtual"
+        aria-expanded={false}
         aria-controls="chat-asistente-virtual"
-        className="relative w-12 h-12 rounded-full bg-primary text-text-inverse flex items-center justify-center btn-shadow-primary btn-shadow-primary-hover hover:-translate-y-0.5 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
-        style={{
-          pointerEvents: 'auto',
-        }}
+        className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-4 z-[9998] w-14 h-14 sm:w-12 sm:h-12 rounded-full bg-primary text-text-inverse flex items-center justify-center btn-shadow-primary btn-shadow-primary-hover active:scale-95 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+        style={{ pointerEvents: 'auto' }}
       >
-        <span className="relative">
-          {open ? <X size={20} aria-hidden="true" /> : <MessageCircle size={20} aria-hidden="true" />}
-        </span>
-        {!open && <span className="sr-only">Asistente virtual de Pineda y Asociados</span>}
+        <MessageCircle size={22} className="sm:w-5 sm:h-5" aria-hidden="true" />
+        <span className="sr-only">Asistente virtual de Pineda y Asociados</span>
       </button>
+      )}
     </div>,
     document.body,
   );

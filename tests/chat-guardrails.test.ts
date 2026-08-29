@@ -58,18 +58,39 @@ describe('guardrails — evaluateGuardrails', () => {
     }
   });
 
-  it('detecta solicitudes de asesoramiento definitivo', () => {
+  it('detecta solicitudes de redacción de escritos', () => {
     const cases = [
-      '¿Cuántos años de prisión me tocan?',
-      'Calcula la pena para este delito',
       'Redacta una demanda de divorcio',
-      '¿Cuál es mi estrategia de defensa?',
-      '¿soy culpable o inocente?',
+      'Escríbeme un recurso de apelación',
     ];
     for (const c of cases) {
       const r = evaluateGuardrails(c);
       expect(r.hit).toBe(true);
-      if (r.hit) expect(r.reason).toBe('definitive_advice');
+      if (r.hit) expect(r.reason).toBe('document_drafting');
+    }
+  });
+
+  it('detecta solicitudes de estrategia de caso concreto', () => {
+    const cases = [
+      '¿Cuál es mi estrategia de defensa?',
+      '¿soy culpable o inocente?',
+      '¿Cuánto me tocan de pena?',
+    ];
+    for (const c of cases) {
+      const r = evaluateGuardrails(c);
+      expect(r.hit).toBe(true);
+      if (r.hit) expect(r.reason).toBe('case_strategy');
+    }
+  });
+
+  it('permite consultas jurídicas generales en el motor de reglas (no bloquea)', () => {
+    const cases = [
+      '¿Cuántos años de prisión tiene el hurto según el CP?',
+      '¿Qué dice el artículo 213 del Código Penal?',
+    ];
+    for (const c of cases) {
+      const r = evaluateGuardrails(c);
+      expect(r.hit).toBe(false);
     }
   });
 

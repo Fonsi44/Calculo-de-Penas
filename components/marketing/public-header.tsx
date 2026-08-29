@@ -4,12 +4,13 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Phone, MessageCircle, Calendar, ChevronRight, Search, Download, Share } from 'lucide-react';
+import { Menu, X, Phone, MessageCircle, Calendar, Download, Share } from 'lucide-react';
 import { site, telHref, whatsappHref } from '@/lib/site';
-import { trackFormClick, trackPhoneClick, trackWhatsAppClick } from '@/lib/analytics';
+import { trackFormClick, trackWhatsAppClick } from '@/lib/analytics';
 import { whatsappMessageForPath } from '@/lib/whatsapp-messages';
 import { useInstallPrompt } from '@/hooks/use-install-prompt';
 import { HeaderServiceSearch } from '@/components/marketing/header-service-search';
+import { PublicMobileNavDrawer } from '@/components/marketing/public-mobile-nav';
 import type { ServiceSearchEntry } from '@/lib/service-search-index';
 
 const NAV = [
@@ -89,24 +90,35 @@ export function PublicHeader({
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
         setOpen(false);
+        setSearchOpen(false);
+        setIosPanelOpen(false);
       }
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const overlayOpen = open || searchOpen || iosPanelOpen;
+
   useEffect(() => {
-    if (!open) return;
+    if (!overlayOpen) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = previous;
     };
-  }, [open]);
+  }, [overlayOpen]);
+
+  useEffect(
+    () => () => {
+      document.body.style.overflow = '';
+    },
+    [],
+  );
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full text-text-inverse transition-all duration-200 ${
+      className={`sticky top-0 z-[60] w-full text-text-inverse transition-all duration-200 ${
         scrolled
           ? 'bg-primary/95 backdrop-blur-md border-b border-primary-light/40 shadow-lg'
           : 'bg-primary border-b border-primary-light/60'
@@ -135,31 +147,32 @@ export function PublicHeader({
         </div>
       </div>
 
-      <div className="relative z-[47] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center gap-2">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 flex items-center gap-2 min-w-0">
         <Link
           href="/"
-          className="group flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg flex-shrink-0 cursor-pointer"
+          className="group flex items-center gap-2 min-w-0 flex-1 lg:flex-none max-w-[calc(100%-7.5rem)] sm:max-w-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg cursor-pointer"
           aria-label={`Ir a la página de inicio — ${site.shortName}`}
         >
           <Image
             src="/images/logo.png"
-            alt={`${site.name} — Logo oficial`}
+            alt=""
             width={741}
             height={728}
-            className="relative flex-shrink-0 h-8 sm:h-9 lg:h-10 w-auto transition-all duration-200 ease-out group-hover:opacity-90"
+            className="relative flex-shrink-0 h-8 sm:h-9 lg:h-10 w-auto transition-opacity duration-200 ease-out group-hover:opacity-90"
             style={{
               filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.45)) drop-shadow(0 0 6px rgba(212,175,55,0.18))',
               objectFit: 'contain',
             }}
             priority
             decoding="async"
+            aria-hidden="true"
           />
 
-          <span className="flex flex-col leading-tight">
-            <span className="font-serif font-bold text-text-inverse text-sm whitespace-nowrap">
+          <span className="flex flex-col leading-tight min-w-0 overflow-hidden">
+            <span className="font-serif font-bold text-text-inverse text-sm truncate">
               {site.name}
             </span>
-            <span className="text-xxs font-semibold tracking-eyebrow text-accent whitespace-nowrap">
+            <span className="text-xxs font-semibold tracking-eyebrow text-accent truncate hidden min-[380px]:block">
               Bufete Jurídico
             </span>
           </span>
@@ -192,7 +205,7 @@ export function PublicHeader({
           })}
         </nav>
 
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-1 sm:gap-2 flex-shrink-0">
           <HeaderServiceSearch
             entries={searchEntries}
             open={searchOpen}
@@ -252,6 +265,7 @@ export function PublicHeader({
             type="button"
             onClick={() => {
               setSearchOpen(false);
+              setIosPanelOpen(false);
               setOpen((v) => !v);
             }}
             className="lg:hidden min-h-11 min-w-11 inline-flex items-center justify-center rounded-lg bg-primary-light/40 hover:bg-primary-light/60 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none transition-colors"
@@ -323,110 +337,18 @@ export function PublicHeader({
         </>
       )}
 
-      {open && (
-        <div className="lg:hidden">
-          <div
-            className="fixed inset-0 z-[45] bg-primary-dark/50"
-            onClick={() => setOpen(false)}
-            aria-hidden="true"
-          />
-          <div
-            id="public-mobile-navigation"
-            className="fixed inset-y-0 right-0 z-[46] w-[min(22rem,90vw)] bg-primary border-l border-primary-light/40 shadow-xl overflow-y-auto overscroll-contain safe-bottom"
-          >
-            <nav aria-label="Navegación móvil" className="px-3 py-4 flex flex-col gap-1">
-              {NAV.map((item) => {
-                const active = isActive(pathname, item.href);
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    title={item.title}
-                    onClick={() => setOpen(false)}
-                    aria-current={active ? 'page' : undefined}
-                    className={`relative px-3 min-h-11 inline-flex items-center justify-between text-sm font-semibold rounded-lg focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none ${
-                      active
-                        ? 'text-accent bg-primary-light/30'
-                        : 'text-text-inverse/85 hover:text-accent hover:bg-primary-light/30'
-                    }`}
-                  >
-                    <span>{item.label}</span>
-                    {active ? (
-                      <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    ) : (
-                      <ChevronRight size={14} aria-hidden="true" />
-                    )}
-                  </Link>
-                );
-              })}
-              <button
-                type="button"
-                onClick={() => {
-                  setOpen(false);
-                  setSearchOpen(true);
-                }}
-                className="px-3 min-h-11 inline-flex items-center gap-2 text-sm font-semibold text-text-inverse/85 hover:text-accent focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg"
-              >
-                <Search size={16} aria-hidden="true" />
-                Buscar servicios
-              </button>
-              <div className="border-t border-primary-light/40 my-2" />
-              <a
-                href={telHref()}
-                title="Llamar a Pineda y Asociados — abogados en Nacaome"
-                onClick={() => {
-                  trackPhoneClick('header_mobile');
-                  setOpen(false);
-                }}
-                className="px-3 min-h-11 inline-flex items-center gap-2 text-sm font-semibold text-text-inverse/85 hover:text-accent focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg"
-              >
-                <Phone size={16} />
-                {site.phoneDisplay}
-              </a>
-              <a
-                href={whatsappHref(waMessage)}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Escribir por WhatsApp a Pineda y Asociados"
-                onClick={() => {
-                  trackWhatsAppClick('header_mobile');
-                  setOpen(false);
-                }}
-                className="px-3 min-h-12 inline-flex items-center justify-center gap-2 text-sm font-bold text-white bg-success rounded-lg btn-shadow-success focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
-              >
-                <MessageCircle size={16} />
-                WhatsApp
-              </a>
-              <Link
-                href="/solicitar-consulta#formulario"
-                title="Solicitar consulta legal con Pineda y Asociados"
-                onClick={() => {
-                  trackFormClick('header_mobile');
-                  setOpen(false);
-                }}
-                className="mt-2 min-h-11 inline-flex items-center justify-center gap-2 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
-              >
-                <Calendar size={16} />
-                Solicitar consulta
-              </Link>
-              {showInstall && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (!isIOS) void promptInstall();
-                    setOpen(false);
-                  }}
-                  className="px-3 min-h-11 inline-flex items-center gap-2 text-sm font-semibold text-text-inverse/85 hover:text-accent focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg"
-                >
-                  <Download size={16} aria-hidden="true" />
-                  Instalar app
-                </button>
-              )}
-              <p className="px-3 pt-2 text-xxs text-text-inverse/75">{site.hours}</p>
-            </nav>
-          </div>
-        </div>
-      )}
+      <PublicMobileNavDrawer
+        open={open}
+        onClose={() => setOpen(false)}
+        pathname={pathname}
+        nav={NAV}
+        waMessage={waMessage}
+        showInstall={showInstall}
+        isIOS={isIOS}
+        onOpenSearch={() => setSearchOpen(true)}
+        onPromptInstall={() => void promptInstall()}
+        isActive={isActive}
+      />
     </header>
   );
 }

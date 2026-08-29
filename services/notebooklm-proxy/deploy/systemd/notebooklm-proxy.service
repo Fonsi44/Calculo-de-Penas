@@ -1,0 +1,16 @@
+[Unit]
+Description=NotebookLM proxy — chat público Pineda y Asociados
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/pineda/notebooklm-proxy
+EnvironmentFile=/etc/pineda/notebooklm-proxy.env
+ExecStart=/usr/bin/node server.mjs
+Restart=on-failure
+RestartSec=10
+User=notebooklm
+Group=notebooklm
+
+[Install]
+WantedBy=multi-user.target

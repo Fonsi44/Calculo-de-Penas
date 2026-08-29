@@ -22,8 +22,7 @@ export const chatRequestSchema = z.object({
     .min(8, 'sessionId inválido')
     .max(64, 'sessionId inválido')
     .regex(/^[a-zA-Z0-9_-]+$/, 'sessionId inválido'),
-  /** Historial corto (máx 6 turnos) para coherencia conversacional.
-   *  Solo role + content saneado; nunca PII obligatoria. */
+  /** Historial corto (máx 6 turnos) para coherencia conversacional. */
   history: z
     .array(
       z.object({
@@ -34,6 +33,13 @@ export const chatRequestSchema = z.object({
     .max(6)
     .optional()
     .default([]),
+  /** ID de conversación NotebookLM (opcional, continuidad jurídica). */
+  conversationId: z
+    .string()
+    .trim()
+    .max(128)
+    .regex(/^[a-zA-Z0-9_-]+$/, 'conversationId inválido')
+    .optional(),
 });
 
 export type ChatRequest = z.infer<typeof chatRequestSchema>;

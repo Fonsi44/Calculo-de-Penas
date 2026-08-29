@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.pineda.notebooklm-proxy</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/local/bin/node</string>
+    <string>REPO_ROOT/services/notebooklm-proxy/server.mjs</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PORT</key>
+    <string>8787</string>
+    <key>NOTEBOOKLM_NOTEBOOK_ID</key>
+    <string>6189a2da-d3f1-4450-8abb-c28aeb438272</string>
+    <key>NOTEBOOKLM_PROXY_API_KEY</key>
+    <string>local-dev-chat-proxy-key</string>
+    <key>CHAT_NOTEBOOKLM_TIMEOUT_MS</key>
+    <string>90000</string>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>REPO_ROOT</string>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/tmp/notebooklm-proxy.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/notebooklm-proxy.err</string>
+</dict>
+</plist>

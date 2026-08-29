@@ -1,41 +1,48 @@
 /**
- * POST /api/chat — Endpoint server-side del chat asistente público.
+ * POST /api/chat — Endpoint server-side del chat asistente público (híbrido).
  *
  * Flujo:
- *   1. rate-limit por IP y por sessionId (rateLimits, keyPrefix 'chat_ip' / 'chat_sess').
- *   2. validación Zod (mensaje no vacío, longitud, sessionId, historial corto).
- *   3. guardrails server-side (prompt injection, tema privado, asesoramiento definitivo).
- *   4. motor de reglas local (sin LLM externo): los mensajes del usuario NO se
- *      transmiten a ningún proveedor de IA. Se procesan localmente con reglas,
- *      plantillas y heurísticas.
- *
- * SEGURIDAD Y PRIVACIDAD:
- *   - Los mensajes del usuario NO se envían a ningún proveedor externo de IA.
- *   - No se persisten conversaciones: el historial lo envía el cliente por turnos
- *     (máx 6 mensajes) y no se almacena en DB.
- *   - No se loguea contenido sensible completo.
- *   - Errores son genéricos (no vuelcan stack ni configuración).
- *   - Rate-limit protege contra abuso.
- *
- * El endpoint se mantiene server-side (en lugar de mover todo al cliente) para:
- *   - Centralizar los guardrails y rate-limiting (defensa en profundidad).
- *   - Evitar exponer la lógica de reglas/heurísticas en el bundle del cliente.
- *   - Registrar eventos mínimos de analytics sin datos sensibles.
+ *   1. rate-limit por IP y por sessionId.
+ *   2. validación Zod.
+ *   3. guardrails de bloqueo duro (injection, intranet, redacción, estrategia).
+ *   4. router: sitio → motor de reglas; «una pregunta:» → NotebookLM (si habilitado).
+ *   5. degradación segura a reglas si NLM falla.
  */
 
 import { rateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit';
 import { validate } from '@/lib/validation';
 import { chatRequestSchema } from '@/lib/chat/schema';
 import { chatConfig } from '@/lib/chat/config';
-import { evaluateGuardrails, sanitizeReply } from '@/lib/chat/guardrails';
+import { evaluateBlockingGuardrails, sanitizeReply, detectUrgency } from '@/lib/chat/guardrails';
 import { procesarMensajeLocal } from '@/lib/chat/rules-engine';
+import { routeChatMessage } from '@/lib/chat/router';
+import {
+  buildChatLegalPrompt,
+  finalizeNlmAnswerForChat,
+  isInsufficientAnswer,
+  NLM_REPLY_MAX_CHARS,
+} from '@/lib/chat/notebooklm-prompt';
+import {
+  hasLawyerNotebookShortcut,
+  stripLawyerNotebookShortcut,
+} from '@/lib/chat/lawyer-shortcut';
+import {
+  LEGAL_CORPUS_ERROR_REPLY,
+  LEGAL_CORPUS_RATE_LIMIT_REPLY,
+  LEGAL_CORPUS_TIMEOUT_REPLY,
+  LEGAL_CORPUS_UNAVAILABLE_REPLY,
+} from '@/lib/chat/legal-corpus-fallback';
+import {
+  isNotebookLmChatConfigured,
+  queryNotebookLmForChat,
+  NotebookLmChatError,
+} from '@/lib/notebooklm/chat-client';
 
 export const runtime = 'nodejs';
 
 export async function POST(request: Request) {
   const ip = getClientIp(request);
 
-  // body
   let body: unknown;
   try {
     body = await request.json();
@@ -43,14 +50,12 @@ export async function POST(request: Request) {
     return jsonError('JSON inválido', 400);
   }
 
-  // Validación Zod.
   const parsed = validate(chatRequestSchema, body);
   if (!parsed.success) {
     return jsonError(parsed.error, 400);
   }
-  const { message, sessionId } = parsed.data;
+  const { message, sessionId, history, conversationId } = parsed.data;
 
-  // Rate-limit por IP y por sessionId (doble cubierta).
   const ipRl = await rateLimit(ip, {
     keyPrefix: 'chat_ip',
     windowMs: chatConfig.limits.rateWindowMs,
@@ -65,23 +70,110 @@ export async function POST(request: Request) {
   });
   if (!sessRl.ok) return rateLimitResponse(sessRl);
 
-  // Guardrails server-side: si se disparan, respondemos sin procesar más.
-  const guardrail = evaluateGuardrails(message);
-  if (guardrail.hit) {
-    // Log estructurado sin contenido del usuario (minimización de datos).
+  const blocking = evaluateBlockingGuardrails(message);
+  if (blocking.hit) {
     console.log('[chat] guardrail hit', {
-      reason: guardrail.reason,
+      reason: blocking.reason,
       ip,
       sessionId: sessionId.slice(0, 8),
     });
     return Response.json({
-      reply: guardrail.reply,
+      reply: blocking.reply,
       source: 'guardrail',
-      urgent: guardrail.urgent === true,
+      urgent: blocking.urgent === true,
     });
   }
 
-  // Motor de reglas local: procesa el mensaje sin llamar a ningún proveedor externo.
+  const routed = routeChatMessage(message);
+  if (routed.route === 'blocked' && routed.guardrail) {
+    return Response.json({
+      reply: routed.guardrail.reply,
+      source: 'guardrail',
+      urgent: routed.guardrail.urgent === true,
+    });
+  }
+
+  const urgent = detectUrgency(message);
+
+  if (routed.route === 'legal') {
+    const legalMessage = hasLawyerNotebookShortcut(message)
+      ? stripLawyerNotebookShortcut(message)
+      : message;
+
+    if (hasLawyerNotebookShortcut(message) && !legalMessage) {
+      return Response.json({
+        reply:
+          'Escriba la consulta jurídica justo después de «una pregunta:». Ejemplo: una pregunta: ¿cómo se tramita un poder desde España?',
+        source: 'rules',
+        urgent: false,
+      });
+    }
+
+    if (!isNotebookLmChatConfigured()) {
+      return Response.json({
+        reply: LEGAL_CORPUS_UNAVAILABLE_REPLY,
+        source: 'fallback_no_config',
+        urgent: false,
+      });
+    }
+
+    const nlmRl = await rateLimit(sessionId, {
+      keyPrefix: 'chat_nlm_sess',
+      windowMs: chatConfig.limits.rateWindowMs,
+      max: chatConfig.notebooklm.rateLimitPerSession,
+    });
+    if (!nlmRl.ok) {
+      return Response.json({
+        reply: LEGAL_CORPUS_RATE_LIMIT_REPLY,
+        source: 'fallback_provider_error',
+        urgent,
+      });
+    }
+
+    try {
+      const prompt = buildChatLegalPrompt(legalMessage, urgent);
+      const nlm = await queryNotebookLmForChat({
+        question: prompt,
+        conversationId: conversationId ?? undefined,
+        sessionId,
+      });
+
+      let reply = finalizeNlmAnswerForChat(nlm.answer);
+      if (isInsufficientAnswer(nlm.answer)) {
+        reply = sanitizeReply(
+          `${reply} Le recomiendo contactar con el despacho para una evaluación de su caso concreto.`,
+          NLM_REPLY_MAX_CHARS,
+        );
+      } else {
+        reply = sanitizeReply(reply, NLM_REPLY_MAX_CHARS);
+      }
+
+      if (urgent) {
+        reply += ' Su caso parece urgente: contacte al despacho por WhatsApp o teléfono lo antes posible.';
+      }
+
+      return Response.json({
+        reply,
+        source: 'notebooklm',
+        urgent,
+        conversationId: nlm.conversationId,
+      });
+    } catch (err) {
+      const code = err instanceof NotebookLmChatError ? err.code : 'unknown';
+      console.log('[chat] notebooklm error', {
+        code,
+        sessionId: sessionId.slice(0, 8),
+      });
+      const reply =
+        code === 'timeout' ? LEGAL_CORPUS_TIMEOUT_REPLY : LEGAL_CORPUS_ERROR_REPLY;
+      return Response.json({
+        reply,
+        source: 'fallback_provider_error',
+        urgent,
+      });
+    }
+  }
+
   const result = procesarMensajeLocal(message);
   return Response.json({
     reply: sanitizeReply(result.reply),
@@ -90,7 +182,6 @@ export async function POST(request: Request) {
   });
 }
 
-/** Respuesta de error JSON estándar (sin detalles internos). */
 function jsonError(message: string, status: number): Response {
   return Response.json({ error: message }, { status });
 }

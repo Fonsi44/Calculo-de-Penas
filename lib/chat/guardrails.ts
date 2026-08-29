@@ -16,10 +16,12 @@
  * contacto.
  */
 
+export type GuardrailReason = 'injection' | 'private_topic' | 'document_drafting' | 'case_strategy';
+
 export type GuardrailHit = {
   hit: true;
   /** Clave interna para analytics (sin contenido del usuario). */
-  reason: 'injection' | 'private_topic' | 'definitive_advice';
+  reason: GuardrailReason;
   reply: string;
   /** Una respuesta de guardrail puede además marcar urgencia. */
   urgent?: boolean;
@@ -71,19 +73,23 @@ const PRIVATE_TOPIC_PATTERNS = [
   /\blogin\s+(admin|interno|backend)/i,
 ];
 
-const DEFINITIVE_ADVICE_PATTERNS = [
-  // ¿Cuántos años/meses/días de prisión/cárcel...? (la interrogación inicial es opcional)
-  /¿?\s*cu[aá]nt[oa]s?\s+(a[ñn]os|meses|d[ií]as)\s+de\s+(prisi[oó]n|c[aá]rcel|condena)/i,
-  // "¿cuánto me tocan?" / "qué pena me toca"
-  /cu[aá]nt[oa]\s+(me\s+)?(toc|correspon|van)/i,
-  /qu[eé]\s+(pena|condena|castigo|sentencia)\s+(me\s+)?(toc|correspon|van|esper)/i,
-  /calcula\s+(la\s+)?(pena|prisi[oó]n|condena)/i,
+/** Peticiones de redacción de escritos: siempre bloqueadas (no NLM). */
+const DOCUMENT_DRAFTING_PATTERNS = [
+  /redacta(r|me)?\s+((un|una)\s+)?(demanda|escrito|recurso|querella|memorial|alegato)/i,
+  /escr[ií]b(e|eme|ir)\s+((un|una)\s+)?(demanda|escrito|recurso|querella|memorial|alegato)/i,
+  /hazme\s+(un|una)\s+(demanda|escrito|recurso|querella)/i,
+];
+
+/** Estrategia o valoración sobre el caso concreto del usuario: bloqueadas. */
+const CASE_STRATEGY_PATTERNS = [
   /estrategia\s+(legal|procesal|de\s+defensa)/i,
   /cu[aá]l\s+es\s+mi\s+(estrategia|defensa)/i,
-  /redacta\s+(una\s+)?(demanda|escrito|recurso|querella)/i,
   /soy\s+(culpable|inocente|responsable)/i,
   /¿?\s*(debo|tengo\s+que)\s+(declararme|confesar|apelar)/i,
   /qu[eé]\s+(debo\s+)?declarar/i,
+  /calcula\s+(la\s+)?(pena|prisi[oó]n|condena)\s+(de\s+)?mi\s+caso/i,
+  /cu[aá]nt[oa]\s+me\s+(toc|correspon|van)/i,
+  /qu[eé]\s+(pena|condena|castigo|sentencia)\s+me\s+(toc|correspon|van|esper)/i,
 ];
 
 /**
@@ -115,30 +121,43 @@ const INJECTION_REPLY =
 const PRIVATE_TOPIC_REPLY =
   'No puedo ayudar con áreas privadas o internas. Si necesita asistencia, contacte directamente con el despacho por los canales oficiales.';
 
-const DEFINITIVE_ADVICE_REPLY =
-  'Esa valoración requiere revisión directa con el despacho, ya que depende del caso concreto y no puedo ofrecerla por chat. Le recomiendo contactar por WhatsApp o teléfono para recibir orientación profesional.';
+const DOCUMENT_DRAFTING_REPLY =
+  'No puedo redactar demandas, escritos ni recursos por chat. Esa tarea requiere revisión profesional directa. Le recomiendo contactar con el despacho por WhatsApp o teléfono.';
+
+const CASE_STRATEGY_REPLY =
+  'Esa valoración sobre su caso concreto requiere revisión directa con el despacho y no puedo ofrecerla por chat. Le recomiendo contactar por WhatsApp o teléfono para recibir orientación profesional.';
 
 /** Detecta si el mensaje contiene señales de urgencia. */
 export function detectUrgency(message: string): boolean {
   return URGENCY_PATTERNS.some((re) => re.test(message ?? ''));
 }
 
-/** Evalúa un mensaje de usuario contra los guardrails. */
-export function evaluateGuardrails(message: string): GuardrailResult {
+/**
+ * Guardrails de bloqueo duro (injection, intranet, redacción, estrategia de caso).
+ * Las consultas jurídicas con palabra clave `una pregunta:` pasan al router/NotebookLM.
+ */
+export function evaluateBlockingGuardrails(message: string): GuardrailResult {
   const text = message ?? '';
   const urgent = detectUrgency(text);
 
-  // Orden: injection primero (intento de evasión), luego privado, luego asesoramiento.
   if (INJECTION_PATTERNS.some((re) => re.test(text))) {
     return { hit: true, reason: 'injection', reply: INJECTION_REPLY, urgent };
   }
   if (PRIVATE_TOPIC_PATTERNS.some((re) => re.test(text))) {
     return { hit: true, reason: 'private_topic', reply: PRIVATE_TOPIC_REPLY, urgent };
   }
-  if (DEFINITIVE_ADVICE_PATTERNS.some((re) => re.test(text))) {
-    return { hit: true, reason: 'definitive_advice', reply: DEFINITIVE_ADVICE_REPLY, urgent };
+  if (DOCUMENT_DRAFTING_PATTERNS.some((re) => re.test(text))) {
+    return { hit: true, reason: 'document_drafting', reply: DOCUMENT_DRAFTING_REPLY, urgent };
+  }
+  if (CASE_STRATEGY_PATTERNS.some((re) => re.test(text))) {
+    return { hit: true, reason: 'case_strategy', reply: CASE_STRATEGY_REPLY, urgent };
   }
   return { hit: false, urgent };
+}
+
+/** Alias retrocompatible: delega en evaluateBlockingGuardrails. */
+export function evaluateGuardrails(message: string): GuardrailResult {
+  return evaluateBlockingGuardrails(message);
 }
 
 /** Normalización mínima de la respuesta del modelo antes de devolverla.
@@ -168,4 +187,9 @@ export function sanitizeReply(reply: string, maxChars = 1200): string {
   return `${slice.slice(0, lastSpace > 0 ? lastSpace : maxChars)}…`;
 }
 
-export { INJECTION_REPLY, PRIVATE_TOPIC_REPLY, DEFINITIVE_ADVICE_REPLY };
+export {
+  INJECTION_REPLY,
+  PRIVATE_TOPIC_REPLY,
+  DOCUMENT_DRAFTING_REPLY,
+  CASE_STRATEGY_REPLY,
+};

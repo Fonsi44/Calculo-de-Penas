@@ -115,9 +115,22 @@ describe('POST /api/chat — motor de reglas local (sin LLM externo)', () => {
     expect(data.reply.toLowerCase()).toContain('privad');
   });
 
-  it('deriva a contacto ante asesoramiento definitivo (cálculo de pena)', async () => {
+  it('enruta consultas de pena informativa al motor de reglas si NLM desactivado', async () => {
+    process.env.CHAT_NOTEBOOKLM_ENABLED = 'false';
     const res = await POST(
-      jsonRequest({ message: '¿Cuántos años de prisión me van a poner?', sessionId: 'sid-abcdefgh' }),
+      jsonRequest({
+        message: '¿Cuántos años de prisión tiene el hurto según el CP?',
+        sessionId: 'sid-abcdefgh',
+      }),
+    );
+    const data = await res.json();
+    expect(data.source).toBe('rules');
+    expect(data.reply).toBeTruthy();
+  });
+
+  it('deriva a contacto ante estrategia de caso concreto (guardrail)', async () => {
+    const res = await POST(
+      jsonRequest({ message: '¿Cuál es mi estrategia de defensa?', sessionId: 'sid-abcdefgh' }),
     );
     const data = await res.json();
     expect(data.source).toBe('guardrail');
@@ -140,13 +153,28 @@ describe('POST /api/chat — motor de reglas local (sin LLM externo)', () => {
     expect(text.toLowerCase()).not.toContain('.env');
   });
 
-  it('no existe ningún path de código que llame a DeepSeek desde el chat', async () => {
-    // Test de regresión: confirma que el endpoint no tiene bifurcación deepseek.
-    // Si alguien reintrodujera la lógica DeepSeek, el source podría ser 'deepseek'.
-    // Como el motor es solo local, source siempre es 'rules' o 'guardrail'.
+  it('acepta source rules, guardrail o notebooklm', async () => {
     const res = await POST(jsonRequest(validBody));
     const data = await res.json();
-    expect(['rules', 'guardrail']).toContain(data.source);
+    expect(['rules', 'guardrail', 'notebooklm', 'fallback_no_config', 'fallback_provider_error']).toContain(
+      data.source,
+    );
     expect(data.source).not.toBe('deepseek');
+  });
+
+  it('no degrada «una pregunta:» al motor de sitio si NLM no está configurado', async () => {
+    const prev = process.env.CHAT_NOTEBOOKLM_ENABLED;
+    process.env.CHAT_NOTEBOOKLM_ENABLED = 'false';
+    const res = await POST(
+      jsonRequest({
+        message: 'una pregunta: poderes desde España para vender terreno',
+        sessionId: 'sid-abcdefgh',
+      }),
+    );
+    process.env.CHAT_NOTEBOOKLM_ENABLED = prev;
+    const data = await res.json();
+    expect(data.source).toBe('fallback_no_config');
+    expect(data.reply).toMatch(/corpus legal/i);
+    expect(data.reply).not.toMatch(/hondureños residentes en España/i);
   });
 });

@@ -66,7 +66,8 @@ Thumbs.db
 /coverage/
 /test-results/
 /playwright-report/
-/playwright/.cache/
+# Cache local (logs proxy chat, etc.)
+.cache/
 
 # ── E2E Staging (PR #20) ────────────────────────────────────
 # Entorno E2E aislado: artifacts locales + reports JSON.

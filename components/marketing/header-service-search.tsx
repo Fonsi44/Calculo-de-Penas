@@ -1,6 +1,7 @@
 'use client';
 
-import { useDeferredValue, useEffect, useId, useMemo, useRef, useState, type RefObject } from 'react';
+import { useDeferredValue, useEffect, useId, useMemo, useRef, useState, useSyncExternalStore, type RefObject } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { Search, X, ArrowRight } from 'lucide-react';
 import {
@@ -39,6 +40,11 @@ function HeaderSearchPanel({ entries, panelId, onClose, triggerRef }: PanelProps
   const inputRef = useRef<HTMLInputElement>(null);
   const searchId = `${panelId}-input`;
   const resultsId = `${panelId}-results`;
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -70,14 +76,12 @@ function HeaderSearchPanel({ entries, panelId, onClose, triggerRef }: PanelProps
   );
   const groups = useMemo(() => groupSearchResults(visibleHits), [visibleHits]);
 
-  return (
-    <>
-      <div role="presentation" className="fixed inset-0 z-[48]" onClick={onClose} />
-      <div
-        id={panelId}
-        role="search"
-        className="absolute left-3 right-3 top-full z-[49] mt-2 max-w-lg ml-auto rounded-lg border border-accent/30 bg-surface text-text shadow-xl p-3"
-      >
+  const panelContent = (
+    <div
+      id={panelId}
+      role="search"
+      className="fixed top-14 right-3 left-3 sm:left-auto sm:w-full sm:max-w-lg z-[56] max-h-[calc(100dvh-4rem)] overflow-y-auto rounded-lg border border-accent/30 bg-surface text-text shadow-xl p-3"
+    >
         <div className="relative">
           <Search
             size={16}
@@ -178,8 +182,17 @@ function HeaderSearchPanel({ entries, panelId, onClose, triggerRef }: PanelProps
           <Search size={14} aria-hidden="true" />
           Buscar en el blog
         </Link>
-      </div>
-    </>
+    </div>
+  );
+
+  if (!mounted) return null;
+
+  return createPortal(
+    <>
+      <div role="presentation" className="fixed inset-0 z-[55]" onClick={onClose} />
+      {panelContent}
+    </>,
+    document.body,
   );
 }
 

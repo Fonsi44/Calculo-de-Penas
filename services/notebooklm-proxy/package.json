@@ -1,0 +1,9 @@
+{
+  "name": "@pineda/notebooklm-proxy",
+  "private": true,
+  "type": "module",
+  "description": "Proxy HTTP para consultas NotebookLM del chat público",
+  "scripts": {
+    "start": "node server.mjs"
+  }
+}

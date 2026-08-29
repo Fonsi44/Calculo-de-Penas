@@ -285,10 +285,11 @@ Los manuales operativos extensos viven bajo `docs/`, no en este protocolo.
   `ANALYTICS_EXCLUDED_PREFIXES`. Variables: `NEXT_PUBLIC_GA_ID`,
   `NEXT_PUBLIC_GTM_ID`, `NEXT_PUBLIC_CLARITY_ID`, `NEXT_PUBLIC_ANALYTICS_TEST`,
   `NEXT_PUBLIC_ANALYTICS_DEBUG`.
-- **Chat público:** motor de reglas local, **sin LLM externo**. Endpoint
-  `POST /api/chat` (rate-limit → Zod → guardrails → motor de reglas). No envía
-  mensajes a terceros. Las variables `DEEPSEEK_*` pertenecen a RAG/scripts de
-  blog, **no al chat**.
+- **Chat público:** motor híbrido (`POST /api/chat`). Por defecto: reglas locales
+  (sitio, contacto, preconsulta). NotebookLM solo con palabra clave interna
+  `una pregunta:` (proxy `NOTEBOOKLM_PROXY_*`, `CHAT_NOTEBOOKLM_ENABLED`). Flujo:
+  rate-limit → Zod → guardrails → router → reglas o NLM. Sin DeepSeek en chat.
+  Manual del proxy: `docs/ops/notebooklm-proxy.md`.
 
 ---
 

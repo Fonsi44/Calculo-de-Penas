@@ -31,8 +31,11 @@ alwaysApply: false
 
 ## Chat público
 
-- Motor de reglas local, **sin LLM externo** (`POST /api/chat`)
-- No conectar el chat a DeepSeek ni APIs de terceros
+- Motor híbrido (`POST /api/chat`): reglas locales para sitio/servicios;
+  NotebookLM vía proxy propio para consultas jurídicas informativas
+  (`CHAT_NOTEBOOKLM_ENABLED`, `NOTEBOOKLM_PROXY_*`)
+- No conectar el chat a DeepSeek ni APIs de LLM genéricas
+- Descargo legal obligatorio en respuestas NLM (`lib/legal-disclaimer.ts`)
 
 ## Antes de tocar SEO estático
 
