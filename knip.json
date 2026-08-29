@@ -1,4 +1,17 @@
 {
   "ignoreBinaries": ["opencode"],
-  "ignore": ["scripts/patch-utils.js"]
+  "ignore": [
+    "scripts/patch-utils.js",
+    "tests/blog-claims-extract.test.ts",
+    "tests/blog-notebooklm-contract.test.ts",
+    "tests/blog-notebooklm-review.test.ts",
+    "tests/blog-notebooklm-editorial-gate.test.ts",
+    "tests/remediate-commercial-claims.test.ts"
+  ],
+  "ignoreDependencies": [
+    "@google/genai",
+    "pixelmatch",
+    "pngjs",
+    "sharp"
+  ]
 }
