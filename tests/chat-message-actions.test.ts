@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { chatConfig } from '../lib/chat/config';
 import {
   baseMessagesForLegalRetry,
+  getCopyableAssistantText,
+  getCopyResponseLabel,
   isLegalRetryableMessage,
   shouldShowCopyResponseButton,
   shouldShowWhatsappDraftButton,
@@ -40,6 +42,8 @@ describe('message-actions', () => {
   it('muestra copiar y WhatsApp solo en respuesta NLM', () => {
     expect(shouldShowWhatsappDraftButton(nlmMsg)).toBe(true);
     expect(shouldShowCopyResponseButton(nlmMsg)).toBe(true);
+    expect(getCopyableAssistantText(nlmMsg)).toBe(nlmMsg.content);
+    expect(getCopyResponseLabel(nlmMsg)).toBe('Copiar respuesta');
   });
 
   it('limpia el hilo al reintentar', () => {

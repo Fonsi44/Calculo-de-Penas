@@ -48,6 +48,8 @@ import {
   isLegalRetryableMessage,
   shouldShowCopyResponseButton,
   shouldShowWhatsappDraftButton,
+  getCopyableAssistantText,
+  getCopyResponseLabel,
 } from '@/lib/chat/message-actions';
 import {
   buildInitialQuickReplies,
@@ -688,7 +690,10 @@ export function ChatWidget() {
                           />
                         )}
                         {shouldShowCopyResponseButton(m) && (
-                          <ChatCopyResponseButton text={m.content} />
+                          <ChatCopyResponseButton
+                            text={getCopyableAssistantText(m) ?? m.content}
+                            label={getCopyResponseLabel(m)}
+                          />
                         )}
                       </>
                     )}

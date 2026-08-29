@@ -5,10 +5,11 @@ import { Check, Copy } from 'lucide-react';
 
 type Props = {
   text: string;
+  label?: string;
 };
 
-/** Copia la respuesta completa del asistente (texto plano) al portapapeles. */
-export function ChatCopyResponseButton({ text }: Props) {
+/** Copia texto del asistente al portapapeles. */
+export function ChatCopyResponseButton({ text, label = 'Copiar respuesta' }: Props) {
   const [copied, setCopied] = useState(false);
 
   const onCopy = async () => {
@@ -27,10 +28,10 @@ export function ChatCopyResponseButton({ text }: Props) {
       type="button"
       onClick={() => void onCopy()}
       className="mt-3 inline-flex items-center gap-1.5 min-h-10 px-2.5 py-1.5 rounded-lg text-xs font-medium text-text-muted hover:text-accent-dark hover:bg-surface-alt border border-transparent hover:border-border-light transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-      aria-label={copied ? 'Respuesta copiada al portapapeles' : 'Copiar respuesta completa'}
+      aria-label={copied ? 'Texto copiado al portapapeles' : label}
     >
       {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
-      <span>{copied ? 'Copiado' : 'Copiar respuesta'}</span>
+      <span>{copied ? 'Copiado' : label}</span>
     </button>
   );
 }

@@ -28,7 +28,19 @@ export function shouldShowWhatsappDraftButton(message: ChatSessionMessage): bool
 }
 
 export function shouldShowCopyResponseButton(message: ChatSessionMessage): boolean {
-  return message.source === 'notebooklm';
+  return getCopyableAssistantText(message) !== null;
+}
+
+export function getCopyableAssistantText(message: ChatSessionMessage): string | null {
+  if (message.source === 'notebooklm') return message.content;
+  if (message.whatsappDraft?.trim() && shouldShowWhatsappDraftButton(message)) {
+    return message.whatsappDraft;
+  }
+  return null;
+}
+
+export function getCopyResponseLabel(message: ChatSessionMessage): string {
+  return message.source === 'notebooklm' ? 'Copiar respuesta' : 'Copiar mensaje';
 }
 
 /** Hilo limpio para reintentar: saludo + última consulta «una pregunta:». */
