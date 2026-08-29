@@ -15,6 +15,7 @@ const SCRIPT_DEPENDENT_TESTS = [
   'tests/blog-notebooklm-review.test.ts',
   'tests/blog-verify-fix.test.ts',
   'tests/canonical-domain-enforce.test.ts',
+  'tests/indexnow-key.test.ts',
   'tests/llms-txt.test.ts',
   'tests/meta-seo-auditor.test.ts',
   'tests/remediate-commercial-claims.test.ts',
