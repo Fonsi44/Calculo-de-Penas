@@ -10,6 +10,7 @@ import { BlogHero } from '@/components/blog/blog-hero';
 import { FeaturedPosts } from '@/components/blog/featured-posts';
 import { BlogExplorer } from '@/components/blog/blog-explorer';
 import { BlogSidebar } from '@/components/blog/blog-sidebar';
+import { SemanticHubLinks } from '@/components/marketing/semantic-hub-links';
 import { blogCollectionSchema } from '@/lib/schemas/blog';
 import {
   getAllPosts,
@@ -169,6 +170,10 @@ export default async function BlogHubPage(props: Props) {
         postCount={allPosts.length}
         categoryCount={categoryCounts.length}
       />
+
+      <Container size="lg" className="pb-2">
+        <SemanticHubLinks variant="blog" />
+      </Container>
 
       {showFeatured && featured.length > 0 && (
         <FeaturedPosts posts={featured.map(toCardData)} />

@@ -15,6 +15,8 @@ import { type LandingLocal } from '@/data/landings-locales';
 import { ViewLocalPageTracker } from '@/components/marketing/view-local-page-tracker';
 import { PUBLIC_SERVICE_CATALOG } from '@/lib/public-service-catalog';
 import { whatsappMessageForCity } from '@/lib/whatsapp-messages';
+import { SemanticHubLinks } from '@/components/marketing/semantic-hub-links';
+import type { SemanticHubVariant } from '@/components/marketing/semantic-hub-links';
 
 /**
  * Mapa de títulos de servicio (en landings-locales.ts) → slug de área en
@@ -54,6 +56,15 @@ const SERVICIO_SLUG_MAP: Record<string, string> = {
   'conciliacion y arbitraje': '/servicios-juridicos/conciliacion-y-arbitraje',
   'conciliación y arbitraje': '/servicios-juridicos/conciliacion-y-arbitraje',
 };
+
+function localSemanticVariant(slug: string): SemanticHubVariant | null {
+  if (slug === 'nacaome') return 'local-nacaome';
+  if (slug === 'choluteca') return 'local-choluteca';
+  if (['san-lorenzo', 'goascoran', 'san-marcos-de-colon', 'el-triunfo', 'amapala'].includes(slug)) {
+    return 'local-regional';
+  }
+  return null;
+}
 
 function cityClosingCopy(landing: LandingLocal): {
   eyebrow: string;
@@ -377,6 +388,17 @@ export function LandingLocalView({ landing }: { landing: LandingLocal }) {
           </div>
         </Section>
       )}
+
+      {!isLandingNoindex(landing.slug) && localSemanticVariant(landing.slug) ? (
+        <Section background="muted" spacing="sm">
+          <Container size="md">
+            <SemanticHubLinks
+              variant={localSemanticVariant(landing.slug)!}
+              citySlug={landing.slug}
+            />
+          </Container>
+        </Section>
+      ) : null}
 
       {/* CTA final — coherente con el resto del sitio (Fase 3.6).
           Antes era una card manual personalizada con 3 botones que rompía el

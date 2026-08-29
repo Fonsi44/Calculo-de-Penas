@@ -12,6 +12,7 @@ import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { RelatedCities } from '@/components/marketing/related-links';
+import { SemanticHubLinks } from '@/components/marketing/semantic-hub-links';
 import { HubFaq } from '@/components/marketing/hub-faq';
 import { AnswerBlock } from '@/components/marketing/answer-block';
 import { FAQ_GUIA_LEGAL_HONDURAS } from '@/data/pilar/faqs-guia';
@@ -328,7 +329,8 @@ export default function GuiaLegalPage() {
 
       {/* Cobertura local */}
       <Section background="muted" spacing="sm">
-        <Container size="lg">
+        <Container size="lg" className="space-y-4">
+          <SemanticHubLinks variant="guia" />
           <RelatedCities limit={10} eyebrow="Atendemos en todo el sur de Honduras" />
         </Container>
       </Section>

@@ -3,6 +3,7 @@
 .env.*
 .secrets/
 .vercel/
+.codegraph
 
 # Artefactos locales y documentos potencialmente personales
 output/

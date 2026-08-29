@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import { CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
+import { semanticLinkProps } from '@/lib/semantic-link';
 import { cn } from '@/lib/ui';
 
 /**
@@ -142,6 +143,7 @@ export function EditorialBlock({
         <div className={cn('mt-7', align === 'center' && 'text-center')}>
           <Link
             href={cta.href}
+            {...semanticLinkProps(cta.href)}
             className={cn(
               'inline-flex items-center gap-1.5 text-sm font-semibold transition-colors',
               inverted ? 'text-accent hover:text-accent-light' : 'text-primary hover:text-accent-dark',

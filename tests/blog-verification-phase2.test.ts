@@ -26,12 +26,13 @@ vi.mock('@/lib/db', () => ({
 describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
   
   describe('1. Redirecciones 301/308 de posts locales', () => {
-    it('las 6 redirecciones locales vigentes están configuradas y Nacaome queda informativo', async () => {
+    it('las 7 redirecciones locales vigentes están configuradas (incl. Nacaome → landing)', async () => {
       const redirects = await nextConfig.redirects?.();
       expect(redirects).toBeDefined();
       if (!redirects) return;
 
       const localRedirects = [
+        { src: '/blog/practica-legal/abogados-en-nacaome', dest: '/abogados-en-nacaome' },
         { src: '/blog/practica-legal/abogados-en-choluteca', dest: '/abogados-en-choluteca' },
         { src: '/blog/practica-legal/abogados-en-san-lorenzo', dest: '/abogados-en-san-lorenzo' },
         { src: '/blog/practica-legal/abogados-en-pespire-choluteca', dest: '/abogados-en-pespire' },
@@ -46,9 +47,6 @@ describe('Fase 2 — Suite de Integración y Hardening del Blog', () => {
         expect(match?.destination).toBe(rule.dest);
         expect(match?.permanent).toBe(true);
       }
-      expect(redirects.some((rule: { source: string }) => (
-        rule.source === '/blog/practica-legal/abogados-en-nacaome'
-      ))).toBe(false);
     });
 
     it('no existen redirecciones circulares ni en cadena entre los 6 posts locales y sus destinos', async () => {

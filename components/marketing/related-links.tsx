@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { MapPin, Scale, FolderOpen, BookOpen } from 'lucide-react';
+import { semanticLinkProps } from '@/lib/semantic-link';
 import {
   getRelatedServices,
   getRelatedCitiesForContent,
@@ -50,6 +51,7 @@ export function RelatedServices({
           <Link
             key={s.slug}
             href={s.href}
+            {...semanticLinkProps(s.href)}
             className="focus-ring chip-specialty inline-flex items-center"
           >
             <Scale size={10} className="text-accent-dark" aria-hidden="true" />
@@ -88,6 +90,7 @@ export function RelatedCities({
           <Link
             key={c.slug}
             href={c.href}
+            {...semanticLinkProps(c.href)}
             className="focus-ring chip-specialty inline-flex items-center"
           >
             <MapPin size={10} className="text-accent-dark" aria-hidden="true" />

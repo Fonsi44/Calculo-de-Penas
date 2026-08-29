@@ -57,6 +57,10 @@ Thumbs.db
 /scripts/
 .agents/skills/legal-notebooklm/
 .cursor/mcp.local.json
+.cursor/mcp.local.json.example
+
+# ── Exports Ahrefs (CSV locales, no versionar) ───────────────
+/ahrefs/
 
 # ── Testing ─────────────────────────────────────────────────
 /coverage/

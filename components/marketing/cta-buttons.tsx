@@ -4,6 +4,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Phone, MessageCircle, Calendar, ShieldAlert, MapPin } from 'lucide-react';
 import { site, telHref, whatsappHref, directTelHref, directWhatsappHref, FOUNDER_PROFILE } from '@/lib/site';
+import { semanticLinkProps } from '@/lib/semantic-link';
 import { trackWhatsAppClick, trackPhoneClick, trackConsultationCtaClick, trackDirectionsClick } from '@/lib/analytics';
 
 const URGENCY_WA_MSG =
@@ -65,6 +66,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
         </a>
         <a
           href="/solicitar-consulta#formulario"
+          {...semanticLinkProps('/solicitar-consulta')}
           title="Solicitar consulta legal confidencial con Pineda y Asociados en Nacaome"
           onClick={() => trackConsultationCtaClick('cta_solicitar')}
           className="btn-shimmer inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer"
@@ -83,7 +85,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
             <MessageCircle size={16} aria-hidden="true" /> WhatsApp{who}
           </a>
         ) : (
-          <a href="/solicitar-consulta#formulario" title="Solicitar consulta legal confidencial — Pineda y Asociados" onClick={() => trackConsultationCtaClick('cta_inverse')} className="btn-shimmer inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer">
+          <a href="/solicitar-consulta#formulario" {...semanticLinkProps('/solicitar-consulta')} title="Solicitar consulta legal confidencial — Pineda y Asociados" onClick={() => trackConsultationCtaClick('cta_inverse')} className="btn-shimmer inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer">
             <Calendar size={16} aria-hidden="true" /> Solicitar evaluación confidencial
           </a>
         )}
@@ -103,6 +105,7 @@ export function CTAGroup({ variant = 'primary', message = DEFAULT_MSG, className
     <div className={`flex flex-col sm:flex-row gap-2 ${className ?? ''}`}>
       <a
         href="/solicitar-consulta#formulario"
+        {...semanticLinkProps('/solicitar-consulta')}
         title="Solicitar consulta legal con Pineda y Asociados en Nacaome"
         onClick={() => trackConsultationCtaClick('cta_primary')}
         className="btn-shimmer inline-flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-accent text-primary text-sm font-bold border border-accent-dark/40 btn-shadow-accent btn-shadow-accent-hover hover:-translate-y-0.5 hover:bg-accent-light transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer"

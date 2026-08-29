@@ -26,6 +26,8 @@ import { ServiceCard } from '@/components/marketing/service-card';
 import { Reveal } from '@/components/marketing/reveal';
 import type { PlaceholderTone } from '@/components/marketing/placeholder-photo';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { SemanticHubLinks } from '@/components/marketing/semantic-hub-links';
+import { semanticLinkProps } from '@/lib/semantic-link';
 import { EditorialBlock } from '@/components/marketing/editorial-block';
 import { ProblemSelector } from '@/components/marketing/problem-selector';
 import { TOP_ORGANIC_GUIDE_SLUGS } from '@/data/seo/high-intent-guides';
@@ -330,7 +332,7 @@ export default async function HomePage() {
           {LAWYER_PROFILES.map(renderProfileCard)}
         </div>
         <p className="mt-6 text-center">
-          <Link href="/despacho" className="text-sm font-semibold text-accent-dark hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg">
+          <Link href="/despacho" {...semanticLinkProps('/despacho')} className="text-sm font-semibold text-accent-dark hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg">
             Conozca el despacho y el equipo completo
           </Link>
         </p>
@@ -365,6 +367,8 @@ export default async function HomePage() {
       {/* CTA FINAL — llamada a la acción premium (componente compartido).
           Con enlace contextual a /preguntas-frecuentes (antes era una sección
           visual completa FAQ que duplicaba el hub FAQ canónico). */}
+      <SemanticHubLinks variant="home" className="max-w-3xl mx-auto px-4 -mt-2 mb-4" />
+
       <ConsultationCTA
         variant="closing"
         subtitle="Le explicamos las opciones reales y el presupuesto por escrito, antes de actuar."

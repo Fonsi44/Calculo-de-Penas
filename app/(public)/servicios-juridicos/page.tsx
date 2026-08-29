@@ -11,6 +11,8 @@ import { AnswerBlock } from '@/components/marketing/answer-block';
 import { ServiceCard } from '@/components/marketing/service-card';
 import { Reveal } from '@/components/marketing/reveal';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
+import { SemanticHubLinks } from '@/components/marketing/semantic-hub-links';
+import { semanticLinkProps } from '@/lib/semantic-link';
 import { BlogHighlights } from '@/components/marketing/blog-highlights';
 import { webpageSchema } from '@/lib/seo-schema';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
@@ -171,9 +173,13 @@ export default async function AreasJuridicasPage() {
         subtitle={`Evaluamos su situación con rigor técnico y le explicamos con claridad las opciones legales disponibles. Atendemos en Nacaome, San Lorenzo, Amapala, Langue, Goascorán, Choluteca, Pespiré, San Marcos de Colón, Marcovia y El Triunfo. Presupuesto por escrito antes de cualquier actuación. ¿Primera vez contratando abogado? Consulte nuestra guía sobre cómo contratar abogado en Honduras.`}
       />
 
-      <div className="text-center pb-2 -mt-4">
+      <div className="text-center pb-2 -mt-4 space-y-3">
+        <Container size="md">
+          <SemanticHubLinks variant="servicios" className="text-center" />
+        </Container>
         <Link
           href="/guia-legal-abogados-honduras"
+          {...semanticLinkProps('/guia-legal-abogados-honduras')}
           className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
         >
           <BookOpen size={14} aria-hidden="true" />

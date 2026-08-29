@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, BookOpen, MessageCircle, ShieldAlert, Gavel, FileSearch, Scale, FolderOpen, type LucideIcon } from 'lucide-react';
 import { site, absoluteUrl, FOUNDER_PROFILE, directWhatsappHref } from '@/lib/site';
+import { semanticLinkProps } from '@/lib/semantic-link';
 import { buildMetadata } from '@/lib/seo';
 import { Section, SectionHeader, Container } from '@/components/marketing/section';
 import { AnswerBlock } from '@/components/marketing/answer-block';
@@ -535,6 +536,7 @@ const PRIORITY_PENAL_SLUGS = [
             </Link>
             <Link
               href="/preguntas-frecuentes#derecho-penal-general"
+              {...semanticLinkProps('/preguntas-frecuentes')}
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
             >
               Ver todas las preguntas frecuentes sobre derecho penal <ArrowRight size={16} />
@@ -547,6 +549,7 @@ const PRIORITY_PENAL_SLUGS = [
             </Link>
             <Link
               href="/guia-legal-abogados-honduras"
+              {...semanticLinkProps('/guia-legal-abogados-honduras')}
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
             >
               Guía para contratar abogado en Honduras <ArrowRight size={16} />

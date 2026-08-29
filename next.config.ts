@@ -306,6 +306,7 @@ const nextConfig: NextConfig = {
       { source: '/defensa-penal-nacaome', destination: '/abogado-penalista-nacaome', permanent: true },
       { source: '/defensa-penal-sur-honduras', destination: '/derecho-penal', permanent: true },
       // === CONSOLIDACIÓN DE POSTS LOCALES POST-AUDITORÍA (Jul 2026) ===
+      { source: '/blog/practica-legal/abogados-en-nacaome', destination: '/abogados-en-nacaome', permanent: true },
       { source: '/blog/practica-legal/abogados-en-choluteca', destination: '/abogados-en-choluteca', permanent: true },
       { source: '/blog/practica-legal/abogados-en-san-lorenzo', destination: '/abogados-en-san-lorenzo', permanent: true },
       { source: '/blog/practica-legal/abogados-en-pespire-choluteca', destination: '/abogados-en-pespire', permanent: true },

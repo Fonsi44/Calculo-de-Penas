@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight, BookOpen } from 'lucide-react';
+import { semanticLinkProps } from '@/lib/semantic-link';
 import { Section, SectionHeader } from '@/components/marketing/section';
 import { Card } from '@/components/ui/card';
 import { IconBadge } from '@/components/marketing/icon-badge';
@@ -193,6 +194,7 @@ export async function BlogHighlights({
         <div className="text-center mt-6">
           <Link
             href={ctaHref}
+            {...semanticLinkProps(ctaHref.split('#')[0])}
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-dark hover:text-primary transition-colors"
           >
             {ctaLabel} <ArrowRight size={16} />

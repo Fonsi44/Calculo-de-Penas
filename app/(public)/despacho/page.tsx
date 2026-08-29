@@ -22,6 +22,7 @@ import { FAQ_DESPACHO } from '@/data/faqs-hubs';
 import { AnswerBlock } from '@/components/marketing/answer-block';
 import { EditorialBlock } from '@/components/marketing/editorial-block';
 import { TrustLimits } from '@/components/marketing/trust-limits';
+import { SemanticHubLinks } from '@/components/marketing/semantic-hub-links';
 
 export const metadata: Metadata = buildMetadata({
   // CHANGED A.1 — 46 chars. Desambiguación Nacaome vs Tegucigalpa.
@@ -463,6 +464,12 @@ export default async function DespachoPage() {
           garantiza, sin afirmaciones pendientes (P01–P15) ni cifras inventadas. */}
       <Section spacing="md" ariaLabel="Confianza y límites">
         <TrustLimits showLimitsLink={false} />
+      </Section>
+
+      <Section background="muted" spacing="sm">
+        <Container size="md">
+          <SemanticHubLinks variant="despacho" />
+        </Container>
       </Section>
 
       <script

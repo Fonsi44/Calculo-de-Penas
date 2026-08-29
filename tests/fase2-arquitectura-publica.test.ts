@@ -29,8 +29,8 @@ describe('Fase 2 — contratos de arquitectura pública', () => {
     );
     expect(generatedCta).toContain('consultar con un abogado en Nacaome');
     expect(generatedCta).toContain('href="/"');
-    expect(redirects).not.toMatch(
-      /source:\s*'\/blog\/practica-legal\/abogados-en-nacaome'/,
+    expect(redirects).toMatch(
+      /source:\s*'\/blog\/practica-legal\/abogados-en-nacaome',\s*destination:\s*'\/abogados-en-nacaome'/,
     );
   });
 
