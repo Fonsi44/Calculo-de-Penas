@@ -80,15 +80,9 @@ export function buildPendingLegalWhatsappDraft(question: string): string {
 }
 
 export function buildNlmChatSuggestions(): ChatSuggestion[] {
-  return [
-    { id: 'nlm-wa', label: 'Enviar por WhatsApp', message: '', action: 'whatsapp' },
-    { id: 'nlm-prep', label: 'Preparar consulta', message: 'Preparar consulta' },
-  ];
+  return [{ id: 'nlm-prep', label: 'Preparar consulta', message: 'Preparar consulta' }];
 }
 
 export function buildLegalErrorChatSuggestions(): ChatSuggestion[] {
-  return [
-    { id: 'retry-legal', label: 'Reintentar consulta', message: '', action: 'retry_legal' },
-    { id: 'wa-legal', label: 'Enviar por WhatsApp', message: '', action: 'whatsapp' },
-  ];
+  return [];
 }

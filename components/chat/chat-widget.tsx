@@ -44,6 +44,12 @@ import {
 import { fetchChatApi, ChatApiError } from '@/lib/chat/fetch-chat-api';
 import { resolveLegalRetryQuery } from '@/lib/chat/legal-retry';
 import {
+  baseMessagesForLegalRetry,
+  isLegalRetryableMessage,
+  shouldShowCopyResponseButton,
+  shouldShowWhatsappDraftButton,
+} from '@/lib/chat/message-actions';
+import {
   buildInitialQuickReplies,
   getChatPageHint,
   resolveChatPageContext,
@@ -73,6 +79,7 @@ import {
 
 import { useConsentObserver } from '@/hooks/use-consent-observer';
 import { useToast } from '@/components/ui/toast';
+import { ChatLegalErrorActions } from './chat-legal-error-actions';
 import { ChatMessageBody } from './chat-message-body';
 import { ChatCopyResponseButton } from './chat-copy-response';
 import { ChatCopyWhatsappButton } from './chat-copy-whatsapp';
@@ -385,7 +392,7 @@ export function ChatWidget() {
       void requestChatBrowserNotificationPermission();
 
       const snapshot = getChatSessionStoreSnapshot(INITIAL_MESSAGE);
-      const baseMessages = snapshot.messages.slice(0, errorAssistantIndex);
+      const baseMessages = baseMessagesForLegalRetry(snapshot.messages, errorAssistantIndex);
       const gen = ++chatFetchGenRef.current;
       const startedAt = Date.now();
 
@@ -659,29 +666,43 @@ export function ChatWidget() {
                 ) : (
                   <>
                     <ChatMessageBody content={m.content} source={m.source} />
-                    {m.whatsappDraft && (
-                      <ChatCopyWhatsappButton
-                        text={m.whatsappDraft}
-                        onOpenWhatsApp={() => {
-                          trackChatWhatsAppClicked();
-                          trackChatContactClicked('whatsapp');
-                        }}
-                      />
-                    )}
-                    <ChatCopyResponseButton text={m.content} />
-                    {m.links && m.links.length > 0 && <ChatMessageLinks links={m.links} />}
-                    {i === lastAssistantIndex && m.suggestions && m.suggestions.length > 0 && (
-                      <ChatSuggestionChips
-                        suggestions={m.suggestions}
+                    {isLegalRetryableMessage(m) ? (
+                      <ChatLegalErrorActions
                         whatsappDraft={m.whatsappDraft}
-                        canRetryLegal={Boolean(resolveLegalRetryQuery(messages, i))}
-                        disabled={loading}
-                        onSelect={(msg) => void sendMessage(msg)}
-                        onOpenWhatsApp={openWhatsappDraft}
-                        onRetryLegal={() => {
+                        retrying={loadingLegal}
+                        onRetry={() => {
                           const query = resolveLegalRetryQuery(messages, i);
                           if (query) void retryLegalQuery(query, i);
                         }}
+                        onWhatsApp={openWhatsappDraft}
+                      />
+                    ) : (
+                      <>
+                        {shouldShowWhatsappDraftButton(m) && (
+                          <ChatCopyWhatsappButton
+                            text={m.whatsappDraft!}
+                            onOpenWhatsApp={() => {
+                              trackChatWhatsAppClicked();
+                              trackChatContactClicked('whatsapp');
+                            }}
+                          />
+                        )}
+                        {shouldShowCopyResponseButton(m) && (
+                          <ChatCopyResponseButton text={m.content} />
+                        )}
+                      </>
+                    )}
+                    {m.links && m.links.length > 0 && <ChatMessageLinks links={m.links} />}
+                    {i === lastAssistantIndex &&
+                      m.suggestions &&
+                      m.suggestions.length > 0 &&
+                      !isLegalRetryableMessage(m) && (
+                      <ChatSuggestionChips
+                        suggestions={m.suggestions}
+                        whatsappDraft={m.whatsappDraft}
+                        disabled={loading}
+                        onSelect={(msg) => void sendMessage(msg)}
+                        onOpenWhatsApp={openWhatsappDraft}
                       />
                     )}
                   </>

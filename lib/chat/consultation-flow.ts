@@ -150,7 +150,6 @@ export function advanceConsultationFlow(
       'Un abogado le indicará los siguientes pasos tras la evaluación inicial confidencial.',
     whatsappDraft,
     suggestions: [
-      { id: 'flow-wa', label: 'Enviar por WhatsApp', message: '', action: 'whatsapp' },
       { id: 'flow-form', label: 'Ir al formulario', message: 'Ir al formulario' },
     ],
     links: [

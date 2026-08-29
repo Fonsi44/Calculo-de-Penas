@@ -24,11 +24,8 @@ describe('whatsapp-share — borradores NLM', () => {
     expect(draft).toMatch(/no pude obtener la respuesta completa/i);
   });
 
-  it('chip de reintento usa acción dedicada', () => {
-    const chips = buildLegalErrorChatSuggestions();
-    const retry = chips.find((c) => c.action === 'retry_legal');
-    expect(retry?.message).toBe('');
-    expect(retry?.label).toMatch(/Reintentar/i);
+  it('no duplica chips en error legal', () => {
+    expect(buildLegalErrorChatSuggestions()).toHaveLength(0);
   });
 
   it('elimina markdown ligero', () => {
