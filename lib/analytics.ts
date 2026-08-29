@@ -40,15 +40,11 @@ export function isValidGtmId(value: string | null | undefined): value is string 
  * (hipotética ruta pública) no.
  */
 export const ANALYTICS_EXCLUDED_PREFIXES = [
-  '/intranet',
-  '/preview',
   '/api',
-  '/cp',
-  '/calculadora',
-  '/casos',
-  '/delitos',
-  '/atajos',
+  '/intranet',
   '/admin',
+  '/cargar',
+  '/preview',
   '/_next',
   '/404',
   '/500',

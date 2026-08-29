@@ -14,7 +14,7 @@ import { areaSchemas, penalHubHref } from '@/lib/schemas/legal-page';
 import { getIcon } from '@/lib/icon-map';
 import { ConsultationCTA } from '@/components/marketing/consultation-cta';
 import { HubFaq } from '@/components/marketing/hub-faq';
-import { RespuestaDirecta } from '@/components/marketing/service-detail-blocks';
+import { RespuestaDirecta, ContextualCta } from '@/components/marketing/service-detail-blocks';
 import { sanitizeHtml } from '@/lib/sanitize';
 import { getPostsByCategoryOrEmpty, formatDate } from '@/lib/blog';
 import { Breadcrumbs } from '@/components/marketing/breadcrumbs';
@@ -267,7 +267,18 @@ export default async function PenalGrupoPage({ params }: { params: Promise<{ slu
       {ldSchemas.map((schema, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}
-      <ConsultationCTA />
+      {grupo.ctaContextual ? (
+        <ContextualCta
+          href={grupo.ctaContextual.href}
+          label={grupo.ctaContextual.label}
+          title={grupo.ctaContextual.title}
+          eyebrow={grupo.ctaContextual.eyebrow}
+          secondaryHref={grupo.ctaContextual.secondaryHref ?? '/despacho'}
+          secondaryLabel={grupo.ctaContextual.secondaryLabel ?? 'Conozca el despacho'}
+        />
+      ) : (
+        <ConsultationCTA />
+      )}
     </>
   );
 }

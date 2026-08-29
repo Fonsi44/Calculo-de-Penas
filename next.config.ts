@@ -326,21 +326,6 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
-      // Regla específica para el proxy del editor visual (permitir framing same-origin)
-      {
-        source: '/api/admin/visual-editor/proxy',
-        headers: [
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
-          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()' },
-          { key: 'X-DNS-Prefetch-Control', value: 'on' },
-          { key: 'Content-Security-Policy', value: csp },
-          ...(isProd ? [{ key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' }] : []),
-          { key: 'Cache-Control', value: 'no-store, max-age=0' },
-          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
-        ],
-      },
       // Cabeceras para API en general
       {
         source: '/api/:path*',
@@ -348,21 +333,6 @@ const nextConfig: NextConfig = {
           { key: 'Cache-Control', value: 'no-store, max-age=0' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
-        ],
-      },
-      // Intranet: política más restrictiva (clickjacking DENY, noindex estricto)
-      {
-        source: '/intranet/:path*',
-        headers: [
-          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive, nosnippet, noimageindex' },
-          { key: 'X-Frame-Options', value: 'DENY' },
-        ],
-      },
-      {
-        source: '/intranet',
-        headers: [
-          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive, nosnippet, noimageindex' },
-          { key: 'X-Frame-Options', value: 'DENY' },
         ],
       },
       // Next.js gestiona Cache-Control de /_next/* para assets hasheados.

@@ -67,14 +67,6 @@ export default async function PoliticaCookiesPage() {
             </thead>
             <tbody className="divide-y divide-border-light">
               <tr>
-                <td className="px-3 py-2.5 font-mono text-xs text-primary">__Host-token</td>
-                <td className="px-3 py-2.5">Técnica (sesión)</td>
-                <td className="px-3 py-2.5">
-                  Autenticación del usuario en la intranet del bufete.
-                </td>
-                <td className="px-3 py-2.5">Sesión</td>
-              </tr>
-              <tr>
                 <td className="px-3 py-2.5 font-mono text-xs text-primary">__Host-theme</td>
                 <td className="px-3 py-2.5">Técnica (preferencia)</td>
                 <td className="px-3 py-2.5">
@@ -110,9 +102,8 @@ export default async function PoliticaCookiesPage() {
           técnicas. Estos datos no abandonan el dispositivo del usuario
           y no son accesibles por terceros. Se emplean exclusivamente
           para preservar preferencias de interfaz durante la navegación
-          y para el funcionamiento de la calculadora de penas, que
-          almacena temporalmente los datos del cálculo en curso sin
-          transmitirlos a ningún servidor externo.
+          (por ejemplo, el tema claro/oscuro) sin transmitirlos a
+          servidores externos.
         </p>
       </LegalSection>
 
@@ -147,8 +138,8 @@ export default async function PoliticaCookiesPage() {
         />
         <LegalCallout variant="warning">
           El bloqueo total de las cookies técnicas puede impedir el
-          correcto funcionamiento del sitio, especialmente del inicio de
-          sesión y de la calculadora de penas.
+          correcto funcionamiento de preferencias de interfaz del sitio
+          (por ejemplo, recordar el tema elegido).
         </LegalCallout>
       </LegalSection>
 

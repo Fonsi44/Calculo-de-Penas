@@ -85,10 +85,14 @@ export type AreaDetailFields = {
   erroresFrecuentes?: string[];
   /** Fuentes oficiales generales consultadas (se muestran como "Fuentes generales"). §13 */
   fuentesGenerales?: FuenteGeneral[];
-  /** CTA contextual del área (href con ?motivo=... y label). §15 */
+  /** CTA contextual del área (href con ?motivo=... y copy por página). §15 */
   ctaContextual?: {
     href: string;
     label: string;
+    title?: string;
+    eyebrow?: string;
+    secondaryLabel?: string;
+    secondaryHref?: string;
   };
 };
 
@@ -228,7 +232,10 @@ export const areasGenerales: AreaStandalone[] = [
     ],
     ctaContextual: {
       href: '/solicitar-consulta?motivo=derecho-de-familia#formulario',
+      title: '¿Necesita orientación en un asunto familiar?',
       label: 'Explicar mi situación familiar',
+      secondaryLabel: 'Conozca a la abogada de familia',
+      secondaryHref: '/equipo/thania-marlene-paz',
     },
     subservicios: [
       { titulo: 'Divorcio por mutuo acuerdo', descripcion: 'Tramitación express ante el Juzgado de Familia cuando no hay menores ni bienes en disputa.' },
@@ -381,7 +388,10 @@ export const areasGenerales: AreaStandalone[] = [
     ],
     ctaContextual: {
       href: '/solicitar-consulta?motivo=derecho-laboral#formulario',
+      title: '¿Tiene un conflicto laboral o un despido reciente?',
       label: 'Solicitar revisión inicial de mi situación laboral',
+      secondaryLabel: 'Conozca al abogado laboral',
+      secondaryHref: '/equipo/emil-barahona',
     },
     subservicios: [
       { titulo: 'Despido injustificado', descripcion: 'Cálculo y reclamación de prestaciones: preaviso, cesantía, vacaciones, aguinaldo y décimo tercer mes.', aliases: ['demandas por despido'] },
@@ -539,7 +549,10 @@ export const areasGenerales: AreaStandalone[] = [
     ],
     ctaContextual: {
       href: '/solicitar-consulta?motivo=derecho-civil-y-notarial#formulario',
+      title: '¿Necesita revisar un contrato, propiedad o sucesión?',
       label: 'Consultar un contrato, propiedad, sucesión o trámite notarial',
+      secondaryLabel: 'Conozca al equipo civil y notarial',
+      secondaryHref: '/despacho',
     },
     subservicios: [
       { titulo: 'Compraventa de inmuebles', descripcion: 'Estudio de títulos, redacción de contrato y protocolización.', aliases: ['procesos de inquilinato', 'redacción y formalización', 'compraventa de bienes', 'escrituras públicas'] },
@@ -678,7 +691,10 @@ export const areasGenerales: AreaStandalone[] = [
     ],
     ctaContextual: {
       href: '/solicitar-consulta?motivo=derecho-mercantil-empresarial#formulario',
+      title: '¿Necesita asesoría en derecho mercantil o empresarial?',
       label: 'Solicitar revisión de un asunto mercantil',
+      secondaryLabel: 'Conozca a la socia mercantil',
+      secondaryHref: '/equipo/thania-marlene-paz',
     },
     subservicios: [
       { titulo: 'Constitución de sociedades', descripcion: 'Sociedad anónima, de responsabilidad limitada, en comandita, cooperativa y sucursal.', aliases: ['procesos de disolución'] },
@@ -740,6 +756,13 @@ export const areasGenerales: AreaStandalone[] = [
       'Defensa frente a bancos, financieras, cooperativas y la CNBS en Honduras. Revisión de contratos crediticios, defensa del usuario financiero, reestructuras, ejecución de garantías, sanciones administrativas, lavado de activos, leasing, factoraje y cumplimiento normativo. Actuación en Juzgados de Letras de lo Mercantil y ante la Comisión Nacional de Bancos y Seguros.',
     respuestaDirecta:
       'Pineda y Asociados asesora a personas y empresas frente a bancos, financieras, cooperativas y la CNBS. El trabajo puede comprender revisión de contratos crediticios, reestructuración de deudas, defensa del usuario financiero, ejecución o defensa de garantías, leasing, factoraje y recursos ante la autoridad de supervisión. La vía adecuada depende del contrato, el estado de la obligación y las resoluciones aplicables.',
+    ctaContextual: {
+      href: '/solicitar-consulta?motivo=derecho-bancario-y-financiero#formulario',
+      title: '¿Tiene un conflicto con su banco o una deuda en mora?',
+      label: 'Solicitar revisión de un asunto bancario o financiero',
+      secondaryLabel: 'Conozca el despacho',
+      secondaryHref: '/despacho',
+    },
     subservicios: [
       { titulo: 'Revisión de contratos crediticios', descripcion: 'Identificación de cláusulas abusivas y tasas excesivas.', aliases: ['estructuración y revisión'] },
       { titulo: 'Reestructuración de deudas', descripcion: 'Negociación con entidades financieras.', aliases: ['negociación y reestructuración'] },
@@ -841,7 +864,10 @@ export const areasGenerales: AreaStandalone[] = [
     ],
     ctaContextual: {
       href: '/solicitar-consulta?motivo=derecho-administrativo-y-servicio-civil#formulario',
+      title: '¿Enfrenta una resolución o sanción administrativa?',
       label: 'Consultar una resolución o sanción administrativa',
+      secondaryLabel: 'Conozca al equipo administrativo',
+      secondaryHref: '/equipo/thania-marlene-paz',
     },
     subservicios: [
       { titulo: 'Recurso de reposición y apelación administrativa', descripcion: 'Agotamiento de la vía administrativa.', aliases: ['interposición de recursos'] },
@@ -890,6 +916,13 @@ export const areasGenerales: AreaStandalone[] = [
       'Importación, exportación, regímenes especiales y defensa ante la Administración Aduanera en Honduras. Clasificación arancelaria, valoración OMC, ZOLI, ZIP, ZAL, devolución de impuestos, defensa por contrabando y defraudación, recursos ante el SAR y litigio contencioso-administrativo. Operativa ágil con cumplimiento normativo en Puerto Cortés, Amapala, San Lorenzo y el resto del país.',
     respuestaDirecta:
       'Pineda y Asociados asesora a importadores, exportadores y operadores de comercio exterior en Honduras. El área aduanera comprende clasificación y valoración, regímenes especiales, defensa ante reparos o decomisos y, cuando corresponda, la vía administrativa o penal. El trámite depende de la mercancía, el régimen aplicable y la actuación de la Administración Aduanera o del SAR.',
+    ctaContextual: {
+      href: '/solicitar-consulta?motivo=derecho-aduanero-y-comercio-exterior#formulario',
+      title: '¿Necesita asesoría en importación, exportación o defensa aduanera?',
+      label: 'Consultar un trámite o conflicto aduanero',
+      secondaryLabel: 'Conozca el despacho',
+      secondaryHref: '/despacho',
+    },
     subservicios: [
       { titulo: 'Clasificación arancelaria', descripcion: 'Determinación del código correcto y consulta a la Administración Aduanera.', aliases: ['asesoría técnica'] },
       { titulo: 'Valoración aduanera', descripcion: 'Métodos principales y auxiliares según el Acuerdo de Valoración de la OMC.', aliases: ['defensa legal directa'] },
@@ -936,6 +969,13 @@ export const areasGenerales: AreaStandalone[] = [
       'Cumplimiento normativo en alimentos, medicamentos, cosméticos, dispositivos médicos, plaguicidas, establecimientos de salud y telemedicina. Registro sanitario, Buenas Prácticas de Manufactura y Almacenamiento, defensa ante ARSA, mala praxis médica, consentimiento informado y litigio contencioso-administrativo en la zona sur de Honduras.',
     respuestaDirecta:
       'Pineda y Asociados acompaña a laboratorios, importadores, establecimientos y profesionales de la salud en trámites ante la ARSA y la Secretaría de Salud. Puede incluir registros sanitarios, licencias de funcionamiento, certificados de buenas prácticas, certificado de libre venta y defensa frente a sanciones. El procedimiento y los plazos dependen del tipo de producto o establecimiento y de la normativa sanitaria vigente.',
+    ctaContextual: {
+      href: '/solicitar-consulta?motivo=regulacion-sanitaria#formulario',
+      title: '¿Necesita un registro sanitario o defensa ante la ARSA?',
+      label: 'Consultar un trámite o sanción sanitaria',
+      secondaryLabel: 'Conozca el despacho',
+      secondaryHref: '/despacho',
+    },
     subservicios: [
       { titulo: 'Registro sanitario de medicamentos', descripcion: 'Tramitación ante la ARSA y la Secretaría de Salud.' },
       { titulo: 'Registro de alimentos y bebidas', descripcion: 'Notificación y registro según riesgo.', aliases: ['licencias y registros'] },
@@ -981,6 +1021,13 @@ export const areasGenerales: AreaStandalone[] = [
       'Acompañamiento integral al extranjero que vive, trabaja, invierte, estudia o se casa con un hondureño. Visas de turista, trabajo, residencia temporal y permanente, visa de inversionista, rentista, pensionado, naturalización ordinaria y por matrimonio, doble nacionalidad, permisos de salida de menores, apostilla, traducción y defensa ante el INM y la Cancillería.',
     respuestaDirecta:
       'Pineda y Asociados asesora a extranjeros que viven, trabajan, invierten o estudian en Honduras, y a empresas que contratan personal extranjero. El área comprende visas, residencias, regularización, naturalización, visas consultadas y defensa ante el Instituto Nacional de Migración. La categoría aplicable y los documentos requeridos dependen de la situación migratoria concreta y de la normativa vigente.',
+    ctaContextual: {
+      href: '/solicitar-consulta?motivo=extranjeria-en-honduras#formulario',
+      title: '¿Necesita regularizar su estatus migratorio en Honduras?',
+      label: 'Consultar visa, residencia o naturalización',
+      secondaryLabel: 'Conozca el despacho',
+      secondaryHref: '/despacho',
+    },
     subservicios: [
       { titulo: 'Visa de turista', descripcion: 'Prórrogas y conversión de estatus.' },
       { titulo: 'Visa de trabajo', descripcion: 'Por oferta de empleo o transferencia intraempresarial.' },
@@ -1027,6 +1074,13 @@ export const areasGenerales: AreaStandalone[] = [
       'Registre, defienda y monetice sus marcas, patentes, modelos de utilidad, derechos de autor, diseños industriales, secretos empresariales y nombres de dominio en Honduras. Redacción de contratos de cesión, licenciamiento y transferencia de tecnología, oposición al registro, medidas cautelares, defensa judicial y arbitraje internacional. Asesoría integral con coordinación con oficinas de propiedad intelectual de la región.',
     respuestaDirecta:
       'Pineda y Asociados protege marcas, patentes, diseños, derechos de autor y secretos empresariales en Honduras. El trabajo puede incluir búsqueda y registro, contratos de confidencialidad o licencia, oposiciones y defensa frente a infracciones o piratería. La estrategia depende del activo, el uso que se le da y el estado del registro ante la Dirección de Propiedad Intelectual.',
+    ctaContextual: {
+      href: '/solicitar-consulta?motivo=propiedad-intelectual#formulario',
+      title: '¿Quiere registrar o defender una marca, patente u obra?',
+      label: 'Consultar protección de propiedad intelectual',
+      secondaryLabel: 'Conozca el despacho',
+      secondaryHref: '/despacho',
+    },
     subservicios: [
       { titulo: 'Registro de marcas', descripcion: 'Búsqueda, presentación, seguimiento y renovación.' },
       { titulo: 'Marcas de certificación y colectivas', descripcion: 'Asociación de productores, denominaciones de origen.' },
@@ -1072,6 +1126,13 @@ export const areasGenerales: AreaStandalone[] = [
       'Defensa y planificación tributaria estratégica frente al Servicio de Administración de Rentas (SAR) en Honduras. Impuesto sobre la renta (ISR), impuesto al valor agregado (ISV), aportación solidaria, regímenes simplificados, precios de transferencia, fiscalización, recursos administrativos, devolución de impuestos, beneficios fiscales en zonas libres y contencioso tributario ante Juzgados de Letras.',
     respuestaDirecta:
       'Pineda y Asociados asesora a personas y empresas frente al SAR en liquidación de impuestos, fiscalización, recursos, exoneraciones y regímenes especiales como ZOLI o RIT. El alcance se define tras revisar la obligación, el requerimiento o el reparo notificado. No se publican fórmulas de ahorro cerradas: la vía depende de la normativa aplicable y de la documentación del contribuyente.',
+    ctaContextual: {
+      href: '/solicitar-consulta?motivo=tributario-fiscal#formulario',
+      title: '¿Recibió un requerimiento del SAR o necesita asesoría fiscal?',
+      label: 'Solicitar revisión de un asunto tributario',
+      secondaryLabel: 'Conozca el despacho',
+      secondaryHref: '/despacho',
+    },
     subservicios: [
       { titulo: 'Impuesto sobre la renta (personas naturales y jurídicas)', descripcion: 'Liquidación anual, declaraciones, regímenes especiales.' },
       { titulo: 'Impuesto al valor agregado (ISV)', descripcion: 'Declaración mensual, créditos fiscales y devoluciones.' },
@@ -1115,6 +1176,13 @@ export const areasGenerales: AreaStandalone[] = [
       'Cumplimiento ambiental preventivo y defensa frente a MiAmbiente y la SERNA en Honduras. Licencias ambientales por categoría, evaluaciones de impacto ambiental, permisos de vertimiento y emisiones, manejo de residuos sólidos y peligrosos, aprovechamientos forestales, sanciones administrativas, acciones populares ambientales, responsabilidad por daño ambiental, bonos de carbono y litigio climático.',
     respuestaDirecta:
       'Pineda y Asociados acompaña proyectos y empresas en licencias ambientales, evaluaciones de impacto, permisos de vertimiento o residuos y defensa frente a sanciones de MiAmbiente. El trámite varía según la categoría del proyecto, su ubicación y los compromisos ambientales exigidos. La consulta inicial sirve para identificar la vía y la documentación que suele requerirse.',
+    ctaContextual: {
+      href: '/solicitar-consulta?motivo=ambiental-regulatorio#formulario',
+      title: '¿Su proyecto necesita licencia ambiental o enfrenta una sanción?',
+      label: 'Consultar un trámite o conflicto ambiental',
+      secondaryLabel: 'Conozca el despacho',
+      secondaryHref: '/despacho',
+    },
     subservicios: [
       { titulo: 'Licencia ambiental', descripcion: 'Tramitación por categoría según el proyecto.', aliases: ['auditorías verdes'] },
       { titulo: 'Evaluación de impacto ambiental', descripcion: 'Estudio y presentación.' },
@@ -1156,6 +1224,13 @@ export const areasGenerales: AreaStandalone[] = [
       'Resuelva sus disputas de forma rápida, confidencial y especializada en Honduras. Redacción de cláusulas compromisorias, arbitraje institucional (CIAM, CICA) y ad hoc, arbitraje internacional (CCI, CIADI, UNCITRAL, LACIAC), mediación prejudicial, mediación privada, mediación penal y familiar, dispute boards, homologación de laudos extranjeros ante la Corte Suprema y ejecución del laudo.',
     respuestaDirecta:
       'Pineda y Asociados redacta cláusulas compromisorias y representa en conciliación, mediación y arbitraje ante centros de las cámaras de comercio y foros institucionales. También tramita homologación de laudos cuando procede. La conveniencia de estas vías depende del contrato, la materia y si las partes aceptan someter la controversia a un tercero. Evaluación inicial confidencial.',
+    ctaContextual: {
+      href: '/solicitar-consulta?motivo=conciliacion-y-arbitraje#formulario',
+      title: '¿Prefiere resolver su conflicto por mediación o arbitraje?',
+      label: 'Consultar conciliación, mediación o arbitraje',
+      secondaryLabel: 'Conozca el despacho',
+      secondaryHref: '/despacho',
+    },
     subservicios: [
       { titulo: 'Cláusula compromisoria', descripcion: 'Redacción e incorporación a sus contratos.' },
       { titulo: 'Convención arbitral', descripcion: 'Someter una controversia ya existente a arbitraje.' },
@@ -1270,7 +1345,11 @@ export const hubPenal: HubPenal = {
   ],
   ctaContextual: {
     href: '/solicitar-consulta?motivo=derecho-penal#formulario',
+    eyebrow: 'Atención penal',
+    title: '¿Necesita defensa penal? Cuéntenos su caso',
     label: 'Solicitar atención por una detención, citación o audiencia',
+    secondaryLabel: 'Conozca al penalista',
+    secondaryHref: '/equipo/danilo-pineda-maradiaga',
   },
   faqs: [
     { pregunta: '¿Pueden defenderme si acabo de ser detenido?', respuesta: 'Sí. La asistencia letrada es un derecho desde el primer momento. Podemos acudir a la estación policial o al juzgado y ejercer defensa inmediata, dentro del horario y la disponibilidad operativa del despacho.' },
@@ -1307,6 +1386,14 @@ export const hubPenal: HubPenal = {
       color: 'danger',
       respuestaDirecta:
         'Pineda y Asociados asume la defensa técnica en casos penales litigiosos en el sur de Honduras, desde la primera declaración hasta el juicio y los recursos. Cubre delitos contra la vida, la libertad sexual, el patrimonio, el tráfico ilícito, el lavado de activos y la administración pública, entre otros. La estrategia depende de los hechos, la prueba y las resoluciones de la autoridad competente.',
+      ctaContextual: {
+        href: '/solicitar-consulta?motivo=atencion-casos-penales-litigiosos#formulario',
+        eyebrow: 'Defensa penal litigiosa',
+        title: '¿Enfrenta una imputación penal grave?',
+        label: 'Solicitar defensa en un caso penal litigioso',
+        secondaryLabel: 'Conozca al penalista',
+        secondaryHref: '/equipo/danilo-pineda-maradiaga',
+      },
       subservicios: [
         { titulo: 'Homicidio simple y homicidio agravado', descripcion: 'Defensa técnica desde la audiencia de declaración del imputado.' },
         { titulo: 'Asesinato, parricidio y femicidio', descripcion: 'Análisis de calificación jurídica y estrategia procesal.' },
@@ -1376,6 +1463,14 @@ export const hubPenal: HubPenal = {
       color: 'accent',
       respuestaDirecta:
         'Pineda y Asociados tramita salidas alternas al proceso penal, mediación, conciliación, criterios de oportunidad, sustitución de penas y recursos contra multas. El objetivo es evaluar si el caso admite una vía distinta al juicio oral, siempre conforme al Código Procesal Penal y a la situación concreta de la persona imputada o de la víctima.',
+      ctaContextual: {
+        href: '/solicitar-consulta?motivo=mediacion-conflictos-penales-y-multas#formulario',
+        eyebrow: 'Salidas alternas al proceso',
+        title: '¿Busca evitar el juicio o impugnar una multa?',
+        label: 'Consultar mediación, conciliación o recurso de multa',
+        secondaryLabel: 'Conozca el despacho',
+        secondaryHref: '/despacho',
+      },
       subservicios: [
         { titulo: 'Criterios de oportunidad (Art. 27 CPP)', descripcion: 'Solicitud al Ministerio Público y al juez.' },
         { titulo: 'Suspensión condicional del proceso', descripcion: 'Régimen de prueba y revocación.' },
@@ -1417,6 +1512,14 @@ export const hubPenal: HubPenal = {
       color: 'warning',
       respuestaDirecta:
         'Pineda y Asociados interviene en justicia juvenil y protección de menores en Honduras: defensa de adolescentes, representación de menores víctimas y control del interés superior del niño. Actúa ante Juzgados de Niñez y Adolescencia y coordina medidas de protección cuando procede. El procedimiento es especializado y no se rige por las mismas reglas del proceso penal de adultos.',
+      ctaContextual: {
+        href: '/solicitar-consulta?motivo=menores-justicia-juvenil#formulario',
+        eyebrow: 'Justicia juvenil',
+        title: '¿Un menor está involucrado en un proceso penal o necesita protección?',
+        label: 'Solicitar orientación en justicia juvenil',
+        secondaryLabel: 'Conozca el despacho',
+        secondaryHref: '/despacho',
+      },
       subservicios: [
         { titulo: 'Defensa de adolescentes infractores', descripcion: 'Procedimiento ante Juez de Niñez y Adolescencia.', aliases: ['defensa de menores'] },
         { titulo: 'Medidas socioeducativas', descripcion: 'Amonestación, libertad asistida, servicio a la comunidad.' },
@@ -1452,6 +1555,14 @@ export const hubPenal: HubPenal = {
       color: 'primary',
       respuestaDirecta:
         'Pineda y Asociados acompaña el proceso penal completo: detención, declaraciones, audiencia inicial, etapa intermedia, juicio oral, medidas cautelares e incidentes. La defensa se organiza por fases y se explica por escrito. Los plazos y el resultado dependen de la imputación, la prueba y las decisiones del juez o del Ministerio Público.',
+      ctaContextual: {
+        href: '/solicitar-consulta?motivo=proceso-penal-completo#formulario',
+        eyebrow: 'Todas las etapas del proceso',
+        title: '¿Necesita acompañamiento en todo el proceso penal?',
+        label: 'Solicitar defensa desde la investigación hasta el juicio',
+        secondaryLabel: 'Conozca al penalista',
+        secondaryHref: '/equipo/danilo-pineda-maradiaga',
+      },
       subservicios: [
         { titulo: 'Investigación preliminar fiscal', descripcion: 'Acompañamiento al momento de la detención y primera declaración.', aliases: ['audiencia preliminar'] },
         { titulo: 'Audiencia inicial (Art. 296 CPP)', descripcion: 'Imputación, defensa, solicitud de sobreseimiento o medidas cautelares.', aliases: ['audiencia de declaración'] },
@@ -1493,6 +1604,14 @@ export const hubPenal: HubPenal = {
       color: 'danger',
       respuestaDirecta:
         'Pineda y Asociados interpone apelación, casación, habeas corpus, habeas data y amparo constitucional en materia penal cuando una resolución o una detención vulnera garantías. La viabilidad del recurso se analiza antes de que precluya el plazo. No se promete la revocación: se expone el fundamento y el riesgo procesal de cada vía.',
+      ctaContextual: {
+        href: '/solicitar-consulta?motivo=recursos-y-defensa-avanzada#formulario',
+        eyebrow: 'Recursos y garantías',
+        title: '¿Recibió una resolución desfavorable y quiere recurrir?',
+        label: 'Consultar apelación, casación o habeas corpus',
+        secondaryLabel: 'Conozca al penalista',
+        secondaryHref: '/equipo/danilo-pineda-maradiaga',
+      },
       subservicios: [
         { titulo: 'Recurso de reposición', descripcion: 'Ante el mismo juez que dictó la resolución.' },
         { titulo: 'Apelación', descripcion: 'Ante la Corte de Apelaciones Penal.', aliases: ['recursos de apelación'] },
@@ -1527,6 +1646,14 @@ export const hubPenal: HubPenal = {
       color: 'primary',
       respuestaDirecta:
         'Pineda y Asociados diseña la estrategia penal del caso: teoría del caso, carga probatoria, peritajes, acusador privado y salidas alternas cuando proceden. El plan se documenta con los hechos y la prueba disponible. La defensa corporativa o individual se define según quién esté imputado y qué etapa procesal esté abierta.',
+      ctaContextual: {
+        href: '/solicitar-consulta?motivo=estrategia-penal-y-litigio#formulario',
+        eyebrow: 'Estrategia preventiva',
+        title: '¿Necesita una estrategia penal antes de declarar o negociar?',
+        label: 'Solicitar análisis de estrategia penal',
+        secondaryLabel: 'Conozca al penalista',
+        secondaryHref: '/equipo/danilo-pineda-maradiaga',
+      },
       subservicios: [
         { titulo: 'Auditoría de riesgo penal corporativo', descripcion: 'Compliance y prevención de delitos.' },
         { titulo: 'Mapa de riesgos penales', descripcion: 'Identificación de vulnerabilidades por actividad.' },
@@ -1563,6 +1690,14 @@ export const hubPenal: HubPenal = {
       color: 'success',
       respuestaDirecta:
         'Pineda y Asociados gestiona libertad condicional, beneficios penitenciarios, redención de pena y extinción de la responsabilidad penal cuando se cumplen los requisitos legales. También interviene en traslados y habeas corpus durante la ejecución. Los beneficios no son automáticos: dependen del cómputo, la conducta y la resolución del Juzgado de Ejecución Penal.',
+      ctaContextual: {
+        href: '/solicitar-consulta?motivo=ejecucion-penal-y-beneficios#formulario',
+        eyebrow: 'Ejecución penal',
+        title: '¿Un familiar privado de libertad necesita beneficios o libertad condicional?',
+        label: 'Consultar beneficios penitenciarios o libertad condicional',
+        secondaryLabel: 'Conozca el despacho',
+        secondaryHref: '/despacho',
+      },
       subservicios: [
         { titulo: 'Libertad condicional', descripcion: 'Cumplimiento de los requisitos legales y trámite.', aliases: ['solicitud y tramitación'] },
         { titulo: 'Redención de pena por trabajo y estudio', descripcion: 'Cómputo y solicitud.' },

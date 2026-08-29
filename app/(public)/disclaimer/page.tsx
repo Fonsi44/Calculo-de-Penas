@@ -6,7 +6,7 @@ import { getLegalPageContent } from '@/lib/legal-content';
 export const metadata: Metadata = {
   title: 'Exención de Responsabilidad',
   description:
-    'Exención de responsabilidad de Pineda y Asociados, bufete en Nacaome, Valle, sobre la calculadora de penas, contenidos publicados y servicios legales.',
+    'Exención de responsabilidad de Pineda y Asociados, bufete en Nacaome, Valle, sobre contenidos publicados y servicios legales.',
   alternates: { canonical: '/disclaimer' },
   robots: { index: false, follow: true },
   twitter: {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Disclaimer | Pineda y Asociados',
-    description: 'Exención de responsabilidad del bufete jurídico Pineda y Asociados sobre la calculadora de penas y contenidos publicados.',
+    description: 'Exención de responsabilidad del bufete jurídico Pineda y Asociados sobre contenidos publicados y servicios legales.',
     url: `${site.url}/disclaimer`,
     siteName: site.name,
     locale: 'es_HN',
@@ -40,40 +40,14 @@ export default async function DisclaimerPage() {
     >
       <LegalCallout variant="danger">
         <strong className="font-semibold text-primary">Mensaje principal.</strong>{' '}
-        La información publicada en este sitio web —incluyendo los
-        resultados generados por la calculadora de penas— tiene carácter
+        La información publicada en este sitio web tiene carácter
         <strong className="font-semibold"> estrictamente orientativo</strong> y
         NO sustituye el asesoramiento legal personalizado que sólo puede
         prestarse tras el análisis individual del caso por un abogado
         colegiado en Honduras.
       </LegalCallout>
 
-      <LegalSection number="1" title="Sobre la calculadora de penas">
-        <p>
-          La calculadora aplica las reglas del <strong className="font-semibold text-primary">Código Penal de Honduras (Decreto 130-2017 y reformas vigentes)</strong> y
-          sus reformas vigentes. Está diseñada como herramienta de apoyo
-          para que abogados, estudiantes de derecho y usuarios informados
-          puedan estimar la pena correspondiente a uno o varios delitos
-          en escenarios idealizados.
-        </p>
-        <p>La calculadora <strong className="font-semibold text-primary">NO</strong> realiza:</p>
-        <LegalList
-          items={[
-            'Calificación jurídica de hechos ni subsunción penal.',
-            'Valoración probatoria de los indicios o pruebas del caso.',
-            'Análisis de la jurisprudencia vinculante de la Corte Suprema de Justicia.',
-            'Aplicación de circunstancias especiales, grados de ejecución incompletos o figuras concursales complejas.',
-            'Atenuantes o agravantes que requieran valoración subjetiva del juez.',
-          ]}
-        />
-        <p>
-          La estimación puede diferir —incluso significativamente— del
-          fallo judicial definitivo. <strong className="font-semibold text-primary">El resultado no es vinculante</strong> para ninguna
-          autoridad jurisdiccional.
-        </p>
-      </LegalSection>
-
-      <LegalSection number="2" title="Sobre los contenidos publicados">
+      <LegalSection number="1" title="Sobre los contenidos publicados">
         <p>
           Los artículos, guías, FAQ y demás contenidos del blog tienen
           carácter <strong className="font-semibold text-primary">informativo general</strong> y
@@ -89,20 +63,19 @@ export default async function DisclaimerPage() {
         </p>
       </LegalSection>
 
-      <LegalSection number="3" title="Sobre la base de datos de delitos">
+      <LegalSection number="2" title="Sobre las referencias al Código Penal">
         <p>
-          La base de datos incluida en la calculadora contiene{' '}
-          <strong className="font-semibold text-primary">483 delitos del Código Penal</strong>{' '}
-          validados contra el Decreto 130-2017 y las reformas vigentes
-          (119-2019, 46-2020, 93-2021 y 59-2024). Si bien se ha puesto
-          especial cuidado en su actualización, pueden existir errores
-          materiales. El bufete agradece las correcciones que los
-          usuarios cualificados quieran reportar a través del formulario
-          de contacto.
+          Las referencias a delitos y artículos del{' '}
+          <strong className="font-semibold text-primary">Código Penal de Honduras (Decreto 130-2017 y reformas vigentes)</strong>{' '}
+          publicadas en el sitio se basan en fuentes canónicas internas.
+          Si bien se ha puesto especial cuidado en su actualización,
+          pueden existir errores materiales. El bufete agradece las
+          correcciones que los usuarios cualificados quieran reportar a
+          través del formulario de contacto.
         </p>
       </LegalSection>
 
-      <LegalSection number="4" title="Sobre los servicios jurídicos">
+      <LegalSection number="3" title="Sobre los servicios jurídicos">
         <p>
           La información publicada en este sitio web NO constituye una
           oferta de servicios jurídicos vinculante. La contratación
@@ -117,14 +90,14 @@ export default async function DisclaimerPage() {
           ]}
         />
         <LegalCallout variant="info">
-          Ningún resultado de la calculadora, contenido del blog o
-          comunicación con el bufete a través de este sitio genera por
-          sí solo una relación abogado-cliente. Esta sólo se perfecciona
-          con la firma de la hoja de encargo.
+          Ningún contenido del blog ni comunicación con el bufete a
+          través de este sitio genera por sí solo una relación
+          abogado-cliente. Esta sólo se perfecciona con la firma de la
+          hoja de encargo.
         </LegalCallout>
       </LegalSection>
 
-      <LegalSection number="5" title="Sobre los enlaces externos">
+      <LegalSection number="4" title="Sobre los enlaces externos">
         <p>
           El sitio puede incluir enlaces a recursos oficiales
           (Congreso Nacional, Poder Judicial, SAR, ARSA, INM, Colegio de
@@ -134,7 +107,7 @@ export default async function DisclaimerPage() {
         </p>
       </LegalSection>
 
-      <LegalSection number="6" title="Sobre la ausencia de garantía de resultados">
+      <LegalSection number="5" title="Sobre la ausencia de garantía de resultados">
         <p>
           En materia jurídica, ningún resultado judicial puede
           garantizarse. La defensa penal, civil, laboral o administrativa
@@ -146,30 +119,29 @@ export default async function DisclaimerPage() {
         </p>
       </LegalSection>
 
-      <LegalSection number="7" title="Sobre la responsabilidad del usuario">
+      <LegalSection number="6" title="Sobre la responsabilidad del usuario">
         <p>
           El usuario es el único responsable del uso que haga de la
-          información y herramientas publicadas. En particular:
+          información publicada. En particular:
         </p>
         <LegalList
           items={[
-            'De la veracidad de los datos introducidos en la calculadora.',
-            'De las decisiones que adopte basándose —exclusivamente— en los resultados obtenidos.',
+            'De las decisiones que adopte basándose —exclusivamente— en contenidos informativos del sitio.',
             'De la verificación posterior con un abogado habilitado antes de cualquier actuación procesal.',
           ]}
         />
       </LegalSection>
 
-      <LegalSection number="8" title="Aceptación del disclaimer">
+      <LegalSection number="7" title="Aceptación del disclaimer">
         <p>
-          El uso continuado de este sitio web y de la calculadora de
-          penas implica la aceptación íntegra del presente disclaimer.
-          Si el usuario no está de acuerdo con alguno de sus términos,
-          debe abstenerse de utilizarlos.
+          El uso continuado de este sitio web implica la aceptación
+          íntegra del presente disclaimer. Si el usuario no está de
+          acuerdo con alguno de sus términos, debe abstenerse de
+          utilizarlo.
         </p>
       </LegalSection>
 
-      <LegalSection number="9" title="Contacto">
+      <LegalSection number="8" title="Contacto">
         <p>
           Para cualquier duda o aclaración, el bufete está disponible en{' '}
           <a href={`mailto:${site.email}`} className="text-accent hover:underline">{site.email}</a> y en el teléfono {site.phoneDisplay}.
@@ -183,7 +155,7 @@ export default async function DisclaimerPage() {
           '@id': `${absoluteUrl('/disclaimer')}#webpage`,
           url: absoluteUrl('/disclaimer'),
           name: 'Exención de Responsabilidad | Pineda y Asociados',
-          description: 'Exención de responsabilidad de Pineda y Asociados, bufete en Nacaome, Valle, sobre la calculadora de penas, contenidos publicados y servicios legales.',
+          description: 'Exención de responsabilidad de Pineda y Asociados, bufete en Nacaome, Valle, sobre contenidos publicados y servicios legales.',
           inLanguage: 'es-HN',
           isPartOf: { '@id': `${site.url}/#website` },
           about: { '@id': `${site.url}/#legal-service` },

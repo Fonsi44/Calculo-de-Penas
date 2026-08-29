@@ -643,8 +643,10 @@ export default async function AreaStandalonePage({ params }: { params: Promise<{
         <ContextualCta
           href={area.ctaContextual.href}
           label={area.ctaContextual.label}
-          secondaryHref="/despacho"
-          secondaryLabel="Conozca el despacho"
+          title={area.ctaContextual.title}
+          eyebrow={area.ctaContextual.eyebrow}
+          secondaryHref={area.ctaContextual.secondaryHref ?? '/despacho'}
+          secondaryLabel={area.ctaContextual.secondaryLabel ?? 'Conozca el despacho'}
         />
       ) : (
         <ConsultationCTA />

@@ -53,7 +53,7 @@ let cachedIndex: CorpusIndex | null = null;
 let cachedMtime = 0;
 
 function readJsonFile<T>(relativePath: string): T | null {
-  const abs = path.join(ROOT, relativePath);
+  const abs = path.join(/*turbopackIgnore: true*/ ROOT, relativePath);
   if (!fs.existsSync(abs)) return null;
   try {
     return JSON.parse(fs.readFileSync(abs, 'utf-8')) as T;
@@ -73,7 +73,7 @@ function articlesToText(data: unknown[]): string {
 }
 
 function readTextFile(relativePath: string): string | null {
-  const abs = path.join(ROOT, relativePath);
+  const abs = path.join(/*turbopackIgnore: true*/ ROOT, relativePath);
   if (!fs.existsSync(abs)) return null;
   try {
     return fs.readFileSync(abs, 'utf-8');

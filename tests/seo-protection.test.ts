@@ -17,22 +17,15 @@ import robotsFn from '@/app/robots';
 import { PUBLIC_ROUTES, THIN_POST_SLUGS } from '@/lib/seo/sitemap';
 
 // Rutas que NUNCA deben ser públicas, indexables ni enlazadas (AGENTS.md reglas 17-19).
-const PRIVATE_PREFIXES = ['/intranet/', '/admin/', '/calculadora', '/casos/', '/cp/', '/delitos/', '/atajos'];
+const PRIVATE_PREFIXES = ['/intranet/', '/admin/', '/cargar/', '/preview/'];
 
 const PRIVATE_PAGE_PATHS = [
   '/intranet',
   '/intranet/admin',
   '/intranet/dashboard',
-  '/intranet/calculadora',
-  '/calculadora',
-  '/casos',
-  '/casos/123',
-  '/cp',
-  '/cp/1',
-  '/delitos',
-  '/delitos/abc',
-  '/atajos',
   '/admin',
+  '/cargar',
+  '/preview',
 ];
 
 interface RobotsRule {
@@ -50,7 +43,7 @@ describe('proxy.ts — clasificación de rutas', () => {
   });
 
   it('las rutas /api privadas NO se clasifican como API pública', () => {
-    const privateApis = ['/api/calcular', '/api/admin/blog', '/api/seed', '/api/casos', '/api/calculos'];
+    const privateApis = ['/api/admin/blog', '/api/sgie/expedientes', '/api/auth/login', '/api/seed'];
     for (const p of privateApis) {
       expect(isPublicApiPath(p), `${p} no debería ser API pública`).toBe(false);
     }
