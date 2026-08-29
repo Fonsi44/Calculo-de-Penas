@@ -86,17 +86,31 @@
       "expiresAt": null
     },
     {
+      "id": "ci.postbuild",
+      "path": "tools/ci/postbuild.mjs",
+      "owner": "engineering",
+      "status": "active",
+      "purpose": "Ejecutar verify-chunks/llms/IndexNow tras next build, o no-op si scripts/ no está en el checkout.",
+      "command": "node tools/ci/postbuild.mjs",
+      "mutates": true,
+      "dryRun": false,
+      "requiredEnv": [],
+      "rollback": null,
+      "lastValidated": "2026-08-29",
+      "expiresAt": null
+    },
+    {
       "id": "ci.governance",
       "path": "tools/ci/governance.mjs",
       "owner": "engineering",
       "status": "active",
-      "purpose": "Validar límites de archivos, imports, ciclos, duplicados, flags y artefactos locales.",
+      "purpose": "Validar límites de archivos, imports, ciclos, duplicados y artefactos locales.",
       "command": "node tools/ci/governance.mjs",
       "mutates": false,
       "dryRun": true,
       "requiredEnv": [],
       "rollback": null,
-      "lastValidated": "2026-07-28",
+      "lastValidated": "2026-08-29",
       "expiresAt": null
     },
     {
