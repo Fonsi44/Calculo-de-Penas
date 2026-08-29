@@ -1,0 +1,33 @@
+---
+description: Flujo design-to-code sin Figma — composición de páginas web
+globs: app/**/*.tsx,components/marketing/**/*
+alwaysApply: false
+---
+
+# Design-to-code sin Figma
+
+## Fuente de verdad
+
+El código es la especificación visual. No uses Figma MCP ni mockups como fuente final.
+
+## Crear una página nueva
+
+1. Un solo `<h1>` por página — usar `PageHero`
+2. Secciones con `Section` + `SectionHeader`
+3. CTA final con `CtaBlock`
+4. FAQ opcional con `FaqBlock`
+5. Contenido específico en `Card` o grid custom
+
+## Variar diseño entre proyectos
+
+1. Cambiar `theme` en `lib/site.ts`
+2. Ajustar variantes: `Section variant="brand"`, `PageHero variant="muted"`
+3. Solo si hace falta: nuevo preset en `themes/`
+
+## Mockups opcionales
+
+Penpot/Excalidraw solo para exploración. Al implementar, descartar y componer en código.
+
+## Validación
+
+Tras cambios visuales: `npm run validate:all`

@@ -1,0 +1,39 @@
+---
+description: Design tokens canónicos — radius, sombras, iconos, acento
+globs: **/*.tsx,**/*.css,app/**/*,components/**/*
+alwaysApply: false
+---
+
+# Design tokens canónicos
+
+## Radius y sombras
+
+- Border radius estándar: `rounded-lg`
+- Sombras de botones: clases `.shadow-btn-*`, no `shadow-lg` arbitrario
+- Cards: `rounded-lg` + `.card-premium` o variantes en `Card`
+
+## Iconos
+
+- Iconos en cards/features: `w-11 h-11` dentro de contenedor `rounded-lg`
+
+## Color
+
+- Acento (`accent`): solo acento, no fondos dominantes
+- Primario: CTAs y títulos
+- Texto: `text-text`, `text-text-secondary`, `text-text-muted`
+
+## Componentes
+
+- Preferir `components/ui/` y `components/marketing/`
+- No introducir librerías UI nuevas sin justificación
+- Cambiar look vía preset en `lib/site.ts`, no hex inline
+
+## Ejemplos
+
+```tsx
+// Card estándar
+<div className="rounded-lg border border-border-light bg-surface p-4">
+
+// Icono feature
+<div className="w-11 h-11 rounded-lg bg-accent/15 flex items-center justify-center">
+```

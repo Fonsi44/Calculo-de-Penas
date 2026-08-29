@@ -1,0 +1,14 @@
+/* Preset: warm-legal — tonos tierra, acento cobre (ideal despachos, consultoría) */
+[data-theme='warm-legal'] {
+  --color-primary: #2C2417;
+  --color-primary-light: #4A3D2A;
+  --color-primary-dark: #1A140C;
+  --color-accent: #B87333;
+  --color-accent-light: #D4956A;
+  --color-accent-dark: #8B5A2B;
+  --color-background: #FAF7F2;
+  --color-surface-alt: #F0EBE3;
+  --color-page-warm: #EDE6DA;
+  --color-border: #DDD4C8;
+  --color-border-light: #EBE4DA;
+}

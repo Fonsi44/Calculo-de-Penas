@@ -1,0 +1,15 @@
+/* Preset: vibrant-startup — oscuro con acento violeta/coral */
+[data-theme='vibrant-startup'] {
+  --color-primary: #1E1033;
+  --color-primary-light: #3D2066;
+  --color-primary-dark: #0D0618;
+  --color-accent: #F97316;
+  --color-accent-light: #FB923C;
+  --color-accent-dark: #C2410C;
+  --color-background: #FAFAFA;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #F5F3FF;
+  --color-page-warm: #FFF7ED;
+  --color-text: #18181B;
+  --color-border: #E4E4E7;
+}

@@ -1,0 +1,14 @@
+/* Preset: modern-minimal — neutros fríos, acento azul eléctrico */
+[data-theme='modern-minimal'] {
+  --color-primary: #111827;
+  --color-primary-light: #1F2937;
+  --color-primary-dark: #030712;
+  --color-accent: #2563EB;
+  --color-accent-light: #60A5FA;
+  --color-accent-dark: #1D4ED8;
+  --color-background: #FAFAFA;
+  --color-surface-alt: #F4F4F5;
+  --color-page-warm: #F4F4F5;
+  --color-border: #E4E4E7;
+  --color-border-light: #F4F4F5;
+}

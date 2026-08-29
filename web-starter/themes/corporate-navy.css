@@ -1,0 +1,12 @@
+/* Preset: corporate-navy — navy + gold, estilo corporativo premium (default) */
+[data-theme='corporate-navy'] {
+  --color-primary: #0F1D3A;
+  --color-primary-light: #1F3260;
+  --color-primary-dark: #060E20;
+  --color-accent: #D4AF37;
+  --color-accent-light: #E5C97A;
+  --color-accent-dark: #705714;
+  --color-background: #F9F8F5;
+  --color-surface-alt: #F3F1EB;
+  --color-page-warm: #F5F0E8;
+}
