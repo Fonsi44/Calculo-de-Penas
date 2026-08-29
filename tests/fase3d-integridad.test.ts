@@ -19,9 +19,11 @@ import {
   countsAsOfficial,
   classifySourceProvenance,
 } from '@/lib/ai/source-provenance';
+import { auditFixtureExists } from './helpers/phase-audit-fixtures';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
+const SKIP_PHASE_AUDITS = !auditFixtureExists('docs/audits/fase3d-matriz-lote1.json');
 
 function loadJson(rel: string): unknown {
   const p = resolve(ROOT, rel);
@@ -60,9 +62,9 @@ interface Matriz {
   matriz: MatrizRow[];
 }
 
-const matriz = loadJson('docs/audits/fase3d-matriz-lote1.json') as Matriz;
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 3D — Integridad del Lote 1 Penal (10 supuestos §11)', () => {
+  const matriz = loadJson('docs/audits/fase3d-matriz-lote1.json') as Matriz;
 
-describe('Fase 3D — Integridad del Lote 1 Penal (10 supuestos §11)', () => {
   // ─── Supuesto 1: build determinista vs service worker ─────────────────────
   // Cubierto por tests/fase3e-sw-build-determinism.test.ts (7 tests).
   // Fase 3E: public/sw.template.js es la PLANTILLA versionada; /sw.js se sirve

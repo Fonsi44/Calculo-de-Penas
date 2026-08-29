@@ -47,6 +47,11 @@ Thumbs.db
 *.sublime-workspace
 *.sublime-project
 
+# ── Auditorías y backups operativos ─────────────────────────
+/auditoria-blog/
+*-backup.json
+/data/pdfs-chunked/
+
 # ── Solo local (no subir a GitHub) ───────────────────────────
 /docs/
 /scripts/

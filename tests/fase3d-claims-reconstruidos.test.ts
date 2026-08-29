@@ -17,11 +17,13 @@ import { execFileSync } from 'node:child_process';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
+import { auditFixtureExists } from './helpers/phase-audit-fixtures';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const OUT_PATH = resolve(ROOT, 'docs/audits/fase3d-claims-reconstruidos.json');
 const SCRIPT = resolve(ROOT, 'scripts/fase3d-reconstruir-claims-ausentes.ts');
+const SKIP_PHASE_AUDITS = !auditFixtureExists('docs/audits/fase3d-claims-reconstruidos.json');
 
 interface ClaimReconstruido {
   id: string;
@@ -70,7 +72,7 @@ function cargarClaims(): ClaimReconstruido[] {
   return raw.claims as ClaimReconstruido[];
 }
 
-describe('Fase 3D — Reconstrucción de claims ausentes', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 3D — Reconstrucción de claims ausentes', () => {
   const claims = cargarClaims();
 
   // ─── Estructura general ──────────────────────────────────────────────────

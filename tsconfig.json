@@ -39,12 +39,6 @@
   ],
   "exclude": [
     "node_modules",
-    "_archived_unused",
-    "scripts/legacy",
-    "scripts/archive",
-    "**/_unused",
-    "data/legacy",
-    "docs/legacy",
-    "basura"
+    "scripts"
   ]
 }

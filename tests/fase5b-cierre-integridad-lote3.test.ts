@@ -21,8 +21,10 @@
 import { describe, it, expect } from 'vitest';
 import * as fs from 'fs';
 import * as path from 'path';
+import { auditFixtureExists } from './helpers/phase-audit-fixtures';
 
 const AUDITS = path.resolve(process.cwd(), 'docs', 'audits');
+const SKIP_PHASE_AUDITS = !auditFixtureExists('docs/audits/fase5a-lote3-claims-finales.json');
 
 interface ClaimItem {
   id: string;
@@ -103,7 +105,7 @@ const LOTE3 = [
 const CANON_ID = '5a-poder-legal-honduras-cua-M02';
 const DUP_ID = '5a-poder-legal-honduras-cua-01';
 
-describe('Fase 5B — Deduplicación de claims corrected', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 5B — Deduplicación de claims corrected', () => {
   it('no quedan dos claims corrected para la misma afirmación jurídica', () => {
     const c = loadJson<ClaimsDoc>('fase5a-lote3-claims-finales.json');
     const correctedPoderLegal = c.claims.filter(
@@ -148,7 +150,7 @@ describe('Fase 5B — Deduplicación de claims corrected', () => {
   });
 });
 
-describe('Fase 5B — Recuento de claims definitivo', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 5B — Recuento de claims definitivo', () => {
   it('totalClaims == 79 (no 80)', () => {
     const c = loadJson<ClaimsDoc>('fase5a-lote3-claims-finales.json');
     expect(c.totalClaims).toBe(79);
@@ -184,7 +186,7 @@ describe('Fase 5B — Recuento de claims definitivo', () => {
   });
 });
 
-describe('Fase 5B — Estados definitivos del Lote 3', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 5B — Estados definitivos del Lote 3', () => {
   it('la suma de estados == 15', () => {
     const e = loadJson<EstadosFinalesDoc>('fase5a-lote3-estados-finales.json');
     const suma = Object.values(e.distribucionEstados).reduce((a, b) => a + b, 0);
@@ -221,7 +223,7 @@ describe('Fase 5B — Estados definitivos del Lote 3', () => {
   });
 });
 
-describe('Fase 5B — Paquetes de revisión humana', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 5B — Paquetes de revisión humana', () => {
   it('existen 12 paquetes: 10 needs_human_review + 2 blocked', () => {
     const e = loadJson<EstadosFinalesDoc>('fase5a-lote3-estados-finales.json');
     const pendientes = e.estados.filter(
@@ -262,7 +264,7 @@ describe('Fase 5B — Paquetes de revisión humana', () => {
   });
 });
 
-describe('Fase 5B — Desglose de revalidación (45/28/17)', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 5B — Desglose de revalidación (45/28/17)', () => {
   it('45 invocaciones, 28 paths únicos, 17 duplicados', () => {
     const r = loadJson<RevalidacionDoc>('fase5a-lote3-revalidacion.json');
     expect(r.invocacionesTotales).toBe(45);
@@ -303,7 +305,7 @@ describe('Fase 5B — Desglose de revalidación (45/28/17)', () => {
   });
 });
 
-describe('Fase 5B — Deployment SHA frente a HEAD', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 5B — Deployment SHA frente a HEAD', () => {
   it('el artefacto de deployment ancla githubCommitSha == HEAD (a24f1391)', () => {
     const dep = loadJson<DeploymentRef>('fase5b-lote3-deployment-final.json');
     expect(dep.githubCommitSha).toBe('a24f13913474cc5d5b40c32f4ef86bb1b9e6ca0e');
@@ -317,7 +319,7 @@ describe('Fase 5B — Deployment SHA frente a HEAD', () => {
   });
 });
 
-describe('Fase 5B — Consistencia artifacts vs Lote 3', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 5B — Consistencia artifacts vs Lote 3', () => {
   it('los 15 slugs del Lote 3 están presentes en estados finales', () => {
     const e = loadJson<EstadosFinalesDoc>('fase5a-lote3-estados-finales.json');
     const slugs = e.estados.map((x) => x.slug).sort();

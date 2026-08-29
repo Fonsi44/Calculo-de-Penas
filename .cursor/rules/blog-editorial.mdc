@@ -1,0 +1,44 @@
+---
+description: Contenido editorial del blog — citas legales, política comercial y gates
+globs: data/blog/**/*.ts,data/blog/**/*.md,scripts/blog-*.ts,scripts/lib/blog-*.ts,scripts/*notebooklm*,scripts/lib/*notebooklm*,tests/blog-*.ts
+alwaysApply: false
+---
+
+# Blog editorial (Pineda y Asociados)
+
+## Fuentes de verdad
+
+- Posts publicados: DB `blog_posts` vía `lib/blog-db.ts`
+- Corpus versionado: `data/blog/articles/*.ts`
+- Categorías: `data/blog/categories.ts`
+- Verificación normativa: NotebookLM (`npm run blog:notebooklm:review`), no `data/*.json` local
+
+## Citas legales
+
+- No inventar artículos, decretos ni porcentajes
+- Citas verificables contra fuentes canónicas (NotebookLM o corpus legal del proyecto)
+- Dry-run por defecto; `--aplicar` solo con autorización y entorno permitido
+- Sin relleno genérico ni párrafos de relleno IA
+
+## Estructura del post
+
+- Longitud guía: 600–1200 palabras (ampliación IA: 800–1000)
+- Un solo `<h1>` por página (el título); body usa `<h2>`/`<h3>`
+- Disclaimer legal en `<LegalDisclaimer>`, **nunca** en el body del post
+
+## Política comercial (R24)
+
+- Formulación canónica: **«Evaluación inicial confidencial»** (`lib/marketing-policy.ts`)
+- Prohibido: consulta gratuita, sin costo, sin compromiso (como claim comercial)
+- Validar con `npm run content:audit-dynamic` al tocar contenido administrable
+
+## Autoría (R23)
+
+- No cambiar `author`, `reviewedBy`, firmas ni estados editoriales sin autorización expresa del propietario
+
+## Validación mínima tras cambios
+
+```bash
+npm run blog:notebooklm:gate
+npm run validate:dates && npm run content:audit
+```

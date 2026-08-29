@@ -22,7 +22,10 @@ import { dirname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const LIVE_ROOT_FILES = ['README.md', 'AGENTS.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'docs/README.md'];
+const PUBLIC_ROOT_DOCS = ['README.md', 'AGENTS.md', 'CHANGELOG.md', 'CONTRIBUTING.md'];
+const LIVE_ROOT_FILES = existsSync(resolve(ROOT, 'docs'))
+  ? [...PUBLIC_ROOT_DOCS, 'docs/README.md']
+  : PUBLIC_ROOT_DOCS;
 const FRONTMATTER_DIRS = [
   'docs/adr',
   'docs/architecture',
@@ -79,7 +82,9 @@ function exists(target) {
 }
 
 for (const file of files) {
-  const source = readFileSync(resolve(ROOT, file), 'utf8');
+  const filePath = resolve(ROOT, file);
+  if (!existsSync(filePath)) continue;
+  const source = readFileSync(filePath, 'utf8');
 
   if (file.startsWith('docs/') && liveSet.has(file)) {
     const frontmatter = source.match(/^---\n([\s\S]*?)\n---\n/);

@@ -48,16 +48,6 @@ export function sitemapIndexResponse(index: Array<{ url: string }>): Response {
   });
 }
 
-export function legacySitemapRedirectResponse(segment = 'legacy'): Response {
-  return new Response(null, {
-    status: 308,
-    headers: {
-      Location: 'https://www.pinedayasociadoshn.com/sitemap.xml',
-      'X-Legacy-Sitemap-Segment': segment,
-    },
-  });
-}
-
 function escapeXml(value: string): string {
   return value
     .replaceAll('&', '&amp;')

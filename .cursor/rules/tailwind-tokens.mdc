@@ -1,0 +1,43 @@
+---
+description: Design tokens canónicos — radius, sombras, iconos, acento dorado
+globs: **/*.tsx,**/*.css,app/**/*,components/**/*
+alwaysApply: false
+---
+
+# Design tokens canónicos (R16)
+
+## Radius y sombras
+
+- Border radius estándar: `rounded-lg` (no `rounded-xl`, `rounded-2xl` salvo excepción justificada)
+- Sombras de botones: clases `.btn-shadow-*` del proyecto, no `shadow-lg` arbitrario
+- Cards y inputs: `rounded-lg` + bordes sutiles (`border-border/40`)
+
+## Iconos y espaciado
+
+- Iconos en cards/features: `w-11 h-11` dentro de contenedor `rounded-lg`
+- No mezclar tamaños de icono (`w-8`, `w-12`) sin motivo
+
+## Color
+
+- Dorado (`accent`): **solo acento**, no fondos dominantes ni texto largo
+- Primario: `primary` / `primary-light` para CTAs
+- Texto: `text-text`, `text-text-muted`; fondos: `bg-surface`, `bg-surface-alt`
+
+## Componentes UI
+
+- Preferir componentes existentes en `components/ui/` y shadcn instalados
+- No introducir librerías UI nuevas sin justificación
+- Mantener coherencia con landings y blog existentes
+
+## Ejemplos
+
+```tsx
+// ✅ Card estándar
+<div className="rounded-lg border border-border/40 bg-surface p-4">
+
+// ✅ Icono feature
+<div className="w-11 h-11 rounded-lg bg-accent/15 flex items-center justify-center">
+
+// ❌ Evitar
+<div className="rounded-2xl shadow-2xl bg-accent text-white p-8">
+```

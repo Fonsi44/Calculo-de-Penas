@@ -25,6 +25,9 @@ describe('contratos de artefactos locales', () => {
     'database.dump',
     'database.sql.gz',
     'debug.log',
+    'auditoria-blog/checkpoint-notebooklm.json',
+    'data/lote2-backup.json',
+    'data/pdfs-chunked/chunks-pdfs.json',
   ])('ignora %s', (path) => {
     expect(ignored(path)).toBe(true);
   });

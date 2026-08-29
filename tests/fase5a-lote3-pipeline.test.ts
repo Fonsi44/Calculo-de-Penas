@@ -22,8 +22,10 @@
 import { describe, it, expect } from 'vitest';
 import * as fs from 'fs';
 import * as path from 'path';
+import { auditFixtureExists } from './helpers/phase-audit-fixtures';
 
 const AUDITS = path.resolve(process.cwd(), 'docs', 'audits');
+const SKIP_PHASE_AUDITS = !auditFixtureExists('docs/audits/fase5a-lote3-seleccion.json');
 
 const ESTADOS_VALIDOS = new Set([
   'not_started',
@@ -164,7 +166,7 @@ function loadMatriz(p: string): MatrizDoc {
   return JSON.parse(fs.readFileSync(path.join(AUDITS, p), 'utf8'));
 }
 
-describe('Fase 5A — Lote 3: selección determinista', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 5A — Lote 3: selección determinista', () => {
   it('selecciona exactamente 15 artículos', () => {
     const sel = loadSeleccion('fase5a-lote3-seleccion.json');
     expect(sel.selected).toHaveLength(15);
@@ -203,7 +205,7 @@ describe('Fase 5A — Lote 3: selección determinista', () => {
   });
 });
 
-describe('Fase 5A — Lote 3: backup y estados iniciales', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 5A — Lote 3: backup y estados iniciales', () => {
   it('tiene 15 artículos con hash SHA-256 único', () => {
     const est = loadEstadosIniciales('fase5a-lote3-estados-iniciales.json');
     expect(est.articulos).toHaveLength(15);
@@ -220,7 +222,7 @@ describe('Fase 5A — Lote 3: backup y estados iniciales', () => {
   });
 });
 
-describe('Fase 5A — Lote 3: claims', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 5A — Lote 3: claims', () => {
   it('todos los claims tienen id estable con prefijo 5a-', () => {
     const c = loadClaims('fase5a-lote3-claims-finales.json');
     for (const claim of c.claims) {
@@ -261,7 +263,7 @@ describe('Fase 5A — Lote 3: claims', () => {
   });
 });
 
-describe('Fase 5A — Lote 3: puerta de integridad (corrected aplicados)', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 5A — Lote 3: puerta de integridad (corrected aplicados)', () => {
   it('todos los claims corrected están aplicados al body', () => {
     const c = loadClaims('fase5a-lote3-claims-finales.json');
     const corrected = c.claims.filter((x) => x.decision === 'corrected');
@@ -273,7 +275,7 @@ describe('Fase 5A — Lote 3: puerta de integridad (corrected aplicados)', () =>
   });
 });
 
-describe('Fase 5A — Lote 3: estados finales e invariantes', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 5A — Lote 3: estados finales e invariantes', () => {
   it('todos los estados son valores válidos', () => {
     const e = loadEstadosFinales('fase5a-lote3-estados-finales.json');
     for (const est of e.estados) {
@@ -325,7 +327,7 @@ describe('Fase 5A — Lote 3: estados finales e invariantes', () => {
   });
 });
 
-describe('Fase 5A — Lote 3: enlazado interno (sin duplicados)', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 5A — Lote 3: enlazado interno (sin duplicados)', () => {
   it('el artefacto de aplicación de enlazado existe y tiene estructura válida', () => {
     const a = loadAplicacionEnlazado('fase5a-lote3-aplicacion-enlazado.json');
     expect(a.fase).toBe('5A');
@@ -340,7 +342,7 @@ describe('Fase 5A — Lote 3: enlazado interno (sin duplicados)', () => {
   });
 });
 
-describe('Fase 5A — Lote 3: paquetes de revisión humana', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 5A — Lote 3: paquetes de revisión humana', () => {
   it('existe un paquete por cada artículo no completed', () => {
     const e = loadEstadosFinales('fase5a-lote3-estados-finales.json');
     const noCompleted = e.estados.filter(
@@ -358,7 +360,7 @@ describe('Fase 5A — Lote 3: paquetes de revisión humana', () => {
   });
 });
 
-describe('Fase 5A — Lote 3: matriz DB-JSON', () => {
+describe.skipIf(SKIP_PHASE_AUDITS)('Fase 5A — Lote 3: matriz DB-JSON', () => {
   it('tiene 15 filas en la matriz', () => {
     const m = loadMatriz('fase5a-lote3-matriz.json');
     expect(m.matriz).toHaveLength(15);

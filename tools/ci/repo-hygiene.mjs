@@ -34,7 +34,7 @@ function ok(msg) { console.log(`  ✓ ${msg}`); }
 console.log('\n═══ 1. Raíz limpia ═══');
 
 const CANONICAL_ROOT_FILES = new Set([
-  'README.md', 'AGENTS.md', 'CHANGELOG.md', 'CONTRIBUTING.md',
+  'README.md', 'AGENTS.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'SECURITY.md', 'LICENSE',
   'package.json', 'package-lock.json', 'tsconfig.json', 'vercel.json',
   'lighthouserc.json', 'vitest.config.ts', 'next.config.ts', 'drizzle.config.ts',
   'postcss.config.mjs', 'eslint.config.mjs', '.gitignore', '.vercelignore',
@@ -104,6 +104,20 @@ if (generatedOutputs === 0) {
   ok('Sin backups/outputs generados versionados bajo docs/ o data/seo/');
 }
 
+const trackedBackupJson = trackedPaths.filter((p) => /-backup\.json$/i.test(p));
+for (const p of trackedBackupJson) {
+  error(`Backup JSON versionado: ${p}`);
+}
+
+const trackedAuditBlog = trackedPaths.filter((p) => p.startsWith('auditoria-blog/'));
+for (const p of trackedAuditBlog) {
+  error(`Artefacto de auditoria-blog versionado: ${p}`);
+}
+
+if (trackedBackupJson.length === 0 && trackedAuditBlog.length === 0) {
+  ok('Sin backups JSON ni auditoria-blog versionados');
+}
+
 // ── 2. Secretos hardcodeados (solo en archivos no-ignorados) ───────────
 
 if (!quickMode) {
@@ -132,20 +146,37 @@ if (!quickMode) {
   console.log('\n═══ 4. Scripts package.json ═══');
   const pkg = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
   const scripts = pkg.scripts || {};
-  let missingScripts = 0;
-  
+  let missingTools = 0;
+  let missingDevScripts = 0;
+  const devScriptsMissing = [];
+  const hasScriptsDir = existsSync(resolve(ROOT, 'scripts'));
+
   for (const [name, cmd] of Object.entries(scripts)) {
-    // Extraer el archivo principal del comando
     const match = cmd.match(/(?:node|npx|tsx)\s+(scripts\/[^\s]+|tools\/[^\s]+)/);
-    if (match) {
-      const scriptPath = resolve(ROOT, match[1]);
-      if (!existsSync(scriptPath)) {
-        error(`Script no encontrado: ${name} → ${match[1]}`);
-        missingScripts++;
-      }
+    if (!match) continue;
+    const scriptPath = resolve(ROOT, match[1]);
+    if (existsSync(scriptPath)) continue;
+
+    if (match[1].startsWith('tools/')) {
+      error(`Script no encontrado: ${name} → ${match[1]}`);
+      missingTools++;
+      continue;
+    }
+
+    if (hasScriptsDir) {
+      error(`Script no encontrado: ${name} → ${match[1]}`);
+      missingDevScripts++;
+    } else {
+      devScriptsMissing.push(`${name} → ${match[1]}`);
     }
   }
-  if (missingScripts === 0) ok('Todos los scripts existen');
+
+  if (missingTools === 0 && (hasScriptsDir ? missingDevScripts === 0 : true)) {
+    ok(hasScriptsDir ? 'Todos los scripts existen' : 'Scripts de tools/ verificados (scripts/ ausente en checkout público)');
+  }
+  if (!hasScriptsDir && devScriptsMissing.length > 0) {
+    warn(`${devScriptsMissing.length} script(s) de scripts/ omitidos (entorno de desarrollo completo no presente)`);
+  }
 
   console.log('\n═══ 5. Manifiesto de tooling ═══');
   const manifest = JSON.parse(readFileSync(resolve(ROOT, 'tools/manifest.json'), 'utf8'));

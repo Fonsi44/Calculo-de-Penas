@@ -1,0 +1,42 @@
+---
+description: Web pública — restricciones visuales, SEO permitido, rutas sensibles
+globs: app/(public)/**/*,components/**/*.tsx,components/**/*.ts,lib/seo/**/*
+alwaysApply: false
+---
+
+# Web pública
+
+## Regla principal (R5)
+
+- **No rediseñar** la web pública (`app/(public)/**`): layout, home, componentes visuales, blog público
+- **SEO sí permitido**: metadata, schema, sitemap, robots, canonical, enlazado interno, indexabilidad
+
+## Rutas privadas — no exponer
+
+- `/intranet/*`, `/admin/*`, `/api/*` (salvo endpoints públicos documentados)
+- No mover lógica de intranet a rutas públicas
+
+## Indexabilidad y landings
+
+- Clasificación: `data/seo/local-landing-indexability.json`
+- Catálogo estático: `data/seo/canonical-paths.json`
+- Footer/Home: solo ciudades con landing indexable (máx. 10)
+- Las 9 landings `NOINDEX_UNTIL_UNIQUE` no aparecen en módulos destacados ni listados SEO automáticos
+
+## Analítica
+
+- GA4 y GTM son mutuamente excluyentes
+- No enviar PII, consultas legales, nombres, correos ni expedientes
+- Config: `lib/site.ts`, `components/analytics-scripts.tsx`
+
+## Chat público
+
+- Motor de reglas local, **sin LLM externo** (`POST /api/chat`)
+- No conectar el chat a DeepSeek ni APIs de terceros
+
+## Antes de tocar SEO estático
+
+```bash
+npm run seo:public-contract
+npm run build
+```

@@ -197,7 +197,7 @@ autorización explícita y validación completa (suite + build):
 - Auth (`lib/auth.ts`), Proxy (`proxy.ts`).
 - Datos de delitos (`data/delitos.json`, `data/delitos-estados.json`).
 - Redirects 301 de `next.config.ts`.
-- `auditoriatotal.mc` y `auditoriatotal.md` — **solo lectura**.
+- `auditoriatotal.mc` — **solo lectura**, copia local en `docs/audits/archive/` (no versionado en Git público).
 
 Los agentes pueden auditar y reportar problemas en cualquiera de estos archivos.
 
