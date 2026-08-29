@@ -6,22 +6,28 @@
   <string>com.pineda.notebooklm-proxy</string>
   <key>ProgramArguments</key>
   <array>
-    <string>/usr/local/bin/node</string>
-    <string>REPO_ROOT/services/notebooklm-proxy/server.mjs</string>
+    <string>__NODE_BIN__</string>
+    <string>__REPO_ROOT__/services/notebooklm-proxy/server.mjs</string>
   </array>
   <key>EnvironmentVariables</key>
   <dict>
     <key>PORT</key>
-    <string>8787</string>
+    <string>__PORT__</string>
     <key>NOTEBOOKLM_NOTEBOOK_ID</key>
-    <string>6189a2da-d3f1-4450-8abb-c28aeb438272</string>
+    <string>__NOTEBOOKLM_NOTEBOOK_ID__</string>
     <key>NOTEBOOKLM_PROXY_API_KEY</key>
-    <string>local-dev-chat-proxy-key</string>
+    <string>__NOTEBOOKLM_PROXY_API_KEY__</string>
     <key>CHAT_NOTEBOOKLM_TIMEOUT_MS</key>
-    <string>90000</string>
+    <string>__CHAT_NOTEBOOKLM_TIMEOUT_MS__</string>
+    <key>NLM_BIN</key>
+    <string>__NLM_BIN__</string>
+    <key>HOME</key>
+    <string>__HOME_DIR__</string>
+    <key>PATH</key>
+    <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin</string>
   </dict>
   <key>WorkingDirectory</key>
-  <string>REPO_ROOT</string>
+  <string>__REPO_ROOT__</string>
   <key>RunAtLoad</key>
   <true/>
   <key>KeepAlive</key>

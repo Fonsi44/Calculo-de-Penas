@@ -3,7 +3,6 @@ import { extractAnswerFromJson } from '../lib/notebooklm/query-core';
 import {
   isNotebookLmChatConfigured,
   queryNotebookLmForChat,
-  NotebookLmChatError,
 } from '../lib/notebooklm/chat-client';
 import { appendLegalDisclaimer } from '../lib/chat/notebooklm-prompt';
 

@@ -77,6 +77,8 @@ describe('guardián de entorno — rechaza producción', () => {
     withEnv({
       APP_ENV: undefined,
       DATABASE_URL: 'postgresql://user:pass@localhost:5432/db',
+      VERCEL_ENV: undefined,
+      NEXT_PUBLIC_SITE_URL: undefined,
     }, () => {
       const inspection = inspectEnvironment();
       expect(inspection.kind).toBe('local');

@@ -2,8 +2,8 @@ import { defineConfig } from 'vitest/config';
 import path from 'path';
 import { existsSync } from 'node:fs';
 
-const hasScripts = existsSync(path.resolve(__dirname, 'scripts'));
-const hasDocs = existsSync(path.resolve(__dirname, 'docs'));
+const hasScripts = existsSync(path.resolve(__dirname, 'scripts/seo-growth-final-reconcile.mjs'));
+const hasDocs = existsSync(path.resolve(__dirname, 'docs/seo/growth/batch-1-selection.csv'));
 
 /** Tests que importan o leen `scripts/` (gitignored en checkout público). */
 const SCRIPT_DEPENDENT_TESTS = [
@@ -20,8 +20,6 @@ const SCRIPT_DEPENDENT_TESTS = [
   'tests/remediate-commercial-claims.test.ts',
   'tests/seo-content-audit.test.ts',
   'tests/seo-data-cli.test.ts',
-  'tests/seo-growth-final-reconciliation.test.ts',
-  'tests/seo-phase3-editorial.test.ts',
 ];
 
 /** Tests que leen fixtures bajo `docs/` (gitignored en checkout público). */
@@ -40,6 +38,8 @@ const DOCS_DEPENDENT_TESTS = [
   'tests/fase5b-cierre-integridad-lote3.test.ts',
   'tests/fase5-design-system.test.ts',
   'tests/fase7-inventario.test.ts',
+  'tests/seo-growth-final-reconciliation.test.ts',
+  'tests/seo-phase3-editorial.test.ts',
 ];
 
 export default defineConfig({
@@ -55,6 +55,7 @@ export default defineConfig({
     exclude: [
       'node_modules',
       '.next',
+      'web-starter/**',
       'e2e/**',
       'tests/e2e/**',
       'playwright-report/**',

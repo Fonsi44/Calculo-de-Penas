@@ -29,6 +29,8 @@ const eslintConfig = defineConfig([
     "wordpress/**",
     // Cobertura de vitest (regenerable con npm run test:coverage).
     "coverage/**",
+    // Plantilla aislada (tiene su propio tsconfig; no comparte aliases del app principal).
+    "web-starter/**",
   ]),
 ]);
 

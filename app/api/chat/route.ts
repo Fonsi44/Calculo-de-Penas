@@ -27,10 +27,10 @@ import {
   stripLawyerNotebookShortcut,
 } from '@/lib/chat/lawyer-shortcut';
 import {
+  getLegalCorpusUnavailableReply,
   LEGAL_CORPUS_ERROR_REPLY,
   LEGAL_CORPUS_RATE_LIMIT_REPLY,
   LEGAL_CORPUS_TIMEOUT_REPLY,
-  LEGAL_CORPUS_UNAVAILABLE_REPLY,
 } from '@/lib/chat/legal-corpus-fallback';
 import {
   isNotebookLmChatConfigured,
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
   if (!parsed.success) {
     return jsonError(parsed.error, 400);
   }
-  const { message, sessionId, history, conversationId } = parsed.data;
+  const { message, sessionId, conversationId } = parsed.data;
 
   const ipRl = await rateLimit(ip, {
     keyPrefix: 'chat_ip',
@@ -111,7 +111,7 @@ export async function POST(request: Request) {
 
     if (!isNotebookLmChatConfigured()) {
       return Response.json({
-        reply: LEGAL_CORPUS_UNAVAILABLE_REPLY,
+        reply: getLegalCorpusUnavailableReply(),
         source: 'fallback_no_config',
         urgent: false,
       });

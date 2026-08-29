@@ -1,0 +1,14 @@
+# Plantilla para Cloudflare Tunnel → proxy local :8787
+# Sustituya __TUNNEL_ID__ y __HOSTNAME__ antes de usar.
+#
+# Crear túnel:
+#   cloudflared tunnel create pineda-notebooklm
+#   cloudflared tunnel route dns pineda-notebooklm nlm-proxy.tudominio.com
+
+tunnel: __TUNNEL_ID__
+credentials-file: __HOME_DIR__/.cloudflared/__TUNNEL_ID__.json
+
+ingress:
+  - hostname: __HOSTNAME__
+    service: http://127.0.0.1:8787
+  - service: http_status:404

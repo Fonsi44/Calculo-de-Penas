@@ -89,7 +89,7 @@ function inlineFormat(text: string): string {
 /** Sanitiza HTML generado (whitelist mínima). */
 export function sanitizeNlmHtml(html: string): string {
   // Sin parser DOM en servidor: confiamos en nuestro generador + strip tags no permitidos.
-  return html.replace(/<\/?([a-z0-9]+)([^>]*)>/gi, (match, tag) =>
+  return html.replace(/<\/?([a-z0-9]+)([^>]*)>/gi, (match) =>
     ALLOWED.test(match) ? match : '',
   );
 }

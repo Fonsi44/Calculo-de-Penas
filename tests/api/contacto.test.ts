@@ -4,6 +4,7 @@ const returningMock = vi.fn();
 const onConflictDoUpdateMock = vi.fn().mockReturnValue({ returning: returningMock });
 const valuesMock = vi.fn().mockReturnValue({ onConflictDoUpdate: onConflictDoUpdateMock });
 const insertMock = vi.fn().mockReturnValue({ values: valuesMock });
+const captchaMock = vi.fn();
 
 vi.mock('../../lib/db', () => ({
   db: {
@@ -14,6 +15,10 @@ vi.mock('../../lib/db', () => ({
 
 vi.mock('../../lib/schema', () => ({
   rateLimits: { identifier: 'rate_limits.identifier', keyPrefix: 'rate_limits.key_prefix' },
+}));
+
+vi.mock('../../lib/captcha', () => ({
+  verifyTurnstileToken: (...args: unknown[]) => captchaMock(...args),
 }));
 
 const sendContactEmailMock = vi.fn();
@@ -33,6 +38,7 @@ const baseBody = {
   asunto: 'Cita para consulta',
   mensaje: 'Necesito orientación sobre un caso penal.',
   acepta: true,
+  'cf-turnstile-response': 'turnstile-fixture-secret',
 };
 
 function jsonRequest(body: unknown): Request {
@@ -49,6 +55,7 @@ describe('POST /api/contacto', () => {
     returningMock.mockResolvedValue([{ count: 1, expiresAt: new Date(Date.now() + 60_000).toISOString() }]);
     sendContactEmailMock.mockReset();
     isEmailConfiguredMock.mockReset();
+    captchaMock.mockReset().mockResolvedValue(true);
   });
 
   it('retorna 200 cuando el envío es exitoso', async () => {

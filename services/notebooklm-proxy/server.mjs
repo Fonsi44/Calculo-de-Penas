@@ -15,7 +15,7 @@ const PORT = Number(process.env.PORT) || 8787;
 const API_KEY = process.env.NOTEBOOKLM_PROXY_API_KEY?.trim();
 const NOTEBOOK_ID = process.env.NOTEBOOKLM_NOTEBOOK_ID?.trim();
 const NLM_BIN = process.env.NLM_BIN?.trim() || 'nlm';
-const TIMEOUT_MS = Number(process.env.CHAT_NOTEBOOKLM_TIMEOUT_MS) || 90_000;
+const TIMEOUT_MS = Number(process.env.CHAT_NOTEBOOKLM_TIMEOUT_MS) || 180_000;
 const TIMEOUT_SEC = Math.max(10, Math.ceil(TIMEOUT_MS / 1000));
 
 const rateLimitMap = new Map();

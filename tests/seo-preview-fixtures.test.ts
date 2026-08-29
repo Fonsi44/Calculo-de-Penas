@@ -29,9 +29,12 @@ describe('fixtures públicos sanitizados de Preview', () => {
   });
 
   it('cubren penal, laboral, familia y civil', () => {
-    vi.stubEnv('NODE_ENV', 'test');
-    vi.stubEnv('SEO_PREVIEW_BLOG_DATA_MODE', 'limited-test-fixtures');
-    const fixtures = getLimitedTestBlogFixtures();
+    const fixtures = getLimitedTestBlogFixtures({
+      NODE_ENV: 'test',
+      SEO_PREVIEW_BLOG_DATA_MODE: 'limited-test-fixtures',
+      VERCEL_ENV: undefined,
+      APP_ENV: undefined,
+    });
     expect(new Set(fixtures.map((fixture) => fixture.category))).toEqual(new Set([
       'derecho-penal',
       'derecho-laboral',
@@ -42,9 +45,12 @@ describe('fixtures públicos sanitizados de Preview', () => {
   });
 
   it('incluyen pending y un verified inequívocamente no productivo', () => {
-    vi.stubEnv('NODE_ENV', 'test');
-    vi.stubEnv('SEO_PREVIEW_BLOG_DATA_MODE', 'limited-test-fixtures');
-    const fixtures = getLimitedTestBlogFixtures();
+    const fixtures = getLimitedTestBlogFixtures({
+      NODE_ENV: 'test',
+      SEO_PREVIEW_BLOG_DATA_MODE: 'limited-test-fixtures',
+      VERCEL_ENV: undefined,
+      APP_ENV: undefined,
+    });
     expect(fixtures.some((fixture) => fixture.reviewStatus === 'pending')).toBe(true);
     const verified = fixtures.find((fixture) => fixture.reviewStatus === 'verified');
     expect(verified?.slug).toBe('fixture-preview-articulo-verificado');

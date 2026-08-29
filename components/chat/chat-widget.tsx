@@ -14,7 +14,7 @@
  *
  * Seguridad:
  *   - No expone la API key (solo llama a /api/chat relativa).
- *   - sessionId en localStorage (no conversación completa).
+ *   - sessionId y conversationId NLM en localStorage; mensajes en sessionStorage.
  *   - Salvaguarda: no renderiza en rutas privadas aunque se monte por error.
  *
  * Render solo en web pública: se monta en app/(public)/layout.tsx.
@@ -32,6 +32,13 @@ import { telHref, whatsappHref } from '@/lib/site';
 import { chatConfig } from '@/lib/chat/config';
 import { sugerirAreaLegal } from '@/lib/chat/preconsulta';
 import {
+  defaultChatSessionSnapshot,
+  getChatSessionStoreSnapshot,
+  patchChatSessionStore,
+  subscribeChatSessionStore,
+  type ChatSessionMessage,
+} from '@/lib/chat/browser-session';
+import {
   trackChatOpened,
   trackChatClosed,
   trackChatMessageSent,
@@ -44,7 +51,7 @@ import {
 import { useConsentObserver } from '@/hooks/use-consent-observer';
 import { ChatMessageBody } from './chat-message-body';
 
-type Msg = { role: 'assistant' | 'user'; content: string; source?: string };
+type Msg = ChatSessionMessage;
 
 const PRIVATE_PREFIXES = [
   '/intranet', '/admin', '/login', '/dashboard',
@@ -53,6 +60,7 @@ const PRIVATE_PREFIXES = [
 
 const SESSION_KEY = 'pya_chat_sid';
 const NLM_CONVERSATION_KEY = 'pya_chat_nlm_cid';
+const INITIAL_MESSAGE = chatConfig.assistant.initialMessage;
 
 /** Genera/recupera un sessionId estable en localStorage (sin conversación). */
 function getOrCreateSessionId(): string {
@@ -101,17 +109,17 @@ export function ChatWidget() {
   const consentOpen = useConsentObserver();
 
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Msg[]>([
-    { role: 'assistant', content: chatConfig.assistant.initialMessage },
-  ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  // Marca de urgencia: cuando el backend o el mensaje del usuario indican
-  // urgencia, se resaltan los CTAs de WhatsApp/teléfono en el widget.
-  const [urgent, setUrgent] = useState(false);
-  // Muestra las quick replies iniciales mientras no haya mensajes del usuario.
-  const [showQuickReplies, setShowQuickReplies] = useState(true);
+  const chatSession = useSyncExternalStore(
+    subscribeChatSessionStore,
+    () => getChatSessionStoreSnapshot(INITIAL_MESSAGE),
+    () => defaultChatSessionSnapshot(INITIAL_MESSAGE),
+  );
+  const messages = chatSession.messages;
+  const showQuickReplies = chatSession.showQuickReplies;
+  const urgent = chatSession.urgent;
   // `mounted` garantiza que el primer render del cliente coincida con el del
   // server (null). Antes se usaba `typeof document === 'undefined'`, lo que
   // provocaba un mismatch de hidratación (#418): el server renderizaba null y
@@ -137,21 +145,21 @@ export function ChatWidget() {
     if (el) el.scrollTop = el.scrollHeight;
   }, []);
 
-  // sessionId se genera/recupera de localStorage perezosamente en el primer
-  // envío. No se guarda en estado (no afecta al render) para evitar el
-  // patrón "setState in effect" y mantenerlo fuera del ciclo de render.
+  useEffect(() => {
+    if (!open) return;
+    trackChatOpened();
+  }, [open]);
 
   useEffect(() => {
-    if (open) {
-      // Al abrir, scroll al inicio (saludo). El scrollRef apunta al contenedor
-      // de mensajes; scrollTo(0,0) = mostrar el primer mensaje (el saludo).
-      const el = scrollRef.current;
-      if (el) el.scrollTop = 0;
-      const t = setTimeout(() => inputRef.current?.focus(), 50);
-      trackChatOpened();
-      return () => clearTimeout(t);
+    if (!open) return;
+    const el = scrollRef.current;
+    const hasUserMessages = messages.some((m) => m.role === 'user');
+    if (el) {
+      el.scrollTop = hasUserMessages ? el.scrollHeight : 0;
     }
-  }, [open]);
+    const t = setTimeout(() => inputRef.current?.focus(), 50);
+    return () => clearTimeout(t);
+  }, [open, messages]);
 
   useEffect(() => {
     scrollToBottom();
@@ -194,12 +202,15 @@ export function ChatWidget() {
       const history = messages
         .slice(-7, -1)
         .map((m) => ({ role: m.role, content: m.content }));
+      const withUser = [...messages, userMsg];
 
-      setMessages((prev) => [...prev, userMsg]);
+      patchChatSessionStore({
+        messages: withUser,
+        showQuickReplies: false,
+      });
       setInput('');
       setLoading(true);
       setError(false);
-      setShowQuickReplies(false);
       trackChatMessageSent();
 
       // Detección de urgencia client-side (refuerzo del backend).
@@ -224,14 +235,17 @@ export function ChatWidget() {
         });
 
         if (res.status === 429) {
-          setMessages((prev) => [
-            ...prev,
-            {
-              role: 'assistant',
-              content:
-                'Ha enviado muchos mensajes en poco tiempo. Espere unos minutos o contacte directamente por WhatsApp para atención inmediata.',
-            },
-          ]);
+          patchChatSessionStore({
+            messages: [
+              ...withUser,
+              {
+                role: 'assistant',
+                content:
+                  'Ha enviado muchos mensajes en poco tiempo. Espere unos minutos o contacte directamente por WhatsApp para atención inmediata.',
+              },
+            ],
+            showQuickReplies: false,
+          });
           return;
         }
         if (!res.ok) {
@@ -251,7 +265,9 @@ export function ChatWidget() {
         }
 
         // Marca urgencia si el backend lo señala (resalta CTAs de contacto).
-        if (data.urgent === true) setUrgent(true);
+        if (data.urgent === true) {
+          patchChatSessionStore({ urgent: true });
+        }
 
         if (data.source && data.source.startsWith('fallback')) {
           trackChatFallbackUsed(
@@ -261,10 +277,13 @@ export function ChatWidget() {
           );
         }
 
-        setMessages((prev) => [
-          ...prev,
-          { role: 'assistant', content: reply, source: data.source },
-        ]);
+        patchChatSessionStore({
+          messages: [
+            ...withUser,
+            { role: 'assistant', content: reply, source: data.source },
+          ],
+          showQuickReplies: false,
+        });
 
         // Heurística simple para evento service_suggested (categoría fija).
         const lower = reply.toLowerCase();
@@ -275,7 +294,13 @@ export function ChatWidget() {
           trackChatServiceSuggested('migrantes');
       } catch {
         setError(true);
-        setMessages((prev) => [...prev, { role: 'assistant', content: chatConfig.fallbackReply }]);
+        patchChatSessionStore({
+          messages: [
+            ...withUser,
+            { role: 'assistant', content: chatConfig.fallbackReply },
+          ],
+          showQuickReplies: false,
+        });
         trackChatFallbackUsed('fallback_provider_error');
       } finally {
         setLoading(false);
